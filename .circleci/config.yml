@@ -4,13 +4,13 @@ orbs:
   codecov: codecov/codecov@1.0.5
 
 executors:
-  cif_executor:
+  forms_executor:
     docker:
       - image: circleci/openjdk:8u212-jdk-stretch-node
 
 jobs:
   build:
-    executor: cif_executor
+    executor: forms_executor
     steps:
       - checkout
       - restore_cache:
@@ -34,64 +34,12 @@ jobs:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
           path: bundles/core/target/surefire-reports
-      - store_test_results:
-          path: examples/bundle/target/surefire-reports
-      - store_artifacts:
-          path: examples/bundle/target/surefire-reports
       - codecov/upload:
           conf: .circleci/codecov.yml
           flags: unittests
-
-  karma:
-    docker:
-      - image: circleci/node:lts-browsers
-    steps:
-      - checkout
-      - run:
-          name: Provision
-          command: |
-            node -v
-            npm -v
-            npm install
-            npm run webpack:dev
-          working_directory: ./ui.apps
-      - run:
-          name: Run Unit Tests (Karma)
-          command: npm test
-          working_directory: ./ui.apps
-      - store_test_results:
-          path: ui.apps/karma-junit
-      - store_artifacts:
-          path: ui.apps/karma-junit
-      - codecov/upload:
-          conf: .circleci/codecov.yml
-          flags: karma
-  jest:
-    docker:
-      - image: circleci/node:lts-browsers
-    steps:
-      - checkout
-      - run:
-          name: Provision
-          command: |
-            node -v
-            npm -v
-            npm install
-          working_directory: ./react-components
-      - run:
-          name: Run Unit Tests (Jest)
-          command: npm run ci
-          working_directory: ./react-components
-      - store_test_results:
-          path: ./react-components/test-results
-      - store_artifacts:
-          path: ./react-components/test-results
-      - codecov/upload:
-          conf: .circleci/codecov.yml
-          flags: jest
  
   release:
-    executor: cif_executor
+    executor: forms_executor
     steps:
       - checkout
       - restore_cache:
@@ -120,14 +68,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - karma:
-          filters:
-            tags:
-              only: /.*/
-      - jest:
-          filters:
-            tags:
-              only: /.*/
       - release:
           requires:
             - build
@@ -135,4 +75,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-cif-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
