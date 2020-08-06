@@ -24,7 +24,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | AEM 6.4 | AEM 6.5 | Java |
 | ------------------- 	| ------- | ------- | ---- |
-| 1.1.0               	| 6.4.4.0 | 6.5.0   | 1.8  |
+| 0.0.1               	| 6.4.4.0 | 6.5.0   | 1.8  |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
@@ -53,7 +53,7 @@ This installs everything by default to `localhost:4502` without any context path
 
 ### UberJar
 
-This project relies on the AEM 6.4.4 `cq-quickstart` UberJar. This is publicly available on https://repo.adobe.com
+This project relies on the AEM 6.4.4 `cq-quickstart` UberJar and AEM Forms SDK API. This is publicly available on https://repo.adobe.com
 
 For more details about the UberJar please head over to the
 [How to Build AEM Projects using Apache Maven](https://helpx.adobe.com/experience-manager/6-4/sites/developing/using/ht-projects-maven.html) documentation page.
