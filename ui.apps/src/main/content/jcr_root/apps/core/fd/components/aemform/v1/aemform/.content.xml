@@ -19,4 +19,4 @@
     jcr:description="Container for AEM Forms"
     jcr:primaryType="cq:Component"
     jcr:title="AEM Form (v1)"
-    componentGroup=".core-wcm"/>
+    componentGroup=".core-forms"/>

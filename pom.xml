@@ -47,8 +47,6 @@
 
     <!-- We have a dedicated profile for the Forms components examples library -->
     <!-- They are included by default unless we perform a release -->
-    <!-- Once examples module is implemented, this needs to be uncommented -->
-    <!--
     <profiles>
         <profile>
             <id>examples-library</id>
@@ -62,7 +60,6 @@
             </modules>
         </profile>
     </profiles>
-    -->
 
     <!-- ====================================================================== -->
     <!-- S C M  D E F I N I T I O N                                             -->

@@ -3,7 +3,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Edit AEM Forms Container"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="core.wcm.components.aemform.v1.editor"
+    extraClientlibs="core.forms.components.aemform.v1.editor"
     trackingFeature="core-components:aemform:v1"
     helpPath="https://helpx.adobe.com/aem-forms/6-4/embed-adaptive-form-aem-sites.html">
     <content

@@ -16,12 +16,12 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <sly data-sly-use.form="com.adobe.cq.wcm.core.components.models.AEMForm"
+    <sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
          data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
     <title data-sly-test="${form.isAdaptiveForm || form.isMCDocument}"><sly data-sly-use.af="com.adobe.aemds.guide.common.AdaptiveForm" />${af.formTitle @ context='html'}</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
     <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
-    <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.wcm.components.aemform.v1.iframeContentResizer']}"/>
+    <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.iframeContentResizer']}"/>
 </head>
 <body>
 <sly data-sly-include="formcontainer.html"></sly>

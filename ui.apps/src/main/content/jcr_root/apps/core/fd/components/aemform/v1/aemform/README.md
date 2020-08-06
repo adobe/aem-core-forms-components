@@ -23,7 +23,7 @@ AEM Form component written in HTL.
 * AEM Forms Pages could be used inside iframe or non-iframe mode
 
 ### Use Object
-The AEM Form component uses the `com.adobe.cq.wcm.core.components.models.AEMForm` Sling model as its Use-object.
+The AEM Form component uses the `com.adobe.cq.forms.core.components.models.aemform.AEMForm` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for the AEM Form component and are expected to be available as `Resource` properties:

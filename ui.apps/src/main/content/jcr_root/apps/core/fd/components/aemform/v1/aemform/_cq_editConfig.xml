@@ -20,8 +20,8 @@
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
         <editexpression
             jcr:primaryType="nt:unstructured"
-            condition="fd.formExists"
-            handler="fd.openFormForEditing"
+            condition="fd.core.formExists"
+            handler="fd.core.openFormForEditing"
             icon="alias"
             text="Edit in a new window"/>
     </cq:actionConfigs>

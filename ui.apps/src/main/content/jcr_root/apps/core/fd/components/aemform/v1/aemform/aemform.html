@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<sly data-sly-use.form="com.adobe.cq.wcm.core.components.models.AEMForm"
+<sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
 <script>
     // Editor evaluates this script and if the clientlib is not loaded by then, it will fail. Hence triggering an
@@ -44,9 +44,9 @@
             width="100%"
             data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
-         data-sly-call="${clientLib.all @ categories=['core.wcm.components.aemform.v1.iframeResizer']}"/>
+         data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.iframeResizer']}"/>
 </sly>
-<sly data-sly-call="${clientLib.all @ categories=['core.wcm.components.aemform.v1.formapp']}"/>
+<sly data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.formapp']}"/>
 <sly data-sly-test="${!useIframe}">
     <sly data-sly-include="formcontainer.html"></sly>
 </sly>

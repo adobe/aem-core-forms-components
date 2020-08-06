@@ -14,10 +14,10 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
-<sly data-sly-use.form="com.adobe.cq.wcm.core.components.models.AEMForm"
+<sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
 <sly data-sly-test="${!wcmmode.disabled && !form.isFormSelected}">
-    <sly data-sly-call="${clientLib.all @ categories='core.wcm.components.aemform.v1'}"/>
+    <sly data-sly-call="${clientLib.all @ categories='core.forms.components.aemform.v1'}"/>
     <div class="cmp-aemform no-form-selected">
         ${'You need to select a Form from the Dialog' @ i18n, locale=request.locale}
     </div>

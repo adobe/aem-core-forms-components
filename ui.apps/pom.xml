@@ -85,7 +85,7 @@
                     <exclude>**/.DS_Store</exclude>
                     <exclude>**/target/**</exclude>
                     <!-- Exclude un-transpiled JavaScript files -->
-                    <exclude>**/js/**</exclude>
+                    <!-- <exclude>**/js/**</exclude> -->
                 </excludes>
             </resource>
         </resources>
@@ -138,15 +138,6 @@
                             <version>${core.wcm.components.version}</version>
                         </dependency>
                     </dependencies>
-                    
-                    <embeddedTarget>/apps/bundles/install</embeddedTarget>
-                    <embeddeds> 
-                        <embedded>
-                            <groupId>org.apache.commons</groupId>
-                            <artifactId>commons-text</artifactId>
-                            <filter>true</filter>
-                        </embedded>
-                    </embeddeds>
                 </configuration>
             </plugin>
 
