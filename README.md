@@ -53,7 +53,7 @@ This installs everything by default to `localhost:4502` without any context path
 
 ### UberJar
 
-This project relies on the AEM 6.4.4 `cq-quickstart` UberJar and AEM Forms SDK API. This is publicly available on https://repo.adobe.com
+This project relies on the AEM 6.4.4 `cq-quickstart` UberJar and [AEM Forms SDK API](https://repo.maven.apache.org/maven2/com/adobe/aem/aem-forms-sdk-api/). This is publicly available on https://repo.adobe.com
 
 For more details about the UberJar please head over to the
 [How to Build AEM Projects using Apache Maven](https://helpx.adobe.com/experience-manager/6-4/sites/developing/using/ht-projects-maven.html) documentation page.
