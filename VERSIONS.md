@@ -2,7 +2,7 @@
 
 See below for a full list of minimum system requirements for historical versions of the Forms Core Components:
 
-| Forms Core Components | AEM 6.4 | AEM 6.5 | Java |
-| -------------------   | ------- | ------- | ---- |
-| 0.0.1                 | 6.4.4.0 | 6.5.0   | 1.8. |
+| Forms Core Components | AEM Forms as a cloud service | Java   |
+| -------------------   | ---------------------------- | -----  |
+| 0.0.1                 | Continual                    | 8, 11  |  
 

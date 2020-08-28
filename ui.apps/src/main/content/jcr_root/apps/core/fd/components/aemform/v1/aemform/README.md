@@ -45,7 +45,7 @@ BLOCK cmp-aemform
 ## Information
 * **Vendor**: Adobe
 * **Version**: v1
-* **Compatibility**: AEM 6.5
+* **Compatibility**: AEM Forms as a cloud service
 * **Status**: production-ready
 
 _If you were involved in the authoring of this component and are not credited above, please reach out to us on [GitHub](https://github.com/adobe/aem-core-wcm-components)._

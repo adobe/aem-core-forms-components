@@ -22,9 +22,9 @@ See our [wiki](https://github.com/adobe/aem-core-forms-components/wiki) for usag
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
-| Forms Core Components | AEM 6.4 | AEM 6.5 | Java |
-| ------------------- 	| ------- | ------- | ---- |
-| 0.0.1               	| 6.4.4.0 | 6.5.0   | 1.8  |
+| Forms Core Components | AEM Forms as a cloud service | Java | Maven  |
+| ------------------- 	| ---------------------------- | ---- | -----  |
+| 0.0.1               	| Continual                    | 8,11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 

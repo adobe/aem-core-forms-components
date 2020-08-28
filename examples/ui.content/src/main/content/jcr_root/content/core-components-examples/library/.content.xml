@@ -22,7 +22,6 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/forms-components/aemform.svg"
                         linkURL="/content/core-components-examples/library/forms/aemform"
                         textIsRich="true"
                         titleFromPage="false">
