@@ -25,6 +25,7 @@
                         <items jcr:primaryType="nt:unstructured">
                             <adaptiveForm
                                 jcr:primaryType="nt:unstructured"
+                                checked="{Boolean}true"
                                 text="Adaptive Form"
                                 value="adaptiveForm">
                                 <granite:data
@@ -35,6 +36,7 @@
                             </adaptiveForm>
                             <adaptiveDocument
                                 jcr:primaryType="nt:unstructured"
+                                granite:hide="{Boolean}true"
                                 text="Interactive Communication"
                                 value="adaptiveDocument">
                                 <granite:data

@@ -16,7 +16,7 @@ See our [wiki](https://github.com/adobe/aem-core-forms-components/wiki) for usag
 
 ## Available Components
 
--   [AEM Forms](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+-   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
 
 ## System Requirements
 
