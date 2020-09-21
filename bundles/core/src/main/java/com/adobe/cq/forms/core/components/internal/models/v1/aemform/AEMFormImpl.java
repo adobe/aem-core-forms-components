@@ -51,7 +51,7 @@ import com.day.cq.wcm.api.designer.Style;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
 
-    public static final String RESOURCE_TYPE = "core/wcm/components/aemform/v1/aemform";
+    public static final String RESOURCE_TYPE = "core/fd/components/aemform/v1/aemform";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AEMFormImpl.class);
 

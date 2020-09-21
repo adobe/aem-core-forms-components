@@ -53,7 +53,7 @@ class AEMFormImplTest {
     @Test
     void testExportedType() {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
-        assertEquals("core/wcm/components/aemform/v1/aemform", aemform.getExportedType());
+        assertEquals("core/fd/components/aemform/v1/aemform", aemform.getExportedType());
     }
 
     @Test

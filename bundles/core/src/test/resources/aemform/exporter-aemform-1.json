@@ -12,5 +12,5 @@
     "themePath": "/content/dam/formsanddocuments-themes/abc/jcr:content",
     "formEditPagePath": "/content/forms/af/abc",
     "locale" : "",
-    ":type": "core/wcm/components/aemform/v1/aemform"
+    ":type": "core/fd/components/aemform/v1/aemform"
 }

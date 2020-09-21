@@ -1,0 +1,13 @@
+.forms-demo {
+    width : 100% !important;
+}
+
+
+.forms-demo .container {
+    width : auto !important;
+}
+
+
+.forms-demo .cmp-examples-demo__top {
+    display: block;
+}
