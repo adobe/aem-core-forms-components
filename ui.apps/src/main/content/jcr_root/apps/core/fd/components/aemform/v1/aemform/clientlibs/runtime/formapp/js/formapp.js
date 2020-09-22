@@ -16,6 +16,8 @@
 
 (function () {
     var guideBridge, aemFormConfig,
+        aemFormIframeSelector = ".cmp-aemform__iframecontent",
+        aemFormNonIframeSelector = ".cmp-aemform__content",
         onSubmit = function (guideResultObj) {
             var data = guideResultObj.data, element, iframeDocument, afSuccessPayload = JSON.parse(data.afSuccessPayload);
             if (aemFormConfig.thankyouConfig === "page") {
@@ -34,10 +36,10 @@
                 }
             } else {
                 if (aemFormConfig.useIframe !== "false") {
-                    iframeDocument = $("#aemFormFrame")[0].contentWindow.document;
+                    iframeDocument = document.querySelector(aemFormIframeSelector).contentWindow.document;
                     element = iframeDocument.createElement("div");
                 } else {
-                    element = $(".aemformcontainer")[0];
+                    element = $(aemFormNonIframeSelector)[0];
                 }
                 //honor thankYou message coming from server side.
                 element.innerHTML = afSuccessPayload.thankYouContent;
@@ -58,10 +60,10 @@
                     autoResize : true,
                     scrolling : true,
                     heightCalculationMethod : "taggedElement"
-                }, "#aemFormFrame");
+                }, aemFormIframeSelector);
             }
             if (aemFormConfig.height != "auto") {
-                $("#aemFormFrame").css("height", aemFormConfig.height);
+                $(aemFormIframeSelector).css("height", aemFormConfig.height);
             }
             var submitConfig = {},
                 formElement,
