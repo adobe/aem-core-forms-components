@@ -12,7 +12,7 @@ This project is intended to be used in conjunction with the [AEM Sites Core Comp
 
 ## Documentation
 
-See our [wiki](https://github.com/adobe/aem-core-forms-components/wiki) for usage and configuration instructions of the AEM Forms Core Components.
+See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html) for usage and configuration instructions of the AEM Forms Core Components.
 
 ## Available Components
 
@@ -83,12 +83,6 @@ and sub package section
 ```
 
 to the `content-package-maven-plugin`.
-
-
-
-## Customization
-
-For customizing Forms Core Components, we provide use cases and examples in our documentation at [Customizing Forms Core Components](https://github.com/adobe/aem-core-forms-components/wiki/Customizing-Forms-Core-Components).
 
 
 ## Code Formatting
