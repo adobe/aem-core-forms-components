@@ -106,24 +106,26 @@ public abstract class AbstractComponentImpl implements Component {
             boolean inCurrentPage = (containingPage != null
                 && StringUtils.equals(containingPage.getPath(), currentPage.getPath()));
             boolean inTemplate = (template != null && path.startsWith(template.getPath()));
-            if (!inCurrentPage && !inTemplate) {
-                ComponentContext parentContext = componentContext.getParent();
-                while (parentContext != null) {
-                    Resource parentContextResource = parentContext.getResource();
-                    if (parentContextResource != null) {
-                        Page parentContextPage = pageManager.getContainingPage(parentContextResource);
-                        inCurrentPage = (parentContextPage != null
-                            && StringUtils.equals(parentContextPage.getPath(), currentPage.getPath()));
-                        inTemplate = (template != null
-                            && parentContextResource.getPath().startsWith(template.getPath()));
-                        if (inCurrentPage || inTemplate) {
-                            path = parentContextResource.getPath().concat(resource.getPath());
-                            break;
-                        }
-                    }
-                    parentContext = parentContext.getParent();
-                }
-            }
+            /*
+             * if (!inCurrentPage && !inTemplate) {
+             * ComponentContext parentContext = componentContext.getParent();
+             * while (parentContext != null) {
+             * Resource parentContextResource = parentContext.getResource();
+             * if (parentContextResource != null) {
+             * Page parentContextPage = pageManager.getContainingPage(parentContextResource);
+             * inCurrentPage = (parentContextPage != null
+             * && StringUtils.equals(parentContextPage.getPath(), currentPage.getPath()));
+             * inTemplate = (template != null
+             * && parentContextResource.getPath().startsWith(template.getPath()));
+             * if (inCurrentPage || inTemplate) {
+             * path = parentContextResource.getPath().concat(resource.getPath());
+             * break;
+             * }
+             * }
+             * parentContext = parentContext.getParent();
+             * }
+             * }
+             **/
 
         }
 

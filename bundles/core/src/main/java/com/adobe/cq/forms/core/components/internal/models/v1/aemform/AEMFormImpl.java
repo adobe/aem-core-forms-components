@@ -124,7 +124,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
             Resource themeResource = request.getResourceResolver().getResource(themePath + "/jcr:content/metadata");
             if (themeResource != null) {
                 ValueMap themeProps = themeResource.getValueMap();
-                return themeProps.get("clientlibCategory", "");
+                clientLibCategory = themeProps.get("clientlibCategory", "");
             }
         }
         return clientLibCategory;
@@ -198,10 +198,11 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
 
     @Override
     public String getSubmitType() {
+        String sbmType = submitType;
         if ("message".equals(getThankyouConfig())) {
-            return "inline";
+            sbmType = "inline";
         }
-        return submitType;
+        return sbmType;
     }
 
     @Override

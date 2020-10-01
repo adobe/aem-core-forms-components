@@ -36,11 +36,14 @@ class AEMFormImplTest {
     private static final String BASE = "/aemform";
     private static final String CONTENT_ROOT = "/content";
     private static final String ROOT_PAGE = "/content/aemform";
+    private static final String ROOT_PAGE_LANG = "/content/aemform/en_US";
     private static final String GRID = ROOT_PAGE + "/jcr:content/root/responsivegrid";
+    private static final String GRID_LANG = ROOT_PAGE_LANG + "/jcr:content/root/responsivegrid";
     private static final String FORM_1 = "/aemform-1";
     private static final String FORM_2 = "/aemform-2";
     private static final String PATH_FORM_1 = GRID + FORM_1;
     private static final String PATH_FORM_2 = GRID + FORM_2;
+    private static final String PATH_FORM_LANG = GRID_LANG + FORM_1;
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -177,6 +180,12 @@ class AEMFormImplTest {
     }
 
     @Test
+    void testGetSubmitTypeInline() {
+        AEMForm aemformLang = getAEMFormUnderTest(PATH_FORM_LANG);
+        assertEquals("inline", aemformLang.getSubmitType());
+    }
+
+    @Test
     void testGetThemePath() {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
         assertEquals("/content/dam/formsanddocuments-themes/abc/jcr:content", aemform.getThemePath());
@@ -236,6 +245,12 @@ class AEMFormImplTest {
         AEMForm aemFormMock1 = Mockito.mock(AEMForm.class);
         Mockito.when(aemFormMock1.isAdaptiveForm()).thenReturn(true);
         assertEquals("", aemform.getLocale());
+    }
+
+    @Test
+    void testGetPageLocale() {
+        AEMForm aemformLang = getAEMFormUnderTest(PATH_FORM_LANG);
+        assertEquals("en_US", aemformLang.getLocale());
     }
 
     @Test
