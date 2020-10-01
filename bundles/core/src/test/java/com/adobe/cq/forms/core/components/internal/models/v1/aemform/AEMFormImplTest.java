@@ -159,6 +159,11 @@ class AEMFormImplTest {
         AEMForm aemFormMock = Mockito.mock(AEMForm.class);
         Mockito.when(aemFormMock.isFormSelected()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::isFormSelected);
+
+        AEMForm aemFormMockSelected = Mockito.mock(AEMFormImpl.class);
+        Mockito.when(aemFormMockSelected.isFormSelected()).thenCallRealMethod();
+        Mockito.when(aemFormMockSelected.getFormType()).thenReturn(AEMForm.FormType.ADAPTIVE_FORM);
+        assertEquals(true, aemFormMockSelected.isFormSelected());
     }
 
     @Test
@@ -192,6 +197,14 @@ class AEMFormImplTest {
         AEMForm aemFormMock = Mockito.mock(AEMForm.class);
         Mockito.when(aemFormMock.getThemePath()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getThemePath);
+    }
+
+    @Test
+    void testGetBlankThemePath() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        assertEquals("", aemform.getThemePath());
+        assertEquals("", aemform.getThemeName());
+        assertEquals("auto", aemform.getHeight());
     }
 
     @Test
@@ -251,6 +264,8 @@ class AEMFormImplTest {
     void testGetPageLocale() {
         AEMForm aemformLang = getAEMFormUnderTest(PATH_FORM_LANG);
         assertEquals("en_US", aemformLang.getLocale());
+        assertEquals("auto", aemformLang.getHeight());
+        assertEquals("", aemformLang.getFormPagePath());
     }
 
     @Test

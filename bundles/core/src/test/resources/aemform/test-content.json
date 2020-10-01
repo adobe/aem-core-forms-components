@@ -30,7 +30,8 @@
                     "aemform-2" : {
                         "jcr:primaryType": "nt:unstructured",
                         "sling:resourceType": "core/fd/components/aemform/v1/aemform",
-                        "usePageLocale" : "true"
+                        "usePageLocale" : "true",
+                        "height" : "abc"
                     }
                 }
             }
@@ -52,7 +53,7 @@
                         "aemform-1": {
                             "jcr:primaryType": "nt:unstructured",
                             "sling:resourceType": "core/fd/components/aemform/v1/aemform",
-                            "height": "100",
+                            "height": "auto",
                             "thankyouPage": "/a/b/c",
                             "thankyouConfig": "message",
                             "formType": "adaptiveDocument",
