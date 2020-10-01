@@ -188,7 +188,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     }
 
     private String getPageLocale() {
-        String pagePath = currentPage.getPath(), pageLocaleRoot = LanguageUtil.getLanguageRoot(pagePath), locale = null;
+        String pagePath = currentPage.getPath(), pageLocaleRoot = LanguageUtil.getLanguageRoot(pagePath), locale = "";
         if (StringUtils.isNotBlank(pageLocaleRoot)) {
             int localeStartIndex = StringUtils.lastIndexOf(pageLocaleRoot, '/');
             locale = StringUtils.substring(pageLocaleRoot, localeStartIndex + 1);

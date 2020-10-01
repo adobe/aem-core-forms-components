@@ -23,11 +23,30 @@
                         "formRef": "/content/forms/af/abc",
                         "themeRef": "/content/dam/formsanddocuments-themes/abc",
                         "submitType": "inline",
-                        "cssClientlib": "abc.def"
+                        "cssClientlib": "abc.def",
+                        "useiframe" : "true",
+                        "usePageLocale" : "true"
                     },
                     "aemform-2" : {
                         "jcr:primaryType": "nt:unstructured",
-                        "sling:resourceType": "core/fd/components/aemform/v1/aemform"
+                        "sling:resourceType": "core/fd/components/aemform/v1/aemform",
+                        "usePageLocale" : "true"
+                    }
+                }
+            }
+        }
+    },
+    "dam" : {
+        "jcr:primaryType": "sling:Folder",
+        "formsanddocuments-themes": {
+            "jcr:primaryType": "sling:Folder",
+            "abc" : {
+                "jcr:primaryType": "dam:asset",
+                "jcr:content"    : {
+                    "jcr:primaryType": "dam:assetContent",
+                    "metadata" : {
+                        "jcr:primaryType"   : "nt:unstructured",
+                        "clientlibCategory" : "abc-clientlib"
                     }
                 }
             }
