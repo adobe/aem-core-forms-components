@@ -25,7 +25,8 @@
                         "submitType": "inline",
                         "cssClientlib": "abc.def",
                         "useiframe" : "true",
-                        "usePageLocale" : "true"
+                        "usePageLocale" : "true",
+                        "enableFocusOnFirstField" : true
                     },
                     "aemform-2" : {
                         "jcr:primaryType": "nt:unstructured",

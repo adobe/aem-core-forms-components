@@ -123,6 +123,13 @@ public interface AEMForm extends Component {
     String PN_USEPAGELOCALE = "usePageLocale";
 
     /**
+     * Name of the resource property that defines whether to enable focus on first field of form or not
+     *
+     * @since com.adobe.cq.forms.core.components.models.aemform 0.0.14
+     */
+    String PN_ENABLEFOCUSONFIRSTFIELD = "enableFocusOnFirstField";
+
+    /**
      * Returns the form type
      *
      * @return the form type, if one was set
@@ -240,6 +247,16 @@ public interface AEMForm extends Component {
      * @since com.adobe.cq.forms.core.components.models.aemform 0.0.1;
      */
     default String getHeight() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Indicates if the form is configured to enable focus on first field or not
+     *
+     * @return true if the form is configured to enable focus on first field; false otherwise
+     * @since com.adobe.cq.forms.core.components.models.aemform 0.0.14;
+     */
+    default boolean getEnableFocusOnFirstField() {
         throw new UnsupportedOperationException();
     }
 

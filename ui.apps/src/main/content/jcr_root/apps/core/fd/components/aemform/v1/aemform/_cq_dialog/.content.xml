@@ -192,6 +192,21 @@
                                 name="./usePageLocale"
                                 text="Use Page Language"
                                 value="true"/>
+                            <enableFocusOnFirstField
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    fieldDescription="Select to keep the focus on the first field of the adaptive form or uncheck to keep the focus on the parent page or application."
+                                    granite:class="cmp-aemform--editor-enablefocusonfirstfield"
+                                    name="./enableFocusOnFirstField"
+                                    checked="{Boolean}true"
+                                    text="Set Focus on Form"
+                                    uncheckedValue="false"
+                                    value="true"/>
+                            <enableFocusOnFirstField-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./enableFocusOnFirstField@TypeHint"
+                                    value="Boolean"/>
                         </items>
                     </adaptiveFormContainer>
                     <adaptiveDocumentContainer

@@ -269,6 +269,17 @@ class AEMFormImplTest {
     }
 
     @Test
+    void testGetEnableFocusOnFirstField() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals(true, aemform.getEnableFocusOnFirstField());
+
+        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
+        Mockito.when(aemFormMock.getEnableFocusOnFirstField()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getEnableFocusOnFirstField);
+
+    }
+
+    @Test
     void testJSONExport() throws Exception {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
         Utils.testJSONExport(aemform, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));

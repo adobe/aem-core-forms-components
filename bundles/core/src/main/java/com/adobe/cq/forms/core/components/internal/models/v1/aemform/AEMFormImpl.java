@@ -114,6 +114,10 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     @Default(values = "false")
     private String useIframe;
 
+    @ValueMapValue(name = AEMForm.PN_ENABLEFOCUSONFIRSTFIELD, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = true)
+    private boolean enableFocusOnFirstField;
+
     @ValueMapValue(name = AEMForm.PN_USEPAGELOCALE, injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = "false")
     private String usePageLocale;
@@ -230,6 +234,11 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     @Override
     public String getUseIframe() {
         return useIframe;
+    }
+
+    @Override
+    public boolean getEnableFocusOnFirstField() {
+        return enableFocusOnFirstField;
     }
 
     @Override
