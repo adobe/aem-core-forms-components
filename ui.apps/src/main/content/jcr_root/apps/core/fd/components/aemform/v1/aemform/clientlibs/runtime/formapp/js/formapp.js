@@ -66,6 +66,7 @@
                 $(aemFormIframeSelector).css("height", aemFormConfig.height);
             }
             var submitConfig = {},
+                renderConfig = {},
                 formElement,
                 inlineSubmitTypeWithoutIframe = aemFormConfig.useIframe === "false" && aemFormConfig.submitType === "inline",
                 pageRefreshSubmitTypeWithIframe = aemFormConfig.useIframe === "true" && aemFormConfig.submitType === "pageRefresh";
@@ -86,7 +87,9 @@
                 }
             }
             submitConfig.aemFormComponentPath = aemFormConfig.aemFormComponentPath;
+            renderConfig.enableFocusOnFirstField = aemFormConfig.enableFocusOnFirstField;
             guideBridge.registerConfig("submitConfig", submitConfig);
+            guideBridge.registerConfig("renderConfig", renderConfig);
         },
         initAEMForm = function (evnt) {
             guideBridge = evnt.detail.guideBridge;

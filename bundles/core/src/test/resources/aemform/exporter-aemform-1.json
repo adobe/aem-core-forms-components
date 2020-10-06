@@ -11,6 +11,7 @@
     "cssClientlib": "abc.def",
     "themePath": "/content/dam/formsanddocuments-themes/abc/jcr:content",
     "formEditPagePath": "/content/forms/af/abc",
+    "enableFocusOnFirstField":true,
     "locale" : "",
     ":type": "core/fd/components/aemform/v1/aemform"
 }

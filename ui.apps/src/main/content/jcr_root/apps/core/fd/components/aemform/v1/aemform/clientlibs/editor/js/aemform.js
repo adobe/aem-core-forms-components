@@ -16,6 +16,7 @@
 /* global jQuery, Coral */
 (function ($, Coral) {
     var iframeOptionSelector = ".cmp-aemform--editor-useiframe",
+        enableFocusSelector = ".cmp-aemform--editor-enablefocusonfirstfield",
         thankYouConfigSelector = "coral-radio[name='./thankyouConfig']",
         submitTypeSelector = ".cmp-aemform--editor-submitType",
         getToggleElement = function (elementId) {
@@ -44,10 +45,6 @@
         radioToggle = function ($el) {
             $el.each(function () {
                 var $this = $(this);
-                // since there is only single option, added this as a workaround to select single item
-                if ($(this).attr("value") == "adaptiveForm") {
-                    $this.attr("checked", "checked");
-                }
                 //same as onLoad so that relevant radio options is checked and works likewise.
                 if ($this.attr("checked") != null) {
                     toggle($this);
