@@ -21,6 +21,7 @@ AEM Forms Container component written in HTL.
 * Acts as a container to use AEM Forms pages (ie) Adaptive Form or Interactive Communication inside an AEM Sites Page
 * Customizable to use AEM Forms Theme
 * AEM Forms Pages could be used inside iframe or non-iframe mode
+* Customizable to enable/disable focus on the form
 
 ### Use Object
 The AEM Forms Container component uses the `com.adobe.cq.forms.core.components.models.aemform.AEMForm` Sling model as its Use-object.
@@ -32,7 +33,10 @@ The following properties are written to JCR for the AEM Form component and are e
 2. `./thankyouPage` - defines the thank you page to use for submit
 3. `./thankyouMessage` - defines the thank you message to use for submit
 4. `./themeRef` - defines an AEM Form Theme to be used for the corresponding AEM Form Page
-5. `./id` - defines the component HTML ID attribute.
+5. `./enableFocusOnFirstField` - defines whether to enable focus on the form.
+6. `./submitType` - defines the submit type for the form. 
+7. `./locale` - defined the locale to be used for the form. It could be sites page locale or custom
+8. `./id` - defines the component HTML ID attribute.
 
 
 ## BEM Description
