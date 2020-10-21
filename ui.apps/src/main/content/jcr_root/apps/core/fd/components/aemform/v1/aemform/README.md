@@ -29,14 +29,14 @@ The AEM Forms Container component uses the `com.adobe.cq.forms.core.components.m
 ### Edit Dialog Properties
 The following properties are written to JCR for the AEM Form component and are expected to be available as `Resource` properties:
 
-1. `./useIframe` - defines whether to use iframe as container for AEM Form Pages
-2. `./thankyouPage` - defines the thank you page to use for submit
-3. `./thankyouMessage` - defines the thank you message to use for submit
-4. `./themeRef` - defines an AEM Form Theme to be used for the corresponding AEM Form Page
-5. `./enableFocusOnFirstField` - defines whether to enable focus on the form.
-6. `./submitType` - defines the submit type for the form. 
-7. `./locale` - defined the locale to be used for the form. It could be sites page locale or custom
-8. `./id` - defines the component HTML ID attribute.
+1. `./useIframe` - specifies whether to use iframe as a container for the form or interactive communication.
+2. `./thankyouPage` - specifies the thank you page to show on form submission.
+3. `./thankyouMessage` - specifies the thank you message to show on form submission.
+4. `./themeRef` - specifies the AEM Forms theme to use for the form or interactive communication.
+5. `./enableFocusOnFirstField` - specifies whether to bring focus on the form or page containing the form or interactive communication.
+6. `./submitType` - specifies a submit type for the form. It can be synchronous or asynchronous.
+7. `./locale` - specifies the locale of the form or interactive communication. It could be sites page locale or a custom locale.
+8. `./id` - specifies value for the component HTML ID attribute.
 
 
 ## BEM Description
