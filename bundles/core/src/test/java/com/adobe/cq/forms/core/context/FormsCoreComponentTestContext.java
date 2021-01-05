@@ -15,14 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.context;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.models.impl.ResourceTypeBasedResourcePicker;
 import org.apache.sling.models.spi.ImplementationPicker;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 
 import com.adobe.cq.wcm.core.components.testing.MockResponsiveGrid;
-import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.aem.junit.AemContextCallback;
 import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
 
 /**
@@ -36,34 +33,6 @@ public final class FormsCoreComponentTestContext {
 
     private FormsCoreComponentTestContext() {
         // only static methods
-    }
-
-    public static AemContext createContext() {
-        return createContext(null, null);
-    }
-
-    /**
-     * Creates a new instance of {@link AemContext}, adds the project specific Sling Models and loads test data from the
-     * JSON file "/test-content.json" in the current classpath
-     *
-     * @param testBase
-     *            Prefix of the classpath resource to load test data from. Optional, can be null. If null, test data
-     *            will be loaded from /test-content.json
-     * @param contentRoot
-     *            Path to import the JSON content to
-     * @return New instance of {@link AemContext}
-     */
-    public static AemContext createContext(final String testBase, final String contentRoot) {
-        return new AemContext((AemContextCallback) context -> {
-            context.registerService(ImplementationPicker.class, new ResourceTypeBasedResourcePicker());
-            if (testBase != null) {
-                if (StringUtils.isNotEmpty(testBase)) {
-                    context.load().json(testBase + TEST_CONTENT_JSON, contentRoot);
-                } else {
-                    context.load().json(TEST_CONTENT_JSON, contentRoot);
-                }
-            }
-        }, ResourceResolverType.JCR_MOCK);
     }
 
     public static io.wcm.testing.mock.aem.junit5.AemContext newAemContext() {
