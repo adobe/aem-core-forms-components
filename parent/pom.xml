@@ -805,10 +805,8 @@
              -->
             <dependency>
                 <groupId>com.adobe.aem</groupId>
-                <artifactId>uber-jar</artifactId>
-                <version>6.4.4</version>
-                <classifier>apis</classifier>
-                <scope>provided</scope>
+                <artifactId>aem-sdk-api</artifactId>
+                <version>2020.12.4676.20201216T130744Z-201201</version>
             </dependency>
 
             <dependency>
@@ -931,6 +929,26 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- Jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.9.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.9.5</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.9.5</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
@@ -969,14 +987,15 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>io.wcm</groupId>
-                <artifactId>io.wcm.testing.aem-mock</artifactId>
-                <version>2.2.6</version>
+                <groupId>org.apache.sling</groupId>
+                <artifactId>org.apache.sling.testing.sling-mock</artifactId>
+                <version>2.2.14</version>
                 <scope>test</scope>
                 <exclusions>
+                    <!-- Exclude the older version of the API and use the one from the uber-jar -->
                     <exclusion>
-                        <groupId>org.apache.commons</groupId>
-                        <artifactId>commons-imaging</artifactId>
+                        <groupId>org.apache.sling</groupId>
+                        <artifactId>org.apache.sling.models.api</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -1033,13 +1052,7 @@
             <dependency>
                 <groupId>io.wcm</groupId>
                 <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
-                <version>2.7.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.wcm</groupId>
-                <artifactId>io.wcm.testing.aem-mock.junit4</artifactId>
-                <version>2.7.0</version>
+                <version>3.0.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
