@@ -3,10 +3,46 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
 
+common:
+  restore_cache: &restore_cache
+    restore_cache:
+      keys:
+        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-
+
+  cypress_test_steps: &cypress_test_steps
+      steps:
+        - checkout
+        - *restore_cache
+        - attach_workspace:
+            at: /home/circleci/build
+        - run:
+            name: UI tests
+            command: node .circleci/ci/it-tests.js
+        - store_test_results:
+            path: ui.tests/test-module/reports
+        # Save test results as artifacts
+        - store_artifacts:
+            path: ui.tests/test-module/reports
+        # Save AEM logs as artifacts
+        - store_artifacts:
+            path: logs
+
+  docker_auth: &docker_auth
+      auth:
+        username: $DOCKER_USER
+        password: $DOCKER_PASS
+
 executors:
   forms_executor:
     docker:
       - image: circleci/openjdk:11-stretch-node
+
+  test_executor_cloudready:
+      docker:
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:4830
+          <<: *docker_auth
 
 jobs:
   build:
@@ -37,6 +73,16 @@ jobs:
       - codecov/upload:
           conf: .circleci/codecov.yml
           flags: unittests
+
+  cypress-chrome-cloudready-with-addon:
+      executor: test_executor_cloudready
+      environment:
+        AEM: addon
+        TYPE: cypress
+        BROWSER: chrome
+      resource_class: large
+      working_directory: /home/circleci/build
+      <<: *cypress_test_steps
  
   release:
     executor: forms_executor
@@ -68,6 +114,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - cypress-chrome-cloudready-with-addon:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build
       - release:
           requires:
             - build
