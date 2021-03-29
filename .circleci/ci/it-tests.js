@@ -68,7 +68,7 @@ try {
     */
 
     // Run UI tests
-    if (TYPE === 'selenium') {
+    if (TYPE === 'cypress') {
         // Get version of ChromeDriver
         let chromedriver = ci.sh('chromedriver --version', true); // Returns something like ChromeDriver 80.0.3987.16 (320f6526c1632ad4f205ebce69b99a062ed78647-refs/branch-heads/3987@{#185})
         chromedriver = chromedriver.split(' ');
@@ -85,7 +85,7 @@ try {
 });
 
     // No coverage for UI tests
-    if (TYPE === 'selenium') {
+    if (TYPE === 'cypress') {
         return;
     }
 

@@ -46,6 +46,21 @@
         <module>all</module>
     </modules>
 
+    <!-- Integration and UI tests are included unless we perform a release -->
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <activation>
+                <property>
+                    <name>!skip-it</name>
+                </property>
+            </activation>
+            <modules>
+                <module>ui.tests</module>
+            </modules>
+        </profile>
+    </profiles>
+
 
     <!-- ====================================================================== -->
     <!-- S C M  D E F I N I T I O N                                             -->
