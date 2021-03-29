@@ -12,27 +12,27 @@ common:
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
-      steps:
-        - checkout
-        - *restore_cache
-        - attach_workspace:
-            at: /home/circleci/build
-        - run:
-            name: UI tests
-            command: node .circleci/ci/it-tests.js
-        - store_test_results:
-            path: ui.tests/test-module/reports
-        # Save test results as artifacts
-        - store_artifacts:
-            path: ui.tests/test-module/reports
-        # Save AEM logs as artifacts
-        - store_artifacts:
-            path: logs
+    steps:
+      - checkout
+      - *restore_cache
+      - attach_workspace:
+          at: /home/circleci/build
+      - run:
+          name: UI tests
+          command: node .circleci/ci/it-tests.js
+      - store_test_results:
+          path: ui.tests/test-module/reports
+      # Save test results as artifacts
+      - store_artifacts:
+          path: ui.tests/test-module/reports
+      # Save AEM logs as artifacts
+      - store_artifacts:
+          path: logs
 
   docker_auth: &docker_auth
-      auth:
-        username: $DOCKER_USER
-        password: $DOCKER_PASS
+    auth:
+      username: $DOCKER_USER
+      password: $DOCKER_PASS
 
 executors:
   forms_executor:
@@ -40,15 +40,11 @@ executors:
       - image: circleci/openjdk:11-stretch-node
 
   test_executor_cloudready:
-      docker:
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.4-jdk11
-          auth:
-            username: $DOCKER_USER
-            password: $DOCKER_PASS
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:4830
-          auth:
-            username: $DOCKER_USER
-            password: $DOCKER_PASS
+    docker:
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.4-jdk11
+        <<: *docker_auth
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:4830
+        <<: *docker_auth
 
 jobs:
   build:
@@ -81,14 +77,14 @@ jobs:
           flags: unittests
 
   cypress-chrome-cloudready-with-addon:
-      executor: test_executor_cloudready
-      environment:
-        AEM: addon
-        TYPE: cypress
-        BROWSER: chrome
-      resource_class: large
-      working_directory: /home/circleci/build
-      <<: *cypress_test_steps
+    executor: test_executor_cloudready
+    environment:
+      AEM: addon
+      TYPE: cypress
+      BROWSER: chrome
+    resource_class: large
+    working_directory: /home/circleci/build
+    <<: *cypress_test_steps
  
   release:
     executor: forms_executor
