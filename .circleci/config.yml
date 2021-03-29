@@ -42,9 +42,13 @@ executors:
   test_executor_cloudready:
       docker:
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.4-jdk11
-          <<: *docker_auth
+          auth:
+            username: $DOCKER_USER
+            password: $DOCKER_PASS
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:4830
-          <<: *docker_auth
+          auth:
+            username: $DOCKER_USER
+            password: $DOCKER_PASS
 
 jobs:
   build:
