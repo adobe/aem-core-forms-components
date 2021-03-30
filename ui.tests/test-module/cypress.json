@@ -1,0 +1,23 @@
+{
+  "baseUrl": "http://localhost:4502",
+  "integrationFolder": "specs",
+  "fixturesFolder": "libs/fixtures",
+  "supportFile": "libs/support/index.js",
+  "pluginsFile": "libs/plugins/index.js",
+  "screenshotsFolder" : "target/screenshots",
+  "videosFolder" : "target/videos",
+  "videoUploadOnPasses" : false,
+  "video" : true,
+  "chromeWebSecurity" :true,
+  "viewportHeight" : 900,
+  "viewportWidth" : 1440,
+  "pageLoadTimeout" : 200000,
+  "defaultCommandTimeout" : 10000,
+  "responseTimeout" : 120000,
+  "watchForFileChanges" : true,
+  "trashAssetsBeforeRuns" : true,
+  "reporterEnabled": "spec, mocha-junit-reporter",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "target/reports/TEST-[hash].xml"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "core-forms-components-ui-tests",
+  "version": "1.0.0",
+  "description": "UI tests for Forms components",
+  "author": "rismehta@adobe.com",
+  "private": true,
+  "keywords": [
+    "aem",
+    "cloud",
+    "aemaacs",
+    "faacs",
+    "cypress"
+  ],
+  "devDependencies": {
+    "@cypress/code-coverage": "3.9.2",
+    "cypress": "6.8.0",
+    "cypress-iframe": "1.0.1",
+    "cypress-pipe": "2.0.0",
+    "cypress-plugin-snapshots": "1.4.3",
+    "cypress-select-tests": "1.5.3",
+    "cypress-terminal-report": "2.4.0",
+    "cypress-wait-until": "1.7.1",
+    "mocha-junit-reporter": "2.0.0",
+    "mocha-multi-reporters": "1.5.1"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest-local-chrome": "npm run lint",
+    "pretest-local-firefox": "npm run lint",
+    "pretest-cloud": "npm run lint",
+    "clean": "rm -rf node_modules reports",
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "cypress:run": ".node_modules/.bin/cypress run --browser chrome --headless",
+    "delete:reports": "rm target/reports/* || true",
+    "prereport": "npm run delete:reports",
+    "cypress-native-dependencies": "sudo apt-get update && sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb",
+    "test:ci": ".node_modules/.bin/cypress run",
+    "test:ci:chrome": "./node_modules/.bin/cypress run --browser chrome",
+    "test:ci:firefox": "./node_modules/.bin/cypress run --browser firefox",
+    "test:ci:record": "./node_modules/.bin/cypress run --record"
+  }
+}
