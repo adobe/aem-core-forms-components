@@ -118,13 +118,6 @@ var commons = {
     resetDefaultUserPreferences : function(formPage) {
         commons.resetTutorials(formPage);
         commons.resetLanguage(formPage);
-    },
-
-    getAuthorInstanceUrl : function() {
-        var QUICKSTART_AUTHOR_HOST = process.env.QUICKSTART_AUTHOR_HOST ? process.env.QUICKSTART_AUTHOR_HOST : "localhost";
-        var QUICKSTART_AUTHOR_PORT = process.env.QUICKSTART_AUTHOR_PORT ? process.env.QUICKSTART_AUTHOR_PORT : "4502";
-        var QUICKSTART_AUTHOR_CP = process.env.QUICKSTART_AUTHOR_CP ? process.env.QUICKSTART_AUTHOR_CP : "";
-        return "http://" + QUICKSTART_AUTHOR_HOST + ":" + QUICKSTART_AUTHOR_PORT + QUICKSTART_AUTHOR_CP;
     }
 };
 

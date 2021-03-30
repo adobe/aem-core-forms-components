@@ -1,13 +1,12 @@
 Sample Tests Project
 ====================
 
-Sample UI tests using [Webdriver.IO](https://webdriver.io/) framework
+Sample UI tests using [Cypress](https://www.cypress.io//) framework
 
 
-* `lib/config.js` Builds configuration object from Environment variables sent by EaaS
 * `package.json` Project definition: dependencies, npm scripts, ...
-* `wdio.conf.js` WDIO configuration: selenium endpoint, reporters, browser capabilities, ...
-* `specs/cif-components-library` Tests
+* `cypress.json` Cypress configuration: reporters, browser capabilities, ...
+* `specs` Tests
 
 
 * [Node.js LTS](https://nodejs.org/en/)
@@ -28,12 +27,7 @@ npm install
 
 * Chrome
   ```
-  npm run test-local-chrome
-  ```
-
-* Firefox
-  ```
-  npm run test-local-firefox
+  mvn verify -Pcypress
   ```
 
 After execution, reports and logs are available in `reports` folder
