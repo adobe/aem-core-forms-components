@@ -15,12 +15,12 @@
  */
 
 var sitesConstants = {
-    EVENT_NAME_EDITABLES_UPDATED : "cq-editables-updated.wdio",
-    EVENT_NAME_OVERLAYS_REPOSITIONED : "cq-overlays-repositioned.wdio",
-    EVENT_NAME_UNDO_COMPLETE : 'cq-history-step-undo-complete.wdio',
-    EVENT_NAME_REDO_COMPLETE : 'cq-history-step-redo-complete.wdio',
-    EVENT_NAME_EDITABLE_ADDED : 'cq-editable-added.wdio',
-    EVENT_NAME_EDITOR_LOADED  : 'cq-editor-loaded.wdio'
+    EVENT_NAME_EDITABLES_UPDATED : "cq-editables-updated.cypress",
+    EVENT_NAME_OVERLAYS_REPOSITIONED : "cq-overlays-repositioned.cypress",
+    EVENT_NAME_UNDO_COMPLETE : 'cq-history-step-undo-complete.cypress',
+    EVENT_NAME_REDO_COMPLETE : 'cq-history-step-redo-complete.cypress',
+    EVENT_NAME_EDITABLE_ADDED : 'cq-editable-added.cypress',
+    EVENT_NAME_EDITOR_LOADED  : 'cq-editor-loaded.cypress'
 };
 
 module.exports = sitesConstants;

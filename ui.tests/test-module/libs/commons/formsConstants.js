@@ -24,11 +24,11 @@ var formsConstants = {
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
     RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
-    EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.wdio",
+    EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
     events : {
-        LOADING_SHOW : "loading-show.wdio",
-        LOADING_HIDE : "loading-hide.wdio",
-        DIALOG_READY : "dialog-ready.wdio"
+        LOADING_SHOW : "loading-show.cypress",
+        LOADING_HIDE : "loading-hide.cypress",
+        DIALOG_READY : "dialog-ready.cypress"
     }
 };
 
