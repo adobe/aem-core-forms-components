@@ -32,7 +32,7 @@ const commons = require('../libs/commons/commons'),
       guideSelectors = require('../libs/commons/guideSelectors'),
       afConstants = require('../libs/commons/formsConstants');
 
-describe('Adaptive From - Authoring', function () {
+describe('Page - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/forms/aemform",
             aemFormContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
@@ -40,7 +40,7 @@ describe('Adaptive From - Authoring', function () {
             aemFormContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
             aemFormContainerDropPathSelector = "[data-path='" + aemFormContainerDropPath + "']";
 
-    context('Open Authoring Page', function () {
+    context('Open Editor', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
