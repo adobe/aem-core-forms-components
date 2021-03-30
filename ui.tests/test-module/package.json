@@ -33,7 +33,7 @@
     "cypress:run": ".node_modules/.bin/cypress run --browser chrome --headless",
     "delete:reports": "rm target/reports/* || true",
     "prereport": "npm run delete:reports",
-    "cypress-native-dependencies": "apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb",
+    "cypress-native-dependencies": "sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb",
     "test:ci": ".node_modules/.bin/cypress run",
     "test:ci:chrome": "./node_modules/.bin/cypress run --browser chrome",
     "test:ci:firefox": "./node_modules/.bin/cypress run --browser firefox",
