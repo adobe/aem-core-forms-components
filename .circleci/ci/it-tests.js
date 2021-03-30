@@ -51,7 +51,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            --vm-options \\\"-Xmx1536m -XX:MaxPermSize=256m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\"`);
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\"`);
 });
 
     // Run integration tests
