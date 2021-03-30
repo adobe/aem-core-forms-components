@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Edit the Link Component"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    jcr:mixinTypes="[granite:InternalArea]"
+    width="46rem">
+<!--    extraClientlibs="[fp.link.touchAuthoring,fp.touch.authoring.dialog,coralui.components.fd.metadata]"-->
+    <!--    TODO: Fix Granite:class-->
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximised="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <display
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Display"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <caption
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Link Caption"
+                                                name="./linkText"
+                                                required="{Boolean}true"/>
+                                            <tooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Link Tooltip"
+                                                name="./linkTooltip"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </display>
+
+                    <assetinfo
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Asset Info"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <assetType
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Asset Type"
+                                                name="./assetType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <form
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Form"
+                                                        value="Form"/>
+                                                    <document
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Interactive Communication"
+                                                        value="Document"/>
+                                                </items>
+                                            </assetType>
+                                            <formPath
+                                                granite:class="fp-class-formpath"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="fd/fm/base/components/custompathfield"
+                                                editable="{Boolean}false"
+                                                fieldLabel="Asset Path"
+                                                filter="formsportalSupportedForms"
+                                                name="./formPath"
+                                                predicate="nosystem"
+                                                rootPath="/content/dam/formsanddocuments"/>
+                                            <documentPath
+                                                granite:class="fp-class-documentpath"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="fd/fm/base/components/custompathfield"
+                                                editable="{Boolean}false"
+                                                fieldLabel="Asset Path"
+                                                filter="multiChannelDocument"
+                                                name="./formPath"
+                                                predicate="nosystem"
+                                                rootPath="/content/dam/formsanddocuments"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </assetinfo>
+
+                    <queryparams
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Query Params"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <parameters
+                                                granite:class="fpmultifield"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/metadatafield"
+                                                    name="./fpmetadata"/>
+                                            </parameters>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </queryparams>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
