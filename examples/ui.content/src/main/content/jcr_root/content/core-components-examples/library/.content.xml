@@ -28,6 +28,28 @@
                                 width="12"/>
                         </cq:responsive>
                     </teaser_1837085907>
+                    <teaser_1837085908
+                        cq:styleIds="[1547060090076]"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core-components-examples/components/teaser"
+                        actionsEnabled="false"
+                        descriptionFromPage="true"
+                        fileReference="/content/dam/core-components-examples/library/components/form-container.svg"
+                        linkURL="/content/core-components-examples/library/page-authoring/link"
+                        textIsRich="true"
+                        titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                                jcr:primaryType="nt:unstructured"
+                                width="3"/>
+                            <small
+                                jcr:primaryType="nt:unstructured"
+                                width="4"/>
+                            <extrasmall
+                                jcr:primaryType="nt:unstructured"
+                                width="12"/>
+                        </cq:responsive>
+                    </teaser_1837085908>
                 </container_40754488>
             </responsivegrid>
         </root>
