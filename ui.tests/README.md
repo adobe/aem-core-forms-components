@@ -3,10 +3,16 @@
 
 This folder contains UI tests that test some client-side (= clientlib) features of the forms components. The tests are based on the sample content of the [Forms components library](../examples). To execute the tests with a local AEM instance, simply setup and install the Forms components library.
 
-To execute the tests, simply run
+To execute the tests in debug mode, simply run
 
 ```
-mvn verify -Pui-tests-local-execution
+mvn verify -Pcypress
+```
+
+To execute the tests in headless mode, simply run
+
+```
+mvn verify -Pcypress-ci
 ```
 
 ## Requirements
@@ -18,18 +24,6 @@ mvn verify -Pui-tests-local-execution
 
 #### Remarks
 * After execution, reports and logs are available in `test-module/reports` folder
-* If you receive an error message like:
-    ```
-    This version of ChromeDriver only supports Chrome version XX.
-    ```
-
-    Try setting the `CHROMEDRIVER` environment variable to a version that matches your currently installed Chrome version. You can find matching versions at https://chromedriver.chromium.org/downloads.
-
-    Example:
-
-    ```bash
-    CHROMEDRIVER=87.0.4280.20 mvn verify -Pui-tests-local-execution
-    ```
 
 ### Parameters
 
@@ -41,8 +35,6 @@ mvn verify -Pui-tests-local-execution
 | `AEM_PUBLISH_URL`       | false     | -                       | URL of the publish instance |
 | `AEM_PUBLISH_USERNAME`  | false     | `admin`                 | Username used to access the publish instance |
 | `AEM_PUBLISH_PASSWORD`  | false     | `admin`                 | Password used to access the publish instance |
-| `SELENIUM_BROWSER`      | false     | `chrome`                | Browser used in the tests (`chrome` **_or_** `firefox`) |
-| `HEADLESS_BROWSER`      | false     | `false`                 | Set [headless mode](https://en.wikipedia.org/wiki/Headless_browser) of the browser |
 
 #### Example
 

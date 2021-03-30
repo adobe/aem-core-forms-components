@@ -323,7 +323,9 @@
 
                         <!-- Log files -->
                         <exclude>**/*.log</exclude>
+                        <exclude>**/*.iml</exclude>
                         <exclude>**/logback*.xml</exclude>
+                        <exclude>**/target/rat.txt</exclude>
                         <!-- file that should not be committed anywhere -->
                         <exclude>**/.env</exclude>
                         <exclude>**/.env.sample</exclude>

@@ -14,25 +14,13 @@
  *  limitations under the License.
  */
 
-module.exports = {
-    extends: [
-        'eslint:recommended'
-    ],
-    env: {
-        commonjs: true,
-        es2017: true,
-        node: true,
-        mocha: true
-    },
-    parserOptions: {
-        ecmaVersion: 9
-    },
-    rules: {
-        'semi': ['error'],
-        'semi-spacing': ['error', { before: false, after: true }],
-        'semi-style': ['error', 'last'],
-        'quotes': ['error', 'single'],
-        'indent': ['error', 4],
-        'no-trailing-spaces': ['error']
-    }
+var sitesConstants = {
+    EVENT_NAME_EDITABLES_UPDATED : "cq-editables-updated.wdio",
+    EVENT_NAME_OVERLAYS_REPOSITIONED : "cq-overlays-repositioned.wdio",
+    EVENT_NAME_UNDO_COMPLETE : 'cq-history-step-undo-complete.wdio',
+    EVENT_NAME_REDO_COMPLETE : 'cq-history-step-redo-complete.wdio',
+    EVENT_NAME_EDITABLE_ADDED : 'cq-editable-added.wdio',
+    EVENT_NAME_EDITOR_LOADED  : 'cq-editor-loaded.wdio'
 };
+
+module.exports = sitesConstants;

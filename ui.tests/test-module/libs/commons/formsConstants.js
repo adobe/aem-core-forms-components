@@ -14,25 +14,22 @@
  *  limitations under the License.
  */
 
-module.exports = {
-    extends: [
-        'eslint:recommended'
-    ],
-    env: {
-        commonjs: true,
-        es2017: true,
-        node: true,
-        mocha: true
+var formsConstants = {
+    components : {
+        forms : {
+            resourceType : {
+                "aemformcontainer" : "/apps/forms-components-examples/components/aemform"
+            }
+        }
     },
-    parserOptions: {
-        ecmaVersion: 9
-    },
-    rules: {
-        'semi': ['error'],
-        'semi-spacing': ['error', { before: false, after: true }],
-        'semi-style': ['error', 'last'],
-        'quotes': ['error', 'single'],
-        'indent': ['error', 4],
-        'no-trailing-spaces': ['error']
+    RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
+    RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
+    EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.wdio",
+    events : {
+        LOADING_SHOW : "loading-show.wdio",
+        LOADING_HIDE : "loading-hide.wdio",
+        DIALOG_READY : "dialog-ready.wdio"
     }
 };
+
+module.exports = formsConstants;
