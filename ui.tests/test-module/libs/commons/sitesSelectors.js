@@ -27,6 +27,7 @@ var selectors = {
     confirmDialog : {
         self : "coral-dialog.is-open[role='dialog']",
         actions : {
+            first : "coral-dialog.is-open[role='dialog'] coral-dialog-footer [is='coral-button']:first-child",
             last : "coral-dialog.is-open[role='dialog'] coral-dialog-footer [is='coral-button']:last-child"
         }
     },

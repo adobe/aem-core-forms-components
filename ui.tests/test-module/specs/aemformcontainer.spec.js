@@ -64,7 +64,7 @@ describe('Adaptive From - Authoring', function () {
             cy.get("[name='./formType'")
                 .should("be.visible")
                 .should("have.value", "adaptiveForm");
-            cy.get(".coral-dialog-cancel").click();
+            cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
 
         after(function() {
