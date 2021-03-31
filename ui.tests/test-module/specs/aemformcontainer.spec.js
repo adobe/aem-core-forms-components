@@ -61,9 +61,26 @@ describe('Page - Authoring', function () {
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            cy.get("[name='./formType'")
+            // check if adaptive form is selected by default
+            cy.get("[name='./formType']")
                 .should("be.visible")
                 .should("have.value", "adaptiveForm");
+            // check for dynamic operations performed using JS
+            cy.get("[name='./thankyouConfig'][value='message']")
+                .should("be.visible")
+                .click({multiple: true});
+            cy.get("[name='./thankyouMessage']").should("be.visible");
+            // check for dynamic operations performed using JS
+            cy.get("[name='./thankyouConfig'][value='page']")
+                .should("be.visible")
+                .click({multiple: true});
+            cy.get("[name='./thankyouPage']").should("be.visible");
+            // check if use page locale is selected
+            cy.get("[name='./usePageLocale'").should("be.checked");
+            // check if set focus form on form is selected
+            cy.get("[name='./enableFocusOnFirstField'").should("be.checked");
+            // check if by default iframe is not selected
+            cy.get("[name='./useiframe'").should("be.checked");
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
 
