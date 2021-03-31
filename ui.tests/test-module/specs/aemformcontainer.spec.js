@@ -51,7 +51,7 @@ describe('Page - Authoring', function () {
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
             // Add aem forms container component and delete it
-            cy.insertComponentInPanel(responsiveGridDropZoneSelector, "AEM Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
+            cy.insertComponent(responsiveGridDropZoneSelector, "AEM Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
             // once component is added, to remove the overlay from being active, we click on body
             cy.get('body').click(0,0);
             cy.deleteComponentByPath(aemFormContainerDropPath);
