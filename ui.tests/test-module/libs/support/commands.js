@@ -254,3 +254,17 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
 });
+
+
+// cypress command to insert component
+Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
+    //Open toolbar of root panel
+    const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
+        insertComponentDialog_searchField = ".InsertComponentDialog-components input";
+    cy.openEditableToolbar(selector);
+    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+    cy.get(insertComponentDialog_searchField).type(componentString).type('{enter}');
+    cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
+    // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
+    cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+});
