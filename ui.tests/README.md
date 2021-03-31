@@ -23,7 +23,7 @@ mvn verify -Pcypress-ci
 
 
 #### Remarks
-* After execution, reports and logs are available in `test-module/reports` folder
+* After execution, reports and logs are available in `test-module/target/reports` folder
 
 ### Parameters
 

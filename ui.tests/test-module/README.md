@@ -30,4 +30,4 @@ npm install
   mvn verify -Pcypress
   ```
 
-After execution, reports and logs are available in `reports` folder
+After execution, reports and logs are available in `target/reports` folder
