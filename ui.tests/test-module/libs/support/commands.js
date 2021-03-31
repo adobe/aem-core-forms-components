@@ -201,33 +201,6 @@ Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
 });
 
 
-// cypress command to convert to new responsive layout conditionally
-Cypress.Commands.add("convertToNewLayoutIfRequired", () => {
-    cy.get("body").then($body => {
-        if ($body.find(".fd-layout-conversion-message").length === 0) {
-            // dummy method so that cypress executes
-            // cy.get(".fd-layout-conversion-message").should("not.exist");
-        } else {
-            const isEventComplete = {};
-            // intialize the event handler for overlay overlayRepositionEvent event
-            cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isOverlayRepositionEventComplete");
-            cy.window().then(win => {
-                // we have added it twice, since on editable action which involves refresh of guide, it is called twice
-                const listener = e => {
-                    win.$(win).off("guideRefreshDone", listener);
-                    isEventComplete.e = e;
-                };
-                win.$(win).on("guideRefreshDone", listener);
-            });
-            cy.get(".fd-layout-conversion-message").should("be.visible");
-            cy.get("coral-dialog-footer button[variant='primary']:visible").should("be.visible").click();
-            // wait for the conversion to complete
-            cy.wrap(isEventComplete).should(isEventComplete => expect(isEventComplete.e).not.to.be.undefined);
-            cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
-        }
-    });
-});
-
 
 // cypress command to initialize event handler on channel
 Cypress.Commands.add("initializeEventHandlerOnChannel", (eventName) => {
@@ -280,73 +253,4 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     // wait for event to complete to signify deletion is complete
     cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
-});
-
-
-// cypress command to insert component
-Cypress.Commands.add("insertComponentInPanel", (selector, componentString, componentType) => {
-    //Open toolbar of root panel
-    const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = ".InsertComponentDialog-components input";
-    cy.openEditableToolbar(selector);
-    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
-    cy.get(insertComponentDialog_searchField).type(componentString).type('{enter}');
-    cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
-    // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
-    cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
-});
-
-// cypress to perform undo operation on editor
-Cypress.Commands.add("undoOperation", () => {
-    const undoSelector = siteSelectors.undoButtonSelector,
-          undoEventName = siteConstants.EVENT_NAME_UNDO_COMPLETE,
-          isAFRefreshEventComplete = {},
-          isUndoEventComplete = {};
-    // this is done to check if event triggered happended as desired
-    // refer: https://github.com/cypress-io/cypress/issues/1922
-    cy.window().then(win => {
-        cy.document().then(document => {
-            const listener1 = e => {
-                win.$(win).off("guideRefreshDone", listener1);
-                isAFRefreshEventComplete.e = e;
-            };
-            win.$(win).on("guideRefreshDone", listener1);
-            const listener = e => {
-                win.$(document).off(undoEventName, listener);
-                isUndoEventComplete.e = e
-            };
-            win.$(document).on(undoEventName, listener);
-        })
-    });
-    cy.get(undoSelector).should('be.visible').click();
-    cy.wrap(isAFRefreshEventComplete).should(isAFRefreshEventComplete => expect(isAFRefreshEventComplete.e).not.to.be.undefined);
-    cy.wrap(isUndoEventComplete).should(isUndoEventComplete => expect(isUndoEventComplete.e).not.to.be.undefined);
-});
-
-
-// cypress to perform redo operation on editor
-Cypress.Commands.add("redoOperation", () => {
-    const redoSelector = siteSelectors.redoButtonSelector,
-        redoEventName = siteConstants.EVENT_NAME_REDO_COMPLETE,
-        isAFRefreshEventComplete = {},
-        isRedoEventComplete = {};
-    // this is done to check if event triggered happended as desired
-    // refer: https://github.com/cypress-io/cypress/issues/1922
-    cy.window().then(win => {
-        cy.document().then(document => {
-            const listener1 = e => {
-                win.$(win).off("guideRefreshDone", listener1);
-                isAFRefreshEventComplete.e = e;
-            };
-            win.$(win).on("guideRefreshDone", listener1);
-            const listener = e => {
-                win.$(document).off(redoEventName, listener);
-                isRedoEventComplete.e = e
-            };
-            win.$(document).on(redoEventName, listener);
-        })
-    });
-    cy.get(redoSelector).should('be.visible').click();
-    cy.wrap(isAFRefreshEventComplete).should(isAFRefreshEventComplete => expect(isAFRefreshEventComplete.e).not.to.be.undefined);
-    cy.wrap(isRedoEventComplete).should(isUndoEventComplete => expect(isUndoEventComplete.e).not.to.be.undefined);
 });
