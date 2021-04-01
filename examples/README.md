@@ -23,8 +23,9 @@ _Note that the `ui.apps` examples content package depends on the same version of
 ## Installation with 'examples-all' package
 This folder also contains an all content package that can be used to deploy the Forms components library and most of its dependencies:
 
-the Forms Components and bundle
-the WCM Core Components library when building with the Maven -Pinclude-wcm-components-examples profile
+* the Forms Components and bundle
+* the WCM Core Components library when building with the Maven -Pinclude-wcm-components-examples profile
+
 Note that the WCM Core components are not included: they are installed by default in the AEM Cloud SDK, and should be installed separately on a classic AEM instance.
 
 To build and install that content package in a running AEM instance, simply use mvn clean install content-package:install.
