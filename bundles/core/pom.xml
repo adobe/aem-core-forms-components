@@ -86,6 +86,8 @@
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
                             javax.annotation;version=0.0.0,
+                            com.adobe.aemds.guide.utils;version=0.0.0,
+                            com.adobe.cq.wcm.core.components.models;version=0.0.0,
                             *
                         </Import-Package>
                     </instructions>
