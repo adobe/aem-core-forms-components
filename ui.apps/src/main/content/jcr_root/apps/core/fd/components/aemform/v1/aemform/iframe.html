@@ -20,6 +20,7 @@
          data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
     <title data-sly-test="${form.isAdaptiveForm || form.isMCDocument}"><sly data-sly-use.af="com.adobe.aemds.guide.common.AdaptiveForm" />${af.formTitle @ context='html'}</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="robots" content="noindex, nofollow"/>
     <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.iframeContentResizer']}"/>
 </head>
