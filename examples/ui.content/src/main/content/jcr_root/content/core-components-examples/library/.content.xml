@@ -12,7 +12,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/components/content-fragment.svg"
+                        fileReference="/content/dam/core-components-examples/library/components/form-container.svg"
                         linkURL="/content/core-components-examples/library/page-authoring/aemform"
                         textIsRich="true"
                         titleFromPage="false">
