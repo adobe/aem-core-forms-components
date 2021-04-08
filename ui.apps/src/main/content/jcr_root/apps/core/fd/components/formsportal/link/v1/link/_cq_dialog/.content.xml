@@ -75,22 +75,29 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <assetType
+                                            <selectorContainer
                                                 jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                fieldLabel="Asset Type"
-                                                name="./assetType"
-                                                granite:class="cq-dialog-dropdown-showhide">
+                                                granite:class="hidden"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <adaptiveform
+                                                    <assetType
                                                         jcr:primaryType="nt:unstructured"
-                                                        text="Adaptive Form"
-                                                        value="Adaptive Form"/>
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                        fieldLabel="Asset Type"
+                                                        name="./assetType"
+                                                        granite:class="cq-dialog-dropdown-showhide">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <adaptiveform
+                                                                jcr:primaryType="nt:unstructured"
+                                                                text="Adaptive Form"
+                                                                value="Adaptive Form"/>
+                                                        </items>
+                                                        <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                cq-dialog-dropdown-showhide-target=".cmp-formsportal-link--editor-assetPath"/>
+                                                    </assetType>
                                                 </items>
-                                                <granite:data
-                                                    jcr:primaryType="nt:unstructured"
-                                                    cq-dialog-dropdown-showhide-target=".cmp-formsportal-link--editor-assetPath"/>
-                                            </assetType>
+                                            </selectorContainer>
                                             <field1 jcr:primaryType="nt:unstructured"
                                                 granite:class="cmp-formsportal-link--editor-assetPath"
                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -110,6 +117,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     showhidetargetvalue="Adaptive Form"/>
                                             </field1>
+                                        </items>
                                     </column>
                                 </items>
                             </columns>
