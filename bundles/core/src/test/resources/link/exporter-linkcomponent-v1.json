@@ -1,0 +1,11 @@
+{
+    "id": "link-00d7088753",
+    "linkText": "Link Component",
+    "linkTooltip": "Some Hover Tooltip Text",
+    "assetType": "ADAPTIVE_FORM",
+    "queryParams": {
+        "wcmmode": "disabled"
+    },
+    "assetPath": "/content/dam/formsanddocuments/sample-form",
+    ":type": "core/fd/components/formsportal/link/v1/link"
+}

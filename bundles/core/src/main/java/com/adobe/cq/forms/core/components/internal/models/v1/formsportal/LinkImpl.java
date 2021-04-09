@@ -22,8 +22,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
@@ -95,14 +93,9 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             return "#";
         }
         try {
-            Session session = resourceResolver.adaptTo(Session.class);
             String formContentPath = url + "/jcr:content";
-            try {
-                if (session != null && session.nodeExists(formContentPath)) {
-                    url = formContentPath;
-                }
-            } catch (RepositoryException e) {
-                logger.error("[FORMS] Link Component asset doesn't seem a valid Adaptive Form {}", url, e);
+            if (resourceResolver.getResource(formContentPath) != null) {
+                url = formContentPath;
             }
             URIBuilder uriBuilder = null;
             uriBuilder = new URIBuilder(url);

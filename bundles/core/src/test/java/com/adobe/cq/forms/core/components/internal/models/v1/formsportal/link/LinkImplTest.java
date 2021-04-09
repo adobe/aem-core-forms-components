@@ -20,7 +20,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 
+import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.formsportal.Link;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -41,6 +43,18 @@ public class LinkImplTest {
     @BeforeEach
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+    }
+
+    @Test
+    public void testExportedType() {
+        Link component = getLinkUnderTest(LINK1_PATH);
+        Assertions.assertEquals("core/fd/components/formsportal/link/v1/link", component.getExportedType());
+    }
+
+    @Test
+    public void testExportedJson() {
+        Link component = getLinkUnderTest(LINK1_PATH);
+        Utils.testJSONExport(component, Utils.getTestExporterJSONPath(TEST_BASE, LINK1_PATH));
     }
 
     @Test
@@ -77,6 +91,31 @@ public class LinkImplTest {
         Assertions.assertEquals("Some Hover Tooltip Text", link.getLinkTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
         Assertions.assertEquals(1, link.getQueryParams().size());
+    }
+
+    @Test
+    public void testMainInterface() {
+        Link linkMock = Mockito.mock(Link.class);
+        Mockito.when(linkMock.getAssetPath()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getAssetPath);
+
+        Mockito.when(linkMock.getAssetType()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getAssetType);
+
+        Mockito.when(linkMock.getLinkTarget()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getLinkTarget);
+
+        Mockito.when(linkMock.getLinkText()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getLinkText);
+
+        Mockito.when(linkMock.getLinkTooltip()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getLinkTooltip);
+
+        Mockito.when(linkMock.getQueryParams()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getQueryParams);
+
+        Mockito.when(linkMock.getRenderUrl()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getRenderUrl);
     }
 
     private Link getLinkUnderTest(String resourcePath) {
