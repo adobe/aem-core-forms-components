@@ -72,7 +72,6 @@
         <aem.publish.host>localhost</aem.publish.host>
         <aem.publish.port>4503</aem.publish.port>
         <aem.publish.contextPath />
-        <aem.java.version>8</aem.java.version>
 
         <quickstart.url>http://${aem.host}:${aem.port}${aem.contextPath}</quickstart.url>
         <quickstart.publish.url>http://${aem.publish.host}:${aem.publish.port}${aem.publish.contextPath}</quickstart.publish.url>
@@ -91,6 +90,14 @@
         <core.wcm.components.version>2.10.0</core.wcm.components.version>
         <core.wcm.components.library.version>2.10.0</core.wcm.components.library.version>
         <formatter.config>../eclipse-formatter.xml</formatter.config>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <aem.java.version>8</aem.java.version>
+
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
     </properties>
 
@@ -212,9 +219,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
+                    <source>1.${aem.java.version}</source>
+                    <target>1.${aem.java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
@@ -371,7 +378,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.2</version>
+                    <version>3.8.0</version>
                 </plugin>
                 <!-- Maven Installer Plugin -->
                 <plugin>
@@ -384,6 +391,10 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M3</version>
+                    <configuration>
+                        <argLine>-Xmx1024m</argLine>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                    </configuration>
                 </plugin>
                 <!-- Maven Failsafe Plugin -->
                 <plugin>
@@ -804,21 +815,6 @@
             </dependency>
 
             <!-- Adobe Experience Manager -->
-            <!--
-                AEM APIs; make sure to not move this bundle upper in the list so that newer APIs available in AEM but not in the Uber
-                Jar can be used as dependencies.
-             -->
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-sdk-api</artifactId>
-                <version>2020.12.4676.20201216T130744Z-201201</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2020.07.01.04</version>
-            </dependency>
 
             <!-- Apache Sling -->
             <dependency>
@@ -953,6 +949,34 @@
                 <version>2.9.5</version>
                 <scope>provided</scope>
             </dependency>
+
+            <!--
+                AEM APIs; make sure to not move this bundle upper in the list so that newer APIs available in AEM but not in the Uber
+                Jar can be used as dependencies.
+             -->
+
+            <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
+
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>uber-jar</artifactId>
+                <version>6.4.0</version>
+                <classifier>apis</classifier>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-forms-sdk-api</artifactId>
+                <version>2020.07.01.04</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-sdk-api</artifactId>
+                <version>2020.12.4676.20201216T130744Z-201201</version>
+            </dependency>
+
 
             <!-- Testing -->
             <dependency>
