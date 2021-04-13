@@ -14,9 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    cq:icon="link"
-    jcr:description="Link Component for AEM Forms Portal"
-    jcr:primaryType="cq:Component"
-    jcr:title="AEM Forms Portal Link Component (v1)"
-    componentGroup=".core-forms"/>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:primaryType="cq:ClientLibraryFolder"
+          categories="[core.forms.components.formsportal.link.v1.editor]"
+          dependencies="[jquery]"/>

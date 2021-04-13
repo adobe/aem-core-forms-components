@@ -13,18 +13,20 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<sly data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-     data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link"
-     data-sly-test.hasText="${link.linkText}">
-    <a
-        id="${component.id}"
-        class="cmp-link coral-Link"
-        href="${link.renderUrl}"
-        title="${link.linkTooltip}"
-        target="${link.linkTarget}"
-        data-sly-text="${link.linkText}">
-        AF Link Component
-    </a>
-</sly>
+<div class="cmp-link">
+    <sly data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
+         data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+         data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link"
+         data-sly-test.hasText="${link.title}">
+        <a
+            id="${component.id}"
+            class="cmp-link-anchor coral-Link"
+            href="${link.url}"
+            title="${link.tooltip}"
+            target="${link.target}"
+            data-sly-text="${link.title}">
+            AF Link Component
+        </a>
+    </sly>
+</div>
 <sly data-sly-call="${commonsTemplates.placeholder @ isEmpty = !hasText}"></sly>

@@ -60,11 +60,11 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
-    private String linkText;
+    private String title;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
-    private String linkTooltip;
+    private String tooltip;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
@@ -73,7 +73,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
-    private String adaptiveformPath;
+    private String assetPath;
 
     @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Named(QUERY_PARAMS_PATH)
@@ -84,10 +84,8 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     private Map<String, String> queryParamsMap;
 
-    private String linkTarget;
-
     @Override
-    public String getRenderUrl() {
+    public String getUrl() {
         String url = getAssetPath();
         if (StringUtils.isBlank(url)) {
             return "#";
@@ -119,18 +117,18 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     }
 
     @Override
-    public String getLinkText() {
-        return linkText;
+    public String getTitle() {
+        return title;
     }
 
     @Override
-    public String getLinkTooltip() {
-        return linkTooltip;
+    public String getTooltip() {
+        return tooltip;
     }
 
     @Override
-    public String getLinkTarget() {
-        String renderLink = getRenderUrl();
+    public String getTarget() {
+        String renderLink = getUrl();
         if (StringUtils.isBlank(renderLink) || renderLink.equals("#")) {
             return "_self";
         }
@@ -152,22 +150,10 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     @Override
     public String getAssetPath() {
-        AssetType type = getAssetType();
-        String aPath = null;
-        if (type != null) {
-            switch (type) {
-                case ADAPTIVE_FORM:
-                    aPath = adaptiveformPath;
-                    break;
-                default:
-                    break;
-            }
-        }
-        return aPath;
+        return assetPath;
     }
 
-    @Override
-    public Map<String, String> getQueryParams() {
+    private Map<String, String> getQueryParams() {
         if (queryParamsMap == null) {
             populateQueryParams();
         }
