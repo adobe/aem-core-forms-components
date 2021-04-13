@@ -15,8 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.wcm.core.components.models.Component;
@@ -28,21 +26,20 @@ public interface Link extends Component {
         ADAPTIVE_FORM
     }
 
+    default String getUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    default String getTitle() {
+        throw new UnsupportedOperationException();
+    }
+
+    default String getTooltip() {
+        throw new UnsupportedOperationException();
+    }
+
     @JsonIgnore
-    default String getRenderUrl() {
-        throw new UnsupportedOperationException();
-    }
-
-    default String getLinkText() {
-        throw new UnsupportedOperationException();
-    }
-
-    default String getLinkTooltip() {
-        throw new UnsupportedOperationException();
-    }
-
-    @JsonIgnore
-    default String getLinkTarget() {
+    default String getTarget() {
         throw new UnsupportedOperationException();
     }
 
@@ -53,9 +50,4 @@ public interface Link extends Component {
     default String getAssetPath() {
         throw new UnsupportedOperationException();
     }
-
-    default Map<String, String> getQueryParams() {
-        throw new UnsupportedOperationException();
-    }
-
 }
