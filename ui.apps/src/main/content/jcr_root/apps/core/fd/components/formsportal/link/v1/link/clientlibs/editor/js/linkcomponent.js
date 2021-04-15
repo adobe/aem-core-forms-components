@@ -20,24 +20,28 @@
         var multifield = $('.cmp-formsportal-link--editor-parameters')[0];
         var header = $('.cmp-formsportal-link--editor-parameters__header')[0];
 
-        Coral.commons.ready(btn, function() {
-            // overrides the default multi-field button
-            btn.set({
-                label: {
-                    innerHTML: "Add Item"
-                },
-                icon: "add"
+        if (typeof(btn) !== "undefined") {
+            Coral.commons.ready(btn, function() {
+                // overrides the default multi-field button
+                btn.set({
+                    label: {
+                        innerHTML: "Add Item"
+                    },
+                    icon: "add"
+                });
             });
-        });
+        }
 
-        Coral.commons.ready(multifield, function() {
-            // toggles hide or show of header based on whether multifield elements presence
-            var toggleHeaderShowHide = function () {
-                header.hidden = !multifield.items.length;
-            };
-            multifield.on('change', toggleHeaderShowHide);
-            toggleHeaderShowHide();
-        });
+        if (typeof(multifield) !== "undefined") {
+            Coral.commons.ready(multifield, function() {
+                // toggles hide or show of header based on whether multifield elements presence
+                var toggleHeaderShowHide = function () {
+                    header.hidden = !multifield.items.length;
+                };
+                multifield.on('change', toggleHeaderShowHide);
+                toggleHeaderShowHide();
+            });
+        }
     };
 
     // wait till dialog load is complete
