@@ -4,7 +4,17 @@
     <jcr:content jcr:primaryType="cq:PageContent">
         <root jcr:primaryType="nt:unstructured">
             <responsivegrid jcr:primaryType="nt:unstructured">
-                <container_40754488 jcr:primaryType="nt:unstructured">
+                <container_1589240808
+                    cq:styleIds="[1579016386576]"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core-components-examples/components/container"
+                    layout="responsiveGrid">
+                    <title_153929501
+                        cq:styleIds="[1544759664489]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Adaptive Forms"
+                        sling:resourceType="core-components-examples/components/title"
+                        type="h2"/>
                     <teaser_1837085907
                         cq:styleIds="[1547060090076]"
                         jcr:primaryType="nt:unstructured"
@@ -18,39 +28,51 @@
                         titleFromPage="false">
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
-                                jcr:primaryType="nt:unstructured"
-                                width="3"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    width="3"/>
                             <small
-                                jcr:primaryType="nt:unstructured"
-                                width="4"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    width="4"/>
                             <extrasmall
-                                jcr:primaryType="nt:unstructured"
-                                width="12"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    width="12"/>
                         </cq:responsive>
                     </teaser_1837085907>
-                    <teaser_1837085908
-                        cq:styleIds="[1547060090076]"
+                    <container_formsportal
+                        cq:styleIds="[1579016386576]"
                         jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core-components-examples/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/components/form-container.svg"
-                        linkURL="/content/core-components-examples/library/page-authoring/link"
-                        textIsRich="true"
-                        titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                                jcr:primaryType="nt:unstructured"
-                                width="3"/>
-                            <small
-                                jcr:primaryType="nt:unstructured"
-                                width="4"/>
-                            <extrasmall
-                                jcr:primaryType="nt:unstructured"
-                                width="12"/>
-                        </cq:responsive>
-                    </teaser_1837085908>
-                </container_40754488>
+                        sling:resourceType="core-components-examples/components/container"
+                        layout="responsiveGrid">
+                        <title
+                            cq:styleIds="[1544759676459]"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Adaptive Forms - Forms Portal"
+                            sling:resourceType="core-components-examples/components/title"
+                            type="h3"/>
+                        <teaser_link
+                            cq:styleIds="[1547060090076]"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/teaser"
+                            actionsEnabled="false"
+                            descriptionFromPage="true"
+                            fileReference="/content/dam/core-components-examples/library/components/form-container.svg"
+                            linkURL="/content/core-components-examples/library/page-authoring/adaptive-form/link"
+                            textIsRich="true"
+                            titleFromPage="true">
+                            <cq:responsive jcr:primaryType="nt:unstructured">
+                                <default
+                                    jcr:primaryType="nt:unstructured"
+                                    width="3"/>
+                                <small
+                                    jcr:primaryType="nt:unstructured"
+                                    width="4"/>
+                                <extrasmall
+                                    jcr:primaryType="nt:unstructured"
+                                    width="12"/>
+                            </cq:responsive>
+                        </teaser_link>
+                    </container_formsportal>
+                </container_1589240808>
             </responsivegrid>
         </root>
     </jcr:content>
