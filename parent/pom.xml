@@ -951,6 +951,18 @@
             </dependency>
 
             <!--
+                aem-sdk-api ships a newer version, but uber-jar is shipping an old version of httpclient
+                Explicitly stating newer version here to resolve issue
+            -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.13</version>
+                <scope>provided</scope>
+            </dependency>
+
+
+            <!--
                 AEM APIs; make sure to not move this bundle upper in the list so that newer APIs available in AEM but not in the Uber
                 Jar can be used as dependencies.
              -->
