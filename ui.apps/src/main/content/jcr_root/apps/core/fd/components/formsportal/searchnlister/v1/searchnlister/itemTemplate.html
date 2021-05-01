@@ -1,0 +1,17 @@
+<!--/*
+    Template used as Card template
+*/-->
+<template data-sly-template.include="${ @ style}">
+    <section data-sly-test="${style == 'Card'}" data-sly-unwrap>
+        <script data-cmp-hook-formssearch="itemTemplate"
+                type="x-template">
+            <div class="cmp-searchnlister__item cmp-searchnlister__item--card" data-cmp-hook-formssearch="item">
+                <h3 class="cmp-searchnlister__item--title cmp-searchnlister__item__title--card-title" data-cmp-hook-formssearch="itemTitle"></h3>
+                <p class="cmp-searchnlister__item--card-body" data-cmp-hook-formssearch="description"></p>
+                <div class="cmp-searchnlister__item--card-footer">
+                    <a data-cmp-hook-formssearch="formLink"></a>
+                </div>
+            </div>
+        </script>
+    </section>
+</template>
