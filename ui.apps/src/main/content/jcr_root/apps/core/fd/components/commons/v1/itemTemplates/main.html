@@ -1,0 +1,18 @@
+<!--/*
+    The absolute path is required here, because template can be called from any location
+    Chooses the correct template path based on style parameter
+    Should be called like:
+    <sly
+        data-sly-use.template="core/fd/components/commons/v1/itemTemplates/main.html"
+        data-sly-call="${template @ style='<Desired Style>'}">
+    </sly>
+
+    Currently the only possible style is 'Card'
+    */-->
+<template data-sly-template.include="${ @ style}"
+          data-sly-use.logic="${'/apps/core/fd/components/commons/v1/itemTemplates/main.js' @ style=style}">
+    <script data-cmp-hook-formssearch="itemTemplate"
+            data-sly-include="${logic.styleFile @ context='html'}"
+            type="x-template">
+    </script>
+</template>
