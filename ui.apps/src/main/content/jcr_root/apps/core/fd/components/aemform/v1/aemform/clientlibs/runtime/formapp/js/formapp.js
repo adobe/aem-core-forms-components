@@ -53,6 +53,9 @@
                 }
             }
             guideBridge._guide.executeExpression("submitSuccess", afSuccessPayload);
+            if (data.agreementId && guideBridge._guide._isFirstSignerFormFiller() && FD.isToggleEnabled(guidelib.util.FeatureToggleConstants.SIGN_INTEGRATION_ENHANCEMENT_FT)) {
+                guideBridge._guide.guideUtil.redirectWithDelay(data.afSuccessRedirectUrl, 3000);
+            }
         },
         updateForm = function (guideBridge) {
             if (aemFormConfig.useIframe !== "false" && aemFormConfig.height == "auto") {
