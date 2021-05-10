@@ -16,13 +16,14 @@
 <div class="cmp-link">
     <sly data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
          data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link"
-         data-sly-test.hasText="${link.title}">
+         data-sly-test.hasText="${link.title}"
+         data-sly-use.viewlogic="link.js">
         <a
             id="${link.id}"
             class="cmp-link-anchor coral-Link"
             href="${link.url}"
             title="${link.tooltip}"
-            target="${link.target}"
+            target="${viewlogic.target}"
             data-sly-text="${link.title}">
             AF Link Component
         </a>

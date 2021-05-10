@@ -62,7 +62,6 @@ public class LinkImplTest {
         Link link = getLinkUnderTest(EMPTY_LINK_PATH);
         Assertions.assertEquals(null, link.getAssetPath());
         Assertions.assertEquals("#", link.getUrl());
-        Assertions.assertEquals("_self", link.getTarget());
         Assertions.assertEquals(null, link.getTitle());
         Assertions.assertEquals(null, link.getTooltip());
         Assertions.assertEquals(null, link.getAssetType());
@@ -73,7 +72,6 @@ public class LinkImplTest {
         Link link = getLinkUnderTest(LINK1_PATH);
         Assertions.assertEquals("/content/dam/formsanddocuments/sample-form", link.getAssetPath());
         Assertions.assertEquals("/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled", link.getUrl());
-        Assertions.assertEquals("_blank", link.getTarget());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
@@ -84,7 +82,6 @@ public class LinkImplTest {
         Link link = getLinkUnderTest(LINK1_PATH_WITH_INVALID_LINK);
         Assertions.assertEquals("https://www.adobe.com/", link.getAssetPath());
         Assertions.assertEquals("https://www.adobe.com/?hello", link.getUrl());
-        Assertions.assertEquals("_blank", link.getTarget());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
@@ -98,9 +95,6 @@ public class LinkImplTest {
 
         Mockito.when(linkMock.getAssetType()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getAssetType);
-
-        Mockito.when(linkMock.getTarget()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getTarget);
 
         Mockito.when(linkMock.getTitle()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getTitle);
