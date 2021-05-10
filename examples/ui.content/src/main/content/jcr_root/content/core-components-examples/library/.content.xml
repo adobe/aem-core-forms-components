@@ -46,7 +46,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/components/form-container.svg"
+                        fileReference="/content/dam/core-components-examples/library/components/embed.svg"
                         linkURL="/content/core-components-examples/library/forms-and-communications-portal/link"
                         textIsRich="true"
                         titleFromPage="true">
