@@ -18,8 +18,7 @@ use(function () {
     var viewLogic = {
         "target": "_self"
     };
-    var link = resource.properties['assetPath'];
-    if (link) {
+    if (this.assetPath) {
         // some asset path is set, target to new tab
         viewLogic.target = "_blank";
     }
