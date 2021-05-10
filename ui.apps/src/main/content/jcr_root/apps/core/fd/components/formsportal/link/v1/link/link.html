@@ -17,7 +17,7 @@
     <sly data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
          data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link"
          data-sly-test.hasText="${link.title}"
-         data-sly-use.viewlogic="link.js">
+         data-sly-use.viewlogic="${'link.js' @ assetPath=link.assetPath}">
         <a
             id="${link.id}"
             class="cmp-link-anchor coral-Link"
