@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Defines the sling model for {@code /apps/core/fd/components/formsportal/link} component.
@@ -63,18 +62,6 @@ public interface Link extends Component {
      * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
      */
     default String getTooltip() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Return the strategy with which linked url should be opened.
-     * Refer to {@code <a>} html tag attribute {@code target} for semantics
-     *
-     * @return Target strategy string
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
-     */
-    @JsonIgnore
-    default String getTarget() {
         throw new UnsupportedOperationException();
     }
 

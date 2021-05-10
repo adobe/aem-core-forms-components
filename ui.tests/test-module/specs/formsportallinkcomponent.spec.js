@@ -32,7 +32,7 @@ const sitesSelectors = require('../libs/commons/sitesSelectors'),
 
 describe('Link - Authoring', function () {
     // we can use these values to log in
-    const   pagePath = "/content/core-components-examples/library/page-authoring/adaptive-form/link",
+    const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/link",
             linkComponentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fplinkcomponent.split("/").pop(),
             linkComponentEditPathSelector = "[data-path='" + linkComponentEditPath + "']",
             linkComponentDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.fplinkcomponent.split("/").pop(),
@@ -49,7 +49,7 @@ describe('Link - Authoring', function () {
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
             // Add link component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "AEM Forms Link", afConstants.components.forms.resourceType.fplinkcomponent);
+            cy.insertComponent(responsiveGridDropZoneSelector, "Link", afConstants.components.forms.resourceType.fplinkcomponent);
             // once component is added, to remove the overlay from being active, we click on body
             cy.get('body').click(0,0);
             cy.deleteComponentByPath(linkComponentDropPath);
@@ -123,6 +123,7 @@ describe('Link - Authoring', function () {
             cy.visit(pagePath + '.html');
             cy.get("a[class*=\"cmp-link-anchor\"]")
                 .should("have.attr", "href", "#")
+                .should("have.attr", "target", "_self");
         });
 
         after(function() {

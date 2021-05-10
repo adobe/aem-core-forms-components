@@ -127,15 +127,6 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     }
 
     @Override
-    public String getTarget() {
-        String renderLink = getUrl();
-        if (StringUtils.isBlank(renderLink) || renderLink.equals("#")) {
-            return "_self";
-        }
-        return "_blank";
-    }
-
-    @Override
     public AssetType getAssetType() {
         if (assetType != null) {
             switch (assetType) {
