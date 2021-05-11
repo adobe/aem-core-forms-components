@@ -1,0 +1,66 @@
+{
+    "fplink": {
+        "linkcomponent-empty": {
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Tue May 21 2019 18:59:35 GMT+0300",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v1/link"
+        },
+        "linkcomponent-v1":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "assetPath"             : "/content/dam/formsanddocuments/sample-form",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v1/link",
+            "assetType"             : "Adaptive Form",
+            "queryParams":{
+                "jcr:primaryType"   : "nt:unstructured",
+                "item0":{
+                    "jcr:primaryType"   : "nt:unstructured",
+                    "key"               : "wcmmode",
+                    "value"             : "disabled"
+                }
+            }
+        },
+        "linkcomponent-v1-invalidref":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "assetPath"             : "https://www.adobe.com/",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v1/link",
+            "assetType"             : "Adaptive Form",
+            "queryParams":{
+                "jcr:primaryType"   : "nt:unstructured",
+                "item0":{
+                    "jcr:primaryType"   : "nt:unstructured",
+                    "key"               : "hello"
+                }
+            }
+        }
+    },
+    "dam" : {
+        "jcr:primaryType": "sling:Folder",
+        "formsanddocuments": {
+            "jcr:primaryType": "sling:Folder",
+            "sample-form": {
+                "jcr:primaryType":"dam:Asset",
+                "jcr:content":{
+                    "jcr:primaryType":"dam:AssetContent",
+                    "type":"guide",
+                    "guide":"1",
+                    "sling:resourceType":"fd/fm/af/render"
+                }
+            }
+        }
+    }
+}

@@ -18,7 +18,8 @@ var formsConstants = {
     components : {
         forms : {
             resourceType : {
-                "aemformcontainer" : "/apps/forms-components-examples/components/aemform"
+                "aemformcontainer" : "/apps/forms-components-examples/components/aemform",
+                "fplinkcomponent"  : "/apps/forms-components-examples/components/linkcomponent"
             }
         }
     },
