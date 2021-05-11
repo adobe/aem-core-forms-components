@@ -15,19 +15,27 @@ limitations under the License.
 -->
 Link Component  (v1)
 ====
-AEM Forms Portal Link component written in HTL.
+Forms and Communications Portal Link component written in HTL.
 
 ## Features
 
 ### Use Object
-The AEM Forms Portal Link component uses the `com.adobe.cq.forms.core.components.models.formsportal.Link` Sling model as its Use-object.
+The Link component uses the `com.adobe.cq.forms.core.components.models.formsportal.Link` Sling model as its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for the AEM Forms Portal Link component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for the Link component and are expected to be available as `Resource` properties:
+
+1. `./title`     - Text shown on the link
+2. `./tooltip`   - Tooltip on the link
+3. `./assetType` - Type of asset the link refers to (e.g *ADAPTIVE_FORM*)
+4. `./assetPath` - Path to the asset linked
+
+In addition, the n<sup>th</sup> query parameter is saved as `key` and `value` properties on child node `queryParams/item<n>`.
 
 ## BEM Description
 ```
 BLOCK cmp-link
+    ELEMENT cmp-link__anchor
 ```
 
 ## Information
