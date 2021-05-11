@@ -121,7 +121,7 @@ describe('Link - Authoring', function () {
 
         it('navigate to rendered page and verify link', function () {
             cy.visit(pagePath + '.html');
-            cy.get("a[class*=\"cmp-link-anchor\"]")
+            cy.get("a[class*=\"cmp-link__anchor\"]")
                 .should("have.attr", "href", "#")
                 .should("have.attr", "target", "_self");
         });

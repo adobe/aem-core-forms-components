@@ -17,6 +17,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 ## Available Components
 
 -   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+-   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
 
 ## System Requirements
 
