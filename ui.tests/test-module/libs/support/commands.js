@@ -108,6 +108,22 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
 });
 
 let loginRedirected = false;
+const waitForEditorToInitialize = () => {
+    cy.window().then((win) => {
+        // keeps rechecking "editables"
+        return new Cypress.Promise((resolve, reject) => {
+            const isReady = () => {
+                // temporary added this to check if editor is loaded
+                if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
+                    return resolve()
+                }
+                setTimeout(isReady, 0)
+            };
+            isReady()
+        })
+    });
+};
+
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
@@ -116,18 +132,7 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
     cy.visit(baseUrl);
     cy.login(baseUrl);
     cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl, {
-        onLoad: (contentWindow) => {
-            // contentWindow is the remote page's window object
-            const eventName = "cq-editor-loaded.cypress";
-            // intialize the event handler for cq editor loaded event
-            contentWindow.$(contentWindow.document).on(eventName, function(e) {
-                contentWindow.$(contentWindow.document).off(eventName);
-                isEventComplete.e= e;
-            });
-        }
-    });
-    cy.wrap(isEventComplete).should(isEventComplete => expect(isEventComplete.e).not.to.be.undefined); // takes only promise or objects
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
     // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
     // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
