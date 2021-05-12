@@ -18,6 +18,27 @@
     var guideBridge, aemFormConfig,
         aemFormIframeSelector = ".cmp-aemform__iframecontent",
         aemFormNonIframeSelector = ".cmp-aemform__content",
+        httpEval = function(url) {
+            var response = $.ajax({
+                url: url,
+                type: "get",
+                async: false,
+                dataType: "json"
+            });
+            if (response.status != 200) {
+                return;
+            }
+            var text = response.body ? response.body : response.responseText;
+            return JSON.parse(text);
+        },
+
+        _isFeatureEnabled = function(featureName) {
+            toggles = toggles || httpEval("/etc.clientlibs/toggles.json");
+            return (toggles || {
+                enabled: []
+            }).enabled.includes(featureName);
+        },
+
         onSubmit = function (guideResultObj) {
             var data = guideResultObj.data, element, iframeDocument, afSuccessPayload = JSON.parse(data.afSuccessPayload);
             if (aemFormConfig.thankyouConfig === "page") {
@@ -53,6 +74,9 @@
                 }
             }
             guideBridge._guide.executeExpression("submitSuccess", afSuccessPayload);
+            if (data.agreementId && guideBridge._guide._isFirstSignerFormFiller() && _isFeatureEnabled("FT_CQ-4321231")) {
+                guideBridge._guide.guideUtil.redirectWithDelay(data.afSuccessRedirectUrl, 3000);
+            }
         },
         updateForm = function (guideBridge) {
             if (aemFormConfig.useIframe !== "false" && aemFormConfig.height == "auto") {
