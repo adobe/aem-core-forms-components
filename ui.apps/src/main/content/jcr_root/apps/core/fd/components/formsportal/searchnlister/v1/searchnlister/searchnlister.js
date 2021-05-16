@@ -14,6 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
+// Seperator is created using synthetic resource
+// Reference for synthetic resource https://gist.github.com/gabrielwalt/0da85e4855070dc6264652269729eddf
+
 use(function () {
     var clientlibsArr = ['core.forms.components.formsportal.searchnlister.v1'];
     if (this.layout === 'Card') {

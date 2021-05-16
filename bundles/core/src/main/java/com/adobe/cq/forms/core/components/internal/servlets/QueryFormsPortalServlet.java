@@ -71,7 +71,7 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
     private static final String QB_GROUP = "_group.";
     private static final String QB_PATH = "_path";
     private static final String QB_FULLTEXT = "_fulltext";
-    private static final String QB_FULLTEXT_RELPATH = "_fulltext.relpath";
+    private static final String QB_FULLTEXT_RELPATH = "_fulltext.relPath";
     private static final String DEFAULT_PATH = "/content/dam/formsanddocuments";
 
     @Reference
@@ -115,14 +115,7 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
             RequestParameter[] paramValue = entry.getValue();
             int paramCount = paramValue.length;
 
-            if (paramName.equals("path")) {
-                int pathID = 0;
-                while (paramCount-- > 0) {
-                    queryMap.put(predicateID + QB_GROUP + pathID + QB_PATH, paramValue[pathID].getString());
-                    pathID++;
-                }
-                queryMap.put(predicateID + "_group.p.or", Boolean.TRUE.toString());
-            } else if (paramName.equals("searchText")) {
+            if (paramName.equals("searchText")) {
                 int counter = 0;
                 while (paramCount-- > 0) {
                     String text = paramValue[counter].getString();
@@ -135,20 +128,18 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
                 }
             } else if (paramName.equals("title")) {
                 String title = paramValue[0].getString();
-                queryMap.put(predicateID + "_group.0_fulltext", title);
-                queryMap.put(predicateID + "_group.0_fulltext.relPath", METADATA_NODE_PATH + "/@title");
-                queryMap.put(predicateID + "_group.1_fulltext", title);
-                queryMap.put(predicateID + "_group.1_fulltext.relPath", METADATA_NODE_PATH + "/@dc:title");
-                queryMap.put(predicateID + "_group.p.or", "true");
-                predicateID++;
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, title);
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@title");
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, title);
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:title");
+                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
             } else if (paramName.equals("description")) {
                 String description = paramValue[0].getString();
-                queryMap.put(predicateID + "_group.0_fulltext", description);
-                queryMap.put(predicateID + "_group.0_fulltext.relPath", METADATA_NODE_PATH + "/@description");
-                queryMap.put(predicateID + "_group.1_fulltext", description);
-                queryMap.put(predicateID + "_group.1_fulltext.relPath", METADATA_NODE_PATH + "/@dc:description");
-                queryMap.put(predicateID + "_group.p.or", "true");
-                predicateID++;
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, description);
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@description");
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, description);
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:description");
+                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
             } else if (paramName.equals("tags")) {
                 int tagID = 0;
                 while (paramCount-- > 0) {
@@ -173,27 +164,28 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
             predicateID++;
         }
 
-        if (requester.getChild("assetSource") != null) {
+        Resource assetSources = requester.getChild("assetSource");
+        Resource assetFolders = requester.getChild("assetFolders");
+
+        if (assetSources != null) {
             int counter = 1;
-            for (Resource source : requester.getChild("assetSource").getChildren()) {
+            for (Resource source : assetSources.getChildren()) {
                 ValueMap assetSource = source.getValueMap();
                 String renderType = assetSource.get("type", String.class);
-                String typeValue;
-                String renderKey;
+                String typeValue = null;
+                String renderKey = null;
                 if (StringUtils.isBlank(renderType)) {
                     continue;
-                }
-                if (renderType.equals("Adaptive Forms")) {
+                } else if (renderType.equals("Adaptive Forms")) {
                     typeValue = "guide";
                     renderKey = "HTML";
-                    results.put("htmlTooltip", assetSource.get("htmlTooltip", String.class));
+                    results.put("htmlTooltip", i18n.get(assetSource.get("htmlTooltip", String.class)));
                 } else if (renderType.equals("PDF Forms")) {
                     typeValue = "pdfForm";
                     renderKey = "PDF";
-                    results.put("pdfTooltip", assetSource.get("pdfTooltip", String.class));
-                } else {
-                    continue;
+                    results.put("pdfTooltip", i18n.get(assetSource.get("pdfTooltip", String.class)));
                 }
+
                 String typePrefix = "group." + predicateID + QB_GROUP + counter + "_property";
                 queryMap.put(typePrefix, "./jcr:content/type");
                 queryMap.put(typePrefix + ".value", typeValue);
@@ -202,7 +194,7 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
 
                 typePrefix = "group." + predicateID + QB_GROUP + counter + "_property";
                 queryMap.put(typePrefix, "./jcr:content/metadata/allowedRenderFormat");
-                queryMap.put(typePrefix + ".0_value", "BOTH");
+                queryMap.put(typePrefix + ".0_value", "BOTH");      // this is ANDed with set renderKey
                 queryMap.put(typePrefix + ".1_value", renderKey);
                 queryMap.put(typePrefix + ".operation", "equals");
 
@@ -212,10 +204,22 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
             queryMap.put("group.p.or", "true");
         }
 
-        if (!parameterMap.containsKey("path")) {
-            // put a default path in case one doesn't exist
-            queryMap.put(predicateID + QB_PATH, DEFAULT_PATH);
+        if (assetFolders != null) {
+            int counter = 0;
+            for (Resource source : assetFolders.getChildren()) {
+                ValueMap assetFolder = source.getValueMap();
+                String folderPath = assetFolder.get("folder", String.class);
+                if (StringUtils.isNotBlank(folderPath)) {
+                    queryMap.put(predicateID + QB_GROUP + counter + QB_PATH, folderPath);
+                    counter++;
+                }
+            }
+        } else {
+            // default search path
+            queryMap.put(predicateID + QB_GROUP + "0" + QB_PATH, DEFAULT_PATH);
         }
+        queryMap.put(predicateID + "_group.p.or", Boolean.TRUE.toString());
+        predicateID++;
 
         PredicateGroup predicateGroup = PredicateGroup.create(queryMap);
         Query query = queryBuilder.createQuery(predicateGroup, session);

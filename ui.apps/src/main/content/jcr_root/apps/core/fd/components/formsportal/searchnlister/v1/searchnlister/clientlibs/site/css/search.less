@@ -41,6 +41,10 @@
             border-color: #ECEFF1;
             background-color: #ECEFF1;
             margin-bottom: 5px;
+
+            &:focus {
+                background-color: #FFFFFF;
+            }
         }
     }
 
@@ -63,7 +67,25 @@
 }
 
 .cmp-searchnlister__more {
-    font-color: #455A64;
+    color: #455A64;
     font-size: 16px;
+    display: inline-block;
+    padding: 5px 18px 5px 18px;
+    border-radius: 24px;
+
+
+    &:hover {
+        background-color: rgb(244, 244, 244);
+            border-color: rgb(244, 244, 244);
+    }
+
+    &:active {
+        background-color: rgb(234, 234, 234);
+            border-color: rgb(234, 234, 234);
+    }
+}
+
+.cmp-searchnlister__more--wrapper {
     text-align: center;
+    display: block;
 }

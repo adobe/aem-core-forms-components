@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -69,12 +68,13 @@ public interface SearchAndLister extends Component {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Returns number of search results to return per page
+     *
+     * @return maximum results in a page
+     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     */
     default long getResultLimit() {
-        throw new UnsupportedOperationException();
-    }
-
-    @JsonIgnore
-    default String[] getFolderPathsArr() {
         throw new UnsupportedOperationException();
     }
 }

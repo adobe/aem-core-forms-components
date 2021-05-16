@@ -13,28 +13,26 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!-- Reference for synthetic resource https://gist.github.com/gabrielwalt/0da85e4855070dc6264652269729eddf -->
 
 <sly data-sly-use.model="com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister"
      data-sly-use.logic="${'searchnlister.js' @ layout=model.layout}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.items="itemTemplate.html"></sly>
 <script>
-    // Dispatch Initialization events for this instance
+    // Instance initialization on receiving jquery event for searchnlister library load
     (function () {
-        var onScriptLoad = function (evnt) {
-            var componentApp = evnt.detail.searchAndLister;
+        var onScriptLoad = function (event, additionalParams) {
+            var componentApp = additionalParams.detail.searchAndLister;
             componentApp.initializeComponent({
                 "id": "${model.id @ context='scriptString'}",
                 "queryPath": "${resource.path @ context='scriptString'}.fpquery.json",
                 "layout": "${model.layout @ context='scriptString'}",
-                "paths": "${model.folderPaths @ context='scriptString'}",
-                "limit": "${model.resultLimit @ context='scriptString'}",
-                "": "${model.resultLimit @ context='scriptString'}"
+                "limit": "${model.resultLimit @ context='scriptString'}"
             });
-            window.removeEventListener("searchnlister-onload", onScriptLoad);
+            $(window).off("searchnlister-onload.${model.id @ context='scriptString'}", onScriptLoad);
         };
-        window.addEventListener("searchnlister-onload", onScriptLoad);
+
+        $(window).on("searchnlister-onload.${model.id @ context='scriptString'}", onScriptLoad);
     }());
 </script>
 <div class="cmp-searchnlister" id="${model.id}">
@@ -46,7 +44,7 @@
         </div>
         <div class="cmp-searchnlister-search__sortbutton--wrapper" data-sly-test.advancedSearch="${!model.advancedSearchDisabled}">
             <select class="cmp-searchnlister-search__sortbutton" data-cmp-hook-formssearch="filter">
-                <option value="" disabled selected="selected">Filter By</option>
+                <option value="" selected="selected">Filter By</option>
                 <option value="tags">Tag</option>
                 <option value="title">Title</option>
                 <option value="description">Description</option>
@@ -54,14 +52,17 @@
         </div>
         <div class="cmp-searchnlister-search__sortbutton--wrapper" data-sly-test.advancedSearch="${!model.advancedSearchDisabled}">
             <select class="cmp-searchnlister-search__sortbutton cmp-searchnlister-search__sortbutton--right" data-cmp-hook-formssearch="sort">
-                <option value="" disabled selected="selected">Sort By</option>
+                <option value="" selected="selected">Sort By</option>
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
             </select>
         </div>
     </div>
     <div class="cmp-searchnlister-results" data-cmp-hook-formssearch="results"></div>
-    <div class="cmp-searchnlister__more" data-cmp-hook-formssearch="more">Load more</div>
+    <div class="cmp-searchnlister__more--wrapper">
+        <div class="cmp-searchnlister__more" data-cmp-hook-formssearch="more">Load more</div>
+    </div>
+
     <sly data-sly-call="${items.include @ file='itemTemplate.html', style=model.layout}"></sly>
     <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs}"></sly>
 </div>

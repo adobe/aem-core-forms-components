@@ -18,12 +18,12 @@ limitations under the License.
 
 Search And Lister Component  (v1)
 ====
-AEM Forms Portal Search and Lister component written in HTL.
+Search and Lister component written in HTL.
 
 ## Features
 
 ### Use Object
-The AEM Forms Portal Search and Lister component uses the `com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister` Sling model as its Use-object.
+The Search and Lister component uses the `com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister` Sling model as its Use-object.
 
 ### Behavior
 Pagination is implemented via Load More button, which loads more results lazily.
@@ -54,6 +54,7 @@ A hook attribute from the following should be added to the corresponding element
 
 ```
 data-cmp-hook-formssearch="input"
+data-cmp-hook-formssearch="filter"
 data-cmp-hook-formssearch="sort"
 data-cmp-hook-formssearch="results"
 data-cmp-hook-formssearch="itemTemplate"

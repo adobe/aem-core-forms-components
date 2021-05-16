@@ -1,0 +1,10 @@
+
+{
+    "id"                    : "searchnlister-ff2359bd7e",
+    "title"                 : "Sample Title",
+    "layout"                : "Custom",
+    "advancedSearchDisabled": true,
+    "textSearchDisabled"    : true,
+    "resultLimit"           : 4,
+    ":type"                 : "core/fd/components/formsportal/searchnlister/v1/searchnlister"
+}

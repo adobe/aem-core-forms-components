@@ -16,19 +16,13 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
@@ -47,10 +41,6 @@ import com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister;
 public class SearchAndListerImpl extends AbstractComponentImpl implements SearchAndLister {
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/searchnlister/v1/searchnlister";
     private static final String DEFAULT_TITLE = "Forms Portal";
-    private static final String FOLDER_PATHS = "assetFolders";
-    private static final String ASSET_SOURCES = "assetSources";
-    private static final String PN_FOLDER = "folder";
-    private static final String PN_TYPE = "type";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
@@ -70,16 +60,10 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
     @Inject
     private boolean disableTextSearch;
 
-    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Named(FOLDER_PATHS)
-    private List<Resource> folderPathChildResources;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     @Default(longValues = 8)
     private long limit;
-
-    private String[] folderPathsArr;
 
     @Override
     public String getTitle() {
@@ -106,21 +90,6 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
     @Override
     public boolean getTextSearchDisabled() {
         return disableTextSearch;
-    }
-
-    @Override
-    public String[] getFolderPathsArr() {
-        if (folderPathsArr != null && folderPathsArr.length > 0) {
-            return folderPathsArr;
-        }
-        if ((folderPathChildResources != null) && !folderPathChildResources.isEmpty()) {
-            List<String> arr = new ArrayList<>();
-            for (Resource r : folderPathChildResources) {
-                arr.add(r.getValueMap().get(PN_FOLDER, String.class));
-            }
-            folderPathsArr = arr.toArray(new String[0]);
-        }
-        return folderPathsArr;
     }
 
     @Override
