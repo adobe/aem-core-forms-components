@@ -84,18 +84,23 @@ public class QueryFormsPortalServlet extends SlingAllMethodsServlet {
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        ResourceResolver resourceResolver = null;
 
         Map<String, Object> results = new HashMap<>();
         try {
             I18n i18n = new I18n(request);
             RequestParameterMap parameterMap = request.getRequestParameterMap();
             Resource requester = request.getResource();
-            ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null);
+            resourceResolver = resourceResolverFactory.getServiceResourceResolver(null);
             results.put("data", queryFormsAssets(i18n, parameterMap, resourceResolver, results, requester));
             results.put("success", "true");
         } catch (Exception ex) {
             LOGGER.error("Exception while processing FP Query {}", ex.getMessage(), ex);
             results.put("success", "false");
+        } finally {
+            if (resourceResolver != null) {
+                resourceResolver.close();
+            }
         }
         new ObjectMapper().writeValue(response.getWriter(), results);
     }
