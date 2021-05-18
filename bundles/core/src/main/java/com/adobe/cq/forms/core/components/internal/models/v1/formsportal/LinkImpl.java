@@ -51,7 +51,6 @@ import com.adobe.cq.forms.core.components.models.formsportal.Link;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class LinkImpl extends AbstractComponentImpl implements Link {
-    // ToDo: Documentation of each method once properties and model is reviewed and final
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/link/v1/link";
     public static final String QUERY_PARAMS_PATH = "queryParams";
     private static final String PN_PARAM_KEY = "key";
@@ -68,7 +67,6 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
-
     private String assetType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -85,7 +83,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     private Map<String, String> queryParamsMap;
 
     @Override
-    public String getUrl() {
+    public String getAssetPathWithQueryParams() {
         String url = getAssetPath();
         if (StringUtils.isBlank(url)) {
             return "#";
@@ -136,7 +134,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
                     break;
             }
         }
-        return null;
+        return AssetType.NONE;
     }
 
     @Override

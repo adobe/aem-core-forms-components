@@ -78,7 +78,6 @@
                                         <items jcr:primaryType="nt:unstructured">
                                             <selectorContainer
                                                 jcr:primaryType="nt:unstructured"
-                                                granite:class="hidden"
                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <assetType
