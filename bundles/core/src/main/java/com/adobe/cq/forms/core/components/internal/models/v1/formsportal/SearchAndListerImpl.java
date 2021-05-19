@@ -108,7 +108,7 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
 
     @Override
     public Map<String, Object> getSearchResults() {
-        List<PortalLister.Item> results = commonLister.getResultList();
+        List<PortalLister.Item> results = commonLister.getItemList();
         Long offset = commonLister.getNextOffset();
         Map<String, Object> jacksonMapping = new HashMap<>();
         jacksonMapping.put("data", results);

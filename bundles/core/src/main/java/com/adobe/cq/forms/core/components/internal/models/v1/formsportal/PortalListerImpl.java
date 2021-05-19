@@ -63,17 +63,91 @@ import com.day.cq.search.result.SearchResult;
     defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class PortalListerImpl extends AbstractComponentImpl implements PortalLister {
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/portallister/v1/portallister";
+
     private static final String QB_GROUP = "_group.";
     private static final String QB_PATH = "_path";
     private static final String QB_FULLTEXT = "_fulltext";
     private static final String QB_FULLTEXT_RELPATH = "_fulltext.relPath";
     private static final String DEFAULT_PATH = "/content/dam/formsanddocuments";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PortalListerImpl.class);
     private static final String METADATA_NODE_PATH = JcrConstants.JCR_CONTENT + "/metadata";
-
     private static final String PN_CHILD_ASSETFOLDERS = "assetFolders";
     private static final String PN_CHILD_ASSETSOURCES = "assetSource";
+    private static final Map<String, QueryStrategy> queryStrategies = new HashMap<>();
+    static {
+        queryStrategies.put("searchText", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                int counter = 0;
+                int paramCount = params.length;
+                while (paramCount-- > 0) {
+                    String text = params[counter].getString();
+                    if (StringUtils.isNotBlank(text)) {
+                        queryMap.put(predicateID + QB_FULLTEXT, text);
+                        queryMap.put(predicateID + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH);
+                        predicateID++;
+                    }
+                    counter++;
+                }
+            }
+        });
+
+        queryStrategies.put("title", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                String title = params[0].getString();
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, title);
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@title");
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, title);
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:title");
+                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
+            }
+        });
+
+        queryStrategies.put("description", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                String description = params[0].getString();
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, description);
+                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@description");
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, description);
+                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:description");
+                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
+            }
+        });
+
+        queryStrategies.put("tags", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                int tagID = 0;
+                int paramCount = params.length;
+                while (paramCount-- > 0) {
+                    queryMap.put(predicateID + "_tagid", params[tagID].getString());
+                    queryMap.put(predicateID + "_tagid.property", METADATA_NODE_PATH + "/cq:tags");
+                    predicateID++;
+                    tagID++;
+                }
+            }
+        });
+
+        queryStrategies.put("orderby", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                String orderByValue = params[0].getString();
+                if (orderByValue.equals("name")) {
+                    orderByValue = "title";
+                }
+                queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
+            }
+        });
+
+        queryStrategies.put("sort", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                queryMap.put("orderby.sort", params[0].getString());
+            }
+        });
+
+        queryStrategies.put("offset", new QueryStrategy() {
+            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+                queryMap.put("p.offset", params[0].getString());
+            }
+        });
+    }
 
     @OSGiService
     private QueryBuilder queryBuilder;
@@ -115,7 +189,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     }
 
     @Override
-    public List<PortalLister.Item> getResultList() {
+    public List<PortalLister.Item> getItemList() {
         // call implementation depending on data source
         List<PortalLister.Item> result = null;
         if ("AEM".equals(getDataSource())) {
@@ -142,74 +216,9 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         return String.valueOf(limit);
     }
 
-    protected List<PortalLister.Item> fetchViaQueryBuilder(ResourceResolver resourceResolver) {
-        RequestParameterMap parameterMap = request.getRequestParameterMap();
-        I18n i18n = new I18n(request);
-
-        Session session = null;
-        // service resource resolver has fd-user access, ref OSGi configuration file
-        session = resourceResolver.adaptTo(Session.class);
-        List<PortalLister.Item> resultMap = new ArrayList<>();
-        Map<String, String> queryMap = new HashMap<>();
-
-        queryMap.put("type", getAssetType());
-        queryMap.put("p.limit", getLimit());
-
-        int predicateID = 0;    // used across all parameters
-
-        for (Map.Entry<String, RequestParameter[]> entry : parameterMap.entrySet()) {
-            String paramName = entry.getKey();
-            RequestParameter[] paramValue = entry.getValue();
-            int paramCount = paramValue.length;
-
-            if (paramName.equals("searchText")) {
-                int counter = 0;
-                while (paramCount-- > 0) {
-                    String text = paramValue[counter].getString();
-                    if (StringUtils.isNotBlank(text)) {
-                        queryMap.put(predicateID + QB_FULLTEXT, text);
-                        queryMap.put(predicateID + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH);
-                        predicateID++;
-                    }
-                    counter++;
-                }
-            } else if (paramName.equals("title")) {
-                String title = paramValue[0].getString();
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, title);
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@title");
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, title);
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:title");
-                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
-            } else if (paramName.equals("description")) {
-                String description = paramValue[0].getString();
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, description);
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@description");
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, description);
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:description");
-                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
-            } else if (paramName.equals("tags")) {
-                int tagID = 0;
-                while (paramCount-- > 0) {
-                    queryMap.put(predicateID + "_tagid", paramValue[tagID].getString());
-                    queryMap.put(predicateID + "_tagid.property", METADATA_NODE_PATH + "/cq:tags");
-                    predicateID++;
-                    tagID++;
-                }
-            } else if (paramName.equals("orderby")) {
-                String orderByValue = paramValue[0].getString();
-                if (orderByValue.equals("name")) {
-                    orderByValue = "title";
-                }
-                queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
-            } else if (paramName.equals("sort")) {
-                queryMap.put("orderby.sort", paramValue[0].getString());
-            } else if (paramName.equals("offset")) {
-                queryMap.put("p.offset", paramValue[0].getString());
-            }
-            predicateID++;
-        }
-
+    private void buildAssetSourcesQuery(int predicateID, Map<String, String> queryMap) {
         if (assetSources != null) {
+            I18n i18n = new I18n(request);
             int counter = 1;
             for (Resource source : assetSources) {
                 ValueMap assetSource = source.getValueMap();
@@ -245,7 +254,9 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             }
             queryMap.put("group.p.or", "true");
         }
+    }
 
+    private void buildAssetFolderQuery(int predicateID, Map<String, String> queryMap) {
         if (assetFolders != null) {
             int counter = 0;
             for (Resource source : assetFolders) {
@@ -262,6 +273,30 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         }
         queryMap.put(predicateID + "_group.p.or", Boolean.TRUE.toString());
         predicateID++;
+    }
+
+    protected List<PortalLister.Item> fetchViaQueryBuilder(ResourceResolver resourceResolver) {
+        RequestParameterMap parameterMap = request.getRequestParameterMap();
+        Session session = null;
+        // service resource resolver has fd-user access, ref OSGi configuration file
+        session = resourceResolver.adaptTo(Session.class);
+        List<PortalLister.Item> resultMap = new ArrayList<>();
+        Map<String, String> queryMap = new HashMap<>();
+
+        queryMap.put("type", getAssetType());
+        queryMap.put("p.limit", getLimit());
+
+        int predicateID = 0;    // used across all parameters
+        for (Map.Entry<String, RequestParameter[]> entry : parameterMap.entrySet()) {
+            QueryStrategy queryStrategy = queryStrategies.get(entry.getKey());
+            if (queryStrategy != null) {
+                queryStrategy.buildQuery(entry.getValue(), predicateID, queryMap);
+            }
+            predicateID++;
+        }
+
+        buildAssetSourcesQuery(predicateID, queryMap);
+        buildAssetFolderQuery(predicateID, queryMap);
 
         PredicateGroup predicateGroup = PredicateGroup.create(queryMap);
         Query query = queryBuilder.createQuery(predicateGroup, session);
@@ -363,5 +398,9 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         public String getFormLink() {
             return formLink;
         }
+    }
+
+    private interface QueryStrategy {
+        void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap);
     }
 }

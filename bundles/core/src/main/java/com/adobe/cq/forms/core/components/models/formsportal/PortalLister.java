@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface PortalLister {
 
-    default List<Item> getResultList() {
+    default List<Item> getItemList() {
         throw new UnsupportedOperationException();
     }
 
