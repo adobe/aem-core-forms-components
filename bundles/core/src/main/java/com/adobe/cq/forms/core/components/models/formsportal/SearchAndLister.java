@@ -23,9 +23,9 @@ import com.adobe.cq.wcm.core.components.models.Component;
 
 /**
  *
- * Defines the sling model for {@code /apps/core/fd/components/formsportal/searchnlister} component.
+ * Defines the sling model for {@code /apps/core/fd/components/formsportal/searchlister} component.
  *
- * @since com.adobe.cq.forms.core.components.models.aemform 1.0.0
+ * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
  */
 @ConsumerType
 public interface SearchAndLister extends Component {
@@ -34,7 +34,7 @@ public interface SearchAndLister extends Component {
      * Returns title string of component
      *
      * @return Search and Lister Title String
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default String getTitle() {
         throw new UnsupportedOperationException();
@@ -44,29 +44,29 @@ public interface SearchAndLister extends Component {
      * Returns layout in which sub-views should be rendered
      *
      * @return String indication layout of listing
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default String getLayout() {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * Returns whether advanced search should be available or not
+     * Returns whether search box should be available or not
      *
-     * @return should advanced search be shown
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @return should search box be shown
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default boolean getAdvancedSearchDisabled() {
+    default boolean getSearchDisabled() {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * Returns whether text search should be enabled
+     * Returns whether sort option should be enabled
      *
-     * @return Should support full text search
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @return Should support sorting
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default boolean getTextSearchDisabled() {
+    default boolean getSortDisabled() {
         throw new UnsupportedOperationException();
     }
 
@@ -74,7 +74,7 @@ public interface SearchAndLister extends Component {
      * Returns number of search results to return per page
      *
      * @return maximum results in a page
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default long getResultLimit() {
         throw new UnsupportedOperationException();

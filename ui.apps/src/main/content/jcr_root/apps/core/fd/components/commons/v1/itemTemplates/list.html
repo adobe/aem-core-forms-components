@@ -1,0 +1,23 @@
+<template data-sly-template.layout>
+    <div data-cmp-hook-item-template="includes">
+        <sly data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+             data-sly-call="${clientlib.all @ categories=['core.forms.components.commons.v1.clientlibs.layouts.list']}"></sly>
+    </div>
+    <table class="cmp-portallister-results cmp-portallister-results--list" data-cmp-hook-item-template="container">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </table>
+    <table>
+        <tr class="cmp-portallister__item cmp-portallister__item--list" data-cmp-hook-item-template="item">
+            <td class="cmp-portallister__item--list-image-wrapper"><img class="cmp-portallister__item--list-image" data-cmp-hook-item-template="thumbnail"/></td>
+            <td class="cmp-portallister__item--list-title" data-cmp-hook-item-template="itemTitle"></td>
+            <td class="cmp-portallister__item--list-body" data-cmp-hook-item-template="description"></td>
+            <td class="cmp-portallister__item--list-footer">
+                <a data-cmp-hook-item-template="formLink"></a>
+            </td>
+        </tr>
+    </table>
+</template>

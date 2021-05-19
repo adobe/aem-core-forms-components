@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +56,7 @@ import com.day.cq.search.PredicateGroup;
 import com.day.cq.search.Query;
 import com.day.cq.search.QueryBuilder;
 import com.day.cq.search.result.SearchResult;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -73,6 +75,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     private static final String METADATA_NODE_PATH = JcrConstants.JCR_CONTENT + "/metadata";
     private static final String PN_CHILD_ASSETFOLDERS = "assetFolders";
     private static final String PN_CHILD_ASSETSOURCES = "assetSource";
+    private static final String THUMBNAIL_PATH_SUFFIX = "/jcr:content/renditions/cq5dam.thumbnail.319.319.png";
     private static final Map<String, QueryStrategy> queryStrategies = new HashMap<>();
     static {
         queryStrategies.put("searchText", new QueryStrategy() {
@@ -129,9 +132,6 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         queryStrategies.put("orderby", new QueryStrategy() {
             public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
                 String orderByValue = params[0].getString();
-                if (orderByValue.equals("name")) {
-                    orderByValue = "title";
-                }
                 queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
             }
         });
@@ -168,6 +168,8 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     @Named(PN_CHILD_ASSETSOURCES)
     @Inject
     private List<Resource> assetSources;
+
+    private List<Resource> defaultAssetSources;
 
     @ValueMapValue
     @Inject
@@ -208,19 +210,37 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     }
 
     @Override
-    public String getLimit() {
+    public Long getLimit() {
         String limitParam = request.getParameter("limit");
-        if (StringUtils.isNotBlank(limitParam)) {
-            return limitParam;
+        if (StringUtils.isNumeric(limitParam)) {
+            return Long.valueOf(limitParam);
         }
-        return String.valueOf(limit);
+        return limit;
     }
 
-    private void buildAssetSourcesQuery(int predicateID, Map<String, String> queryMap) {
+    @Override
+    @JsonIgnore
+    public List<Resource> getAssetSources() {
         if (assetSources != null) {
+            return assetSources;
+        } else if (defaultAssetSources != null) {
+            return defaultAssetSources;
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    @JsonIgnore
+    public void setDefaultAssetSources(List<Resource> assetSources) {
+        this.defaultAssetSources = assetSources;
+    }
+
+    private int buildAssetSourcesQuery(int predicateID, Map<String, String> queryMap) {
+        List<Resource> assetSourcesOrDefault = getAssetSources();
+        if (assetSourcesOrDefault != null) {
             I18n i18n = new I18n(request);
             int counter = 1;
-            for (Resource source : assetSources) {
+            for (Resource source : assetSourcesOrDefault) {
                 ValueMap assetSource = source.getValueMap();
                 String renderType = assetSource.get("type", String.class);
                 String typeValue = null;
@@ -254,9 +274,10 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             }
             queryMap.put("group.p.or", "true");
         }
+        return predicateID;
     }
 
-    private void buildAssetFolderQuery(int predicateID, Map<String, String> queryMap) {
+    private int buildAssetFolderQuery(int predicateID, Map<String, String> queryMap) {
         if (assetFolders != null) {
             int counter = 0;
             for (Resource source : assetFolders) {
@@ -272,7 +293,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             queryMap.put(predicateID + QB_GROUP + "0" + QB_PATH, DEFAULT_PATH);
         }
         queryMap.put(predicateID + "_group.p.or", Boolean.TRUE.toString());
-        predicateID++;
+        return predicateID + 1;
     }
 
     protected List<PortalLister.Item> fetchViaQueryBuilder(ResourceResolver resourceResolver) {
@@ -284,7 +305,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         Map<String, String> queryMap = new HashMap<>();
 
         queryMap.put("type", getAssetType());
-        queryMap.put("p.limit", getLimit());
+        queryMap.put("p.limit", getLimit().toString());
 
         int predicateID = 0;    // used across all parameters
         for (Map.Entry<String, RequestParameter[]> entry : parameterMap.entrySet()) {
@@ -295,8 +316,8 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             predicateID++;
         }
 
-        buildAssetSourcesQuery(predicateID, queryMap);
-        buildAssetFolderQuery(predicateID, queryMap);
+        predicateID = buildAssetSourcesQuery(predicateID, queryMap);
+        predicateID = buildAssetFolderQuery(predicateID, queryMap);
 
         PredicateGroup predicateGroup = PredicateGroup.create(queryMap);
         Query query = queryBuilder.createQuery(predicateGroup, session);
@@ -333,14 +354,16 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
 
     private PortalLister.Item fetchResourceProperties(Resource r) {
         ValueMap valueMap = r.getValueMap();
+        ResourceResolver resolver = r.getResourceResolver();
         ValueMap metaDataMap = null;
         if (r.getChild(METADATA_NODE_PATH) != null) {
             metaDataMap = r.getChild(METADATA_NODE_PATH).getValueMap();
         }
         String title = null;
         String description = null;
-        String path = r.getPath() + "/" + JcrConstants.JCR_CONTENT;
+        String path = r.getPath() + "/" + JcrConstants.JCR_CONTENT + "?wcmmode=disabled";
         String tooltip = "";
+        String thubmnail = r.getPath() + THUMBNAIL_PATH_SUFFIX;
 
         if (metaDataMap != null && metaDataMap.containsKey("title")) {
             title = metaDataMap.get("title", String.class);
@@ -363,7 +386,12 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             }
         }
 
-        return new Item(title, description, tooltip, path);
+        if (resolver.getResource(thubmnail) == null) {
+            // thumbnail doesn't exist, set it to null
+            thubmnail = null;
+        }
+
+        return new Item(title, description, tooltip, path, thubmnail);
     }
 
     private class Item implements PortalLister.Item {
@@ -371,12 +399,14 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         private String description;
         private String tooltip;
         private String formLink;
+        private String formThumbnail;
 
-        public Item(String title, String description, String tooltip, String formLink) {
+        public Item(String title, String description, String tooltip, String formLink, String formThumbnail) {
             this.title = title;
             this.description = description;
             this.tooltip = tooltip;
             this.formLink = formLink;
+            this.formThumbnail = formThumbnail;
         }
 
         @Override
@@ -397,6 +427,11 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         @Override
         public String getFormLink() {
             return formLink;
+        }
+
+        @Override
+        public String getThumbnailLink() {
+            return formThumbnail;
         }
     }
 

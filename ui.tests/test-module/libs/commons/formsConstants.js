@@ -20,7 +20,7 @@ var formsConstants = {
             resourceType : {
                 "aemformcontainer" : "/apps/forms-components-examples/components/aemform",
                 "fplinkcomponent"  : "/apps/forms-components-examples/components/linkcomponent",
-                "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchnlister",
+                "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
             }
         }
     },

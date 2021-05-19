@@ -29,9 +29,9 @@
 const sitesSelectors = require('../libs/commons/sitesSelectors'),
       afConstants = require('../libs/commons/formsConstants');
 
-describe('Link - Authoring', function () {
+describe('Search And Lister - Authoring', function () {
     // we can use these values to log in
-    const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchnlister",
+    const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchlister",
             componentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
             componentEditPathSelector = "[data-path='" + componentEditPath + "']",
             componentDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
@@ -63,16 +63,19 @@ describe('Link - Authoring', function () {
 
             // check if default proxy component values are set correctly
             // Display tab
+            cy.get("[data-foundation-tracking-event*=\"display\"]")
+                .should("be.visible")
+                .click();
             cy.get("[name='./title']")
                 .should("be.visible")
                 .should("have.value", "");
             cy.get("[name='./layout']")
                 .should("be.visible")
-                .should("have.value", "Card");
+                .should("have.value", "card");
             cy.get("input[name='./disableSearch']")
                 .should("be.visible")
                 .should("not.be.checked");
-            cy.get("input[name='./disableTextSearch']")
+            cy.get("input[name='./disableSorting']")
                 .should("be.visible")
                 .should("not.be.checked");
 
@@ -115,9 +118,9 @@ describe('Link - Authoring', function () {
                 .should("be.visible")
                 .click();
 
-            cy.get("[name='./assetSource/item0/type']")
-                .should("be.visible")
-                .should("have.value", "Adaptive Forms");
+//            cy.get("[name='./assetSource/item0/type']")
+//                .should("be.visible")
+//                .should("have.value", "Adaptive Forms");
 
             cy.get("[name='./assetSource/item0/htmlTooltip']")
                 .should("be.visible")
