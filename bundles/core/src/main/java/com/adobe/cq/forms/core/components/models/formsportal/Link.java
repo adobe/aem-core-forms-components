@@ -40,7 +40,7 @@ public interface Link extends Component {
      * The URL contains query parameters if configured
      *
      * @return URL after processing, or {@code #} if none is set
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.0.0
      */
     default String getAssetPathWithQueryParams() {
         throw new UnsupportedOperationException();
