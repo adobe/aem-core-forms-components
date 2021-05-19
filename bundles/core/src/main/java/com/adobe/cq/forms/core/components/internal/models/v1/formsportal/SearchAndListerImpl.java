@@ -16,14 +16,23 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceMetadata;
+import org.apache.sling.api.resource.ResourceWrapper;
+import org.apache.sling.api.resource.SyntheticResource;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Exporter;
@@ -49,7 +58,7 @@ import com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class SearchAndListerImpl extends AbstractComponentImpl implements SearchAndLister {
-    public static final String RESOURCE_TYPE = "core/fd/components/formsportal/searchnlister/v1/searchnlister";
+    public static final String RESOURCE_TYPE = "core/fd/components/formsportal/searchlister/v1/searchlister";
     private static final String DEFAULT_TITLE = "Forms Portal";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -68,11 +77,25 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     @Inject
-    private boolean disableTextSearch;
+    private boolean disableSorting;
 
     @Self
     @Via(type = ResourceSuperType.class)
     private PortalLister commonLister;
+
+    @PostConstruct
+    private void init() {
+        if (commonLister != null) {
+            List<Resource> defaultAssetSources = new ArrayList<>();
+            Map<String, Object> valueMap = new HashMap<>();
+            valueMap.put("type", "Adaptive Forms");
+            valueMap.put("htmlTooltip", "Click Here to view as HTML");
+            Resource res = new DefaultValueMapResourceWrapper(new SyntheticResource(resource.getResourceResolver(), new ResourceMetadata(),
+                JcrConstants.NT_UNSTRUCTURED), valueMap);
+            defaultAssetSources.add(res);
+            commonLister.setDefaultAssetSources(defaultAssetSources);
+        }
+    }
 
     @Override
     public String getTitle() {
@@ -86,24 +109,24 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
     @Override
     public String getLayout() {
         if (StringUtils.isEmpty(layout)) {
-            return "Card";
+            return PortalLister.LayoutType.CARD;
         }
         return layout;
     }
 
     @Override
-    public boolean getAdvancedSearchDisabled() {
+    public boolean getSearchDisabled() {
         return disableSearch;
     }
 
     @Override
-    public boolean getTextSearchDisabled() {
-        return disableTextSearch;
+    public boolean getSortDisabled() {
+        return disableSorting;
     }
 
     @Override
     public long getResultLimit() {
-        return Long.parseLong(commonLister.getLimit());
+        return commonLister.getLimit();
     }
 
     @Override
@@ -115,5 +138,24 @@ public class SearchAndListerImpl extends AbstractComponentImpl implements Search
         jacksonMapping.put("success", "true");
         jacksonMapping.put("nextOffset", offset);
         return jacksonMapping;
+    }
+
+    private static class DefaultValueMapResourceWrapper extends ResourceWrapper {
+        private final ValueMap valueMap;
+
+        public DefaultValueMapResourceWrapper(Resource resource, Map<String, Object> properties) {
+            super(resource);
+            this.valueMap = new ValueMapDecorator(properties);
+        }
+
+        @Override
+        public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
+            return type == ValueMap.class ? (AdapterType) this.valueMap : super.adaptTo(type);
+        }
+
+        @Override
+        public ValueMap getValueMap() {
+            return this.valueMap;
+        }
     }
 }

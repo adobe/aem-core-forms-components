@@ -17,20 +17,54 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 
 import java.util.List;
 
+import org.apache.sling.api.resource.Resource;
 import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ *
+ * Defines the sling model for {@code /apps/core/fd/components/formsportal/portallister} component.
+ *
+ * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+ */
 @ConsumerType
 public interface PortalLister {
 
+    /**
+     * Return List of Portal Items, Standardized by the {@link Item} interface
+     *
+     * @return List of items
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
     default List<Item> getItemList() {
         throw new UnsupportedOperationException();
     }
 
-    default String getLimit() {
+    /**
+     * Return maximum number of results to be returned by getItemList at a time
+     *
+     * @return String containing numeric value of limit
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
+    default Long getLimit() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Offset of next set of results
+     *
+     * @return long integer representing next offset
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
     default Long getNextOffset() {
+        throw new UnsupportedOperationException();
+    }
+
+    default List<Resource> getAssetSources() {
+        throw new UnsupportedOperationException();
+    }
+
+    default void setDefaultAssetSources(List<Resource> assetSources) {
         throw new UnsupportedOperationException();
     }
 
@@ -51,5 +85,14 @@ public interface PortalLister {
         default String getFormLink() {
             throw new UnsupportedOperationException();
         }
+
+        default String getThumbnailLink() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    @ProviderType
+    public interface LayoutType {
+        public static final String CARD = "card";
     }
 }

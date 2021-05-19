@@ -69,7 +69,7 @@
                         actionsEnabled="false"
                         descriptionFromPage="true"
                         fileReference="/content/dam/core-components-examples/library/components/list.svg"
-                        linkURL="/content/core-components-examples/library/forms-and-communications-portal/searchnlister"
+                        linkURL="/content/core-components-examples/library/forms-and-communications-portal/searchlister"
                         textIsRich="true"
                         titleFromPage="true">
                         <cq:responsive jcr:primaryType="nt:unstructured">
