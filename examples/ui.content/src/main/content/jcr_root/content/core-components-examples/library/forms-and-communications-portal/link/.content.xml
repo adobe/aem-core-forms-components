@@ -98,7 +98,6 @@
                             jcr:primaryType="nt:unstructured"
                             title="Sample Link Component"
                             tooltip="Sample Tooltip"
-                            assetType="Adaptive Form"
                             sling:resourceType="forms-components-examples/components/linkcomponent"/>
                     </component>
                     <info

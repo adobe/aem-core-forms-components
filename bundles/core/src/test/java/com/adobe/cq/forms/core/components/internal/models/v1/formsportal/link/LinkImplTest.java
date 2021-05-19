@@ -61,17 +61,18 @@ public class LinkImplTest {
     public void testEmptyLinkComponent() {
         Link link = getLinkUnderTest(EMPTY_LINK_PATH);
         Assertions.assertEquals(null, link.getAssetPath());
-        Assertions.assertEquals("#", link.getUrl());
+        Assertions.assertEquals("#", link.getAssetPathWithQueryParams());
         Assertions.assertEquals(null, link.getTitle());
         Assertions.assertEquals(null, link.getTooltip());
-        Assertions.assertEquals(null, link.getAssetType());
+        Assertions.assertEquals(Link.AssetType.NONE, link.getAssetType());
     }
 
     @Test
     public void testLinkComponent() {
         Link link = getLinkUnderTest(LINK1_PATH);
         Assertions.assertEquals("/content/dam/formsanddocuments/sample-form", link.getAssetPath());
-        Assertions.assertEquals("/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled", link.getUrl());
+        Assertions.assertEquals("/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled", link
+            .getAssetPathWithQueryParams());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
@@ -81,7 +82,7 @@ public class LinkImplTest {
     public void testLinkComponentWithInvalidPath() {
         Link link = getLinkUnderTest(LINK1_PATH_WITH_INVALID_LINK);
         Assertions.assertEquals("https://www.adobe.com/", link.getAssetPath());
-        Assertions.assertEquals("https://www.adobe.com/?hello", link.getUrl());
+        Assertions.assertEquals("https://www.adobe.com/?hello", link.getAssetPathWithQueryParams());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
@@ -102,8 +103,8 @@ public class LinkImplTest {
         Mockito.when(linkMock.getTooltip()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getTooltip);
 
-        Mockito.when(linkMock.getUrl()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getUrl);
+        Mockito.when(linkMock.getAssetPathWithQueryParams()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getAssetPathWithQueryParams);
     }
 
     private Link getLinkUnderTest(String resourcePath) {

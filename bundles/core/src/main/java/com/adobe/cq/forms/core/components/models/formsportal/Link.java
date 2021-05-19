@@ -31,7 +31,8 @@ public interface Link extends Component {
      * Defines the Asset Type that is being linked to
      */
     enum AssetType {
-        ADAPTIVE_FORM
+        ADAPTIVE_FORM,
+        NONE
     }
 
     /**
@@ -39,9 +40,9 @@ public interface Link extends Component {
      * The URL contains query parameters if configured
      *
      * @return URL after processing, or {@code #} if none is set
-     * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.0.0
      */
-    default String getUrl() {
+    default String getAssetPathWithQueryParams() {
         throw new UnsupportedOperationException();
     }
 
@@ -77,7 +78,7 @@ public interface Link extends Component {
 
     /**
      * Returns path to the asset to which the URL would redirect to
-     * Note that this is not the url. For url, use {@link #getUrl}
+     * Note that this is not the url. For url, use {@link #getAssetPathWithQueryParams}
      *
      * @return Path to asset if configured
      * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
