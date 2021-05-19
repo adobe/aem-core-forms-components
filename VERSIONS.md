@@ -4,5 +4,5 @@ See below for a full list of minimum system requirements for historical versions
 
 | Forms Core Components  | AEM Forms as a cloud service | Java   |
 | -------------------    | ---------------------------- | -----  |
-| 1.0.0                  | Continual                    | 8, 11  |  
+| 1.0.2                  | Continual                    | 8, 11  |  
 
