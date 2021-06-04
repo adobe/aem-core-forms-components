@@ -15,11 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ConsumerType;
-
-import com.adobe.cq.wcm.core.components.models.Component;
 
 /**
  *
@@ -28,27 +24,7 @@ import com.adobe.cq.wcm.core.components.models.Component;
  * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
  */
 @ConsumerType
-public interface SearchAndLister extends Component {
-
-    /**
-     * Returns title string of component
-     *
-     * @return Search and Lister Title String
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
-     */
-    default String getTitle() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Returns layout in which sub-views should be rendered
-     *
-     * @return String indication layout of listing
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
-     */
-    default String getLayout() {
-        throw new UnsupportedOperationException();
-    }
+public interface SearchAndLister extends PortalLister {
 
     /**
      * Returns whether search box should be available or not
@@ -67,20 +43,6 @@ public interface SearchAndLister extends Component {
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default boolean getSortDisabled() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Returns number of search results to return per page
-     *
-     * @return maximum results in a page
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
-     */
-    default long getResultLimit() {
-        throw new UnsupportedOperationException();
-    }
-
-    default Map<String, Object> getSearchResults() {
         throw new UnsupportedOperationException();
     }
 }

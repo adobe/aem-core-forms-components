@@ -1,11 +1,10 @@
-
 {
     "id"                    : "searchlister-fb0b07e803",
     "title"                 : "Sample Title",
     "layout"                : "Custom",
     "searchDisabled"        : true,
     "sortDisabled"          : true,
-    "resultLimit"           : 4,
-    "searchResults"         : {"data":[],"success":"true","nextOffset":0},
+    "limit"                 : 4,
+    "searchResults"         : {"data":[],"offset":0,"nextOffset":-1},
     ":type"                 : "core/fd/components/formsportal/searchlister/v1/searchlister"
 }

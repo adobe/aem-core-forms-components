@@ -7,26 +7,9 @@
             "jcr:created"       : "Wed Mar 06 2019 14:11:01 GMT+0100",
             "jcr:lastModified"  : "Tue May 21 2019 18:59:35 GMT+0300",
             "sling:resourceType": "core/fd/components/formsportal/portallister/v1/portallister",
-            "limit"             : 4,
-            "assetFolders": {
-                "jcr:primaryType":"nt:unstructured",
-                "item0": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "folder"         :"/content/dam/projects"
-                },
-                "item1": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "folder"         :"/content/dam/formsanddocuments"
-                }
-            },
-            "assetSource": {
-                "jcr:primaryType":"nt:unstructured",
-                "item0": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "type"           :"Adaptive Forms",
-                    "htmlTooltip"    :"Click here to view as HTML"
-                }
-            }
+            "limit"             : 10,
+            "title"             : "Sample Title",
+            "layout"            : "Custom"
         }
     },
     "dam" : {

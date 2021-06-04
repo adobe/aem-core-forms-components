@@ -19,5 +19,4 @@
           jcr:description="Search and Lister Component for AEM Forms Portal"
           jcr:primaryType="cq:Component"
           jcr:title="Search and Lister Component (v1)"
-          sling:resourceSuperType="core/fd/components/formsportal/portallister/v1/portallister"
           componentGroup=".core-forms-and-communications-portal"/>
