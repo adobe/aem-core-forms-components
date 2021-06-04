@@ -1,15 +1,8 @@
 {
-    "id":"portallister-2e39f82e36",
-    "limit":10,
-    "nextOffset":0,
-    "itemList":[
-        {
-            "title":"Sample Form",
-            "description":"Sample description for Sample Form",
-            "tooltip":"Click here to view as HTML",
-            "formLink":"/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled",
-            "thumbnailLink": null
-        }
-    ],
+    "id"                    : "portallister-2e39f82e36",
+    "title"                 : "Sample Title",
+    "layout"                : "Custom",
+    "limit"                 : 10,
+    "searchResults"         : {"data":[],"offset":0,"nextOffset":-1},
     ":type":"core/fd/components/formsportal/portallister/v1/portallister"
 }

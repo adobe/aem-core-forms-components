@@ -17,17 +17,21 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal.searchlister;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.jcr.Session;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
@@ -43,19 +47,21 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 @ExtendWith(AemContextExtension.class)
 public class SearchAndListerImplTest {
 
-    public final AemContext context = FormsCoreComponentTestContext.newAemContext();
-
     private static final String TEST_BASE = "/searchlister";
     private static final String CONTENT_ROOT = "/content";
     private static final String ROOT_PAGE = CONTENT_ROOT + "/fpsnl";
     private static final String DEFAULT_COMPONENT_PATH = ROOT_PAGE + "/searchlister-empty";
     private static final String CONFIGURED_COMPONENT_V1_PATH = ROOT_PAGE + "/searchlister-v1";
+    private static final String SAMPLE_FORM = CONTENT_ROOT + "/dam/formsanddocuments/sample-form";
+    public final AemContext context = FormsCoreComponentTestContext.newAemContext();
+
+    private QueryBuilder mockQB;
 
     @BeforeEach
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         ResourceResolverFactory mockResolverFactory = Mockito.mock(ResourceResolverFactory.class);
-        QueryBuilder mockQB = Mockito.mock(QueryBuilder.class);
+        mockQB = Mockito.mock(QueryBuilder.class);
         Query mockQuery = Mockito.mock(Query.class);
         SearchResult mockSearchResult = Mockito.mock(SearchResult.class);
 
@@ -91,7 +97,7 @@ public class SearchAndListerImplTest {
         Assertions.assertEquals("card", component.getLayout());
         Assertions.assertFalse(component.getSearchDisabled());
         Assertions.assertFalse(component.getSortDisabled());
-        Assertions.assertEquals(8, component.getResultLimit());
+        Assertions.assertEquals(Integer.valueOf(8), component.getLimit());
 
         // map at top level should have exactly three keys
         Assertions.assertEquals(3, component.getSearchResults().size());
@@ -104,18 +110,62 @@ public class SearchAndListerImplTest {
         Assertions.assertEquals("Custom", component.getLayout());
         Assertions.assertTrue(component.getSearchDisabled());
         Assertions.assertTrue(component.getSortDisabled());
-        Assertions.assertEquals(4, component.getResultLimit());
+        Assertions.assertEquals(Integer.valueOf(4), component.getLimit());
         Assertions.assertEquals(3, component.getSearchResults().size());
+    }
+
+    @Test
+    public void testPredicateAndResultJson() {
+        // Cover all predicates and also match output json
+        SearchAndLister component = getInstanceUnderTest(CONFIGURED_COMPONENT_V1_PATH);
+
+        Map<String, Object> requestParams = new HashMap<>();
+        requestParams.put("title", "Sample Title");
+        requestParams.put("searchText", "Search Text");
+        requestParams.put("description", "Desc");
+        requestParams.put("tags", "full/path/to/tag");
+        requestParams.put("orderby", "@title");
+        requestParams.put("sort", "asc");
+        requestParams.put("offset", "0");
+        requestParams.put("limit", "10");
+
+        MockSlingHttpServletRequest request = context.request();
+
+        request.setResource(context.currentResource(CONFIGURED_COMPONENT_V1_PATH));
+        request.setParameterMap(requestParams);
+
+        Resource mockFormResource = Mockito.spy(context.resourceResolver().getResource(SAMPLE_FORM));
+
+        Query mockQuery = Mockito.mock(Query.class);
+        SearchResult mockSearchResult = Mockito.mock(SearchResult.class);
+        List<Resource> resultList = new ArrayList<>();
+        resultList.add(mockFormResource);
+        ResourceResolver leakingResourceResolverMock = Mockito.spy(request.getResourceResolver());
+
+        Mockito.when(mockQuery.getResult()).thenReturn(mockSearchResult);
+        Mockito.when(mockSearchResult.getTotalMatches()).thenReturn(Long.valueOf(1));
+        Mockito.when(mockSearchResult.getHits()).thenReturn(Mockito.mock(List.class));
+        Mockito.when(mockSearchResult.getStartIndex()).thenReturn(Long.valueOf(1));
+        Mockito.when(mockSearchResult.getResources()).thenReturn(resultList.listIterator());
+        Mockito.when(mockFormResource.getResourceResolver()).thenReturn(leakingResourceResolverMock);
+
+        // the resource resolver is not leaking in unit testing, hence mocking a leaky resourceResolver
+        Mockito.doNothing().when(leakingResourceResolverMock).close();
+        Mockito.when(mockQB.createQuery(Mockito.any(PredicateGroup.class), Mockito.any(Session.class))).thenReturn(mockQuery);
+
+        // generate model json, after this resourceIterator would need to be reset if called again
+        Utils.testJSONExport(component, TEST_BASE + "/searchlister-v1-withResults.json");
+
+        // the exported json is already tested above, but still test intermediate predicates and invocation below
+        Mockito.verify(mockQB, Mockito.times(1)).createQuery(ArgumentMatchers.argThat(argument -> {
+            // Predicate list's top level predicates / predicate groups size should match
+            return argument.size() == 8;
+        }), Mockito.any(Session.class));
     }
 
     @Test
     public void testMainInterface() {
         SearchAndLister component = Mockito.mock(SearchAndLister.class);
-        Mockito.when(component.getTitle()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getTitle);
-
-        Mockito.when(component.getLayout()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getLayout);
 
         Mockito.when(component.getSearchDisabled()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, component::getSearchDisabled);
@@ -123,11 +173,9 @@ public class SearchAndListerImplTest {
         Mockito.when(component.getSortDisabled()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, component::getSortDisabled);
 
-        Mockito.when(component.getResultLimit()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getResultLimit);
+        Mockito.when(component.getLimit()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, component::getLimit);
 
-        Mockito.when(component.getSearchResults()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getSearchResults);
     }
 
     private SearchAndLister getInstanceUnderTest(String resourcePath) {

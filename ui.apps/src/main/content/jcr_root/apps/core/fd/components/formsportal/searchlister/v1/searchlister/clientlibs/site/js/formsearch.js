@@ -94,7 +94,7 @@
         },
         paginateNext = function (event, id) {
             var componentConfig = componentStore[id];
-            if (componentConfig.nextOffset) {
+            if (componentConfig.nextOffset && componentConfig.nextOffset > 0) {
                 queryFPAssets(id, componentConfig.nextOffset);
             } else {
                 hideLoadMore(id);

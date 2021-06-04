@@ -15,28 +15,38 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
-import java.util.List;
+import java.util.Map;
 
-import org.apache.sling.api.resource.Resource;
 import org.osgi.annotation.versioning.ConsumerType;
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.adobe.cq.wcm.core.components.models.Component;
+
 /**
- *
  * Defines the sling model for {@code /apps/core/fd/components/formsportal/portallister} component.
  *
  * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
  */
 @ConsumerType
-public interface PortalLister {
+public interface PortalLister extends Component {
 
     /**
-     * Return List of Portal Items, Standardized by the {@link Item} interface
+     * Returns title string of component
      *
-     * @return List of items
+     * @return Search and Lister Title String
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default List<Item> getItemList() {
+    default String getTitle() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns layout in which sub-views should be rendered
+     *
+     * @return String indication layout of listing
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
+    default String getLayout() {
         throw new UnsupportedOperationException();
     }
 
@@ -46,25 +56,17 @@ public interface PortalLister {
      * @return String containing numeric value of limit
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default Long getLimit() {
+    default Integer getLimit() {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * Offset of next set of results
+     * Return search results and data required for pagination.
      *
-     * @return long integer representing next offset
+     * @return Map of key to object
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default Long getNextOffset() {
-        throw new UnsupportedOperationException();
-    }
-
-    default List<Resource> getAssetSources() {
-        throw new UnsupportedOperationException();
-    }
-
-    default void setDefaultAssetSources(List<Resource> assetSources) {
+    default Map<String, Object> getSearchResults() {
         throw new UnsupportedOperationException();
     }
 
@@ -94,5 +96,6 @@ public interface PortalLister {
     @ProviderType
     public interface LayoutType {
         public static final String CARD = "card";
+        public static final String LIST = "list";
     }
 }
