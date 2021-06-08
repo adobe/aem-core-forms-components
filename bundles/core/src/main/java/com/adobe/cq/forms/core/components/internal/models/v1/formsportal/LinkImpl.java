@@ -19,6 +19,8 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,7 +35,7 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,22 +79,24 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     @Named(QUERY_PARAMS_PATH)
     private List<Resource> paramsResourceList;
 
-    @SlingObject
-    private ResourceResolver resourceResolver;
+    @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private SlingHttpServletRequest request;
 
     private Map<String, String> queryParamsMap;
 
+    protected static SortedSet<FormsLinkProcessor> processorsList = new TreeSet<>();
+
     @Override
     public String getAssetPathWithQueryParams() {
-        String url = getAssetPath();
+        String url = processorsList.stream()
+            .filter(processor -> processor.accepts(this))
+            .findFirst().map(processor -> processor.processLink(this, request))
+            .orElse(getAssetPath());
+
         if (StringUtils.isBlank(url)) {
             return "#";
         }
         try {
-            String formContentPath = url + "/jcr:content";
-            if (resourceResolver.getResource(formContentPath) != null) {
-                url = formContentPath;
-            }
             URIBuilder uriBuilder = null;
             uriBuilder = new URIBuilder(url);
             Map<String, String> queryParams = getQueryParams();
@@ -126,13 +130,8 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     @Override
     public AssetType getAssetType() {
-        if (assetType != null) {
-            switch (assetType) {
-                case "Adaptive Form":
-                    return AssetType.ADAPTIVE_FORM;
-                default:
-                    break;
-            }
+        if ("Adaptive Form".equals(assetType)) {
+            return AssetType.ADAPTIVE_FORM;
         }
         return AssetType.NONE;
     }
@@ -143,20 +142,64 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     }
 
     private Map<String, String> getQueryParams() {
-        if (queryParamsMap == null) {
+        if (queryParamsMap == null || this.queryParamsMap.isEmpty()) {
             populateQueryParams();
         }
         return queryParamsMap;
     }
 
     private void populateQueryParams() {
+        this.queryParamsMap = new HashMap<String, String>();
         if (paramsResourceList != null) {
-            this.queryParamsMap = new HashMap<String, String>();
             for (Resource param : paramsResourceList) {
                 ValueMap properties = param.getValueMap();
                 this.queryParamsMap.put(properties.get(PN_PARAM_KEY, ""),
                     properties.get(PN_PARAM_VALUE, ""));
             }
         }
+    }
+
+    protected abstract static class FormsLinkProcessor implements Comparable<FormsLinkProcessor> {
+        abstract Boolean accepts(LinkImpl link);
+
+        abstract String processLink(LinkImpl link, SlingHttpServletRequest request);
+
+        abstract Integer priority();
+
+        @Override
+        public int compareTo(FormsLinkProcessor o) {
+            return o.priority() - this.priority();
+        }
+    }
+
+    static {
+        processorsList.add(new FormsLinkProcessor() {
+            // Adaptive Forms and PDF processor
+            @Override
+            public Boolean accepts(LinkImpl link) {
+                return (AssetType.ADAPTIVE_FORM.equals(link.getAssetType())
+                    || AssetType.PDF.equals(link.getAssetType())) && StringUtils.isNotBlank(link.getAssetPath());
+            }
+
+            @Override
+            public String processLink(LinkImpl link, SlingHttpServletRequest request) {
+                String givenPath = link.getAssetPath();
+                String builtPath = givenPath + "/jcr:content";
+                ResourceResolver resourceResolver = request.getResourceResolver();
+                if (resourceResolver.getResource(builtPath) != null) {
+                    Map<String, String> params = link.getQueryParams();
+                    if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey("wcmmode")) {
+                        builtPath += "?wcmmode=disabled";
+                    }
+                    givenPath = builtPath;
+                }
+                return givenPath;
+            }
+
+            @Override
+            public Integer priority() {
+                return Integer.MIN_VALUE + 1;
+            }
+        });
     }
 }

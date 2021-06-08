@@ -32,6 +32,9 @@ public interface Link extends Component {
      */
     enum AssetType {
         ADAPTIVE_FORM,
+        PDF,
+        OTHERS,
+        EXTERNAL_LINK,
         NONE
     }
 

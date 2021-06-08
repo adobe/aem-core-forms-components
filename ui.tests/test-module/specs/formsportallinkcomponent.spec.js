@@ -75,7 +75,11 @@ describe('Link - Authoring', function () {
                 .should("be.visible")
                 .click();
 
-            cy.get("[name='./assetPath']")
+            cy.get("[name='./assetType']")
+                .should("be.visible")
+                .should("have.value", "Adaptive Form");
+
+            cy.get("[name='./adaptiveFormPath']")
                 .should("be.visible")
                 .should("have.value", "");
 
