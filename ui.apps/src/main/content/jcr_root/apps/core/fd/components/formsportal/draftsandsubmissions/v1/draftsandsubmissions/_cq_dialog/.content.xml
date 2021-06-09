@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2021 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:mixinTypes="[granite:InternalArea]"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Edit Component"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          extraClientlibs="core.forms.components.formsportal.draftsandsubmissions.v1.editor">
+    <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <titleText
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    emptyText="Drafts"
+                    fieldDescription="Specify a title"
+                    fieldLabel="Title"
+                    name="./title"/>
+            <type
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    emptyText=""
+                    fieldLabel="Select Type"
+                    fieldDescription="Specify type - Drafts / Submissions / Pending Sign Forms"
+                    multiple="{Boolean}false"
+                    name="./type"
+                    text="Select">
+                <items jcr:primaryType="nt:unstructured">
+                    <draftOnly
+                            jcr:primaryType="nt:unstructured"
+                            text="Draft Forms"
+                            value="DRAFT"/>
+                    <submitOnly
+                            jcr:primaryType="nt:unstructured"
+                            text="Submitted Forms"
+                            value="SUBMISSION"/>
+                    <pendingSignOnly
+                            jcr:primaryType="nt:unstructured"
+                            text="Pending Sign Forms"
+                            value="PENDING_SIGN"/>
+                </items>
+            </type>
+            <layout
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/foundation/form/select"
+                    fieldLabel="Layout Template"
+                    name="./layout">
+                <items jcr:primaryType="nt:unstructured">
+                    <layout1
+                            jcr:primaryType="nt:unstructured"
+                            text="Card"
+                            value="card"
+                            selected="{Boolean}true"/>
+                    <layout2
+                            jcr:primaryType="nt:unstructured"
+                            text="List"
+                            value="list"/>
+                </items>
+            </layout>
+            <totalResult
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                    defaultValue="8"
+                    emptyText="8"
+                    fieldDescription="Specify the number of resultant records to display"
+                    fieldLabel="Results Displayed"
+                    maxLength="{Long}30"
+                    name="./limit"/>
+        </items>
+    </content>
+</jcr:root>

@@ -94,7 +94,7 @@
     };
 
     var onScriptLoad = function (event, additionalParams) {
-        var componentApp = additionalParams.detail.searchAndLister;
+        var componentApp = additionalParams.detail.portalLister;
         componentApp.initializeItemAPI(ItemAPI);
     };
 

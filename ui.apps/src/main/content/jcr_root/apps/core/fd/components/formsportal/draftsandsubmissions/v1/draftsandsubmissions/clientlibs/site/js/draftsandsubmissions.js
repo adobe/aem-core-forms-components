@@ -16,7 +16,7 @@
 
 (function($) {
     var NS = 'cmp',
-        IS = 'formssearch',
+        IS = 'draftsandsubmissions',
         ATTR_PREFIX = "data-" + NS + "-hook-" + IS;
 
     var keyCodes = {
@@ -25,12 +25,9 @@
 
     var selectors = {
         results: "[" + ATTR_PREFIX + "=\"results\"]",
-        searchInput: "[" + ATTR_PREFIX + "=\"input\"]",
         itemTemplate: "[" + ATTR_PREFIX + "=\"itemTemplate\"]",
         loadMore: "[" + ATTR_PREFIX + "=\"more\"]",
-        sortButton: "[" + ATTR_PREFIX + "=\"sort\"]",
-        filterButton: "[" + ATTR_PREFIX + "=\"filter\"]",
-        self: "[data-" + NS + '-is="' + IS + '"]',
+        self: "[data-" + NS + '-is="' + IS + '"]'
     };
 
     // All instances are stored in the store object with key being their model's id
@@ -55,21 +52,13 @@
             queryResults.data.forEach(function(item) {
                 ItemAPI.createAndInject(componentConfig.itemTemplate, item, componentConfig.resultsNode);
             });
+            if (queryResults.nextOffset < 0) {
+                hideLoadMore(id);
+            }
         },
-        queryFPAssets = function (id, offset) {
+        queryFPRecords = function (id, offset) {
             var parameters = new URLSearchParams(),
                 componentConfig = componentStore[id];
-            if (componentConfig.inputNode && componentConfig.inputNode.value) {
-                // Filtering to come with Advanced Search
-                // if (componentConfig.filter) {
-                //     parameters.append(componentConfig.filter, componentConfig.inputNode.value);
-                // }
-                parameters.append("searchText", componentConfig.inputNode.value);
-            }
-            if (componentConfig.sort) {
-                parameters.append("orderby", "title");
-                parameters.append("sort", componentConfig.sort);
-            }
             if (componentConfig.limit) {
                 parameters.append("limit", componentConfig.limit);
             }
@@ -86,7 +75,7 @@
                 case keyCodes.ENTER:
                     event.preventDefault();
                     cleanup(id);
-                    queryFPAssets(id);
+                    queryFPRecords(id);
                     break;
                 default:
                     return;
@@ -94,13 +83,13 @@
         },
         paginateNext = function (event, id) {
             var componentConfig = componentStore[id];
-            if (componentConfig.nextOffset && componentConfig.nextOffset > 0) {
-                queryFPAssets(id, componentConfig.nextOffset);
+            if (componentConfig.nextOffset) {
+                queryFPRecords(id, componentConfig.nextOffset);
             } else {
                 hideLoadMore(id);
             }
         },
-        initializeSearchAndListerInstance = function (config) {
+        initializeDraftsAndSubmissionsInstance = function (config) {
             if (componentStore[config.id]) {
                 // to prevent multiple initializations of same component
                 return;
@@ -109,10 +98,7 @@
 
             componentConfig.componentNode = document.getElementById(config.id);
             componentConfig.resultsNode = componentConfig.componentNode.querySelector(selectors.results);
-            componentConfig.inputNode = componentConfig.componentNode.querySelector(selectors.searchInput);
             componentConfig.loadmoreNode = componentConfig.componentNode.querySelector(selectors.loadMore);
-            componentConfig.sortBtnNode = componentConfig.componentNode.querySelector(selectors.sortButton);
-            componentConfig.filterBtnNode = componentConfig.componentNode.querySelector(selectors.filterButton);
             componentConfig.itemTemplate = componentConfig.componentNode.querySelector(selectors.itemTemplate).innerHTML;
 
             componentStore[config.id] = componentConfig;
@@ -123,20 +109,6 @@
                     handleKeyPresses(event, config.id);
                 });
             }
-            if (componentConfig.sortBtnNode) {
-                componentConfig.sortBtnNode.addEventListener("change", (event) => {
-                    componentConfig.sort = componentConfig.sortBtnNode.value;
-                    cleanup(config.id);
-                    queryFPAssets(config.id);
-                });
-            }
-            if (componentConfig.filterBtnNode) {
-                componentConfig.filterBtnNode.addEventListener("change", (event) => {
-                    componentConfig.filter = componentConfig.filterBtnNode.value;
-                    cleanup(config.id);
-                    queryFPAssets(config.id);
-                });
-            }
             componentConfig.loadmoreNode.addEventListener("click", (event) => {
                 paginateNext(event, config.id)
             });
@@ -144,7 +116,7 @@
             ItemAPI.init(componentConfig.itemTemplate, componentConfig.resultsNode);
 
             cleanup(config.id);
-            queryFPAssets(config.id);
+            queryFPRecords(config.id);
         },
         queryDomForAllInstances = function () {
             // This function should execute after DOM is safe to manipulate
@@ -152,7 +124,7 @@
             var elements = document.querySelectorAll(selectors.self);
             for (var i = 0; i < elements.length; i++) {
                 var element = elements[i];
-                initializeSearchAndListerInstance({
+                initializeDraftsAndSubmissionsInstance({
                     "id": element.getAttribute("id"),
                     "queryPath": element.getAttribute("data-queryPath")
                 })
@@ -167,7 +139,7 @@
         tmpEvent = {
             detail: {
                 portalLister: {
-                    initializeItemAPI: initializeItemAPI,
+                    initializeItemAPI: initializeItemAPI
                 }
             }
         };
