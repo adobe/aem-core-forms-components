@@ -607,7 +607,23 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>formsportal-api</artifactId>
+            <version>1.0.10</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>formsportal-api</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.forms.foundation</groupId>
+            <artifactId>forms-foundation-bundle</artifactId>
+            <version>5.0.196</version>
+        </dependency>
     </dependencies>
 
     <developers>
