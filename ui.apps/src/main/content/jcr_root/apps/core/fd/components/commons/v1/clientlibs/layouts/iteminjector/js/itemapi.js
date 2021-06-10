@@ -60,8 +60,12 @@
 
             addTextWithTooltip(titleElem, data.title);
             addTextWithTooltip(descElem, data.description);
-            addTextWithTooltip(linkElem, "HTML", data.tooltip)
-            linkElem.setAttribute("href", data.formLink);
+            if (linkElem) {
+                linkElem.setAttribute("href", data.formLink);
+                if (data.tooltip) {
+                    linkElem.setAttribute("title", data.tooltip);
+                }
+            }
 
             if (data.thumbnailLink) {
                 thumbnailElem.setAttribute("src", data.thumbnailLink);
