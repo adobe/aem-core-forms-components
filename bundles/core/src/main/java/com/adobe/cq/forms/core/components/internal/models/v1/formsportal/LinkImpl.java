@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -45,6 +46,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.Link;
+import com.day.cq.wcm.api.WCMMode;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -55,12 +57,12 @@ import com.adobe.cq.forms.core.components.models.formsportal.Link;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class LinkImpl extends AbstractComponentImpl implements Link {
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/link/v1/link";
-    public static final String QUERY_PARAMS_PATH = "queryParams";
+    private static final String QUERY_PARAMS_PATH = "queryParams";
     private static final String PN_PARAM_KEY = "key";
     private static final String PN_PARAM_VALUE = "value";
-    public static final Logger logger = LoggerFactory.getLogger(LinkImpl.class);
-    private static final String QP_AF_DEFAULT_MODE_KEY = "wcmmode";
-    private static final String QP_AF_DEFAULT_MODE_VALUE = "disabled";
+    private static final Logger logger = LoggerFactory.getLogger(LinkImpl.class);
+    private static final String QP_AF_DEFAULT_MODE_KEY = WCMMode.class.getSimpleName().toLowerCase();
+    private static final String QP_AF_DEFAULT_MODE_VALUE = WCMMode.DISABLED.name().toLowerCase();
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
@@ -87,7 +89,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
 
     private Map<String, String> queryParamsMap;
 
-    protected static SortedSet<FormsLinkProcessor> processorsList = new TreeSet<>();
+    private SortedSet<FormsLinkProcessor> processorsList = new TreeSet<>();
 
     @Override
     public String getAssetPathWithQueryParams() {
@@ -144,15 +146,14 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
         return assetPath;
     }
 
-    @Override
-    public Map<String, String> getQueryParams() {
+    protected Map<String, String> getQueryParams() {
         if (queryParamsMap == null || this.queryParamsMap.isEmpty()) {
             populateQueryParams();
         }
         return queryParamsMap;
     }
 
-    private void populateQueryParams() {
+    protected void populateQueryParams() {
         this.queryParamsMap = new HashMap<String, String>();
         if (paramsResourceList != null) {
             for (Resource param : paramsResourceList) {
@@ -164,29 +165,39 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     }
 
     protected abstract static class FormsLinkProcessor implements Comparable<FormsLinkProcessor> {
-        public abstract Boolean accepts(Link link);
+        // has to be a class in order to implement Comparable
+        // accepts a LinkImpl and is protected to allow implementation by subclasses (i.e future versions of Link component)
+        public abstract Boolean accepts(LinkImpl link);
 
-        public abstract String processLink(Link link, SlingHttpServletRequest request);
+        public abstract String processLink(LinkImpl link, SlingHttpServletRequest request);
 
         public abstract Integer priority();
 
         @Override
         public int compareTo(FormsLinkProcessor o) {
-            return o.priority() - this.priority();
+            if (o != null) {
+                return o.priority() - this.priority();
+            }
+            return 0;
         }
     }
 
-    static {
-        processorsList.add(new FormsLinkProcessor() {
+    protected void addFormsLinkProcessor(FormsLinkProcessor processor) {
+        this.processorsList.add(processor);
+    }
+
+    @PostConstruct
+    protected void init() {
+        this.addFormsLinkProcessor(new FormsLinkProcessor() {
             // Adaptive Forms and PDF processor
             @Override
-            public Boolean accepts(Link link) {
+            public Boolean accepts(LinkImpl link) {
                 return (AssetType.ADAPTIVE_FORM.equals(link.getAssetType())
                     || AssetType.PDF.equals(link.getAssetType())) && StringUtils.isNotBlank(link.getAssetPath());
             }
 
             @Override
-            public String processLink(Link link, SlingHttpServletRequest request) {
+            public String processLink(LinkImpl link, SlingHttpServletRequest request) {
                 String givenPath = link.getAssetPath();
                 String builtPath = givenPath + "/" + JcrConstants.JCR_CONTENT;
                 ResourceResolver resourceResolver = request.getResourceResolver();
