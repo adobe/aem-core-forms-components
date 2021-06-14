@@ -15,9 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
+import java.util.Map;
+
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Defines the sling model for {@code /apps/core/fd/components/formsportal/link} component.
@@ -87,6 +90,17 @@ public interface Link extends Component {
      * @since com.adobe.cq.forms.core.components.models.formsportal 1.0.0
      */
     default String getAssetPath() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns query parameters set for this link
+     *
+     * @return Map containing query parameters as key, value pairs
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
+    @JsonIgnore
+    default Map<String, String> getQueryParams() {
         throw new UnsupportedOperationException();
     }
 }

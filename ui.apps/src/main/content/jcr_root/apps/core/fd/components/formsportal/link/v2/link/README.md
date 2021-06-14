@@ -46,8 +46,46 @@ BLOCK cmp-link
 ```
 
 ## Extending Link Component
-Provided sling model has a `processorsList` where Link processors for asset types can be plugged in.  
+Provided sling model has a `processorsList` where Link processors for asset types can be plugged in to modify / override default behaviour.
+This list is sorted in order of priority from high to low. Exactly one processor is executed for a link. For example, the following code specifies custom processing for external links:  
+```java
+public class CustomLinkExtension extends com.adobe.cq.forms.core.components.internal.models.v2.formsportal.LinkImpl {
+    ...
 
+    static {
+        // this processor now applies to existing link implementation
+        processorsList.add(new FormsLinkProcessor() {
+
+            @Override
+            public Boolean accepts(Link link) {
+                if (link.getAssetType().equals(AssetType.EXTERNAL_LINK)) {
+                    // only called for external links
+                    return Boolean.TRUE;
+                }
+                return Boolean.FALSE;
+            }
+
+            @Override
+            public String processLink(Link link, SlingHttpServletRequest request) {
+                // replace references of our old domain with new one in external links
+                String finalPath = link.getAssetPath();
+                if (finalPath.contains("www.myolddomain.com")) {
+                    finalPath.replace("www.myolddomain.com", "www.mynewdomain.com");
+                }
+                return finalPath;
+            }
+
+            @Override
+            public Integer priority() {
+                // highest priority of this processor
+                return Integer.MAX_VALUE;
+            }
+        });
+    }
+
+    ...
+}
+```
 
 ## Information
 * **Vendor**: Adobe

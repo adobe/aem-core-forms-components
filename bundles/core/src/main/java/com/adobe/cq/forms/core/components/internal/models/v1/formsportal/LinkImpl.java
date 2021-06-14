@@ -27,6 +27,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -58,6 +59,8 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     private static final String PN_PARAM_KEY = "key";
     private static final String PN_PARAM_VALUE = "value";
     public static final Logger logger = LoggerFactory.getLogger(LinkImpl.class);
+    private static final String QP_AF_DEFAULT_MODE_KEY = "wcmmode";
+    private static final String QP_AF_DEFAULT_MODE_VALUE = "disabled";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
@@ -141,7 +144,8 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
         return assetPath;
     }
 
-    private Map<String, String> getQueryParams() {
+    @Override
+    public Map<String, String> getQueryParams() {
         if (queryParamsMap == null || this.queryParamsMap.isEmpty()) {
             populateQueryParams();
         }
@@ -160,11 +164,11 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
     }
 
     protected abstract static class FormsLinkProcessor implements Comparable<FormsLinkProcessor> {
-        abstract Boolean accepts(LinkImpl link);
+        public abstract Boolean accepts(Link link);
 
-        abstract String processLink(LinkImpl link, SlingHttpServletRequest request);
+        public abstract String processLink(Link link, SlingHttpServletRequest request);
 
-        abstract Integer priority();
+        public abstract Integer priority();
 
         @Override
         public int compareTo(FormsLinkProcessor o) {
@@ -176,20 +180,20 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
         processorsList.add(new FormsLinkProcessor() {
             // Adaptive Forms and PDF processor
             @Override
-            public Boolean accepts(LinkImpl link) {
+            public Boolean accepts(Link link) {
                 return (AssetType.ADAPTIVE_FORM.equals(link.getAssetType())
                     || AssetType.PDF.equals(link.getAssetType())) && StringUtils.isNotBlank(link.getAssetPath());
             }
 
             @Override
-            public String processLink(LinkImpl link, SlingHttpServletRequest request) {
+            public String processLink(Link link, SlingHttpServletRequest request) {
                 String givenPath = link.getAssetPath();
-                String builtPath = givenPath + "/jcr:content";
+                String builtPath = givenPath + "/" + JcrConstants.JCR_CONTENT;
                 ResourceResolver resourceResolver = request.getResourceResolver();
                 if (resourceResolver.getResource(builtPath) != null) {
                     Map<String, String> params = link.getQueryParams();
-                    if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey("wcmmode")) {
-                        builtPath += "?wcmmode=disabled";
+                    if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey(QP_AF_DEFAULT_MODE_KEY)) {
+                        builtPath += "?" + QP_AF_DEFAULT_MODE_KEY + "=" + QP_AF_DEFAULT_MODE_VALUE;
                     }
                     givenPath = builtPath;
                 }

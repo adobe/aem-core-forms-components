@@ -38,6 +38,8 @@ public class LinkImplTest {
     private static final String EMPTY_LINK_PATH = ROOT_PAGE + "/linkcomponent-v2-empty";
     private static final String LINK2_PATH = ROOT_PAGE + "/linkcomponent-v2";
     private static final String LINK2_PATH_WITH_EXTERNAL_LINK = ROOT_PAGE + "/linkcomponent-v2-external";
+    private static final String LINK2_PATH_WITH_PDF = ROOT_PAGE + "/linkcomponent-v2-pdf";
+    private static final String LINK2_PATH_WITH_OTHERS = ROOT_PAGE + "/linkcomponent-v2-others";
 
     @BeforeEach
     public void setUp() {
@@ -85,6 +87,18 @@ public class LinkImplTest {
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.EXTERNAL_LINK, link.getAssetType());
+    }
+
+    @Test
+    public void testOthersAssetType() {
+        Link link = getLinkUnderTest(LINK2_PATH_WITH_OTHERS);
+        Assertions.assertEquals(Link.AssetType.OTHERS, link.getAssetType());
+    }
+
+    @Test
+    public void testPDFAssetType() {
+        Link link = getLinkUnderTest(LINK2_PATH_WITH_PDF);
+        Assertions.assertEquals(Link.AssetType.PDF, link.getAssetType());
     }
 
     private Link getLinkUnderTest(String resourcePath) {
