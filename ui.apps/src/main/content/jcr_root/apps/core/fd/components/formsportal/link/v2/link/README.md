@@ -34,8 +34,9 @@ The following properties are written to JCR for the Link component and are expec
 
 1. `./title`     - Text shown on the link
 2. `./tooltip`   - Tooltip on the link
-3. `./assetType` - Type of asset the link refers to (e.g *ADAPTIVE_FORM*)
-4. `./adaptiveFormPath`, `./pdfPath`, `./otherAssetPath`, `./externalLinkPath` - Path to the asset linked, depending on it's type
+3. `./accessibiltyLabel` - `aria-label` property on the link
+4. `./assetType` - Type of asset the link refers to (e.g *ADAPTIVE_FORM*)
+5. `./adaptiveFormPath`, `./pdfPath`, `./otherAssetPath`, `./externalLinkPath` - Path to the asset linked, depending on it's type
 
 In addition, the n<sup>th</sup> query parameter is saved as `key` and `value` properties on child node `queryParams/item<n>`.
 

@@ -105,6 +105,9 @@ public class LinkImplTest {
 
         Mockito.when(linkMock.getAssetPathWithQueryParams()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, linkMock::getAssetPathWithQueryParams);
+
+        Mockito.when(linkMock.getAccessibilityLabel()).thenCallRealMethod();
+        Assertions.assertNull(linkMock.getAccessibilityLabel());
     }
 
     private Link getLinkUnderTest(String resourcePath) {

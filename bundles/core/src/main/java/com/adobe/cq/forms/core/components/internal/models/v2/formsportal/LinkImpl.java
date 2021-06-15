@@ -34,7 +34,7 @@ import com.adobe.cq.forms.core.components.models.formsportal.Link;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models.v1.formsportal.LinkImpl {
+public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models.v1.formsportal.LinkImpl implements Link {
 
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/link/v2/link";
 
@@ -57,6 +57,10 @@ public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     private String assetType;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Inject
+    private String accessibilityLabel;
 
     @Override
     public String getAssetPath() {
@@ -90,5 +94,10 @@ public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models
             }
         }
         return super.getAssetType();
+    }
+
+    @Override
+    public String getAccessibilityLabel() {
+        return accessibilityLabel;
     }
 }

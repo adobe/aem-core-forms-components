@@ -4,6 +4,7 @@
     "tooltip"   : "Some Hover Tooltip Text",
     "assetType" : "ADAPTIVE_FORM",
     "assetPath" : "/content/dam/formsanddocuments/sample-form",
+    "accessibilityLabel"       : "Test Aria Label",
     "assetPathWithQueryParams" : "/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled",
     ":type"     : "core/fd/components/formsportal/link/v2/link"
 }

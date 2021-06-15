@@ -89,4 +89,15 @@ public interface Link extends Component {
     default String getAssetPath() {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * Returns path to the asset to which the URL would redirect to
+     * Note that this is not the url. For url, use {@link #getAssetPathWithQueryParams}
+     *
+     * @return Path to asset if configured
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
+    default String getAccessibilityLabel() {
+        return null;
+    }
 }

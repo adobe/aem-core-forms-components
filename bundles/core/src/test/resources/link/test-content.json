@@ -77,6 +77,7 @@
             "adaptiveFormPath"      : "/content/dam/formsanddocuments/sample-form",
             "title"                 : "Link Component",
             "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "accessibilityLabel"    : "Test Aria Label",
             "assetType"             : "Adaptive Form"
         },
         "linkcomponent-v2-empty": {
