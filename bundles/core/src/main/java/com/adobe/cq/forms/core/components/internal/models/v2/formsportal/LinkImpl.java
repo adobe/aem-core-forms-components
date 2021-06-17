@@ -58,10 +58,6 @@ public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models
     @Inject
     private String assetType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Inject
-    private String accessibilityLabel;
-
     @Override
     public String getAssetPath() {
         switch (getAssetType()) {
@@ -94,10 +90,5 @@ public class LinkImpl extends com.adobe.cq.forms.core.components.internal.models
             }
         }
         return super.getAssetType();
-    }
-
-    @Override
-    public String getAccessibilityLabel() {
-        return accessibilityLabel;
     }
 }

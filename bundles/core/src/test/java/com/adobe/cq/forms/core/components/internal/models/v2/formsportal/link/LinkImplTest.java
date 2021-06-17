@@ -76,7 +76,7 @@ public class LinkImplTest {
             .getAssetPathWithQueryParams());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
-        Assertions.assertEquals("Test Aria Label", link.getAccessibilityLabel());
+        Assertions.assertNull(link.getAccessibilityLabel());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
     }
 
