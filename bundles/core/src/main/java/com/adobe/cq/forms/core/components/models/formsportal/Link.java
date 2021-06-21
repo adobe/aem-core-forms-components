@@ -91,10 +91,9 @@ public interface Link extends Component {
     }
 
     /**
-     * Returns path to the asset to which the URL would redirect to
-     * Note that this is not the url. For url, use {@link #getAssetPathWithQueryParams}
+     * Returns the accessibility label on corresponding link
      *
-     * @return Path to asset if configured
+     * @return accessibility label
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default String getAccessibilityLabel() {
