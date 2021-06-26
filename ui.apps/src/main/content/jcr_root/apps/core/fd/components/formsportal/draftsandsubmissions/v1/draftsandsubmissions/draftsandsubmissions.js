@@ -26,6 +26,7 @@ use(function () {
             resourceName: "seperator",
             "sling:resourceType": "core/wcm/components/separator/v1/separator"
         },
-        layoutPath: layoutPath
+        layoutPath: layoutPath,
+        menuPath: "core/fd/components/commons/v1/menuTemplate/menu.html"
     }
 });

@@ -22,16 +22,6 @@ import org.osgi.annotation.versioning.*;
 public interface DraftsAndSubmissions extends PortalLister {
 
     /**
-     * Returns title string of component
-     *
-     * @return Search and Lister Title String
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
-     */
-    default String getTitle() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Returns type - DRAFT / SUBMISSION / PENDING_SIGN
      *
      * @return Type - DRAFT / SUBMISSION / PENDING_SIGN
@@ -42,32 +32,20 @@ public interface DraftsAndSubmissions extends PortalLister {
     }
 
     /**
-     * Returns layout in which sub-views should be rendered
+     * Operation name that is to be performed.
      *
-     * @return String indication layout of listing
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     * @return Operation name
      */
-    default String getLayout() {
+    default String getOperationName() {
         throw new UnsupportedOperationException();
     }
 
     /**
-     * Return maximum number of results to be returned by getItemList at a time
-     *
-     * @return String containing numeric value of limit
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     * Result of performed operation.
+     * 
+     * @return
      */
-    default Integer getLimit() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Return map of queried results
-     *
-     * @return Map of queried results
-     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
-     */
-    default Map<String, Object> getSearchResults() {
+    default Operation.OperationResult getOperationResult() {
         throw new UnsupportedOperationException();
     }
 

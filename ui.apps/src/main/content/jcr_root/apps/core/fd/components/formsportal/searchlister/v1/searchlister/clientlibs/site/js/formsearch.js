@@ -53,7 +53,7 @@
                 queryResults = response.searchResults;
             componentConfig.nextOffset = queryResults.nextOffset;
             queryResults.data.forEach(function(item) {
-                ItemAPI.createAndInject(componentConfig.itemTemplate, item, componentConfig.resultsNode);
+                ItemAPI.createAndInject(componentConfig, item);
             });
         },
         queryFPAssets = function (id, offset) {
@@ -141,7 +141,7 @@
                 paginateNext(event, config.id)
             });
 
-            ItemAPI.init(componentConfig.itemTemplate, componentConfig.resultsNode);
+            ItemAPI.init(componentConfig);
 
             cleanup(config.id);
             queryFPAssets(config.id);

@@ -40,10 +40,6 @@
         padding-right: 20px;
         width: 60%;
     }
-
-    &-footer {
-        width: 10%;
-    }
 }
 
 .cmp-portallister-results {
@@ -52,5 +48,21 @@
     &--list {
         border-collapse: collapse;
         width: 100%;
+    }
+}
+
+.cmp-portallister__item--list-operations {
+    cursor: pointer;
+}
+
+.cmp-portallister__item--list-operations-icon {
+    font-size: 14px;
+    color: #6e6e6e;
+    &:hover {
+        color: #2c2c2c;
+    }
+    &::before {
+        content: "\f141";
+        font-family: 'Font Awesome 5 Free';
     }
 }
