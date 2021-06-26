@@ -34,6 +34,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
+import com.adobe.cq.forms.core.components.models.formsportal.Operation;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 
 @Model(
@@ -127,11 +128,15 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     }
 
     public static class Item implements PortalLister.Item {
+        private String id;
         private String title;
         private String description;
         private String tooltip;
         private String formLink;
         private String formThumbnail;
+        private List<Operation> operations;
+
+        public Item() {}
 
         public Item(String title, String description, String tooltip, String formLink, String formThumbnail) {
             this.title = title;
@@ -139,6 +144,39 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
             this.tooltip = tooltip;
             this.formLink = formLink;
             this.formThumbnail = formThumbnail;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public void setTooltip(String tooltip) {
+            this.tooltip = tooltip;
+        }
+
+        public void setFormLink(String formLink) {
+            this.formLink = formLink;
+        }
+
+        public void setFormThumbnail(String formThumbnail) {
+            this.formThumbnail = formThumbnail;
+        }
+
+        public void setOperations(List<Operation> operations) {
+            this.operations = operations;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public List<Operation> getOperations() {
+            return operations;
         }
 
         @Override
@@ -164,6 +202,11 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         @Override
         public String getThumbnailLink() {
             return formThumbnail;
+        }
+
+        @Override
+        public String getId() {
+            return id;
         }
     }
 }

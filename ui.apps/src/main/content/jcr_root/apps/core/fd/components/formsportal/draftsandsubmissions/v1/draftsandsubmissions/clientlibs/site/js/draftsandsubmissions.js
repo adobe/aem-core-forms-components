@@ -26,6 +26,7 @@
     var selectors = {
         results: "[" + ATTR_PREFIX + "=\"results\"]",
         itemTemplate: "[" + ATTR_PREFIX + "=\"itemTemplate\"]",
+        menuTemplate: "[" + ATTR_PREFIX + "=\"menuTemplate\"]",
         loadMore: "[" + ATTR_PREFIX + "=\"more\"]",
         self: "[data-" + NS + '-is="' + IS + '"]'
     };
@@ -50,7 +51,7 @@
                 queryResults = response.searchResults;
             componentConfig.nextOffset = queryResults.nextOffset;
             queryResults.data.forEach(function(item) {
-                ItemAPI.createAndInject(componentConfig.itemTemplate, item, componentConfig.resultsNode);
+                ItemAPI.createAndInject(componentConfig, item);
             });
             if (queryResults.nextOffset < 0) {
                 hideLoadMore(id);
@@ -100,8 +101,7 @@
             componentConfig.resultsNode = componentConfig.componentNode.querySelector(selectors.results);
             componentConfig.loadmoreNode = componentConfig.componentNode.querySelector(selectors.loadMore);
             componentConfig.itemTemplate = componentConfig.componentNode.querySelector(selectors.itemTemplate).innerHTML;
-
-            componentStore[config.id] = componentConfig;
+            componentConfig.menuTemplate = componentConfig.componentNode.querySelector(selectors.menuTemplate).innerHTML;
 
             // input node, sort button and filter button are rendered conditionally
             if (componentConfig.inputNode) {
@@ -113,8 +113,9 @@
                 paginateNext(event, config.id)
             });
 
-            ItemAPI.init(componentConfig.itemTemplate, componentConfig.resultsNode);
+            ItemAPI.init(componentConfig);
 
+            componentStore[config.id] = componentConfig;
             cleanup(config.id);
             queryFPRecords(config.id);
         },

@@ -24,7 +24,7 @@
         white-space: nowrap;
     }
 
-    .cmp-portallister__item--card-body {
+    .cmp-portallister__item--card-description {
         margin-top: 10px;
         margin-bottom: 10px;
         text-overflow: ellipsis;
@@ -39,6 +39,22 @@
         height: 48px;
         border-top: 2px solid #ECEFF1;
         padding-top: 13px;
+    }
+
+    .cmp-portallister__item--card-operations {
+        display: inline-block;
+        float: right;
+        cursor: pointer;
+    }
+    .cmp-portallister__item--card-operations-icon {
+        color: #6e6e6e;
+        &:hover {
+            color: #2c2c2c;
+        }
+        &::before {
+            content: "\f141";
+            font-family: 'Font Awesome 5 Free';
+        }
     }
 }
 

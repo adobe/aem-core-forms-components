@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ConsumerType;
@@ -89,6 +90,14 @@ public interface PortalLister extends Component {
         }
 
         default String getThumbnailLink() {
+            throw new UnsupportedOperationException();
+        }
+
+        default List<Operation> getOperations() {
+            throw new UnsupportedOperationException();
+        }
+
+        default String getId() {
             throw new UnsupportedOperationException();
         }
     }
