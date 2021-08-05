@@ -58,6 +58,9 @@
                 <configuration>
                     <group>forms-components-library</group>
                     <packageType>container</packageType>
+                    <properties>
+                        <cloudManagerTarget>none</cloudManagerTarget>
+                    </properties>
                     <allowIndexDefinitions>true</allowIndexDefinitions>
                     <embeddedTarget>/apps/core/forms/install</embeddedTarget>
                     <embeddeds>
