@@ -979,7 +979,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2020.07.01.04</version>
+                <version>2021.06.18.00</version>
             </dependency>
 
             <dependency>
