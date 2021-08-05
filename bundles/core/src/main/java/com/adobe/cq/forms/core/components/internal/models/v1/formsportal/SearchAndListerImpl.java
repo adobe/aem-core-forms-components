@@ -19,14 +19,12 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jcr.Session;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -53,15 +51,15 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import com.adobe.aem.formsndocuments.assets.models.AdaptiveFormAsset;
+import com.adobe.aem.formsndocuments.assets.models.FormManagerAsset;
+import com.adobe.aem.formsndocuments.assets.service.FMAssetSearch;
+import com.adobe.aem.formsndocuments.assets.utils.FMSearchCriteria;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister;
 import com.day.cq.i18n.I18n;
-import com.day.cq.search.PredicateGroup;
-import com.day.cq.search.Query;
-import com.day.cq.search.QueryBuilder;
-import com.day.cq.search.result.SearchResult;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -74,28 +72,19 @@ import com.day.cq.search.result.SearchResult;
 public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLister {
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/searchlister/v1/searchlister";
 
-    private static final String QB_GROUP = "_group.";
-    private static final String QB_PATH = "_path";
-    private static final String QB_FULLTEXT = "_fulltext";
-    private static final String QB_FULLTEXT_RELPATH = "_fulltext.relPath";
-    private static final String DEFAULT_PATH = "/content/dam/formsanddocuments";
-    private static final String METADATA_NODE_PATH = org.apache.jackrabbit.vault.util.JcrConstants.JCR_CONTENT + "/metadata";
     private static final String PN_CHILD_ASSETFOLDERS = "assetFolders";
     private static final String PN_CHILD_ASSETSOURCES = "assetSource";
-    private static final String THUMBNAIL_PATH_SUFFIX = "/jcr:content/renditions/cq5dam.thumbnail.319.319.png";
     private static final Map<String, QueryStrategy> queryStrategies = new HashMap<>();
 
     static {
         queryStrategies.put("searchText", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
                 int counter = 0;
                 int paramCount = params.length;
                 while (paramCount-- > 0) {
                     String text = params[counter].getString();
                     if (StringUtils.isNotBlank(text)) {
-                        queryMap.put(predicateID + QB_FULLTEXT, text);
-                        queryMap.put(predicateID + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH);
-                        predicateID++;
+                        builder.withFullText(text);
                     }
                     counter++;
                 }
@@ -103,56 +92,36 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         });
 
         queryStrategies.put("title", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
                 String title = params[0].getString();
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, title);
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@title");
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, title);
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:title");
-                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
+                builder.withPropertyEquals(FMSearchCriteria.Property.TITLE, title);
             }
         });
 
         queryStrategies.put("description", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
                 String description = params[0].getString();
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT, description);
-                queryMap.put(predicateID + QB_GROUP + "0" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@description");
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT, description);
-                queryMap.put(predicateID + QB_GROUP + "1" + QB_FULLTEXT_RELPATH, METADATA_NODE_PATH + "/@dc:description");
-                queryMap.put(predicateID + QB_GROUP + "p.or", "true");
-            }
-        });
-
-        queryStrategies.put("tags", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
-                int tagID = 0;
-                int paramCount = params.length;
-                while (paramCount-- > 0) {
-                    queryMap.put(predicateID + "_tagid", params[tagID].getString());
-                    queryMap.put(predicateID + "_tagid.property", METADATA_NODE_PATH + "/cq:tags");
-                    predicateID++;
-                    tagID++;
-                }
+                builder.withPropertyEquals(FMSearchCriteria.Property.DESCRIPTION, description);
             }
         });
 
         queryStrategies.put("orderby", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
                 String orderByValue = params[0].getString();
-                queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
+                builder.sortBy(FMSearchCriteria.Property.getEnum(orderByValue));
+                // queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
             }
         });
 
         queryStrategies.put("sort", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
-                queryMap.put("orderby.sort", params[0].getString());
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
+                builder.sortBy(FMSearchCriteria.SortCriteria.getEnum(params[0].getString()));
             }
         });
 
         queryStrategies.put("offset", new QueryStrategy() {
-            public void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap) {
-                queryMap.put("p.offset", params[0].getString());
+            public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
+                builder.withOffset(Integer.valueOf(params[0].getString()));
             }
         });
     }
@@ -161,7 +130,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     private ResourceResolverFactory resourceResolverFactory;
 
     @OSGiService
-    private QueryBuilder queryBuilder;
+    private FMAssetSearch assetSearch;
 
     @Self
     @Required
@@ -191,8 +160,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     private String htmlTooltip = "";
     private String pdfTooltip = "";
 
-    private String ASSET_TYPE = "dam:Asset";
-
     @PostConstruct
     private void init() {
         List<Resource> defaultAssetSourcesList = new ArrayList<>();
@@ -214,6 +181,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     protected List<PortalLister.Item> getItemList() {
         List<PortalLister.Item> result = null;
         try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
+            // service resource resolver has fd-user access, ref OSGi configuration file
             result = fetchViaQueryBuilder(resourceResolver);
         } catch (LoginException e) {
             e.printStackTrace();
@@ -230,155 +198,70 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         return Collections.emptyList();
     }
 
-    private int buildAssetSourcesQuery(int predicateID, Map<String, String> queryMap) {
+    private void buildAssetSourcesQuery(FMSearchCriteria.Builder searchBuilder) {
         List<Resource> assetSourcesOrDefault = getAssetSources();
         if (assetSourcesOrDefault != null) {
             I18n i18n = new I18n(request);
-            int counter = 1;
             for (Resource source : assetSourcesOrDefault) {
                 ValueMap assetSource = source.getValueMap();
                 String renderType = assetSource.get("type", String.class);
-                String typeValue = null;
-                String renderKey = null;
                 if (StringUtils.isBlank(renderType)) {
                     continue;
                 } else if (renderType.equals("Adaptive Forms")) {
-                    typeValue = "guide";
-                    renderKey = "HTML";
+                    searchBuilder.withAssetType(FormManagerAsset.AssetType.ADAPTIVE_FORM);
                     htmlTooltip = i18n.get(assetSource.get("htmlTooltip", String.class));
-                } else if (renderType.equals("PDF Forms")) {
-                    typeValue = "pdfForm";
-                    renderKey = "PDF";
-                    pdfTooltip = i18n.get(assetSource.get("pdfTooltip", String.class));
                 }
-
-                String typePrefix = "group." + predicateID + QB_GROUP + counter + "_property";
-                queryMap.put(typePrefix, "./jcr:content/type");
-                queryMap.put(typePrefix + ".value", typeValue);
-                queryMap.put(typePrefix + ".operation", "equals");
-                counter++;
-
-                typePrefix = "group." + predicateID + QB_GROUP + counter + "_property";
-                queryMap.put(typePrefix, "./jcr:content/metadata/allowedRenderFormat");
-                queryMap.put(typePrefix + ".0_value", "BOTH");      // this is ANDed with set renderKey
-                queryMap.put(typePrefix + ".1_value", renderKey);
-                queryMap.put(typePrefix + ".operation", "equals");
-
-                counter++;
-                predicateID++;
             }
-            queryMap.put("group.p.or", "true");
         }
-        return predicateID;
     }
 
-    private int buildAssetFolderQuery(int predicateID, Map<String, String> queryMap) {
+    private void buildAssetFolderQuery(FMSearchCriteria.Builder searchBuilder) {
         if (assetFolders != null) {
-            int counter = 0;
             for (Resource source : assetFolders) {
                 ValueMap assetFolder = source.getValueMap();
                 String folderPath = assetFolder.get("folder", String.class);
                 if (StringUtils.isNotBlank(folderPath)) {
-                    queryMap.put(predicateID + QB_GROUP + counter + QB_PATH, folderPath);
-                    counter++;
+                    searchBuilder.withLocation(folderPath);
                 }
             }
-        } else {
-            // default search path
-            queryMap.put(predicateID + QB_GROUP + "0" + QB_PATH, DEFAULT_PATH);
         }
-        queryMap.put(predicateID + "_group.p.or", Boolean.TRUE.toString());
-        return predicateID + 1;
     }
 
     protected List<PortalLister.Item> fetchViaQueryBuilder(ResourceResolver resourceResolver) {
         RequestParameterMap parameterMap = request.getRequestParameterMap();
-        Session session = null;
-        // service resource resolver has fd-user access, ref OSGi configuration file
-        session = resourceResolver.adaptTo(Session.class);
         List<PortalLister.Item> resultMap = new ArrayList<>();
-        Map<String, String> queryMap = new HashMap<>();
 
-        queryMap.put("type", ASSET_TYPE);
-        queryMap.put("p.limit", getLimit().toString());
+        FMSearchCriteria.Builder searchBuilder = new FMSearchCriteria.Builder();
 
-        int predicateID = 0;    // used across all parameters
+        searchBuilder.withOffset(0);
+        searchBuilder.withMaxSize(getLimit());
+
         for (Map.Entry<String, RequestParameter[]> entry : parameterMap.entrySet()) {
             QueryStrategy queryStrategy = queryStrategies.get(entry.getKey());
             if (queryStrategy != null) {
-                queryStrategy.buildQuery(entry.getValue(), predicateID, queryMap);
-            }
-            predicateID++;
-        }
-
-        predicateID = buildAssetSourcesQuery(predicateID, queryMap);
-        predicateID = buildAssetFolderQuery(predicateID, queryMap);
-
-        PredicateGroup predicateGroup = PredicateGroup.create(queryMap);
-        Query query = queryBuilder.createQuery(predicateGroup, session);
-        SearchResult searchResult = query.getResult();
-
-        // Query builder has a leaking resource resolver, so the following work around is required.
-        ResourceResolver leakingResourceResolver = null;
-        try {
-            Iterator<Resource> resourceIterator = searchResult.getResources();
-            while (resourceIterator.hasNext()) {
-                Resource resource = resourceIterator.next();
-                if (leakingResourceResolver == null) {
-                    // Get a reference to QB's leaking resource resolver
-                    leakingResourceResolver = resource.getResourceResolver();
-                }
-                resultMap.add(fetchResourceProperties(resource));
-            }
-        } finally {
-            if (leakingResourceResolver != null) {
-                // Always close the leaking query builder resource resolver
-                leakingResourceResolver.close();
+                queryStrategy.buildQuery(entry.getValue(), searchBuilder);
             }
         }
 
+        buildAssetSourcesQuery(searchBuilder);
+        buildAssetFolderQuery(searchBuilder);
+        List<FormManagerAsset> results = assetSearch.searchForms(searchBuilder.build(), resourceResolver);
+
+        for (FormManagerAsset fmA : results) {
+            resultMap.add(fetchResourceProperties(fmA));
+        }
         return resultMap;
     }
 
-    private PortalLister.Item fetchResourceProperties(Resource r) {
-        ValueMap valueMap = r.getValueMap();
-        ResourceResolver resolver = r.getResourceResolver();
-        ValueMap metaDataMap = null;
-        if (r.getChild(METADATA_NODE_PATH) != null) {
-            metaDataMap = r.getChild(METADATA_NODE_PATH).getValueMap();
+    private PortalLister.Item fetchResourceProperties(FormManagerAsset fmAsset) {
+        String title = fmAsset.getTitle();
+        String description = fmAsset.getDescription();
+        String path = fmAsset.getPath();
+        if (fmAsset.getAssetType().equals(FormManagerAsset.AssetType.ADAPTIVE_FORM)) {
+            path = fmAsset.getResource().adaptTo(AdaptiveFormAsset.class).getRenderLink();
         }
-        String title = null;
-        String description = null;
-        String path = r.getPath() + "/" + org.apache.jackrabbit.vault.util.JcrConstants.JCR_CONTENT + "?wcmmode=disabled";
         String tooltip = "";
-        String thubmnail = r.getPath() + THUMBNAIL_PATH_SUFFIX;
-
-        if (metaDataMap != null && metaDataMap.containsKey("title")) {
-            title = metaDataMap.get("title", String.class);
-        } else if (valueMap.containsKey(org.apache.jackrabbit.vault.util.JcrConstants.JCR_TITLE)) {
-            title = valueMap.get(org.apache.jackrabbit.vault.util.JcrConstants.JCR_TITLE, String.class);
-        }
-        if (metaDataMap != null && metaDataMap.containsKey("dc:description")) {
-            description = metaDataMap.get("dc:description", String.class);
-        } else if (metaDataMap != null && metaDataMap.containsKey("description")) {
-            description = metaDataMap.get("description", String.class);
-        } else if (valueMap.containsKey(org.apache.jackrabbit.vault.util.JcrConstants.JCR_DESCRIPTION)) {
-            description = valueMap.get(org.apache.jackrabbit.vault.util.JcrConstants.JCR_DESCRIPTION, String.class);
-        }
-
-        if (metaDataMap != null && metaDataMap.containsKey("allowedRenderFormat")) {
-            if (metaDataMap.get("allowedRenderFormat").equals("HTML")) {
-                tooltip = htmlTooltip;
-            } else {
-                tooltip = pdfTooltip;
-            }
-        }
-
-        if (resolver.getResource(thubmnail) == null) {
-            // thumbnail doesn't exist, set it to null
-            thubmnail = null;
-        }
-
+        String thubmnail = fmAsset.getThumbnailPath();
         return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail);
     }
 
@@ -391,7 +274,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     }
 
     private interface QueryStrategy {
-        void buildQuery(RequestParameter[] params, int predicateID, Map<String, String> queryMap);
+        void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder);
     }
 
     private static class DefaultValueMapResourceWrapper extends ResourceWrapper {
