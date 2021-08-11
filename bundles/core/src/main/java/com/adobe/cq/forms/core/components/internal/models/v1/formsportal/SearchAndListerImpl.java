@@ -52,9 +52,10 @@ import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.aem.formsndocuments.assets.models.AdaptiveFormAsset;
-import com.adobe.aem.formsndocuments.assets.models.FormManagerAsset;
+import com.adobe.aem.formsndocuments.assets.models.FDAsset;
+import com.adobe.aem.formsndocuments.assets.models.FMSearchCriteria;
+import com.adobe.aem.formsndocuments.assets.models.FormAsset;
 import com.adobe.aem.formsndocuments.assets.service.FMAssetSearch;
-import com.adobe.aem.formsndocuments.assets.utils.FMSearchCriteria;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
@@ -132,6 +133,9 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     @OSGiService
     private FMAssetSearch assetSearch;
 
+    @OSGiService
+    private FMSearchCriteria.BuilderProvider searchBuilderProvider;
+
     @Self
     @Required
     private SlingHttpServletRequest request;
@@ -208,7 +212,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
                 if (StringUtils.isBlank(renderType)) {
                     continue;
                 } else if (renderType.equals("Adaptive Forms")) {
-                    searchBuilder.withAssetType(FormManagerAsset.AssetType.ADAPTIVE_FORM);
+                    searchBuilder.withAssetType(FormAsset.AssetType.ADAPTIVE_FORM);
                     htmlTooltip = i18n.get(assetSource.get("htmlTooltip", String.class));
                 }
             }
@@ -231,8 +235,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         RequestParameterMap parameterMap = request.getRequestParameterMap();
         List<PortalLister.Item> resultMap = new ArrayList<>();
 
-        FMSearchCriteria.Builder searchBuilder = new FMSearchCriteria.Builder();
-
+        FMSearchCriteria.Builder searchBuilder = searchBuilderProvider.createBuilder();
         searchBuilder.withOffset(0);
         searchBuilder.withMaxSize(getLimit());
 
@@ -245,23 +248,34 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
 
         buildAssetSourcesQuery(searchBuilder);
         buildAssetFolderQuery(searchBuilder);
-        List<FormManagerAsset> results = assetSearch.searchForms(searchBuilder.build(), resourceResolver);
 
-        for (FormManagerAsset fmA : results) {
-            resultMap.add(fetchResourceProperties(fmA));
+        // the resource resolver will likely close
+        try (ResourceResolver subResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
+            List<FDAsset> results = assetSearch.searchForms(searchBuilder.build(), subResolver);
+            for (FDAsset fmA : results) {
+                resultMap.add(fetchResourceProperties(fmA, resourceResolver));
+            }
+        } catch (LoginException e) {
+            e.printStackTrace();
         }
+
         return resultMap;
     }
 
-    private PortalLister.Item fetchResourceProperties(FormManagerAsset fmAsset) {
-        String title = fmAsset.getTitle();
-        String description = fmAsset.getDescription();
-        String path = fmAsset.getPath();
-        if (fmAsset.getAssetType().equals(FormManagerAsset.AssetType.ADAPTIVE_FORM)) {
-            path = fmAsset.getResource().adaptTo(AdaptiveFormAsset.class).getRenderLink();
-        }
+    private PortalLister.Item fetchResourceProperties(FDAsset fmAsset, ResourceResolver resolver) {
+        String title = "";
+        String description = "";
+        String path = "";
         String tooltip = "";
-        String thubmnail = fmAsset.getThumbnailPath();
+        String thubmnail = "";
+        if (fmAsset.getAssetType().equals(FDAsset.AssetType.ADAPTIVE_FORM)) {
+            AdaptiveFormAsset asset = resolver.getResource(fmAsset.getDamPath()).adaptTo(AdaptiveFormAsset.class);
+            title = asset.getTitle();
+            description = asset.getDescription();
+            path = asset.getRenderLink();
+            thubmnail = asset.getThumbnailPath();
+            tooltip = htmlTooltip;
+        }
         return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail);
     }
 
