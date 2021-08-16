@@ -152,6 +152,11 @@
                 linkElem.setAttribute("link", data.formLink);
                 linkElem.classList.add('item-link');
                 linkElem.addEventListener("click", linkClickHandler);
+//            if (linkElem) {
+//                linkElem.setAttribute("href", data.formLink);
+//                if (data.tooltip) {
+//                    linkElem.setAttribute("title", data.tooltip);
+//                }
             }
 
             if (data.thumbnailLink) {

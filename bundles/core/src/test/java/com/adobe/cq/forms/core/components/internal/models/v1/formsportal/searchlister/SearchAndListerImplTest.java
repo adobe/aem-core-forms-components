@@ -21,26 +21,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jcr.Session;
-
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.adobe.aem.formsndocuments.assets.models.AdaptiveFormAsset;
+import com.adobe.aem.formsndocuments.assets.models.FDAsset;
+import com.adobe.aem.formsndocuments.assets.models.FMSearchCriteria;
+import com.adobe.aem.formsndocuments.assets.service.FMAssetSearch;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import com.day.cq.search.PredicateGroup;
-import com.day.cq.search.Query;
-import com.day.cq.search.QueryBuilder;
-import com.day.cq.search.result.SearchResult;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -55,27 +50,25 @@ public class SearchAndListerImplTest {
     private static final String SAMPLE_FORM = CONTENT_ROOT + "/dam/formsanddocuments/sample-form";
     public final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
-    private QueryBuilder mockQB;
+    private FMAssetSearch searchAPI;
+    private FMSearchCriteria searchCriteria;
 
     @BeforeEach
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        ResourceResolverFactory mockResolverFactory = Mockito.mock(ResourceResolverFactory.class);
-        mockQB = Mockito.mock(QueryBuilder.class);
-        Query mockQuery = Mockito.mock(Query.class);
-        SearchResult mockSearchResult = Mockito.mock(SearchResult.class);
+        List<FDAsset> resultList = new ArrayList<>();
 
-        List<Resource> resultList = new ArrayList<>();
+        searchCriteria = Mockito.mock(FMSearchCriteria.class);
+        searchAPI = Mockito.mock(FMAssetSearch.class);
+        Mockito.when(searchAPI.searchForms(Mockito.any(), Mockito.any())).thenReturn(resultList);
 
-        Mockito.when(mockQB.createQuery(Mockito.any(PredicateGroup.class), Mockito.any(Session.class))).thenReturn(mockQuery);
-        Mockito.when(mockQuery.getResult()).thenReturn(mockSearchResult);
-        Mockito.when(mockSearchResult.getTotalMatches()).thenReturn(Long.valueOf(0));
-        Mockito.when(mockSearchResult.getHits()).thenReturn(Mockito.mock(List.class));
-        Mockito.when(mockSearchResult.getStartIndex()).thenReturn(Long.valueOf(0));
-        Mockito.when(mockSearchResult.getResources()).thenReturn(resultList.listIterator());
+        FMSearchCriteria.BuilderProvider providerService = Mockito.mock(FMSearchCriteria.BuilderProvider.class);
+        FMSearchCriteria.Builder builder = Mockito.mock(FMSearchCriteria.Builder.class, Mockito.RETURNS_SELF);
+        Mockito.when(providerService.createBuilder()).thenReturn(builder);
+        Mockito.when(builder.build()).thenReturn(searchCriteria);
 
-        context.registerService(ResourceResolverFactory.class, mockResolverFactory);
-        context.registerService(QueryBuilder.class, mockQB);
+        context.registerService(FMAssetSearch.class, searchAPI);
+        context.registerService(FMSearchCriteria.BuilderProvider.class, providerService);
     }
 
     @Test
@@ -111,6 +104,9 @@ public class SearchAndListerImplTest {
         Assertions.assertTrue(component.getSearchDisabled());
         Assertions.assertTrue(component.getSortDisabled());
         Assertions.assertEquals(Integer.valueOf(4), component.getLimit());
+
+        List<FDAsset> resultList = new ArrayList<>();
+        Mockito.when(searchAPI.searchForms(Mockito.any(), Mockito.any())).thenReturn(resultList);
         Assertions.assertEquals(3, component.getSearchResults().size());
     }
 
@@ -124,7 +120,7 @@ public class SearchAndListerImplTest {
         requestParams.put("searchText", "Search Text");
         requestParams.put("description", "Desc");
         requestParams.put("tags", "full/path/to/tag");
-        requestParams.put("orderby", "@title");
+        requestParams.put("orderby", "title");
         requestParams.put("sort", "asc");
         requestParams.put("offset", "0");
         requestParams.put("limit", "10");
@@ -136,31 +132,20 @@ public class SearchAndListerImplTest {
 
         Resource mockFormResource = Mockito.spy(context.resourceResolver().getResource(SAMPLE_FORM));
 
-        Query mockQuery = Mockito.mock(Query.class);
-        SearchResult mockSearchResult = Mockito.mock(SearchResult.class);
-        List<Resource> resultList = new ArrayList<>();
-        resultList.add(mockFormResource);
-        ResourceResolver leakingResourceResolverMock = Mockito.spy(request.getResourceResolver());
+        List<FDAsset> resultList = new ArrayList<>();
+        AdaptiveFormAsset mockAsset = Mockito.mock(AdaptiveFormAsset.class);
+        resultList.add(mockAsset);
+        context.registerAdapter(Resource.class, AdaptiveFormAsset.class, mockAsset);
 
-        Mockito.when(mockQuery.getResult()).thenReturn(mockSearchResult);
-        Mockito.when(mockSearchResult.getTotalMatches()).thenReturn(Long.valueOf(1));
-        Mockito.when(mockSearchResult.getHits()).thenReturn(Mockito.mock(List.class));
-        Mockito.when(mockSearchResult.getStartIndex()).thenReturn(Long.valueOf(1));
-        Mockito.when(mockSearchResult.getResources()).thenReturn(resultList.listIterator());
-        Mockito.when(mockFormResource.getResourceResolver()).thenReturn(leakingResourceResolverMock);
-
-        // the resource resolver is not leaking in unit testing, hence mocking a leaky resourceResolver
-        Mockito.doNothing().when(leakingResourceResolverMock).close();
-        Mockito.when(mockQB.createQuery(Mockito.any(PredicateGroup.class), Mockito.any(Session.class))).thenReturn(mockQuery);
+        Mockito.when(searchAPI.searchForms(Mockito.any(), Mockito.any())).thenReturn(resultList);
+        Mockito.when(mockAsset.getDamPath()).thenReturn(SAMPLE_FORM);
+        Mockito.when(mockAsset.getAssetType()).thenReturn(FDAsset.AssetType.ADAPTIVE_FORM);
+        Mockito.when(mockAsset.getTitle()).thenReturn("Sample Form");
+        Mockito.when(mockAsset.getDescription()).thenReturn("Sample description for Sample Form");
+        Mockito.when(mockAsset.getRenderLink()).thenReturn("/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled");
 
         // generate model json, after this resourceIterator would need to be reset if called again
         Utils.testJSONExport(component, TEST_BASE + "/searchlister-v1-withResults.json");
-
-        // the exported json is already tested above, but still test intermediate predicates and invocation below
-        Mockito.verify(mockQB, Mockito.times(1)).createQuery(ArgumentMatchers.argThat(argument -> {
-            // Predicate list's top level predicates / predicate groups size should match
-            return argument.size() == 8;
-        }), Mockito.any(Session.class));
     }
 
     @Test
@@ -183,5 +168,4 @@ public class SearchAndListerImplTest {
         mockRequest.setResource(context.currentResource(resourcePath));
         return mockRequest.adaptTo(SearchAndLister.class);
     }
-
 }
