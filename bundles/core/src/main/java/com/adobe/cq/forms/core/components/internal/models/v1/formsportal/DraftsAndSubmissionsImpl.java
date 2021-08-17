@@ -22,11 +22,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jackrabbit.vault.util.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Exporter;
@@ -35,10 +33,12 @@ import org.apache.sling.models.annotations.Required;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.aem.formsndocuments.assets.models.AdaptiveFormAsset;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -54,6 +54,7 @@ import com.adobe.fd.fp.api.service.DraftService;
 import com.adobe.fd.fp.api.service.PendingSignService;
 import com.adobe.fd.fp.api.service.SubmitService;
 import com.adobe.forms.foundation.usc.model.Query;
+import com.adobe.forms.foundation.usc.model.Statement;
 import com.adobe.forms.foundation.usc.model.StatementGroup;
 
 @Model(
@@ -67,9 +68,7 @@ import com.adobe.forms.foundation.usc.model.StatementGroup;
 public class DraftsAndSubmissionsImpl extends PortalListerImpl implements DraftsAndSubmissions {
 
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions";
-    private static final String METADATA_NODE_PATH = JcrConstants.JCR_CONTENT + "/metadata";
-    private static final String THUMBNAIL_PATH_SUFFIX = "/jcr:content/renditions/cq5dam.thumbnail.319.319.png";
-    private static final String DRAFT_LINK = "%s.html?wcmmode=disabled&dataRef=service://FP/draft/%s";
+    private static final String DRAFT_LINK = "%s&dataRef=service://FP/draft/%s";
     private static final String TOOLTIP = "Open";
     private static final String OPERATION = "operation";
 
@@ -78,6 +77,9 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     @Self
     @Required
     private SlingHttpServletRequest request;
+
+    @SlingObject
+    private ResourceResolver resolver;
 
     @OSGiService
     private DraftService draftService;
@@ -107,39 +109,24 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id) {
+        String title = null;
+        String description = null;
+        String thubmnail = null;
+        String formLink = null;
+
         ResourceResolver resourceResolver = request.getResourceResolver();
         String formAssetPath = GuideUtils.convertGuideContainerPathToFMAssetPath(formPath);
         Resource formAssetResource = resourceResolver.getResource(formAssetPath);
-        ValueMap valueMap = formAssetResource.getValueMap();
-        ValueMap metaDataMap = null;
-        if (formAssetResource.getChild(METADATA_NODE_PATH) != null) {
-            metaDataMap = formAssetResource.getChild(METADATA_NODE_PATH).getValueMap();
-        }
-        String title = null;
-        String description = null;
-        String thubmnail = formAssetPath + THUMBNAIL_PATH_SUFFIX;
-        String formLink = null;
+        if (formAssetResource != null) {
+            AdaptiveFormAsset asset = formAssetResource.adaptTo(AdaptiveFormAsset.class);
+            title = asset.getTitle();
+            description = asset.getDescription();
+            thubmnail = asset.getThumbnailPath();
+            formLink = asset.getRenderLink();
 
-        if (TypeEnum.DRAFT == typeEnum) {
-            formLink = String.format(DRAFT_LINK, GuideUtils.convertFMAssetPathToFormPagePath(formAssetPath), id);
-        }
-
-        if (metaDataMap != null && metaDataMap.containsKey("title")) {
-            title = metaDataMap.get("title", String.class);
-        } else if (valueMap.containsKey(JcrConstants.JCR_TITLE)) {
-            title = valueMap.get(JcrConstants.JCR_TITLE, String.class);
-        }
-        if (metaDataMap != null && metaDataMap.containsKey("dc:description")) {
-            description = metaDataMap.get("dc:description", String.class);
-        } else if (metaDataMap != null && metaDataMap.containsKey("description")) {
-            description = metaDataMap.get("description", String.class);
-        } else if (valueMap.containsKey(JcrConstants.JCR_DESCRIPTION)) {
-            description = valueMap.get(JcrConstants.JCR_DESCRIPTION, String.class);
-        }
-
-        if (resourceResolver.getResource(thubmnail) == null) {
-            // thumbnail doesn't exist, set it to null
-            thubmnail = null;
+            if (TypeEnum.DRAFT == typeEnum) {
+                formLink = String.format(DRAFT_LINK, asset.getRenderLink(), id);
+            }
         }
 
         PortalListerImpl.Item item = new PortalListerImpl.Item();
@@ -180,9 +167,20 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     protected List<PortalLister.Item> getItemList() {
         List<PortalLister.Item> itemList = new ArrayList<>();
         TypeEnum typeEnum = TypeEnum.valueOf(getType());
+
         QueryImpl query = new QueryImpl();
         query.setOffset(getOffset());
         query.setLimit(getLimit());
+
+        // Add information about currently logged in user
+        StatementImpl currentUserStatement = new StatementImpl();
+        currentUserStatement.setAttributeName("owner");
+        currentUserStatement.setAttributeValue(resolver.getUserID());
+        currentUserStatement.setOperator(Statement.Operator.EQUALS);
+        StatementGroupImpl stmtGroup = new StatementGroupImpl();
+        stmtGroup.addStatement(currentUserStatement);
+        query.setStatementGroup(stmtGroup);
+
         switch (typeEnum) {
             case DRAFT:
                 try {
@@ -285,6 +283,59 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         @Override
         public int getLimit() {
             return limit;
+        }
+    }
+
+    private class StatementImpl implements Statement {
+
+        private String attributeName;
+        private String attributeValue;
+        private Operator operator;
+
+        public void setAttributeName(String attributeName) {
+            this.attributeName = attributeName;
+        }
+
+        public void setAttributeValue(String attributeValue) {
+            this.attributeValue = attributeValue;
+        }
+
+        public void setOperator(Operator operator) {
+            this.operator = operator;
+        }
+
+        @Override
+        public String getAttributeName() {
+            return attributeName;
+        }
+
+        @Override
+        public String getAttributeValue() {
+            return attributeValue;
+        }
+
+        @Override
+        public Operator getOperator() {
+            return operator;
+        }
+    }
+
+    private class StatementGroupImpl implements StatementGroup {
+
+        private List<Statement> statements = new ArrayList<>();
+
+        public void addStatement(Statement statement) {
+            this.statements.add(statement);
+        }
+
+        @Override
+        public List<Statement> getStatements() {
+            return this.statements;
+        }
+
+        @Override
+        public JoinOperator getJoinOperator() {
+            return null;
         }
     }
 }

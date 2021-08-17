@@ -62,12 +62,21 @@ public class OperationManagerImpl implements OperationManager {
                     break;
             }
         }
-        draftOperations = draftOperations.size() > 0 ? draftOperations : null;
-        submitOperations = submitOperations.size() > 0 ? submitOperations : null;
-        signOperations = signOperations.size() > 0 ? signOperations : null;
-        operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations);
-        operationLists.put(DraftsAndSubmissions.TypeEnum.SUBMISSION, submitOperations);
-        operationLists.put(DraftsAndSubmissions.TypeEnum.PENDING_SIGN, signOperations);
+        if (!draftOperations.isEmpty()) {
+            operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations);
+        } else {
+            operationLists.remove(DraftsAndSubmissions.TypeEnum.DRAFT);
+        }
+        if (!submitOperations.isEmpty()) {
+            operationLists.put(DraftsAndSubmissions.TypeEnum.SUBMISSION, submitOperations);
+        } else {
+            operationLists.remove(DraftsAndSubmissions.TypeEnum.SUBMISSION);
+        }
+        if (!signOperations.isEmpty()) {
+            operationLists.put(DraftsAndSubmissions.TypeEnum.PENDING_SIGN, signOperations);
+        } else {
+            operationLists.remove(DraftsAndSubmissions.TypeEnum.PENDING_SIGN);
+        }
     }
 
     protected void bindOperation(final Operation operation, Map<String, Object> config) {

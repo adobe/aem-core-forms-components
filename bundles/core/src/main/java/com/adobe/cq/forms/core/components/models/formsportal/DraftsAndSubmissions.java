@@ -15,8 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.formsportal;
 
-import java.util.*;
-
 import org.osgi.annotation.versioning.*;
 
 public interface DraftsAndSubmissions extends PortalLister {
