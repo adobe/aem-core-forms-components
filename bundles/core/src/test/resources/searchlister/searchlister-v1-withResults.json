@@ -8,10 +8,12 @@
     "searchResults"         : {
         "data":[
             {
+                "id": null,
                 "title":"Sample Form",
                 "description":"Sample description for Sample Form",
                 "tooltip":"Click here to view as HTML",
                 "formLink":"/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled",
+                "operations":null,
                 "thumbnailLink": null
             }
         ], "offset":0, "nextOffset":-1
