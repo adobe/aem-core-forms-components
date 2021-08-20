@@ -67,8 +67,8 @@ public class CancelAgreementOperation implements Operation {
         String operationModelId = request.getParameter(OPERATION_MODEL_ID);
         Map<String, Object> result = new HashMap<>();
         try {
-            pendingSignService.cancelPendingSign(operationModelId);
-            result.put("status", "success");
+            boolean x = pendingSignService.cancelPendingSign(operationModelId);
+            result.put("status", x ? "success" : "fail");
         } catch (FormsPortalException e) {
             LOGGER.error("Failed to cancel agreement with id " + operationModelId, e);
             result.put("status", "fail");

@@ -30,7 +30,7 @@ import com.adobe.cq.forms.core.components.models.formsportal.Operation;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.PendingSignModel;
 import com.adobe.fd.fp.api.service.PendingSignService;
-import com.adobe.forms.foundation.usc.model.Attachment;
+import com.adobe.forms.common.service.FileAttachmentWrapper;
 
 @Component(
     service = Operation.class,
@@ -70,10 +70,10 @@ public class DorOperation implements Operation {
         Map<String, Object> result = new HashMap<>();
         try {
             PendingSignModel model = pendingSignService.getPendingSign(operationModelId);
-            Attachment dor = model.getDor();
-            result.put("dorData", dor.getData());
-            result.put("dorName", dor.getName());
-            result.put("dorContentType", dor.getContentType());
+            FileAttachmentWrapper file = pendingSignService.getSignedDocument(operationModelId);
+            result.put("dorData", file.getValue());
+            result.put("dorName", model.getPdfName());
+            result.put("dorContentType", file.getContentType());
             result.put("status", "success");
         } catch (FormsPortalException e) {
             LOGGER.error("Failed to fetch DoR for agreement id " + operationModelId, e);
