@@ -15,9 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -74,6 +77,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DraftsAndSubmissionsImpl.class);
 
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("hh:mm:ss dd-M-yy");
+
     @Self
     @Required
     private SlingHttpServletRequest request;
@@ -108,8 +113,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         return type;
     }
 
-    private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id) {
-        String title = null;
+    private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id, final String timeInfo) {
+        String title = "<Non Existent Form>";
         String description = null;
         String thubmnail = null;
         String formLink = null;
@@ -137,6 +142,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         item.setFormThumbnail(thubmnail);
         item.setId(id);
         item.setOperations(operationManager.getOperationList(typeEnum));
+        item.setTimeInfo(timeInfo);
         return item;
     }
 
@@ -186,7 +192,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                 try {
                     List<DraftModel> list = draftService.getAllDraft(query);
                     for (DraftModel draftModel : list) {
-                        PortalLister.Item item = getItem(draftModel.getFormPath(), typeEnum, draftModel.getId());
+                        PortalLister.Item item = getItem(draftModel.getFormPath(), typeEnum, draftModel.getId(),
+                            dateFormatter.format(draftModel.getLastModifiedTime().getTime()));
                         itemList.add(item);
                     }
                 } catch (FormsPortalException e) {
@@ -197,7 +204,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                 try {
                     List<SubmitModel> list = submitService.getAllSubmission(query);
                     for (SubmitModel submitModel : list) {
-                        PortalLister.Item item = getItem(submitModel.getFormPath(), typeEnum, submitModel.getId());
+                        PortalLister.Item item = getItem(submitModel.getFormPath(), typeEnum, submitModel.getId(),
+                            dateFormatter.format(submitModel.getLastModifiedTime().getTime()));
                         itemList.add(item);
                     }
                 } catch (FormsPortalException e) {
@@ -208,7 +216,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                 try {
                     List<PendingSignModel> list = pendingSignService.getAllPendingSign(query);
                     for (PendingSignModel pendingSignModel : list) {
-                        PortalLister.Item item = getItem(pendingSignModel.getFormPath(), typeEnum, pendingSignModel.getId());
+                        PortalLister.Item item = getItem(pendingSignModel.getFormPath(), typeEnum, pendingSignModel.getId(),
+                            dateFormatter.format(pendingSignModel.getLastModifiedTime().getTime()));
                         itemList.add(item);
                     }
                 } catch (FormsPortalException e) {
@@ -217,7 +226,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                 break;
         }
 
-        return itemList;
+        // might create holes during pagination
+        return itemList.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @Override

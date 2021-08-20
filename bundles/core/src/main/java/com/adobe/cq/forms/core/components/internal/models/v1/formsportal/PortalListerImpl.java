@@ -135,15 +135,17 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         private String formLink;
         private String formThumbnail;
         private List<Operation> operations;
+        private String timeInfo;
 
         public Item() {}
 
-        public Item(String title, String description, String tooltip, String formLink, String formThumbnail) {
+        public Item(String title, String description, String tooltip, String formLink, String formThumbnail, String timeInfo) {
             this.title = title;
             this.description = description;
             this.tooltip = tooltip;
             this.formLink = formLink;
             this.formThumbnail = formThumbnail;
+            this.timeInfo = timeInfo;
         }
 
         public void setTitle(String title) {
@@ -172,6 +174,10 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public void setTimeInfo(String timeInfo) {
+            this.timeInfo = timeInfo;
         }
 
         @Override
@@ -207,6 +213,11 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         @Override
         public String getId() {
             return id;
+        }
+
+        @Override
+        public String getTimeInfo() {
+            return timeInfo;
         }
     }
 }
