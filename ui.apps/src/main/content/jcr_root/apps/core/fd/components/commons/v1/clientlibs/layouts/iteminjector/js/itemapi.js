@@ -29,8 +29,9 @@
         formLink:  "[" + ATTR_PREFIX + "=\"formLink\"]",
         description:  "[" + ATTR_PREFIX + "=\"description\"]",
         includes:  "[" + ATTR_PREFIX + "=\"includes\"]",
-        thumbnail: "[" + ATTR_PREFIX + "=\"thumbnail\"",
-        operations: "[" + ATTR_PREFIX + "=\"operations\""
+        thumbnail: "[" + ATTR_PREFIX + "=\"thumbnail\"]",
+        operations: "[" + ATTR_PREFIX + "=\"operations\"]",
+        timeinfo: "[" + ATTR_PREFIX + "=\"timeinfo\"]"
     };
 
     var addTextWithTooltip = function (element, text, tooltip) {
@@ -144,6 +145,7 @@
                 descElem = el.querySelector(selectors.description),
                 thumbnailElem = el.querySelector(selectors.thumbnail),
                 operationsElem = el.querySelector(selectors.operations),
+                timeInfoElem = el.querySelector(selectors.timeinfo),
                 itemContainer = container.querySelector(selectors.container);
 
             addTextWithTooltip(titleElem, data.title);
@@ -152,11 +154,6 @@
                 linkElem.setAttribute("link", data.formLink);
                 linkElem.classList.add('item-link');
                 linkElem.addEventListener("click", linkClickHandler);
-//            if (linkElem) {
-//                linkElem.setAttribute("href", data.formLink);
-//                if (data.tooltip) {
-//                    linkElem.setAttribute("title", data.tooltip);
-//                }
             }
 
             if (data.thumbnailLink) {
@@ -175,6 +172,9 @@
                 operationsElem.style.display = "none";
             }
 
+            if (data.timeInfo && timeInfoElem) {
+                addTextWithTooltip(timeInfoElem, data.timeInfo);
+            }
             itemContainer.appendChild(item);
         },
         init: function (config) {

@@ -100,6 +100,10 @@ public interface PortalLister extends Component {
         default String getId() {
             throw new UnsupportedOperationException();
         }
+
+        default String getTimeInfo() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @ProviderType

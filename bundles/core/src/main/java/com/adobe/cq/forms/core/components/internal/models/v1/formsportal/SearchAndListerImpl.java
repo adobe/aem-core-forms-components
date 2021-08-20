@@ -268,6 +268,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         String path = "";
         String tooltip = "";
         String thubmnail = "";
+        String lastModified = "";
         if (fmAsset.getAssetType().equals(FDAsset.AssetType.ADAPTIVE_FORM)) {
             AdaptiveFormAsset asset = resolver.getResource(fmAsset.getDamPath()).adaptTo(AdaptiveFormAsset.class);
             title = asset.getTitle();
@@ -276,7 +277,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
             thubmnail = asset.getThumbnailPath();
             tooltip = htmlTooltip;
         }
-        return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail);
+        return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail, null);
     }
 
     public boolean getSearchDisabled() {

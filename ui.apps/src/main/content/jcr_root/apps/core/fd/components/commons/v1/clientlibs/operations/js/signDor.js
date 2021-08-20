@@ -25,11 +25,9 @@
                 byteArray[i] = decoded.charCodeAt(i);
             }
             var bytes = new Uint8Array(byteArray);
-            var blob=new Blob([bytes], {type: result.dorContentType});
-            var link=document.createElement('a');
-            link.href=window.URL.createObjectURL(blob);
-            link.download=result.dorName;
-            link.click();
+            var blob = new Blob([bytes], { type: result.dorContentType || "application/pdf" });
+            var fileURL = URL.createObjectURL(blob);
+            window.open(fileURL);
         }
     };
 
