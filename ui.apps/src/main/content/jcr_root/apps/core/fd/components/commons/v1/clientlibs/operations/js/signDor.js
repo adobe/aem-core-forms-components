@@ -19,7 +19,12 @@
         var result = data.operationResult.result;
         if (result.status == "success") {
             //Dor
-            var bytes = new Uint8Array(result.dorData);
+            var decoded = atob(result.dorData);
+            var byteArray = new Array(decoded.length); // ToDo: consider processing in chunks to save browser memory
+            for (var i=0; i<decoded.length; i++) {
+                byteArray[i] = decoded.charCodeAt(i);
+            }
+            var bytes = new Uint8Array(byteArray);
             var blob=new Blob([bytes], {type: result.dorContentType});
             var link=document.createElement('a');
             link.href=window.URL.createObjectURL(blob);

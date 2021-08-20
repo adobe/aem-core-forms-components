@@ -610,13 +610,13 @@
         <dependency>
             <groupId>com.adobe.aemfd</groupId>
             <artifactId>formsportal-api</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.30</version>
         </dependency>
 
         <dependency>
             <groupId>com.adobe.forms.foundation</groupId>
             <artifactId>forms-foundation-bundle</artifactId>
-            <version>5.0.196</version>
+            <version>5.0.214</version>
         </dependency>
     </dependencies>
 
