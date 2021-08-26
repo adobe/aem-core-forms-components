@@ -154,6 +154,10 @@
                 linkElem.setAttribute("link", data.formLink);
                 linkElem.classList.add('item-link');
                 linkElem.addEventListener("click", linkClickHandler);
+
+                if (data.tooltip) {
+                    linkElem.setAttribute("title", data.tooltip);
+                }
             }
 
             if (data.thumbnailLink) {
@@ -168,7 +172,7 @@
                 operationsElem.addEventListener('click',function (event) {
                     menu.showHidePopover(operationsElem);
                 });
-            } else {
+            } else if (operationsElem) {
                 operationsElem.style.display = "none";
             }
 

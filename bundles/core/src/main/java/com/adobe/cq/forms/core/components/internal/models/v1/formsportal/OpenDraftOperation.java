@@ -19,6 +19,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.sling.settings.SlingSettingsService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import com.adobe.cq.forms.core.components.models.formsportal.Operation;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
 import com.adobe.fd.fp.api.service.DraftService;
+import com.day.cq.commons.Externalizer;
 
 @Component(
     service = Operation.class,
@@ -37,12 +39,16 @@ import com.adobe.fd.fp.api.service.DraftService;
 public class OpenDraftOperation implements Operation {
     private static final String OPERATION_NAME = "openDraft";
     private static final String OPERATION_TITLE = "Open";
-    private static final String DRAFT_LINK = "%s.html?wcmmode=disabled&dataRef=service://FP/draft/%s";
+    private static final String DRAFT_LINK = "%s.html?dataRef=service://FP/draft/%s%s";
+    private static final String WCM_MODE = "&wcmmode=disabled";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenDraftOperation.class);
 
     @Reference
     private DraftService draftService;
+
+    @Reference
+    private SlingSettingsService slingSettings;
 
     @Override
     public String getName() {
@@ -66,12 +72,13 @@ public class OpenDraftOperation implements Operation {
 
     @Override
     public OperationResult execute(String modelID) {
+        String suffix = slingSettings.getRunModes().contains(Externalizer.AUTHOR) ? WCM_MODE : "";
         Map<String, Object> result = new HashMap<>();
         try {
             DraftModel dm = draftService.getDraft(modelID);
-            String formPath = dm.getFormPath();
-            String formAssetPath = GuideUtils.convertGuideContainerPathToFMAssetPath(formPath);
-            String formLink = String.format(DRAFT_LINK, GuideUtils.convertFMAssetPathToFormPagePath(formAssetPath), modelID);
+            String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm
+                .getFormPath()));
+            String formLink = String.format(DRAFT_LINK, formPath, modelID, suffix);
             result.put("formLink", formLink);
             result.put("status", "success");
         } catch (FormsPortalException e) {

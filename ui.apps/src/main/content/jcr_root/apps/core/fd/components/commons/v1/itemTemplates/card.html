@@ -1,4 +1,4 @@
-<template data-sly-template.layout="${@ hideTime}">
+<template data-sly-template.layout="${@ hideTime, hideFooter}">
     <div data-cmp-hook-item-template="includes">
         <sly data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
              data-sly-call="${clientlib.all @ categories=['core.forms.components.commons.v1.clientlibs.layouts.card']}"></sly>
@@ -10,7 +10,7 @@
             <h3 class="cmp-portallister__item--card-title" data-cmp-hook-item-template="itemTitle"></h3>
             <p class="cmp-portallister__item--card-description" data-cmp-hook-item-template="description"></p>
         </div>
-        <div class="cmp-portallister__item--card-footer">
+        <div data-sly-test="${!hideFooter}" class="cmp-portallister__item--card-footer">
             <div data-sly-test="${!hideTime}" class="cmp-portallister__item--card-time" data-cmp-hook-item-template="timeinfo"></div>
             <div class="cmp-portallister__item--card-operations" aria-label="Menu" data-cmp-hook-item-template="operations">
                 <div class="cmp-portallister__item--card-operations-icon"></div>

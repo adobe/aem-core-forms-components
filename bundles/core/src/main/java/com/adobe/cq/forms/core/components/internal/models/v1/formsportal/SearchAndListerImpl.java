@@ -75,6 +75,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
 
     private static final String PN_CHILD_ASSETFOLDERS = "assetFolders";
     private static final String PN_CHILD_ASSETSOURCES = "assetSource";
+    private static final String DEFAULT_TOOLTIP = "Click to open Form";
     private static final Map<String, QueryStrategy> queryStrategies = new HashMap<>();
 
     static {
@@ -161,7 +162,11 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     private boolean disableSorting;
 
     private List<Resource> defaultAssetSources;
-    private String htmlTooltip = "";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = DEFAULT_TOOLTIP)
+    private String htmlTooltip;
+
     private String pdfTooltip = "";
 
     @PostConstruct
@@ -169,7 +174,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         List<Resource> defaultAssetSourcesList = new ArrayList<>();
         Map<String, Object> valueMap = new HashMap<>();
         valueMap.put("type", "Adaptive Forms");
-        valueMap.put("htmlTooltip", "Click Here to view as HTML");
+        valueMap.put("htmlTooltip", DEFAULT_TOOLTIP);
         Resource res = new DefaultValueMapResourceWrapper(new SyntheticResource(resource.getResourceResolver(), new ResourceMetadata(),
             JcrConstants.NT_UNSTRUCTURED), valueMap);
         defaultAssetSourcesList.add(res);
@@ -205,15 +210,11 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     private void buildAssetSourcesQuery(FMSearchCriteria.Builder searchBuilder) {
         List<Resource> assetSourcesOrDefault = getAssetSources();
         if (assetSourcesOrDefault != null) {
-            I18n i18n = new I18n(request);
             for (Resource source : assetSourcesOrDefault) {
                 ValueMap assetSource = source.getValueMap();
                 String renderType = assetSource.get("type", String.class);
-                if (StringUtils.isBlank(renderType)) {
-                    continue;
-                } else if (renderType.equals("Adaptive Forms")) {
+                if ("Adaptive Forms".equals(renderType)) {
                     searchBuilder.withAssetType(FormAsset.AssetType.ADAPTIVE_FORM);
-                    htmlTooltip = i18n.get(assetSource.get("htmlTooltip", String.class));
                 }
             }
         }
@@ -269,13 +270,14 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         String tooltip = "";
         String thubmnail = "";
         String lastModified = "";
+        I18n i18n = new I18n(request);
         if (fmAsset.getAssetType().equals(FDAsset.AssetType.ADAPTIVE_FORM)) {
             AdaptiveFormAsset asset = resolver.getResource(fmAsset.getDamPath()).adaptTo(AdaptiveFormAsset.class);
             title = asset.getTitle();
             description = asset.getDescription();
             path = asset.getRenderLink();
             thubmnail = asset.getThumbnailPath();
-            tooltip = htmlTooltip;
+            tooltip = i18n.get(htmlTooltip);
         }
         return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail, null);
     }
