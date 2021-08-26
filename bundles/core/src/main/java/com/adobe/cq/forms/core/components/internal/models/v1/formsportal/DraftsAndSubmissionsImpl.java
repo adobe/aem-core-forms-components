@@ -51,7 +51,6 @@ import com.adobe.cq.forms.core.components.models.formsportal.OperationManager;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
-import com.adobe.fd.fp.api.models.PendingSignModel;
 import com.adobe.fd.fp.api.models.SubmitModel;
 import com.adobe.fd.fp.api.service.DraftService;
 import com.adobe.fd.fp.api.service.PendingSignService;
@@ -59,6 +58,7 @@ import com.adobe.fd.fp.api.service.SubmitService;
 import com.adobe.forms.foundation.usc.model.Query;
 import com.adobe.forms.foundation.usc.model.Statement;
 import com.adobe.forms.foundation.usc.model.StatementGroup;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -160,7 +160,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         if (operation == null) {
             return null;
         }
-        return operation.execute(request);
+        return operation.execute(request.getParameter(Operation.OPERATION_MODEL_ID));
     }
 
     @Override
@@ -212,18 +212,18 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     LOGGER.error("Failed to fetch Form Submissions.", e);
                 }
                 break;
-            case PENDING_SIGN:
-                try {
-                    List<PendingSignModel> list = pendingSignService.getAllPendingSign(query);
-                    for (PendingSignModel pendingSignModel : list) {
-                        PortalLister.Item item = getItem(pendingSignModel.getFormPath(), typeEnum, pendingSignModel.getId(),
-                            dateFormatter.format(pendingSignModel.getLastModifiedTime().getTime()));
-                        itemList.add(item);
-                    }
-                } catch (FormsPortalException e) {
-                    LOGGER.error("Failed to fetch Pending Signs forms.", e);
-                }
-                break;
+            // case PENDING_SIGN:
+            // try {
+            // List<PendingSignModel> list = pendingSignService.getAllPendingSign(query);
+            // for (PendingSignModel pendingSignModel : list) {
+            // PortalLister.Item item = getItem(pendingSignModel.getFormPath(), typeEnum, pendingSignModel.getId(),
+            // dateFormatter.format(pendingSignModel.getLastModifiedTime().getTime()));
+            // itemList.add(item);
+            // }
+            // } catch (FormsPortalException e) {
+            // LOGGER.error("Failed to fetch Pending Signs forms.", e);
+            // }
+            // break;
         }
 
         // might create holes during pagination
@@ -255,6 +255,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     @Override
+    @JsonIgnore
     public Integer getLimit() {
         if (isOperationCall()) {
             return null;
@@ -262,7 +263,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         return super.getLimit();
     }
 
-    private class QueryImpl implements Query {
+    private static class QueryImpl implements Query {
 
         private StatementGroup statementGroup;
         private int offset;
@@ -296,7 +297,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         }
     }
 
-    private class StatementImpl implements Statement {
+    private static class StatementImpl implements Statement {
 
         private String attributeName;
         private String attributeValue;
@@ -330,7 +331,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         }
     }
 
-    private class StatementGroupImpl implements StatementGroup {
+    private static class StatementGroupImpl implements StatementGroup {
 
         private List<Statement> statements = new ArrayList<>();
 

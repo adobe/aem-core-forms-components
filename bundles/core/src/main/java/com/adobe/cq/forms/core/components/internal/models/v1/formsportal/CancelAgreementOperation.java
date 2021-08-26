@@ -19,8 +19,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +28,10 @@ import com.adobe.cq.forms.core.components.models.formsportal.Operation;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.service.PendingSignService;
 
-@Component(
-    service = Operation.class,
-    immediate = true)
+// Ignore this Operation
+//@Component(
+//    service = Operation.class,
+//    immediate = true)
 public class CancelAgreementOperation implements Operation {
     private static final String OPERATION_NAME = "cancelAgreement";
     private static final String OPERATION_TITLE = "Cancel Agreement";
@@ -63,14 +62,13 @@ public class CancelAgreementOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(SlingHttpServletRequest request) {
-        String operationModelId = request.getParameter(OPERATION_MODEL_ID);
+    public OperationResult execute(String modelID) {
         Map<String, Object> result = new HashMap<>();
         try {
-            boolean x = pendingSignService.cancelPendingSign(operationModelId);
+            boolean x = pendingSignService.cancelPendingSign(modelID);
             result.put("status", x ? "success" : "fail");
         } catch (FormsPortalException e) {
-            LOGGER.error("Failed to cancel agreement with id " + operationModelId, e);
+            LOGGER.error("Failed to cancel agreement with id " + modelID, e);
             result.put("status", "fail");
         }
         return new OperationResult() {

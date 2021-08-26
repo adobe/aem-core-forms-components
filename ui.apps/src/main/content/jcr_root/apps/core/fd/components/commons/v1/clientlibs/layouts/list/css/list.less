@@ -40,6 +40,30 @@
         padding-right: 20px;
         width: 60%;
     }
+
+    &-time {
+        display: inline;
+        font-size: 10px;
+        color: #607D8B;
+        padding-right: 10px;
+    }
+
+    &-operations {
+        cursor: pointer;
+        padding-right: 15px;
+    }
+
+    &-operations-icon {
+        font-size: 14px;
+        color: #6e6e6e;
+        &:hover {
+            color: #2c2c2c;
+        }
+        &::before {
+            content: "\f141";
+            font-family: 'Font Awesome 5 Free';
+        }
+    }
 }
 
 .cmp-portallister-results {
@@ -48,21 +72,5 @@
     &--list {
         border-collapse: collapse;
         width: 100%;
-    }
-}
-
-.cmp-portallister__item--list-operations {
-    cursor: pointer;
-}
-
-.cmp-portallister__item--list-operations-icon {
-    font-size: 14px;
-    color: #6e6e6e;
-    &:hover {
-        color: #2c2c2c;
-    }
-    &::before {
-        content: "\f141";
-        font-family: 'Font Awesome 5 Free';
     }
 }

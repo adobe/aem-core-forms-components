@@ -19,8 +19,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +30,10 @@ import com.adobe.fd.fp.api.models.PendingSignModel;
 import com.adobe.fd.fp.api.service.PendingSignService;
 import com.adobe.forms.common.service.FileAttachmentWrapper;
 
-@Component(
-    service = Operation.class,
-    immediate = true)
+// Ignore this Operation
+//@Component(
+//    service = Operation.class,
+//    immediate = true)
 public class DorOperation implements Operation {
     private static final String OPERATION_NAME = "signDor";
     private static final String OPERATION_TITLE = "View DoR";
@@ -65,18 +64,17 @@ public class DorOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(SlingHttpServletRequest request) {
-        String operationModelId = request.getParameter(OPERATION_MODEL_ID);
+    public OperationResult execute(String modelID) {
         Map<String, Object> result = new HashMap<>();
         try {
-            PendingSignModel model = pendingSignService.getPendingSign(operationModelId);
-            FileAttachmentWrapper file = pendingSignService.getSignedDocument(operationModelId);
+            PendingSignModel model = pendingSignService.getPendingSign(modelID);
+            FileAttachmentWrapper file = pendingSignService.getSignedDocument(modelID);
             result.put("dorData", file.getValue());
             result.put("dorName", model.getPdfName());
             result.put("dorContentType", file.getContentType());
             result.put("status", "success");
         } catch (FormsPortalException e) {
-            LOGGER.error("Failed to fetch DoR for agreement id " + operationModelId, e);
+            LOGGER.error("Failed to fetch DoR for agreement id " + modelID, e);
             result.put("status", "fail");
         }
         return new OperationResult() {

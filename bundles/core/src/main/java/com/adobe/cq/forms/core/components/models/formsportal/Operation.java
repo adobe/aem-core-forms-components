@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 
 import java.util.Map;
 
-import org.apache.sling.api.SlingHttpServletRequest;
 import org.osgi.annotation.versioning.ConsumerType;
 
 @ConsumerType
@@ -31,7 +30,7 @@ public interface Operation {
 
     public DraftsAndSubmissions.TypeEnum getType();
 
-    public OperationResult execute(SlingHttpServletRequest request);
+    public OperationResult execute(String modelID);
 
     default String getIcon() {
         throw new UnsupportedOperationException();
