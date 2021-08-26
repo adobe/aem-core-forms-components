@@ -75,78 +75,79 @@
                         </items>
                     </assetfolder>
 
-                    <assetlisting
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Asset Listing"
-                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                            margin="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/container"
-                                    margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <parameters
-                                                    jcr:primaryType="nt:unstructured"
-                                                    composite="{Boolean}true"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield">
-                                                <granite:data
-                                                        jcr:primaryType="nt:unstructured"
-                                                        min-item="0"/>
-                                                <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./assetSource">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <fieldset
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/accordion">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <accordion
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        jcr:title="Asset Source"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                                        maximized="{Boolean}true">
-                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                        <!-- ToDo: Unhide Type dropdown when more asset types are available -->
-                                                                        <type
-                                                                                jcr:primaryType="nt:unstructured"
-                                                                                sling:resourceType="granite/ui/components/foundation/form/hidden"
-                                                                                required="{Boolean}true"
-                                                                                emptyText="Form Template"
-                                                                                fieldLabel="Type"
-                                                                                value="Adaptive Forms"
-                                                                                name="type">
-                                                                            <items jcr:primaryType="nt:unstructured">
-                                                                                <item1
-                                                                                        jcr:primaryType="nt:unstructured"
-                                                                                        text="Adaptive Forms"
-                                                                                        selected="{Boolean}true"/>
-                                                                            </items>
-                                                                        </type>
-                                                                        <htmltooltip
-                                                                                jcr:primaryType="nt:unstructured"
-                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                                fieldLabel="HTML tooltip text"
-                                                                                value="Click here to view as HTML"
-                                                                                name="htmlTooltip"/>
-                                                                    </items>
-                                                                </accordion>
-                                                            </items>
-                                                        </fieldset>
-                                                    </items>
-                                                </field>
-                                            </parameters>
-                                        </items>
-                                    </column>
-                                </items>
-                            </columns>
-                        </items>
-                    </assetlisting>
+<!--                    <assetlisting-->
+<!--                            jcr:primaryType="nt:unstructured"-->
+<!--                            jcr:title="Asset Listing"-->
+<!--                            granite:class=""-->
+<!--                            sling:resourceType="granite/ui/components/foundation/form/hidden"-->
+<!--                            margin="{Boolean}true">-->
+<!--                        <items jcr:primaryType="nt:unstructured">-->
+<!--                            <columns-->
+<!--                                    jcr:primaryType="nt:unstructured"-->
+<!--                                    sling:resourceType="granite/ui/components/coral/foundation/container"-->
+<!--                                    margin="{Boolean}true">-->
+<!--                                <items jcr:primaryType="nt:unstructured">-->
+<!--                                    <column-->
+<!--                                            jcr:primaryType="nt:unstructured"-->
+<!--                                            sling:resourceType="granite/ui/components/coral/foundation/container">-->
+<!--                                        <items jcr:primaryType="nt:unstructured">-->
+<!--                                            <parameters-->
+<!--                                                    jcr:primaryType="nt:unstructured"-->
+<!--                                                    composite="{Boolean}true"-->
+<!--                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield">-->
+<!--                                                <granite:data-->
+<!--                                                        jcr:primaryType="nt:unstructured"-->
+<!--                                                        min-item="0"/>-->
+<!--                                                <field-->
+<!--                                                        jcr:primaryType="nt:unstructured"-->
+<!--                                                        sling:resourceType="granite/ui/components/coral/foundation/container"-->
+<!--                                                        name="./assetSource">-->
+<!--                                                    <items jcr:primaryType="nt:unstructured">-->
+<!--                                                        <fieldset-->
+<!--                                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                                sling:resourceType="granite/ui/components/coral/foundation/accordion">-->
+<!--                                                            <items jcr:primaryType="nt:unstructured">-->
+<!--                                                                <accordion-->
+<!--                                                                        jcr:primaryType="nt:unstructured"-->
+<!--                                                                        jcr:title="Asset Source"-->
+<!--                                                                        sling:resourceType="granite/ui/components/coral/foundation/container"-->
+<!--                                                                        maximized="{Boolean}true">-->
+<!--                                                                    <items jcr:primaryType="nt:unstructured">-->
+<!--                                                                        &lt;!&ndash; ToDo: Unhide Type dropdown when more asset types are available &ndash;&gt;-->
+<!--                                                                        <type-->
+<!--                                                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                                                sling:resourceType="granite/ui/components/foundation/form/hidden"-->
+<!--                                                                                required="{Boolean}true"-->
+<!--                                                                                emptyText="Form Template"-->
+<!--                                                                                fieldLabel="Type"-->
+<!--                                                                                value="Adaptive Forms"-->
+<!--                                                                                name="type">-->
+<!--                                                                            <items jcr:primaryType="nt:unstructured">-->
+<!--                                                                                <item1-->
+<!--                                                                                        jcr:primaryType="nt:unstructured"-->
+<!--                                                                                        text="Adaptive Forms"-->
+<!--                                                                                        selected="{Boolean}true"/>-->
+<!--                                                                            </items>-->
+<!--                                                                        </type>-->
+<!--                                                                        <htmltooltip-->
+<!--                                                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"-->
+<!--                                                                                fieldLabel="HTML tooltip text"-->
+<!--                                                                                value="Click here to view as HTML"-->
+<!--                                                                                name="htmlTooltip"/>-->
+<!--                                                                    </items>-->
+<!--                                                                </accordion>-->
+<!--                                                            </items>-->
+<!--                                                        </fieldset>-->
+<!--                                                    </items>-->
+<!--                                                </field>-->
+<!--                                            </parameters>-->
+<!--                                        </items>-->
+<!--                                    </column>-->
+<!--                                </items>-->
+<!--                            </columns>-->
+<!--                        </items>-->
+<!--                    </assetlisting>-->
 
                     <resultdisplay jcr:primaryType="nt:unstructured"
                                    jcr:title="Results"
@@ -214,18 +215,24 @@
                                                         value="list"/>
                                                 </items>
                                             </layout>
-                                            <advancedSearch
+                                            <searchCheckbox
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 value="{Boolean}true"
                                                 text="Disable Search"
                                                 name="./disableSearch"/>
-                                            <textSearch
+                                            <sortCheckbox
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 value="{Boolean}true"
                                                 text="Disable Sorting"
                                                 name="./disableSorting"/>
+                                            <htmltooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Tooltip"
+                                                value="Click here to view as HTML"
+                                                name="./htmlTooltip"/>
                                         </items>
                                     </column>
                                 </items>

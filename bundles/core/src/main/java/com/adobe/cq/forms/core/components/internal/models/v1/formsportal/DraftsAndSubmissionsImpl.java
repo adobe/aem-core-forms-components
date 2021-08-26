@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -71,7 +74,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class DraftsAndSubmissionsImpl extends PortalListerImpl implements DraftsAndSubmissions {
 
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions";
-    private static final String DRAFT_LINK = "%s&dataRef=service://FP/draft/%s";
+    private static final String DRAFT_LINK = "service://FP/draft/%s";
     private static final String TOOLTIP = "Open";
     private static final String OPERATION = "operation";
 
@@ -130,7 +133,12 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
             formLink = asset.getRenderLink();
 
             if (TypeEnum.DRAFT == typeEnum) {
-                formLink = String.format(DRAFT_LINK, asset.getRenderLink(), id);
+                try {
+                    URI newLink = new URIBuilder(formLink).addParameter("dataRef", String.format(DRAFT_LINK, id)).build();
+                    formLink = newLink.toString();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

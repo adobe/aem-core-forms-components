@@ -40,7 +40,7 @@
 
     <script data-cmp-hook-formssearch="itemTemplate"
             type="x-template"
-            data-sly-call="${items.layout @ style=model.layout, hideTime=true, context='html'}">
+            data-sly-call="${items.layout @ style=model.layout, hideTime=true, hideFooter=true, context='html'}">
     </script>
     <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs}"></sly>
 </div>
