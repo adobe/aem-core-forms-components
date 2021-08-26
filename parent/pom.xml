@@ -978,8 +978,8 @@
 
             <dependency>
                 <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2021.06.18.00</version>
+                <artifactId>aem-forms-prerelease-sdk-api</artifactId>
+                <version>2021.08.19.03-SNAPSHOT</version>
             </dependency>
 
             <dependency>

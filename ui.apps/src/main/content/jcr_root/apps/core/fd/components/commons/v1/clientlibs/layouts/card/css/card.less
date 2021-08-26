@@ -12,19 +12,23 @@
     margin-right: 15px;
     margin-bottom: 15px;
 
-    .cmp-portallister__item--card-image {
+    &-time {
+        display: inline;
+    }
+
+    &-image {
         width: 100%;
         height: 100px;
     }
 
-    .cmp-portallister__item--card-title {
+    &-title {
         text-transform:none;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
     }
 
-    .cmp-portallister__item--card-description {
+    &-description {
         margin-top: 10px;
         margin-bottom: 10px;
         text-overflow: ellipsis;
@@ -32,7 +36,7 @@
         overflow: hidden;
     }
 
-    .cmp-portallister__item--card-footer {
+    &-footer {
         font-size: 10px;
         color: #607D8B;
         position: relative;
@@ -41,12 +45,12 @@
         padding-top: 13px;
     }
 
-    .cmp-portallister__item--card-operations {
+    &-operations {
         display: inline-block;
         float: right;
         cursor: pointer;
     }
-    .cmp-portallister__item--card-operations-icon {
+    &-operations-icon {
         color: #6e6e6e;
         &:hover {
             color: #2c2c2c;

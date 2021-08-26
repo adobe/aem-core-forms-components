@@ -17,9 +17,11 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +65,8 @@ public class OperationManagerImpl implements OperationManager {
             }
         }
         if (!draftOperations.isEmpty()) {
-            operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations);
+            operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations.stream().sorted(Comparator.comparing(
+                Operation::getTitle).reversed()).collect(Collectors.toList()));
         } else {
             operationLists.remove(DraftsAndSubmissions.TypeEnum.DRAFT);
         }
