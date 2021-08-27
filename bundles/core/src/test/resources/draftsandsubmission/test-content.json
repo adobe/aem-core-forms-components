@@ -1,44 +1,26 @@
 {
-    "fpsnl": {
-        "searchlister-empty": {
-            "jcr:primaryType"   : "nt:unstructured",
-            "jcr:createdBy"     : "admin",
-            "jcr:lastModifiedBy": "admin",
-            "jcr:created"       : "Sun May 16 2021 16:47:55 GMT+0000",
-            "jcr:lastModified"  : "Sun May 16 2021 16:47:55 GMT+0000",
-            "sling:resourceType": "core/fd/components/formsportal/searchlister/v1/searchlister"
-        },
-        "searchlister-v1": {
+    "fpdns": {
+        "dns-draft-v1": {
             "jcr:primaryType"   : "nt:unstructured",
             "jcr:createdBy"     : "admin",
             "jcr:lastModifiedBy": "admin",
             "jcr:created"       : "Wed Mar 06 2019 14:11:01 GMT+0100",
             "jcr:lastModified"  : "Tue May 21 2019 18:59:35 GMT+0300",
-            "sling:resourceType": "core/fd/components/formsportal/searchlister/v1/searchlister",
-            "layout"            : "Custom",
-            "disableSearch"     : "true",
-            "disableSorting"    : "true",
-            "title"             : "Sample Title",
-            "limit"             : 4,
-            "assetFolders": {
-                "jcr:primaryType":"nt:unstructured",
-                "item0": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "folder"         :"/content/dam/projects"
-                },
-                "item1": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "folder"         :"/content/dam/formsanddocuments"
-                }
-            },
-            "assetSource": {
-                "jcr:primaryType":"nt:unstructured",
-                "item0": {
-                    "jcr:primaryType":"nt:unstructured",
-                    "type"           :"Adaptive Forms",
-                    "htmlTooltip"    :"Click here to view as HTML"
-                }
-            }
+            "sling:resourceType": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions",
+            "layout"            : "list",
+            "title"             : "Drafts",
+            "type"              : "DRAFT"
+        },
+        "dns-submission-v1": {
+            "jcr:primaryType"   : "nt:unstructured",
+            "jcr:createdBy"     : "admin",
+            "jcr:lastModifiedBy": "admin",
+            "jcr:created"       : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"  : "Tue May 21 2019 18:59:35 GMT+0300",
+            "sling:resourceType": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions",
+            "layout"            : "card",
+            "title"             : "Submissions",
+            "type"              : "SUBMISSION"
         }
     },
     "dam" : {

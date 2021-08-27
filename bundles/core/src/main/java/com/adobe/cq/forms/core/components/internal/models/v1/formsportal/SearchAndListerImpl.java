@@ -111,7 +111,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
             public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
                 String orderByValue = params[0].getString();
                 builder.sortBy(FMSearchCriteria.Property.getEnum(orderByValue));
-                // queryMap.put("orderby", "@" + METADATA_NODE_PATH + "/" + orderByValue);
             }
         });
 
@@ -250,7 +249,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         buildAssetSourcesQuery(searchBuilder);
         buildAssetFolderQuery(searchBuilder);
 
-        // the resource resolver will likely close
+        // close resource resolver session
         try (ResourceResolver subResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
             List<FDAsset> results = assetSearch.searchForms(searchBuilder.build(), subResolver);
             for (FDAsset fmA : results) {

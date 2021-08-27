@@ -137,7 +137,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     URI newLink = new URIBuilder(formLink).addParameter("dataRef", String.format(DRAFT_LINK, id)).build();
                     formLink = newLink.toString();
                 } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    LOGGER.error("[FP] Could not parse render link", e);
                 }
             }
         }
@@ -220,18 +220,6 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     LOGGER.error("Failed to fetch Form Submissions.", e);
                 }
                 break;
-            // case PENDING_SIGN:
-            // try {
-            // List<PendingSignModel> list = pendingSignService.getAllPendingSign(query);
-            // for (PendingSignModel pendingSignModel : list) {
-            // PortalLister.Item item = getItem(pendingSignModel.getFormPath(), typeEnum, pendingSignModel.getId(),
-            // dateFormatter.format(pendingSignModel.getLastModifiedTime().getTime()));
-            // itemList.add(item);
-            // }
-            // } catch (FormsPortalException e) {
-            // LOGGER.error("Failed to fetch Pending Signs forms.", e);
-            // }
-            // break;
         }
 
         // might create holes during pagination

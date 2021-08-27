@@ -1,0 +1,23 @@
+{
+    "id": "draftsandsubmissions-5d10a27fc0",
+    "title": "Submissions",
+    "layout": "card",
+    "type": "SUBMISSION",
+    "searchResults": {
+        "data": [
+            {
+                "id": "abc123",
+                "title": "Sample Form",
+                "description": "Sample description for Sample Form",
+                "tooltip": "Open",
+                "formLink": "/render/link/by/backend/api",
+                "operations": null,
+                "timeInfo": "12:00:00 27-9-21",
+                "thumbnailLink": "/thumbnail/path/by/backend"
+            }
+        ],
+        "offset": 0,
+        "nextOffset": -1
+    },
+    ":type": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions"
+}

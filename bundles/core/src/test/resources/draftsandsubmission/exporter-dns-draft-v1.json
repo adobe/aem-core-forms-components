@@ -1,0 +1,30 @@
+{
+    "id": "draftsandsubmissions-212bdbc1fe",
+    "title": "Drafts",
+    "layout": "list",
+    "type": "DRAFT",
+    "searchResults": {
+        "data": [
+            {
+                "id": "abc123",
+                "title": "Sample Form",
+                "description": "Sample description for Sample Form",
+                "tooltip": "Open",
+                "formLink": "/render/link/by/backend/api?dataRef=service%3A%2F%2FFP%2Fdraft%2Fabc123",
+                "operations": [
+                    {
+                        "title": "Open",
+                        "icon": null,
+                        "name": "openDraft",
+                        "type": "DRAFT"
+                    }
+                ],
+                "timeInfo": "12:00:00 27-9-21",
+                "thumbnailLink": "/thumbnail/path/by/backend"
+            }
+        ],
+        "offset": 0,
+        "nextOffset": -1
+    },
+    ":type": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions"
+}
