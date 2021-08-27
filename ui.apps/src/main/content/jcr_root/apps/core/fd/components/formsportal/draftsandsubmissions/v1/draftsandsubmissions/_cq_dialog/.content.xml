@@ -29,7 +29,7 @@
                     sling:orderBefore="layout"
                     emptyText=""
                     fieldLabel="Select Type"
-                    fieldDescription="Specify type - Drafts / Submissions / Pending Sign Forms"
+                    fieldDescription="Specify type - Drafts / Submissions"
                     multiple="{Boolean}false"
                     name="./type"
                     text="Select">
@@ -42,10 +42,6 @@
                             jcr:primaryType="nt:unstructured"
                             text="Submitted Forms"
                             value="SUBMISSION"/>
-<!--                    <pendingSignOnly-->
-<!--                            jcr:primaryType="nt:unstructured"-->
-<!--                            text="Pending Sign Forms"-->
-<!--                            value="PENDING_SIGN"/>-->
                 </items>
             </type>
             <totalResult
