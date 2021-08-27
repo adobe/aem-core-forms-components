@@ -17,5 +17,3 @@
 #base=js
 openDraft.js
 discardDraft.js
-cancelAgreement.js
-signDor.js
