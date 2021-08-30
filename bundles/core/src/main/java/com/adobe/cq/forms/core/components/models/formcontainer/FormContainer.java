@@ -58,4 +58,8 @@ public interface FormContainer extends Component {
         throw new UnsupportedOperationException();
     }
 
+    default String getPath() {
+        throw new UnsupportedOperationException();
+    }
+
 }
