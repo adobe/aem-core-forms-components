@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formcontainer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -84,6 +85,18 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
                         InputStream inputStream = asset.getOriginal().getStream();
                         ObjectMapper mapper = new ObjectMapper();
                         jsonMap = mapper.readValue(inputStream, Map.class);
+                        Object metadata = jsonMap.get(":metadata");
+                        Map<String, Object> metaDataMap;
+                        if (metadata != null) {
+                            metaDataMap = (Map<String, Object>) metadata;
+                        } else {
+                            metaDataMap = new HashMap<String, Object>();
+                            jsonMap.put(":metadata", metaDataMap);
+                        }
+                        if (!metaDataMap.containsKey("action")) {
+                            metaDataMap.put(":action", resource.getPath() + ".af.submit/v1");
+                            metaDataMap.put(":dataUrl", resource.getPath() + ".af.formdata/v1");
+                        }
                     } catch (IOException e) {
                         LOGGER.error("Unable to read json from resource '{}'", documentPath);
                     }
@@ -94,5 +107,9 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
             }
         }
         return jsonMap;
+    }
+
+    public String getPath() {
+        return resource.getPath();
     }
 }
