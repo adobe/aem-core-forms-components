@@ -18,7 +18,9 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import org.apache.sling.api.request.RequestParameterMap;
 import org.apache.sling.settings.SlingSettingsService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,9 +73,10 @@ public class OpenDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(String modelID) {
+    public OperationResult execute(RequestParameterMap parameterMap) {
         String suffix = slingSettings.getRunModes().contains(Externalizer.AUTHOR) ? WCM_MODE : "";
         Map<String, Object> result = new HashMap<>();
+        String modelID = Objects.requireNonNull(parameterMap.getValue(Operation.OPERATION_MODEL_ID)).getString();
         try {
             DraftModel dm = draftService.getDraft(modelID);
             String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm

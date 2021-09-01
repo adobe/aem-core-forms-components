@@ -168,7 +168,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         if (operation == null) {
             return null;
         }
-        return operation.execute(request.getParameter(Operation.OPERATION_MODEL_ID));
+        return operation.execute(request.getRequestParameterMap());
     }
 
     @Override
