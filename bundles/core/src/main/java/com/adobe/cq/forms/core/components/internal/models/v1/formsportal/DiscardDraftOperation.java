@@ -18,7 +18,9 @@ package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import org.apache.sling.api.request.RequestParameterMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -62,8 +64,9 @@ public class DiscardDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(String modelID) {
+    public OperationResult execute(RequestParameterMap parameterMap) {
         Map<String, Object> result = new HashMap<>();
+        String modelID = Objects.requireNonNull(parameterMap.getValue(Operation.OPERATION_MODEL_ID)).getString();
         try {
             draftService.deleteDraft(modelID);
             result.put("status", "success");
