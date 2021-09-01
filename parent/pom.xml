@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3-internal-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -225,10 +225,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -646,17 +642,6 @@
                     </executions>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.7</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -792,14 +777,17 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>dev-snapshots</id>
+            <name>Adobe Dev Snapshots</name>
+            <url>https://artifactory.corp.adobe.com/artifactory/maven-aemforms-dev-snapshot-local</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>releases</id>
+            <name>Adobe Releases</name>
+            <url>https://artifactory.corp.adobe.com/artifactory/maven-aemforms-release-local/</url>
         </repository>
     </distributionManagement>
+
 
     <!-- ====================================================================== -->
     <!-- D E P E N D E N C I E S                                                -->
