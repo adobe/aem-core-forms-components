@@ -3,7 +3,11 @@
     "title": "Drafts",
     "layout": "list",
     "type": "DRAFT",
-    "searchResults": {
+    "elements": {
+        "pagination": {
+            "loadAction": null,
+            "nextOffset": -1
+        },
         "data": [
             {
                 "id": "abc123",
@@ -13,18 +17,20 @@
                 "formLink": "/render/link/by/backend/api?dataRef=service%3A%2F%2FFP%2Fdraft%2Fabc123",
                 "operations": [
                     {
-                        "title": "Open",
-                        "icon": null,
+                        "actionURL": "/?operation=openDraft&operation_model_id=abc123",
                         "name": "openDraft",
-                        "type": "DRAFT"
+                        "title": "Open"
+                    },
+                    {
+                        "actionURL": "/?operation=discardDraft&operation_model_id=abc123",
+                        "name": "discardDraft",
+                        "title": "Discard"
                     }
                 ],
-                "timeInfo": "12:00:00 27-9-21",
+                "lastModified": "12:00:00 27-9-21",
                 "thumbnailLink": "/thumbnail/path/by/backend"
             }
-        ],
-        "offset": 0,
-        "nextOffset": -1
+        ]
     },
     ":type": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions"
 }

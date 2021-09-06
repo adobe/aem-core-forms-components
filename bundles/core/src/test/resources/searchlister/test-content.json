@@ -19,7 +19,7 @@
             "disableSearch"     : "true",
             "disableSorting"    : "true",
             "title"             : "Sample Title",
-            "limit"             : 4,
+            "limit"             : 1,
             "assetFolders": {
                 "jcr:primaryType":"nt:unstructured",
                 "item0": {

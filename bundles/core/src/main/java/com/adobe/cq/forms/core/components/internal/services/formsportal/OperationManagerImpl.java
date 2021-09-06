@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
+package com.adobe.cq.forms.core.components.internal.services.formsportal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -29,8 +31,9 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
-import com.adobe.cq.forms.core.components.models.formsportal.Operation;
-import com.adobe.cq.forms.core.components.models.formsportal.OperationManager;
+import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
+import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 
 @Component(
     service = OperationManager.class,
@@ -49,7 +52,6 @@ public class OperationManagerImpl implements OperationManager {
     private void refreshOperationLists() {
         List<Operation> draftOperations = new ArrayList<>();
         List<Operation> submitOperations = new ArrayList<>();
-        List<Operation> signOperations = new ArrayList<>();
         for (Map.Entry<String, Operation> entry : operations.entrySet()) {
             Operation operation = entry.getValue();
             switch (operation.getType()) {
@@ -59,27 +61,11 @@ public class OperationManagerImpl implements OperationManager {
                 case SUBMISSION:
                     submitOperations.add(operation);
                     break;
-                case PENDING_SIGN:
-                    signOperations.add(operation);
-                    break;
             }
         }
-        if (!draftOperations.isEmpty()) {
-            operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations.stream().sorted(Comparator.comparing(
-                Operation::getTitle).reversed()).collect(Collectors.toList()));
-        } else {
-            operationLists.remove(DraftsAndSubmissions.TypeEnum.DRAFT);
-        }
-        if (!submitOperations.isEmpty()) {
-            operationLists.put(DraftsAndSubmissions.TypeEnum.SUBMISSION, submitOperations);
-        } else {
-            operationLists.remove(DraftsAndSubmissions.TypeEnum.SUBMISSION);
-        }
-        if (!signOperations.isEmpty()) {
-            operationLists.put(DraftsAndSubmissions.TypeEnum.PENDING_SIGN, signOperations);
-        } else {
-            operationLists.remove(DraftsAndSubmissions.TypeEnum.PENDING_SIGN);
-        }
+        operationLists.put(DraftsAndSubmissions.TypeEnum.DRAFT, draftOperations.stream().sorted(Comparator.comparing(
+            Operation::getTitle).reversed()).collect(Collectors.toList()));
+        operationLists.put(DraftsAndSubmissions.TypeEnum.SUBMISSION, submitOperations);
     }
 
     protected void bindOperation(final Operation operation, Map<String, Object> config) {
@@ -100,7 +86,14 @@ public class OperationManagerImpl implements OperationManager {
         return operations.get(operationName);
     }
 
-    public List<Operation> getOperationList(DraftsAndSubmissions.TypeEnum typeEnum) {
-        return operationLists.get(typeEnum);
+    public List<Operation> getOperationList(DraftsAndSubmissions.TypeEnum typeEnum, PortalLister.Item item, String requestURI) {
+        List<Operation> ops = Optional.ofNullable(operationLists.get(typeEnum))
+            .orElse(Collections.emptyList())
+            .stream().map(x -> x.makeOperation(item, requestURI))
+            .collect(Collectors.toList());
+        if (ops.isEmpty()) {
+            return null;
+        }
+        return ops;
     }
 }

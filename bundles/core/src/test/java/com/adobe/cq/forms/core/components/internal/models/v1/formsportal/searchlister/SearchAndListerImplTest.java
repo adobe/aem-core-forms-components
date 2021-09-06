@@ -92,8 +92,8 @@ public class SearchAndListerImplTest {
         Assertions.assertFalse(component.getSortDisabled());
         Assertions.assertEquals(Integer.valueOf(8), component.getLimit());
 
-        // map at top level should have exactly three keys
-        Assertions.assertEquals(3, component.getSearchResults().size());
+        // map at top level should have exactly two keys
+        Assertions.assertEquals(2, component.getElements().size());
     }
 
     @Test
@@ -103,11 +103,11 @@ public class SearchAndListerImplTest {
         Assertions.assertEquals("Custom", component.getLayout());
         Assertions.assertTrue(component.getSearchDisabled());
         Assertions.assertTrue(component.getSortDisabled());
-        Assertions.assertEquals(Integer.valueOf(4), component.getLimit());
+        Assertions.assertEquals(Integer.valueOf(1), component.getLimit());
 
         List<FDAsset> resultList = new ArrayList<>();
         Mockito.when(searchAPI.searchForms(Mockito.any(), Mockito.any())).thenReturn(resultList);
-        Assertions.assertEquals(3, component.getSearchResults().size());
+        Assertions.assertEquals(2, component.getElements().size());
     }
 
     @Test

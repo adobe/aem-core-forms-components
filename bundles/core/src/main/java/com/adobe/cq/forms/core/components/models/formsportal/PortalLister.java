@@ -21,6 +21,7 @@ import java.util.Map;
 import org.osgi.annotation.versioning.ConsumerType;
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.adobe.cq.wcm.core.components.models.Component;
 
 /**
@@ -67,7 +68,7 @@ public interface PortalLister extends Component {
      * @return Map of key to object
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
-    default Map<String, Object> getSearchResults() {
+    default Map<String, Object> getElements() {
         throw new UnsupportedOperationException();
     }
 
@@ -101,7 +102,7 @@ public interface PortalLister extends Component {
             throw new UnsupportedOperationException();
         }
 
-        default String getTimeInfo() {
+        default String getLastModified() {
             throw new UnsupportedOperationException();
         }
     }

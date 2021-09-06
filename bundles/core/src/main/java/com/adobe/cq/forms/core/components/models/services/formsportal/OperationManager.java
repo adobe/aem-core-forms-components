@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package com.adobe.cq.forms.core.components.models.formsportal;
+package com.adobe.cq.forms.core.components.models.services.formsportal;
 
 import java.util.List;
+
+import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
+import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 
 public interface OperationManager {
     default Operation getOperation(String operationName) {
         throw new UnsupportedOperationException();
     }
 
-    default List<Operation> getOperationList(DraftsAndSubmissions.TypeEnum typeEnum) {
+    default List<Operation> getOperationList(DraftsAndSubmissions.TypeEnum typeEnum, PortalLister.Item item, String requestURI) {
         throw new UnsupportedOperationException();
     }
 }

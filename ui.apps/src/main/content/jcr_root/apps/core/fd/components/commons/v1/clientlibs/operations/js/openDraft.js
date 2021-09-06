@@ -25,10 +25,7 @@
     var openDraftOperation = {
         name: "openDraft",
         handler: function (event, operationData) {
-            var parameters = new URLSearchParams();
-            parameters.append("operation", operationData.name);
-            parameters.append("operation_model_id", operationData.operation_model_id);
-            var queryPath = operationData.queryPath + "?" + parameters.toString();
+            var queryPath = operationData.actionURL;
 
             fetch(queryPath)
                 .then(response => response.json())

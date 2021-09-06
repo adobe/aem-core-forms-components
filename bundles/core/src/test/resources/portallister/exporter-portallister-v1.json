@@ -1,8 +1,14 @@
 {
-    "id"                    : "portallister-2e39f82e36",
-    "title"                 : "Sample Title",
-    "layout"                : "Custom",
-    "limit"                 : 10,
-    "searchResults"         : {"data":[],"offset":0,"nextOffset":-1},
-    ":type":"core/fd/components/formsportal/portallister/v1/portallister"
+    "id": "portallister-2e39f82e36",
+    "title": "Sample Title",
+    "layout": "Custom",
+    "limit": 10,
+    "elements": {
+        "pagination": {
+            "loadAction": null,
+            "nextOffset": -1
+        },
+        "data": []
+    },
+    ":type": "core/fd/components/formsportal/portallister/v1/portallister"
 }

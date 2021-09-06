@@ -48,12 +48,12 @@
         },
         updateSearchResults = function (response, id) {
             var componentConfig = componentStore[id],
-                queryResults = response.searchResults;
-            componentConfig.nextOffset = queryResults.nextOffset;
+                queryResults = response.elements;
+            componentConfig.nextOffset = queryResults.pagination.nextOffset;
             queryResults.data.forEach(function(item) {
                 ItemAPI.createAndInject(componentConfig, item);
             });
-            if (queryResults.nextOffset < 0) {
+            if (componentConfig.nextOffset < 0) {
                 hideLoadMore(id);
             }
         },
