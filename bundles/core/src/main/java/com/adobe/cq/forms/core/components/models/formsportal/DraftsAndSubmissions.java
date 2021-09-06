@@ -17,12 +17,14 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 
 import org.osgi.annotation.versioning.*;
 
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
+
 public interface DraftsAndSubmissions extends PortalLister {
 
     /**
-     * Returns type - DRAFT / SUBMISSION / PENDING_SIGN
+     * Returns type - DRAFT / SUBMISSION
      *
-     * @return Type - DRAFT / SUBMISSION / PENDING_SIGN
+     * @return Type - DRAFT / SUBMISSION
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default String getType() {
@@ -50,8 +52,7 @@ public interface DraftsAndSubmissions extends PortalLister {
     @ProviderType
     public enum TypeEnum {
         DRAFT,
-        SUBMISSION,
-        PENDING_SIGN
+        SUBMISSION
     }
 
 }

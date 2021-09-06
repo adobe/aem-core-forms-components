@@ -3,7 +3,11 @@
     "title": "Submissions",
     "layout": "card",
     "type": "SUBMISSION",
-    "searchResults": {
+    "elements": {
+        "pagination": {
+            "loadAction": null,
+            "nextOffset": -1
+        },
         "data": [
             {
                 "id": "abc123",
@@ -12,12 +16,10 @@
                 "tooltip": "Open",
                 "formLink": "/render/link/by/backend/api",
                 "operations": null,
-                "timeInfo": "12:00:00 27-9-21",
+                "lastModified": "12:00:00 27-9-21",
                 "thumbnailLink": "/thumbnail/path/by/backend"
             }
-        ],
-        "offset": 0,
-        "nextOffset": -1
+        ]
     },
     ":type": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions"
 }

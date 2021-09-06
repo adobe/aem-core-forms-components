@@ -30,10 +30,11 @@ import org.mockito.Mockito;
 
 import com.adobe.aem.formsndocuments.assets.models.AdaptiveFormAsset;
 import com.adobe.cq.forms.core.Utils;
-import com.adobe.cq.forms.core.components.internal.models.v1.formsportal.OpenDraftOperation;
-import com.adobe.cq.forms.core.components.internal.models.v1.formsportal.OperationManagerImpl;
+import com.adobe.cq.forms.core.components.internal.services.formsportal.DiscardDraftOperation;
+import com.adobe.cq.forms.core.components.internal.services.formsportal.OpenDraftOperation;
+import com.adobe.cq.forms.core.components.internal.services.formsportal.OperationManagerImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
-import com.adobe.cq.forms.core.components.models.formsportal.OperationManager;
+import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
@@ -97,6 +98,7 @@ public class DraftsAndSubmissionsImplTest {
         AdaptiveFormAsset mockAsset = getMockAFAssetOf(afDamRes);
         context.registerAdapter(Resource.class, AdaptiveFormAsset.class, mockAsset);
         context.registerInjectActivateService(new OpenDraftOperation());
+        context.registerInjectActivateService(new DiscardDraftOperation());
 
         DraftsAndSubmissions component = getInstanceUnderTest(DRAFT_COMPONENT_PATH);
         Utils.testJSONExport(component, Utils.getTestExporterJSONPath(TEST_BASE, DRAFT_COMPONENT_PATH));

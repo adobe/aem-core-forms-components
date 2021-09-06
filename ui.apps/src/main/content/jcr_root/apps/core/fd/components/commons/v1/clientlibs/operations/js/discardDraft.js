@@ -27,11 +27,8 @@
     var discardDraftOperation = {
         name: "discardDraft",
         handler: function (event, operationData) {
-            var itemEl = $(event.currentTarget).parents('[data-cmp-hook-item-template="item"]'),
-                parameters = new URLSearchParams();
-            parameters.append("operation", operationData.name);
-            parameters.append("operation_model_id", operationData.operation_model_id);
-            var queryPath = operationData.queryPath + "?" + parameters.toString();
+            var itemEl = $(event.currentTarget).parents('[data-cmp-hook-item-template="item"]');
+            var queryPath = operationData.actionURL;
 
             fetch(queryPath)
                 .then(response => response.json())

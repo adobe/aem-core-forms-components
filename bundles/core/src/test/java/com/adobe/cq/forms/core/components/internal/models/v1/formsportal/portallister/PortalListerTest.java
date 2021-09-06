@@ -57,8 +57,8 @@ public class PortalListerTest {
         Mockito.when(component.getLimit()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, component::getLimit);
 
-        Mockito.when(component.getSearchResults()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getSearchResults);
+        Mockito.when(component.getElements()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, component::getElements);
 
         // PortalLister.Item interface tests
         PortalLister.Item item = Mockito.mock(PortalLister.Item.class);

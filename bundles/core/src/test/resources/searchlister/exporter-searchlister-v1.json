@@ -1,10 +1,13 @@
 {
-    "id"                    : "searchlister-fb0b07e803",
-    "title"                 : "Sample Title",
-    "layout"                : "Custom",
-    "searchDisabled"        : true,
-    "sortDisabled"          : true,
-    "limit"                 : 4,
-    "searchResults"         : {"data":[],"offset":0,"nextOffset":-1},
-    ":type"                 : "core/fd/components/formsportal/searchlister/v1/searchlister"
+    "id": "searchlister-fb0b07e803",
+    "title": "Sample Title",
+    "layout": "Custom",
+    "elements": {
+        "pagination": {
+            "loadAction": null,
+            "nextOffset": -1
+        },
+        "data": []
+    },
+    ":type": "core/fd/components/formsportal/searchlister/v1/searchlister"
 }

@@ -14,28 +14,41 @@
  * limitations under the License.
  */
 
-package com.adobe.cq.forms.core.components.models.formsportal;
+package com.adobe.cq.forms.core.components.models.services.formsportal;
 
 import java.util.Map;
 
-import org.apache.sling.api.request.RequestParameterMap;
 import org.osgi.annotation.versioning.ConsumerType;
+
+import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
+import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @ConsumerType
 public interface Operation {
+    public static final String OPERATION_KEY = "operation";
+
     public static final String OPERATION_MODEL_ID = "operation_model_id";
 
     public String getName();
 
     public String getTitle();
 
+    @JsonIgnore
     public DraftsAndSubmissions.TypeEnum getType();
 
-    public OperationResult execute(RequestParameterMap parameterMap);
+    public OperationResult execute(Map parameterMap);
 
     default String getIcon() {
         throw new UnsupportedOperationException();
     }
+
+    default String getActionURL() {
+        throw new UnsupportedOperationException();
+    }
+
+    @JsonIgnore
+    Operation makeOperation(PortalLister.Item item, String requestURI);
 
     @ConsumerType
     public interface OperationResult {

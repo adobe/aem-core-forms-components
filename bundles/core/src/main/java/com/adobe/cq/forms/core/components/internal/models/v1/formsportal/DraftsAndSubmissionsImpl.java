@@ -49,9 +49,9 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
-import com.adobe.cq.forms.core.components.models.formsportal.Operation;
-import com.adobe.cq.forms.core.components.models.formsportal.OperationManager;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
+import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
 import com.adobe.fd.fp.api.models.SubmitModel;
@@ -149,8 +149,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         item.setTooltip(TOOLTIP);
         item.setFormThumbnail(thubmnail);
         item.setId(id);
-        item.setOperations(operationManager.getOperationList(typeEnum));
-        item.setTimeInfo(timeInfo);
+        item.setOperations(operationManager.getOperationList(typeEnum, item, request.getRequestURI()));
+        item.setLastModified(timeInfo);
         return item;
     }
 
@@ -227,11 +227,11 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     @Override
-    public Map<String, Object> getSearchResults() {
+    public Map<String, Object> getElements() {
         if (isOperationCall()) {
             return null;
         }
-        return super.getSearchResults();
+        return super.getElements();
     }
 
     @Override
@@ -257,6 +257,12 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
             return null;
         }
         return super.getLimit();
+    }
+
+    @Override
+    protected Integer getNextOffset(Integer resultLength) {
+        // Pagination not supported in drafts and submissions
+        return -1;
     }
 
     private static class QueryImpl implements Query {

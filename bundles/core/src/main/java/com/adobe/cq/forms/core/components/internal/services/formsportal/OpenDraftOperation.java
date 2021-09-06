@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
+package com.adobe.cq.forms.core.components.internal.services.formsportal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +28,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
-import com.adobe.cq.forms.core.components.models.formsportal.Operation;
+import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
 import com.adobe.fd.fp.api.service.DraftService;
 import com.day.cq.commons.Externalizer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component(
     service = Operation.class,
@@ -45,6 +48,8 @@ public class OpenDraftOperation implements Operation {
     private static final String WCM_MODE = "&wcmmode=disabled";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenDraftOperation.class);
+
+    private String actionURL;
 
     @Reference
     private DraftService draftService;
@@ -63,6 +68,7 @@ public class OpenDraftOperation implements Operation {
     }
 
     @Override
+    @JsonIgnore
     public String getIcon() {
         return null;
     }
@@ -73,10 +79,11 @@ public class OpenDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(RequestParameterMap parameterMap) {
+    public OperationResult execute(Map parameterMap) {
         String suffix = slingSettings.getRunModes().contains(Externalizer.AUTHOR) ? WCM_MODE : "";
         Map<String, Object> result = new HashMap<>();
-        String modelID = Objects.requireNonNull(parameterMap.getValue(Operation.OPERATION_MODEL_ID)).getString();
+        RequestParameterMap map = (RequestParameterMap) parameterMap;
+        String modelID = Objects.requireNonNull(map.getValue(Operation.OPERATION_MODEL_ID)).getString();
         try {
             DraftModel dm = draftService.getDraft(modelID);
             String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm
@@ -94,5 +101,17 @@ public class OpenDraftOperation implements Operation {
                 return result;
             }
         };
+    }
+
+    @Override
+    public Operation makeOperation(PortalLister.Item item, String requestURI) {
+        OpenDraftOperation op = new OpenDraftOperation();
+        op.actionURL = Utils.generateActionURL(item.getId(), getName(), requestURI);
+        return op;
+    }
+
+    @Override
+    public String getActionURL() {
+        return actionURL;
     }
 }

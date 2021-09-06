@@ -60,7 +60,9 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister;
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.day.cq.i18n.I18n;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -197,6 +199,12 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         return result;
     }
 
+    @Override
+    @JsonIgnore
+    public Integer getLimit() {
+        return super.getLimit();
+    }
+
     private List<Resource> getAssetSources() {
         if (assetSources != null) {
             return assetSources;
@@ -262,7 +270,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         return resultMap;
     }
 
-    private PortalLister.Item fetchResourceProperties(FDAsset fmAsset, ResourceResolver resolver) {
+    private SearchAndListerItem fetchResourceProperties(FDAsset fmAsset, ResourceResolver resolver) {
         String title = "";
         String description = "";
         String path = "";
@@ -278,13 +286,15 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
             thubmnail = asset.getThumbnailPath();
             tooltip = i18n.get(htmlTooltip);
         }
-        return new PortalListerImpl.Item(title, description, tooltip, path, thubmnail, null);
+        return new SearchAndListerItem(title, description, tooltip, path, thubmnail, null);
     }
 
+    @JsonIgnore
     public boolean getSearchDisabled() {
         return disableSearch;
     }
 
+    @JsonIgnore
     public boolean getSortDisabled() {
         return disableSorting;
     }
@@ -309,6 +319,31 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         @Override
         public ValueMap getValueMap() {
             return this.valueMap;
+        }
+    }
+
+    private static class SearchAndListerItem extends PortalListerImpl.Item {
+        public SearchAndListerItem(String title, String description, String tooltip, String formLink, String formThumbnail,
+                                   String lastModified) {
+            super(title, description, tooltip, formLink, formThumbnail, lastModified);
+        }
+
+        @Override
+        @JsonIgnore
+        public void setOperations(List<Operation> operations) {
+            super.setOperations(operations);
+        }
+
+        @Override
+        @JsonIgnore
+        public String getLastModified() {
+            return super.getLastModified();
+        }
+
+        @Override
+        @JsonIgnore
+        public String getId() {
+            return super.getId();
         }
     }
 }
