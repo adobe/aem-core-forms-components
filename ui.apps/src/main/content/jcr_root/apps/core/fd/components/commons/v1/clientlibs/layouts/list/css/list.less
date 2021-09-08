@@ -38,6 +38,7 @@
 
     &-body {
         padding-right: 20px;
+        padding-left: 20px;
         width: 60%;
     }
 
@@ -72,5 +73,21 @@
     &--list {
         border-collapse: collapse;
         width: 100%;
+    }
+}
+
+.cmp-portallister__item--error {
+    .cmp-portallister__item--list-image-wrapper::before {
+        content: "\f12a";
+        font-family: 'Font Awesome 5 Free';
+        color: #D7373F;
+        margin-left: 50%;
+        border-width: thin;
+        border-style: solid;
+        padding: 5px;
+    }
+
+    td {
+        padding: 5px;
     }
 }

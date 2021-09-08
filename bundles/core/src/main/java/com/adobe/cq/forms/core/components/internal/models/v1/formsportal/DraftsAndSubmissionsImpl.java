@@ -117,8 +117,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id, final String timeInfo) {
-        String title = "<Non Existent Form>";
-        String description = null;
+        String title = "Retired Form";
+        String description = "Form template has been retired";
         String thubmnail = null;
         String formLink = null;
 
@@ -168,7 +168,11 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         if (operation == null) {
             return null;
         }
-        return operation.execute(request.getParameterMap());
+        Map<String, Object> inputMap = request.getParameterMap()
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return operation.execute(inputMap);
     }
 
     @Override

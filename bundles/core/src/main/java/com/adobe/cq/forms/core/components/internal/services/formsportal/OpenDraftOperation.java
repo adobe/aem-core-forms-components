@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.settings.SlingSettingsService;
@@ -80,10 +81,14 @@ public class OpenDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(Map<String, String[]> parameterMap) {
+    public OperationResult execute(Map<String, Object> parameterMap) {
         String suffix = slingSettings.getRunModes().contains(Externalizer.AUTHOR) ? WCM_MODE : "";
         Map<String, Object> result = new HashMap<>();
-        String modelID = Arrays.stream(Objects.requireNonNull(parameterMap.get(OPERATION_MODEL_ID))).findFirst().orElse(null);
+        Map<String, String[]> map = parameterMap
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, v -> (String[]) v.getValue()));
+        String modelID = Arrays.stream(Objects.requireNonNull(map.get(OPERATION_MODEL_ID))).findFirst().orElse(null);
         try {
             DraftModel dm = draftService.getDraft(modelID);
             String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm

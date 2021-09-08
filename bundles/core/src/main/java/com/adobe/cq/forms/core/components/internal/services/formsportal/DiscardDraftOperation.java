@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,9 +71,12 @@ public class DiscardDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(Map<String, String[]> parameterMap) {
+    public OperationResult execute(Map<String, Object> parameterMap) {
         Map<String, Object> result = new HashMap<>();
-        String modelID = Arrays.stream(Objects.requireNonNull(parameterMap.get(Operation.OPERATION_MODEL_ID))).findFirst().orElse(null);
+        Map<String, String[]> map = parameterMap.entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, value -> (String[]) value.getValue()));
+        String modelID = Arrays.stream(Objects.requireNonNull(map.get(Operation.OPERATION_MODEL_ID))).findFirst().orElse(null);
         try {
             draftService.deleteDraft(modelID);
             result.put("status", "success");

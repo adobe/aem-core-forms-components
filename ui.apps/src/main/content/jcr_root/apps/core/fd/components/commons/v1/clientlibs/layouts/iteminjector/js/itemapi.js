@@ -41,6 +41,7 @@
 
     var  NS = "cmp",
          TEMPLATE = 'item-template',
+         ERROR_CLASS = 'cmp-portallister__item--error',
          ATTR_PREFIX = "data-" + NS + "-hook-" + TEMPLATE;
 
     // handler for operations
@@ -196,6 +197,9 @@
                 if (data.tooltip) {
                     linkElem.setAttribute("title", data.tooltip);
                 }
+            }
+            else {
+                item.classList.add(ERROR_CLASS);
             }
 
             if (data.thumbnailLink) {
