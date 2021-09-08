@@ -15,6 +15,30 @@
  ******************************************************************************/
 
 (function($) {
+    // time related functionality
+    var DATE_FORMATTER;
+
+    const DIVISIONS = [
+        { amount: 60, name: 'seconds' },
+        { amount: 60, name: 'minutes' },
+        { amount: 24, name: 'hours' },
+        { amount: 7, name: 'days' },
+        { amount: 4.34524, name: 'weeks' },
+        { amount: 12, name: 'months' },
+        { amount: Number.POSITIVE_INFINITY, name: 'years' }
+    ];
+
+    var formatTimeAgo = function (date, DATE_FORMATTER) {
+        var duration = (date - new Date()) / 1000
+        for (let i = 0; i <= DIVISIONS.length; i++) {
+            const division = DIVISIONS[i];
+            if (Math.abs(duration) < division.amount) {
+              return DATE_FORMATTER.format(Math.round(duration), division.name);
+            }
+            duration /= division.amount;
+        }
+    };
+
     var  NS = "cmp",
          TEMPLATE = 'item-template',
          ATTR_PREFIX = "data-" + NS + "-hook-" + TEMPLATE;
@@ -39,6 +63,20 @@
             element.appendChild(document.createTextNode(text));
             element.setAttribute("title", tooltip || text);
         }
+    },
+    addDateWithTooltip = function (element, dateInMillis) {
+        var dt = new Date(Number.parseInt(dateInMillis)), tooltip = dt.toLocaleString(), text = dt.toDateString();
+        if (window.Intl) {
+            // not supported in I.E, so don't make relative dates there
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat
+            // automatically handles browser locale and timezone
+            DATE_FORMATTER = DATE_FORMATTER || new Intl.RelativeTimeFormat(undefined, {
+                                                 numeric: 'auto'
+                                               });
+            text = formatTimeAgo(dt, DATE_FORMATTER);
+        }
+        element.appendChild(document.createTextNode(text));
+        element.setAttribute("title", tooltip);;
     },
     linkClickHandler = function (event) {
         var link = event.currentTarget.getAttribute('link');
@@ -176,8 +214,8 @@
                 operationsElem.style.display = "none";
             }
 
-            if (data.timeInfo && timeInfoElem) {
-                addTextWithTooltip(timeInfoElem, data.timeInfo);
+            if (data.lastModified && timeInfoElem) {
+                addDateWithTooltip(timeInfoElem, data.lastModified);
             }
             itemContainer.appendChild(item);
         },

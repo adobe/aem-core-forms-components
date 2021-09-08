@@ -168,7 +168,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         if (operation == null) {
             return null;
         }
-        return operation.execute(request.getRequestParameterMap());
+        return operation.execute(request.getParameterMap());
     }
 
     @Override
@@ -201,7 +201,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     List<DraftModel> list = draftService.getAllDraft(query);
                     for (DraftModel draftModel : list) {
                         PortalLister.Item item = getItem(draftModel.getFormPath(), typeEnum, draftModel.getId(),
-                            dateFormatter.format(draftModel.getLastModifiedTime().getTime()));
+                            draftModel.getLastModifiedTime().getTimeInMillis() + "");
                         itemList.add(item);
                     }
                 } catch (FormsPortalException e) {
@@ -213,7 +213,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     List<SubmitModel> list = submitService.getAllSubmission(query);
                     for (SubmitModel submitModel : list) {
                         PortalLister.Item item = getItem(submitModel.getFormPath(), typeEnum, submitModel.getId(),
-                            dateFormatter.format(submitModel.getLastModifiedTime().getTime()));
+                            submitModel.getLastModifiedTime().getTimeInMillis() + "");
                         itemList.add(item);
                     }
                 } catch (FormsPortalException e) {

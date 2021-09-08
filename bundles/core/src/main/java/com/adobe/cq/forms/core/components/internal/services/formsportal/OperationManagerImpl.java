@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -90,6 +91,7 @@ public class OperationManagerImpl implements OperationManager {
         List<Operation> ops = Optional.ofNullable(operationLists.get(typeEnum))
             .orElse(Collections.emptyList())
             .stream().map(x -> x.makeOperation(item, requestURI))
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
         if (ops.isEmpty()) {
             return null;

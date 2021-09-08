@@ -16,11 +16,12 @@
 
 package com.adobe.cq.forms.core.components.internal.services.formsportal;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.sling.api.request.RequestParameterMap;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.settings.SlingSettingsService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,11 +80,10 @@ public class OpenDraftOperation implements Operation {
     }
 
     @Override
-    public OperationResult execute(Map parameterMap) {
+    public OperationResult execute(Map<String, String[]> parameterMap) {
         String suffix = slingSettings.getRunModes().contains(Externalizer.AUTHOR) ? WCM_MODE : "";
         Map<String, Object> result = new HashMap<>();
-        RequestParameterMap map = (RequestParameterMap) parameterMap;
-        String modelID = Objects.requireNonNull(map.getValue(Operation.OPERATION_MODEL_ID)).getString();
+        String modelID = Arrays.stream(Objects.requireNonNull(parameterMap.get(OPERATION_MODEL_ID))).findFirst().orElse(null);
         try {
             DraftModel dm = draftService.getDraft(modelID);
             String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm
@@ -105,6 +105,9 @@ public class OpenDraftOperation implements Operation {
 
     @Override
     public Operation makeOperation(PortalLister.Item item, String requestURI) {
+        if (StringUtils.isBlank(item.getFormLink())) {
+            return null;
+        }
         OpenDraftOperation op = new OpenDraftOperation();
         op.actionURL = Utils.generateActionURL(item.getId(), getName(), requestURI);
         return op;
