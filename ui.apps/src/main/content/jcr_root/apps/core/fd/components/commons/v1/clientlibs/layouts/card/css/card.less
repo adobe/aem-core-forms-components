@@ -60,8 +60,21 @@
             font-family: 'Font Awesome 5 Free';
         }
     }
+
+    &.cmp-portallister__item--error {
+        border-color: #D7373F;
+    }
+
 }
 
 .cmp-portallister-results {
     margin-top: 5px;
+}
+
+.cmp-portallister__item--error .cmp-portallister__item--card-description::before {
+    content: "\f12a";
+    font-family: 'Font Awesome 5 Free';
+    color: #D7373F;
+    margin-right: 5px;
+    min-height: 100%;
 }

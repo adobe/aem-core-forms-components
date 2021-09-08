@@ -37,7 +37,7 @@ public interface Operation {
     @JsonIgnore
     public DraftsAndSubmissions.TypeEnum getType();
 
-    public OperationResult execute(Map<String, String[]> parameterMap);
+    public OperationResult execute(Map<String, Object> parameterMap);
 
     default String getIcon() {
         throw new UnsupportedOperationException();
