@@ -19,19 +19,19 @@
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.items="${logic.layoutPath}"
      data-sly-use.menu="${logic.menuPath}"></sly>
-<div class="cmp-draftsandsubmissions" data-cmp-is="draftsandsubmissions" id="${model.id}" data-queryPath="${resource.path}.model.json">
-    <h1 class="cmp-draftsandsubmissions__heading" data-sly-text="${model.title}"></h1>
-    <div class="cmp-draftsandsubmissions__seperator" data-sly-resource.seperator="${logic.seperator}"></div>
-    <div class="cmp-draftsandsubmissions-results" data-cmp-hook-draftsandsubmissions="results"></div>
-    <div class="cmp-draftsandsubmissions__more--wrapper">
-        <div class="cmp-draftsandsubmissions__more" data-cmp-hook-draftsandsubmissions="more">Load more</div>
+<div class="cmp-drafts-and-submissions" data-cmp-is="draftsandsubmissions" id="${model.id}" data-queryPath="${resource.path}.model.json">
+    <h1 class="cmp-drafts-and-submissions__heading" data-sly-text="${model.title}"></h1>
+    <div class="cmp-drafts-and-submissions__seperator" data-sly-resource.seperator="${logic.seperator}"></div>
+    <div class="cmp-drafts-and-submissions__results" data-cmp-hook-draftsandsubmissions="results"></div>
+    <div class="cmp-drafts-and-submissions__more--wrapper">
+        <div class="cmp-drafts-and-submissions__more" data-cmp-hook-draftsandsubmissions="more">Load more</div>
     </div>
     <script data-cmp-hook-draftsandsubmissions="itemTemplate"
-            type="x-template"
-            data-sly-call="${items.layout @ style=model.layout, context='html'}">
-        </script>
+        type="x-template"
+        data-sly-call="${items.layout @ style=model.layout, context='html'}">
+    </script>
     <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs}"></sly>
     <script data-cmp-hook-draftsandsubmissions="menuTemplate"
-            type="x-template" data-sly-call="${menu.menu}">
-        </script>
+        type="x-template" data-sly-call="${menu.menu}">
+    </script>
 </div>

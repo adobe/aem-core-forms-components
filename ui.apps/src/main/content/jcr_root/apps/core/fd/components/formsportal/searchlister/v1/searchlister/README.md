@@ -18,7 +18,7 @@ limitations under the License.
 
 Search And Lister Component  (v1)
 ====
-Search and Lister component written in HTL.
+Search and Lister component written in HTL. Allows listing of all Adaptive Forms present in the AEM instance on an AEM sites page.
 
 ## Features
 
@@ -45,18 +45,18 @@ respectively.
 BLOCK cmp-searchlister
     ELEMENT cmp-searchlister__heading
     ELEMENT cmp-searchlister__seperator
-    BLOCK cmp-searchlister-search
-        ELEMENT cmp-searchlister-search__box
-            MOD cmp-searchlister-search__box--text
-        ELEMENT cmp-searchlister-search__sortbutton
-            MOD cmp-searchlister-search__sortbutton--wrapper
-            MOD cmp-searchlister-search__sortbutton--right
-    BLOCK cmp-searchlister__results
-        ELEMENT cmp-searchlister__item
     ELEMENT cmp-searchlister__more
+BLOCK cmp-searchlister-search
+    ELEMENT cmp-searchlister-search__box
+    ELEMENT cmp-searchlister-search__box-text
+    ELEMENT cmp-searchlister-search__sortbutton
+        MOD cmp-searchlister-search__sortbutton--wrapper
+        MOD cmp-searchlister-search__sortbutton--right
+BLOCK cmp-searchlister-results
+    ELEMENT cmp-searchlister__item
 ```
 ## JavaScript Data Attribute Bindings
-There can be only multiple search and lister instances in a page. It is initialized by the clientlib on window state as ready (i.e all dom instances loaded).
+There can be multiple search and lister instances in a page. It is initialized by the clientlib on window state as ready (i.e all dom instances loaded).
 
 A hook attribute from the following should be added to the corresponding element/template so that the JavaScript is able to target it:
 
@@ -66,13 +66,19 @@ data-cmp-hook-formssearch="filter"
 data-cmp-hook-formssearch="sort"
 data-cmp-hook-formssearch="results"
 data-cmp-hook-formssearch="itemTemplate"
-data-cmp-hook-formssearch="item"
-data-cmp-hook-item-template="itemTitle"
-data-cmp-hook-item-template="description"
-data-cmp-hook-item-template="formLink"
 data-cmp-hook-formssearch="more"
 ```
 
+Following Hooks should be provided by the layout template:
+```
+data-cmp-hook-item-template="item"
+data-cmp-hook-item-template="thumbnail"
+data-cmp-hook-item-template="itemTitle"
+data-cmp-hook-item-template="description"
+data-cmp-hook-item-template="formLink"
+```
+
+The jQuery event `core-forms-itemapi-onload` is used to register the component instance with item injector.
 
 ## Information
 * **Vendor**: Adobe
