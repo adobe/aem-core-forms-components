@@ -199,12 +199,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         return result;
     }
 
-    @Override
-    @JsonIgnore
-    public Integer getLimit() {
-        return super.getLimit();
-    }
-
     private List<Resource> getAssetSources() {
         if (assetSources != null) {
             return assetSources;
@@ -290,11 +284,13 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     }
 
     @JsonIgnore
+    @Override
     public boolean getSearchDisabled() {
         return disableSearch;
     }
 
     @JsonIgnore
+    @Override
     public boolean getSortDisabled() {
         return disableSorting;
     }

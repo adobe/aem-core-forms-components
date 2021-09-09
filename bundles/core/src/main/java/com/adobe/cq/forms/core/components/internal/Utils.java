@@ -12,17 +12,12 @@
  *
  ******************************************************************************/
 
-package com.adobe.cq.forms.core.components.internal.models.v1;
-
-import java.net.URISyntaxException;
+package com.adobe.cq.forms.core.components.internal;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 
 public class Utils {
 

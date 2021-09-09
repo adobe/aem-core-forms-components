@@ -78,6 +78,9 @@ describe('Search And Lister - Authoring', function () {
             cy.get("input[name='./disableSorting']")
                 .should("be.visible")
                 .should("not.be.checked");
+            cy.get("input[name='./htmlTooltip']")
+                .should("be.visible")
+                .should("have.value", "");
 
             // Asset Folder tab, check presence of multifields
             cy.get("[data-foundation-tracking-event*=\"asset folder\"]")
@@ -104,27 +107,6 @@ describe('Search And Lister - Authoring', function () {
             cy.get("input[name='./limit']")
                 .should("be.visible")
                 .should("have.value", "");
-
-            // Asset Listing tab
-            cy.get("[data-foundation-tracking-event*=\"asset listing\"]")
-                .should("be.visible")
-                .click();
-
-            // verify no items present in multifield beforehand
-            var assetSourceMultifieldSelector = "[data-granite-coral-multifield-name=\"./assetSource\"]";
-            assertMultifieldLength(cy.get(assetSourceMultifieldSelector), 1);
-
-            cy.get(assetSourceMultifieldSelector + " ._coral-Accordion-itemHeader")
-                .should("be.visible")
-                .click();
-
-//            cy.get("[name='./assetSource/item0/type']")
-//                .should("be.visible")
-//                .should("have.value", "Adaptive Forms");
-
-            cy.get("[name='./assetSource/item0/htmlTooltip']")
-                .should("be.visible")
-                .should("have.value", "Click here to view as HTML");
 
             // check no error tooltips visible
             cy.get("coral-tooltip[variant=\"error\"]")

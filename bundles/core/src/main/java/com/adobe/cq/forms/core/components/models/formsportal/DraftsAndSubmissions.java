@@ -17,8 +17,6 @@ package com.adobe.cq.forms.core.components.models.formsportal;
 
 import org.osgi.annotation.versioning.*;
 
-import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
-
 public interface DraftsAndSubmissions extends PortalLister {
 
     /**
@@ -28,24 +26,6 @@ public interface DraftsAndSubmissions extends PortalLister {
      * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
      */
     default String getType() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Operation name that is to be performed.
-     *
-     * @return Operation name
-     */
-    default String getOperationName() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Result of performed operation.
-     * 
-     * @return
-     */
-    default Operation.OperationResult getOperationResult() {
         throw new UnsupportedOperationException();
     }
 

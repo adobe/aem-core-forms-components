@@ -16,7 +16,7 @@
 
 (function($) {
     var operationResponseHandler = function (data) {
-        var result = data.operationResult.result;
+        var result = data.result;
         if (result.status == "success") {
             window.open(result.formLink, "_blank");
         }

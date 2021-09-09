@@ -17,7 +17,7 @@
 (function($) {
 
     var operationResponseHandler = function (data, itemEl) {
-        var result = data.operationResult.result;
+        var result = data.result;
         if (result.status == "success") {
             // removing the deleted draft from ui.
             itemEl.remove();

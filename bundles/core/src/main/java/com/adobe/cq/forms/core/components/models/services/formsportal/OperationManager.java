@@ -18,9 +18,12 @@ package com.adobe.cq.forms.core.components.models.services.formsportal;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 
+@ProviderType
 public interface OperationManager {
     default Operation getOperation(String operationName) {
         throw new UnsupportedOperationException();

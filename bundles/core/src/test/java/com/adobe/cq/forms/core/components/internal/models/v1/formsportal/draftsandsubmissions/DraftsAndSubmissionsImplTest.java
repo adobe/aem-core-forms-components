@@ -121,12 +121,6 @@ public class DraftsAndSubmissionsImplTest {
     public void testMainInterface() {
         DraftsAndSubmissions component = Mockito.mock(DraftsAndSubmissions.class);
 
-        Mockito.when(component.getOperationName()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getOperationName);
-
-        Mockito.when(component.getOperationResult()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, component::getOperationResult);
-
         Mockito.when(component.getType()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, component::getType);
     }
