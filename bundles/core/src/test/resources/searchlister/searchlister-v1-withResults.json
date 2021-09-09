@@ -11,7 +11,7 @@
             {
                 "title": "Sample Form",
                 "description": "Sample description for Sample Form",
-                "tooltip": "Click to open Form",
+                "tooltip": "Click to open",
                 "formLink": "/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled",
                 "thumbnailLink": null
             }
