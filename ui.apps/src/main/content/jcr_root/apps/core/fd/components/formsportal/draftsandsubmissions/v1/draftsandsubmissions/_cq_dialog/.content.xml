@@ -29,7 +29,6 @@
                     sling:orderBefore="layout"
                     emptyText=""
                     fieldLabel="Select Type"
-                    fieldDescription="Specify type - Drafts / Submissions"
                     multiple="{Boolean}false"
                     name="./type"
                     text="Select">

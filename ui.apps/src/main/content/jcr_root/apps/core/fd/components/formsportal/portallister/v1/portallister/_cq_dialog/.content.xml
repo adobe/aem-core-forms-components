@@ -26,23 +26,22 @@
             <titleText
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldDescription="Specify a title"
                     fieldLabel="Title"
                     name="./title"/>
             <layout
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/foundation/form/select"
-                    fieldLabel="Layout Template"
+                    fieldLabel="Layout"
                     name="./layout">
                 <items jcr:primaryType="nt:unstructured">
                     <layout1
                             jcr:primaryType="nt:unstructured"
-                            text="Card"
+                            text="Card Layout"
                             value="card"
                             selected="{Boolean}true"/>
                     <layout2
                             jcr:primaryType="nt:unstructured"
-                            text="List"
+                            text="List Layout"
                             value="list"/>
                 </items>
             </layout>

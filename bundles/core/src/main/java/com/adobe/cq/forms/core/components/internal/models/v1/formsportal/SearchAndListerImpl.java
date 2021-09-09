@@ -77,7 +77,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
 
     private static final String PN_CHILD_ASSETFOLDERS = "assetFolders";
     private static final String PN_CHILD_ASSETSOURCES = "assetSource";
-    private static final String DEFAULT_TOOLTIP = "Click to open Form";
+    private static final String DEFAULT_TOOLTIP = "Click to open";
     private static final Map<String, QueryStrategy> queryStrategies = new HashMap<>();
 
     static {

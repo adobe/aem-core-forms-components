@@ -28,6 +28,8 @@
         { amount: Number.POSITIVE_INFINITY, name: 'years' }
     ];
 
+    const OP_ICON_DESC = "Click to open menu";
+
     var formatTimeAgo = function (date, DATE_FORMATTER) {
         var duration = (date - new Date()) / 1000
         for (let i = 0; i <= DIVISIONS.length; i++) {
@@ -210,6 +212,8 @@
 
             if (data.operations) {
                 operationsElem.setAttribute("operation_model_id", data.id);
+                operationsElem.setAttribute("title", OP_ICON_DESC);
+                operationsElem.setAttribute("aria-label", OP_ICON_DESC);
                 operationsElem.setAttribute("operations", JSON.stringify(data.operations));
                 operationsElem.addEventListener('click',function (event) {
                     menu.showHidePopover(operationsElem);
