@@ -12,17 +12,12 @@
  *
  ******************************************************************************/
 
-package com.adobe.cq.forms.core.components.internal.models.v1;
-
-import java.net.URISyntaxException;
+package com.adobe.cq.forms.core.components.internal;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 
 public class Utils {
 
@@ -46,18 +41,5 @@ public class Utils {
      */
     public static String generateId(String prefix, String path) {
         return StringUtils.join(prefix, ID_SEPARATOR, StringUtils.substring(DigestUtils.sha256Hex(path), 0, 10));
-    }
-
-    public static String generateActionURL(String modelID, String opName, String requestURI) {
-        String actionURL = null;
-        try {
-            URIBuilder uriBuilder = new URIBuilder(requestURI);
-            uriBuilder.setParameter(Operation.OPERATION_KEY, opName);
-            uriBuilder.setParameter(Operation.OPERATION_MODEL_ID, modelID);
-            actionURL = uriBuilder.build().toString();
-        } catch (URISyntaxException e) {
-            LOGGER.error("[FP] Could not create action URL for {}", requestURI, e);
-        }
-        return actionURL;
     }
 }

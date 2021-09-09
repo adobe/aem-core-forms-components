@@ -30,12 +30,12 @@
 
     const OP_ICON_DESC = "Click to open menu";
 
-    var formatTimeAgo = function (date, DATE_FORMATTER) {
+    var formatTimeAgo = function (date, formatter) {
         var duration = (date - new Date()) / 1000
         for (let i = 0; i <= DIVISIONS.length; i++) {
             const division = DIVISIONS[i];
             if (Math.abs(duration) < division.amount) {
-              return DATE_FORMATTER.format(Math.round(duration), division.name);
+              return formatter.format(Math.round(duration), division.name);
             }
             duration /= division.amount;
         }
@@ -44,7 +44,8 @@
     var  NS = "cmp",
          TEMPLATE = 'item-template',
          ERROR_CLASS = 'cmp-portallister__item--error',
-         ATTR_PREFIX = "data-" + NS + "-hook-" + TEMPLATE;
+         ATTR_PREFIX = "data-" + NS + "-hook-" + TEMPLATE,
+         ATTR_PREFIX_MENU = "data-" + NS + "-hook-menu-template";
 
     // handler for operations
     var operationHandlers = {};
@@ -79,7 +80,7 @@
             text = formatTimeAgo(dt, DATE_FORMATTER);
         }
         element.appendChild(document.createTextNode(text));
-        element.setAttribute("title", tooltip);;
+        element.setAttribute("title", tooltip);
     },
     linkClickHandler = function (event) {
         var link = event.currentTarget.getAttribute('link');
@@ -91,23 +92,24 @@
         operationHandlers[operation_data.name].call(this, event, operation_data);
     };
 
-    class Menu {
-        static ATTR_PREFIX = "data-cmp-hook-menu-template";
-        static selectors = {
-            menuContainer: "[" + Menu.ATTR_PREFIX + "=\"container\"]",
-            menuItemTemplate: "[" + Menu.ATTR_PREFIX + "=\"menuItemTemplate\"]",
-            list:  "[" + Menu.ATTR_PREFIX + "=\"list\"]",
-            item:  "[" + Menu.ATTR_PREFIX + "=\"item\"]",
-            itemLabel: "[" + Menu.ATTR_PREFIX + "=\"itemLabel\"]",
-            includes:  "[" + Menu.ATTR_PREFIX + "=\"includes\"]"
-        };
-        constructor (menuTemplate, queryPath) {
-            this.menuTemplate = menuTemplate;
-            this.queryPath = queryPath;
-            this.menuElement = null;
-            this.containerElement = null;
-        }
-        static addMenuItem(operation, menuItemTemplate, listEl) {
+    var Menu = {
+        selectors: {
+            menuContainer: "[" + ATTR_PREFIX_MENU + "=\"container\"]",
+            menuItemTemplate: "[" + ATTR_PREFIX_MENU + "=\"menuItemTemplate\"]",
+            list:  "[" + ATTR_PREFIX_MENU + "=\"list\"]",
+            item:  "[" + ATTR_PREFIX_MENU + "=\"item\"]",
+            itemLabel: "[" + ATTR_PREFIX_MENU + "=\"itemLabel\"]",
+            includes:  "[" + ATTR_PREFIX_MENU + "=\"includes\"]"
+        },
+        constructor: function (menuTemplate, queryPath) {
+            var MenuInstance = Menu || {};
+            MenuInstance.menuTemplate = menuTemplate;
+            MenuInstance.queryPath = queryPath;
+            MenuInstance.menuElement = null;
+            MenuInstance.containerElement = null;
+            return MenuInstance;
+        },
+        addMenuItem: function (operation, menuItemTemplate, listEl) {
             var el = document.createElement("span");
             el.innerHTML = menuItemTemplate;
             var item = el.querySelector(Menu.selectors.item),
@@ -116,17 +118,17 @@
             addTextWithTooltip(itemLabel, operation.title);
             item.addEventListener('click', operationClickHandler);
             listEl.appendChild(item);
-        }
-        constructMenu () {
+        },
+        constructMenu: function () {
             // choice of tag doesn't matter here because it's unwrapped
             var el = document.createElement("span");
-            el.innerHTML = this.menuTemplate;
+            el.innerHTML = Menu.menuTemplate;
             var menuEl = el.querySelector(Menu.selectors.menuContainer),
                 menuItemTemplate = el.querySelector(Menu.selectors.menuItemTemplate).innerHTML,
                 listEl = el.querySelector(Menu.selectors.list),
-                operationsStr = this.containerElement.getAttribute("operations"),
-                operationModelId = this.containerElement.getAttribute("operation_model_id"),
-                queryPath = this.queryPath,
+                operationsStr = Menu.containerElement.getAttribute("operations"),
+                operationModelId = Menu.containerElement.getAttribute("operation_model_id"),
+                queryPath = Menu.queryPath,
                 operations = JSON.parse(operationsStr),
                 addListItem = function (operation) {
                     operation.operation_model_id = operationModelId;
@@ -135,28 +137,28 @@
                 };
             operations.forEach(addListItem);
             return menuEl;
-        }
-        show (containerElement) {
-            this.containerElement = containerElement;
-            this.menuElement = this.constructMenu();
-            this.containerElement.appendChild(this.menuElement);
-        }
-        hide () {
-            this.menuElement.remove();
-            this.menuElement = null;
-            this.containerElement = null;
-        }
-        showHidePopover (containerElement) {
-            if (this.containerElement == containerElement) {
+        },
+        show: function (containerElement) {
+            Menu.containerElement = containerElement;
+            Menu.menuElement = Menu.constructMenu();
+            Menu.containerElement.appendChild(Menu.menuElement);
+        },
+        hide: function () {
+            Menu.menuElement.remove();
+            Menu.menuElement = null;
+            Menu.containerElement = null;
+        },
+        showHidePopover: function (containerElement) {
+            if (Menu.containerElement == containerElement) {
                 // clicked on the same button again to close menu
-                this.hide();
-            } else if (this.menuElement) {
+                Menu.hide();
+            } else if (Menu.menuElement) {
                 // clicked on a different button, when menu was already open
-                this.hide();
-                this.show(containerElement);
+                Menu.hide();
+                Menu.show(containerElement);
             } else {
                 // clicked on button to open menu
-                this.show(containerElement);
+                Menu.show(containerElement);
             }
         }
     };
@@ -233,10 +235,10 @@
 
             //add menuTemplate if there, initialize menu for component config
             if (config.menuTemplate) {
-                config.menu = new Menu(config.menuTemplate, config.queryPath);
-                var el = document.createElement("span");
-                el.innerHTML = config.menuTemplate;
-                var menuInclude = el.querySelector(Menu.selectors.includes);
+                config.menu = Menu.constructor(config.menuTemplate, config.queryPath);
+                var elI = document.createElement("span");
+                elI.innerHTML = config.menuTemplate;
+                var menuInclude = elI.querySelector(Menu.selectors.includes);
                 container.appendChild(menuInclude);
             }
 

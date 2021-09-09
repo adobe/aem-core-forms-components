@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
-import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
@@ -114,7 +113,7 @@ public class OpenDraftOperation implements Operation {
             return null;
         }
         OpenDraftOperation op = new OpenDraftOperation();
-        op.actionURL = Utils.generateActionURL(item.getId(), getName(), requestURI);
+        op.actionURL = OperationUtils.generateActionURL(item.getId(), getName(), requestURI);
         return op;
     }
 

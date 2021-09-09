@@ -40,6 +40,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -65,7 +66,9 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     private Integer limit;
 
     @Override
+    @JsonIgnore
     public Integer getLimit() {
+        // not required in json
         return limit;
     }
 
@@ -97,7 +100,6 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
     @Override
     public Map<String, Object> getElements() {
         List<PortalLister.Item> results = getItemList();
-        Integer offset = getOffset();
         Integer nextOffset = getNextOffset(results.size());
         String loadActionURL = null;
         Map<String, Object> jacksonMapping = new HashMap<>();

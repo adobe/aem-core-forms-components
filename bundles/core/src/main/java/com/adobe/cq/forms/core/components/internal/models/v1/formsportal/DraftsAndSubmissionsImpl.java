@@ -20,13 +20,11 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -50,7 +48,6 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
-import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
@@ -61,7 +58,6 @@ import com.adobe.fd.fp.api.service.SubmitService;
 import com.adobe.forms.foundation.usc.model.Query;
 import com.adobe.forms.foundation.usc.model.Statement;
 import com.adobe.forms.foundation.usc.model.StatementGroup;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -154,33 +150,6 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         return item;
     }
 
-    private Boolean isOperationCall() {
-        String operationName = getOperationName();
-        return StringUtils.isNotEmpty(operationName);
-    }
-
-    @Override
-    public Operation.OperationResult getOperationResult() {
-        if (!isOperationCall()) {
-            return null;
-        }
-        Operation operation = operationManager.getOperation(getOperationName());
-        if (operation == null) {
-            return null;
-        }
-        Map<String, Object> inputMap = request.getParameterMap()
-            .entrySet()
-            .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return operation.execute(inputMap);
-    }
-
-    @Override
-    public String getOperationName() {
-        String operationParam = request.getParameter(OPERATION);
-        return operationParam;
-    }
-
     @Override
     protected List<PortalLister.Item> getItemList() {
         List<PortalLister.Item> itemList = new ArrayList<>();
@@ -228,39 +197,6 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
 
         // might create holes during pagination
         return itemList.stream().filter(Objects::nonNull).collect(Collectors.toList());
-    }
-
-    @Override
-    public Map<String, Object> getElements() {
-        if (isOperationCall()) {
-            return null;
-        }
-        return super.getElements();
-    }
-
-    @Override
-    public String getTitle() {
-        if (isOperationCall()) {
-            return null;
-        }
-        return super.getTitle();
-    }
-
-    @Override
-    public String getLayout() {
-        if (isOperationCall()) {
-            return null;
-        }
-        return super.getLayout();
-    }
-
-    @Override
-    @JsonIgnore
-    public Integer getLimit() {
-        if (isOperationCall()) {
-            return null;
-        }
-        return super.getLimit();
     }
 
     @Override

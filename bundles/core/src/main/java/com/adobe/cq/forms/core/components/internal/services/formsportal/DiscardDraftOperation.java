@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
@@ -95,7 +94,7 @@ public class DiscardDraftOperation implements Operation {
     @Override
     public Operation makeOperation(PortalLister.Item item, String requestURI) {
         DiscardDraftOperation op = new DiscardDraftOperation();
-        op.actionURL = Utils.generateActionURL(item.getId(), getName(), requestURI);
+        op.actionURL = OperationUtils.generateActionURL(item.getId(), getName(), requestURI);
         return op;
     }
 

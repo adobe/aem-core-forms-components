@@ -2,7 +2,6 @@
     "id": "portallister-2e39f82e36",
     "title": "Sample Title",
     "layout": "Custom",
-    "limit": 10,
     "elements": {
         "pagination": {
             "loadAction": null,
