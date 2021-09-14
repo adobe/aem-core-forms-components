@@ -72,7 +72,6 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     public static final String RESOURCE_TYPE = "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions";
     private static final String DRAFT_LINK = "service://FP/draft/%s";
     private static final String TOOLTIP = "Open";
-    private static final String OPERATION = "operation";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DraftsAndSubmissionsImpl.class);
 
@@ -113,8 +112,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id, final String timeInfo) {
-        String title = "Retired Form";
-        String description = "Form template has been retired";
+        String title = "Draft not available";
+        String description = "The draft is not available. Contact your administrator for more information.";
         String thubmnail = null;
         String formLink = null;
 
