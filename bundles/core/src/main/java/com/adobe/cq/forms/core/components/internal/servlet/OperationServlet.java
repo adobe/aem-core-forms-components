@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.internal.models.v1.formsportal.DraftsAndSubmissionsImpl;
+import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
 import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,8 +51,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     })
 public class OperationServlet extends SlingSafeMethodsServlet {
 
-    static final String OPERATION_SELECTOR = "execute";
-    static final String EXTENSTION = "json";
+    static final String OPERATION_SELECTOR = "fp";
+    static final String EXTENSTION = "operation";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationServlet.class);
 
@@ -65,24 +66,27 @@ public class OperationServlet extends SlingSafeMethodsServlet {
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
         String opName = request.getParameter(Operation.OPERATION_KEY);
 
-        Map<String, Object> inputMap = request.getParameterMap()
-            .entrySet()
-            .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         response.setContentType("application/json");
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try {
-            new ObjectMapper().writer().writeValue(response.getOutputStream(), execute(opName, inputMap));
+            new ObjectMapper().writer().writeValue(response.getOutputStream(), execute(opName, request));
         } catch (Exception ex) {
             LOGGER.error("[FP] [Operation] Could not execute operation {}", opName, ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
-    private Operation.OperationResult execute(String op_name, Map<String, Object> inputMap) {
-        Operation op = operationManager.getOperation(op_name);
+    private Operation.OperationResult execute(String opName, SlingHttpServletRequest request) {
+        Map<String, Object> inputMap = request.getParameterMap()
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        DraftsAndSubmissions componentModel = modelFactory.createModel(request, DraftsAndSubmissions.class);
+        Operation op = operationManager.getOperation(opName);
         if (op == null) {
-            throw new UnsupportedOperationException("Could not find operation " + op_name);
+            throw new UnsupportedOperationException("Could not find operation " + opName);
+        } else if (op.getType() != DraftsAndSubmissions.TypeEnum.valueOf(componentModel.getType())) {
+            throw new IllegalArgumentException("Illegal operation " + opName + " on component type " + componentModel.getType());
         }
         return op.execute(inputMap);
     }

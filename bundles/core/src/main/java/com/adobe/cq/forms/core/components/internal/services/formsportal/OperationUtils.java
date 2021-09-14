@@ -32,7 +32,7 @@ public class OperationUtils {
     public static String generateActionURL(String modelID, String opName, String requestURI) {
         String actionURL = null;
         try {
-            URIBuilder uriBuilder = new URIBuilder(requestURI.replace(".model.json", ".execute.json"));
+            URIBuilder uriBuilder = new URIBuilder(requestURI.replace(".model.json", ".fp.operation"));
             uriBuilder.setParameter(Operation.OPERATION_KEY, opName);
             uriBuilder.setParameter(Operation.OPERATION_MODEL_ID, modelID);
             actionURL = uriBuilder.build().toString();
