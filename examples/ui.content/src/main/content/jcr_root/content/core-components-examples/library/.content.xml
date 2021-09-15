@@ -46,7 +46,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/components/embed.svg"
+                        fileReference="/content/dam/core-components-examples/library/forms-components/link.svg"
                         linkURL="/content/core-components-examples/library/forms-and-communications-portal/link"
                         textIsRich="true"
                         titleFromPage="true">
@@ -68,7 +68,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"
-                        fileReference="/content/dam/core-components-examples/library/components/list.svg"
+                        fileReference="/content/dam/core-components-examples/library/forms-components/searchandlister.svg"
                         linkURL="/content/core-components-examples/library/forms-and-communications-portal/searchlister"
                         textIsRich="true"
                         titleFromPage="true">
@@ -84,6 +84,28 @@
                                 width="12"/>
                         </cq:responsive>
                     </teaser_snl>
+                    <teaser_dns
+                            cq:styleIds="[1547060090076]"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/teaser"
+                            actionsEnabled="false"
+                            descriptionFromPage="true"
+                            fileReference="/content/dam/core-components-examples/library/forms-components/draftsandsubmissions.svg"
+                            linkURL="/content/core-components-examples/library/forms-and-communications-portal/draftsandsubmissions"
+                            textIsRich="true"
+                            titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                                    jcr:primaryType="nt:unstructured"
+                                    width="3"/>
+                            <small
+                                    jcr:primaryType="nt:unstructured"
+                                    width="4"/>
+                            <extrasmall
+                                    jcr:primaryType="nt:unstructured"
+                                    width="12"/>
+                        </cq:responsive>
+                    </teaser_dns>
                 </container_1589240808>
             </responsivegrid>
         </root>
