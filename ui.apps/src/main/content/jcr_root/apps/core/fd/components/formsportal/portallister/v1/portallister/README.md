@@ -31,10 +31,10 @@ The following properties are written to JCR for the AEM Forms Portal Lister comp
 The PortalLister Component is not intended to be used directly. It provides basic authoring and pagination and layouting model for other listing elements.
 Consider using Search and Lister or Drafts and Submissions component.
 
-### PortalLister Layout BEM
+## BEM Description
 ```
-BLOCK cmp-portallister-results
 BLOCK cmp-portallister
+    ELEMENT cmp-portallister__results
     ELEMENT cmp-portallister__item
 ```
 
