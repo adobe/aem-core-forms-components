@@ -43,17 +43,17 @@ respectively.
 ## BEM Description
 ```
 BLOCK cmp-searchlister
-    ELEMENT cmp-searchlister__heading
-    ELEMENT cmp-searchlister__seperator
-    ELEMENT cmp-searchlister__more
-BLOCK cmp-searchlister-search
-    ELEMENT cmp-searchlister-search__box
-    ELEMENT cmp-searchlister-search__box-text
-    ELEMENT cmp-searchlister-search__sortbutton
-        MOD cmp-searchlister-search__sortbutton--wrapper
-        MOD cmp-searchlister-search__sortbutton--right
-BLOCK cmp-searchlister-results
-    ELEMENT cmp-searchlister__item
+    ELEMENT cmp-search-lister__heading
+    ELEMENT cmp-search-lister__seperator
+    ELEMENT cmp-search-lister__more
+    ELEMENT cmp-search-lister__search-container
+    ELEMENT cmp-search-lister__search-box
+    ELEMENT cmp-search-lister__search-box-text
+    ELEMENT cmp-search-lister__search-sortbutton
+        MOD cmp-search-lister__search-sortbutton--wrapper
+        MOD cmp-search-lister__search-sortbutton--right
+    ELEMENT cmp-search-lister__results
+    ELEMENT cmp-search-lister__item
 ```
 ## JavaScript Data Attribute Bindings
 There can be multiple search and lister instances in a page. It is initialized by the clientlib on window state as ready (i.e all dom instances loaded).

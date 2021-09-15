@@ -21,19 +21,19 @@
 <div class="cmp-search-lister" data-cmp-is="formssearch" id="${model.id}" data-queryPath="${resource.path}.model.json">
     <h1 class="cmp-search-lister__heading" data-sly-text="${model.title}">Forms Portal</h1>
     <div class="cmp-search-lister__seperator" data-sly-resource.seperator="${logic.seperator}"></div>
-    <div class="cmp-search-lister-search" data-sly-test="${!model.searchDisabled || !model.sortDisabled}">
-        <div class="cmp-search-lister-search__box" data-sly-test.textSearch="${!model.searchDisabled}">
-            <input class="cmp-search-lister-search__box-text" data-cmp-hook-formssearch="input" type="text" placeholder="Search">
+    <div class="cmp-search-lister__search-container" data-sly-test="${!model.searchDisabled || !model.sortDisabled}">
+        <div class="cmp-search-lister__search-box" data-sly-test.textSearch="${!model.searchDisabled}">
+            <input class="cmp-search-lister__search-box-text" data-cmp-hook-formssearch="input" type="text" placeholder="Search">
         </div>
-        <div class="cmp-search-lister-search__sortbutton--wrapper" data-sly-test.advancedSearch="${!model.sortDisabled}">
-            <select class="cmp-search-lister-search__sortbutton cmp-search-lister-search__sortbutton--right" data-cmp-hook-formssearch="sort">
+        <div class="cmp-search-lister__search-sortbutton--wrapper" data-sly-test.advancedSearch="${!model.sortDisabled}">
+            <select class="cmp-search-lister__search-sortbutton cmp-search-lister__search-sortbutton--right" data-cmp-hook-formssearch="sort">
                 <option value="" selected="selected">Sort By</option>
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
             </select>
         </div>
     </div>
-    <div class="cmp-search-lister-results" data-cmp-hook-formssearch="results"></div>
+    <div class="cmp-search-lister__results" data-cmp-hook-formssearch="results"></div>
     <div class="cmp-search-lister__more--wrapper">
         <div class="cmp-search-lister__more" data-cmp-hook-formssearch="more">Load more</div>
     </div>

@@ -112,8 +112,8 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
     }
 
     private PortalLister.Item getItem(final String formPath, final TypeEnum typeEnum, final String id, final String timeInfo) {
-        String title = "Draft not available";
-        String description = "The draft is not available. Contact your administrator for more information.";
+        String title = "Item not available";
+        String description = "The item is not available. Contact your administrator for more information.";
         String thubmnail = null;
         String formLink = null;
 
