@@ -36,6 +36,10 @@ Consider using Search and Lister or Drafts and Submissions component.
 BLOCK cmp-portallister
     ELEMENT cmp-portallister__results
     ELEMENT cmp-portallister__item
+    ELEMENT cmp-portallister__menu
+    ELEMENT cmp-portallister__menu-item
+    ELEMENT cmp-portallister__menu-item-label
+    ELEMENT cmp-portallister__menu-list
 ```
 
 ## Information
