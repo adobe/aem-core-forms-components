@@ -28,7 +28,7 @@ The following properties are written to JCR for the AEM Forms Portal Lister comp
 2. `./layout` - specifies layout of the resultant forms portal records to be displayed.
 3. `./limit` - specifies the number of resultant forms portal records to be displayed at a time.
 
-The PortalLister Component is not intended to be used directly. It provides basic authoring and pagination and layouting model for other listing elements.
+The PortalLister Component is not intended to be used directly. It provides basic authoring, pagination and layouting model for other listing elements.
 Consider using Search and Lister or Drafts and Submissions component.
 
 ## BEM Description

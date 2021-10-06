@@ -33,7 +33,6 @@ The following properties are written to JCR for the AEM Forms Portal DraftsandSu
 ```
 BLOCK cmp-drafts-and-submissions
     ELEMENT cmp-drafts-and-submissions__heading
-    ELEMENT cmp-drafts-and-submissions__seperator
     ELEMENT cmp-drafts-and-submissions__results
     ELEMENT cmp-drafts-and-submissions__more
         MOD cmp-drafts-and-submissions__more--wrapper

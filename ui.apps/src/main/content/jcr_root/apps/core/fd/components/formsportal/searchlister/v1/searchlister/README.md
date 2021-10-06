@@ -44,7 +44,6 @@ respectively.
 ```
 BLOCK cmp-searchlister
     ELEMENT cmp-search-lister__heading
-    ELEMENT cmp-search-lister__seperator
     ELEMENT cmp-search-lister__more
     ELEMENT cmp-search-lister__search-container
     ELEMENT cmp-search-lister__search-box

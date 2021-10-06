@@ -14,5 +14,6 @@
 # limitations under the License.
 ###############################################################################
 
-#base=css
-card.less
+#base=styles
+
+index.less

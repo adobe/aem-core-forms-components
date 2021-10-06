@@ -14,18 +14,11 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-// Seperator is created using synthetic resource
-// Reference for synthetic resource https://gist.github.com/gabrielwalt/0da85e4855070dc6264652269729eddf
-
 use(function () {
     var clientlibsArr = ['core.forms.components.formsportal.draftsandsubmissions.v1'];
     var layoutPath = 'core/fd/components/commons/v1/itemTemplates/' + this.layout + '.html';
     return {
         clientlibs: clientlibsArr,
-        seperator: {
-            resourceName: "seperator",
-            "sling:resourceType": "core/wcm/components/separator/v1/separator"
-        },
         layoutPath: layoutPath,
         menuPath: "core/fd/components/commons/v1/menuTemplate/menu.html"
     }
