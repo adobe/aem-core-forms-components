@@ -50,16 +50,18 @@
     // handler for operations
     var operationHandlers = {};
 
+    // selectors that'll work as space separated attrs as well
+    // e.g [formLink, itemTitle]
     var selectors = {
-        self: "[" + ATTR_PREFIX + "=\"item\"]",
-        container: "[" + ATTR_PREFIX + "=\"container\"]",
-        title: "[" + ATTR_PREFIX + "=\"itemTitle\"]",
-        formLink:  "[" + ATTR_PREFIX + "=\"formLink\"]",
-        description:  "[" + ATTR_PREFIX + "=\"description\"]",
-        includes:  "[" + ATTR_PREFIX + "=\"includes\"]",
-        thumbnail: "[" + ATTR_PREFIX + "=\"thumbnail\"]",
-        operations: "[" + ATTR_PREFIX + "=\"operations\"]",
-        timeinfo: "[" + ATTR_PREFIX + "=\"timeinfo\"]"
+        self: "[" + ATTR_PREFIX + "~=\"item\"]",
+        container: "[" + ATTR_PREFIX + "~=\"container\"]",
+        title: "[" + ATTR_PREFIX + "~=\"itemTitle\"]",
+        formLink:  "[" + ATTR_PREFIX + "~=\"formLink\"]",
+        description:  "[" + ATTR_PREFIX + "~=\"description\"]",
+        includes:  "[" + ATTR_PREFIX + "~=\"includes\"]",
+        thumbnail: "[" + ATTR_PREFIX + "~=\"thumbnail\"]",
+        operations: "[" + ATTR_PREFIX + "~=\"operations\"]",
+        timeinfo: "[" + ATTR_PREFIX + "~=\"timeinfo\"]"
     };
 
     var addTextWithTooltip = function (element, text, tooltip) {
@@ -201,9 +203,15 @@
                 if (data.tooltip) {
                     linkElem.setAttribute("title", data.tooltip);
                 }
+                if (thumbnailElem) {
+                    thumbnailElem.parentElement.setAttribute('data-first-letter', data.title.charAt(0).toUpperCase());
+                }
             }
             else {
                 item.classList.add(ERROR_CLASS);
+                if (thumbnailElem) {
+                    thumbnailElem.parentElement.setAttribute('data-first-letter', '!');
+                }
             }
 
             if (data.thumbnailLink) {
@@ -239,7 +247,10 @@
                 var elI = document.createElement("span");
                 elI.innerHTML = config.menuTemplate;
                 var menuInclude = elI.querySelector(Menu.selectors.includes);
-                container.appendChild(menuInclude);
+                if (menuInclude) {
+                    // just in case there's some layout level clientlib includes
+                    container.appendChild(menuInclude);
+                }
             }
 
             // Initialize container
@@ -249,7 +260,10 @@
             var resultContainer = el.querySelector(selectors.container),
                 includeElements = el.querySelector(selectors.includes);
 
-            container.appendChild(includeElements);
+            if (includeElements) {
+                // just in case there's some layout level clientlib includes
+                container.appendChild(includeElements);
+            }
             container.appendChild(resultContainer);
         },
         clear: function (template, container) {

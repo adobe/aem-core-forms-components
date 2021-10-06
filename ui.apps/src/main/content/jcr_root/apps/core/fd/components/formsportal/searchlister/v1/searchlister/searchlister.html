@@ -20,7 +20,6 @@
      data-sly-use.items="${logic.layoutPath}"></sly>
 <div class="cmp-search-lister" data-cmp-is="formssearch" id="${model.id}" data-queryPath="${resource.path}.model.json">
     <h1 class="cmp-search-lister__heading" data-sly-text="${model.title}">Forms Portal</h1>
-    <div class="cmp-search-lister__seperator" data-sly-resource.seperator="${logic.seperator}"></div>
     <div class="cmp-search-lister__search-container" data-sly-test="${!model.searchDisabled || !model.sortDisabled}">
         <div class="cmp-search-lister__search-box" data-sly-test.textSearch="${!model.searchDisabled}">
             <input class="cmp-search-lister__search-box-text" data-cmp-hook-formssearch="input" type="text" placeholder="Search">
