@@ -13,7 +13,7 @@
                         actionsEnabled="false"
                         descriptionFromPage="true"
                         fileReference="/content/dam/core-components-examples/library/forms-components/aemform.svg"
-                        linkURL="/content/core-components-examples/library/page-authoring/aemform"
+                        linkURL="/content/core-components-examples/library/core-content/aemform"
                         textIsRich="true"
                         titleFromPage="false">
                         <cq:responsive jcr:primaryType="nt:unstructured">
