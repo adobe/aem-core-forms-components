@@ -185,12 +185,9 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     @Override
     protected List<PortalLister.Item> getItemList() {
         List<PortalLister.Item> result = null;
-        try (ResourceResolver resourceResolver = request.getResourceResolver()) {
-            // resource resolver has logged-in user level access, only forms accessible by current user will be shown
-            result = fetchViaQueryBuilder(resourceResolver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // resource resolver has logged-in user level access, only forms accessible by current user will be shown
+        result = fetchViaQueryBuilder(request.getResourceResolver());
+
         return result;
     }
 

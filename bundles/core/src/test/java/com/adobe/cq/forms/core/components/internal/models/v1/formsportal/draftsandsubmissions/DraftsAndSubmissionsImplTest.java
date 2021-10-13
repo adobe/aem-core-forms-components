@@ -91,7 +91,7 @@ public class DraftsAndSubmissionsImplTest {
 
     @Test
     public void testExportedDraftJson() {
-        Mockito.when(draftModel.getLastModifiedTime()).thenReturn(new Calendar.Builder().setDate(2021, 8, 27).setTimeOfDay(0, 0, 0)
+        Mockito.when(draftModel.getLastModifiedTime()).thenReturn(new Calendar.Builder().setInstant(12345678)
             .build());
         Mockito.when(draftModel.getFormPath()).thenReturn(SAMPLE_FORM);
         Resource afDamRes = context.resourceResolver().getResource(SAMPLE_FORM);
@@ -106,7 +106,7 @@ public class DraftsAndSubmissionsImplTest {
 
     @Test
     public void testExportedSubmissionJson() {
-        Mockito.when(submitModel.getLastModifiedTime()).thenReturn(new Calendar.Builder().setDate(2021, 8, 27).setTimeOfDay(0, 0, 0)
+        Mockito.when(submitModel.getLastModifiedTime()).thenReturn(new Calendar.Builder().setInstant(12345678)
             .build());
         Mockito.when(submitModel.getFormPath()).thenReturn(SAMPLE_FORM);
         Resource afDamRes = context.resourceResolver().getResource(SAMPLE_FORM);
