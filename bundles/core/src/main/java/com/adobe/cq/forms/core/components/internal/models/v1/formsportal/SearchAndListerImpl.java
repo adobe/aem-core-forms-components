@@ -31,11 +31,9 @@ import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.request.RequestParameterMap;
-import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceMetadata;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.ResourceWrapper;
 import org.apache.sling.api.resource.SyntheticResource;
 import org.apache.sling.api.resource.ValueMap;
@@ -130,9 +128,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     }
 
     @OSGiService
-    private ResourceResolverFactory resourceResolverFactory;
-
-    @OSGiService
     private FMAssetSearch assetSearch;
 
     @OSGiService
@@ -190,10 +185,10 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     @Override
     protected List<PortalLister.Item> getItemList() {
         List<PortalLister.Item> result = null;
-        try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
-            // service resource resolver has fd-user access, ref OSGi configuration file
+        try (ResourceResolver resourceResolver = request.getResourceResolver()) {
+            // resource resolver has logged-in user level access, only forms accessible by current user will be shown
             result = fetchViaQueryBuilder(resourceResolver);
-        } catch (LoginException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
@@ -251,14 +246,9 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         buildAssetSourcesQuery(searchBuilder);
         buildAssetFolderQuery(searchBuilder);
 
-        // close resource resolver session
-        try (ResourceResolver subResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
-            List<FDAsset> results = assetSearch.searchForms(searchBuilder.build(), subResolver);
-            for (FDAsset fmA : results) {
-                resultMap.add(fetchResourceProperties(fmA, resourceResolver));
-            }
-        } catch (LoginException e) {
-            e.printStackTrace();
+        List<FDAsset> results = assetSearch.searchForms(searchBuilder.build(), resourceResolver);
+        for (FDAsset fmA : results) {
+            resultMap.add(fetchResourceProperties(fmA, resourceResolver));
         }
 
         return resultMap;
@@ -270,7 +260,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         String path = "";
         String tooltip = "";
         String thubmnail = "";
-        String lastModified = "";
         I18n i18n = new I18n(request);
         if (fmAsset.getAssetType().equals(FDAsset.AssetType.ADAPTIVE_FORM)) {
             AdaptiveFormAsset asset = resolver.getResource(fmAsset.getDamPath()).adaptTo(AdaptiveFormAsset.class);
