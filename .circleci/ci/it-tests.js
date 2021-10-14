@@ -22,7 +22,7 @@ ci.stage('Project Configuration');
 const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
-const { TYPE, BROWSER, AEM } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 
 try {
     ci.stage("Integration Tests");
@@ -31,14 +31,18 @@ try {
         // Connect to QP
         ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
 
-    let extras = ``;
-    if (AEM == 'classic') {
+    let extras = ``, preleaseOpts = ``;
+    if (AEM === 'classic') {
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
-    } else if (AEM == 'addon') {
+    } else if (AEM === 'addon') {
         // Download the forms Add-On
         ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
         extras = '--install-file forms-addon.far';
+        if (PRERELEASE === 'true') {
+            // enable pre-release settings
+            preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+        }
     }
 
     // Start CQ
@@ -51,7 +55,8 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\"`);
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            ${preleaseOpts}`);
 });
 
     // Run integration tests
