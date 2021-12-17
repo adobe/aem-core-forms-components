@@ -979,15 +979,13 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2021.09.23.02</version>
+                <version>2021.11.18.00</version>
             </dependency>
 
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-prerelease-sdk-api</artifactId>
-                <version>2021.08.19.03-SNAPSHOT</version>
-                <scope>system</scope>
-                <systemPath>${maven.multiModuleProjectDirectory}/maven_repository/aem-forms-prerelease-sdk-api-2021.08.19.03-SNAPSHOT.jar</systemPath>
+                <version>2021.11.18.00-211100</version>
             </dependency>
 
             <dependency>
