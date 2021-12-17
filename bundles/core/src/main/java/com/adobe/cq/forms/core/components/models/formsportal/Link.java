@@ -32,6 +32,9 @@ public interface Link extends Component {
      */
     enum AssetType {
         ADAPTIVE_FORM,
+        PDF,
+        OTHERS,
+        EXTERNAL_LINK,
         NONE
     }
 
@@ -85,5 +88,15 @@ public interface Link extends Component {
      */
     default String getAssetPath() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns the accessibility label on corresponding link
+     *
+     * @return accessibility label
+     * @since com.adobe.cq.forms.core.components.models.formsportal 2.1.0
+     */
+    default String getAccessibilityLabel() {
+        return null;
     }
 }

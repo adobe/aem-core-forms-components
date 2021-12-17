@@ -46,6 +46,71 @@
                     "key"               : "hello"
                 }
             }
+        },
+        "linkcomponent-v2-external":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "externalLinkPath"             : "https://www.adobe.com/",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "assetType"             : "External",
+            "queryParams":{
+                "jcr:primaryType"   : "nt:unstructured",
+                "item0":{
+                    "jcr:primaryType"   : "nt:unstructured",
+                    "key"               : "hello",
+                    "value"             : "world"
+                }
+            }
+        },
+        "linkcomponent-v2":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "adaptiveFormPath"      : "/content/dam/formsanddocuments/sample-form",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "accessibilityLabel"    : "Test Aria Label",
+            "assetType"             : "Adaptive Form"
+        },
+        "linkcomponent-v2-empty": {
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Tue May 21 2019 18:59:35 GMT+0300",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link"
+        },
+        "linkcomponent-v2-pdf":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "pdfPath"               : "/content/dam/formsanddocuments/sample-form",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "assetType"             : "PDF"
+        },
+        "linkcomponent-v2-others":{
+            "jcr:primaryType"       : "nt:unstructured",
+            "jcr:createdBy"         : "admin",
+            "jcr:lastModifiedBy"    : "admin",
+            "jcr:created"           : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"      : "Thu Apr 08 2021 04:07:39 GMT+0000",
+            "tooltip"               : "Some Hover Tooltip Text",
+            "otherAssetPath"        : "/content/dam/formsanddocuments/sample-form",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "assetType"             : "Others"
         }
     },
     "dam" : {
