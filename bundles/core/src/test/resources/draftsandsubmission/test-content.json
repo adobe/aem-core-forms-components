@@ -21,6 +21,16 @@
             "layout"            : "card",
             "title"             : "Submissions",
             "type"              : "SUBMISSION"
+        },
+        "dns-default-v1": {
+            "jcr:primaryType"   : "nt:unstructured",
+            "jcr:createdBy"     : "admin",
+            "jcr:lastModifiedBy": "admin",
+            "jcr:created"       : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"  : "Tue May 21 2019 18:59:35 GMT+0300",
+            "sling:resourceType": "core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions",
+            "layout"            : "card",
+            "type"              : "DRAFT"
         }
     },
     "dam" : {
