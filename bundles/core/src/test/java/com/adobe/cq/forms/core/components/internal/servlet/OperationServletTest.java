@@ -35,9 +35,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.adobe.cq.forms.core.components.internal.services.formsportal.DiscardDraftOperation;
 import com.adobe.cq.forms.core.components.internal.services.formsportal.OpenDraftOperation;
 import com.adobe.cq.forms.core.components.internal.services.formsportal.OperationManagerImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
+import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions.TypeEnum;
+import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.adobe.fd.fp.api.models.DraftModel;
@@ -52,13 +55,15 @@ class OperationServletTest {
 
     private OperationServlet servlet;
 
+    private OpenDraftOperation operation;
+
     @BeforeEach
     void setUp() throws FormsPortalException {
         String modelID = "abc123";
         OperationManagerImpl operationManager = new OperationManagerImpl();
         ModelFactory modelFactory = Mockito.mock(ModelFactory.class);
         DraftsAndSubmissions dummy = Mockito.mock(DraftsAndSubmissions.class);
-        OpenDraftOperation operation = new OpenDraftOperation();
+        operation = new OpenDraftOperation();
         servlet = new OperationServlet();
 
         Mockito.when(dummy.getType()).thenReturn("DRAFT");
@@ -94,5 +99,46 @@ class OperationServletTest {
         JsonReader expected = Json.createReader(is);
         JsonReader actual = Json.createReader(IOUtils.toInputStream(response.getOutputAsString(), response.getCharacterEncoding()));
         Assertions.assertEquals(expected.read(), actual.read());
+    }
+
+    @Test
+    void testInvalidOp() throws ServletException, IOException {
+        // this test should throw UnsupportedOperationException in logs
+        MockSlingHttpServletResponse response = context.response();
+        MockSlingHttpServletRequest request = context.request();
+        request.setQueryString("operation=openDraftNonExistant&operation_model_id=abc123");
+        servlet.doGet(request, response);
+        String res = response.getOutputAsString();
+        Assertions.assertNotNull(res);
+        Assertions.assertEquals(0, res.length());
+        Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+    }
+
+    @Test
+    void testIllegalArgOp() throws ServletException, IOException {
+        // this test should throw IllegalArgumentException in logs
+        Operation custom_op = new CustomOp();
+        context.registerService(Operation.class, custom_op);
+
+        MockSlingHttpServletResponse response = context.response();
+        MockSlingHttpServletRequest request = context.request();
+        request.setQueryString("operation=customDraftOp&operation_model_id=abc123");
+        servlet.doGet(request, response);
+        String res = response.getOutputAsString();
+        Assertions.assertNotNull(res);
+        Assertions.assertEquals(0, res.length());
+        Assertions.assertEquals(HttpStatus.SC_BAD_REQUEST, response.getStatus());
+    }
+
+    public class CustomOp extends DiscardDraftOperation {
+        @Override
+        public String getName() {
+            return "customDraftOp";
+        }
+
+        @Override
+        public TypeEnum getType() {
+            return TypeEnum.SUBMISSION;
+        }
     }
 }
