@@ -74,6 +74,18 @@ public class PortalListerTest {
 
         Mockito.when(item.getFormLink()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, item::getFormLink);
+
+        Mockito.when(item.getThumbnailLink()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, item::getThumbnailLink);
+
+        Mockito.when(item.getOperations()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, item::getOperations);
+
+        Mockito.when(item.getId()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, item::getId);
+
+        Mockito.when(item.getLastModified()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, item::getLastModified);
     }
 
     @Test
