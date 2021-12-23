@@ -91,8 +91,9 @@ to the `content-package-maven-plugin`.
 ## Using Pre-release versions
 In order to use components under pre-release:  
 1. Enable the pre-release channel. Instructions at https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/release-notes/prerelease.html?lang=en
-2. Replace forms version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project.
+2. Replace `core-forms-components-*` version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project. This can be done by updating `<core.forms.components.version>x.y.z</core.forms.components.version>` in the top level pom.xml of archetype project.
 
+Contents in the pre-release are contained in the `pre-release` branch.
 
 ## Code Formatting
 
