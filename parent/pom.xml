@@ -961,7 +961,6 @@
                 <scope>provided</scope>
             </dependency>
 
-
             <!--
                 AEM APIs; make sure to not move this bundle upper in the list so that newer APIs available in AEM but not in the Uber
                 Jar can be used as dependencies.
@@ -980,7 +979,13 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2020.07.01.04</version>
+                <version>2021.11.18.00</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-forms-prerelease-sdk-api</artifactId>
+                <version>2021.11.18.00-211100</version>
             </dependency>
 
             <dependency>

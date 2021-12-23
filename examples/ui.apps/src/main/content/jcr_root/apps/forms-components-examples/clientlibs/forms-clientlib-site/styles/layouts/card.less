@@ -1,0 +1,105 @@
+/*
+ *  Copyright 2021 Adobe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+.cmp-portallister {
+    &__item-card {
+        font-family: @forms-examples-font-family;
+        font-size: @forms-examples-font-size;
+        border-radius: @forms-examples-border-radius;
+        padding: @forms-examples-spacing-4;
+        background-color: @forms-examples-color-background;
+        width: 182*@px;
+        display: inline-block;
+        border: 2*@px solid #CFD8DC;
+        position: relative;
+        vertical-align: top;
+        margin-right: 15*@px;
+        margin-bottom: 15*@px;
+    
+        &-time {
+            display: inline;
+        }
+    
+        &-image {
+            width: 100%;
+            height: 100*@px;
+            display: none;
+        }
+    
+        &-title {
+            text-transform:none;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: @forms-examples-font-size-l;
+        }
+    
+        &-description {
+            margin-top: 10*@px;
+            margin-bottom: 10*@px;
+            text-overflow: ellipsis;
+            height: 36*@px;
+            overflow: hidden;
+            font-size: @forms-examples-font-size-xs;
+
+            display: -webkit-inline-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    
+        &-footer {
+            font-size: 10*@px;
+            font-weight: @forms-examples-font-weight-semibold;
+            color: #607D8B;
+            position: relative;
+            height: 48*@px;
+            border-top: 2*@px solid #ECEFF1;
+            padding-top: 13*@px;
+        }
+    
+        &-operations {
+            float: right;
+            cursor: pointer;
+        }
+    
+        &-operations-icon {
+            color: #6e6e6e;
+            &:hover {
+                color: #2c2c2c;
+            }
+            &::before {
+                content: "\f141";
+                font-family: 'Font Awesome 5 Free';
+            }
+        }
+    
+        &.cmp-portallister__item--error {
+            border-color: @forms-examples-color-red-600;
+        }
+    }
+    
+    &__results-card-container {
+        margin-top: 5*@px;
+    }
+
+    &__item--error &__item-card-description::before {
+        content: "\f12a";
+        font-family: 'Font Awesome 5 Free';
+        color: @forms-examples-color-red-600;
+        margin-right: 5*@px;
+        min-height: 100%;
+    }
+}
