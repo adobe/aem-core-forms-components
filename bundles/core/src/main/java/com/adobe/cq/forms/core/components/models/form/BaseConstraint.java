@@ -112,7 +112,7 @@ public interface BaseConstraint {
      * @return an expression
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getExpression() {
+    default String getValidationExpression() {
         return null;
     }
 

@@ -36,7 +36,7 @@ public abstract class AbstractBaseConstraintImpl implements BaseConstraint {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    protected String expression;
+    protected String validationExpression;
 
 
     @ValueMapValue
@@ -68,7 +68,7 @@ public abstract class AbstractBaseConstraintImpl implements BaseConstraint {
 
     @Override
     @Nullable
-    public String getExpression() {
-        return expression;
+    public String getValidationExpression() {
+        return validationExpression;
     }
 }
