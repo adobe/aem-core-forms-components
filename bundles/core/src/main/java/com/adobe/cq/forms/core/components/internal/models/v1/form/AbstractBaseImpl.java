@@ -198,7 +198,7 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
 
 
     /**
-     * Provides metadata based on the content of a generic webpage.
+     * Provides constraint messages configured for a form field
      */
     private interface ConstraintMessages {
 

@@ -17,9 +17,12 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +42,7 @@ public interface Container extends Base, ContainerConstraint, ContainerExporter 
      * @return list of items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default List<? extends Base> getItems() {return Collections.emptyList();}
+    List<? extends ComponentExporter> getItems();
 
     /**
      * @see ContainerExporter#getExportedItems()
@@ -47,9 +50,16 @@ public interface Container extends Base, ContainerConstraint, ContainerExporter 
      */
     @NotNull
     @Override
+    @JsonIgnore
     default Map<String, ? extends ComponentExporter> getExportedItems() {
         return Collections.emptyMap();
     }
+
+
+    @NotNull
+    @Override
+    @JsonIgnore
+    default String[] getExportedItemsOrder() {return ArrayUtils.EMPTY_STRING_ARRAY;}
 
     /**
      * @see ContainerExporter#getExportedType()
