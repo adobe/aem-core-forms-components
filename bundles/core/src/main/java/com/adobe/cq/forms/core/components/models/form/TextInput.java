@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -35,7 +36,7 @@ public interface TextInput extends Field {
      * @return {@code true} if multi line, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    @JsonProperty("multiline")
+    @JsonIgnore
     default boolean isMultiLine() {
         return false;
     }

@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -25,6 +26,55 @@ import org.osgi.annotation.versioning.ConsumerType;
  */
 @ConsumerType
 public interface BaseConstraint {
+
+    /**
+     * Defines the data type. Possible values: {@code string}, {@code file}, {@code file[]}, {@code number}, {@code boolean}, {@code array}
+     * , {@code object}
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    public enum Type {
+        STRING("string"),
+        NUMBER("number"),
+        BOOLEAN("boolean"),
+        OBJECT("object"),
+        ARRAY("array"),
+        FILE("file"),
+        FILE_ARRAY("file[]");
+
+        private String value;
+
+        Type(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
+         * representation. If no representation is found, {@link #STRING} will be returned.
+         *
+         * @param value the string representation for which an enum value should be returned
+         * @return the corresponding enum value, if one was found, or {@link #STRING}
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public static Type fromString(String value) {
+            for (Type type : Type.values()) {
+                if (StringUtils.equals(value, type.value)) {
+                    return type;
+                }
+            }
+            return STRING;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public String getValue() {
+            return value;
+        }
+    }
 
     /**
      * Returns {@code true} if field is required, otherwise {@code false}.
@@ -42,7 +92,7 @@ public interface BaseConstraint {
      * @return the data type of the form field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getType() {
+    default Type getType() {
         return null;
     }
 

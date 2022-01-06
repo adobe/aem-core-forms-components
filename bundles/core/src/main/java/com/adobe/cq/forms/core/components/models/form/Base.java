@@ -21,6 +21,9 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 
+import java.util.Collections;
+import java.util.Map;
+
 
 /**
  * A base interface to be extended by all the different types of form elements.
@@ -31,13 +34,14 @@ import com.adobe.cq.export.json.ComponentExporter;
 public interface Base extends ComponentExporter {
 
     /**
-     * Defines the view type. Possible values: {@code text-input}, {@code number-input}, {@code date-input}, {@code file-input}, {@code drop-down}, {@code radio-group}
+     * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input}, {@code file-input}, {@code drop-down}, {@code radio-group}
      * , {@code plain-text}, {@code checkbox}, {@code button}, {@code panel}
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public enum ViewType {
         TEXT_INPUT("text-input"),
+        MULTILINE_INPUT("multiline-input"),
         NUMBER_INPUT("number-input"),
         DATE_INPUT("date-input"),
         FILE_INPUT("file-input"),
@@ -82,6 +86,63 @@ public interface Base extends ComponentExporter {
         }
     }
 
+
+    /**
+     * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum}, {@code minLength}, {@code maxLength}
+     * , {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems}, {@code uniqueItems}, {@code enforceEnum}, {@code validationExpression}
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    public enum ConstraintType {
+        TYPE("type"),
+        REQUIRED("required"),
+        MINIMUM("minimum"),
+        MAXIMUM("maximum"),
+        MIN_LENGTH("minLength"),
+        MAX_LENGTH("maxLength"),
+        STEP("step"),
+        FORMAT("format"),
+        PATTERN("pattern"),
+        MIN_ITEMS("minItems"),
+        MAX_ITEMS("maxItems"),
+        UNIQUE_ITEMS("uniqueItems"),
+        ENFORCE_ENUM("enforceEnum"),
+        VALIDATION_EXPRESSION("validationExpression");
+
+        private String value;
+
+        ConstraintType(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
+         * representation
+         *
+         * @param value the string representation for which an enum value should be returned
+         * @return the corresponding enum value, if one was found
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public static ConstraintType fromString(String value) {
+            for (ConstraintType type : ConstraintType.values()) {
+                if (StringUtils.equals(value, type.value)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public String getValue() {
+            return value;
+        }
+    }
+
     /**
      * Returns label of the form field
      *
@@ -109,16 +170,6 @@ public interface Base extends ComponentExporter {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getDataRef() {
-        return null;
-    }
-
-    /**
-     * Returns the title of the field (text displayed on the field).
-     *
-     * @return the title of the field (text displayed on the field)
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    default String getTitle() {
         return null;
     }
 
@@ -161,6 +212,17 @@ public interface Base extends ComponentExporter {
         return true;
     }
 
+    /**
+     * Returns map of constraint messages specific to each constraint (like required, minLength etc). The constraint
+     * list would change based on the form field type
+     *
+     * @return map of constraint messages specific to each constraint.
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @NotNull
+    default Map<ConstraintType, String> getConstraintsMessages() {
+        return Collections.emptyMap();
+    }
 
     /**
      * @see ComponentExporter#getExportedType()

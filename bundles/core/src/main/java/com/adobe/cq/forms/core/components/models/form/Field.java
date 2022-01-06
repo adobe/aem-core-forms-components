@@ -35,16 +35,5 @@ public interface Field extends Base, BaseConstraint {
      */
      Object getDefault();
 
-    /**
-     * Returns map of constraint messages specific to each constraint (like required, minLength etc). The constraint
-     * list would change based on the form field type
-     *
-     * @return map of constraint messages specific to each constraint.
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @NotNull
-    default Map<String, String> getConstraintsMessages() {
-        return Collections.emptyMap();
-    }
 }
 
