@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -35,7 +36,7 @@ import java.util.List;
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
  */
-public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
+public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Base, Container, ContainerConstraint {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(intValues = 0)

@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
@@ -29,18 +30,22 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.factory.ModelFactory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Model(adaptables = SlingHttpServletRequest.class,
         adapters = {FormContainer.class, ContainerExporter.class, ComponentExporter.class},
         resourceType = {FormConstants.RT_FD_FORM_CONTAINER_V1})
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
+public class FormContainerImpl implements FormContainer {
 
     @Self
     private SlingHttpServletRequest request;
@@ -48,11 +53,26 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ScriptVariable
     private SlingHttpServletResponse response;
 
+    @OSGiService
+    private SlingModelFilter slingModelFilter;
+
+    @OSGiService
+    private ModelFactory modelFactory;
+
     @ScriptVariable
     private Resource resource;
 
     @ScriptVariable
     private Page currentPage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String thankyouMessage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String thankyouPage;
+
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -65,19 +85,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     private List<? extends ComponentExporter> childrenModels;
 
-    // form container does not have viewType of a type
-    @Override
-    @JsonIgnore
-    public ViewType getDefaultViewType() {
-        return null;
-    }
-
-    @Override
-    @JsonIgnore
-    public Type getDefaultType() {
-        return null;
-    }
-    // end of form container does not have viewType of a type
 
     @Override
     public List<? extends ComponentExporter> getItems() {
@@ -100,8 +107,33 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     @Nullable
+    public String getThankYouMessage() {
+        return thankyouMessage;
+    }
+
+    @Override
+    @Nullable
+    public String getThankYouPage() {
+        return thankyouPage;
+    }
+
+    @Override
+    @Nullable
     public String getData() {
         return data;
+    }
+
+    // todo: its similar to other container code, but could not find a better way to do this
+    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T>
+            modelClass) {
+        List<T> models = new ArrayList<>();
+        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
+            T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+            if (model != null) {
+                models.add(model);
+            }
+        }
+        return models;
     }
 }
 

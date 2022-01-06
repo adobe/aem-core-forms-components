@@ -33,7 +33,7 @@ import java.util.Map;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Container extends Base, ContainerConstraint, ContainerExporter {
+public interface Container extends ContainerExporter {
 
 
     /**
