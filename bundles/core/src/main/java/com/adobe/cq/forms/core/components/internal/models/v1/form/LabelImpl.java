@@ -54,7 +54,7 @@ public class LabelImpl implements Label {
      */
     @Override
     public boolean isVisible() {
-        return properties.get(PN_HIDE_TITLE, true);
+        return !(properties.get(PN_HIDE_TITLE, false));
     }
 
     /**
