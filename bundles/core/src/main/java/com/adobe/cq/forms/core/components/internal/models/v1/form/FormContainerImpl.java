@@ -29,6 +29,7 @@ import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
@@ -38,6 +39,7 @@ import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +64,8 @@ public class FormContainerImpl implements FormContainer {
     @ScriptVariable
     private Resource resource;
 
-    @ScriptVariable
-    private Page currentPage;
+    //@ScriptVariable
+    //private Page currentPage;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -73,6 +75,9 @@ public class FormContainerImpl implements FormContainer {
     @Nullable
     private String thankyouPage;
 
+    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL) @Named(FormConstants.ITEMS_PATH)
+    @Nullable
+    private List<Resource> itemResources;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -123,11 +128,16 @@ public class FormContainerImpl implements FormContainer {
         return data;
     }
 
+    @Override
+    public @NotNull String getExportedType() {
+        return resource.getResourceType();
+    }
+
     // todo: its similar to other container code, but could not find a better way to do this
     protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T>
             modelClass) {
         List<T> models = new ArrayList<>();
-        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
+        for (Resource child : slingModelFilter.filterChildResources(itemResources)) {
             T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
             if (model != null) {
                 models.add(model);

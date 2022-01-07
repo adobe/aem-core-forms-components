@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -84,6 +86,12 @@ public interface Base extends ComponentExporter {
         public String getValue() {
             return value;
         }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return value;
+        }
     }
 
 
@@ -139,6 +147,12 @@ public interface Base extends ComponentExporter {
          * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
          */
         public String getValue() {
+            return value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
             return value;
         }
     }
@@ -220,6 +234,7 @@ public interface Base extends ComponentExporter {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default Map<ConstraintType, String> getConstraintsMessages() {
         return Collections.emptyMap();
     }

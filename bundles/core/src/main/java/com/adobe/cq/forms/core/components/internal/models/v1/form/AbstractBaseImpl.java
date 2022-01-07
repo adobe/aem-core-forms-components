@@ -19,6 +19,7 @@ import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -75,6 +76,7 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     private Map<ConstraintType, String> constraintMessages = null;
 
 
+    @JsonIgnore
     protected abstract ViewType getDefaultViewType();
 
     /**

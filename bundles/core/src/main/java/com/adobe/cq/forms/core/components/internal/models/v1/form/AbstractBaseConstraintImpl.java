@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -47,8 +48,8 @@ public abstract class AbstractBaseConstraintImpl implements BaseConstraint {
     @SlingObject
     private Resource resource;
 
+    @JsonIgnore
     protected abstract Type getDefaultType();
-
 
     @Override
     public boolean isRequired() {

@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.models.form;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -42,6 +43,7 @@ public interface Container extends ContainerExporter {
      * @return list of items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     List<? extends ComponentExporter> getItems();
 
     /**

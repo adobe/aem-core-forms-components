@@ -25,6 +25,8 @@ public final class FormConstants {
 
     }
 
+    public static final String ITEMS_PATH = "items";
+
     /** The prefixes for all core form related resource types */
     private final static String RT_FD_FORM_PREFIX = "core/fd/components/form/";
 

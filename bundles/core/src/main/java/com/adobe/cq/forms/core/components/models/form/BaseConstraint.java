@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -72,6 +73,12 @@ public interface BaseConstraint {
          * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
          */
         public String getValue() {
+            return value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
             return value;
         }
     }
