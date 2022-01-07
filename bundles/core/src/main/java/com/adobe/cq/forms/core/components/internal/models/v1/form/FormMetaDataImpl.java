@@ -1,5 +1,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  ~ Copyright 2022 Adobe
  ~
@@ -15,19 +19,12 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
-
-
 
 public class FormMetaDataImpl implements FormMetaData {
 
     private static final String PN_ACTION = "action";
     private static final String PN_DATA_URL = "dataUrl";
-
 
     private ValueMap properties;
     private SlingHttpServletRequest request;
@@ -36,7 +33,6 @@ public class FormMetaDataImpl implements FormMetaData {
         this.request = request;
         this.properties = field.getValueMap();
     }
-
 
     @Override
     public String getAction() {

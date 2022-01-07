@@ -45,6 +45,3 @@ public interface NumberAndDateConstraint extends BaseConstraint {
     Object getMaximum();
 
 }
-
-
-

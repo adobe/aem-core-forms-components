@@ -15,18 +15,18 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ContainerExporter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ContainerExporter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Defines the form {@code Container} Sling Model used for form container component (like fieldset or panel)
@@ -35,7 +35,6 @@ import java.util.Map;
  */
 @ConsumerType
 public interface Container extends ContainerExporter {
-
 
     /**
      * Returns the list of items present inside the container as an array.
@@ -57,11 +56,12 @@ public interface Container extends ContainerExporter {
         return Collections.emptyMap();
     }
 
-
     @NotNull
     @Override
     @JsonIgnore
-    default String[] getExportedItemsOrder() {return ArrayUtils.EMPTY_STRING_ARRAY;}
+    default String[] getExportedItemsOrder() {
+        return ArrayUtils.EMPTY_STRING_ARRAY;
+    }
 
     /**
      * @see ContainerExporter#getExportedType()

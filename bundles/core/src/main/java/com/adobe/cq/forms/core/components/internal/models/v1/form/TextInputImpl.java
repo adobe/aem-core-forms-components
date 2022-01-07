@@ -15,10 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
@@ -26,11 +22,18 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
-@Model(adaptables = SlingHttpServletRequest.class,
-        adapters = {TextInput.class, ComponentExporter.class},
-        resourceType = {FormConstants.RT_FD_FORM_TEXT_V1})
-@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-        extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
+
+@Model(
+    adaptables = SlingHttpServletRequest.class,
+    adapters = { TextInput.class, ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_TEXT_V1 })
+@Exporter(
+    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
+    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

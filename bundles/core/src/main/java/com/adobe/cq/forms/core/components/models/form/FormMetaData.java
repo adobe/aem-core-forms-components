@@ -31,7 +31,9 @@ public interface FormMetaData {
      * @return the version of adaptive form specification
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getVersion() {return "1.0.0";}
+    default String getVersion() {
+        return "1.0.0";
+    }
 
     /**
      * Returns the locale of the form
@@ -39,7 +41,9 @@ public interface FormMetaData {
      * @return the locale of the form
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getLocale() {return "en-us";}
+    default String getLocale() {
+        return "en-us";
+    }
 
     /**
      * Returns the version of the rule grammar
@@ -47,7 +51,9 @@ public interface FormMetaData {
      * @return the version of the rule grammar
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getGrammar() {return "json-formula-1.0.0";}
+    default String getGrammar() {
+        return "json-formula-1.0.0";
+    }
 
     /**
      * Returns the submit action

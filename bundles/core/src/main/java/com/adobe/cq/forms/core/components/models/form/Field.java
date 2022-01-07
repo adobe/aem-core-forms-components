@@ -15,11 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Defines the form {@code Field} Sling Model used for form field component.
@@ -28,7 +24,6 @@ import java.util.Map;
  */
 @ConsumerType
 public interface Field extends Base, BaseConstraint {
-
 
     /**
      * Checks if the field should be rendered read only.
@@ -48,7 +43,6 @@ public interface Field extends Base, BaseConstraint {
      * @return default value of the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-     Object getDefault();
+    Object getDefault();
 
 }
-

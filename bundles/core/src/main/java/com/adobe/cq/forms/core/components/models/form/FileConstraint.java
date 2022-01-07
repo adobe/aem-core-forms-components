@@ -43,11 +43,7 @@ public interface FileConstraint {
      * @return the list of standard IANA media types
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String[] getAccept() {return new String[]{"audio/*", "video/*", "image/*", "text/*", "application/pdf"};}
+    default String[] getAccept() {
+        return new String[] { "audio/*", "video/*", "image/*", "text/*", "application/pdf" };
+    }
 }
-
-
-
-
-
-

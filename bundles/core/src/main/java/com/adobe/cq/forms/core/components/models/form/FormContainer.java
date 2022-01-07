@@ -15,17 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ContainerExporter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import com.adobe.cq.export.json.ContainerExporter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -51,8 +45,9 @@ public interface FormContainer extends Container {
      * @return form title
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getTitle() {return "";}
-
+    default String getTitle() {
+        return "";
+    }
 
     /**
      * Returns the form thank you message
@@ -63,7 +58,6 @@ public interface FormContainer extends Container {
     @JsonProperty("props:thankyouMessage")
     String getThankYouMessage();
 
-
     /**
      * Returns the form thank you page
      *
@@ -72,8 +66,6 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("props:thankyouPage")
     String getThankYouPage();
-
-
 
     /**
      * @see ContainerExporter#getExportedType()
@@ -91,5 +83,7 @@ public interface FormContainer extends Container {
      * @return the form data
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getData() {return "";}
+    default String getData() {
+        return "";
+    }
 }

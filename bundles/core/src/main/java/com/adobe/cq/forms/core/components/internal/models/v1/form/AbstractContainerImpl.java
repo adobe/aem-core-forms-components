@@ -15,10 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.Container;
-import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -29,9 +28,10 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
@@ -41,7 +41,6 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(intValues = 0)
     protected int minItems;
-
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(intValues = -1)
@@ -53,10 +52,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @OSGiService
     private ModelFactory modelFactory;
 
-
     @SlingObject
     private Resource resource;
-
 
     @Override
     public int getMinItems() {
@@ -68,8 +65,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return maxItems;
     }
 
-    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T>
-            modelClass) {
+    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
             T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);

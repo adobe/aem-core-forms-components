@@ -15,8 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.osgi.annotation.versioning.ConsumerType;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Interface for options constraints (for radio button, check box and drop down type of fields)
@@ -58,5 +59,3 @@ public interface OptionsConstraint {
      */
     String[] enumNames();
 }
-
-

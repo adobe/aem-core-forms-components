@@ -15,19 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
-
-import com.adobe.cq.forms.core.components.models.form.Field;
-import com.day.cq.commons.jcr.JcrConstants;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
+import com.adobe.cq.forms.core.components.models.form.Field;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -38,11 +33,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Default(booleanValues = false)
     protected boolean readOnly;
 
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     @Nullable
     protected Object defaultValue;
-
 
     @SlingObject
     private Resource resource;
@@ -58,4 +51,3 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
 }
-

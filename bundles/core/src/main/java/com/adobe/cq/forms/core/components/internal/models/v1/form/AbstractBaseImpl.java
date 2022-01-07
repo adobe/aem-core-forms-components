@@ -15,11 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.day.cq.commons.jcr.JcrConstants;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -30,38 +28,36 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
  */
 public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implements Base, BaseConstraint {
 
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = JcrConstants.JCR_DESCRIPTION)
     @Nullable
     protected String description;
-
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String dataRef;
 
-
     @ValueMapValue
     protected String name;
-
 
     @ValueMapValue
     @Default(values = "")
     protected String value;
 
-
     @ValueMapValue
     @Default(booleanValues = true)
     protected boolean visible;
-
 
     @ValueMapValue
     @Default(booleanValues = true)
@@ -74,7 +70,6 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
      * Holds the constraint messages
      */
     private Map<ConstraintType, String> constraintMessages = null;
-
 
     @JsonIgnore
     protected abstract ViewType getDefaultViewType();
@@ -112,7 +107,6 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     public String getDataRef() {
         return dataRef;
     }
-
 
     /**
      * Returns the description of the field
@@ -198,7 +192,6 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
         }
     }
 
-
     /**
      * Provides constraint messages configured for a form field
      */
@@ -249,8 +242,6 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
         private static final String PN_UNIQUEITEMS_MESSAGE = "uniqueItemsMessage";
         private static final String PN_ENFORCEENUM_MESSAGE = "enforceEnumMessage";
         private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validationExpressionMessage";
-
-
 
         private ValueMap properties = resource.getValueMap();
 
@@ -337,6 +328,15 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
         public String getValidationExpressionConstraintMessage() {
             return properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class);
         }
+    }
+
+    @Override
+    @Nullable
+    public String getId() {
+        String resourceType = resource.getResourceType();
+        String prefix = StringUtils.substringAfterLast(resourceType, "/");
+        String path = resource.getPath();
+        return Utils.generateId(prefix, path);
     }
 
     @Override

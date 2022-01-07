@@ -15,17 +15,19 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonValue;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.osgi.annotation.versioning.ConsumerType;
-
-import com.adobe.cq.export.json.ComponentExporter;
-
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.osgi.annotation.versioning.ConsumerType;
+
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.wcm.core.components.models.Component;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * A base interface to be extended by all the different types of form elements.
@@ -33,10 +35,11 @@ import java.util.Map;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Base extends ComponentExporter {
+public interface Base extends Component {
 
     /**
-     * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input}, {@code file-input}, {@code drop-down}, {@code radio-group}
+     * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input},
+     * {@code file-input}, {@code drop-down}, {@code radio-group}
      * , {@code plain-text}, {@code checkbox}, {@code button}, {@code panel}
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
@@ -94,10 +97,11 @@ public interface Base extends ComponentExporter {
         }
     }
 
-
     /**
-     * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum}, {@code minLength}, {@code maxLength}
-     * , {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems}, {@code uniqueItems}, {@code enforceEnum}, {@code validationExpression}
+     * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum}, {@code minLength},
+     * {@code maxLength}
+     * , {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems}, {@code uniqueItems}, {@code enforceEnum},
+     * {@code validationExpression}
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
@@ -187,7 +191,6 @@ public interface Base extends ComponentExporter {
         return null;
     }
 
-
     /**
      * Returns the description of the field
      *
@@ -200,6 +203,7 @@ public interface Base extends ComponentExporter {
 
     /**
      * Returns the view type
+     * 
      * @return the view type
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
@@ -214,7 +218,6 @@ public interface Base extends ComponentExporter {
     default boolean isVisible() {
         return true;
     }
-
 
     /**
      * Returns {@code true} if form field should be enabled, otherwise {@code false}.
@@ -247,5 +250,11 @@ public interface Base extends ComponentExporter {
     @Override
     default String getExportedType() {
         return "";
+    }
+
+    @Nullable
+    @JsonIgnore
+    default String getId() {
+        return null;
     }
 }

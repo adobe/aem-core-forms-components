@@ -41,7 +41,6 @@ public interface StringConstraint extends BaseConstraint {
      */
     int getMaxLength();
 
-
     /**
      * As specified in the JSON Schema specification, the regex against which the value of the field should be tested with.
      *

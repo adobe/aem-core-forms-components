@@ -15,10 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-
-import com.fasterxml.jackson.annotation.JsonValue;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.annotation.versioning.ConsumerType;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * A base interface which specifies the different form field constraints
@@ -122,7 +122,5 @@ public interface BaseConstraint {
     default String getValidationExpression() {
         return null;
     }
-
-
 
 }

@@ -15,15 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ContainerExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.day.cq.wcm.api.Page;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Named;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
@@ -39,13 +35,18 @@ import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ContainerExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 
-@Model(adaptables = SlingHttpServletRequest.class,
-        adapters = {FormContainer.class, ContainerExporter.class, ComponentExporter.class},
-        resourceType = {FormConstants.RT_FD_FORM_CONTAINER_V1})
+@Model(
+    adaptables = SlingHttpServletRequest.class,
+    adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl implements FormContainer {
 
@@ -64,8 +65,8 @@ public class FormContainerImpl implements FormContainer {
     @ScriptVariable
     private Resource resource;
 
-    //@ScriptVariable
-    //private Page currentPage;
+    // @ScriptVariable
+    // private Page currentPage;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -75,7 +76,8 @@ public class FormContainerImpl implements FormContainer {
     @Nullable
     private String thankyouPage;
 
-    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL) @Named(FormConstants.ITEMS_PATH)
+    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Named(FormConstants.ITEMS_PATH)
     @Nullable
     private List<Resource> itemResources;
 
@@ -87,9 +89,7 @@ public class FormContainerImpl implements FormContainer {
     @Nullable
     private String data;
 
-
     private List<? extends ComponentExporter> childrenModels;
-
 
     @Override
     public List<? extends ComponentExporter> getItems() {
@@ -134,8 +134,7 @@ public class FormContainerImpl implements FormContainer {
     }
 
     // todo: its similar to other container code, but could not find a better way to do this
-    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T>
-            modelClass) {
+    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
         for (Resource child : slingModelFilter.filterChildResources(itemResources)) {
             T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
@@ -146,4 +145,3 @@ public class FormContainerImpl implements FormContainer {
         return models;
     }
 }
-

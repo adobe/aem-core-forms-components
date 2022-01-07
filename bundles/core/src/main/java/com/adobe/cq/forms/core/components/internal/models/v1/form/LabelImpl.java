@@ -15,19 +15,17 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.day.cq.commons.jcr.JcrConstants;
 
 public class LabelImpl implements Label {
 
     private static final String PN_HIDE_TITLE = "hideTitle";
     private static final String PN_TITLE = JcrConstants.JCR_TITLE;
     private static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
-
 
     private ValueMap properties;
 
