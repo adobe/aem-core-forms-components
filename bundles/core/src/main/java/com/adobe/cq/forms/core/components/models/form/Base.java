@@ -25,7 +25,6 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -187,6 +186,7 @@ public interface Base extends Component {
      * @return reference to the data model
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getDataRef() {
         return null;
     }
@@ -197,7 +197,19 @@ public interface Base extends Component {
      * @return the description of the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getDescription() {
+        return null;
+    }
+
+    /**
+     * Returns the string to indicate the text to be read by screen readers
+     *
+     * @return the screen reader text
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getScreenReaderText() {
         return null;
     }
 
@@ -250,11 +262,5 @@ public interface Base extends Component {
     @Override
     default String getExportedType() {
         return "";
-    }
-
-    @Nullable
-    @JsonIgnore
-    default String getId() {
-        return null;
     }
 }

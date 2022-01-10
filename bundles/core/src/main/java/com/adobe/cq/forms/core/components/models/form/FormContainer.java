@@ -50,6 +50,16 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * Returns the form description
+     *
+     * @return form description
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getDescription() {
+        return "";
+    }
+
+    /**
      * Returns the form thank you message
      *
      * @return form thank you message

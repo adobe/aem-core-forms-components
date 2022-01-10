@@ -79,6 +79,10 @@ public class FormContainerImpl implements FormContainer {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String description;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String data;
 
     private List<? extends ComponentExporter> childrenModels;
@@ -100,6 +104,12 @@ public class FormContainerImpl implements FormContainer {
     @Nullable
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    @Nullable
+    public String getDescription() {
+        return description;
     }
 
     @Override

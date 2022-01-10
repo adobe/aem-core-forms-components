@@ -30,12 +30,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
-import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -46,9 +46,68 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     @Nullable
     protected String description;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
     @Nullable
     protected String dataRef;
+
+    /**
+     * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
+     * 
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    private enum AssistPriority {
+        CUSTOM("custom"),
+        DESCRIPTION("description"),
+        LABEL("label"),
+        NAME("name");
+
+        private String value;
+
+        AssistPriority(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
+         * representation
+         *
+         * @param value the string representation for which an enum value should be returned
+         * @return the corresponding enum value, if one was found
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public static AssistPriority fromString(String value) {
+            for (AssistPriority type : AssistPriority.values()) {
+                if (StringUtils.equals(value, type.value)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return value;
+        }
+    }
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
+    @Nullable
+    protected AssistPriority assistPriority;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "custom")
+    @Nullable
+    protected String customAssistPriorityMsg;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -116,6 +175,22 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     @Nullable
     public String getDataRef() {
         return dataRef;
+    }
+
+    @Override
+    @Nullable
+    public String getScreenReaderText() {
+        String screenReaderText = getName();
+        if (AssistPriority.LABEL.equals(assistPriority)) {
+            screenReaderText = getLabel().getValue();
+        } else if (AssistPriority.NAME.equals(assistPriority)) {
+            screenReaderText = getName();
+        } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
+            screenReaderText = getDescription();
+        } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
+            screenReaderText = customAssistPriorityMsg;
+        }
+        return screenReaderText;
     }
 
     /**
@@ -239,19 +314,20 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     private class ConstraintMessagesProvider implements ConstraintMessages {
 
         private static final String PN_TYPE_MESSAGE = "typeMessage";
-        private static final String PN_REQUIRED_MESSAGE = "requiredMessage";
+        private static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in foundation
         private static final String PN_MINIMUM_MESSAGE = "minimumMessage";
         private static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
         private static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
         private static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
         private static final String PN_STEP_MESSAGE = "stepMessage";
         private static final String PN_FORMAT_MESSAGE = "formatMessage";
-        private static final String PN_PATTERN_MESSAGE = "patternMessage";
+        private static final String PN_PATTERN_MESSAGE = "validatePictureClauseMessage"; // reusing the same property name as in foundation
         private static final String PN_MINITEMS_MESSAGE = "minItemsMessage";
         private static final String PN_MAXITEMS_MESSAGE = "maxItemsMessage";
         private static final String PN_UNIQUEITEMS_MESSAGE = "uniqueItemsMessage";
         private static final String PN_ENFORCEENUM_MESSAGE = "enforceEnumMessage";
-        private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validationExpressionMessage";
+        private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property name as in
+                                                                                            // foundation
 
         private ValueMap properties = resource.getValueMap();
 
@@ -338,15 +414,6 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
         public String getValidationExpressionConstraintMessage() {
             return properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class);
         }
-    }
-
-    @Override
-    @Nullable
-    public String getId() {
-        String resourceType = resource.getResourceType();
-        String prefix = StringUtils.substringAfterLast(resourceType, "/");
-        String path = resource.getPath();
-        return Utils.generateId(prefix, path);
     }
 
     @Override

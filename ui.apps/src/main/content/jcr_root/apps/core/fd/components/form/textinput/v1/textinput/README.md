@@ -23,6 +23,7 @@ Adaptive Form Text input field component written in HTL.
   * text
   * textarea
 * Custom constraint messages for the above types
+* Styles
 
 ### Use Object
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.

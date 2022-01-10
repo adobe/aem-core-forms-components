@@ -33,9 +33,25 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Default(booleanValues = false)
     protected boolean readOnly;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "_value")
     @Nullable
     protected Object defaultValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholderText")
+    @Nullable
+    protected String placeholder;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayPictureClause")
+    @Nullable
+    protected String displayFormat;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editPictureClause")
+    @Nullable
+    protected String editFormat;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
+    @Nullable
+    protected String dataFormat;
 
     @SlingObject
     private Resource resource;
@@ -48,6 +64,30 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     public Object getDefault() {
         return defaultValue;
+    }
+
+    @Override
+    @Nullable
+    public String getPlaceHolder() {
+        return placeholder;
+    }
+
+    @Override
+    @Nullable
+    public String getDisplayFormat() {
+        return displayFormat;
+    }
+
+    @Override
+    @Nullable
+    public String getEditFormat() {
+        return editFormat;
+    }
+
+    @Override
+    @Nullable
+    public String getDataFormat() {
+        return dataFormat;
     }
 
 }

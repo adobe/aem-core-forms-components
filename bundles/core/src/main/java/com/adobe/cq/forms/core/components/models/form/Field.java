@@ -36,6 +36,48 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
+     * The placeholder to show on the field.
+     *
+     * @return placeholder to show on the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getPlaceHolder() {
+        return "";
+    }
+
+    /**
+     * The format in which the value will be displayed to the user on screen in the field.
+     * For example when using a currency field, the currency sign should be shown to the user.
+     *
+     * @return display format of the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getDisplayFormat() {
+        return null;
+    }
+
+    /**
+     * The format in which the value will be edited by the user.
+     * For instance users in Germany would want to interchange decimal (.) and comma (,) when entering numerical values.
+     *
+     * @return edit format of the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getEditFormat() {
+        return null;
+    }
+
+    /**
+     * The format in which the value will be exported or submitted.
+     *
+     * @return data format of the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getDataFormat() {
+        return null;
+    }
+
+    /**
      * The value of the field when no value is provided by the end user or data model.
      * The type of this property should match the value of the type property defined in the Field.
      * If not, then a type coercion will be tried and if that fails, the value will be set to null.

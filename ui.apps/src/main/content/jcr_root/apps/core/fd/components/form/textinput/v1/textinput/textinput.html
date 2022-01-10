@@ -14,12 +14,12 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <div data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
-     class="form-group">
-    <label for="${text.id}" data-sly-test="${text.label.value && !text.label.visible}">${text.title}</label>
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component">
+    <label for="${component.id}" data-sly-test="${text.label.value && text.label.visible}">${text.title}</label>
     <p data-sly-test="${text.description}" class="help-block">${text.description}</p>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
-          aria-label="${text.label.hideTitle && text.label.value}"
-          id="${text.id}"
+          aria-label="${text.label.visible && text.label.value}"
+          id="${component.id}"
           name="${text.name}"
           readonly="${text.readOnly}"
           required="${text.required}"
@@ -27,7 +27,7 @@
     <input data-sly-test="${!useTextarea}"
            aria-label="${text.label.visible && text.label.value}"
            type="text"
-           id="${text.id}"
+           id="${component.id}"
            name="${text.name}"
            value="${text.default}"
            readonly="${text.readOnly}"

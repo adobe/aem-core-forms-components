@@ -11,6 +11,7 @@
     "value": "def",
     "richText": false
   },
+  "screenReaderText": "abc",
   "type": "string",
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }

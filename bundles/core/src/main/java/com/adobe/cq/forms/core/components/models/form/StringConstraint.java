@@ -17,6 +17,8 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * A interface which specifies the different form string type constraints
  *
@@ -31,7 +33,8 @@ public interface StringConstraint extends BaseConstraint {
      * @return minimum length of the data
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    int getMinLength();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    Integer getMinLength();
 
     /**
      * Returns the maximum length of the data. The constraint is applicable only for field with type string
@@ -39,7 +42,8 @@ public interface StringConstraint extends BaseConstraint {
      * @return maximum length of the data
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    int getMaxLength();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    Integer getMaxLength();
 
     /**
      * As specified in the JSON Schema specification, the regex against which the value of the field should be tested with.

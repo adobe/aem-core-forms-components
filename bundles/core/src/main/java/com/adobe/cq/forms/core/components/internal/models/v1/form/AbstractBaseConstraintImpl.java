@@ -38,7 +38,8 @@ public abstract class AbstractBaseConstraintImpl implements BaseConstraint {
     @Nullable
     protected String validationExpression;
 
-    @ValueMapValue
+    // using old jcr property names to allow easy conversion from foundation to core components
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "mandatory")
     @Default(booleanValues = false)
     protected boolean required;
 
