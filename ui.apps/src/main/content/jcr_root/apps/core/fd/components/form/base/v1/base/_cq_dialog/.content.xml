@@ -190,8 +190,8 @@
                             <description
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                    fieldLabel="Description"
-                                    name="./jcr:description"
+                                    fieldLabel="Long Description"
+                                    name="./longDescription"
                                     useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                     <links jcr:primaryType="nt:unstructured">

@@ -42,9 +42,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = JcrConstants.JCR_DESCRIPTION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "longDescription")
     @Nullable
-    protected String description;
+    protected String description; // long description as per current spec
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
     @Nullable
