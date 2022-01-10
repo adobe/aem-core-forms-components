@@ -36,11 +36,11 @@ public class FormMetaDataImpl implements FormMetaData {
 
     @Override
     public String getAction() {
-        return properties.get(PN_ACTION, String.class);
+        return properties.get(PN_ACTION, "");
     }
 
     @Override
     public String getDataUrl() {
-        return properties.get(PN_DATA_URL, String.class);
+        return properties.get(PN_DATA_URL, "");
     }
 }

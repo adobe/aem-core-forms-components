@@ -18,14 +18,11 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
@@ -75,11 +72,6 @@ public class FormContainerImpl implements FormContainer {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String thankyouPage;
-
-    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Named(FormConstants.ITEMS_PATH)
-    @Nullable
-    private List<Resource> itemResources;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -136,7 +128,7 @@ public class FormContainerImpl implements FormContainer {
     // todo: its similar to other container code, but could not find a better way to do this
     protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
-        for (Resource child : slingModelFilter.filterChildResources(itemResources)) {
+        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
             T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
             if (model != null) {
                 models.add(model);

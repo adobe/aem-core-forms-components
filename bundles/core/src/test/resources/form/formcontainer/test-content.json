@@ -4,17 +4,14 @@
     "sling:resourceType"    : "core/fd/components/form/container/v1/container",
     "thankyouPage": "/a/b/c",
     "thankyouMessage": "message",
-    "items" : {
+    "textinput" : {
       "jcr:primaryType": "nt:unstructured",
-      "textinput" : {
-        "jcr:primaryType": "nt:unstructured",
-        "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-        "name" : "abc",
-        "jcr:title" : "def",
-        "hideTitle" : false,
-        "description" : "dummy",
-        "visible" : false
-      }
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "visible" : false
     },
     "action": "/a/b",
     "dataUrl": "/c/d"

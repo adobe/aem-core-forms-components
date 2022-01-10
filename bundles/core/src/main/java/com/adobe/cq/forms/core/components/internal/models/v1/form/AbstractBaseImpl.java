@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -28,6 +29,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.internal.models.v1.Utils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -48,7 +50,8 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     @Nullable
     protected String dataRef;
 
-    @ValueMapValue
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     protected String name;
 
     @ValueMapValue
@@ -82,7 +85,7 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
      */
     @Override
     public Label getLabel() {
-        return new LabelImpl(resource);
+        return new LabelImpl(resource, getName());
     }
 
     /**
@@ -93,7 +96,14 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
      */
     @Override
     public String getName() {
+        if (name == null) {
+            name = getDefaultName();
+        }
         return name;
+    }
+
+    protected String getDefaultName() {
+        return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
     /**
