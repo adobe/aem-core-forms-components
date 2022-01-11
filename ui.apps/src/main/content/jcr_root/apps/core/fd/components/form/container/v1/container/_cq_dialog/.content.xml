@@ -1,98 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Core Form Container"
+    jcr:title="Adaptive Form Container"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://www.adobe.com/go/aem_cmp_form_container_v1"
-    extraClientlibs="[core.wcm.components.form.container.v1.editor]"
-    trackingFeature="core-components:form-container:v1">
+    extraClientlibs="[core.forms.components.container.v1.editor]"
+    trackingFeature="core-components:adaptiveform-container:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-            <main
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Main"
-                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                margin="{Boolean}false">
+            <accordion
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/accordion">
                 <items jcr:primaryType="nt:unstructured">
-                    <column
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <actionType
-                                granite:class="cmp-action-type-selection"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                deleteHint="{Boolean}true"
-                                fieldLabel="Action Type"
-                                name="./actionType">
+                            <prefill_service
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-prefill-service-selection"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    disabled="false"
+                                    emptyText="Select"
+                                    fieldDescription="Select a prefill service to fetch form data when the form renders."
+                                    fieldLabel="Prefill Service"
+                                    name="./prefillService"
+                                    renderReadOnly="false">
                                 <datasource
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="core/wcm/components/form/container/v1/datasource/actiontype"/>
-                                <granite:data
-                                    jcr:primaryType="nt:unstructured"
-                                    cq-dialog-dropdown-showhide-target=".action-type-dialog"/>
-                            </actionType>
-                            <advanced
-                                granite:id="cmp-action-type-settings"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
-                                <datasource
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="core/wcm/components/form/container/v1/datasource/actionsetting"/>
-                            </advanced>
-                            <workflowcontainer
-                                granite:class="hide cmp-workflow-container"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <workflowmodel
                                         jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                        emptyOption="{Boolean}true"
-                                        fieldDescription="Whether a workflow should be started with the stored content as payload."
-                                        fieldLabel="Start Workflow"
-                                        name="./workflowModel">
-                                        <datasource
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="core/wcm/components/form/container/v1/datasource/workflowmodel"/>
-                                        <granite:data
-                                            jcr:primaryType="nt:unstructured"
-                                            cq-dialog-dropdown-showhide-target=".cmp-workflow-title"/>
-                                    </workflowmodel>
-                                    <workflowTitle
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        fieldDescription="Title for the workflow."
-                                        fieldLabel="Workflow Title"
-                                        name="./workflowTitle"
-                                        required="{Boolean}true"
-                                        wrapperClass="hide cmp-workflow-title">
-                                        <granite:data
-                                            jcr:primaryType="nt:unstructured"
-                                            reverseshowhidetargetvalue=""/>
-                                    </workflowTitle>
-                                </items>
-                            </workflowcontainer>
-                            <redirect
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="cq/gui/components/coral/common/form/pagefield"
-                                fieldDescription="Leave empty to redisplay the form after submission"
-                                fieldLabel="Thank You Page"
-                                name="./redirect"
-                                rootPath="/content"
-                                wrapperClass="hide cmp-redirect-selection"/>
-                            <id
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                fieldDescription="HTML ID attribute to apply to the component."
-                                fieldLabel="ID"
-                                name="./id"/>
+                                        sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                        type="prefillServiceProvider"/>
+                            </prefill_service>
+                            <clientLibRef
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="This client library contains JavaScript Functions which can be used in expressions supported by Adaptive Forms."
+                                    fieldLabel="Client Library Category"
+                                    name="./clientLibRef"/>
+                            <disableSwipeGesture
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    fieldDescription="Disables the swipe gesture."
+                                    name="./disableSwipeGesture"
+                                    text="Disable Swipe Gesture"
+                                    uncheckedValue="false"
+                                    value="true"/>
+                            <disableSwipeGesture-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./disableSwipeGesture@TypeHint"
+                                    value="Boolean"/>
+                            <enableFocusOnFirstField
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    fieldDescription="Select to keep the focus on the first field of the adaptive form or uncheck to keep the focus on the parent page or application."
+                                    name="./enableFocusOnFirstField"
+                                    checked="{Boolean}true"
+                                    text="Set Focus on Form"
+                                    uncheckedValue="false"
+                                    value="true"/>
+                            <enableFocusOnFirstField-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./enableFocusOnFirstField@TypeHint"
+                                    value="Boolean"/>
                         </items>
-                    </column>
+                        <parentConfig
+                                jcr:primaryType="nt:unstructured"
+                                active="{Boolean}true"/>
+                    </basic>
+                    <submitActions
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Submission"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <enableAsyncSubmission
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            name="./enableAsyncSubmission"
+                                            text="Use asynchronous submission"
+                                            value="true">
+                                        <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.enableDisableAsyncSubmission();"
+                                                af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.enableDisableAsyncSubmission();"/>
+                                    </enableAsyncSubmission>
+                                    <thankYouOption
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                            fieldLabel="On Submit"
+                                            name="./thankYouOption">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <page
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Redirect to URL"
+                                                    value="page"
+                                                    checked="{Boolean}true">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"
+                                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"/>
+                                            </page>
+                                            <message
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Show Message"
+                                                    value="message">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"
+                                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"/>
+                                            </message>
+                                        </items>
+                                    </thankYouOption>
+                                    <redirect
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            nodeTypes="cq:Page, dam:Asset"
+                                            fieldLabel="Redirect URL/Path"
+                                            rootPath="/content"
+                                            name="./redirect"
+                                            filter="nosystem"/>
+                                    <thankYouMessage
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                            fieldLabel="Message Content"
+                                            value="Thank you for submitting the form."
+                                            name="./thankYouMessage"
+                                            useFixedInlineToolbar="{Boolean}true">
+                                        <rtePlugins jcr:primaryType="nt:unstructured">
+                                            <links jcr:primaryType="nt:unstructured">
+                                                <linkDialogConfig
+                                                        jcr:primaryType="nt:unstructured"
+                                                        height="{Long}316">
+                                                    <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
+                                                </linkDialogConfig>
+                                            </links>
+                                            <format
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <lists
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <justify
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <keys
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <paraformat
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <misctools
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <fullscreen
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                        </rtePlugins>
+                                        <uiSettings jcr:primaryType="nt:unstructured">
+                                            <cui jcr:primaryType="nt:unstructured">
+                                                <inline
+                                                        jcr:primaryType="nt:unstructured"
+                                                        toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
+                                                    <popovers jcr:primaryType="nt:unstructured">
+                                                        <justify
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                                                ref="justify"/>
+                                                        <lists
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                                                ref="lists"/>
+                                                    </popovers>
+                                                </inline>
+                                                <fullscreen
+                                                        jcr:primaryType="nt:unstructured"
+                                                        toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
+                                                    <popovers jcr:primaryType="nt:unstructured">
+                                                        <styles
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="styles:getStyles:styles-pulldown"
+                                                                ref="styles"/>
+                                                        <paraformat
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="paraformat:getFormats:paraformat-pulldown"
+                                                                ref="paraformat"/>
+                                                    </popovers>
+                                                </fullscreen>
+                                            </cui>
+                                        </uiSettings>
+                                    </thankYouMessage>
+                                    <enableServerValidation
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            name="./enableServerValidation"
+                                            text="Revalidate on server"
+                                            value="true"/>
+                                    <submitActionType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-submit-action-selection"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Submit Action"
+                                            name="./actionType">
+                                        <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.renderSubDialog(&quot;submitAction&quot;);"
+                                                submit-action-validation=""/>
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                guideDataModel="basic"
+                                                type="submitAction"/>
+                                    </submitActionType>
+                                    <actionSet
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Action Configuration"
+                                            sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                            name="./submitActionSet"
+                                            title="Action Configuration">
+                                        <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                touchUIFormActionSet="submitActionSet"/>
+                                    </actionSet>
+                                </items>
+                            </columns>
+                        </items>
+                        <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                touchUIFormSubmitAction="touchUIFormSubmitAction"/>
+                    </submitActions>
                 </items>
-            </main>
+            </accordion>
         </items>
     </content>
 </jcr:root>

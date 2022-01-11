@@ -16,7 +16,6 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
@@ -56,18 +55,6 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxChars")
     @Nullable
     protected Integer maxLength;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "length")
-    @Default(intValues = -1)
-    protected int exactLength;
-
-    @PostConstruct
-    protected void initModel() {
-        if (this.exactLength != -1) {
-            this.minLength = this.exactLength;
-            this.maxLength = this.exactLength;
-        }
-    }
 
     @Override
     public boolean isMultiLine() {

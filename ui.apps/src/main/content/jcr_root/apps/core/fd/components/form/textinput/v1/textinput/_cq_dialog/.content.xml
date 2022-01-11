@@ -142,15 +142,6 @@
                                     fieldLabel="Minimum Number of Characters"
                                     min="0"
                                     name="./minLength"/>
-                            <length
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:orderBefore="guideGlobalLazyField"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldDescription="The exact number of characters allowed."
-                                    fieldLabel="Exact Number of Characters"
-                                    min="0"
-                                    name="./length"/>
                         </items>
                     </basic>
                     <patterns
