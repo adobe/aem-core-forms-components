@@ -15,11 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.servlets;
 
-
-import javax.servlet.Servlet;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -28,46 +25,42 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.granite.ui.components.Config;
-import com.adobe.granite.ui.components.ExpressionResolver;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.resource.NonExistingResource;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
-import com.adobe.granite.ui.components.ds.DataSource;
-import com.adobe.granite.ui.components.ds.SimpleDataSource;
-import com.day.cq.wcm.foundation.forms.FormsManager;
 import org.osgi.service.component.annotations.Reference;
 
 import com.adobe.aemds.guide.model.FormMetaData;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.granite.ui.components.Config;
+import com.adobe.granite.ui.components.ExpressionResolver;
+import com.adobe.granite.ui.components.ds.DataSource;
+import com.adobe.granite.ui.components.ds.SimpleDataSource;
+import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
-        service = { Servlet.class },
-        property = {
-                "sling.servlet.resourceTypes="+ FormConstants.RT_FD_FORM_CONTAINER_DATASOURCE_V1,
-                "sling.servlet.methods=GET",
-                "sling.servlet.extensions=html"
-        }
-)
+    service = { Servlet.class },
+    property = {
+        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_CONTAINER_DATASOURCE_V1,
+        "sling.servlet.methods=GET",
+        "sling.servlet.extensions=html"
+    })
 public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
-
 
     private static final String TYPE = "type";
     private static final String DATA_MODEL = "guideDataModel";
 
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
+     * 
      * @todo: Add other metadata types here like fragment, actions etc
      */
     public enum FormMetaDataType {
@@ -121,12 +114,15 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         Config config = getConfig(request);
-        FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request));
-        String dataModel = getParameter(config, DATA_MODEL, request);
-        SimpleDataSource actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
+        SimpleDataSource actionTypeDataSource = null;
+        if (config != null) {
+            FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
+            String dataModel = getParameter(config, DATA_MODEL, request, "");
+            actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
                 request.getResourceResolver(), type, dataModel).iterator());
+        }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
@@ -139,15 +135,19 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
                     Set<String> uniques = new HashSet<>();
-                    metaDataList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(), Spliterator.ORDERED), false)
-                            .filter(e -> !uniques.add(e.getResourceType())) // In case of overlay, we honor only one
-                            .filter(e -> {
-                                // only return submit action based on data model configured
-                                return resourceResolver.getResource(e.getResourceType()).getValueMap().get(DATA_MODEL, "").toLowerCase().equals(dataModel.toLowerCase());
-                            })
-                            .collect(Collectors.toList()).iterator();
+                    metaDataList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(),
+                        Spliterator.ORDERED), false)
+                        .filter(e -> uniques.add(e.getResourceType())) // In case of overlay, we honor only one
+                        .filter(e -> {
+                            // only return submit action based on data model configured
+                            return resourceResolver.getResource(e.getResourceType()).getValueMap().get(DATA_MODEL, "").toLowerCase()
+                                .contains(dataModel.toLowerCase());
+                        })
+                        .collect(Collectors.toList()).iterator();
+                    break;
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
+                    break;
             }
 
             while (metaDataList.hasNext()) {
