@@ -68,7 +68,7 @@ public interface Base extends Component {
          *
          * @param value the string representation for which an enum value should be returned
          * @return the corresponding enum value, if one was found, or {@link #TEXT_INPUT}
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         * @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
         public static ViewType fromString(String value) {
             for (ViewType type : ViewType.values()) {
@@ -132,7 +132,7 @@ public interface Base extends Component {
          *
          * @param value the string representation for which an enum value should be returned
          * @return the corresponding enum value, if one was found
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         *  @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
         public static ConstraintType fromString(String value) {
             for (ConstraintType type : ConstraintType.values()) {

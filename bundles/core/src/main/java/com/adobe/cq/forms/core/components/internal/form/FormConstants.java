@@ -34,4 +34,7 @@ public final class FormConstants {
 
     /** The resource type for text input v1 */
     public static final String RT_FD_FORM_TEXT_V1 = RT_FD_FORM_PREFIX + "textinput/v1/textinput";
+
+    /* The resource type prefix for the form container related datasources */
+    public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
 }
