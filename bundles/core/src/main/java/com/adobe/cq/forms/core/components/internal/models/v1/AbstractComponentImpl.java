@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
-import com.day.cq.wcm.api.Template;
 import com.day.cq.wcm.api.components.ComponentContext;
 
 /**
@@ -99,35 +97,37 @@ public abstract class AbstractComponentImpl implements Component {
         String resourceType = resource.getResourceType();
         String prefix = StringUtils.substringAfterLast(resourceType, "/");
         String path = resource.getPath();
-        if (currentPage != null && componentContext != null) {
-            PageManager pageManager = currentPage.getPageManager();
-            Page containingPage = pageManager.getContainingPage(resource);
-            Template template = currentPage.getTemplate();
-            boolean inCurrentPage = (containingPage != null
-                && StringUtils.equals(containingPage.getPath(), currentPage.getPath()));
-            boolean inTemplate = (template != null && path.startsWith(template.getPath()));
-            /*
-             * if (!inCurrentPage && !inTemplate) {
-             * ComponentContext parentContext = componentContext.getParent();
-             * while (parentContext != null) {
-             * Resource parentContextResource = parentContext.getResource();
-             * if (parentContextResource != null) {
-             * Page parentContextPage = pageManager.getContainingPage(parentContextResource);
-             * inCurrentPage = (parentContextPage != null
-             * && StringUtils.equals(parentContextPage.getPath(), currentPage.getPath()));
-             * inTemplate = (template != null
-             * && parentContextResource.getPath().startsWith(template.getPath()));
-             * if (inCurrentPage || inTemplate) {
-             * path = parentContextResource.getPath().concat(resource.getPath());
-             * break;
-             * }
-             * }
-             * parentContext = parentContext.getParent();
-             * }
-             * }
-             **/
-
-        }
+        /*
+         * if (currentPage != null && componentContext != null) {
+         * PageManager pageManager = currentPage.getPageManager();
+         * Page containingPage = pageManager.getContainingPage(resource);
+         * Template template = currentPage.getTemplate();
+         * boolean inCurrentPage = (containingPage != null
+         * && StringUtils.equals(containingPage.getPath(), currentPage.getPath()));
+         * boolean inTemplate = (template != null && path.startsWith(template.getPath()));
+         *//*
+            * * if (!inCurrentPage && !inTemplate) {
+            * ComponentContext parentContext = componentContext.getParent();
+            * while (parentContext != null) {
+            * Resource parentContextResource = parentContext.getResource();
+            * if (parentContextResource != null) {
+            * Page parentContextPage = pageManager.getContainingPage(parentContextResource);
+            * inCurrentPage = (parentContextPage != null
+            * && StringUtils.equals(parentContextPage.getPath(), currentPage.getPath()));
+            * inTemplate = (template != null
+            * && parentContextResource.getPath().startsWith(template.getPath()));
+            * if (inCurrentPage || inTemplate) {
+            * path = parentContextResource.getPath().concat(resource.getPath());
+            * break;
+            * }
+            * }
+            * parentContext = parentContext.getParent();
+            * }
+            * }
+            **//*
+                * 
+                * }
+                */
 
         return Utils.generateId(prefix, path);
     }

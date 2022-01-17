@@ -97,7 +97,7 @@ public class FormContainerImpl implements FormContainer {
 
     @Override
     public FormMetaData getMetaData() {
-        return new FormMetaDataImpl(request, resource);
+        return new FormMetaDataImpl(resource);
     }
 
     @Override

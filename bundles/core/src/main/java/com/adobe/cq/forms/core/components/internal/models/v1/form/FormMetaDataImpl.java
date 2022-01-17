@@ -1,6 +1,5 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 
@@ -27,10 +26,8 @@ public class FormMetaDataImpl implements FormMetaData {
     private static final String PN_DATA_URL = "dataUrl";
 
     private ValueMap properties;
-    private SlingHttpServletRequest request;
 
-    public FormMetaDataImpl(SlingHttpServletRequest request, Resource field) {
-        this.request = request;
+    public FormMetaDataImpl(Resource field) {
         this.properties = field.getValueMap();
     }
 

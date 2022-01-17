@@ -108,6 +108,11 @@
                 <groupId>net.revelc.code</groupId>
                 <artifactId>impsort-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -427,7 +432,7 @@
         <dependency>
             <groupId>com.adobe.aemds.guide</groupId>
             <artifactId>aemds-guide-core</artifactId>
-            <version>7.0.653-SNAPSHOT</version>
+            <version>7.0.655-SNAPSHOT</version>
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
