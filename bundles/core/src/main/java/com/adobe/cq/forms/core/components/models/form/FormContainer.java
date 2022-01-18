@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -65,7 +66,7 @@ public interface FormContainer extends Container {
      * @return form thank you message
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    @JsonProperty("props:thankyouMessage")
+    @JsonIgnore
     String getThankYouMessage();
 
     /**
@@ -74,7 +75,7 @@ public interface FormContainer extends Container {
      * @return form thank you page
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    @JsonProperty("props:thankyouPage")
+    @JsonIgnore
     String getThankYouPage();
 
     /**

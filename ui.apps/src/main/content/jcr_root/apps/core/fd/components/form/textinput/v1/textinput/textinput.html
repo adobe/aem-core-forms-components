@@ -13,18 +13,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
+<div class="cmp-adaptiveform-textinput"
+    data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component">
-    <label for="${component.id}" data-sly-test="${text.label.value && text.label.visible}">${text.title}</label>
-    <p data-sly-test="${text.description}" class="help-block">${text.description}</p>
+    <label for="${component.id}" data-sly-test="${text.label.value && text.label.visible}">${text.label.value}</label>
+    <p data-sly-test="${text.description}" class="cmp-adaptiveform-textinput__help-block">${text.description}</p>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
           aria-label="${text.label.visible && text.label.value}"
+          class="cmp-adaptiveform-textinput__textarea"
           id="${component.id}"
           name="${text.name}"
           readonly="${text.readOnly}"
           required="${text.required}"
           data-cmp-required="${text.constraintMessages.required}">${text.default}</textarea>
     <input data-sly-test="${!useTextarea}"
+           class="cmp-adaptiveform-textinput__text"
            aria-label="${text.label.visible && text.label.value}"
            type="text"
            id="${component.id}"
