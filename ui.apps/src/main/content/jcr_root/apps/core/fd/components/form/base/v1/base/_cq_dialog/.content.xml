@@ -29,6 +29,7 @@
                     <basic
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Basic"
+                            granite:class="cmp-adaptiveform-base__editdialogbasic"
                             sling:resourceType="granite/ui/components/coral/foundation/container"
                             active="{Boolean}true"
                             selected="{Boolean}true">
@@ -70,9 +71,6 @@
                                     granite:class="cmp-adaptiveform-base__required"
                                     text="Required field"
                                     value="true">
-                                <granite:data jcr:primaryType="nt:unstructured"
-                                              af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.requiredFieldOnChange();"
-                                              af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.requiredFieldOnChange();"/>
                             </required>
                             <mandatoryMessage
                                     jcr:primaryType="nt:unstructured"
@@ -102,14 +100,11 @@
                             <visible
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    granite:class="cmp-adaptiveform-base__visible"
                                     name="./visible"
                                     text="Hide Object"
-                                    granite:class="hideFormObjectProperty"
                                     uncheckedValue="true"
                                     value="false">
-                                <granite:data jcr:primaryType="nt:unstructured"
-                                              af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.enableVisibleOnLoad('visible');"
-                                              af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.enableVisibleOnChange('visible');"/>
                             </visible>
                             <visible-typehint
                                     jcr:primaryType="nt:unstructured"
@@ -119,14 +114,11 @@
                             <enabled
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    granite:class="cmp-adaptiveform-base__enabled"
                                     name="./enabled"
                                     text="Disable Object"
-                                    granite:class="disableFormObjectProperty"
                                     uncheckedValue="true"
                                     value="false">
-                                <granite:data jcr:primaryType="nt:unstructured"
-                                              af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.enableVisibleOnLoad('enabled');"
-                                              af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.enableVisibleOnChange('enabled');"/>
                             </enabled>
                             <enabled-typehint
                                     jcr:primaryType="nt:unstructured"
@@ -267,15 +259,12 @@
                         <items jcr:primaryType="nt:unstructured">
                             <assistPriority
                                     jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-base__assistpriority"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                     emptyText="Select"
                                     fieldLabel="Screen Reader Precedence"
                                     name="./assistPriority"
                                     value="custom">
-                                <granite:data
-                                        jcr:primaryType="nt:unstructured"
-                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.showHideCustomText()"
-                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.showHideCustomText()"/>
                                 <items jcr:primaryType="nt:unstructured">
                                     <empty
                                             jcr:primaryType="nt:unstructured"
@@ -305,6 +294,7 @@
                             </assistPriority>
                             <customText
                                     jcr:primaryType="nt:unstructured"
+                                    wrapperClass="cmp-adaptiveform-base__assistpriority-customtext"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldLabel="Custom Text"
                                     name="./custom"/>

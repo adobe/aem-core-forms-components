@@ -48,10 +48,10 @@
     function manipulateElementNameAndValue(elements, newNames, newValues) {
         var elemArray = elements instanceof Array ? elements : [elements];
         elemArray.forEach(function(elem, index) {
-            if (typeof newNames[index] !== 'undefined' && newNames[index] != null) {
+            if (typeof newNames[index] !== 'undefined' && newNames[index] != null && elem) {
                 elem.name = newNames[index];
             }
-            if (typeof newValues[index] !== 'undefined' && newValues[index] != null) {
+            if (typeof newValues[index] !== 'undefined' && newValues[index] != null && elem) {
                 elem.value = newValues[index];
             }
         });
