@@ -22,6 +22,7 @@
     trackingFeature="core-components:adaptiveform-container:v1">
     <content
         jcr:primaryType="nt:unstructured"
+        granite:class="cmp-adaptiveform-container__editdialog"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <accordion
@@ -98,17 +99,17 @@
                                     <enableAsyncSubmission
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            granite:class="cmp-adaptiveform-container__enableasyncsubmission"
                                             name="./enableAsyncSubmission"
                                             text="Use asynchronous submission"
+                                            checked="{Boolean}false"
+                                            uncheckedValue="false"
                                             value="true">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.enableDisableAsyncSubmission();"
-                                                af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.enableDisableAsyncSubmission();"/>
                                     </enableAsyncSubmission>
                                     <thankYouOption
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                            wrapperClass="cmp-adaptiveform-container__thankyouoption"
                                             fieldLabel="On Submit"
                                             name="./thankYouOption">
                                         <items jcr:primaryType="nt:unstructured">
@@ -117,24 +118,17 @@
                                                     text="Redirect to URL"
                                                     value="page"
                                                     checked="{Boolean}true">
-                                                <granite:data
-                                                        jcr:primaryType="nt:unstructured"
-                                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"
-                                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"/>
                                             </page>
                                             <message
                                                     jcr:primaryType="nt:unstructured"
                                                     text="Show Message"
                                                     value="message">
-                                                <granite:data
-                                                        jcr:primaryType="nt:unstructured"
-                                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"
-                                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.thankYouOptionChange();"/>
                                             </message>
                                         </items>
                                     </thankYouOption>
                                     <redirect
                                             jcr:primaryType="nt:unstructured"
+                                            wrapperClass="cmp-adaptiveform-container__redirect"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                             nodeTypes="cq:Page, dam:Asset"
                                             fieldLabel="Redirect URL/Path"
@@ -143,6 +137,7 @@
                                             filter="nosystem"/>
                                     <thankYouMessage
                                             jcr:primaryType="nt:unstructured"
+                                            wrapperClass="cmp-adaptiveform-container__thankyoumessage"
                                             sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                             fieldLabel="Message Content"
                                             value="Thank you for submitting the form."
