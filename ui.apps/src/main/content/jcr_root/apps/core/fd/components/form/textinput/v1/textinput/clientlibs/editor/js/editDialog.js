@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral) {
+(function($) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-textinput__editdialog",
@@ -22,40 +22,9 @@
         TEXTINPUT_MINLENGTH = ".cmp-adaptiveform-textinput__minlength",
         BASE_PLACEHOLDER = ".cmp-adaptiveform-base__placeholder",
         TEXTINPUT_VALUE = ".cmp-adaptiveform-textinput__value",
-        TEXTINPUT_RICHTEXTVALUE = ".cmp-adaptiveform-textinput__richtextvalue";
+        TEXTINPUT_RICHTEXTVALUE = ".cmp-adaptiveform-textinput__richtextvalue",
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-
-    /**
-     * Toggles the display of the given element based on the actual and the expected values.
-     * If the actualValue is equal to the expectedValue, then the element is shown,
-     * otherwise the element is hidden.
-     *
-     * @param {HTMLElement} elements The html element to show/hide.
-     * @param {*} expectedValue The value to test against.
-     * @param {*} actualValue The value to test.
-     */
-    function checkAndDisplay(elements, expectedValue, actualValue) {
-        var elemArray = elements instanceof Array ? elements : [elements];
-        elemArray.forEach(function(elem) {
-            if (expectedValue === actualValue) {
-                elem.show();
-            } else {
-                elem.hide();
-            }
-        });
-    }
-
-    function manipulateElementNameAndValue(elements, newNames, newValues) {
-        var elemArray = elements instanceof Array ? elements : [elements];
-        elemArray.forEach(function(elem, index) {
-            if (typeof newNames[index] !== 'undefined' && newNames[index] != null && elem) {
-                elem.name = newNames[index];
-            }
-            if (typeof newValues[index] !== 'undefined' && newValues[index] != null && elem) {
-                elem.value = newValues[index];
-            }
-        });
-    }
 
     /**
      * Toggles the visibility of the maxChars, minLength, placeholder field based on the checked state of
@@ -70,48 +39,33 @@
         var textInputValue = dialog.find(TEXTINPUT_VALUE);
         var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
         var listOfElements = [textInputMaxChars, textInputMinLength, basePlaceHolder, textInputValue];
-        // hide other elements
-        checkAndDisplay(listOfElements,
-            false,
-            component.checked);
-        // show rich text
-        checkAndDisplay(textInputRichTextValue, true, component.checked);
-        component.on("change", function() {
-            checkAndDisplay(listOfElements,
-                false,
-                component.checked);
-            checkAndDisplay(textInputRichTextValue, true, component.checked);
-        });
 
-        if (component.checked) {
+        var isNotChecked = function() {return !isChecked()};
+        var isChecked = function() {return component.checked};
+        var hideAndShowElements = function() {
+            // hide other elements
+            Utils.checkAndDisplay(listOfElements)(isNotChecked);
+            // show rich text
+            Utils.checkAndDisplay(textInputRichTextValue)(isChecked);
+        };
+        hideAndShowElements();
+        component.on("change", function() {
+            hideAndShowElements();
+        });
+        var changeFormFields = Utils.manipulateNameAndValue([textInputValue[0], textInputRichTextValue[0]]);
+        if (isChecked()) {
             var richTextContainer = textInputRichTextValue.parent('.richtext-container');
             var richTextEditable = richTextContainer.find(".cq-RichText-editable");
-            var filteredValue = $('<div>').html(textInputValue[0].value);
+            var filteredValue = Utils.encodeScriptableTags(textInputValue[0].value);
             richTextEditable.empty().append(filteredValue);
-            manipulateElementNameAndValue([textInputValue[0], textInputRichTextValue[0]], ["./_plainTextValue@Delete", "./_value"], [null, filteredValue])
+            changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
         } else {
             //Removing html tags from content and setting it to default text field
             var filteredValue =  $('<div>').html(textInputValue[0].value).text();
-            manipulateElementNameAndValue([textInputValue[0], textInputRichTextValue[0]], ["./_value", "./_richTextValue@Delete"], [filteredValue, null])
+            changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
 
-    /**
-     * Initialise the conditional display of the various elements of the dialog.
-     *
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function initialise(dialog) {
-        dialog = $(dialog);
-        handleRichText(dialog);
-    }
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
 
-    channel.on("foundation-contentloaded", function(e) {
-        if ($(e.target).find(EDIT_DIALOG).length > 0) {
-            Coral.commons.ready(e.target, function(component) {
-                initialise(component);
-            });
-        }
-    });
-
-})(jQuery, jQuery(document), Coral);
+})(jQuery);

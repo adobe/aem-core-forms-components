@@ -20,43 +20,12 @@
         CONTAINER_ENABLEASYNCSUBMISSION = ".cmp-adaptiveform-container__enableasyncsubmission",
         CONTAINER_THANKYOUOPTION = ".cmp-adaptiveform-container__thankyouoption",
         CONTAINER_REDIRECT = ".cmp-adaptiveform-container__redirect",
-        CONTAINER_THANKYOUMESSAGE = ".cmp-adaptiveform-container__thankyoumessage";
+        CONTAINER_SUBMITACTION = ".cmp-adaptiveform-container__submitaction",
+        CONTAINER_SUBMITACTION_SETTINGS = ".cmp-adaptiveform-container__submitactionsettings",
+        CONTAINER_SUBMITACTION_SETTINGS_WRAPPER = ".cmp-adaptiveform-container__submitactionsettingswrapper",
+        CONTAINER_THANKYOUMESSAGE = ".cmp-adaptiveform-container__thankyoumessage",
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-
-    /**
-     * Toggles the display of the given element based on the actual and the expected values.
-     * If the actualValue is equal to the expectedValue, then the element is shown,
-     * otherwise the element is hidden.
-     *
-     * @param {HTMLElement} elements The html element to show/hide.
-     * @param {*} expectedValue The value to test against.
-     * @param {*} actualValue The value to test.
-     */
-    function checkAndDisplay(elements, expectedValue, actualValue) {
-        var elemArray = elements instanceof Array ? elements : [elements];
-        elemArray.forEach(function(elem) {
-            if (expectedValue === actualValue) {
-                elem.show();
-            } else {
-                elem.hide();
-            }
-        });
-    }
-
-    /**
-     * Get selected radio option helper
-     * @param component The radio option component
-     * @returns {String} Value of the selected radio option
-     */
-    function getSelectedRadioGroupOption(component) {
-        var radioComp = component.find('[type="radio"]');
-        for (var i = 0; i < radioComp.length; i++) {
-            if ($(radioComp[i]).prop("checked")) {
-                return $(radioComp[i]).val();
-            }
-        }
-        return undefined;
-    }
 
     function handleAsyncSubmissionAndThankYouOption(dialog) {
         var containerAsyncSubmission = dialog.find(CONTAINER_ENABLEASYNCSUBMISSION)[0];
@@ -64,48 +33,49 @@
         var containerRedirect = dialog.find(CONTAINER_REDIRECT);
         var containerThankYouMessage = dialog.find(CONTAINER_THANKYOUMESSAGE);
         if (containerAsyncSubmission) {
-            var wrapperCheckAndDisplay = function() {
-                checkAndDisplay(containerThankYouOption,
-                    true,
-                    containerAsyncSubmission.checked);
-                checkAndDisplay(containerRedirect,
-                    false,
-                    containerAsyncSubmission.checked);
+            var isNotChecked = function() {return !isChecked()};
+            var isChecked = function() {return containerAsyncSubmission.checked};
+            var hideAndShowElements = function() {
+                // hide other elements
+                Utils.checkAndDisplay(containerThankYouOption)(isChecked);
+                // show rich text
+                Utils.checkAndDisplay(containerRedirect)(isNotChecked);
             };
             containerAsyncSubmission.on("change", function() {
-                wrapperCheckAndDisplay();
+                hideAndShowElements();
             });
-            wrapperCheckAndDisplay();
+            hideAndShowElements();
         }
         if (containerThankYouOption.length > 0) {
+            var isThankYouOptionAMessage = function() {return (Utils.getSelectedRadioGroupOption(containerThankYouOption) === "message");};
             // show thank you message if async submission and thank you option is set to "message"
             channel.on("change", EDIT_DIALOG + " " + CONTAINER_THANKYOUOPTION, function(e) {
-                checkAndDisplay(containerThankYouMessage,
-                    "message",
-                    getSelectedRadioGroupOption(containerThankYouOption));
+                Utils.checkAndDisplay(containerThankYouMessage)(isThankYouOptionAMessage);
             });
-            checkAndDisplay(containerThankYouMessage,
-                "message",
-                getSelectedRadioGroupOption(containerThankYouOption));
+            Utils.checkAndDisplay(containerThankYouMessage)(isThankYouOptionAMessage);
         }
     }
 
-    /**
-     * Initialise the conditional display of the various elements of the dialog.
-     *
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function initialise(dialog) {
-        dialog = $(dialog);
-        handleAsyncSubmissionAndThankYouOption(dialog);
-    }
-
-    channel.on("foundation-contentloaded", function(e) {
-        if ($(e.target).find(EDIT_DIALOG).length > 0) {
-            Coral.commons.ready(e.target, function(component) {
-                initialise(component);
+    function handleSubmitAction(dialog) {
+        var containerSubmitAction = dialog.find(CONTAINER_SUBMITACTION),
+            containerSubmitActionSettings = dialog.find(CONTAINER_SUBMITACTION_SETTINGS),
+            containerSubmitActionSettingsWrapper = dialog.find(CONTAINER_SUBMITACTION_SETTINGS_WRAPPER);
+        if (containerSubmitAction.length > 0) {
+            // remove the deprecated submit action
+            // this is done in client so that deprecated submit action could still work if configured in form
+            containerSubmitAction.find('coral-select-item[data-deprecated="true"]').filter(function () {
+                return $(this).prop('selected') === false;
+            }).remove();
+            // render the sub dialog
+            var renderSubDialog = Utils.renderSubDialog(containerSubmitActionSettings[0]);
+            var showHideWrapper = function(show){if (show){containerSubmitActionSettingsWrapper.show()} else{containerSubmitActionSettingsWrapper.hide()}};
+            renderSubDialog(containerSubmitAction[0].value, showHideWrapper);
+            containerSubmitAction[0].on("change", function(){
+                renderSubDialog(containerSubmitAction[0].value, showHideWrapper);
             });
         }
-    });
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction);
 
 })(jQuery, jQuery(document), Coral);

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -57,6 +58,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     private static final String TYPE = "type";
     private static final String DATA_MODEL = "guideDataModel";
+    private static final String NN_DIALOG = "cq:dialog";
 
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
@@ -65,7 +67,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
      */
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
-        PREFILL_ACTION("prefillServiceProvider");
+        PREFILL_ACTION("prefillServiceProvider"),
+        SUBMIT_ACTION_SETTINGS("submitActionSettings");
         private String value;
 
         FormMetaDataType(String value) {
@@ -148,12 +151,27 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     break;
+                case SUBMIT_ACTION_SETTINGS:
+                    resources = StreamSupport.stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(),
+                        Spliterator.ORDERED), false)
+                        .map(e -> {
+                            Resource dialogResource = resourceResolver.getResource(e.getResourceType() + "/" + NN_DIALOG);
+                            if (dialogResource != null) {
+                                return dialogResource;
+                            } else {
+                                return null;
+                            }
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
             }
 
-            while (metaDataList.hasNext()) {
-                FormsManager.ComponentDescription description = metaDataList.next();
-                Resource syntheticResource = createResource(resourceResolver, description);
-                resources.add(syntheticResource);
+            if (metaDataList != null) {
+                while (metaDataList.hasNext()) {
+                    FormsManager.ComponentDescription description = metaDataList.next();
+                    Resource syntheticResource = createResource(resourceResolver, description);
+                    resources.add(syntheticResource);
+                }
             }
         }
         return resources;

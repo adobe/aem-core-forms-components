@@ -214,36 +214,32 @@
                                             value="true"/>
                                     <submitActionType
                                             jcr:primaryType="nt:unstructured"
-                                            granite:class="cmp-submit-action-selection"
+                                            granite:class="cmp-adaptiveform-container__submitaction"
+                                            emptyText="Select"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                             fieldLabel="Submit Action"
                                             name="./actionType">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.renderSubDialog(&quot;submitAction&quot;);"
-                                                submit-action-validation=""/>
                                         <datasource
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
                                                 guideDataModel="basic"
                                                 type="submitAction"/>
                                     </submitActionType>
+                                    <!-- not using granite fieldset since the dialog is not rendered correctly and we need to support old dialogs -->
                                     <actionSet
-                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-container__submitactionsettings"
+                                            wrapperClass="cmp-adaptiveform-container__submitactionsettingswrapper"
                                             jcr:title="Action Configuration"
+                                            jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                            name="./submitActionSet"
-                                            title="Action Configuration">
+                                            name="./submitActionSet">
                                         <granite:data
                                                 jcr:primaryType="nt:unstructured"
-                                                touchUIFormActionSet="submitActionSet"/>
+                                                componentPath="${requestPathInfo.suffix}"/>
                                     </actionSet>
                                 </items>
                             </columns>
                         </items>
-                        <granite:data
-                                jcr:primaryType="nt:unstructured"
-                                touchUIFormSubmitAction="touchUIFormSubmitAction"/>
                     </submitActions>
                 </items>
             </accordion>
