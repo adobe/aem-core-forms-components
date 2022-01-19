@@ -6,7 +6,9 @@
     "jcr:title" : "def",
     "hideTitle" : false,
     "longDescription" : "dummy",
-    "visible" : false
+    "visible" : false,
+    "assistPriority" : "custom",
+    "custom" : "Custom screen reader text"
   },
   "multiline-textinput" : {
     "jcr:primaryType": "nt:unstructured",

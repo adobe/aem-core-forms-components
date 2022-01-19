@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -102,7 +104,8 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
     @Nullable
-    protected AssistPriority assistPriority;
+    protected String assistPriorityJcr;
+    private AssistPriority assistPriority;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "custom")
     @Nullable
@@ -131,6 +134,11 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
      * Holds the constraint messages
      */
     private Map<ConstraintType, String> constraintMessages = null;
+
+    @PostConstruct
+    private void initModel() {
+        assistPriority = AssistPriority.fromString(assistPriorityJcr);
+    }
 
     @JsonIgnore
     protected abstract ViewType getDefaultViewType();

@@ -56,6 +56,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Nullable
     protected Integer maxLength;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "validatePictureClause")
+    @Nullable
+    protected String pattern;
+
     @Override
     public boolean isMultiLine() {
         return multiLine;
@@ -84,7 +88,7 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
 
     @Override
     public String getPattern() {
-        return null;
+        return pattern;
     }
 
     @Override
