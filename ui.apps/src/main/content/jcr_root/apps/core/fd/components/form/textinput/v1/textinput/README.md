@@ -50,9 +50,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__help-block
-    ELEMENT cmp-adaptiveform-textinput__textarea
-    ELEMENT cmp-adaptiveform-textinput__text
+    ELEMENT cmp-adaptiveform-textinput__label
+    ELEMENT cmp-adaptiveform-textinput__widget
+    ELEMENT cmp-adaptiveform-textinput__help
 ```
 
 

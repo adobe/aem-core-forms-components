@@ -67,8 +67,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
      */
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
-        PREFILL_ACTION("prefillServiceProvider"),
-        SUBMIT_ACTION_SETTINGS("submitActionSettings");
+        PREFILL_ACTION("prefillServiceProvider");
         private String value;
 
         FormMetaDataType(String value) {
@@ -151,19 +150,6 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     break;
-                case SUBMIT_ACTION_SETTINGS:
-                    resources = StreamSupport.stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(),
-                        Spliterator.ORDERED), false)
-                        .map(e -> {
-                            Resource dialogResource = resourceResolver.getResource(e.getResourceType() + "/" + NN_DIALOG);
-                            if (dialogResource != null) {
-                                return dialogResource;
-                            } else {
-                                return null;
-                            }
-                        })
-                        .filter(Objects::nonNull)
-                        .collect(Collectors.toList());
             }
 
             if (metaDataList != null) {
