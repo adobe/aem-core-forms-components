@@ -126,7 +126,6 @@
         /**
          * Renders sub dialog inside the container specified for the given component path
          * @param container         {HTMLElement}    container on which the dialog is to be rendered
-         * @param componentPath     {String}         path to the component
          * @param dialogPath        {String}        resource type of the dialog
          */
         static renderSubDialog(container) {
@@ -147,12 +146,13 @@
                         var parser = $(window).adaptTo("foundation-util-htmlparser"),
                             html = subDialogResponse.body;
                         parser.parse(html, true).then(function (dialogHtml) {
-                            var $subDialogContent = $(dialogHtml).find('cq-dialog-content');
+                            var $subDialogContent = $(dialogHtml).find('.cq-dialog-content');
                             $subDialogContent.addClass("guide-dialog");
                             if ($subDialogContent.length > 0) {
                                 isDialogRendered = true;
                                 $container.append($subDialogContent);
                                 $subDialogContent.trigger('foundation-contentloaded');
+                                callback(isDialogRendered);
                             }
                         });
                     }
