@@ -413,7 +413,7 @@
         <!-- the below order of dependencies is very critical -->
 
         <dependency>
-            <groupId>com.adobe.aem</groupId>
+            <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
@@ -427,12 +427,6 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-sdk-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.adobe.aemds.guide</groupId>
-            <artifactId>aemds-guide-core</artifactId>
-            <version>7.0.655-SNAPSHOT</version>
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
