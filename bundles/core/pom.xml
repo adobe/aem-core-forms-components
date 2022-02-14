@@ -410,11 +410,6 @@
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-prerelease-sdk-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
             <classifier>apis</classifier>
         </dependency>
