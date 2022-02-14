@@ -107,7 +107,7 @@ jobs:
       AEM: addon
       TYPE: cypress
       BROWSER: chrome
-      PRERELEASE: 'true'
+      PRERELEASE: 'false'
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
@@ -160,4 +160,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+(-PRERELEASE-\d+)?$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
