@@ -15,4 +15,5 @@
         hideInNav="true"
         redirectTarget="/content/core-components-examples/library"/>
     <link/>
+    <searchlister/>
 </jcr:root>

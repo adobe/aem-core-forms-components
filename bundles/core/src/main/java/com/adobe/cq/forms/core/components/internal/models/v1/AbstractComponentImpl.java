@@ -27,6 +27,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.internal.Utils;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;

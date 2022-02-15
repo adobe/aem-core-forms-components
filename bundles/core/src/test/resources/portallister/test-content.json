@@ -1,0 +1,46 @@
+{
+    "fplister": {
+        "portallister-v1": {
+            "jcr:primaryType"   : "nt:unstructured",
+            "jcr:createdBy"     : "admin",
+            "jcr:lastModifiedBy": "admin",
+            "jcr:created"       : "Wed Mar 06 2019 14:11:01 GMT+0100",
+            "jcr:lastModified"  : "Tue May 21 2019 18:59:35 GMT+0300",
+            "sling:resourceType": "core/fd/components/formsportal/portallister/v1/portallister",
+            "limit"             : 10,
+            "title"             : "Sample Title",
+            "layout"            : "Custom"
+        }
+    },
+    "dam" : {
+        "jcr:primaryType": "sling:Folder",
+        "formsanddocuments": {
+            "jcr:primaryType": "sling:Folder",
+            "sample-form": {
+                "jcr:primaryType":"dam:Asset",
+                "jcr:content":{
+                    "jcr:primaryType":"dam:AssetContent",
+                    "type":"guide",
+                    "guide":"1",
+                    "sling:resourceType":"fd/fm/af/render",
+                    "metadata":{
+                        "jcr:primaryType":"nt:unstructured",
+                        "availableInMobileApp":false,
+                        "description":"Sample description for Sample Form",
+                        "author":"admin",
+                        "xmp:CreatorTool":"AEM Forms Editor",
+                        "allowedRenderFormat":"HTML",
+                        "fd:version":"1.1",
+                        "title":"Sample Form",
+                        "cq:tags":[
+                            "imaginary-tags:tagmainfolder/tag"
+                        ],
+                        "formmodel":"none",
+                        "dorType":"none",
+                        "hasCustomThumbnail":false
+                    }
+                }
+            }
+        }
+    }
+}

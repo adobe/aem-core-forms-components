@@ -45,9 +45,9 @@ executors:
         <<: *docker_auth
   test_executor_cloudready:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.4-jdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.4-azul-jdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:5104
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:5852-azul
         <<: *docker_auth
 
 jobs:
@@ -107,6 +107,7 @@ jobs:
       AEM: addon
       TYPE: cypress
       BROWSER: chrome
+      PRERELEASE: 'false'
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps

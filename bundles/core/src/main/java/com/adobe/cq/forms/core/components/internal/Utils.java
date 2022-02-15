@@ -12,7 +12,7 @@
  *
  ******************************************************************************/
 
-package com.adobe.cq.forms.core.components.internal.models.v1;
+package com.adobe.cq.forms.core.components.internal;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;

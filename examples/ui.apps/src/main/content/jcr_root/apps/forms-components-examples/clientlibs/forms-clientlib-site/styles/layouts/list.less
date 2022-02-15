@@ -1,0 +1,206 @@
+/*
+ *  Copyright 2021 Adobe
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+@forms-examples-list-item-description-line-height: 15*@px;
+@forms-examples-list-item-description-line-nums: 2;
+
+.cmp-portallister {
+
+    &__results-list {
+        &-container {
+            margin-top: 5*@px;
+            border-collapse: collapse;
+            width: 100%;
+            font-family: @forms-examples-font-family;
+            font-size: @forms-examples-font-size;
+
+            tr.cmp-portallister__item-list {
+                height: 40*@px;
+                // min-width: 70*@px;
+            }
+        }
+
+        &-head {
+            color: #607D8B;
+            font-size: 10*@px;
+            letter-spacing: 0.4*@px;
+            border-bottom: 2*@px solid #ECEFF1;
+            font-weight: @forms-examples-font-weight-semibold;
+            text-align: left;
+
+            tr {
+                height: 20*@px;
+            }
+        }
+    }
+
+    &__item-list {
+        border-bottom: 1*@px solid #ECEFF1;
+        width: 100%;
+
+        &-image {
+            display: none;
+            width: 28*@px;
+            max-height: 24*@px;
+            vertical-align: middle;
+    
+            &-wrapper {
+                width: 56*@px;
+                padding-left: 16*@px;
+
+                &::before {
+                    content: attr(data-first-letter);
+                    border-radius: @forms-examples-border-radius;
+                    padding: 5*@px 10*@px;
+                    background: #ECEFF1;
+                    color: #607D8B;
+                }
+            }
+        }
+    
+        &-title {
+            max-width: 372*@px;
+            div>div {
+                width: calc(80%);
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    
+        &-body {
+            font-size: @forms-examples-font-size-xs;
+            color: #455A64;
+            // 2 Line hack
+            display: block; /* Fallback for non-webkit */
+            display: -webkit-box;
+            max-width: 106*@px;
+            height: 2rem;
+
+            /* Fallback for non-webkit */
+            line-height: @forms-examples-list-item-description-line-height;
+            -webkit-line-clamp: @forms-examples-list-item-description-line-nums;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* For top spacing td, else is not aligning vertically */
+            margin-top: 4*@px;
+        }
+    
+        &-time {
+            color: #455A64;
+        }
+    
+        &-operations {
+            cursor: pointer;
+        }
+    
+        &-operations-icon {
+            font-size: 14*@px;
+            color: #6e6e6e;
+            &:hover {
+                color: #2c2c2c;
+            }
+            &::before {
+                content: "\f141";
+                font-family: 'Font Awesome 5 Free';
+            }
+        }
+    }
+
+    &__item--error {
+        .cmp-portallister__item-list-title, .cmp-portallister__item-list-body {
+            color: @forms-examples-color-red-600;
+        }
+        .cmp-portallister__item-list-image-wrapper::before {
+            color: @forms-examples-color-red-600;
+            border-width: thin;
+            border-style: solid;
+        }
+    }
+}
+
+
+// responsive queries
+@media only screen and (max-width: 300px) {
+    // ultra small screen (size < 300px)
+    .cmp-portallister__item-list-title {
+        max-width: 245*@px;
+    }
+
+    .cmp-portallister__item-list-body {
+        &, &-head {
+            display: none;
+        }
+    }
+
+    .cmp-portallister__item-list-time {
+        &, &-head {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 360px) {
+    // small screen (360px <  size < 564px)
+    .cmp-portallister__item-list-title {
+        max-width: 280*@px;
+    }
+
+    .cmp-portallister__item-list-body {
+        &, &-head {
+            display: none;
+        }
+    }
+
+    .cmp-portallister__item-list-time {
+        &, &-head {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 564px) {
+    // small screen (564px <  size < 768px)
+    .cmp-portallister__item-list-title {
+        max-width: 320*@px;
+    }
+
+    .cmp-portallister__item-list-time {
+        display: table-cell;
+        &-head {
+            display: table-cell;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    // small screen (768px <  size < 1164px)
+    .cmp-portallister__item-list-title {
+        max-width: 540*@px;
+    }
+
+    .cmp-portallister__item-list-body {
+        display: block;
+        display: -webkit-box;
+        max-width: 106*@px;
+        &-head {
+            display: table-cell;
+        }
+    }
+}
+
