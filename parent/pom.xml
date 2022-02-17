@@ -87,8 +87,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.10.0</core.wcm.components.version>
-        <core.wcm.components.library.version>2.10.0</core.wcm.components.library.version>
+        <core.wcm.components.version>2.18.0</core.wcm.components.version>
+        <core.wcm.components.library.version>2.18.0</core.wcm.components.library.version>
         <formatter.config>../eclipse-formatter.xml</formatter.config>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1012,7 +1012,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-sdk-api</artifactId>
-                <version>2020.12.4676.20201216T130744Z-201201</version>
+                <version>2022.2.6276.20220205T222203Z-220100</version>
             </dependency>
 
 

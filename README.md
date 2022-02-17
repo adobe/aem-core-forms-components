@@ -18,8 +18,8 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 -   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
 -   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
--   [Drafts and Submissions Component (pre-release only)](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
--   [Search and Lister Component (pre-release only)](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
+-   [Drafts and Submissions Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
+-   [Search and Lister Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
 
 ## System Requirements
 
