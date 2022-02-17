@@ -34,7 +34,7 @@ const commons = require('../libs/commons/commons'),
 
 describe('Page - Authoring', function () {
     // we can use these values to log in
-    const   pagePath = "/content/core-components-examples/library/page-authoring/aemform",
+    const   pagePath = "/content/core-components-examples/library/core-content/aemform",
             aemFormContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
             aemFormContainerEditPathSelector = "[data-path='" + aemFormContainerEditPath + "']",
             aemFormContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
