@@ -39,6 +39,7 @@ try {
         // Download the forms Add-On
         ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
         extras = '--install-file forms-addon.far';
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
@@ -48,8 +49,7 @@ try {
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-            --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
-            --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \

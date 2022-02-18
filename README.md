@@ -18,23 +18,23 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 -   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
 -   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
--   [Drafts and Submissions Component (pre-release only)](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
--   [Search and Lister Component (pre-release only)](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
+-   [Drafts and Submissions Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
+-   [Search and Lister Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
 
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
-| Forms Core Components     | AEM Forms as a cloud service          | Java | Maven  |
-| ----------------------    | ------------------------------------- | ---- | -----  |
-| 1.0.4                     | Continual                             | 8,11 | 3.3.9+ |
+| Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
+| --------------------- | ------------------- | ---------------------------- | ----- | ------ |  
+| 1.0.4                 | 2.18.0              | Continual                    | 8, 11 | 3.3.9+ |  
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
 
 ### AEM Sites Core Components
 
-This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components.
+This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.  
 
 ## Installation
 
