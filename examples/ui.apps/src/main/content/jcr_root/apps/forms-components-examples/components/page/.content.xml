@@ -3,5 +3,5 @@
     jcr:description="Page Component for the Forms Components Library"
     jcr:primaryType="cq:Component"
     jcr:title="Page"
-    sling:resourceSuperType="core-components-examples/components/page"
+    sling:resourceSuperType="core/wcm/components/page/v2/page"
     componentGroup=".hidden"/>
