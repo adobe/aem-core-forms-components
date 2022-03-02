@@ -16,7 +16,7 @@
 
 <sly data-sly-use.model="com.adobe.cq.forms.core.components.models.formsportal.SearchAndLister"
      data-sly-use.logic="${'searchlister.js' @ layout=model.layout}"
-     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.clientlib="${'core/wcm/components/commons/v1/templates/clientlib.html'}"
      data-sly-use.items="${logic.layoutPath}"></sly>
 <div class="cmp-search-lister" data-cmp-is="formssearch" id="${model.id}" data-queryPath="${resource.path}.model.json">
     <h1 class="cmp-search-lister__heading" data-sly-text="${model.title}">Forms Portal</h1>
@@ -41,5 +41,5 @@
             type="x-template"
             data-sly-call="${items.layout @ style=model.layout, hideTime=true, hideFooter=true, context='html'}">
     </script>
-    <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs}"></sly>
+    <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs, async=true}"></sly>
 </div>

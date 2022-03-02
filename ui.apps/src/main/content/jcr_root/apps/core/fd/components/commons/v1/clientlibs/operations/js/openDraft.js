@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-(function($) {
-    var operationResponseHandler = function (data) {
-        var result = data.result;
-        if (result.status == "success") {
-            window.open(result.formLink, "_blank");
-        }
-    };
-
-    var openDraftOperation = {
-        name: "openDraft",
-        handler: function (event, operationData) {
-            var queryPath = operationData.actionURL;
-
-            fetch(queryPath)
-                .then(response => response.json())
-                .then(data => operationResponseHandler(data));
-        }
-    };
-
-    $(function() {
-        $(window).trigger("core-forms-register-operation", openDraftOperation);
-    });
-}(jQuery));
+window.addEventListener('load', function () {
+    (function($) {
+        var operationResponseHandler = function (data) {
+            var result = data.result;
+            if (result.status == "success") {
+                window.open(result.formLink, "_blank");
+            }
+        };
+    
+        var openDraftOperation = {
+            name: "openDraft",
+            handler: function (event, operationData) {
+                var queryPath = operationData.actionURL;
+    
+                fetch(queryPath)
+                    .then(response => response.json())
+                    .then(data => operationResponseHandler(data));
+            }
+        };
+    
+        $(function() {
+            $(window).trigger("core-forms-register-operation", openDraftOperation);
+        });
+    }(jQuery));
+}, false);

@@ -13,30 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+window.addEventListener('load', function () {
+    (function($) {
 
-(function($) {
-
-    var operationResponseHandler = function (data, itemEl) {
-        var result = data.result;
-        if (result.status == "success") {
-            // removing the deleted draft from ui.
-            itemEl.remove();
-        }
-    };
-
-    var discardDraftOperation = {
-        name: "discardDraft",
-        handler: function (event, operationData) {
-            var itemEl = $(event.currentTarget).parents('[data-cmp-hook-item-template="item"]');
-            var queryPath = operationData.actionURL;
-
-            fetch(queryPath)
-                .then(response => response.json())
-                .then(data => operationResponseHandler(data, itemEl));
-        }
-    };
-
-    $(function() {
-        $(window).trigger("core-forms-register-operation", discardDraftOperation);
-    });
-}(jQuery));
+        var operationResponseHandler = function (data, itemEl) {
+            var result = data.result;
+            if (result.status == "success") {
+                // removing the deleted draft from ui.
+                itemEl.remove();
+            }
+        };
+    
+        var discardDraftOperation = {
+            name: "discardDraft",
+            handler: function (event, operationData) {
+                var itemEl = $(event.currentTarget).parents('[data-cmp-hook-item-template="item"]');
+                var queryPath = operationData.actionURL;
+    
+                fetch(queryPath)
+                    .then(response => response.json())
+                    .then(data => operationResponseHandler(data, itemEl));
+            }
+        };
+    
+        $(function() {
+            $(window).trigger("core-forms-register-operation", discardDraftOperation);
+        });
+    }(jQuery));
+}, false);
