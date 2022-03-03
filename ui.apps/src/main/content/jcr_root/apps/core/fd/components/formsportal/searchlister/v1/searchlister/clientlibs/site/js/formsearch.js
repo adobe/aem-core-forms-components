@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-window.addEventListener('load', function () {
-    (function($) {
+_tpa_helper(['jQuery'],
+    function($) {
         var NS = 'cmp',
             IS = 'formssearch',
             ATTR_PREFIX = "data-" + NS + "-hook-" + IS;
@@ -178,5 +178,5 @@ window.addEventListener('load', function () {
             $(window).trigger("core-forms-itemapi-onload", tmpEvent);
         });
     
-    }(jQuery));
-}, false);
+    }
+);

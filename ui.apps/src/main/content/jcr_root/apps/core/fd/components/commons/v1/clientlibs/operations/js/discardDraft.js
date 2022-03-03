@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-window.addEventListener('load', function () {
-    (function($) {
-
+_tpa_helper(['jQuery'],
+    function($) {
         var operationResponseHandler = function (data, itemEl) {
             var result = data.result;
             if (result.status == "success") {
@@ -39,5 +38,5 @@ window.addEventListener('load', function () {
         $(function() {
             $(window).trigger("core-forms-register-operation", discardDraftOperation);
         });
-    }(jQuery));
-}, false);
+    }
+);

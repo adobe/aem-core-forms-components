@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-window.addEventListener('load', function () {
-    (function($) {
+_tpa_helper(['jQuery'],
+    function($) {
         // time related functionality
         var DATE_FORMATTER;
     
@@ -289,5 +289,5 @@ window.addEventListener('load', function () {
         }
     
         $(window).on("core-forms-register-operation", registerOperation);
-    }(jQuery));
-}, false);
+    }
+);
