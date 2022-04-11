@@ -404,7 +404,7 @@
         <!-- the below order of dependencies is very critical -->
 
         <dependency>
-            <groupId>com.adobe.aem</groupId>
+            <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
@@ -434,6 +434,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
         </dependency>
 
         <!-- Testing dependencies -->

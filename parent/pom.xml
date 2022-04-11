@@ -812,6 +812,13 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>17.0.0</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- OSGi annotations for DS and metatype -->
             <dependency>
                 <groupId>org.osgi</groupId>
@@ -966,9 +973,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.adobe.aem</groupId>
+                <groupId>com.adobe.aemfd</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2020.07.01.04</version>
+                <version>2022.01.27.00</version>
             </dependency>
 
             <dependency>
