@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -30,6 +33,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @ConsumerType
 // todo: have to add rule events here
 public interface FormContainer extends Container {
+
+    /**
+     * Name of the resource property that defines the document path containing the json
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    String PN_RUNTIME_DOCUMENT_PATH = "formRuntimeDocumentPath";
 
     /**
      * Returns form metadata {@link FormMetaData}
@@ -58,6 +68,28 @@ public interface FormContainer extends Container {
      */
     default String getDescription() {
         return "";
+    }
+
+    /**
+     * Returns the form model
+     *
+     * @return the form model, based on the document path configured or the items
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonIgnore
+    default Map<String, Object> getModel() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Returns the document path
+     *
+     * @return the document path, if one was set, or {@code null}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonIgnore
+    default String getDocumentPath() {
+        return null;
     }
 
     /**
@@ -94,7 +126,8 @@ public interface FormContainer extends Container {
      * @return the form data
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String getData() {
+    @JsonProperty("data")
+    default String getFormData() {
         return "";
     }
 }
