@@ -166,7 +166,7 @@ Cypress.Commands.add("selectLayer", (layer) => {
     // please note: when switching from style to other layer, we refresh guide, so these events need to be checked here
     cy.get(siteSelectors.selectLayer.trigger).click();
     cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
-    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click();
+    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
     cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
 });
 
