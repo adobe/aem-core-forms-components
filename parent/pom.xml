@@ -79,7 +79,7 @@
         <sling.user>admin</sling.user>
         <sling.password>admin</sling.password>
 
-        <vault.package.group>adobe/aem650</vault.package.group>
+        <vault.package.group>adobe/cq60</vault.package.group>
         <vault.package.company>Adobe Systems Inc.</vault.package.company>
         <vault.user>admin</vault.user>
         <vault.password>admin</vault.password>
@@ -100,6 +100,36 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
     </properties>
+
+    <!-- ======================================================================= -->
+    <!-- R E P O R T I N G                                                       -->
+    <!-- ======================================================================= -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <stylesheet>java</stylesheet>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${aem.java.version}</source>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <links>
+                        <link>https://docs.oracle.com/javase/${aem.java.version}/docs/api/</link>
+                        <link>https://docs.oracle.com/javaee/7/api/</link>
+                        <link>https://docs.adobe.com/docs/en/spec/jsr170/javadocs/jcr-2.0/</link>
+                        <link>https://sling.apache.org/apidocs/sling9/</link>
+                        <link>https://jackrabbit.apache.org/api/2.12/</link>
+                        <link>https://osgi.org/javadoc/r6/core/</link>
+                        <link>https://osgi.org/javadoc/r6/annotation/</link>
+                        <link>https://osgi.org/javadoc/r6/cmpn/</link>
+                    </links>
+                    <excludePackageNames>*.impl:*.internal:*.internal.*</excludePackageNames>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <!-- ====================================================================== -->
     <!-- B U I L D   D E F I N I T I O N                                        -->
@@ -440,13 +470,12 @@
                 <plugin>
                     <groupId>org.apache.jackrabbit</groupId>
                     <artifactId>filevault-package-maven-plugin</artifactId>
-                    <version>1.0.0</version>
+                    <version>1.2.2</version>
                     <extensions>true</extensions>
                     <configuration>
                         <failOnMissingEmbed>true</failOnMissingEmbed>
-                        <!-- temporary, until https://issues.apache.org/jira/browse/JCRVLT-219 is fixed -->
-                        <failOnDependencyErrors>false</failOnDependencyErrors>
                         <showImportPackageReport>false</showImportPackageReport>
+                        <filterSource>${project.basedir}/src/main/content/META-INF/vault/filter.xml</filterSource>
                         <excludes>
                             <!-- exclude .vlt control files in the package -->
                             <exclude>**/.vlt</exclude>
@@ -455,13 +484,73 @@
                             <exclude>**/*.iml</exclude>
                             <exclude>**/.classpath</exclude>
                             <exclude>**/.project</exclude>
+                            <exclude>**/.eslintrc</exclude>
+                            <exclude>**/.editorconfig</exclude>
+                            <exclude>**/.stylelintrc.yaml</exclude>
+                            <exclude>**/.eslintignore</exclude>
                             <exclude>**/.settings</exclude>
                             <exclude>**/.DS_Store</exclude>
                             <exclude>**/target/**</exclude>
+                            <exclude>**/node/**</exclude>
+                            <exclude>**/node_modules/**</exclude>
                             <exclude>**/pom.xml</exclude>
                         </excludes>
                         <group>${vault.package.group}</group>
+                        <validatorsSettings>
+                            <jackrabbit-filter>
+                                <options>
+                                    <validRoots>/,/libs,/libs/core/fd,/apps,/apps/core/fd,/etc,/var,/tmp,/content</validRoots>
+                                </options>
+                            </jackrabbit-filter>
+                            <jackrabbit-nodetypes>
+                                <options>
+                                    <!-- use the nodetypes and namespaces from the aem-nodetypes.jar provided in the plugin dependencies -->
+                                    <cnds>tccl:aem.cnd</cnds>
+                                </options>
+                            </jackrabbit-nodetypes>
+                            <netcentric-aem-classification>
+                                <defaultSeverity>WARN</defaultSeverity>
+                                <options>
+                                    <severitiesPerClassification>INTERNAL_DEPRECATED=WARN</severitiesPerClassification>
+                                    <maps>tccl:biz/netcentric/filevault/validator/maps/aem-classification-map-deprecations/coral2deprecations.map,tccl:biz/netcentric/filevault/validator/maps/aem-classification-map-deprecations/graniteuideprecations.map,tccl:biz/netcentric/filevault/validator/maps/aem-classification-map-repo-annotations.map</maps>
+                                </options>
+                            </netcentric-aem-classification>
+                            <netcentric-aem-cloud>
+                                <options>
+                                    <allowVarNodeOutsideContainer>false</allowVarNodeOutsideContainer><!-- default value is true, as it is allowed to have /var nodes inside author-only container -->
+                                </options>
+                            </netcentric-aem-cloud>
+                        </validatorsSettings>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>biz.netcentric.filevault.validator</groupId>
+                            <artifactId>aem-classification-validator</artifactId>
+                            <version>1.0.1</version>
+                        </dependency>
+                        <!-- the dependency containing the actual classification map -->
+                        <dependency>
+                            <groupId>biz.netcentric.filevault.validator.maps</groupId>
+                            <artifactId>aem-classification-map-repo-annotations</artifactId>
+                            <version>6.5.3.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>biz.netcentric.filevault.validator.maps</groupId>
+                            <artifactId>aem-classification-map-deprecations</artifactId>
+                            <version>6.5.0.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>biz.netcentric.aem</groupId>
+                            <artifactId>aem-nodetypes</artifactId>
+                            <version>6.5.7.0</version>
+                        </dependency>
+                        <!-- https://github.com/Netcentric/aem-cloud-validator -->
+                        <dependency>
+                            <groupId>biz.netcentric.filevault.validator</groupId>
+                            <artifactId>aem-cloud-validator</artifactId>
+                            <version>1.2.2</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <!-- Apache Felix Bundle Plugin -->
                 <plugin>
@@ -622,7 +711,71 @@
                 <plugin>
                     <groupId>org.apache.rat</groupId>
                     <artifactId>apache-rat-plugin</artifactId>
-                    <version>0.12</version>
+                    <version>0.13</version>
+                    <configuration>
+                        <excludes combine.children="append">
+                            <!--  Used by maven-remote-resources-plugin -->
+                            <exclude>**/src/main/appended-resources/META-INF/*</exclude>
+                            <!--  Generated by maven-remote-resources-plugin -->
+                            <exclude>velocity.log</exclude>
+                            <!-- don't check anything in target -->
+                            <exclude>**/target/*</exclude>
+                            <!-- README files in markdown format -->
+                            <exclude>**/*.md</exclude>
+                            <!-- Ignore files generated by IDE plugins e.g. maven-eclipse-plugin -->
+                            <exclude>maven-eclipse.xml</exclude>
+                            <!-- Ignore VLT .content.xml files + dialog configurations -->
+                            <exclude>**/jcr_root/**/*.xml</exclude>
+                            <!-- Ignore auto-generated VLT file -->
+                            <exclude>**/META-INF/vault/settings.xml</exclude>
+                            <!-- Ignore .vltignore files -->
+                            <exclude>**/.vltignore</exclude>
+                            <!-- Ignore .vlt files -->
+                            <exclude>**/.vlt</exclude>
+                            <!-- Ignore .svg files -->
+                            <exclude>**/*.svg</exclude>
+                            <!-- Exclude all JSON files -->
+                            <exclude>**/*.json</exclude>
+                            <!-- Generated for release source archives -->
+                            <exclude>DEPENDENCIES</exclude>
+                            <!-- .rej files from svn/patch -->
+                            <exclude>**/*.rej</exclude>
+                            <!-- Jenkins build pipeline configuration file -->
+                            <exclude>Jenkinsfile</exclude>
+                            <exclude>jenkinsfiles/**/*</exclude>
+                            <!-- Ignore IDEA files -->
+                            <exclude>**/*.iml</exclude>
+                            <!-- Ignore lint-files -->
+                            <exclude>**/*.eslintrc</exclude>
+                            <exclude>**/*.editorconfig</exclude>
+                            <exclude>**/*.stylelintrc.yaml</exclude>
+                            <exclude>**/*.eslintignore</exclude>
+                            <!-- Ignore Node and npm -->
+                            <exclude>**/node/**</exclude>
+                            <exclude>**/node_modules/**</exclude>
+                            <!-- Ignore github templates -->
+                            <exclude>**/.github/**</exclude>
+                            <!-- Ignore mockito extensions config -->
+                            <exclude>**/test/resources/mockito-extensions/*</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.sling</groupId>
+                    <artifactId>htl-maven-plugin</artifactId>
+                    <version>2.0.4-1.4.0</version>
+                    <configuration>
+                        <failOnWarnings>true</failOnWarnings>
+                    </configuration>
                 </plugin>
 
                 <plugin>
