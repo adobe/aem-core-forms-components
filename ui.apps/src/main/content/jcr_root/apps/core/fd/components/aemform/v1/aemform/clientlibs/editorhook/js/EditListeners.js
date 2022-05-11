@@ -29,6 +29,21 @@
         window.open(url);
     };
 
+    window.fd.core.openCreateFormWizard = function (editable) {
+        $.ajax({
+            url: Granite.HTTP.externalize('/libs/fd/fm/base/content/commons/wizardspalink.html'),
+            type: "GET",
+            success: function(data){
+                var wizardspalink = $(data).get(0);
+                redirectUrl = Granite.HTTP.externalize(wizardspalink.pathname + wizardspalink.search);
+                window.open(redirectUrl, "_self");
+            },
+            error: function (error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
     window.fd.core.formExists = function (editable) {
         return $(window.fd.core.constants.AEM_FORM_SELECTOR, editable.dom).addBack(window.fd.core.constants.AEM_FORM_SELECTOR).length > 0;
     };
