@@ -39,6 +39,7 @@ properties:
 2. `./thankyouMessage` - defines the thank you message to shown after submission
 3. `./thankyouPage` - if left empty the form will be rendered after submission, otherwise the user will be redirected to the page stored by this
 property
+4. `./formModelDocumentPath` - json document defining the form model
 
 ## Client Libraries
 The component provides a `core.forms.components.container.v1` client library category that contains a recommended base

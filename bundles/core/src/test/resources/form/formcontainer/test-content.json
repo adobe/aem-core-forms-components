@@ -21,7 +21,7 @@
     "sling:resourceType"    : "core/fd/components/form/container/v1/container",
     "thankyouPage": "/a/b/c",
     "thankyouMessage": "message",
-    "formRuntimeDocumentPath" : "/content/dam/sample.json",
+    "formModelDocumentPath" : "/content/dam/sample.json",
     "action": "/a/b",
     "dataUrl": "/c/d"
   }

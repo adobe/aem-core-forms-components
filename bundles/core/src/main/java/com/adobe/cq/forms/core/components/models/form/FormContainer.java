@@ -39,7 +39,7 @@ public interface FormContainer extends Container {
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    String PN_RUNTIME_DOCUMENT_PATH = "formRuntimeDocumentPath";
+    String PN_RUNTIME_DOCUMENT_PATH = "formModelDocumentPath";
 
     /**
      * Returns form metadata {@link FormMetaData}
