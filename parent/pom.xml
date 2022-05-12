@@ -690,6 +690,25 @@
                     <version>${jacoco.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.0.4</version>
+                    <configuration>
+                        <effort>Max</effort>
+                        <xmlOutput>true</xmlOutput>
+                        <excludeFilterFile>src/test/resources/findbugs-exclude.xml</excludeFilterFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>find-bugs</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.rat</groupId>
                     <artifactId>apache-rat-plugin</artifactId>
                     <version>0.13</version>
@@ -977,6 +996,13 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>17.0.0</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- OSGi annotations for DS and metatype -->
             <dependency>
                 <groupId>org.osgi</groupId>
@@ -1132,7 +1158,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.01.17.00-220100</version>
+                <version>2022.04.12.02-220401</version>
             </dependency>
 
             <dependency>

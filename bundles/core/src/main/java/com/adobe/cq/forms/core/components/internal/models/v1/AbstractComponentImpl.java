@@ -30,8 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.forms.core.components.internal.Utils;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
-import com.day.cq.wcm.api.Template;
 import com.day.cq.wcm.api.components.ComponentContext;
 
 /**
@@ -79,57 +77,13 @@ public abstract class AbstractComponentImpl implements Component {
 
     /**
      * Returns an auto generated component ID.
-     *
-     * The ID is the first 10 characters of an SHA-1 hexadecimal hash of the component path, prefixed with the component
-     * name. Example: title-810f3af321
-     *
-     * If the component is referenced, the path is taken to be a concatenation of the component path, with the path of
-     * the first parent context resource that exists on the page or in the template. This ensures the ID is unique if
-     * the same component is referenced multiple times on the same page or template.
-     *
-     * Collision --------- c = expected collisions c ~= (i^2)/(2m) - where i is the number of items and m is the number
-     * of possibilities for each item. m = 16^n - for a hexadecimal string, where n is the number of characters.
-     *
-     * For i = 1000 components with the same name, and n = 10 characters:
-     *
-     * c ~= (1000^2)/(2*(16^10)) c ~= 0.00000045
-     *
+     * 
      * @return the auto generated component ID
      */
     private String generateId() {
         String resourceType = resource.getResourceType();
         String prefix = StringUtils.substringAfterLast(resourceType, "/");
         String path = resource.getPath();
-        if (currentPage != null && componentContext != null) {
-            PageManager pageManager = currentPage.getPageManager();
-            Page containingPage = pageManager.getContainingPage(resource);
-            Template template = currentPage.getTemplate();
-            boolean inCurrentPage = (containingPage != null
-                && StringUtils.equals(containingPage.getPath(), currentPage.getPath()));
-            boolean inTemplate = (template != null && path.startsWith(template.getPath()));
-            /*
-             * if (!inCurrentPage && !inTemplate) {
-             * ComponentContext parentContext = componentContext.getParent();
-             * while (parentContext != null) {
-             * Resource parentContextResource = parentContext.getResource();
-             * if (parentContextResource != null) {
-             * Page parentContextPage = pageManager.getContainingPage(parentContextResource);
-             * inCurrentPage = (parentContextPage != null
-             * && StringUtils.equals(parentContextPage.getPath(), currentPage.getPath()));
-             * inTemplate = (template != null
-             * && parentContextResource.getPath().startsWith(template.getPath()));
-             * if (inCurrentPage || inTemplate) {
-             * path = parentContextResource.getPath().concat(resource.getPath());
-             * break;
-             * }
-             * }
-             * parentContext = parentContext.getParent();
-             * }
-             * }
-             **/
-
-        }
-
         return Utils.generateId(prefix, path);
     }
 }
