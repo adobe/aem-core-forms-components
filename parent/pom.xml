@@ -1156,10 +1156,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.adobe.aemfd</groupId>
+                <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.01.27.00</version>
-
+                <version>2022.04.12.02-220401</version>
             </dependency>
 
             <dependency>
@@ -1167,7 +1166,6 @@
                 <artifactId>aem-sdk-api</artifactId>
                 <version>2022.2.6276.20220205T222203Z-220100</version>
             </dependency>
-
 
             <!-- Testing -->
             <dependency>

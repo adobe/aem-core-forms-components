@@ -302,6 +302,7 @@
                     </accessibility>
                     <patterns
                             jcr:title="Patterns"
+                            jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured"/>
                     </patterns>

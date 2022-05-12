@@ -122,10 +122,12 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         Resource formAssetResource = resourceResolver.getResource(formAssetPath);
         if (formAssetResource != null) {
             AdaptiveFormAsset asset = formAssetResource.adaptTo(AdaptiveFormAsset.class);
-            title = asset.getTitle();
-            description = asset.getDescription();
-            thubmnail = asset.getThumbnailPath();
-            formLink = asset.getRenderLink();
+            if (asset != null) {
+                title = asset.getTitle();
+                description = asset.getDescription();
+                thubmnail = asset.getThumbnailPath();
+                formLink = asset.getRenderLink();
+            }
 
             if (TypeEnum.DRAFT == typeEnum) {
                 try {
