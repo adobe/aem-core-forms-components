@@ -163,7 +163,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     @Default(values = DEFAULT_TOOLTIP)
     private String htmlTooltip;
 
-
     @PostConstruct
     private void init() {
         List<Resource> defaultAssetSourcesList = new ArrayList<>();

@@ -89,7 +89,6 @@
 
         <core.wcm.components.version>2.18.0</core.wcm.components.version>
         <core.wcm.components.library.version>2.18.0</core.wcm.components.library.version>
-        <formatter.config>../eclipse-formatter.xml</formatter.config>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -875,51 +874,6 @@
             </pluginRepositories>
         </profile>
 
-        <profile>
-            <id>format-code</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>net.revelc.code.formatter</groupId>
-                        <artifactId>formatter-maven-plugin</artifactId>
-                        <version>2.9.0</version>
-                        <executions>
-                            <execution>
-                                <id>format-code</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>format</goal>
-                                </goals>
-                                <configuration>
-                                    <configFile>${formatter.config}</configFile>
-                                    <encoding>UTF-8</encoding>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>net.revelc.code</groupId>
-                        <artifactId>impsort-maven-plugin</artifactId>
-                        <version>1.4.1</version>
-                        <configuration>
-                            <groups>java, javax, org</groups>
-                            <staticGroups>*</staticGroups>
-                            <staticAfter>true</staticAfter>
-                            <removeUnused>true</removeUnused>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sort-imports</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>sort</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
 
         <!-- GPG Signature on release -->
         <profile>
