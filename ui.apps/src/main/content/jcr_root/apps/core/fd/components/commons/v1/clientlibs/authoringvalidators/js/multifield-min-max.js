@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function ($) {
+(function($) {
     "use strict";
 
     $.validator.register("foundation.validation.validator", {
-        selector: "coral-multifield",
-        validate: function(el) {
+        selector : "coral-multifield",
+        validate : function(el) {
 
             var totalPanels = el["0"].items.getAll().length;
             var min;
             var max;
-            if ($(el).data("min-item")){
+            if ($(el).data("min-item")) {
                 min = $(el).data("min-item");
-                if(totalPanels < min) {
+                if (totalPanels < min) {
                     return "Minimum numbers of items required are: " + min;
                 }
             }
-            if ($(el).data("max-item")){
+            if ($(el).data("max-item")) {
                 max = $(el).data("max-item");
-                if(totalPanels > max) {
+                if (totalPanels > max) {
                     return "Maximum numbers of items allowed are: " + max;
                 }
             }

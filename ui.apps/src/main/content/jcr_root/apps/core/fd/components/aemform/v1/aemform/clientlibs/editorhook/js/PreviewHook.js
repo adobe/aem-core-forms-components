@@ -13,11 +13,11 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-(function (channel, ns) {
+(function(channel, ns) {
 
     // once the layer is switched, check if AEM form component exists in the page
     // if aem form component exists, then refresh the page, so that we can show the test data in wcmmode preview
-    channel.on("editor-frame-mode-changed.aemform", function () {
+    channel.on("editor-frame-mode-changed.aemform", function() {
         if (window.fd && window.fd.core && window.fd.core.aemFormExistsInPage()) {
             // check if the cookie is wcmmode preview
             var wcModeCookie = $.cookie("wcmmode");

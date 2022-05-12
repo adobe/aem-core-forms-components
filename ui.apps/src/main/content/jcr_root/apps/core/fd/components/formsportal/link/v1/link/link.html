@@ -13,20 +13,14 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div class="cmp-link">
-    <sly data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
-         data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link"
-         data-sly-test.hasText="${link.title}"
-         data-sly-use.viewlogic="${'link.js' @ assetPath=link.assetPath}">
-        <a
-            id="${link.id}"
-            class="cmp-link__anchor coral-Link"
-            href="${link.assetPathWithQueryParams}"
-            title="${link.tooltip}"
-            target="${viewlogic.target}"
-            data-sly-text="${link.title}">
-            AF Link Component
-        </a>
-    </sly>
-</div>
-<sly data-sly-call="${commonsTemplates.placeholder @ isEmpty = !hasText}"></sly>
+<html>
+    <head></head>
+    <body>
+        <div class="cmp-link"> 
+            <sly data-sly-use.commonstemplates="core/wcm/components/commons/v1/templates.html" data-sly-use.link="com.adobe.cq.forms.core.components.models.formsportal.Link" data-sly-test.hastext="${link.title}" data-sly-use.viewlogic="${'link.js' @ assetPath=link.assetPath}"> 
+                <a id="${link.id}" class="cmp-link__anchor coral-Link" href="${link.assetPathWithQueryParams}" title="${link.tooltip}" target="${viewlogic.target}" data-sly-text="${link.title}"> AF Link Component </a> 
+            </sly> 
+        </div> 
+        <sly data-sly-call="${commonsTemplates.placeholder @ isEmpty = !hasText}"></sly> 
+    </body>
+</html>

@@ -1,30 +1,37 @@
-<template data-sly-template.layout="${@ hideTime}">
-    <table class="cmp-portallister__results cmp-portallister__results-list-container" data-cmp-hook-item-template="container">
-        <thead class="cmp-portallister__results-list-head">
-            <tr>
-                <th class="cmp-portallister__item-list-image-wrapper-head"></th>
-                <th class="cmp-portallister__item-list-title-head">Name</th>
-                <th class="cmp-portallister__item-list-body-head">Details</th>
-                <th class="cmp-portallister__item-list-time-head" data-sly-test="${!hideTime}">Last Modified</th>
-                <th class="cmp-portallister__item-list-operations-head"></th>
-            </tr>
-        </thead>
-    </table>
-    <table>
-        <tr class="cmp-portallister__item cmp-portallister__item-list" data-cmp-hook-item-template="item">
-            <td class="cmp-portallister__item-list-image-wrapper">
-                <img class="cmp-portallister__item-list-image" data-cmp-hook-item-template="thumbnail"/>
-            </td>
-            <td class="cmp-portallister__item-list-title">
-                <div data-cmp-hook-item-template="formLink">
-                    <div data-cmp-hook-item-template="itemTitle"></div>
-                </div>
-            </td>
-            <td class="cmp-portallister__item-list-body" data-cmp-hook-item-template="description"></td>
-            <td data-sly-test="${!hideTime}" class="cmp-portallister__item-list-time" data-cmp-hook-item-template="timeinfo"></td>
-            <td class="cmp-portallister__item-list-operations" data-cmp-hook-item-template="operations">
-                <div class="cmp-portallister__item-list-operations-icon"></div>
-            </td>
-        </tr>
-    </table>
-</template>
+<html>
+    <head></head>
+    <body>
+        <template data-sly-template.layout="${@ hideTime}"> 
+            <table class="cmp-portallister__results cmp-portallister__results-list-container" data-cmp-hook-item-template="container"> 
+                <thead class="cmp-portallister__results-list-head"> 
+                    <tr> 
+                        <th class="cmp-portallister__item-list-image-wrapper-head"></th> 
+                        <th class="cmp-portallister__item-list-title-head">Name</th> 
+                        <th class="cmp-portallister__item-list-body-head">Details</th> 
+                        <th class="cmp-portallister__item-list-time-head" data-sly-test="${!hideTime}">Last Modified</th> 
+                        <th class="cmp-portallister__item-list-operations-head"></th> 
+                    </tr> 
+                </thead> 
+            </table> 
+            <table> 
+                <tbody>
+                    <tr class="cmp-portallister__item cmp-portallister__item-list" data-cmp-hook-item-template="item"> 
+                        <td class="cmp-portallister__item-list-image-wrapper"> 
+                            <img class="cmp-portallister__item-list-image" data-cmp-hook-item-template="thumbnail"> 
+                        </td> 
+                        <td class="cmp-portallister__item-list-title"> 
+                            <div data-cmp-hook-item-template="formLink"> 
+                                <div data-cmp-hook-item-template="itemTitle"></div> 
+                            </div> 
+                        </td> 
+                        <td class="cmp-portallister__item-list-body" data-cmp-hook-item-template="description"></td> 
+                        <td data-sly-test="${!hideTime}" class="cmp-portallister__item-list-time" data-cmp-hook-item-template="timeinfo"></td> 
+                        <td class="cmp-portallister__item-list-operations" data-cmp-hook-item-template="operations"> 
+                            <div class="cmp-portallister__item-list-operations-icon"></div> 
+                        </td> 
+                    </tr> 
+                </tbody>
+            </table> 
+        </template> 
+    </body>
+</html>

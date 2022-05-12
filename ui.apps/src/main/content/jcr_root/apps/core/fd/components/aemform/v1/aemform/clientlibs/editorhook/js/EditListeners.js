@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-(function (Granite) {
+(function(Granite) {
     window.fd = window.fd || {};
     window.fd.core = window.fd.core || {};
     window.fd.core.constants = window.fd.core.constants || {};
@@ -22,18 +22,18 @@
         "AEM_FORM_CONTAINER_SELECTOR" : ".cmp-aemform"
     };
 
-    window.fd.core.openFormForEditing = function (editable) {
-        var htmlElement = $(window.fd.core.constants.AEM_FORM_SELECTOR, editable.dom).addBack("[data-form-page-path]"),
-            formPath = htmlElement.attr("data-form-page-path"),
-            url = Granite.HTTP.externalize("/editor.html" + formPath + ".html");
+    window.fd.core.openFormForEditing = function(editable) {
+        var htmlElement = $(window.fd.core.constants.AEM_FORM_SELECTOR, editable.dom).addBack("[data-form-page-path]"), formPath = htmlElement
+                .attr("data-form-page-path"), url = Granite.HTTP.externalize("/editor.html" + formPath + ".html");
         window.open(url);
     };
 
-    window.fd.core.formExists = function (editable) {
-        return $(window.fd.core.constants.AEM_FORM_SELECTOR, editable.dom).addBack(window.fd.core.constants.AEM_FORM_SELECTOR).length > 0;
+    window.fd.core.formExists = function(editable) {
+        return $(window.fd.core.constants.AEM_FORM_SELECTOR, editable.dom).addBack(
+                window.fd.core.constants.AEM_FORM_SELECTOR).length > 0;
     };
 
-    window.fd.core.aemFormExistsInPage = function () {
+    window.fd.core.aemFormExistsInPage = function() {
         return Granite.author.ContentFrame.getDocument().find(window.fd.core.constants.AEM_FORM_CONTAINER_SELECTOR).length > 0;
     };
 

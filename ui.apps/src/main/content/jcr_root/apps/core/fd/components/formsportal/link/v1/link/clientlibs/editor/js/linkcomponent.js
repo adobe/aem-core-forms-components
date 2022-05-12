@@ -14,28 +14,28 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* global jQuery, Coral */
-(function ($, Coral) {
-    var initQueryParametersTab = function () {
+(function($, Coral) {
+    var initQueryParametersTab = function() {
         var btn = $('.cmp-formsportal-link--editor-parameters > ._coral-Button')[0];
         var multifield = $('.cmp-formsportal-link--editor-parameters')[0];
         var header = $('.cmp-formsportal-link--editor-parameters__header')[0];
 
-        if (typeof(btn) !== "undefined") {
+        if (typeof (btn) !== "undefined") {
             Coral.commons.ready(btn, function() {
                 // overrides the default multi-field button
                 btn.set({
-                    label: {
-                        innerHTML: "Add Item"
+                    label : {
+                        innerHTML : "Add Item"
                     },
-                    icon: "add"
+                    icon : "add"
                 });
             });
         }
 
-        if (typeof(multifield) !== "undefined") {
+        if (typeof (multifield) !== "undefined") {
             Coral.commons.ready(multifield, function() {
                 // toggles hide or show of header based on whether multifield elements presence
-                var toggleHeaderShowHide = function () {
+                var toggleHeaderShowHide = function() {
                     header.hidden = !multifield.items.length;
                 };
                 multifield.on('change', toggleHeaderShowHide);
@@ -45,7 +45,7 @@
     };
 
     // wait till dialog load is complete
-    $(document).on("dialog-ready", function () {
+    $(document).on("dialog-ready", function() {
         initQueryParametersTab();
     });
 }(jQuery, Coral));

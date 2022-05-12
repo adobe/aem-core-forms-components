@@ -14,10 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    cq:icon="link"
-    jcr:description="Link Component for Forms and Communications Portal"
-    jcr:primaryType="cq:Component"
-    jcr:title="Link Component (v2)"
-    sling:resourceSuperType="core/fd/components/formsportal/link/v1/link"
-    componentGroup=".core-forms-and-communications-portal"/>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+	xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" cq:icon="link"
+	jcr:description="Link Component for Forms and Communications Portal" jcr:primaryType="cq:Component"
+	jcr:title="Link Component (v2)" sling:resourceSuperType="core/fd/components/formsportal/link/v1/link"
+	componentGroup=".core-forms-and-communications-portal" />

@@ -14,12 +14,12 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-use(function () {
-    var clientlibsArr = ['core.forms.components.formsportal.draftsandsubmissions.v1'];
+use(function() {
+    var clientlibsArr = [ 'core.forms.components.formsportal.draftsandsubmissions.v1' ];
     var layoutPath = 'core/fd/components/commons/v1/itemTemplates/' + this.layout + '.html';
     return {
-        clientlibs: clientlibsArr,
-        layoutPath: layoutPath,
-        menuPath: "core/fd/components/commons/v1/menuTemplate/menu.html"
+        clientlibs : clientlibsArr,
+        layoutPath : layoutPath,
+        menuPath : "core/fd/components/commons/v1/menuTemplate/menu.html"
     }
 });

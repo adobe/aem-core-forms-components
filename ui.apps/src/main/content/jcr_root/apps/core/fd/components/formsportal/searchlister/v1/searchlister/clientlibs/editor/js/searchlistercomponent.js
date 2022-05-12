@@ -14,25 +14,25 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* global jQuery, Coral */
-(function ($, Coral) {
-    var initAssetSourcesTab = function () {
+(function($, Coral) {
+    var initAssetSourcesTab = function() {
         var btn = $('.cmp-formsportal-searchandlister--editor-parameters > ._coral-Button')[0];
 
-        if (typeof(btn) !== "undefined") {
+        if (typeof (btn) !== "undefined") {
             Coral.commons.ready(btn, function() {
                 // overrides the default multi-field button
                 btn.set({
-                    label: {
-                        innerHTML: "Add another location"
+                    label : {
+                        innerHTML : "Add another location"
                     },
-                    icon: "add"
+                    icon : "add"
                 });
             });
         }
     };
 
     // wait till dialog load is complete
-    $(document).on("dialog-ready", function () {
+    $(document).on("dialog-ready", function() {
         initAssetSourcesTab();
     });
 }(jQuery, Coral));

@@ -14,9 +14,9 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-use(function () {
+use(function() {
     var viewLogic = {
-        "target": "_self"
+        "target" : "_self"
     };
     if (this.assetPath) {
         // some asset path is set, target to new tab

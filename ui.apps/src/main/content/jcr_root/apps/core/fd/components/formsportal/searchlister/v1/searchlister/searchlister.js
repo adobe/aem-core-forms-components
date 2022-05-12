@@ -14,11 +14,11 @@
  * limitations under the License.
  ******************************************************************************/
 
-use(function () {
-    var clientlibsArr = ['core.forms.components.formsportal.searchlister.v1'];
+use(function() {
+    var clientlibsArr = [ 'core.forms.components.formsportal.searchlister.v1' ];
     var layoutPath = 'core/fd/components/commons/v1/itemTemplates/' + this.layout + '.html';
     return {
-        clientlibs: clientlibsArr,
-        layoutPath: layoutPath
+        clientlibs : clientlibsArr,
+        layoutPath : layoutPath
     }
 });

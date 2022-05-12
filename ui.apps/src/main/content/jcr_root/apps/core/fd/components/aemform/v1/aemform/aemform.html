@@ -13,9 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
-     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
-<script>
+<html>
+    <head></head>
+    <body>
+        <sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm" data-sly-use.templates="core/wcm/components/commons/v1/templates.html" /> 
+        <script>
     // Editor evaluates this script and if the clientlib is not loaded by then, it will fail. Hence triggering an
     // event after clientlib load and initializing on that event.
     (function () {
@@ -37,18 +39,17 @@
         };
         window.addEventListener("aemform-onscript-load", onScriptLoad);
     }());
-</script>
-<sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
-<sly data-sly-test.useIframe="${form.useIframe != 'false'}">
-    <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
-        <iframe class="cmp-aemform__iframecontent"
-            src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
-            stye="width:100%;"
-            data-form-page-path="${form.formEditPagePath}"></iframe>
-    <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
-         data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.iframeResizer']}"/>
-</sly>
-<sly data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.formapp']}"/>
-<sly data-sly-test="${!useIframe}">
-    <sly data-sly-include="formcontainer.html"></sly>
-</sly>
+
+        </script> 
+        <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}" /> 
+        <sly data-sly-test.useiframe="${form.useIframe != 'false'}"> 
+            <sly data-sly-test.formLocaleString="${form.locale || 'en'}" /> 
+            <iframe class="cmp-aemform__iframecontent" src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&amp;wcmmode={0}':'' @ format=[wcmmode.toString]}" stye="width:100%;" data-form-page-path="${form.formEditPagePath}"></iframe> 
+            <sly data-sly-test="${form.useIframe != 'false' &amp;&amp; form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.iframeResizer']}" /> 
+        </sly> 
+        <sly data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v1.formapp']}" /> 
+        <sly data-sly-test="${!useIframe}"> 
+            <sly data-sly-include="formcontainer.html"></sly> 
+        </sly> 
+    </body>
+</html>
