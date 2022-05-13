@@ -42,7 +42,7 @@ public interface Field extends Base, BaseConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getPlaceHolder() {
-        return "";
+        return null;
     }
 
     /**

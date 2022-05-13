@@ -11,7 +11,12 @@
     "value": "def",
     "richText": false
   },
+  "dataRef":"a.b",
+
   "screenReaderText": "Custom screen reader text",
+  "constraintsMessages":{
+    "type":"incorrect type"
+  },
   "type": "string",
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }

@@ -8,7 +8,9 @@
     "longDescription" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
-    "custom" : "Custom screen reader text"
+    "bindRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type"
   },
   "multiline-textinput" : {
     "jcr:primaryType": "nt:unstructured",
