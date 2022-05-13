@@ -49,6 +49,11 @@ executors:
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:7138-openjdk11
         <<: *docker_auth
+      ## Browser: 'chrome' was not found on your system or is not supported by Cypress.
+      - image: cypress/browsers:node14.15.0-chrome86-ff82
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
 
 jobs:
   build-java-11:

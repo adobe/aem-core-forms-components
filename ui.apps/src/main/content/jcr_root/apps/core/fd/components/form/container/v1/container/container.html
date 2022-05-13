@@ -19,6 +19,7 @@
      id="${formContainer.id}"
      data-cmp-is="formcontainer"
      data-cmp-document-path="${formContainer.documentPath}"
+     data-form-id="${currentPage.path}"
      data-sly-set.documentPathError="${'Please select a form runtime document to display.' @ i18n}"
      data-sly-set.error="${!formContainer.documentPath ? documentPathError : false}"
      data-sly-test="${!error}">
