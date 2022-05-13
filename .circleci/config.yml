@@ -19,7 +19,6 @@ common:
           at: /home/circleci/build
       - run:
           name: UI tests
-          no_output_timeout: 30m
           command: node .circleci/ci/it-tests.js
       - store_test_results:
           path: ui.tests/test-module/target/reports
@@ -48,7 +47,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:6582-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:7138-openjdk11
         <<: *docker_auth
 
 jobs:
