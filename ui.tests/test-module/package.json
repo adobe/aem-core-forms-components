@@ -13,7 +13,7 @@
   ],
   "devDependencies": {
     "@cypress/code-coverage": "^3.8.0",
-    "cypress": "^7.7.0",
+    "cypress": "^9.6.1",
     "cypress-iframe": "1.0.1",
     "cypress-pipe": "2.0.0",
     "cypress-plugin-snapshots": "1.4.4",
