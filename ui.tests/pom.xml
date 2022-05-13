@@ -319,6 +319,8 @@
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>run</argument>
+                                        <argument>--browser</argument>
+                                        <argument>chrome</argument>
                                         <argument>--headless</argument>
                                         <argument>--reporter</argument>
                                         <argument>mocha-multi-reporters</argument>
