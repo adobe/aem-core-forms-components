@@ -34,54 +34,21 @@
                             jcr:title="Basic"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <prefill_service
+                            <column
                                     jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-prefill-service-selection"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    disabled="false"
-                                    emptyText="Select"
-                                    fieldDescription="Select a prefill service to fetch form data when the form renders."
-                                    fieldLabel="Prefill Service"
-                                    name="./prefillService"
-                                    renderReadOnly="false">
-                                <datasource
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                        type="prefillServiceProvider"/>
-                            </prefill_service>
-                            <clientLibRef
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="This client library contains JavaScript Functions which can be used in expressions supported by Adaptive Forms."
-                                    fieldLabel="Client Library Category"
-                                    name="./clientLibRef"/>
-                            <disableSwipeGesture
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    fieldDescription="Disables the swipe gesture."
-                                    name="./disableSwipeGesture"
-                                    text="Disable Swipe Gesture"
-                                    uncheckedValue="false"
-                                    value="true"/>
-                            <disableSwipeGesture-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./disableSwipeGesture@TypeHint"
-                                    value="Boolean"/>
-                            <enableFocusOnFirstField
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    fieldDescription="Select to keep the focus on the first field of the adaptive form or uncheck to keep the focus on the parent page or application."
-                                    name="./enableFocusOnFirstField"
-                                    checked="{Boolean}true"
-                                    text="Set Focus on Form"
-                                    uncheckedValue="false"
-                                    value="true"/>
-                            <enableFocusOnFirstField-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./enableFocusOnFirstField@TypeHint"
-                                    value="Boolean"/>
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <documentPath
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            fieldDescription="Path of Form Runtime Document."
+                                            fieldLabel="Form Runtime Document Path"
+                                            nodeTypes="dam:Asset, nt:file"
+                                            name="./formModelDocumentPath"
+                                            required="{Boolean}true"
+                                            rootPath="/content/dam"/>
+                                </items>
+                            </column>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"
@@ -96,16 +63,6 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <enableAsyncSubmission
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                            granite:class="cmp-adaptiveform-container__enableasyncsubmission"
-                                            name="./enableAsyncSubmission"
-                                            text="Use asynchronous submission"
-                                            checked="{Boolean}false"
-                                            uncheckedValue="false"
-                                            value="true">
-                                    </enableAsyncSubmission>
                                     <thankYouOption
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
@@ -206,12 +163,6 @@
                                             </cui>
                                         </uiSettings>
                                     </thankYouMessage>
-                                    <enableServerValidation
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                            name="./enableServerValidation"
-                                            text="Revalidate on server"
-                                            value="true"/>
                                     <submitActionType
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-adaptiveform-container__submitaction"

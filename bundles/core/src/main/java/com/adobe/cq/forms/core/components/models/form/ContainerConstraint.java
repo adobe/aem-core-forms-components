@@ -24,7 +24,6 @@ import org.osgi.annotation.versioning.ConsumerType;
  */
 @ConsumerType
 public interface ContainerConstraint {
-
     /**
      * Returns the minimum items of the container (ie array data type)
      *
@@ -32,7 +31,7 @@ public interface ContainerConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default int getMinItems() {
-        return 0;
+        return 1;
     }
 
     /**

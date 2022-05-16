@@ -82,9 +82,9 @@ public interface FormContainer extends Container {
     }
 
     /**
-     * Returns the document path
+     * Returns the document path (dam asset) containing the form model json
      *
-     * @return the document path, if one was set, or {@code null}
+     * @return the document path containing form model json, if one was set, or {@code null}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
