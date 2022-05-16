@@ -18,10 +18,9 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.Collections;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.adobe.cq.export.json.ContainerExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -93,6 +92,16 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * Returns base64 encoded current page path
+     *
+     * @return base64 encoded current page path
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonIgnore
+    @Nullable
+    String getEncodedCurrentPagePath();
+
+    /**
      * Returns the form thank you message
      *
      * @return form thank you message
@@ -104,21 +113,11 @@ public interface FormContainer extends Container {
     /**
      * Returns the form thank you page
      *
-     * @return form thank you page
+     * @return form thank x`you page
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
     String getThankYouPage();
-
-    /**
-     * @see ContainerExporter#getExportedType()
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @NotNull
-    @Override
-    default String getExportedType() {
-        return "";
-    }
 
     /**
      * Returns the form data

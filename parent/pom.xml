@@ -87,8 +87,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.18.0</core.wcm.components.version>
-        <core.wcm.components.library.version>2.18.0</core.wcm.components.library.version>
+        <core.wcm.components.version>2.19.0</core.wcm.components.version>
+        <core.wcm.components.library.version>2.19.0</core.wcm.components.library.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

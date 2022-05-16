@@ -15,11 +15,12 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <form class="cmp-formcontainer"
      data-sly-use.formContainer="com.adobe.cq.forms.core.components.models.form.FormContainer"
+     data-sly-use.componentUtils="com.adobe.cq.forms.core.components.util.ComponentUtils"
      data-sly-use.template="core/wcm/components/commons/v1/templates.html"
      id="${formContainer.id}"
      data-cmp-is="formcontainer"
      data-cmp-document-path="${formContainer.documentPath}"
-     data-form-id="${currentPage.path}"
+     data-form-id="${formContainer.encodedCurrentPagePath}"
      data-sly-set.documentPathError="${'Please select a form runtime document to display.' @ i18n}"
      data-sly-set.error="${!formContainer.documentPath ? documentPathError : false}"
      data-sly-test="${!error}">

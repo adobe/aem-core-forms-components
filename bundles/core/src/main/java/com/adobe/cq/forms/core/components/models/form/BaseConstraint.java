@@ -100,7 +100,7 @@ public interface BaseConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default Type getType() {
-        return null;
+        return Type.STRING;
     }
 
     /**

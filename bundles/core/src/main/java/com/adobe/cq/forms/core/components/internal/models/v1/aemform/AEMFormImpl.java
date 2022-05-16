@@ -27,7 +27,6 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +35,8 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -54,9 +53,6 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     public static final String RESOURCE_TYPE = "core/fd/components/aemform/v1/aemform";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AEMFormImpl.class);
-
-    @Self
-    protected SlingHttpServletRequest request;
 
     @ScriptVariable
     protected PageManager pageManager;

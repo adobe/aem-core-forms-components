@@ -44,9 +44,10 @@ import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.day.cq.dam.api.Asset;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -164,6 +165,16 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @JsonIgnore
     public String getDocumentPath() {
         return documentPath;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getEncodedCurrentPagePath() {
+        if (getCurrentPage() != null) {
+            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+        } else {
+            return null;
+        }
     }
 
     @Override

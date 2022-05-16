@@ -108,6 +108,12 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetEncodedCurrentPagePath() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertEquals(null, formContainer.getEncodedCurrentPagePath());
+    }
+
+    @Test
     void testFormModel() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_WITH_DOCUMENT_PATH);
         assertEquals(((List) formContainer.getModel().get("items")).size(), 1);
