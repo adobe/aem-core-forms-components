@@ -15,8 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.Label;
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,13 +26,12 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-
-import java.util.Collections;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -138,7 +138,6 @@ public class TextInputImplTest {
         assertEquals(true, textInputMock.isEnabled());
     }
 
-
     @Test
     void testIsReadOnly() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
@@ -148,7 +147,6 @@ public class TextInputImplTest {
         assertEquals(false, textInputMock.isReadOnly());
     }
 
-
     @Test
     void testIsMultiLine() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
@@ -157,7 +155,6 @@ public class TextInputImplTest {
         Mockito.when(textInputMock.isMultiLine()).thenCallRealMethod();
         assertEquals(false, textInputMock.isMultiLine());
     }
-
 
     @Test
     void testGetPlaceHolder() {
@@ -195,9 +192,6 @@ public class TextInputImplTest {
         assertEquals(null, textInputMock.getDataFormat());
     }
 
-
-
-
     @Test
     void testGetConstraintMessages() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
@@ -207,7 +201,6 @@ public class TextInputImplTest {
         Mockito.when(textInputMock.getConstraintsMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), textInputMock.getConstraintsMessages());
     }
-
 
     @Test
     void testJSONExport() throws Exception {
