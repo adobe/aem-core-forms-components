@@ -48,11 +48,14 @@
         }
         if (containerThankYouOption.length > 0) {
             var isThankYouOptionAMessage = function() {return (Utils.getSelectedRadioGroupOption(containerThankYouOption) === "message");};
+            var isThankYouOptionPage = function() {return !isThankYouOptionAMessage();};
             // show thank you message if async submission and thank you option is set to "message"
             channel.on("change", EDIT_DIALOG + " " + CONTAINER_THANKYOUOPTION, function(e) {
                 Utils.checkAndDisplay(containerThankYouMessage)(isThankYouOptionAMessage);
+                Utils.checkAndDisplay(containerRedirect)(isThankYouOptionPage);
             });
             Utils.checkAndDisplay(containerThankYouMessage)(isThankYouOptionAMessage);
+            Utils.checkAndDisplay(containerRedirect)(isThankYouOptionPage);
         }
     }
 

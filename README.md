@@ -47,7 +47,7 @@ This project relies on the [AEM Sites Core Components](https://github.com/adobe/
 If you want to build all the modules yourself and get all the latest (yet) **unreleased** changes, just build and install all the modules with the following command at the root of the repository:
 
 ```
-mvn clean install -PautoInstallAll
+mvn clean install -PautoInstallAll,include-wcm-components-examples
 ```
 This installs everything by default to `localhost:4502` without any context path. You can also configure the install location with the following maven properties:
 * `aem.host`: the name of the AEM instance
