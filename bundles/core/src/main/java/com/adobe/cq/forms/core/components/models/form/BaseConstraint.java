@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -109,6 +110,7 @@ public interface BaseConstraint {
      * @return the format of the form field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getFormat() {
         return null;
     }
@@ -119,6 +121,7 @@ public interface BaseConstraint {
      * @return an expression
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getValidationExpression() {
         return null;
     }

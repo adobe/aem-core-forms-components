@@ -1,10 +1,13 @@
 coverage:
+  precision: 2
+  round: nearest
+  range: "70...90"
   status:
     project:
       default: off
       unittests:
         enabled: true
-        target: 60%
+        target: 75%
         threshold: 10%
         base: auto
         flags: unittests
@@ -12,7 +15,7 @@ coverage:
       default: off
       unittests:
         enabled: true
-        target: 60%
+        target: 75%
         threshold: 10%
         base: auto
         flags: unittests

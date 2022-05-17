@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -51,6 +52,7 @@ public interface Label {
      * @return the value of this label
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getValue() {
         return null;
     }

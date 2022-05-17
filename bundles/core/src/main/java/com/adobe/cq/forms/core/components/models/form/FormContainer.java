@@ -50,6 +50,18 @@ public interface FormContainer extends Container {
     FormMetaData getMetaData();
 
     /**
+     * Returns a unique identifier
+     *
+     * @return unique identifier
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    @JsonIgnore
+    default String getId() {
+        return null;
+    }
+
+    /**
      * Returns the form title
      *
      * @return form title

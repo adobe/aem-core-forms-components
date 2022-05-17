@@ -189,7 +189,10 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     public String getScreenReaderText() {
         String screenReaderText = getName();
         if (AssistPriority.LABEL.equals(assistPriority)) {
-            screenReaderText = getLabel().getValue();
+            Label label = getLabel();
+            if (label != null) {
+                screenReaderText = label.getValue();
+            }
         } else if (AssistPriority.NAME.equals(assistPriority)) {
             screenReaderText = getName();
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {

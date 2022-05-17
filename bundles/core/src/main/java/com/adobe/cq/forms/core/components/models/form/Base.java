@@ -166,6 +166,7 @@ public interface Base extends Component {
      * @return label of the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default Label getLabel() {
         return null;
     }
@@ -176,6 +177,7 @@ public interface Base extends Component {
      * @return name of the form field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Nullable
     default String getName() {
         return null;
     }

@@ -49,6 +49,7 @@ import static org.apache.jackrabbit.JcrConstants.JCR_MIMETYPE;
 import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
 import static org.apache.jackrabbit.JcrConstants.NT_RESOURCE;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -99,6 +100,24 @@ public class FormContainerImplTest {
         FormContainer formContainerMock = Mockito.mock(FormContainer.class);
         Mockito.when(formContainerMock.getExportedType()).thenCallRealMethod();
         assertEquals("", formContainerMock.getExportedType());
+    }
+
+    @Test
+    void testGetId() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertNotNull(formContainer.getId());
+    }
+
+    @Test
+    void testGetThankYouMessage() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertEquals("message", formContainer.getThankYouMessage());
+    }
+
+    @Test
+    void testGetThankYouPage() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertEquals("/a/b/c", formContainer.getThankYouPage());
     }
 
     @Test
