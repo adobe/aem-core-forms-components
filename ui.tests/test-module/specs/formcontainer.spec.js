@@ -63,8 +63,8 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
             // check if few dialog options are visible
             cy.get("[name='./formModelDocumentPath']").should("be.visible");
-            cy.get("[name='./redirect'").should("be.visible");
-            cy.get("[name='./actionType'").should("be.visible");
+            cy.get("[name='./redirect'").should("exist"); // should exist
+            cy.get("[name='./actionType'").should("exist"); // should exist
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
 
