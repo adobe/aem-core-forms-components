@@ -19,6 +19,7 @@ var formsConstants = {
         forms : {
             resourceType : {
                 "aemformcontainer" : "/apps/forms-components-examples/components/aemform",
+                "formcontainer" : "/apps/forms-components-examples/components/form/container",
                 "fplinkcomponent"  : "/apps/forms-components-examples/components/linkcomponent",
                 "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",

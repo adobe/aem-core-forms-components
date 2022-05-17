@@ -27,7 +27,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ |  
-| 1.0.8                 | 2.18.0              | Continual                    | 8, 11 | 3.3.9+ |  
+| 1.0.10                | 2.19.0              | Continual                    | 8, 11 | 3.3.9+ |  
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
@@ -47,7 +47,7 @@ This project relies on the [AEM Sites Core Components](https://github.com/adobe/
 If you want to build all the modules yourself and get all the latest (yet) **unreleased** changes, just build and install all the modules with the following command at the root of the repository:
 
 ```
-mvn clean install -PautoInstallAll
+mvn clean install -PautoInstallAll,include-wcm-components-examples
 ```
 This installs everything by default to `localhost:4502` without any context path. You can also configure the install location with the following maven properties:
 * `aem.host`: the name of the AEM instance

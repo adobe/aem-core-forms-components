@@ -1,0 +1,22 @@
+{
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "viewType": "text-input",
+  "description" : "dummy",
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+
+  "screenReaderText": "Custom screen reader text",
+  "constraintsMessages":{
+    "type":"incorrect type"
+  },
+  "type": "string",
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}

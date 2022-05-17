@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.Link;
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.day.cq.wcm.api.WCMMode;
 
 @Model(

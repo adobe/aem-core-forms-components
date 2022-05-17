@@ -37,9 +37,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.services.formsportal.Operation;
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(

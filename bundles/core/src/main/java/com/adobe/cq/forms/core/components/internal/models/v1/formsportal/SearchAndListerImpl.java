@@ -122,7 +122,7 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
 
         queryStrategies.put("offset", new QueryStrategy() {
             public void buildQuery(RequestParameter[] params, FMSearchCriteria.Builder builder) {
-                builder.withOffset(Integer.valueOf(params[0].getString()));
+                builder.withOffset(Integer.parseInt(params[0].getString()));
             }
         });
     }
@@ -162,8 +162,6 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = DEFAULT_TOOLTIP)
     private String htmlTooltip;
-
-    private String pdfTooltip = "";
 
     @PostConstruct
     private void init() {
@@ -259,12 +257,17 @@ public class SearchAndListerImpl extends PortalListerImpl implements SearchAndLi
         String thubmnail = "";
         I18n i18n = new I18n(request);
         if (fmAsset.getAssetType().equals(FDAsset.AssetType.ADAPTIVE_FORM)) {
-            AdaptiveFormAsset asset = resolver.getResource(fmAsset.getDamPath()).adaptTo(AdaptiveFormAsset.class);
-            title = asset.getTitle();
-            description = asset.getDescription();
-            path = asset.getRenderLink();
-            thubmnail = asset.getThumbnailPath();
-            tooltip = i18n.get(htmlTooltip);
+            Resource afAssetResource = resolver.getResource(fmAsset.getDamPath());
+            if (afAssetResource != null) {
+                AdaptiveFormAsset asset = afAssetResource.adaptTo(AdaptiveFormAsset.class);
+                if (asset != null) {
+                    title = asset.getTitle();
+                    description = asset.getDescription();
+                    path = asset.getRenderLink();
+                    thubmnail = asset.getThumbnailPath();
+                    tooltip = i18n.get(htmlTooltip);
+                }
+            }
         }
         return new SearchAndListerItem(title, description, tooltip, path, thubmnail, null);
     }

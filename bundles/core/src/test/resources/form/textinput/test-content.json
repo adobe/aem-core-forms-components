@@ -1,0 +1,25 @@
+{
+  "textinput" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "longDescription" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "bindRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type"
+  },
+  "multiline-textinput" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "multiLine" : true,
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "longDescription" : "dummy",
+    "visible" : false
+  }
+}

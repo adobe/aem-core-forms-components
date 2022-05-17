@@ -269,6 +269,10 @@
                                 <configuration>
                                     <tasks>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
+                                        <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
+                                        <!--
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        -->
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/portallister/v1/portallister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/searchlister/v1/searchlister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />

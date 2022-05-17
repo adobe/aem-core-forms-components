@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "required": false,
+      "name": "abc",
+      "visible": false,
+      "enabled": true,
+      "readOnly": false,
+      "viewType": "text-input",
+      "label": {
+        "visible": true,
+        "richText": false,
+        "value": "def"
+      },
+      "screenReaderText": "abc",
+      "type": "string",
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  ],
+  "metadata": {
+    "action": "/a/b",
+    "dataUrl": "/c/d",
+    "locale": "en-us",
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  ":type": "core/fd/components/form/container/v1/container"
+}
