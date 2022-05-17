@@ -35,7 +35,7 @@ const commons = require('../libs/commons/commons'),
 describe('Page - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/adaptive-form/container",
-        formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop(),
+        formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
         formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
         formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop(),
         formContainerDropPathSelector = "[data-path='" + formContainerDropPath + "']";
