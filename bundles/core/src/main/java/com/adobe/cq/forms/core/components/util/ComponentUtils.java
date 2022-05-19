@@ -24,7 +24,13 @@ import org.jetbrains.annotations.NotNull;
  * Utility helper functions for components.
  */
 public class ComponentUtils {
-    // not making the constructor private as it is used to inject in sightly files
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private ComponentUtils() {
+        // NOOP
+    }
+
     /**
      * Returns the base64 encoded path
      *
