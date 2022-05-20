@@ -14,9 +14,8 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-<link rel="stylesheet"
-      href="./clientlibs/editor/css/textinput.less">
 <sly data-sly-use.logic="${'textinput.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${logic.labelPath}"
      data-sly-use.shortDescription="${logic.shortDescriptionPath}"
      data-sly-use.longDescription="${logic.longDescriptionPath}"
@@ -25,7 +24,7 @@
      data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}"></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description}"></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               aria-label="${text.label.visible && text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
@@ -49,4 +48,5 @@
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.shortDescriptionVisible, shortDescription=text.shortDescription, bemBlock='cmp-adaptiveform-textinput'}">
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
+    <sly data-sly-call="${clientlib.all @ categories=logic.clientlibs}"></sly>
 </div>
