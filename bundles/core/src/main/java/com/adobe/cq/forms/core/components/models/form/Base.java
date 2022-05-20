@@ -205,6 +205,27 @@ public interface Base extends Component {
     }
 
     /**
+     * Returns the short description of the field
+     *
+     * @return the short description of the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getShortDescription() {
+        return null;
+    }
+
+    /**
+     * Returns {@code true} if short description should always be visible, otherwise {@code false}.
+     *
+     * @return {@code true} if short description should always be visible, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default boolean isShortDescriptionVisible() {
+        return false;
+    }
+
+    /**
      * Returns the string to indicate the text to be read by screen readers
      *
      * @return the screen reader text
