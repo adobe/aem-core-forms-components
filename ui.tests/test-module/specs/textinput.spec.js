@@ -43,7 +43,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(textInputDrop);
     });
 
-    it('open edit dialog of aem forms container component', function() {
+    it('open edit dialog of aem forms TextInput', function() {
         // click configure action on aem forms container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
         debugger;

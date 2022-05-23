@@ -72,7 +72,6 @@
     }
 
     function handleAutoComplete(dialog) {
-        console.log('DEBUG 2');
         var textInputAutoComplete = dialog.find(TEXTINPUT_AUTOCOMPLETE)[0];
         var textInputAutofill = dialog.find(TEXTINPUT_AUTOFILL_FIELD_KEYWORD);
         var isChecked = function() {return textInputAutoComplete.checked};
@@ -84,9 +83,6 @@
             hideAndShowElements();
         });
     }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAutoComplete);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAutoComplete, handleRichText);
 
 })(jQuery);
