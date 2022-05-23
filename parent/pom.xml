@@ -235,8 +235,8 @@
                                     <version>[2.2.1,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <message>Project must be compiled with Java 8 or higher</message>
-                                    <version>1.8.0</version>
+                                    <message>Project must be compiled with Java ${aem.java.version} or higher</message>
+                                    <version>1.${aem.java.version}</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -555,8 +555,12 @@
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <inherited>true</inherited>
+                    <version>5.1.4</version>
+                    <configuration>
+                        <instructions>
+                            <Bundle-RequiredExecutionEnvironment>JavaSE-1.${aem.java.version}</Bundle-RequiredExecutionEnvironment>
+                        </instructions>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>baseline</id>
