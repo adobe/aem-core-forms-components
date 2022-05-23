@@ -46,7 +46,7 @@ public class OperationManagerImpl implements OperationManager {
         cardinality = ReferenceCardinality.MULTIPLE,
         bind = "bindOperation",
         unbind = "unbindOperation")
-    private Map<String, Operation> operations = new ConcurrentHashMap<String, Operation>();
+    private volatile Map<String, Operation> operations = new ConcurrentHashMap<String, Operation>();
 
     private Map<DraftsAndSubmissions.TypeEnum, List<Operation>> operationLists = new ConcurrentHashMap<>();
 

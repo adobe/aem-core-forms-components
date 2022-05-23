@@ -193,23 +193,6 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.felix</groupId>
-                        <artifactId>maven-bundle-plugin</artifactId>
-                        <configuration>
-                            <instructions>
-                                <Bundle-RequiredExecutionEnvironment>JavaSE-1.${aem.java.version}</Bundle-RequiredExecutionEnvironment>
-                            </instructions>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>baseline</id>
-                                <goals>
-                                    <goal>baseline</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
