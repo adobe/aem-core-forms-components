@@ -56,9 +56,21 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Nullable
     protected Integer maxLength;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "length")
+    @Nullable
+    protected Integer exactLength;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "validatePictureClause")
     @Nullable
     protected String pattern;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean autocomplete;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String autofillFieldKeyword;
 
     @Override
     public boolean isMultiLine() {
@@ -87,6 +99,12 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     }
 
     @Override
+    @Nullable
+    public Integer getExactLength() {
+        return exactLength;
+    }
+
+    @Override
     public String getPattern() {
         return pattern;
     }
@@ -94,5 +112,15 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Override
     public Type getDefaultType() {
         return Type.STRING;
+    }
+
+    @Override
+    public boolean isAutoComplete() {
+        return autocomplete;
+    }
+
+    @Override
+    public String getAutofillFieldKeyword() {
+        return autofillFieldKeyword;
     }
 }

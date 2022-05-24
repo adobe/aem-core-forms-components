@@ -35,7 +35,6 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleRichText(dialog) {
-        console.log('DEBUG');
         var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
         var textInputMaxChars = dialog.find(TEXTINPUT_MAXCHARS);
         var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);

@@ -208,7 +208,7 @@ public interface Base extends Component {
      * Returns the short description of the field
      *
      * @return the short description of the field
-     * @since com.adobe.cq.forms.core.components.models.form 0.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
     @Nullable
     default String getShortDescription() {
@@ -219,7 +219,7 @@ public interface Base extends Component {
      * Returns {@code true} if short description should always be visible, otherwise {@code false}.
      *
      * @return {@code true} if short description should always be visible, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 0.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
     default boolean isShortDescriptionVisible() {
         return false;
