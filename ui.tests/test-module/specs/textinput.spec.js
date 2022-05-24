@@ -46,7 +46,6 @@ describe('Page - Authoring', function () {
     it('open edit dialog of aem forms TextInput', function() {
         // click configure action on aem forms container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-        debugger;
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
 
         // Check If Dialog Options Are Visible
