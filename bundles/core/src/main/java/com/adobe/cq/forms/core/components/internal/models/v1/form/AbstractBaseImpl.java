@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
  */
-public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implements Base, BaseConstraint {
+public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "longDescription")
     @Nullable
@@ -58,6 +59,19 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
     @Nullable
     protected String dataRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String format;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String validationExpression;
+
+    // using old jcr property names to allow easy conversion from foundation to core components
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "mandatory")
+    @Default(booleanValues = false)
+    protected boolean required;
 
     /**
      * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
@@ -459,5 +473,30 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     @Override
     public @NotNull String getExportedType() {
         return resource.getResourceType();
+    }
+
+    @JsonIgnore
+    protected abstract Type getDefaultType();
+
+    @Override
+    public boolean isRequired() {
+        return required;
+    }
+
+    @Override
+    public Type getType() {
+        return getDefaultType();
+    }
+
+    @Override
+    @Nullable
+    public String getFormat() {
+        return format;
+    }
+
+    @Override
+    @Nullable
+    public String getValidationExpression() {
+        return validationExpression;
     }
 }
