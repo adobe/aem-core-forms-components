@@ -43,7 +43,7 @@ public interface Base extends Component {
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    public enum ViewType {
+    public enum FieldType {
         TEXT_INPUT("text-input"),
         MULTILINE_INPUT("multiline-input"),
         NUMBER_INPUT("number-input"),
@@ -58,7 +58,7 @@ public interface Base extends Component {
         CHECKBOX_GROUP("checkbox-goup");
         private String value;
 
-        ViewType(String value) {
+        FieldType(String value) {
             this.value = value;
         }
 
@@ -70,8 +70,8 @@ public interface Base extends Component {
          * @return the corresponding enum value, if one was found, or {@link #TEXT_INPUT}
          * @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
-        public static ViewType fromString(String value) {
-            for (ViewType type : ViewType.values()) {
+        public static FieldType fromString(String value) {
+            for (FieldType type : FieldType.values()) {
                 if (StringUtils.equals(value, type.value)) {
                     return type;
                 }
@@ -216,12 +216,12 @@ public interface Base extends Component {
     }
 
     /**
-     * Returns the view type
+     * Returns the field type
      * 
-     * @return the view type
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @return the field type
+     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
-    String getViewType(); // todo: keeping string here to support custom view types
+    String getFieldType(); // todo: keeping string here to support custom view types
 
     /**
      * Returns {@code true} if form field should be visible, otherwise {@code false}.

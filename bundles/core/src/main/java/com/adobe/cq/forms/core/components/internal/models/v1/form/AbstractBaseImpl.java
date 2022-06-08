@@ -141,7 +141,7 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
     }
 
     @JsonIgnore
-    protected abstract ViewType getDefaultViewType();
+    protected abstract FieldType getDefaultFieldType();
 
     /**
      * Returns label of the form field
@@ -222,8 +222,8 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public String getViewType() {
-        return getDefaultViewType().getValue();
+    public String getFieldType() {
+        return getDefaultFieldType().getValue();
     }
 
     /**

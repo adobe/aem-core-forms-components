@@ -6,7 +6,7 @@
       "visible": false,
       "enabled": true,
       "readOnly": false,
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "label": {
         "visible": true,
         "richText": false,

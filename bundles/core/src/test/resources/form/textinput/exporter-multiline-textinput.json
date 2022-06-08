@@ -4,7 +4,7 @@
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "viewType": "multiline-input",
+  "fieldType": "multiline-input",
   "description" : "dummy",
   "label": {
     "visible": true,
