@@ -46,15 +46,6 @@ public interface StringConstraint extends BaseConstraint {
     Integer getMaxLength();
 
     /**
-     * Returns the exact length of the data. The constraint is applicable only for field with type string
-     *
-     * @return exact length of the data
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    Integer getExactLength();
-
-    /**
      * As specified in the JSON Schema specification, the regex against which the value of the field should be tested with.
      *
      * Returns the regex. The constraint is applicable only for field with type string

@@ -56,10 +56,6 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Nullable
     protected Integer maxLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "length")
-    @Nullable
-    protected Integer exactLength;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "validatePictureClause")
     @Nullable
     protected String pattern;
@@ -96,12 +92,6 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Nullable
     public Integer getMaxLength() {
         return maxLength;
-    }
-
-    @Override
-    @Nullable
-    public Integer getExactLength() {
-        return exactLength;
     }
 
     @Override
