@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -36,6 +35,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -498,5 +498,13 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        customProperties.put("shortDescription", getShortDescription());
+        customProperties.put("shortDescriptionVisible", isShortDescriptionVisible());
+        return customProperties;
     }
 }
