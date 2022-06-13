@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-textinput__questionmark {
+.base__questionmark {
     display:inline-block;
     position:relative;
     top:8px;
@@ -26,7 +26,7 @@
     cursor : pointer;
 }
 
-.cmp-adaptiveform-textinput__longdescription {
+.base__longdescription {
     margin: 0px;
     clear: both;
     border-radius: 4px 4px 3px 3px;
@@ -34,9 +34,21 @@
     padding: 10px 15px;
 }
 
-.cmp-adaptiveform-textinput__shortdescription {
+.base__shortdescription {
     margin: 0px;
     clear: both;
     border-radius: 4px 4px 3px 3px;
     padding: 10px 15px;
+}
+
+.cmp-adaptiveform-textinput__questionmark {
+    &:extend(.base__questionmark);
+}
+
+.cmp-adaptiveform-textinput__longdescription {
+    &:extend(.base__longdescription);
+}
+
+.cmp-adaptiveform-textinput__shortdescription {
+    &:extend(.base__shortdescription);
 }

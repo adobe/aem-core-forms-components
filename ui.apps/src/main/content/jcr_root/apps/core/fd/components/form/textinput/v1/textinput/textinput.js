@@ -16,7 +16,7 @@
 
 use(function () {
 
-  var clientlibsArr = ['core.forms.components.textinput.v1.editor'];
+  var clientlibsArr = ['core.forms.components.base.v1.editor'];
   var labelPath = 'core/fd/components/commons/v1/formTemplates/label.html';
   var shortDescriptionPath = "core/fd/components/commons/v1/formTemplates/shortDescription.html";
   var longDescriptionPath = "core/fd/components/commons/v1/formTemplates/longDescription.html";
