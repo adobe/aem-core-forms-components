@@ -26,7 +26,7 @@
             text="Edit in a new window"/>
         <createFormViaWizard
             jcr:primaryType="nt:unstructured"
-            condition="fd.core.formExists"
+            condition="fd.core.featureEnabled"
             handler="fd.core.openCreateFormWizard"
             icon="addCircle"
             text="Create Form Via Wizard"/>
