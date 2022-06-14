@@ -32,7 +32,7 @@ const commons = require('../libs/commons/commons'),
     guideSelectors = require('../libs/commons/guideSelectors'),
     afConstants = require('../libs/commons/formsConstants');
 
-describe('Page - Authoring', function () {
+describe('Page/Form - Authoring', function () {
 
         context("Open Forms Editor", function () {
             // we can use these values to log in
