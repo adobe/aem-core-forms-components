@@ -116,6 +116,7 @@
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
                 <configuration>
+                    <skip>true</skip>
                     <excludes>
                         <exclude>frontend-maven-plugin/**/*</exclude>
                     </excludes>

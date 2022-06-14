@@ -20,7 +20,7 @@
   "dataRef":"a.b",
 
   "screenReaderText": "Custom screen reader text",
-  "constraintsMessages":{
+  "constraintMessages":{
     "type":"incorrect type"
   },
   "type": "string",

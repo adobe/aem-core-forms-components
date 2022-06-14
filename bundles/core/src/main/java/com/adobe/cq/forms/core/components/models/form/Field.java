@@ -112,4 +112,9 @@ public interface Field extends Base, BaseConstraint {
     default boolean isShortDescriptionVisible() {
         return false;
     }
+
+    String getFormContainer();
+
+    String getId();
+
 }

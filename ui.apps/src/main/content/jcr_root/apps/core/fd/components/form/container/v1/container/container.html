@@ -18,6 +18,7 @@
      data-sly-use.template="core/wcm/components/commons/v1/templates.html"
      id="${formContainer.id}"
      data-cmp-is="formcontainer"
+     data-cmp-path="${container.path}"
      data-cmp-document-path="${formContainer.documentPath}"
      data-form-id="${formContainer.encodedCurrentPagePath}"
      data-sly-set.documentPathError="${'Please select a form runtime document to display.' @ i18n}"
@@ -27,3 +28,7 @@
          class="cmp-formcontainer__content"></div>
 </form>
 <sly data-sly-call="${template.placeholder @ isEmpty=error, classAppend='cmp-formcontainer', emptyTextAppend=error}"></sly>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientlib.js @ categories='core.forms.components.base.v1.view'}" />
+    <sly data-sly-call="${clientlib.js @ categories='core.forms.components.container.v1.base'}" />
+</sly>

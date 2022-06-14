@@ -168,6 +168,11 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     }
 
     @Override
+    public String getPath() {
+        return resource.getPath();
+    }
+
+    @Override
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
         if (getCurrentPage() != null) {
