@@ -59,12 +59,12 @@ public class TextInputImplTest {
     }
 
     @Test
-    void testViewType() {
+    void testFieldType() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals(Base.ViewType.TEXT_INPUT.getValue(), textInput.getViewType());
+        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getViewType()).thenCallRealMethod();
-        assertEquals(Base.ViewType.TEXT_INPUT.getValue(), textInputMock.getViewType());
+        Mockito.when(textInputMock.getFieldType()).thenCallRealMethod();
+        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInputMock.getFieldType());
     }
 
     @Test
