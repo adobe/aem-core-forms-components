@@ -91,6 +91,7 @@
         <core.wcm.components.library.version>2.19.0</core.wcm.components.library.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <formatter.version>2.16.0</formatter.version>
 
         <aem.java.version>8</aem.java.version>
 
@@ -784,7 +785,7 @@
                 <plugin>
                     <groupId>net.revelc.code.formatter</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
-                    <version>2.19.0</version>
+                    <version>${formatter.version}</version>
                     <executions>
                         <execution>
                             <id>verify-code-formatting</id>
