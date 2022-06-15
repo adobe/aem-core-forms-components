@@ -32,7 +32,16 @@ const commons = require('../libs/commons/commons'),
     guideSelectors = require('../libs/commons/guideSelectors'),
     afConstants = require('../libs/commons/formsConstants');
 
-describe('Page/Form - Authoring', function () {
+describe('Page/Form Authoring', function () {
+        const checkEditDialog = function(formContainerEditPathSelector) {
+            // click configure action on adaptive form container component
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+            // check if few dialog options are visible
+            cy.get("[name='./formModelDocumentPath']").should("be.visible");
+            cy.get("[name='./redirect'").should("exist"); // should exist
+            cy.get("[name='./actionType'").should("exist"); // should exist
+        };
 
         context("Open Forms Editor", function () {
             // we can use these values to log in
@@ -47,17 +56,7 @@ describe('Page/Form - Authoring', function () {
 
             it('open edit dialog of adaptive form container component', function () {
                 // click configure action on adaptive form container component
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
-                cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-                // check if few dialog options are visible
-                cy.get("[name='./formModelDocumentPath']").should("be.visible");
-                cy.get("[name='./redirect'").should("exist"); // should exist
-                cy.get("[name='./actionType'").should("exist"); // should exist
-            });
-
-            after(function () {
-                // clean up the operations performed in the test
-                cy.enableOrDisableTutorials(true);
+                checkEditDialog(formContainerEditPathSelector);
             });
         });
 
@@ -85,13 +84,7 @@ describe('Page/Form - Authoring', function () {
                 });
 
                 it('open edit dialog of adaptive form container component', function () {
-                    // click configure action on adaptive form container component
-                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
-                    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-                    // check if few dialog options are visible
-                    cy.get("[name='./formModelDocumentPath']").should("be.visible");
-                    cy.get("[name='./redirect'").should("exist"); // should exist
-                    cy.get("[name='./actionType'").should("exist"); // should exist
+                    checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 });
 
