@@ -53,7 +53,7 @@ public abstract class AbstractBaseImpl extends AbstractBaseConstraintImpl implem
 
     /**
      * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
-     * 
+     *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     private enum AssistPriority {
