@@ -24,7 +24,6 @@
         constructor(params) {
             this._model = params._model;
             this._fields = {};
-            this.path = params.path;
             this.#addFields();
         }
 

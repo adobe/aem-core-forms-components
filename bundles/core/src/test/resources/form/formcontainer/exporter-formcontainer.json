@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "id": "textinput-2be05cc42b",
+      "id": "/content/formcontainer/textinput",
       "required": false,
       "name": "abc",
       "visible": false,

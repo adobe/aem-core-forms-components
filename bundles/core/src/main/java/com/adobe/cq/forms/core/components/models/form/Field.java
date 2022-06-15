@@ -113,6 +113,7 @@ public interface Field extends Base, BaseConstraint {
         return false;
     }
 
+    @JsonIgnore
     String getFormContainer();
 
     String getId();

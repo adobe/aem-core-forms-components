@@ -145,8 +145,8 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
     }
 
     @Override
-    protected ViewType getDefaultViewType() {
-        return ViewType.DATE_INPUT;
+    protected FieldType getDefaultFieldType() {
+        return FieldType.DATE_INPUT;
     }
 
     @Override
@@ -162,4 +162,6 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
         }
         return null;
     }
+
+
 }

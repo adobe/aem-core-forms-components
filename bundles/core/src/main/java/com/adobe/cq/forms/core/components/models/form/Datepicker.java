@@ -27,13 +27,13 @@ import org.osgi.annotation.versioning.ConsumerType;
 public interface Datepicker extends Field {
 
     /**
-     * @see Base#getViewType()
+     * @see Base#getFieldType()
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
     @Override
-    default String getViewType() {
-        return ViewType.DATE_INPUT.getValue();
+    default String getFieldType() {
+        return FieldType.DATE_INPUT.getValue();
     }
 
     /**

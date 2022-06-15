@@ -142,6 +142,6 @@ public interface FormContainer extends Container {
         return "";
     }
 
-
+    @JsonIgnore
     String getPath();
 }
