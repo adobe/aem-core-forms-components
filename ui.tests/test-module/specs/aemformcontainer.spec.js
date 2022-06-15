@@ -30,6 +30,7 @@ const commons = require('../libs/commons/commons'),
       sitesSelectors = require('../libs/commons/sitesSelectors'),
       sitesConstants = require('../libs/commons/sitesConstants'),
       guideSelectors = require('../libs/commons/guideSelectors'),
+      wizardSelectors = require('../libs/commons/wizardSelectors'),
       afConstants = require('../libs/commons/formsConstants');
 
 describe('Page - Authoring', function () {
@@ -83,6 +84,35 @@ describe('Page - Authoring', function () {
             cy.get("[name='./useiframe'").should("be.checked");
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
+
+        it('open toolbar, select wizard and click on Cancel', function(){
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
+            cy.get("[data-action='createFormViaWizard']").should('be.visible');
+            cy.invokeEditableAction("[data-action='createFormViaWizard']");
+            cy.get(wizardSelectors.wizardCancelButton).click();
+        });
+
+        it('open toolbar, select wizard and create a Form', function() {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
+            cy.get("[data-action='createFormViaWizard']").should('be.visible');
+            cy.invokeEditableAction("[data-action='createFormViaWizard']");
+
+            cy.get(wizardSelectors.basicTemplate).click();
+            cy.get(wizardSelectors.wizardCreateButton).click();
+            cy.get(wizardSelectors.modal.create).should('be.visible');
+            const formName = 'testcreateform_' + new Date().getTime();
+            cy.get(wizardSelectors.modal.title).type(formName);
+            cy.get(wizardSelectors.modal.createButton).click();
+
+            //check if created form is configured
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("coral-taglist[name='./formRef']")
+                .should("have.value", "/content/dam/formsanddocuments/" + formName);
+            cy.get(sitesSelectors.confirmDialog.actions.first).click();
+        });
+
+
 
         after(function() {
             // clean up the operations performed in the test
