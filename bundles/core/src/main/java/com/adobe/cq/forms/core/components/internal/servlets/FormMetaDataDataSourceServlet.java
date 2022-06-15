@@ -61,12 +61,13 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
-     * 
+     *
      * @todo: Add other metadata types here like fragment, actions etc
      */
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
         PREFILL_ACTION("prefillServiceProvider");
+
         private String value;
 
         FormMetaDataType(String value) {

@@ -56,6 +56,7 @@ public interface Base extends Component {
         BUTTON("button"),
         PANEL("panel"),
         CHECKBOX_GROUP("checkbox-goup");
+
         private String value;
 
         FieldType(String value) {
@@ -217,7 +218,7 @@ public interface Base extends Component {
 
     /**
      * Returns the field type
-     * 
+     *
      * @return the field type
      * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */

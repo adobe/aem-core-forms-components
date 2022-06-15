@@ -83,7 +83,7 @@ public class Utils {
      * </pre>
      *
      * For example:
-     * 
+     *
      * <pre>
      *     testBase = '/form/button'
      *     testResourcePath = '/content/buttons/button'
@@ -102,7 +102,7 @@ public class Utils {
 
     /**
      * Set internal state on a private field.
-     * 
+     *
      * @param target target object to set the private field
      * @param field name of the private field
      * @param value value of the private field
