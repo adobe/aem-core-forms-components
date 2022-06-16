@@ -24,6 +24,6 @@
      data-sly-set.error="${!formContainer.documentPath ? documentPathError : false}"
      data-sly-test="${!error}">
     <div id="${formContainer.id}-content"
-         class="cmp-formcontainer__content">${resource.path}</div>
+         class="cmp-formcontainer__content"></div>
 </form>
 <sly data-sly-call="${template.placeholder @ isEmpty=error, classAppend='cmp-formcontainer', emptyTextAppend=error}"></sly>
