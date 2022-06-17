@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($) {
-    "use strict";
-    window.af = window.af || {};
-    window.af.formsRuntime = window.af.formsRuntime || {};
-    window.af.formsRuntime.model = window.af.formsRuntime.model || {};
-    window.af.formsRuntime.model.form = window.af.formsRuntime.form || {};
-    window.af.formsRuntime.view = window.af.formsRuntime.view || {};
-    window.af.formsRuntime.view.formContainer =  window.af.formsRuntime.view.formContainer || {};
-    window.af.formsRuntime.view.utils = window.af.formsRuntime.view.utils || {};
-    window.af.formsRuntime.event = window.af.formsRuntime.event || {};
-    console.log("[afRuntime] namespace");
-})(jQuery);
+
+import FormField from "./FormField";
+
+export default class DatePicker extends FormField {
+    constructor(params) {
+        super(params);
+    }
+
+    getWidgetName() {
+        return "dateTimeField";
+    }
+}
+

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>core-forms-components-reactor</artifactId>
+        <groupId>com.adobe.aem</groupId>
+        <version>1.0.13-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ui.frontend</artifactId>
+
+    <build>
+        <sourceDirectory>src/main/content/jcr_root</sourceDirectory>
+        <plugins>
+
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <configuration>
+                        <tarLongFileMode>posix</tarLongFileMode>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>1.12.0</version>
+                    <configuration>
+                        <nodeVersion>v12.22.7</nodeVersion>
+                        <npmVersion>6.14.0</npmVersion>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>npm install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>npm run build dev</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build:prod</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+</project>

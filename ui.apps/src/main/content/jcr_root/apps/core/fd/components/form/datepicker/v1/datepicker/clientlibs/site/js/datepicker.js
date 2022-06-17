@@ -14,19 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 (function($) {
-    "use strict";
-    window.af = window.af || {};
-    window.af.formsRuntime = window.af.formsRuntime || {};
-    window.af.formsRuntime.view = window.af.formsRuntime.view || {};
-    window.af.formsRuntime.view.DatePicker = class DatePicker extends window.af.formsRuntime.view.FormField {
-        constructor(params) {
-            super(params);
-        }
-
-        getWidgetName() {
-            return "dateTimeField";
-        }
-    }
     var NS = "cmp";
     var IS = "datepicker";
     var selectors = {
@@ -65,5 +52,4 @@
         });
     }
     document.addEventListener("FormContainerInitialised", onFormContainerInitialised);
-
 })(jQuery);

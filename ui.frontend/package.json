@@ -1,0 +1,23 @@
+{
+  "name": "ui.frontend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.dev.js && clientlib --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "aem-clientlib-generator": "^1.8.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "@aemforms/af-core": "^0.15.0",
+    "jquery": "^3.6.0"
+  }
+}
