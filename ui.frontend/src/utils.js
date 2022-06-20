@@ -14,18 +14,18 @@
  * limitations under the License.
  ******************************************************************************/
 
-var NS = "cmp";
+const NS = "cmp";
 
 export default function readData(element, clazz) {
-    var data = element.dataset;
-    var options = [];
-    var capitalized = clazz;
+    const data = element.dataset;
+    let options = [];
+    let capitalized = clazz;
     capitalized = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
-    var reserved = ["is", "hook" + capitalized];
+    const reserved = ["is", "hook" + capitalized];
 
-    for (var key in data) {
+    for (let key in data) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
-            var value = data[key];
+            let value = data[key];
             if (key.indexOf(NS) === 0) {
                 key = key.slice(NS.length);
                 key = key.charAt(0).toLowerCase() + key.substring(1);
