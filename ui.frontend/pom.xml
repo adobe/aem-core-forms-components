@@ -14,7 +14,10 @@
     <build>
         <sourceDirectory>src/main/content/jcr_root</sourceDirectory>
         <plugins>
-
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -47,6 +50,16 @@
                                 <goal>npm</goal>
                             </goals>
                         </execution>
+                        <execution>
+                            <id>npm run build dev</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>run build:prod</arguments>
+                            </configuration>
+                        </execution>
                     </executions>
                 </plugin>
             </plugins>
@@ -68,7 +81,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run build:prod</arguments>
+                                    <arguments>run build:dev</arguments>
                                 </configuration>
                             </execution>
                         </executions>
