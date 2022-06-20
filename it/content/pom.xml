@@ -111,7 +111,7 @@
                         <embedded>
                             <groupId>com.adobe.granite.toggle</groupId>
                             <artifactId>com.adobe.granite.toggle.impl.dev</artifactId>
-                            <target>/apps/feature-enablement/install</target>
+                            <target>/apps/core-components-examples/install</target>
                         </embedded>
                     </embeddeds>
                     <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
@@ -200,8 +200,9 @@
         <dependency>
             <groupId>com.adobe.granite.toggle</groupId>
             <artifactId>com.adobe.granite.toggle.impl.dev</artifactId>
-            <version>1.1.0</version>
-            <scope>provided</scope>
+            <version>1.1.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
