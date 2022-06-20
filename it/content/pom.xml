@@ -99,6 +99,25 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.day.jcr.vault</groupId>
+                <artifactId>content-package-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <version>0.0.24</version>
+                <configuration>
+                    <group>day/cq60/test</group>
+                    <embeddeds>
+                        <embedded>
+                            <groupId>com.adobe.granite.toggle</groupId>
+                            <artifactId>com.adobe.granite.toggle.impl.dev</artifactId>
+                            <target>/apps/feature-enablement/install</target>
+                        </embedded>
+                    </embeddeds>
+                    <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

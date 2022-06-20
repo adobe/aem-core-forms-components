@@ -3,4 +3,7 @@
     <filter root="/content/forms/af/core-components-examples" mode="merge"/>
     <filter root="/content/dam/formsanddocuments/core-components-examples" mode="merge"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/af-blank-v2" mode="update"/>
+
+    <filter root="/apps/feature-enablement" type="merge" />
+
 </workspaceFilter>

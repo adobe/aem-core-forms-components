@@ -29,7 +29,7 @@
             condition="fd.core.featureEnabled"
             handler="fd.core.openCreateFormWizard"
             icon="addCircle"
-            text="Create Form Via Wizard"/>
+            text="Create Form"/>
     </cq:actionConfigs>
     <cq:listeners
         jcr:primaryType="cq:EditListenersConfig"
