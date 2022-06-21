@@ -43,11 +43,11 @@ describe('Page - Authoring', function () {
 
     context('Open Editor', function () {
         beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(pagePath);
+            cy.login();
         });
 
         it('insert aem forms container component', function () {
+            cy.openAuthoring(pagePath);
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
@@ -59,6 +59,7 @@ describe('Page - Authoring', function () {
         });
 
         it('open edit dialog of aem forms container component', function() {
+            cy.openAuthoring(pagePath);
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
@@ -86,13 +87,22 @@ describe('Page - Authoring', function () {
         });
 
         it('open toolbar, select wizard and click on Cancel', function(){
+
+            cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
+            cy.openAuthoring(pagePath);
+
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
             cy.get(wizardSelectors.wizardCancelButton).click();
+
+            cy.disableToggles();
         });
 
         it('open toolbar, select wizard and create a Form', function() {
+            cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
+            cy.openAuthoring(pagePath);
+
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
@@ -109,10 +119,8 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("coral-taglist[name='./formRef']")
                 .should("have.value", "/content/dam/formsanddocuments/" + formName);
-            cy.get(sitesSelectors.confirmDialog.actions.first).click();
+            cy.disableToggles();
         });
-
-
 
         after(function() {
             // clean up the operations performed in the test
