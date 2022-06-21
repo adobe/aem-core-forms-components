@@ -74,11 +74,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     }
 
     @Override
-    public ViewType getDefaultViewType() {
+    public FieldType getDefaultFieldType() {
         if (isMultiLine()) {
-            return ViewType.MULTILINE_INPUT;
+            return FieldType.MULTILINE_INPUT;
         } else {
-            return ViewType.TEXT_INPUT;
+            return FieldType.TEXT_INPUT;
         }
     }
 

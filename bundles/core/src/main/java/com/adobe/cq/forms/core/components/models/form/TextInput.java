@@ -40,13 +40,13 @@ public interface TextInput extends Field {
     }
 
     /**
-     * @see Base#getViewType()
+     * @see Base#getFieldType()
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
     @Override
-    default String getViewType() {
-        return ViewType.TEXT_INPUT.getValue();
+    default String getFieldType() {
+        return FieldType.TEXT_INPUT.getValue();
     }
 
     /**

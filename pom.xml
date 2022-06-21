@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.13-SNAPSHOT</version>
+        <version>1.0.15-SNAPSHOT</version>
         <relativePath>parent/pom.xml</relativePath>
     </parent>
 
@@ -56,6 +56,7 @@
                 </property>
             </activation>
             <modules>
+                <module>it/content</module>
                 <module>ui.tests</module>
             </modules>
         </profile>

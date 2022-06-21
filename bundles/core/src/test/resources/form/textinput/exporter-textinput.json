@@ -4,7 +4,7 @@
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "viewType": "text-input",
+  "fieldType": "text-input",
   "description" : "dummy",
   "label": {
     "visible": true,

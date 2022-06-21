@@ -16,10 +16,19 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ## Available Components
 
+### Page Authoring Components
+
 -   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+
+### Forms And Communications Portal
+
 -   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
 -   [Drafts and Submissions Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
 -   [Search and Lister Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
+
+### Adaptive Form
+
+-   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v1/container)
 
 ## System Requirements
 
@@ -27,7 +36,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ |  
-| 1.0.10                | 2.19.0              | Continual                    | 8, 11 | 3.3.9+ |  
+| 1.0.14                | 2.19.0              | Continual                    | 8, 11 | 3.3.9+ |  
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 

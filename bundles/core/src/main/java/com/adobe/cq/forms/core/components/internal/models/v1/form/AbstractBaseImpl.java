@@ -75,7 +75,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     /**
      * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
-     * 
+     *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     private enum AssistPriority {
@@ -163,7 +163,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
-    protected abstract ViewType getDefaultViewType();
+    protected abstract FieldType getDefaultFieldType();
 
     /**
      * Returns label of the form field
@@ -266,8 +266,8 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public String getViewType() {
-        return getDefaultViewType().getValue();
+    public String getFieldType() {
+        return getDefaultFieldType().getValue();
     }
 
     /**
