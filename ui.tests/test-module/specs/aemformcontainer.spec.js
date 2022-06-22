@@ -86,7 +86,7 @@ describe('Page - Authoring', function () {
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
 
-        /*it('open toolbar, select wizard and click on Cancel', function(){
+        it('open toolbar, select wizard and click on Cancel', function(){
 
             cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
             cy.openAuthoring(pagePath);
@@ -120,7 +120,7 @@ describe('Page - Authoring', function () {
             cy.get("coral-taglist[name='./formRef']")
                 .should("have.value", "/content/dam/formsanddocuments/" + formName);
             cy.disableToggles();
-        });*/
+        });
 
         after(function() {
             // clean up the operations performed in the test

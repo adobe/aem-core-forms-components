@@ -41,10 +41,11 @@ describe('Link - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(pagePath);
+            cy.login();
         });
 
         it('insert link component', function () {
+            cy.openAuthoring(pagePath);
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
@@ -56,6 +57,7 @@ describe('Link - Authoring', function () {
         });
 
         it('verify edit dialog properties', function () {
+            cy.openAuthoring(pagePath);
             const x = "";
             // click configure action on link component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + linkComponentEditPathSelector);
@@ -124,6 +126,7 @@ describe('Link - Authoring', function () {
         });
 
         it('navigate to rendered page and verify link', function () {
+            cy.openAuthoring(pagePath);
             cy.visit(pagePath + '.html');
             cy.get("a[class*=\"cmp-link__anchor\"]")
                 .should("have.attr", "href", "#")
