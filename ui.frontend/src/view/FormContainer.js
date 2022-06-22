@@ -25,8 +25,6 @@ export default class FormContainer {
     async initialise() {
         this._model = await createFormInstance(this._formJson);
     }
-
-
     /**
      * returns the form field view
      * @param fieldId
@@ -37,17 +35,6 @@ export default class FormContainer {
 
     getModel(id) {
         return id ? this._model.getElement(id) : this._model;
-    }
-
-    setFocus(somExpression) {
-        this._currentFocusItemSom = somExpression;
-    }
-
-    getFocus() {
-        return this._currentFocusItemSom;
-    }
-
-    getView(somExpression) {
     }
 
     addField(fieldView) {

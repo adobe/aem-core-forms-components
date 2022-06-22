@@ -19,32 +19,30 @@ import readData from "../utils";
 export default class FormField {
 
     constructor(params) {
+        this.formContainer = params.formContainer;
+        this.parent = params.parent || params.formContainer;
         this.element = params.element; //html element of field
         this.options = readData(this.element, this.getClass());  //dataset of field
-        this.setId();
+        let el = this.element.getElementsByTagName(this.getTagName());
+        if (el && el.length > 0) {
+            this.setId(el[0].id);
+        }
         this.bindEventListeners();
+        this.formContainer.addField(this);
     }
 
-    setId() {
-        this.id = this.element.getElementsByTagName(this.getTagName())[0].id;
-    }
-
-    bindEventListeners() {
-        this.element.addEventListener('change', (event) => {
-            this.handleOnChange(event.target.value);
-        });
+    setId(id) {
+        this.id = id;
     }
 
     getId() {
         return this.id;
     }
 
-    setElement(element) {
-        this.element = element;
-    }
-
-    setOptions(options) {
-        this.options = options;
+    bindEventListeners() {
+        this.element.addEventListener('change', (event) => {
+            this._model.value = event.target.value;
+        });
     }
 
     setModel(model) {
@@ -56,27 +54,25 @@ export default class FormField {
     }
 
     getClass() {
-        return "formfield";
+       throw new Error ("Not Implemented");
     }
 
     getTagName() {
-        return "div";
+        throw new Error ("Not Implemented");
     }
 
-    getFieldType() {
-        return this._model._jsonModel.fieldType;
-    }
-
-    handleOnChange(value) {
-        this._model.value = value;
+    setValue(value) {
+       throw new Error("Not implemented");
     }
 
     subscribe() {
         this._model.subscribe((action) => {
             let state = action.target.getState();
-            console.log(action.target.getState());
             if (!state.valid) {
                 alert(state.errorMessage);
+                this.setValue(null);
+            } else {
+                this.setValue(state.value);
             }
         });
     }

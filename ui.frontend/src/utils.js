@@ -37,3 +37,32 @@ export default function readData(element, clazz) {
     }
     return options;
 }
+export function registerMutationObserver(formFieldClass) {
+    let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+    let body = document.querySelector("body");
+    let observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            // needed for IE
+            var nodesArray = [].slice.call(mutation.addedNodes);
+            if (nodesArray.length > 0) {
+                nodesArray.forEach(function(addedNode) {
+                    if (addedNode.querySelectorAll) {
+                        var elementsArray = [].slice.call(addedNode.querySelectorAll(formFieldClass.selectors.self));
+                        elementsArray.forEach(function(element) {
+                            let dataset = FormView.readData(element, formFieldClass.IS);
+                            let formContainerPath = dataset["formcontainer"];
+                            let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
+                            let formField = new formFieldClass({element: element, formContainer: formContainer});
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    observer.observe(body, {
+        subtree: true,
+        childList: true,
+        characterData: true
+    });
+}

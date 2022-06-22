@@ -1,5 +1,5 @@
 import FormContainer from "./view/FormContainer";
-import readData from "./utils";
+import readData, {registerMutationObserver} from "./utils";
 import DatePicker from "./view/DatePicker";
 
 window.af = {
@@ -14,4 +14,4 @@ window.af = {
         event: {}
     }
 }
-export {DatePicker, FormContainer, readData};
+export {DatePicker, FormContainer, readData, registerMutationObserver};

@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 import FormField from "./FormField";
+import $ from "jquery";
 
 export default class DatePicker extends FormField {
 
@@ -28,16 +29,16 @@ export default class DatePicker extends FormField {
         super(params);
     }
 
-    getWidgetName() {
-        return "dateTimeField";
-    }
-
     getClass() {
         return "datepicker"
     }
 
     getTagName() {
         return "input";
+    }
+
+    setValue(value) {
+        $(this.element).find("input[type=date]").val(value);
     }
 }
 
