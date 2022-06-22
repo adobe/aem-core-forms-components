@@ -100,7 +100,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!-- <plugin>
                 <groupId>com.day.jcr.vault</groupId>
                 <artifactId>content-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
@@ -116,7 +116,7 @@
                     </embeddeds>
                     <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
                 </configuration>
-            </plugin>
+            </plugin> -->
 
         </plugins>
     </build>
