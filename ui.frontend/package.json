@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.dev.js && clientlib --verbose"
+    "build:dev": "webpack --config webpack.dev.js && clientlib --verbose",
+    "build:prod": "webpack --config webpack.prod.js && clientlib --verbose"
   },
   "keywords": [],
   "author": "",

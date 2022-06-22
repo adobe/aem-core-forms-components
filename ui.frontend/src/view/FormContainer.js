@@ -14,19 +14,18 @@
  * limitations under the License.
  ******************************************************************************/
 
-import DatePicker from "./DatePicker";
-import readData from "../utils";
+import {createFormInstance} from "@aemforms/af-core";
 
 export default class FormContainer {
     constructor(params) {
-        this._model = params._model;
+        this._formJson = params._formJson;
         this._fields = {};
-        this.#addFields();
     }
 
-    getFieldModel(fieldId) {
-        this._model.getElement(fieldId);
+    async initialise() {
+        this._model = await createFormInstance(this._formJson);
     }
+
 
     /**
      * returns the form field view
@@ -36,8 +35,8 @@ export default class FormContainer {
         return this._fields[fieldId];
     }
 
-    getModel() {
-        return this._model;
+    getModel(id) {
+        return id ? this._model.getElement(id) : this._model;
     }
 
     setFocus(somExpression) {
@@ -51,43 +50,10 @@ export default class FormContainer {
     getView(somExpression) {
     }
 
-    #addFields() {
-        for (const [fieldId, fieldModel] of Object.entries(this._model._fields)) {
-            this.#addField(fieldId, fieldModel);
-        }
-    }
-
-    #addField(fieldId, fieldModel) {
-        switch(fieldModel.fieldType) {
-            case 'date-input': {
-                let textView = new DatePicker({_model: fieldModel, _formContainer: this});
-                this.#addViewField(fieldId, textView);
-            }
-        }
-    }
-
-    #addViewField(fieldId, fieldView) {
-        this._fields[fieldId]  = fieldView;
-    }
-
-    initialiseElementView(element, tagName, clazz) {
-        let elementId = element.getElementsByTagName(tagName)[0].id,
-            formField = this.getField(elementId),
-            that = this;
-        formField.setElement(element);
-        formField.setOptions(readData(element, clazz));
-        formField.subscribe();
-        element.addEventListener('change', (event) => {
-            let currentFormField = that.getField(event.target.id);
-            currentFormField.handleOnChange(event.target.value);
-        });
-    }
-
-    initialiseFormFields(selector, tagName, clazz) {
-        let fieldElements = document.querySelectorAll(selector);
-        for (let i = 0; i < fieldElements.length; i++) {
-            this.initialiseElementView(fieldElements[i], tagName, clazz);
-        }
+    addField(fieldView) {
+        this._fields[fieldView.getId()]  = fieldView;
+        fieldView.setModel(this.getModel(fieldView.getId()));
+        fieldView.subscribe();
     }
 
 }

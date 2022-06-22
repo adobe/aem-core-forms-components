@@ -14,21 +14,29 @@
  * limitations under the License.
  ******************************************************************************/
 
+import readData from "../utils";
+
 export default class FormField {
 
     constructor(params) {
-        this._model = params._model;  //runtime model of field
         this.element = params.element; //html element of field
-        this.options = params.options; //dataset of field
-        this._formContainer =  params._formContainer;
+        this.options = readData(this.element, this.getClass());  //dataset of field
+        this.setId();
+        this.bindEventListeners();
     }
 
-    createWidgetOptions() {
-        console.log("createWidgetOptions");
+    setId() {
+        this.id = this.element.getElementsByTagName(this.getTagName())[0].id;
     }
 
-    getFormContainer() {
-        return this._formContainer;
+    bindEventListeners() {
+        this.element.addEventListener('change', (event) => {
+            this.handleOnChange(event.target.value);
+        });
+    }
+
+    getId() {
+        return this.id;
     }
 
     setElement(element) {
@@ -39,20 +47,24 @@ export default class FormField {
         this.options = options;
     }
 
+    setModel(model) {
+        this._model = model;
+    }
+
     getModel() {
         return this._model;
     }
 
-    getWidgetName() {
+    getClass() {
+        return "formfield";
+    }
+
+    getTagName() {
+        return "div";
+    }
+
+    getFieldType() {
         return this._model._jsonModel.fieldType;
-    }
-
-    handleValueChanged() {
-        console.log("handleValueChanged");
-    }
-
-    handleClick() {
-        console.log("handleClick");
     }
 
     handleOnChange(value) {

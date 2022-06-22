@@ -17,12 +17,27 @@
 import FormField from "./FormField";
 
 export default class DatePicker extends FormField {
+
+    static NS = "cmp";
+    static IS = "datepicker";
+    static selectors  = {
+        self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+    };
+
     constructor(params) {
         super(params);
     }
 
     getWidgetName() {
         return "dateTimeField";
+    }
+
+    getClass() {
+        return "datepicker"
+    }
+
+    getTagName() {
+        return "input";
     }
 }
 

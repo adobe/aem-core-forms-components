@@ -14,16 +14,15 @@
  * limitations under the License.
  ******************************************************************************/
 (function($) {
-    var NS = "cmp";
-    var IS = "datepicker";
-    var selectors = {
-        self: "[data-" + NS + '-is="' + IS + '"]'
-    };
-    var tagName = "input";
 
     function onFormContainerInitialised(e) {
         console.log("FormContainerInitialised Received", e.detail);
-        window.af.formsRuntime.view.formContainer[e.detail].initialiseFormFields(selectors.self, tagName, IS);
+        let formContainer =  window.af.formsRuntime.view.formContainer[e.detail];
+        let fieldElements = document.querySelectorAll(FormView.DatePicker.selectors.self);
+        for (let i = 0; i < fieldElements.length; i++) {
+            let datePickerField = new FormView.DatePicker({element: fieldElements[i]}); //element and dataset will be set here
+            formContainer.addField(datePickerField); //model will be set here
+        }
         var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
         var body = document.querySelector("body");
         var observer = new MutationObserver(function(mutations) {
@@ -33,11 +32,13 @@
                 if (nodesArray.length > 0) {
                     nodesArray.forEach(function(addedNode) {
                         if (addedNode.querySelectorAll) {
-                            var elementsArray = [].slice.call(addedNode.querySelectorAll(selectors.self));
+                            var elementsArray = [].slice.call(addedNode.querySelectorAll(FormView.DatePicker.selectors.self));
                             elementsArray.forEach(function(element) {
-                                let dataset = window.af.formsRuntime.view.utils.readData(element, IS);
+                                let dataset = FormView.readData(element, IS);
                                 let formContainerPath = dataset["formcontainer"];
-                                window.af.formsRuntime.view.formContainer[formContainerPath].initialiseElementView(element, tagName, IS);
+                                let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
+                                let datePickerField = new FormView.DatePicker({element: element});
+                                formContainer.addField(datePickerField);
                             });
                         }
                     });
