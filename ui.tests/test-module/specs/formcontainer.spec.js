@@ -53,10 +53,11 @@ describe('Page/Form Authoring', function () {
                 formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
             beforeEach(function () {
                 // this is done since cypress session results in 403 sometimes
-                cy.openAuthoring(pagePath);
+                cy.login();
             });
 
             it('open edit dialog of adaptive form container component', function () {
+                cy.openAuthoring(pagePath);
                 // click configure action on adaptive form container component
                 checkEditDialog(formContainerEditPathSelector);
             });
@@ -71,10 +72,11 @@ describe('Page/Form Authoring', function () {
                 formContainerDropPathSelector = "[data-path='" + formContainerDropPath + "']";
                 beforeEach(function () {
                     // this is done since cypress session results in 403 sometimes
-                    cy.openAuthoring(pagePath);
+                    cy.login();
                 });
 
                 it('insert adaptive form container component', function () {
+                    cy.openAuthoring(pagePath);
                     const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
                     cy.selectLayer("Edit");
@@ -86,6 +88,7 @@ describe('Page/Form Authoring', function () {
                 });
 
                 it('open edit dialog of adaptive form container component', function () {
+                    cy.openAuthoring(pagePath);
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 });
