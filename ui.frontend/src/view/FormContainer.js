@@ -30,7 +30,10 @@ export default class FormContainer {
      * @param fieldId
      */
     getField(fieldId) {
-        return this._fields[fieldId];
+        if (this._fields.hasOwnProperty(fieldId)) {
+            return this._fields[fieldId];
+        }
+        return null;
     }
 
     getModel(id) {

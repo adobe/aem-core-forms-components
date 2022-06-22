@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "format": "date",
+      "required": false,
+      "name": "datepicker1654685072233",
+      "visible": true,
+      "enabled": true,
+      "constraintMessages": {
+        "minimum": "Please enter a date equal to or after 2022-06-02"
+      },
+      "readOnly": false,
+      "id": "/content/forms/af/try1/jcr:content/guideContainer/datepicker",
+      "fieldType": "date-input",
+      "screenReaderText": "datepicker1654685072233",
+      "label": {
+        "visible": true,
+        "richText": false,
+        "value": "Date of Birth"
+      },
+      "type": "string",
+      "maximum": "2022-06-24",
+      "minimum": "2022-06-02",
+      ":type": "core/fd/components/form/datepicker/v1/datepicker"
+    }
+  ],
+  ":type": "mysite/components/formcontainer",
+  "metadata": {
+    "dataUrl": "",
+    "action": "",
+    "version": "1.0.0",
+    "locale": "en-us",
+    "grammar": "json-formula-1.0.0"
+  }
+}
