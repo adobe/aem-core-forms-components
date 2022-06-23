@@ -50,7 +50,7 @@ const commons = require('../commons/commons'),
 Cypress.Commands.add("login", (pagePath) => {
     const username = Cypress.env('crx.username') ?  Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
-    cy.visit(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
+    cy.visit(pagePath);
     cy.get('#username').type(username);
     cy.get('#password').type(password);
     cy.get('#submit-button').click();
@@ -129,6 +129,8 @@ const waitForEditorToInitialize = () => {
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
+    //const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    //cy.login(baseUrl);
     cy.enableOrDisableTutorials(false);
     cy.visit(editorPageUrl).then(waitForEditorToInitialize);
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done

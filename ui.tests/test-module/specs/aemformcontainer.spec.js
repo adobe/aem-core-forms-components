@@ -33,21 +33,21 @@ const commons = require('../libs/commons/commons'),
       wizardSelectors = require('../libs/commons/wizardSelectors'),
       afConstants = require('../libs/commons/formsConstants');
 
-describe('Page - Authoring', function () {
-    // we can use these values to log in
-    const   pagePath = "/content/core-components-examples/library/core-content/aemform",
-            aemFormContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
-            aemFormContainerEditPathSelector = "[data-path='" + aemFormContainerEditPath + "']",
-            aemFormContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
-            aemFormContainerDropPathSelector = "[data-path='" + aemFormContainerDropPath + "']";
+// we can use these values to log in
+const   pagePath = "/content/core-components-examples/library/core-content/aemform",
+    aemFormContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
+    aemFormContainerEditPathSelector = "[data-path='" + aemFormContainerEditPath + "']",
+    aemFormContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.aemformcontainer.split("/").pop(),
+    aemFormContainerDropPathSelector = "[data-path='" + aemFormContainerDropPath + "']";
 
+describe('Page - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
-            cy.login();
+            cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
+            cy.openAuthoring(pagePath);
         });
 
         it('insert aem forms container component', function () {
-            cy.openAuthoring(pagePath);
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
@@ -59,7 +59,6 @@ describe('Page - Authoring', function () {
         });
 
         it('open edit dialog of aem forms container component', function() {
-            cy.openAuthoring(pagePath);
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
@@ -86,23 +85,29 @@ describe('Page - Authoring', function () {
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
         });
 
-        it('open toolbar, select wizard and click on Cancel', function(){
+        after(function() {
+            // clean up the operations performed in the test
+            cy.enableOrDisableTutorials(true);
+        });
+    });
+});
 
+describe('Page - Authoring - Wizard', function () {
+    context('Open Editor - Wizard', function () {
+        beforeEach(function () {
+            cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
             cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
             cy.openAuthoring(pagePath);
+        });
 
+        it('open toolbar, select wizard and click on Cancel', function(){
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
             cy.get(wizardSelectors.wizardCancelButton).click();
-
-            cy.disableToggles();
         });
 
         it('open toolbar, select wizard and create a Form', function() {
-            cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
-            cy.openAuthoring(pagePath);
-
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
@@ -119,6 +124,9 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("coral-taglist[name='./formRef']")
                 .should("have.value", "/content/dam/formsanddocuments/" + formName);
+        });
+
+        afterEach(function() {
             cy.disableToggles();
         });
 
