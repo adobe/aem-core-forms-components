@@ -25,7 +25,6 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -205,29 +204,6 @@ public interface Base extends Component {
     @Nullable
     default String getDescription() {
         return null;
-    }
-
-    /**
-     * Returns the short description of the field
-     *
-     * @return the short description of the field
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    @JsonIgnore
-    @Nullable
-    default String getShortDescription() {
-        return null;
-    }
-
-    /**
-     * Returns {@code true} if short description should always be visible, otherwise {@code false}.
-     *
-     * @return {@code true} if short description should always be visible, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    @JsonIgnore
-    default boolean isShortDescriptionVisible() {
-        return false;
     }
 
     /**

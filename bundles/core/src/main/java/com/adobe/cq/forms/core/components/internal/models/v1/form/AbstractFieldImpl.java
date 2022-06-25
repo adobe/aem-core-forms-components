@@ -15,11 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
@@ -52,6 +56,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
     @Nullable
     protected String dataFormat;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String shortDescription;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "shortVisible")
+    @Default(booleanValues = false)
+    protected boolean shortDescriptionVisible;
 
     @SlingObject
     private Resource resource;
@@ -90,4 +102,21 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         return dataFormat;
     }
 
+    @Override
+    public @Nullable String getShortDescription() {
+        return shortDescription;
+    }
+
+    @Override
+    public boolean isShortDescriptionVisible() {
+        return shortDescriptionVisible;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        customProperties.put("shortDescription", shortDescription);
+        customProperties.put("shortDescriptionVisible", shortDescriptionVisible);
+        return customProperties;
+    }
 }

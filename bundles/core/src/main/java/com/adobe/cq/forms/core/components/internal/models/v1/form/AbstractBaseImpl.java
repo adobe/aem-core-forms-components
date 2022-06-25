@@ -48,14 +48,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String shortDescription;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "shortVisible")
-    @Default(booleanValues = false)
-    protected boolean shortDescriptionVisible;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
     @Nullable
     protected String dataRef;
@@ -235,28 +227,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Returns the short description of the field
-     *
-     * @return the short description of the field
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    @Override
-    @Nullable
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    /**
-     * Returns {@code true} if short description should always be visible, otherwise {@code false}.
-     *
-     * @return {@code true} if short description should always be visible, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    public boolean isShortDescriptionVisible() {
-        return shortDescriptionVisible;
     }
 
     /**
@@ -498,13 +468,5 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     public String getValidationExpression() {
         return validationExpression;
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        customProperties.put("shortDescription", getShortDescription());
-        customProperties.put("shortDescriptionVisible", isShortDescriptionVisible());
-        return customProperties;
     }
 }
