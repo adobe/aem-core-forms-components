@@ -7,6 +7,7 @@
   "readOnly": false,
   "fieldType": "text-input",
   "description" : "dummy",
+  "autoComplete": false,
   "properties": {
     "shortDescription": "test-short-description",
     "shortDescriptionVisible": false

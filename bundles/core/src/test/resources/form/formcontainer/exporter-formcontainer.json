@@ -8,6 +8,7 @@
       "enabled": true,
       "readOnly": false,
       "fieldType": "text-input",
+      "autoComplete": false,
       "label": {
         "visible": true,
         "richText": false,

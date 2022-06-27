@@ -7,6 +7,7 @@
   "readOnly": false,
   "fieldType": "multiline-input",
   "description" : "dummy",
+  "autoComplete": false,
   "label": {
     "visible": true,
     "value": "def",
