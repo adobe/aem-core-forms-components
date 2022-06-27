@@ -35,7 +35,6 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class TextInputImplTest {
