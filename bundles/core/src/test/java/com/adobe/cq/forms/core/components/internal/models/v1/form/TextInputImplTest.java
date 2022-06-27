@@ -35,6 +35,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class TextInputImplTest {
@@ -222,6 +223,13 @@ public class TextInputImplTest {
         assertFalse(properties.isEmpty());
         assertEquals("test-short-description", String.valueOf(properties.get("shortDescription")));
         assertFalse((boolean) properties.get("shortDescriptionVisible"));
+    }
+
+    @Test
+    void testGetProperties_should_return_empty_if_no_custom_properties() {
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getProperties()).thenCallRealMethod();
+        assertTrue(textInputMock.getProperties().isEmpty());
     }
 
     @Test

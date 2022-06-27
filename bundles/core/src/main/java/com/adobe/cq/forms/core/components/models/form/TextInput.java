@@ -55,7 +55,6 @@ public interface TextInput extends Field {
      * @return {@code true} if autocomplete, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
-    @JsonIgnore
     default boolean isAutoComplete() {
         return false;
     }
@@ -66,7 +65,6 @@ public interface TextInput extends Field {
      * @return autofillFieldKeyword.
      * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
-    @JsonIgnore
     default String getAutofillFieldKeyword() {
         return null;
     }
