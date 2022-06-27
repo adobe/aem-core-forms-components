@@ -17,15 +17,14 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-textinput__editdialog",
-        TEXTINPUT_ALLOWRICHTEXT = ".cmp-adaptiveform-textinput__allowrichtext",
-        TEXTINPUT_MAXCHARS = ".cmp-adaptiveform-textinput__maxchars",
-        TEXTINPUT_MINLENGTH = ".cmp-adaptiveform-textinput__minlength",
-        TEXTINPUT_LENGTH = ".cmp-adaptiveform-textinput__length",
-        BASE_PLACEHOLDER = ".cmp-adaptiveform-base__placeholder",
-        TEXTINPUT_VALUE = ".cmp-adaptiveform-textinput__value",
-        TEXTINPUT_RICHTEXTVALUE = ".cmp-adaptiveform-textinput__richtextvalue",
-        TEXTINPUT_AUTOCOMPLETE = ".cmp-adaptiveform-textinput__autocomplete",
-        TEXTINPUT_AUTOFILL_FIELD_KEYWORD = ".cmp-adaptiveform-textinput__autofillfieldkeyword",
+        TEXTINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__allowrichtext",
+        TEXTINPUT_MAXCHARS = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxchars",
+        TEXTINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__minlength",
+        BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
+        TEXTINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__value",
+        TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
+        TEXTINPUT_AUTOCOMPLETE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autocomplete",
+        TEXTINPUT_AUTOFILL_FIELD_KEYWORD = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autofillfieldkeyword",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -38,11 +37,10 @@
         var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
         var textInputMaxChars = dialog.find(TEXTINPUT_MAXCHARS);
         var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);
-        var textInputLength = dialog.find(TEXTINPUT_LENGTH);
         var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
         var textInputValue = dialog.find(TEXTINPUT_VALUE);
         var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
-        var listOfElements = [textInputMaxChars, textInputMinLength, textInputLength, basePlaceHolder, textInputValue];
+        var listOfElements = [textInputMaxChars, textInputMinLength, basePlaceHolder, textInputValue];
 
         var isNotChecked = function() {return !isChecked()};
         var isChecked = function() {return component.checked};

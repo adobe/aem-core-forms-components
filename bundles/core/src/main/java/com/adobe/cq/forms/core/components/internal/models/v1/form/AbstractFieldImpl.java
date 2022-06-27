@@ -115,8 +115,10 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = new LinkedHashMap<>();
-        customProperties.put("shortDescription", shortDescription);
-        customProperties.put("shortDescriptionVisible", shortDescriptionVisible);
+        if (shortDescription != null) {
+            customProperties.put("shortDescription", shortDescription);
+            customProperties.put("shortDescriptionVisible", shortDescriptionVisible);
+        }
         return customProperties;
     }
 }

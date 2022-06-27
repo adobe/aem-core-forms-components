@@ -60,7 +60,6 @@ describe('Page - Authoring', function () {
         cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
         cy.get(".cmp-adaptiveform-textinput__maxchars").invoke('css', 'display').should('equal','none');
         cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
-        cy.get(".cmp-adaptiveform-textinput__length").invoke('css', 'display').should('equal','none');
         cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
     });
 

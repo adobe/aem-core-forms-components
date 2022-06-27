@@ -7,10 +7,6 @@
   "readOnly": false,
   "fieldType": "multiline-input",
   "description" : "dummy",
-  "properties": {
-    "shortDescription": null,
-    "shortDescriptionVisible": false
-  },
   "label": {
     "visible": true,
     "value": "def",

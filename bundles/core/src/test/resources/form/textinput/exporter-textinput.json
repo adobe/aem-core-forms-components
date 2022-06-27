@@ -12,10 +12,6 @@
     "value": "def",
     "richText": false
   },
-  "properties": {
-    "shortDescription": null,
-    "shortDescriptionVisible": false
-  },
   "dataRef":"a.b",
 
   "screenReaderText": "Custom screen reader text",

@@ -271,7 +271,7 @@ public interface Base extends Component {
     /**
      * Custom Properties
      * 
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @since com.adobe.cq.forms.core.components.models.form 1.1.0
      */
     @NotNull
     @JsonInclude(Include.NON_EMPTY)
