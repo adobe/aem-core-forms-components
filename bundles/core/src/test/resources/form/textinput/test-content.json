@@ -10,7 +10,8 @@
     "assistPriority" : "custom",
     "bindRef" : "a.b",
     "custom" : "Custom screen reader text",
-    "typeMessage" : "incorrect type"
+    "typeMessage" : "incorrect type",
+    "shortDescription": "test-short-description"
   },
   "multiline-textinput" : {
     "jcr:primaryType": "nt:unstructured",
