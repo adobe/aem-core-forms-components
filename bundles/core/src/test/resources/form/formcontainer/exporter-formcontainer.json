@@ -7,10 +7,6 @@
       "visible": false,
       "enabled": true,
       "readOnly": false,
-      "properties": {
-        "shortDescription": null,
-        "shortDescriptionVisible": false
-      },
       "fieldType": "text-input",
       "label": {
         "visible": true,
