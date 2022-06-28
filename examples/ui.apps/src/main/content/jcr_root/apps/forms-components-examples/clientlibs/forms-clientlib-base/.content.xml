@@ -3,4 +3,5 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"
     categories="[forms-examples.base]"
-    embed="[forms-examples.site]"/>
+    embed="[forms-examples.site]"
+    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2015;languageOut=ECMASCRIPT_2015]"/>
