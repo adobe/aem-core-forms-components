@@ -28,7 +28,8 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Adaptive Form
 
--   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v1/container)
+- [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v1/container)
+- [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
 
 ## System Requirements
 
