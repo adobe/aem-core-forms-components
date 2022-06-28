@@ -19,4 +19,5 @@
           allowProxy="{Boolean}true"
           categories="[core.forms.components.formsportal.draftsandsubmissions.v1]"
           embed="[core.forms.components.commons.v1.clientlibs.layouts.iteminjector, core.forms.components.commons.v1.clientlibs.operations]"
-          dependencies="[jquery]"/>
+          dependencies="[jquery]"
+          jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2015;languageOut=ECMASCRIPT_2015]"/>
