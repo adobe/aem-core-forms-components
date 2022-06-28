@@ -125,7 +125,7 @@ public interface FormContainer extends Container {
     /**
      * Returns the form thank you page
      *
-     * @return form thank x`you page
+     * @return form thank you page
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore

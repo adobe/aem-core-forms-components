@@ -13,15 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Container (v1)
+Adaptive Form Container (v2)
 ====
 Adaptive Form container written in HTL.
 
 ## Features
 * Form submit actions like sending emails, submit to rest end point
+* Configurable list of allowed components
 * Thank you page
 * Thank you message
-* Ability to select form model definition as a dam asset
+* Ability to drop other adaptive form components
 
 ### Use Object
 The Adaptive Form Container component uses the `com.adobe.cq.forms.core.components.models.form.FormContainer` Sling Model for its Use-object.
@@ -30,6 +31,7 @@ The Adaptive Form Container component uses the `com.adobe.cq.forms.core.componen
 The following configuration properties are used:
 
 1. `./components` - defines the allowed components that can be dropped onto a Form Container associated to this component policy
+2. `./columns` - defines the number of columns for the container's grid for a Form Container associated to this component policy
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Adaptive Form Container component and are expected to be available as `Resource` 
@@ -39,16 +41,15 @@ properties:
 2. `./thankyouMessage` - defines the thank you message to shown after submission
 3. `./thankyouPage` - if left empty the form will be rendered after submission, otherwise the user will be redirected to the page stored by this
 property
-4. `./formModelDocumentPath` - json document defining the form model
 
 ## Client Libraries
 
-The component provides a `core.forms.components.container.v1.editor` editor client library category that includes
+The component provides a `core.forms.components.container.v2.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description
 ```
-BLOCK cmp-formcontainer
-    ELEMENT cmp-formcontainer__content
+BLOCK cmp-adaptiveform-container
+    ELEMENT cmp-adaptiveform-container__content
 ```
 

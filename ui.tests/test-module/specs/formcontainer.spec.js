@@ -32,15 +32,17 @@ const commons = require('../libs/commons/commons'),
     guideSelectors = require('../libs/commons/guideSelectors'),
     afConstants = require('../libs/commons/formsConstants');
 
+// todo: beta specific form authoring test cases are not run (only common functionality [of beta and to be GA] test are executed)
 describe('Page/Form Authoring', function () {
         const checkEditDialog = function(formContainerEditPathSelector) {
             // click configure action on adaptive form container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
             // check if few dialog options are visible
-            cy.get("[name='./formModelDocumentPath']").should("be.visible");
+            //cy.get("[name='./formModelDocumentPath']").should("be.visible"); // this was in v1, but test are run against latest always
             cy.get("[name='./redirect'").should("exist"); // should exist
             cy.get("[name='./actionType'").should("exist"); // should exist
+            cy.get("[name='./prefillService'").should("exist"); // prefillService option exist in v2
         };
 
         context("Open Forms Editor", function () {
@@ -74,7 +76,7 @@ describe('Page/Form Authoring', function () {
 
                 it('insert adaptive form container component', function () {
                     const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+                        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
                     cy.selectLayer("Edit");
                     // Add adaptibe form container component and delete it
                     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
