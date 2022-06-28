@@ -34,6 +34,8 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class TextInputImplTest {
@@ -212,6 +214,54 @@ public class TextInputImplTest {
     void testMultiLineJSONExport() throws Exception {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_2);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_2));
+    }
+
+    @Test
+    void testGetProperties() throws Exception {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        Map<String, Object> properties = textInput.getProperties();
+        assertFalse(properties.isEmpty());
+        assertEquals("test-short-description", String.valueOf(properties.get("shortDescription")));
+        assertFalse((boolean) properties.get("shortDescriptionVisible"));
+    }
+
+    @Test
+    void testGetProperties_should_return_empty_if_no_custom_properties() {
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getProperties()).thenCallRealMethod();
+        assertTrue(textInputMock.getProperties().isEmpty());
+    }
+
+    @Test
+    void testGetShortDescription() {
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getShortDescription()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getShortDescription());
+    }
+
+    @Test
+    void testIsShortDescriptionVisible() {
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.isShortDescriptionVisible()).thenCallRealMethod();
+        assertEquals(false, textInputMock.isShortDescriptionVisible());
+    }
+
+    @Test
+    void testIsAutoComplete() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals(false, textInput.isAutoComplete());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.isAutoComplete()).thenCallRealMethod();
+        assertEquals(false, textInputMock.isAutoComplete());
+    }
+
+    @Test
+    void testGetAutofillFieldKeyword() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals(null, textInput.getAutofillFieldKeyword());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getAutofillFieldKeyword()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getAutofillFieldKeyword());
     }
 
     private TextInput getTextInputUnderTest(String resourcePath) {

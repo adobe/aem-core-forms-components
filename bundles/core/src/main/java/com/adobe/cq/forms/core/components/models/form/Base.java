@@ -26,6 +26,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
@@ -265,5 +266,16 @@ public interface Base extends Component {
     @Override
     default String getExportedType() {
         return "";
+    }
+
+    /**
+     * Custom Properties
+     * 
+     * @since com.adobe.cq.forms.core.components.models.form 1.1.0
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, Object> getProperties() {
+        return Collections.emptyMap();
     }
 }

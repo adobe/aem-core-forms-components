@@ -1,4 +1,5 @@
 {
+  "id": "textinput-3c50c84973",
   "required": false,
   "name": "abc",
   "visible": false,
@@ -6,6 +7,11 @@
   "readOnly": false,
   "fieldType": "text-input",
   "description" : "dummy",
+  "autoComplete": false,
+  "properties": {
+    "shortDescription": "test-short-description",
+    "shortDescriptionVisible": false
+  },
   "label": {
     "visible": true,
     "value": "def",

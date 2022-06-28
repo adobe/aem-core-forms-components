@@ -1,0 +1,54 @@
+/*******************************************************************************
+ * Copyright 2022 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+.base__questionmark {
+    display:inline-block;
+    position:relative;
+    top:8px;
+    right:8px;
+    width:1rem;
+    height:1rem;
+    border-radius: 9px;
+    background:url(./questionmark.svg) center center / cover no-repeat,#969696;
+    cursor : pointer;
+}
+
+.base__longdescription {
+    margin: 0px;
+    clear: both;
+    border-radius: 4px 4px 3px 3px;
+    display:none;
+    padding: 10px 15px;
+}
+
+.base__shortdescription {
+    margin: 0px;
+    clear: both;
+    border-radius: 4px 4px 3px 3px;
+    padding: 10px 15px;
+}
+
+.cmp-adaptiveform-textinput__questionmark {
+    &:extend(.base__questionmark);
+}
+
+.cmp-adaptiveform-textinput__longdescription {
+    &:extend(.base__longdescription);
+}
+
+.cmp-adaptiveform-textinput__shortdescription {
+    &:extend(.base__shortdescription);
+}

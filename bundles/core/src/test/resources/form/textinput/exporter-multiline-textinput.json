@@ -1,4 +1,5 @@
 {
+  "id": "textinput-7346ac5dd9",
   "required": false,
   "name": "abc",
   "visible": false,
@@ -6,6 +7,7 @@
   "readOnly": false,
   "fieldType": "multiline-input",
   "description" : "dummy",
+  "autoComplete": false,
   "label": {
     "visible": true,
     "value": "def",

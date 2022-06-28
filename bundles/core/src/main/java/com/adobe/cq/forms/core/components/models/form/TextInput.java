@@ -48,4 +48,24 @@ public interface TextInput extends Field {
     default String getFieldType() {
         return FieldType.TEXT_INPUT.getValue();
     }
+
+    /**
+     * Returns {@code true} if autocomplete, otherwise {@code false}.
+     *
+     * @return {@code true} if autocomplete, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     */
+    default boolean isAutoComplete() {
+        return false;
+    }
+
+    /**
+     * The autofillFieldKeyword.
+     *
+     * @return autofillFieldKeyword.
+     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     */
+    default String getAutofillFieldKeyword() {
+        return null;
+    }
 }
