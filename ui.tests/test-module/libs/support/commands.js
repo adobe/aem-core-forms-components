@@ -129,8 +129,6 @@ const waitForEditorToInitialize = () => {
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
-    //const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
-    //cy.login(baseUrl);
     cy.enableOrDisableTutorials(false);
     cy.visit(editorPageUrl).then(waitForEditorToInitialize);
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
