@@ -13,21 +13,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<form class="cmp-formcontainer"
-     data-sly-use.formContainer="com.adobe.cq.forms.core.components.models.form.FormContainer"
-     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-     id="${formContainer.id}"
-     data-cmp-is="formcontainer"
-     data-cmp-path="${container.path}"
-     data-cmp-document-path="${formContainer.documentPath}"
-     data-form-id="${formContainer.encodedCurrentPagePath}"
-     data-sly-set.documentPathError="${'Please select a form runtime document to display.' @ i18n}"
-     data-sly-set.error="${!formContainer.documentPath ? documentPathError : false}"
-     data-sly-test="${!error}">
-    <div id="${formContainer.id}-content"
-         class="cmp-formcontainer__content"></div>
+<form
+      class="cmp-formcontainer"
+      data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
+      data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
+      action="${container.metadata.action}"
+      data-cmp-is="formcontainer"
+      data-cmp-path="${container.path}">
+    <input type="hidden" name=":formstart" value="${resource.path}"/>
+    <input type="hidden" name="_charset_" value="utf-8"/>
+    <input data-sly-test="${container.thankyouPage}" type="hidden" name=":redirect" value="${container.thankyouPage @ extension='html'}"/>
+    <sly data-sly-repeat.paragraph="${grid.paragraphs}"
+         data-sly-resource="${paragraph.path @ resourceType=paragraph.resourceType, decorationTagName='div', cssClassName=paragraph.cssClass}"></sly>
+    <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/responsivegrid/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+         data-sly-test="${wcmmode.edit || wcmmode.preview}"></sly>
 </form>
-<sly data-sly-call="${template.placeholder @ isEmpty=error, classAppend='cmp-formcontainer', emptyTextAppend=error}"></sly>
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" data-sly-test="${wcmmode.preview || wcmmode.disabled}">
     <sly data-sly-call="${clientlib.js @ categories='core.forms.components.container.v1.runtime'}" />
 </sly>

@@ -132,8 +132,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    @Nullable
-    public String getId() {
+    public @NotNull String getId() {
         return resource.getPath();
     }
 
