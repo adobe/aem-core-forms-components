@@ -4,6 +4,6 @@
     cq:isContainer="{Boolean}true"
     jcr:description="Container allowing to construct adaptive forms"
     jcr:primaryType="cq:Component"
-    jcr:title="Adaptive Form Container (v1)"
+    jcr:title="Adaptive Form Container (v2)"
     sling:resourceSuperType="wcm/foundation/components/responsivegrid"
     componentGroup=".core-wcm"/>
