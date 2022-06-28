@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +31,15 @@ import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 @ExtendWith(AemContextExtension.class)
 public class TextInputImplTest {
@@ -262,6 +266,19 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getAutofillFieldKeyword()).thenCallRealMethod();
         assertEquals(null, textInputMock.getAutofillFieldKeyword());
+    }
+
+    @Test
+    void testStyleSystemClasses() {
+        ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
+        Resource resource = spy(context.resourceResolver().getResource(PATH_TEXTINPUT_1));
+        Mockito.doReturn(componentStyleInfoMock).when(resource).adaptTo(ComponentStyleInfo.class);
+        MockSlingHttpServletRequest request = context.request();
+        request.setResource(resource);
+        Mockito.doReturn("mystyle").when(componentStyleInfoMock).getAppliedCssClasses();
+        TextInput textInput = request.adaptTo(TextInput.class);
+        String appliedCssClasses = textInput.getAppliedCssClasses();
+        assertEquals("mystyle", appliedCssClasses);
     }
 
     private TextInput getTextInputUnderTest(String resourcePath) {

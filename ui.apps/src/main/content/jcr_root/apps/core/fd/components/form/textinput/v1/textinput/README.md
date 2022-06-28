@@ -52,7 +52,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__label
     ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__help
+    ELEMENT cmp-adaptiveform-textinput__questionmark
+    ELEMENT cmp-adaptiveform-textinput__shortdescription
+    ELEMENT cmp-adaptiveform-textinput__longdescription
 ```
 
 
