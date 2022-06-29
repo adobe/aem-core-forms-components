@@ -15,11 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.annotation.Nullable;
 import javax.inject.Named;
 
@@ -90,54 +85,6 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
 
     public String getFormat() {
         return "date";
-    }
-
-    /**
-     * Utility function to convert string value to date.
-     * 
-     * @param dateInString
-     *            value of date in String.
-     * @return date string converted to date format.
-     */
-    private Date convertStringToDate(String dateInString) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date;
-        try {
-            date = formatter.parse(dateInString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return date;
-    }
-
-    /**
-     * Utility function to convert date to string.
-     * 
-     * @param date
-     *            value of date in date format.
-     * @return dateInString date converted to string
-     */
-    private String convertDateToString(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateInString;
-        dateInString = formatter.format(date);
-        return dateInString;
-    }
-
-    /**
-     * Utility function to add or subtract days in date.
-     * 
-     * @param date
-     *            the base date to which days are to be added.
-     * @param days
-     *            number of days to be added or substracted from date.
-     * @return newDate which is computed after adding/substracting given days.
-     */
-    private Date addDaysToDate(Date date, int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days);
-        return cal.getTime();
     }
 
     @Override

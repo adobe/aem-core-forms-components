@@ -20,8 +20,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@aemforms/af-core": "^0.15.0",
-    "jquery": "^3.6.0"
+    "@aemforms/af-core": "^0.15.0"
   },
   "jest": {
     "moduleFileExtensions": [

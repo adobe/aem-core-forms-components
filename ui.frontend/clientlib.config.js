@@ -44,8 +44,8 @@ module.exports = {
   libs: [
     {
       ...libsBaseConfig,
-      name: 'frontend',
-      categories: ['aem.core.forms.components'],
+      name: 'clientlib-core-forms-components-runtime',
+      categories: ['core.forms.components.runtime'],
       assets: {
         js: ['dist/main.js']
       }
