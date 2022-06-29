@@ -108,8 +108,6 @@ describe('Page - Authoring - Wizard', function () {
             cy.get(wizardSelectors.wizardCancelButton).click();
         });
 
-        // Enable test once issue is fixed: https://jira.corp.adobe.com/browse/CQ-4345819
-
         /*it('open toolbar, select wizard and create a Form', function() {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
