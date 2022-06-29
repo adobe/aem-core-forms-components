@@ -53,7 +53,6 @@ describe('Page/Form Authoring', function () {
                 formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
             beforeEach(function () {
                 // this is done since cypress session results in 403 sometimes
-                cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
                 cy.openAuthoring(pagePath);
             });
 
@@ -72,7 +71,6 @@ describe('Page/Form Authoring', function () {
                 formContainerDropPathSelector = "[data-path='" + formContainerDropPath + "']";
                 beforeEach(function () {
                     // this is done since cypress session results in 403 sometimes
-                    cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
                     cy.openAuthoring(pagePath);
                 });
 

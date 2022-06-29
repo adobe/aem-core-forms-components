@@ -50,7 +50,6 @@ const commons = require('../commons/commons'),
 Cypress.Commands.add("login", (pagePath) => {
     const username = Cypress.env('crx.username') ?  Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
-    cy.visit(pagePath);
     cy.get('#username').type(username);
     cy.get('#password').type(password);
     cy.get('#submit-button').click();
@@ -125,8 +124,8 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open authoring page
-Cypress.Commands.add("openAuthoring", (pagePath) => {
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
     cy.enableOrDisableTutorials(false);
@@ -148,6 +147,65 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
             };
         }
     });
+});
+
+// Cypress command to open authoring page
+Cypress.Commands.add("openAuthoring", (pagePath) => {
+    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl);
+    cy.login(baseUrl);
+    cy.openSiteAuthoring(pagePath);
+    /*const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    cy.window().then(win => {
+        // only if granite is defined, override the API
+        if (win.Granite) {
+            win.Granite.HTTP.handleLoginRedirect = function () {
+                if (!loginRedirected) {
+                    loginRedirected = true;
+                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
+                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
+                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+                }
+            };
+        }
+    });*/
+});
+
+// Cypress command to open authoring page after configuring feature toggles
+Cypress.Commands.add("openAuthoringWithFeatureToggles", (pagePath, toggles) => {
+    cy.enableToggles(toggles);
+    cy.openSiteAuthoring(pagePath);
+    /*const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    //const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    //cy.visit(baseUrl);
+    //cy.login(baseUrl);
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    cy.window().then(win => {
+        // only if granite is defined, override the API
+        if (win.Granite) {
+            win.Granite.HTTP.handleLoginRedirect = function () {
+                if (!loginRedirected) {
+                    loginRedirected = true;
+                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
+                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
+                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+                }
+            };
+        }
+    });*/
 });
 
 // Cypress command to open authoring page

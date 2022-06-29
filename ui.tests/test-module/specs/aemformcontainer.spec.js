@@ -43,7 +43,6 @@ const   pagePath = "/content/core-components-examples/library/core-content/aemfo
 describe('Page - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
-            cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
             cy.openAuthoring(pagePath);
         });
 
@@ -95,9 +94,11 @@ describe('Page - Authoring', function () {
 describe('Page - Authoring - Wizard', function () {
     context('Open Editor - Wizard', function () {
         beforeEach(function () {
-            cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
-            cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
-            cy.openAuthoring(pagePath);
+            const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+            cy.visit(baseUrl);
+            cy.login(baseUrl);
+            //cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
+            cy.openAuthoringWithFeatureToggles(pagePath,["FT_CQ-4343036","FT_CQ-4339424"]);
         });
 
         it('open toolbar, select wizard and click on Cancel', function(){
@@ -107,7 +108,9 @@ describe('Page - Authoring - Wizard', function () {
             cy.get(wizardSelectors.wizardCancelButton).click();
         });
 
-        it('open toolbar, select wizard and create a Form', function() {
+        // Enable test once issue is fixed: https://jira.corp.adobe.com/browse/CQ-4345819
+
+        /*it('open toolbar, select wizard and create a Form', function() {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
@@ -124,7 +127,7 @@ describe('Page - Authoring - Wizard', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("coral-taglist[name='./formRef']")
                 .should("have.value", "/content/dam/formsanddocuments/" + formName);
-        });
+        });*/
 
         afterEach(function() {
             cy.disableToggles();
