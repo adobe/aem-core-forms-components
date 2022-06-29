@@ -78,11 +78,6 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
         return this.minDateInString;
     }
 
-    @Override
-    public String getId() {
-        return request.getResource().getPath();
-    }
-
     public String getFormat() {
         return "date";
     }
