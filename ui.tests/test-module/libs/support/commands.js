@@ -155,57 +155,12 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
     cy.visit(baseUrl);
     cy.login(baseUrl);
     cy.openSiteAuthoring(pagePath);
-    /*const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
-    cy.window().then(win => {
-        // only if granite is defined, override the API
-        if (win.Granite) {
-            win.Granite.HTTP.handleLoginRedirect = function () {
-                if (!loginRedirected) {
-                    loginRedirected = true;
-                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-                }
-            };
-        }
-    });*/
 });
 
 // Cypress command to open authoring page after configuring feature toggles
 Cypress.Commands.add("openAuthoringWithFeatureToggles", (pagePath, toggles) => {
     cy.enableToggles(toggles);
     cy.openSiteAuthoring(pagePath);
-    /*const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    //const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
-    //cy.visit(baseUrl);
-    //cy.login(baseUrl);
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
-    cy.window().then(win => {
-        // only if granite is defined, override the API
-        if (win.Granite) {
-            win.Granite.HTTP.handleLoginRedirect = function () {
-                if (!loginRedirected) {
-                    loginRedirected = true;
-                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-                }
-            };
-        }
-    });*/
 });
 
 // Cypress command to open authoring page
@@ -215,7 +170,6 @@ Cypress.Commands.add("openPage", (pagePath) => {
     cy.login(baseUrl);
     cy.visit(pagePath);
 });
-
 
 // cypress command to select layer in authoring
 Cypress.Commands.add("selectLayer", (layer) => {
@@ -255,13 +209,10 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     })
 });
 
-
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
     cy.get(actionSelector).click();
 });
-
-
 
 // cypress command to initialize event handler on channel
 Cypress.Commands.add("initializeEventHandlerOnChannel", (eventName) => {
