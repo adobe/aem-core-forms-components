@@ -141,7 +141,4 @@ public interface FormContainer extends Container {
     default String getFormData() {
         return "";
     }
-
-    @JsonIgnore
-    String getPath();
 }
