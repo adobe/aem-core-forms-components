@@ -17,7 +17,7 @@
 (function($) {
     "use strict";
     const NS = "cmp";
-    const IS = "formcontainer";
+    const IS = "adaptiveFormContainer";
     const selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]'
     };
