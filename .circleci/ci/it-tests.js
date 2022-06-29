@@ -50,6 +50,7 @@ try {
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
             --install-file ${config.modules['core-forms-components-it-tests-content'].path}/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar \
+            --install-file ${config.modules['core-forms-components-it-tests-content'].path}/src/main/resources/aem-forms-reference-assets-1.0.0.zip \
             --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \

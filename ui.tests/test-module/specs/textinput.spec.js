@@ -31,6 +31,7 @@ describe('Page - Authoring', function () {
   context('Open Editor', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
+      cy.login(Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "");
       cy.openAuthoring(pagePath);
     });
 
