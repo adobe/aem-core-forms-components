@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;

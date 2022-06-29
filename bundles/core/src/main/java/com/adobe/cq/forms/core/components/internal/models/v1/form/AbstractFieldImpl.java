@@ -121,6 +121,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         }
         return customProperties;
     }
+
     @Override
     @Nullable
     public String getFormContainer() {

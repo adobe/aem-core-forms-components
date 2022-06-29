@@ -86,6 +86,7 @@ public interface BaseConstraint {
 
     public enum Format {
         DATE("date");
+
         private String value;
 
         Format(String value) {

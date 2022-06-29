@@ -91,6 +91,7 @@
         <core.wcm.components.library.version>2.20.2</core.wcm.components.library.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <formatter.version>2.16.0</formatter.version>
 
         <aem.java.version>8</aem.java.version>
 
@@ -288,7 +289,6 @@
                 <groupId>org.apache.rat</groupId>
                 <artifactId>apache-rat-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
                     <excludes combine.children="append">
                         <!--  Used by maven-remote-resources-plugin -->
                         <exclude>src/main/appended-resources/META-INF/*</exclude>
@@ -761,6 +761,9 @@
                             <exclude>**/.github/**</exclude>
                             <!-- Ignore mockito extensions config -->
                             <exclude>**/test/resources/mockito-extensions/*</exclude>
+                            <!-- Ignore auto generated webpack file -->
+                            <exclude>**/dist/main.js</exclude>
+                            <exclude>**/apps/core/fd/components/frontend/js/main.js</exclude>
                         </excludes>
                     </configuration>
                     <executions>
@@ -780,6 +783,46 @@
                     <configuration>
                         <failOnWarnings>true</failOnWarnings>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>${formatter.version}</version>
+                    <executions>
+                        <execution>
+                            <id>verify-code-formatting</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>validate</goal>
+                            </goals>
+                            <configuration>
+                                <configFile>${formatter.config}</configFile>
+                                <encoding>UTF-8</encoding>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>1.4.1</version>
+                    <configuration>
+                        <groups>java, javax, org</groups>
+                        <staticGroups>*</staticGroups>
+                        <staticAfter>true</staticAfter>
+                        <removeUnused>true</removeUnused>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>verify-import-sorting</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>

@@ -19,17 +19,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -41,6 +37,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Datepicker;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -55,7 +52,6 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
 
     @Self
     private SlingHttpServletRequest request;
-
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Named("exclusiveMaximum")
@@ -162,6 +158,5 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
         }
         return null;
     }
-
 
 }
