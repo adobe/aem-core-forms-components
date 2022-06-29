@@ -106,7 +106,6 @@ public interface BaseConstraint {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
          */
         public String getValue() {
             return value;
