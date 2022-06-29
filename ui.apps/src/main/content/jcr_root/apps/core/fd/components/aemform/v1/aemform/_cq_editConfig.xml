@@ -24,6 +24,12 @@
             handler="fd.core.openFormForEditing"
             icon="alias"
             text="Edit in a new window"/>
+        <createFormViaWizard
+            jcr:primaryType="nt:unstructured"
+            condition="fd.core.featureEnabled"
+            handler="fd.core.openCreateFormWizard"
+            icon="addCircle"
+            text="Create Form"/>
     </cq:actionConfigs>
     <cq:listeners
         jcr:primaryType="cq:EditListenersConfig"

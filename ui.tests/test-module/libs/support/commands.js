@@ -124,13 +124,10 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open authoring page
-Cypress.Commands.add("openAuthoring", (pagePath) => {
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
-    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
-    cy.login(baseUrl);
     cy.enableOrDisableTutorials(false);
     cy.visit(editorPageUrl).then(waitForEditorToInitialize);
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
@@ -153,13 +150,26 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 });
 
 // Cypress command to open authoring page
+Cypress.Commands.add("openAuthoring", (pagePath) => {
+    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl);
+    cy.login(baseUrl);
+    cy.openSiteAuthoring(pagePath);
+});
+
+// Cypress command to open authoring page after configuring feature toggles
+Cypress.Commands.add("openAuthoringWithFeatureToggles", (pagePath, toggles) => {
+    cy.enableToggles(toggles);
+    cy.openSiteAuthoring(pagePath);
+});
+
+// Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
     cy.visit(baseUrl);
     cy.login(baseUrl);
     cy.visit(pagePath);
 });
-
 
 // cypress command to select layer in authoring
 Cypress.Commands.add("selectLayer", (layer) => {
@@ -199,13 +209,10 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     })
 });
 
-
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
     cy.get(actionSelector).click();
 });
-
-
 
 // cypress command to initialize event handler on channel
 Cypress.Commands.add("initializeEventHandlerOnChannel", (eventName) => {
@@ -272,4 +279,32 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
     cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
     // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+});
+
+// enable toggles
+Cypress.Commands.add("enableToggles", (toggles) => {
+    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
+    cy.visit(baseUrl);
+    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
+    cy.get("span[id='enabledToggles1']").type(toggles[0]);
+
+    let toggleIndex = 1;
+    let textAreaId = 3;
+    while (toggleIndex < toggles.length) {
+        cy.get("input[value='+']").first().click();
+        cy.get("span[id='enabledToggles" + textAreaId++ + "']").type(toggles[toggleIndex++]);
+    }
+
+    cy.get('button').contains( 'Save').click();
+});
+
+// disable toggles
+Cypress.Commands.add("disableToggles", () => {
+    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
+    cy.visit(baseUrl);
+    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
+    cy.get("textarea[name='enabledToggles']").each(item => {
+        cy.get("input[value='-']").first().click();
+    });
+    cy.get('button').contains( 'Save').click();
 });
