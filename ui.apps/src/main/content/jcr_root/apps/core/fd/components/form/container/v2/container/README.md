@@ -50,6 +50,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-container
-    ELEMENT cmp-adaptiveform-container__content
+    ELEMENT cmp-adaptiveform-container__wrapper
 ```
 
+## JavaScript Data Attribute Bindings
+
+Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform-container` block to enable initialization of the JavaScript component.

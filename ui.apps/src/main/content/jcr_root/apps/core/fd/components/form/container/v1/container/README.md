@@ -52,3 +52,6 @@ BLOCK cmp-formcontainer
     ELEMENT cmp-formcontainer__content
 ```
 
+## JavaScript Data Attribute Bindings
+
+Apply a `data-cmp-is="formcontainer"` attribute to the `cmp-formcontainer` block to enable initialization of the JavaScript component.
