@@ -25,6 +25,8 @@
 
     <artifactId>ui.frontend</artifactId>
 
+
+    <name>AEM Forms Core Components - UI Frontend</name>
     <build>
         <sourceDirectory>src/main/content/jcr_root</sourceDirectory>
         <plugins>
