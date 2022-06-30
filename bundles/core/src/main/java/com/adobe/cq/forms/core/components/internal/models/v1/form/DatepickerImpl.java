@@ -79,7 +79,7 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
     }
 
     public String getFormat() {
-        return "date";
+        return Format.DATE.toString();
     }
 
     @Override
