@@ -13,3 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
+export const Constants = {
+    NS : "cmp",
+    FORM_CONTAINER_INITIALISED : "AF_FormContainerInitialised"
+}
+

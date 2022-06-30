@@ -14,55 +14,88 @@
  * limitations under the License.
  ******************************************************************************/
 
-const NS = "cmp";
+import {Constants} from "./constants";
 
-export default function readData(element, clazz) {
-    const data = element.dataset;
-    let options = [];
-    let capitalized = clazz;
-    capitalized = capitalized.charAt(0).toUpperCase() + capitalized.slice(1);
-    const reserved = ["is", "hook" + capitalized];
 
-    for (let key in data) {
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-            let value = data[key];
-            if (key.indexOf(NS) === 0) {
-                key = key.slice(NS.length);
-                key = key.charAt(0).toLowerCase() + key.substring(1);
-                if (reserved.indexOf(key) === -1) {
-                    options[key] = value;
+export default class Utils {
+    /**
+     * Returns the data attributes of the specific element.
+     * Ignores "data-cmp-is-*" and "data-cmp-hook-*" attributes.
+     * @param element
+     * @param clazz
+     * @returns {{}}
+     */
+    static readData(element, clazz) {
+        const data = element.dataset;
+        let options = {};
+        const capitalized = clazz.charAt(0).toUpperCase() + clazz.substring(1)
+        const reserved = ["is", "hook" + capitalized];
+
+        for (let key in data) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+                let value = data[key];
+                if (key.indexOf(Constants.NS) === 0) {
+                    key = key.slice(Constants.NS.length);
+                    key = key.charAt(0).toLowerCase() + key.substring(1);
+                    if (reserved.indexOf(key) === -1) {
+                        options[key] = value;
+                    }
                 }
             }
         }
+        return options;
     }
-    return options;
-}
-export function registerMutationObserver(formFieldClass) {
-    let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-    let body = document.querySelector("body");
-    let observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            // needed for IE
-            var nodesArray = [].slice.call(mutation.addedNodes);
-            if (nodesArray.length > 0) {
-                nodesArray.forEach(function(addedNode) {
-                    if (addedNode.querySelectorAll) {
-                        var elementsArray = [].slice.call(addedNode.querySelectorAll(formFieldClass.selectors.self));
-                        elementsArray.forEach(function(element) {
-                            let dataset = FormView.readData(element, formFieldClass.IS);
-                            let formContainerPath = dataset["formcontainer"];
-                            let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
-                            let formField = new formFieldClass({element: element, formContainer: formContainer});
-                        });
-                    }
-                });
-            }
-        });
-    });
 
-    observer.observe(body, {
-        subtree: true,
-        childList: true,
-        characterData: true
-    });
+    /**
+     * Registers the mutation observer for a form component
+     * @param formFieldClass class of the form component
+     */
+
+    static registerMutationObserver(formFieldClass) {
+        let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+        let body = document.querySelector("body");
+        let observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                // needed for IE
+                var nodesArray = [].slice.call(mutation.addedNodes);
+                if (nodesArray.length > 0) {
+                    nodesArray.forEach(function (addedNode) {
+                        if (addedNode.querySelectorAll) {
+                            var elementsArray = [].slice.call(addedNode.querySelectorAll(formFieldClass.selectors.self));
+                            elementsArray.forEach(function (element) {
+                                let dataset = FormView.readData(element, formFieldClass.IS);
+                                let formContainerPath = dataset["adaptiveformcontainerPath"];
+                                let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
+                                let formField = new formFieldClass({element: element});
+                                formContainer.addField(formField);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(body, {
+            subtree: true,
+            childList: true,
+            characterData: true
+        });
+    }
+
+    static getJson(url) {
+        return new Promise(resolve => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function () {
+                let status = xhr.status;
+                if (status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    resolve(null);
+                }
+            };
+            xhr.send();
+        });
+    }
 }

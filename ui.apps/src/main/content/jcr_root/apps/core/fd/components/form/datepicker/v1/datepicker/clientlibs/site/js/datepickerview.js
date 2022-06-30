@@ -15,9 +15,10 @@
  ******************************************************************************/
 (function() {
 
+    "use strict";
     class DatePicker extends FormView.FormField {
 
-        static NS = "cmp";
+        static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -50,7 +51,7 @@
             let datePickerField = new DatePicker({element: fieldElements[i]});
             formContainer.addField(datePickerField);
         }
-        FormView.registerMutationObserver(DatePicker);
+        FormView.Utils.registerMutationObserver(DatePicker);
     }
-    document.addEventListener("FormContainerInitialised", onFormContainerInitialised);
+    document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
 })();
