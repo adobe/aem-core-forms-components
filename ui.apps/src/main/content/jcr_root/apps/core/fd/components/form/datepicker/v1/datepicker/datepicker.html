@@ -21,10 +21,11 @@
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div
      data-sly-use.datepicker="com.adobe.cq.forms.core.components.models.form.Datepicker"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      class="cmp-adaptiveform-datepicker"
      data-sly-use.template="core/wcm/components/commons/v1/templates.html"
      data-cmp-is="adaptiveFormDatePicker"
-     data-cmp-formcontainer="${datepicker.formContainer}"
+     data-cmp-formcontainer="${formstructparser.formContainerPath}"
      data-cmp-hook-adaptiveform-datepicker="input"
      data-sly-test="${!error}">
      <div data-sly-call="${label.label @componentId=component.id, labelValue=datepicker.label.value, labelVisible=datepicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>

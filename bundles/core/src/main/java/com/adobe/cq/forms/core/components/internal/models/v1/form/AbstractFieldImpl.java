@@ -121,14 +121,4 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         }
         return customProperties;
     }
-
-    @Override
-    @Nullable
-    public String getFormContainer() {
-        Resource parent = resource.getParent();
-        if (parent != null) {
-            return parent.getPath();
-        }
-        return null;
-    }
 }

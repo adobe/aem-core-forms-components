@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -90,15 +89,6 @@ public class DatepickerImpl extends AbstractFieldImpl implements Datepicker {
     @Override
     protected Type getDefaultType() {
         return Type.STRING;
-    }
-
-    @Override
-    public String getFormContainer() {
-        Resource parent = request.getResource().getParent();
-        if (parent != null) {
-            return parent.getPath();
-        }
-        return null;
     }
 
 }

@@ -112,7 +112,4 @@ public interface Field extends Base, BaseConstraint {
     default boolean isShortDescriptionVisible() {
         return false;
     }
-
-    @JsonIgnore
-    String getFormContainer();
 }
