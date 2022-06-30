@@ -15,6 +15,38 @@
  ******************************************************************************/
 
 (function($) {
+
+    class FormContainer {
+        constructor(params) {
+            this._model = FormView.createFormInstance(params._formJson);
+            this._path = params._path;
+            this._fields = {};
+        }
+        /**
+         * returns the form field view
+         * @param fieldId
+         */
+        getField(fieldId) {
+            if (this._fields.hasOwnProperty(fieldId)) {
+                return this._fields[fieldId];
+            }
+            return null;
+        }
+
+        getModel(id) {
+            return id ? this._model.getElement(id) : this._model;
+        }
+
+        addField(fieldView) {
+            if (fieldView.getFormContainerPath() === this._path) {
+                this._fields[fieldView.getId()] = fieldView;
+                fieldView.setModel(this.getModel(fieldView.getId()));
+                fieldView.subscribe();
+            }
+        }
+
+    }
+
     "use strict";
     const NS = "cmp";
     const IS = "adaptiveFormContainer";
@@ -28,9 +60,8 @@
             const containerPath = dataset["path"];
             const formJson = await $.getJSON(containerPath + ".model.json");
             console.log("model json from server ", formJson);
-            window.af.formsRuntime.view.formContainer[containerPath]  =  new FormView.FormContainer({_formJson: formJson, path: containerPath});
-            await window.af.formsRuntime.view.formContainer[containerPath].initialise();
-            const event = new CustomEvent("FormContainerInitialised", { "detail": containerPath });
+            let formContainer =  new FormContainer({_formJson: formJson, _path: containerPath});
+            const event = new CustomEvent("FormContainerInitialised", { "detail": formContainer });
             document.dispatchEvent(event);
         }
     }

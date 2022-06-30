@@ -13,16 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($) {
+(function() {
+
+    class DatePicker extends FormView.FormField {
+
+        static NS = "cmp";
+        static IS = "adaptiveFormDatePicker";
+        static selectors  = {
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            dateElement: "input[type=date]"
+        };
+
+        constructor(params) {
+            super(params);
+        }
+
+        getClass() {
+            return DatePicker.IS;
+        }
+
+        getTagName() {
+            return "input";
+        }
+
+        setValue(value) {
+            let dateInput = this.element.querySelector(DatePicker.selectors.dateElement);
+            dateInput.value = value;
+        }
+    }
 
     function onFormContainerInitialised(e) {
         console.log("FormContainerInitialised Received", e.detail);
-        let formContainer =  window.af.formsRuntime.view.formContainer[e.detail];
-        let fieldElements = document.querySelectorAll(FormView.DatePicker.selectors.self);
+        let formContainer =  e.detail;
+        let fieldElements = document.querySelectorAll(DatePicker.selectors.self);
         for (let i = 0; i < fieldElements.length; i++) {
-            let datePickerField = new FormView.DatePicker({element: fieldElements[i], formContainer: formContainer});
+            let datePickerField = new DatePicker({element: fieldElements[i]});
+            formContainer.addField(datePickerField);
         }
-        FormView.registerMutationObserver(FormView.DatePicker);
+        FormView.registerMutationObserver(DatePicker);
     }
     document.addEventListener("FormContainerInitialised", onFormContainerInitialised);
-})(jQuery);
+})();

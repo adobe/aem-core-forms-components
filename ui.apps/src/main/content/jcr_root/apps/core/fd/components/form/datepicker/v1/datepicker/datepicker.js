@@ -13,32 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+use(function () {
 
-import FormField from "./FormField";
-
-export default class DatePicker extends FormField {
-
-    static NS = "cmp";
-    static IS = "datepicker";
-    static selectors  = {
-        self: "[data-" + this.NS + '-is="' + this.IS + '"]'
-    };
-
-    constructor(params) {
-        super(params);
+    var clientlibsArr = ['core.forms.components.base.v1.editor'];
+    var labelPath = 'core/fd/components/commons/v1/fieldTemplates/label.html';
+    var shortDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/shortDescription.html";
+    var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
+    var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html"
+    return {
+        labelPath: labelPath,
+        shortDescriptionPath: shortDescriptionPath,
+        longDescriptionPath: longDescriptionPath,
+        questionMarkPath: questionMarkPath,
+        clientlibs: clientlibsArr
     }
-
-    getClass() {
-        return "datepicker"
-    }
-
-    getTagName() {
-        return "input";
-    }
-
-    setValue(value) {
-        let dateInput = this.element.querySelector("input[type=date]");
-        dateInput.value = value;
-    }
-}
-
+});

@@ -28,11 +28,14 @@ export default class FormField {
             this.setId(el[0].id);
         }
         this.bindEventListeners();
-        this.formContainer.addField(this);
     }
 
     setId(id) {
         this.id = id;
+    }
+
+    getFormContainerPath() {
+        return this.options["formcontainer"];
     }
 
     getId() {

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import FormContainer from "./view/FormContainer";
 import readData, {registerMutationObserver} from "./utils";
-import DatePicker from "./view/DatePicker";
+import {createFormInstance} from "@aemforms/af-core";
+import FormField from "./view/FormField";
 
 window.af = {
     formsRuntime: {
@@ -29,4 +29,4 @@ window.af = {
         event: {}
     }
 }
-export {DatePicker, FormContainer, readData, registerMutationObserver};
+export {createFormInstance, FormField, readData, registerMutationObserver};
