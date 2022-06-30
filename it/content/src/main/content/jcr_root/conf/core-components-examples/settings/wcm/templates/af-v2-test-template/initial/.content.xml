@@ -2,18 +2,14 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[mobile/groups/responsive]"
-        cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-examples/settings/wcm/templates/af-v2-test-template"
-        jcr:language="en"
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:template="/conf/forms-components-examples/settings/wcm/templates/af-v2-test-template"
         jcr:primaryType="cq:PageContent"
-        jcr:title="blank"
-        sling:resourceType="forms-components-examples/components/page">
+        sling:resourceType="forms-components-examples/components/page"
+        guideComponentType="fd/af/templates">
         <guideContainer
             fd:version="2.0"
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="forms-components-examples/components/form/container">
-        </guideContainer>
+            sling:resourceType="forms-components-examples/components/form/containe"/>
     </jcr:content>
 </jcr:root>
