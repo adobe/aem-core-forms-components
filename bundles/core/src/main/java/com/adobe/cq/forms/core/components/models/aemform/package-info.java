@@ -10,7 +10,7 @@
  *
  ******************************************************************************/
 
-@Version("1.1.0")
+@Version("1.2.0")
 package com.adobe.cq.forms.core.components.models.aemform;
 
 import org.osgi.annotation.versioning.Version;

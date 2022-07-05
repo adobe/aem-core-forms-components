@@ -26,6 +26,7 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
+import com.adobe.granite.toggle.api.ToggleRouter;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -53,6 +55,9 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     public static final String RESOURCE_TYPE = "core/fd/components/aemform/v1/aemform";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AEMFormImpl.class);
+
+    @OSGiService
+    private ToggleRouter toggleRouter;
 
     @ScriptVariable
     protected PageManager pageManager;
@@ -277,5 +282,19 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
             }
         }
         return height;
+    }
+
+    @Override
+    public String getDefaultMessage() {
+        if (toggleRouter != null && toggleRouter.isEnabled("FT_CQ-4343036")) {
+            String message = "Select a form to embed." + "<br/>";
+            message += "Tap";
+            message += " <coral-icon icon='wrench' size='XS'></coral-icon> ";
+            message += "to embed an existing form or use";
+            message += " <coral-icon icon='addCircle' size='XS'></coral-icon> ";
+            message += "to create and embed a new form.";
+            return message;
+        }
+        return "You need to select a Form from the Dialog";
     }
 }

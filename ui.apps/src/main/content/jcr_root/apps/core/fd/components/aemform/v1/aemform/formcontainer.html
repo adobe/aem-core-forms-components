@@ -20,7 +20,7 @@
 <sly data-sly-test="${!wcmmode.disabled && !form.isFormSelected}">
     <sly data-sly-call="${clientLib.all @ categories='core.forms.components.aemform.v1'}"/>
     <div class="cmp-aemform--no-form-selected">
-        ${'You need to select a Form from the Dialog' @ i18n, locale=request.locale}
+        ${form.getDefaultMessage @ context='scriptComment'}
     </div>
 </sly>
 <div class="cmp-aemform__content"

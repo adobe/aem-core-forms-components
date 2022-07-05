@@ -271,6 +271,16 @@ public interface AEMForm extends Component {
     }
 
     /**
+     * Message to show when no form is selected/configured
+     *
+     * @return the string if no form is configured
+     */
+    @JsonIgnore
+    default String getDefaultMessage() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Indicates if the form configured is Adaptive form or not
      *
      * @return true if the form is adaptive form; false otherwise
