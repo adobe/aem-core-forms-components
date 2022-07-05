@@ -58,16 +58,4 @@
         return Granite.Toggles.isEnabled("FT_CQ-4343036");
     };
 
-    $(document).on("foundation-contentloaded", function(e) {
-        if(Granite.Toggles.isEnabled("FT_CQ-4343036") == true) {
-            var divBody = Granite.I18n.get("Select a form to embed.") + "<br/>";
-            divBody += Granite.I18n.get("Tap");
-            divBody += " <coral-icon icon='wrench' size='XS'></coral-icon> ";
-            divBody += Granite.I18n.get("to embed an existing form or use");
-            divBody += " <coral-icon icon='addCircle' size='XS'></coral-icon> ";
-            divBody += Granite.I18n.get("to create and embed a new form.");
-            Granite.author.ContentFrame.getDocument().find('.cmp-aemform--no-form-selected').html(divBody);
-        }
-    });
-
 }(window.Granite));
