@@ -44,11 +44,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "longDescription")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
     @Nullable
     protected String dataRef;
 
@@ -61,7 +61,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected String validationExpression;
 
     // using old jcr property names to allow easy conversion from foundation to core components
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "mandatory")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
     @Default(booleanValues = false)
     protected boolean required;
 
@@ -448,6 +448,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     protected abstract Type getDefaultType();
 
+    @JsonIgnore
+    protected abstract @NotNull Map<String, Object> getCustomProperties();
+
     @Override
     public boolean isRequired() {
         return required;
@@ -468,5 +471,14 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        if (getCustomProperties().size() != 0) {
+            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
+        }
+        return customProperties;
     }
 }

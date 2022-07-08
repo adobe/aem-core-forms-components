@@ -37,6 +37,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @ConsumerType
 public interface Base extends Component {
 
+    public final String CUSTOM_PROPERTY_WRAPPER = "af:layout";
+
     /**
      * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input},
      * {@code file-input}, {@code drop-down}, {@code radio-group}
@@ -85,7 +87,7 @@ public interface Base extends Component {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         * @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
         public String getValue() {
             return value;
