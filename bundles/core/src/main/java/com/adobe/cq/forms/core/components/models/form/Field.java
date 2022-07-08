@@ -91,25 +91,24 @@ public interface Field extends Base, BaseConstraint {
     Object getDefault();
 
     /**
-     * Returns the short description of the field
+     * Returns the tool tip of the field
      *
-     * @return the short description of the field
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     * @return the tool tip of the field
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    @JsonIgnore
     @Nullable
-    default String getShortDescription() {
+    default String getTooltip() {
         return null;
     }
 
     /**
-     * Returns {@code true} if short description should always be visible, otherwise {@code false}.
+     * Returns {@code true} if tooltip should always be visible, otherwise {@code false}.
      *
-     * @return {@code true} if short description should always be visible, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     * @return {@code true} if tooltip should always be visible, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonIgnore
-    default boolean isShortDescriptionVisible() {
+    default boolean isTooltipVisible() {
         return false;
     }
 }

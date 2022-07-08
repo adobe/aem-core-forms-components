@@ -37,7 +37,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Default(booleanValues = false)
     protected boolean readOnly;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "_value")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     @Nullable
     protected Object defaultValue;
 
@@ -57,13 +57,13 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String dataFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltip")
     @Nullable
-    protected String shortDescription;
+    protected String tooltip;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "shortVisible")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltipVisible")
     @Default(booleanValues = false)
-    protected boolean shortDescriptionVisible;
+    protected boolean tooltipVisible;
 
     @SlingObject
     private Resource resource;
@@ -103,21 +103,20 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    public @Nullable String getShortDescription() {
-        return shortDescription;
+    public @Nullable String getTooltip() {
+        return tooltip;
     }
 
     @Override
-    public boolean isShortDescriptionVisible() {
-        return shortDescriptionVisible;
+    public boolean isTooltipVisible() {
+        return tooltipVisible;
     }
 
     @Override
-    public @NotNull Map<String, Object> getProperties() {
+    public @NotNull Map<String, Object> getCustomProperties() {
         Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (shortDescription != null) {
-            customProperties.put("shortDescription", shortDescription);
-            customProperties.put("shortDescriptionVisible", shortDescriptionVisible);
+        if (tooltip != null) {
+            customProperties.put("tooltipVisible", tooltipVisible);
         }
         return customProperties;
     }

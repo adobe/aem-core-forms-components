@@ -199,6 +199,15 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetTooltip() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals("test-short-description", textInput.getTooltip());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getTooltip()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getTooltip());
+    }
+
+    @Test
     void testGetConstraintMessages() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
@@ -225,8 +234,9 @@ public class TextInputImplTest {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         Map<String, Object> properties = textInput.getProperties();
         assertFalse(properties.isEmpty());
-        assertEquals("test-short-description", String.valueOf(properties.get("shortDescription")));
-        assertFalse((boolean) properties.get("shortDescriptionVisible"));
+        // get custom properties of "af:layout"
+        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
+        assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
 
     @Test
@@ -239,15 +249,15 @@ public class TextInputImplTest {
     @Test
     void testGetShortDescription() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getShortDescription()).thenCallRealMethod();
-        assertEquals(null, textInputMock.getShortDescription());
+        Mockito.when(textInputMock.getTooltip()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getTooltip());
     }
 
     @Test
     void testIsShortDescriptionVisible() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.isShortDescriptionVisible()).thenCallRealMethod();
-        assertEquals(false, textInputMock.isShortDescriptionVisible());
+        Mockito.when(textInputMock.isTooltipVisible()).thenCallRealMethod();
+        assertEquals(false, textInputMock.isTooltipVisible());
     }
 
     @Test
