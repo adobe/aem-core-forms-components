@@ -263,19 +263,10 @@ public class TextInputImplTest {
     @Test
     void testIsAutoComplete() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals(false, textInput.isAutoComplete());
+        assertEquals(null, textInput.getAutoComplete());
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.isAutoComplete()).thenCallRealMethod();
-        assertEquals(false, textInputMock.isAutoComplete());
-    }
-
-    @Test
-    void testGetAutofillFieldKeyword() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals(null, textInput.getAutofillFieldKeyword());
-        TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getAutofillFieldKeyword()).thenCallRealMethod();
-        assertEquals(null, textInputMock.getAutofillFieldKeyword());
+        Mockito.when(textInputMock.getAutoComplete()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getAutoComplete());
     }
 
     @Test

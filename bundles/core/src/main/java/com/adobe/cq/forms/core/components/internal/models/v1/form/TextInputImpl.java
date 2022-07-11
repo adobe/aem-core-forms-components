@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Date;
+import java.util.Optional;
+
 import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -29,6 +32,8 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.DateConstraint;
+import com.adobe.cq.forms.core.components.models.form.NumberConstraint;
 import com.adobe.cq.forms.core.components.models.form.StringConstraint;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 
@@ -39,7 +44,7 @@ import com.adobe.cq.forms.core.components.models.form.TextInput;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TextInputImpl extends AbstractFieldImpl implements TextInput, StringConstraint {
+public class TextInputImpl extends AbstractFieldImpl implements TextInput, StringConstraint, NumberConstraint, DateConstraint {
 
     @ScriptVariable
     private ValueMap properties;
@@ -48,25 +53,13 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     @Default(booleanValues = false)
     protected boolean multiLine;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected Integer minLength;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxChars")
-    @Nullable
-    protected Integer maxLength;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "validatePictureClause")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
     @Nullable
     protected String pattern;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(booleanValues = false)
-    protected boolean autocomplete;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    protected String autofillFieldKeyword;
+    protected String autocomplete;
 
     @Override
     public boolean isMultiLine() {
@@ -95,22 +88,41 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
     }
 
     @Override
+    @Nullable
     public String getPattern() {
         return pattern;
     }
 
     @Override
-    public Type getDefaultType() {
-        return Type.STRING;
-    }
-
-    @Override
-    public boolean isAutoComplete() {
+    public String getAutoComplete() {
         return autocomplete;
     }
 
     @Override
-    public String getAutofillFieldKeyword() {
-        return autofillFieldKeyword;
+    @Nullable
+    public Integer getMinimum() {
+        return minimum;
+    }
+
+    @Override
+    @Nullable
+    public Integer getMaximum() {
+        return maximum;
+    }
+
+    @Override
+    public Date getMinimumDate() {
+        return Optional.ofNullable(minDate)
+            .map(Date::getTime)
+            .map(Date::new)
+            .orElse(null);
+    }
+
+    @Override
+    public Date getMaximumDate() {
+        return Optional.ofNullable(maxDate)
+            .map(Date::getTime)
+            .map(Date::new)
+            .orElse(null);
     }
 }

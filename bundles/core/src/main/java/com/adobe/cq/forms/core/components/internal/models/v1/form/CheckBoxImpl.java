@@ -52,11 +52,6 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
         return FieldType.CHECKBOX;
     }
 
-    @Override
-    public Type getDefaultType() {
-        return Type.BOOLEAN;
-    }
-
     @PostConstruct
     private void initModel() {
         orientation = Orientation.fromString(orientationJcr);

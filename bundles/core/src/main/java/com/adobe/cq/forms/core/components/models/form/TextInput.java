@@ -50,22 +50,13 @@ public interface TextInput extends Field {
     }
 
     /**
-     * Returns {@code true} if autocomplete, otherwise {@code false}.
+     * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
      *
-     * @return {@code true} if autocomplete, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    default boolean isAutoComplete() {
-        return false;
+    default String getAutoComplete() {
+        return "off";
     }
 
-    /**
-     * The autofillFieldKeyword.
-     *
-     * @return autofillFieldKeyword.
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    default String getAutofillFieldKeyword() {
-        return null;
-    }
 }

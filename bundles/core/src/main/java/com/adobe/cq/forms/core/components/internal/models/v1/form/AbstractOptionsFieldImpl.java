@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -35,7 +38,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
     @Nullable
-    private Object[] enums;
+    private String[] enums; // todo: this needs to be thought through ?
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
@@ -47,13 +50,29 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public Object[] enums() {
-        // may expose internal representation of mutable object, hence cloning
-        return ArrayUtils.clone(enums);
+    public Object[] getEnums() {
+        if (enums == null) {
+            return null;
+        } else {
+            // may expose internal representation of mutable object, hence cloning
+            if (this.getType().equals(Type.NUMBER)) {
+                return Arrays.stream(enums)
+                    .filter(Objects::nonNull)
+                    .map(Integer::parseInt)
+                    .toArray(Integer[]::new);
+            } else if (this.getType().equals(Type.BOOLEAN)) {
+                return Arrays.stream(enums)
+                    .filter(Objects::nonNull)
+                    .map(Boolean::parseBoolean)
+                    .toArray(Boolean[]::new);
+            } else {
+                return ArrayUtils.clone(enums);
+            }
+        }
     }
 
     @Override
-    public String[] enumNames() {
+    public String[] getEnumNames() {
         // may expose internal representation of mutable object, hence cloning
         return ArrayUtils.clone(enumNames);
     }
