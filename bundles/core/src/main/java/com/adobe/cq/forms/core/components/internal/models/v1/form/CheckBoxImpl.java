@@ -31,11 +31,10 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
-    adapters = { TextInput.class, ComponentExporter.class },
+    adapters = { CheckBox.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_V1 })
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
@@ -53,7 +52,7 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     }
 
     @PostConstruct
-    private void initModel() {
+    private void initCheckBoxModel() {
         orientation = Orientation.fromString(orientationJcr);
     }
 

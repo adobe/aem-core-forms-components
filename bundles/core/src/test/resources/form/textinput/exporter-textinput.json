@@ -7,13 +7,13 @@
   "readOnly": false,
   "fieldType": "text-input",
   "description" : "dummy",
-  "autoComplete": false,
   "tooltip": "test-short-description",
   "properties": {
     "af:layout" : {
       "tooltipVisible": false
     }
   },
+  "default" : "abc",
   "label": {
     "visible": true,
     "value": "def",

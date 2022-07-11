@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,8 +56,9 @@ public interface TextInput extends Field {
      *
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
+    @Nullable
     default String getAutoComplete() {
-        return "off";
+        return null;
     }
 
 }

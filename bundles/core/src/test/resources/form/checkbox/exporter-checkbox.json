@@ -1,5 +1,5 @@
 {
-  "id": "textinput-3c50c84973",
+  "id": "checkbox-42948c9a6c",
   "required": false,
   "name": "abc",
   "visible": false,
@@ -10,9 +10,11 @@
   "tooltip": "test-short-description",
   "properties": {
     "af:layout" : {
-      "tooltipVisible": false
+      "tooltipVisible": false,
+      "orientation" : "horizontal"
     }
   },
+  "enforceEnum":false,
   "enum" : [true, false],
   "enumNames" : ["yes", "no"],
   "label": {
