@@ -48,6 +48,11 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String description; // long description as per current spec
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
+    @Nullable
+    protected String typeJcr;
+    private Type type;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
     @Nullable
     protected String dataRef;
@@ -152,6 +157,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @PostConstruct
     private void initModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
+        type = Type.fromString(typeJcr);
     }
 
     @JsonIgnore
@@ -201,18 +207,20 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     public String getScreenReaderText() {
+        // needs to be represented as json formula since labels, name, description can be dynamic, and hence
+        // screen reader text can be dynamic
         String screenReaderText = getName();
         if (AssistPriority.LABEL.equals(assistPriority)) {
             Label label = getLabel();
             if (label != null) {
-                screenReaderText = label.getValue();
+                screenReaderText = "$label.$value";
             }
         } else if (AssistPriority.NAME.equals(assistPriority)) {
-            screenReaderText = getName();
+            screenReaderText = "$name";
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
-            screenReaderText = getDescription();
+            screenReaderText = "$description";
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
-            screenReaderText = customAssistPriorityMsg;
+            screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
         }
         return screenReaderText;
     }
@@ -446,9 +454,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
-    protected abstract Type getDefaultType();
-
-    @JsonIgnore
     protected abstract @NotNull Map<String, Object> getCustomProperties();
 
     @Override
@@ -458,7 +463,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     public Type getType() {
-        return getDefaultType();
+        return type;
     }
 
     @Override

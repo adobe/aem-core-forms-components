@@ -5,15 +5,16 @@
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "text-input",
+  "fieldType": "checkbox",
   "description" : "dummy",
-  "autoComplete": false,
   "tooltip": "test-short-description",
   "properties": {
     "af:layout" : {
       "tooltipVisible": false
     }
   },
+  "enum" : [true, false],
+  "enumNames" : ["yes", "no"],
   "label": {
     "visible": true,
     "value": "def",
@@ -24,6 +25,6 @@
   "constraintsMessages":{
     "type":"incorrect type"
   },
-  "type": "string",
-  ":type": "core/fd/components/form/textinput/v1/textinput"
+  "type": "boolean",
+  ":type": "core/fd/components/form/checkbox/v1/checkbox"
 }

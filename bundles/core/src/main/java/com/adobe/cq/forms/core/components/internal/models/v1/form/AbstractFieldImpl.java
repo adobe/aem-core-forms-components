@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,15 +42,15 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Object defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholderText")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholder")
     @Nullable
     protected String placeholder;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayPictureClause")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayFormat")
     @Nullable
     protected String displayFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editPictureClause")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editFormat")
     @Nullable
     protected String editFormat;
 
@@ -64,6 +65,30 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltipVisible")
     @Default(booleanValues = false)
     protected boolean tooltipVisible;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minLength")
+    @Nullable
+    protected Integer minLength;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxLength")
+    @Nullable
+    protected Integer maxLength;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
+    @Nullable
+    protected Integer maximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @Nullable
+    protected Integer minimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minDate")
+    @Nullable
+    protected Date minDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxDate")
+    @Nullable
+    protected Date maxDate;
 
     @SlingObject
     private Resource resource;
