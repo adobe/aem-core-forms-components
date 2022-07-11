@@ -321,7 +321,7 @@ public interface Base extends Component {
      */
     @NotNull
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<ConstraintType, String> getConstraintsMessages() {
+    default Map<ConstraintType, String> getConstraintMessages() {
         return Collections.emptyMap();
     }
 

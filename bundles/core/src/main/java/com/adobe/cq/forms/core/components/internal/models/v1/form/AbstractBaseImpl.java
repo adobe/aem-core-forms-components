@@ -239,7 +239,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     }
 
     @Override
-    public @NotNull Map<ConstraintType, String> getConstraintsMessages() {
+    public @NotNull Map<ConstraintType, String> getConstraintMessages() {
         if (constraintMessages == null) {
             constraintMessages = new LinkedHashMap<>();
             ConstraintMessages msgs = new ConstraintMessagesProvider();
@@ -250,6 +250,11 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
                 put(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
                 put(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
                 put(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
+                String format = this.getFormat();
+                if (format != null && format.equals(Format.DATE.toString())) {
+                    put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                    put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                }
             }
 
             if (this.getType().equals(Type.NUMBER)) {
