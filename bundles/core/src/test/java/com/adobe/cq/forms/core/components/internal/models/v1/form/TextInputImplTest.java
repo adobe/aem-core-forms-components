@@ -118,12 +118,30 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetDefault() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals("abc", textInput.getDefault());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getDefault()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getDefault());
+    }
+
+    @Test
     void testGetScreenReaderText() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals("Custom screen reader text", textInput.getScreenReaderText());
+        assertEquals("'Custom screen reader text'", textInput.getScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, textInputMock.getScreenReaderText());
+    }
+
+    @Test
+    void testGetHtmlScreenReaderText() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals("Custom screen reader text", textInput.getHtmlScreenReaderText());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getHtmlScreenReaderText()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getHtmlScreenReaderText());
     }
 
     @Test
@@ -261,7 +279,7 @@ public class TextInputImplTest {
     }
 
     @Test
-    void testIsAutoComplete() {
+    void testGetAutoComplete() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         assertEquals(null, textInput.getAutoComplete());
         TextInput textInputMock = Mockito.mock(TextInput.class);

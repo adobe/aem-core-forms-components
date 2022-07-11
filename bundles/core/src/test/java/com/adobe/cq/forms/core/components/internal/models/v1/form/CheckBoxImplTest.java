@@ -67,10 +67,10 @@ public class CheckBoxImplTest {
     @Test
     void testFieldType() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), checkbox.getFieldType());
+        assertEquals(Base.FieldType.CHECKBOX.getValue(), checkbox.getFieldType());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.getFieldType()).thenCallRealMethod();
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), checkboxMock.getFieldType());
+        assertEquals(Base.FieldType.CHECKBOX.getValue(), checkboxMock.getFieldType());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class CheckBoxImplTest {
     @Test
     void testGetScreenReaderText() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals("Custom screen reader text", checkbox.getScreenReaderText());
+        assertEquals("'Custom screen reader text'", checkbox.getScreenReaderText());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, checkboxMock.getScreenReaderText());
@@ -249,18 +249,12 @@ public class CheckBoxImplTest {
     void testGetEnum() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertArrayEquals(new Boolean[] { true, false }, checkbox.getEnums());
-        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
-        Mockito.when(checkboxMock.getEnums()).thenCallRealMethod();
-        assertEquals(null, checkboxMock.getEnums());
     }
 
     @Test
     void testGetEnumNames() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
-        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
-        Mockito.when(checkboxMock.getEnumNames()).thenCallRealMethod();
-        assertEquals(null, checkboxMock.getEnumNames());
     }
 
     @Test

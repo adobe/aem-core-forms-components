@@ -88,7 +88,9 @@ public interface Field extends Base, BaseConstraint {
      * @return default value of the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    Object getDefault();
+    default Object getDefault() {
+        return null;
+    }
 
     /**
      * Returns the tool tip of the field

@@ -37,7 +37,6 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -69,57 +68,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
     @Default(booleanValues = false)
     protected boolean required;
-
-    /**
-     * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    private enum AssistPriority {
-        CUSTOM("custom"),
-        DESCRIPTION("description"),
-        LABEL("label"),
-        NAME("name");
-
-        private String value;
-
-        AssistPriority(String value) {
-            this.value = value;
-        }
-
-        /**
-         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-         * representation
-         *
-         * @param value the string representation for which an enum value should be returned
-         * @return the corresponding enum value, if one was found
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
-         */
-        public static AssistPriority fromString(String value) {
-            for (AssistPriority type : AssistPriority.values()) {
-                if (StringUtils.equals(value, type.value)) {
-                    return type;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * Returns the string value of this enum constant.
-         *
-         * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
-         */
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return value;
-        }
-    }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
     @Nullable
@@ -155,7 +103,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     private Map<ConstraintType, String> constraintMessages = null;
 
     @PostConstruct
-    private void initModel() {
+    protected void initBaseModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
         type = Type.fromString(typeJcr);
     }
@@ -209,7 +157,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     public String getScreenReaderText() {
         // needs to be represented as json formula since labels, name, description can be dynamic, and hence
         // screen reader text can be dynamic
-        String screenReaderText = getName();
+        String screenReaderText = "$name";
         if (AssistPriority.LABEL.equals(assistPriority)) {
             Label label = getLabel();
             if (label != null) {
@@ -221,6 +169,26 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             screenReaderText = "$description";
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
             screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
+        }
+        return screenReaderText;
+    }
+
+    @Override
+    @Nullable
+    public String getHtmlScreenReaderText() {
+        // this can be used in sightly to compute initial html
+        String screenReaderText = getName();
+        if (AssistPriority.LABEL.equals(assistPriority)) {
+            Label label = getLabel();
+            if (label != null) {
+                screenReaderText = label.getValue();
+            }
+        } else if (AssistPriority.NAME.equals(assistPriority)) {
+            screenReaderText = getName();
+        } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
+            screenReaderText = getDescription();
+        } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
+            screenReaderText = customAssistPriorityMsg;
         }
         return screenReaderText;
     }
