@@ -1,0 +1,27 @@
+{
+  "id": "datepicker-00447787e6",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "date-input",
+  "description" : "dummy",
+  "properties": {
+    "shortDescription": "test-short-description",
+    "shortDescriptionVisible": false
+  },
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "Custom screen reader text",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "type": "string",
+  "format": "date",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
+}
