@@ -201,11 +201,11 @@ public class TextInputImplTest {
     @Test
     void testGetConstraintMessages() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintsMessages();
+        Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
         assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getConstraintsMessages()).thenCallRealMethod();
-        assertEquals(Collections.emptyMap(), textInputMock.getConstraintsMessages());
+        Mockito.when(textInputMock.getConstraintMessages()).thenCallRealMethod();
+        assertEquals(Collections.emptyMap(), textInputMock.getConstraintMessages());
     }
 
     @Test

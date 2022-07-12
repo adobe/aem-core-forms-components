@@ -1,13 +1,12 @@
 {
-  "id": "textinput-3c50c84973",
+  "id": "datepicker-00447787e6",
   "required": false,
   "name": "abc",
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "text-input",
+  "fieldType": "date-input",
   "description" : "dummy",
-  "autoComplete": false,
   "properties": {
     "shortDescription": "test-short-description",
     "shortDescriptionVisible": false
@@ -18,11 +17,11 @@
     "richText": false
   },
   "dataRef":"a.b",
-
   "screenReaderText": "Custom screen reader text",
   "constraintMessages":{
     "type":"incorrect type"
   },
   "type": "string",
-  ":type": "core/fd/components/form/textinput/v1/textinput"
+  "format": "date",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
 }
