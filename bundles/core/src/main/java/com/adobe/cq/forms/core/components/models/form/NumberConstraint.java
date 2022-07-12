@@ -34,7 +34,7 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Integer getMinimum();
+    Long getMinimum();
 
     /**
      * Returns the maximum value for the number. The constraint is applicable only for field with type number
@@ -43,5 +43,24 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Integer getMaximum();
+    Long getMaximum();
+
+    /**
+     * Returns the Maximum value (exclusive) that can be entered by the user.
+     *
+     * @return maximum value (exclusive) for the number
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    Long getExclusiveMaximum();
+
+    /**
+     * Returns the minimum value (exclusive) that can be entered by the user.
+     *
+     * @return minimum value (exclusive) for the number
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    Long getExclusiveMinimum();
+
 }

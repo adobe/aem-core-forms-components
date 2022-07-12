@@ -16,7 +16,6 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,16 +28,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 @ConsumerType
 public interface CheckBox extends Field, OptionsConstraint {
-
-    /**
-     * @see Base#getFieldType()
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
-     */
-    @NotNull
-    @Override
-    default String getFieldType() {
-        return FieldType.CHECKBOX.getValue();
-    }
 
     /**
      * Defines the orientation for checkbox. Possible values: {@code horizontal}, {@code vertical}
@@ -92,7 +81,7 @@ public interface CheckBox extends Field, OptionsConstraint {
     /**
      * Returns the orientation of the checkbox component
      *
-     * @return autofillFieldKeyword.
+     * @return {@link Orientation}.
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonIgnore

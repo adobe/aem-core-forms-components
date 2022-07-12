@@ -19,7 +19,9 @@ import java.util.Date;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A interface which specifies the different form date type constraints
@@ -36,6 +38,8 @@ public interface DateConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("minimum")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
     Date getMinimumDate();
 
     /**
@@ -45,5 +49,29 @@ public interface DateConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("maximum")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
     Date getMaximumDate();
+
+    /**
+     * Returns the Maximum value (exclusive) that can be entered by the user.
+     *
+     * @return maximum value (exclusive) for the date
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("exclusiveMaximum")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    Date getExclusiveMaximumDate();
+
+    /**
+     * Returns the minimum value (exclusive) that can be entered by the user.
+     *
+     * @return minimum value (exclusive) for the date
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("exclusiveMinimum")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    Date getExclusiveMinimumDate();
 }

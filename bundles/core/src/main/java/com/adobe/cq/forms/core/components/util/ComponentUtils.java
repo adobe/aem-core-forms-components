@@ -17,8 +17,11 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Utility helper functions for components.
@@ -40,6 +43,20 @@ public class ComponentUtils {
     @NotNull
     public static String getEncodedPath(@NotNull String path) {
         return new String(Base64.getEncoder().encode(path.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Returns clone of the date object (mutable) provided as input
+     *
+     * @param date date
+     * @return clone of date object
+     */
+    @NotNull
+    public static Date clone(@Nullable Date date) {
+        return Optional.ofNullable(date)
+            .map(Date::getTime)
+            .map(Date::new)
+            .orElse(null);
     }
 
 }

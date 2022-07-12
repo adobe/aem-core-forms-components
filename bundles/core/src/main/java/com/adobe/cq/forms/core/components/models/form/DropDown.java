@@ -15,39 +15,23 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/datepicker} component.
+ * Defines the form {@code DropDown} Sling Model used for the {@code /apps/core/fd/components/form/dropdown/v1/dropdown} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface Datepicker extends Field {
+public interface DropDown extends Field, OptionsConstraint, ContainerConstraint {
 
     /**
-     * @see Base#getFieldType()
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @NotNull
-    @Override
-    default String getFieldType() {
-        return FieldType.DATE_INPUT.getValue();
-    }
-
-    /**
-     * Returns maximum valid date.
+     * Returns {@code true} if multiple items can be selected in dropdown, {@code false} otherwise
      * 
-     * @return String maximum date which is valid.
+     * @return {@code true} if multiple selection is enabled, {@code false} otherwise
      */
-    String getMaxDate();
-
-    /**
-     * Returns minimum valid date.
-     * 
-     * @return String minimum date which is valid.
-     */
-    String getMinDate();
-
+    @JsonIgnore
+    Boolean isMultiSelect();
 }

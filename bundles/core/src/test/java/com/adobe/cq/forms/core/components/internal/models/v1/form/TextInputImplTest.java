@@ -28,6 +28,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -47,6 +48,7 @@ public class TextInputImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXTINPUT_1 = CONTENT_ROOT + "/textinput";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
+    private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -68,9 +70,6 @@ public class TextInputImplTest {
     void testFieldType() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
-        TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getFieldType()).thenCallRealMethod();
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInputMock.getFieldType());
     }
 
     @Test
@@ -124,6 +123,12 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDefault()).thenCallRealMethod();
         assertEquals(null, textInputMock.getDefault());
+    }
+
+    @Test
+    void testGetNumberDefault() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(150, ((Long) numberTextInput.getDefault()).intValue());
     }
 
     @Test
@@ -214,6 +219,33 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDataFormat()).thenCallRealMethod();
         assertEquals(null, textInputMock.getDataFormat());
+    }
+
+    @Test
+    void testGetType() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals(BaseConstraint.Type.STRING, textInput.getType());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getType()).thenCallRealMethod();
+        assertEquals(BaseConstraint.Type.STRING, textInputMock.getType());
+    }
+
+    @Test
+    void testGetNumberType() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(BaseConstraint.Type.NUMBER, numberTextInput.getType());
+    }
+
+    @Test
+    void testGetMaximum() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(100, numberTextInput.getMaximum().intValue());
+    }
+
+    @Test
+    void testGetMinimum() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(10, numberTextInput.getMinimum().intValue());
     }
 
     @Test

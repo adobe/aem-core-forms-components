@@ -68,9 +68,6 @@ public class CheckBoxImplTest {
     void testFieldType() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertEquals(Base.FieldType.CHECKBOX.getValue(), checkbox.getFieldType());
-        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
-        Mockito.when(checkboxMock.getFieldType()).thenCallRealMethod();
-        assertEquals(Base.FieldType.CHECKBOX.getValue(), checkboxMock.getFieldType());
     }
 
     @Test
@@ -201,11 +198,11 @@ public class CheckBoxImplTest {
     @Test
     void testGetConstraintMessages() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        Map<Base.ConstraintType, String> constraintsMessages = checkbox.getConstraintsMessages();
+        Map<Base.ConstraintType, String> constraintsMessages = checkbox.getConstraintMessages();
         assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
-        Mockito.when(checkboxMock.getConstraintsMessages()).thenCallRealMethod();
-        assertEquals(Collections.emptyMap(), checkboxMock.getConstraintsMessages());
+        Mockito.when(checkboxMock.getConstraintMessages()).thenCallRealMethod();
+        assertEquals(Collections.emptyMap(), checkboxMock.getConstraintMessages());
     }
 
     @Test

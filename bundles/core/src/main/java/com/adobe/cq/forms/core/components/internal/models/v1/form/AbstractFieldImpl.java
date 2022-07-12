@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,6 +27,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 
@@ -33,6 +36,8 @@ import com.adobe.cq.forms.core.components.models.form.Field;
  * Abstract class which can be used as base class for {@link Field} implementations.
  */
 public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Field {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
@@ -76,19 +81,35 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
     @Nullable
-    protected Integer maximum;
+    protected Long maximum;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
     @Nullable
-    protected Integer minimum;
+    protected Long minimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minDate")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
     @Nullable
-    protected Date minDate;
+    protected Date minimumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxDate")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximumDate")
     @Nullable
-    protected Date maxDate;
+    protected Date maximumDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @Nullable
+    protected Long exclusiveMinimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
+    @Nullable
+    protected Long exclusiveMaximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumDate")
+    @Nullable
+    protected Date exclusiveMinimumDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumDate")
+    @Nullable
+    protected Date exclusiveMaximumDate;
 
     @SlingObject
     private Resource resource;
@@ -100,6 +121,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @Override
     public Object getDefault() {
+        if (defaultValue instanceof Calendar) {
+            return ((Calendar) defaultValue).getTime();
+        }
         return defaultValue;
     }
 

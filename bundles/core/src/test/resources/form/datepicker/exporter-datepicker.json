@@ -7,9 +7,11 @@
   "readOnly": false,
   "fieldType": "date-input",
   "description" : "dummy",
+  "tooltip": "test-short-description",
   "properties": {
-    "shortDescription": "test-short-description",
-    "shortDescriptionVisible": false
+    "af:layout" : {
+      "tooltipVisible": false
+    }
   },
   "label": {
     "visible": true,
@@ -17,11 +19,16 @@
     "richText": false
   },
   "dataRef":"a.b",
-  "screenReaderText": "Custom screen reader text",
+  "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
     "type":"incorrect type"
   },
   "type": "string",
   "format": "date",
+  "minimum": "2022-02-04",
+  "exclusiveMinimum": "2022-02-05",
+  "exclusiveMaximum": "2022-02-08",
+  "maximum": "2022-02-09",
+  "default" : "2022-02-07",
   ":type": "core/fd/components/form/datepicker/v1/datepicker"
 }

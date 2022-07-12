@@ -39,6 +39,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public interface Base extends Component {
 
     public final String CUSTOM_PROPERTY_WRAPPER = "af:layout";
+    public final String DATE_FORMATTER = "yyyy-MM-dd";
 
     /**
      * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input},

@@ -94,6 +94,18 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Default(booleanValues = true)
     protected boolean enabled;
 
+    /** Adding in base since it can also be used for fields and panels **/
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(intValues = 0)
+    protected int minItems;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(intValues = -1)
+    protected int maxItems;
+
+    /** End **/
+
     @SlingObject
     private Resource resource;
 

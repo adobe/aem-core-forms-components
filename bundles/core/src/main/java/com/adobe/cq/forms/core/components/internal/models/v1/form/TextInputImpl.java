@@ -16,7 +16,6 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Date;
-import java.util.Optional;
 
 import javax.annotation.Nullable;
 
@@ -32,10 +31,8 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.DateConstraint;
-import com.adobe.cq.forms.core.components.models.form.NumberConstraint;
-import com.adobe.cq.forms.core.components.models.form.StringConstraint;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -44,7 +41,7 @@ import com.adobe.cq.forms.core.components.models.form.TextInput;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TextInputImpl extends AbstractFieldImpl implements TextInput, StringConstraint, NumberConstraint, DateConstraint {
+public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     @ScriptVariable
     private ValueMap properties;
@@ -100,29 +97,43 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput, Strin
 
     @Override
     @Nullable
-    public Integer getMinimum() {
+    public Long getMinimum() {
         return minimum;
     }
 
     @Override
     @Nullable
-    public Integer getMaximum() {
+    public Long getMaximum() {
         return maximum;
     }
 
     @Override
+    public Long getExclusiveMaximum() {
+        return exclusiveMinimum;
+    }
+
+    @Override
+    public Long getExclusiveMinimum() {
+        return exclusiveMaximum;
+    }
+
+    @Override
     public Date getMinimumDate() {
-        return Optional.ofNullable(minDate)
-            .map(Date::getTime)
-            .map(Date::new)
-            .orElse(null);
+        return ComponentUtils.clone(minimumDate);
     }
 
     @Override
     public Date getMaximumDate() {
-        return Optional.ofNullable(maxDate)
-            .map(Date::getTime)
-            .map(Date::new)
-            .orElse(null);
+        return ComponentUtils.clone(maximumDate);
+    }
+
+    @Override
+    public Date getExclusiveMaximumDate() {
+        return ComponentUtils.clone(exclusiveMaximumDate);
+    }
+
+    @Override
+    public Date getExclusiveMinimumDate() {
+        return ComponentUtils.clone(exclusiveMinimumDate);
     }
 }
