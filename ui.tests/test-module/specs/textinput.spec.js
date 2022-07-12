@@ -1,5 +1,5 @@
 /*
- *  Copyright 2021 Adobe Systems Incorporated
+ *  Copyright 2022 Adobe Systems Incorporated
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,46 +21,79 @@ const commons = require('../libs/commons/commons'),
     guideSelectors = require('../libs/commons/guideSelectors'),
     afConstants = require('../libs/commons/formsConstants');
 
+/**
+ * Testing TextInput with Sites Editor
+ */
 describe('Page - Authoring', function () {
   // we can use these values to log in
-  const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-      textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/textinput",
-      textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-      textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
-  context('Open Editor', function () {
+  const dropTextInputInContainer = function() {
+    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    cy.selectLayer("Edit");
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
+    cy.get('body').click(0,0);
+  }
+
+  const testTextInputBehaviour = function(textInputEditPathSelector, textInputDrop) {
+      dropTextInputInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+      // Check If Dialog Options Are Visible
+      cy.get("[name='./html5Type']")
+      .should("exist");
+      cy.get("[name='./multiLine']")
+      .should("exist");
+      cy.get("[name='./autocomplete']")
+      .should("exist");
+
+      // Checking some dynamic behaviours
+      cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
+      cy.get(".cmp-adaptiveform-textinput__maxchars").invoke('css', 'display').should('equal','none');
+      cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
+      cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(textInputDrop);
+  }
+
+  context('Open Forms Editor', function() {
+    const pagePath = "/content/forms/af/core-components-examples/blank",
+        textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
+        textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+        textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+    beforeEach(function () {
+      // this is done since cypress session results in 403 sometimes
+      cy.openAuthoring(pagePath);
+    });
+
+    it('insert TextInput in form container', function () {
+      dropTextInputInContainer();
+      cy.deleteComponentByPath(textInputDrop);
+    });
+
+    it ('open edit dialog of TextInput', function(){
+      testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
+    })
+  })
+
+  context('Open Sites Editor', function () {
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/textinput",
+        textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
     });
 
     it('insert aem forms TextInput', function () {
-      const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-          responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-      cy.selectLayer("Edit");
-      cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
-      cy.get('body').click(0,0);
+      dropTextInputInContainer();
       cy.deleteComponentByPath(textInputDrop);
     });
 
     it('open edit dialog of aem forms TextInput', function() {
-        // click configure action on aem forms container component
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-
-        // Check If Dialog Options Are Visible
-        cy.get("[name='./html5Type']")
-            .should("exist");
-        cy.get("[name='./multiLine']")
-        .should("exist");
-        cy.get("[name='./autocomplete']")
-        .should("exist");
-
-        // Checking some dynamic behaviours
-        cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
-        cy.get(".cmp-adaptiveform-textinput__maxchars").invoke('css', 'display').should('equal','none');
-        cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
-        cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
+      testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
     });
 
     after(function() {
