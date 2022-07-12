@@ -12,6 +12,7 @@
         <guideContainer
                 jcr:primaryType="nt:unstructured"
                 fd:version="2.0"
+                editable="{Boolean}true"
                 sling:resourceType="forms-components-examples/components/form/container"
                 name="guide1">
         </guideContainer>
