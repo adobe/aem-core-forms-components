@@ -21,33 +21,28 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
+ * Defines the form {@code NumberInput} Sling Model used for the {@code /apps/core/fd/components/form/numberinput/v1/numberinput} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface TextInput extends Field, NumberConstraint, DateConstraint, StringConstraint {
+public interface NumberInput extends Field, NumberConstraint {
 
     /**
-     * Returns {@code true} if multi line, otherwise {@code false}.
-     *
-     * @return {@code true} if multi line, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @JsonIgnore
-    default boolean isMultiLine() {
-        return false;
-    }
-
-    /**
-     * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
-     * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * Returns the lead digits for float data type
+     * 
+     * @return lead digits
      */
     @Nullable
-    default String getAutoComplete() {
-        return null;
-    }
+    @JsonIgnore
+    Integer getLeadDigits();
 
+    /**
+     * Returns the fractional digits for float data type
+     * 
+     * @return fractional digits
+     */
+    @Nullable
+    @JsonIgnore
+    Integer getFracDigits();
 }

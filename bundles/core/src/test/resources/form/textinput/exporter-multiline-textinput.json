@@ -7,13 +7,12 @@
   "readOnly": false,
   "fieldType": "multiline-input",
   "description" : "dummy",
-  "autoComplete": false,
   "label": {
     "visible": true,
     "value": "def",
     "richText": false
   },
-  "screenReaderText": "abc",
+  "screenReaderText":"$name",
   "type": "string",
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }

@@ -20,11 +20,8 @@ import java.util.List;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,14 +34,6 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
  * Abstract class which can be used as base class for {@link Container} implementations.
  */
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Base, Container, ContainerConstraint {
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = 0)
-    protected int minItems;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = -1)
-    protected int maxItems;
 
     @OSGiService
     private SlingModelFilter slingModelFilter;

@@ -141,7 +141,7 @@
                                         <items jcr:primaryType="nt:unstructured">
                                             <columLabels
                                                 jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/foundation/container"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container"
                                                 granite:class="cmp-formsportal-link--editor-parameters__header">
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <columnDiv

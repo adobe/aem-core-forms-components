@@ -25,6 +25,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -36,6 +37,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 @ConsumerType
 public interface Base extends Component {
+
+    public final String CUSTOM_PROPERTY_WRAPPER = "af:layout";
+    public final String DATE_FORMATTER = "yyyy-MM-dd";
 
     /**
      * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input},
@@ -85,7 +89,7 @@ public interface Base extends Component {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         * @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
         public String getValue() {
             return value;
@@ -163,6 +167,57 @@ public interface Base extends Component {
     }
 
     /**
+     * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    public enum AssistPriority {
+        CUSTOM("custom"),
+        DESCRIPTION("description"),
+        LABEL("label"),
+        NAME("name");
+
+        private String value;
+
+        AssistPriority(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
+         * representation
+         *
+         * @param value the string representation for which an enum value should be returned
+         * @return the corresponding enum value, if one was found
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public static AssistPriority fromString(String value) {
+            for (AssistPriority type : AssistPriority.values()) {
+                if (StringUtils.equals(value, type.value)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return value;
+        }
+    }
+
+    /**
      * Returns label of the form field
      *
      * @return label of the field
@@ -207,13 +262,26 @@ public interface Base extends Component {
     }
 
     /**
-     * Returns the string to indicate the text to be read by screen readers
+     * Returns json formula rule to indicate the text to be read by screen readers based on the {@link AssistPriority} configured.
      *
-     * @return the screen reader text
+     * @return the screen reader text as json formula rule
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
     default String getScreenReaderText() {
+        return null;
+    }
+
+    /**
+     * Returns the string to indicate the text to be read by screen readers. This
+     * could be used on server side to compute initial rendition
+     *
+     * @return the screen reader text
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getHtmlScreenReaderText() {
         return null;
     }
 

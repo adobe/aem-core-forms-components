@@ -3,4 +3,4 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     categories="[core.forms.components.container.v1.runtime]"
     dependencies="[jquery,core.forms.components.runtime]"
-    embed="[core.forms.components.datepicker.v1.runtime]"/>
+    embed="[core.forms.components.datePicker.v1.runtime]"/>

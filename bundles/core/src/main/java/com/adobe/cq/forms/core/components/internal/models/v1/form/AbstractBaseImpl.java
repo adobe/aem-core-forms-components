@@ -37,18 +37,22 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "longDescription")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "bindRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
+    @Nullable
+    protected String typeJcr;
+    private Type type;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
     @Nullable
     protected String dataRef;
 
@@ -61,60 +65,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected String validationExpression;
 
     // using old jcr property names to allow easy conversion from foundation to core components
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "mandatory")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
     @Default(booleanValues = false)
     protected boolean required;
-
-    /**
-     * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    private enum AssistPriority {
-        CUSTOM("custom"),
-        DESCRIPTION("description"),
-        LABEL("label"),
-        NAME("name");
-
-        private String value;
-
-        AssistPriority(String value) {
-            this.value = value;
-        }
-
-        /**
-         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-         * representation
-         *
-         * @param value the string representation for which an enum value should be returned
-         * @return the corresponding enum value, if one was found
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
-         */
-        public static AssistPriority fromString(String value) {
-            for (AssistPriority type : AssistPriority.values()) {
-                if (StringUtils.equals(value, type.value)) {
-                    return type;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * Returns the string value of this enum constant.
-         *
-         * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
-         */
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return value;
-        }
-    }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
     @Nullable
@@ -141,6 +94,18 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Default(booleanValues = true)
     protected boolean enabled;
 
+    /** Adding in base since it can also be used for fields and panels **/
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(intValues = 0)
+    protected int minItems;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(intValues = -1)
+    protected int maxItems;
+
+    /** End **/
+
     @SlingObject
     private Resource resource;
 
@@ -150,8 +115,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     private Map<ConstraintType, String> constraintMessages = null;
 
     @PostConstruct
-    private void initModel() {
+    protected void initBaseModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
+        type = Type.fromString(typeJcr);
     }
 
     @JsonIgnore
@@ -201,6 +167,28 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     public String getScreenReaderText() {
+        // needs to be represented as json formula since labels, name, description can be dynamic, and hence
+        // screen reader text can be dynamic
+        String screenReaderText = "$name";
+        if (AssistPriority.LABEL.equals(assistPriority)) {
+            Label label = getLabel();
+            if (label != null) {
+                screenReaderText = "$label.$value";
+            }
+        } else if (AssistPriority.NAME.equals(assistPriority)) {
+            screenReaderText = "$name";
+        } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
+            screenReaderText = "$description";
+        } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
+            screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
+        }
+        return screenReaderText;
+    }
+
+    @Override
+    @Nullable
+    public String getHtmlScreenReaderText() {
+        // this can be used in sightly to compute initial html
         String screenReaderText = getName();
         if (AssistPriority.LABEL.equals(assistPriority)) {
             Label label = getLabel();
@@ -451,7 +439,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
-    protected abstract Type getDefaultType();
+    protected abstract @NotNull Map<String, Object> getCustomProperties();
 
     @Override
     public boolean isRequired() {
@@ -460,7 +448,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     public Type getType() {
-        return getDefaultType();
+        return type;
     }
 
     @Override
@@ -473,5 +461,14 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        if (getCustomProperties().size() != 0) {
+            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
+        }
+        return customProperties;
     }
 }

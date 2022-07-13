@@ -20,7 +20,7 @@
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div
-     data-sly-use.datepicker="com.adobe.cq.forms.core.components.models.form.Datepicker"
+     data-sly-use.datePicker="com.adobe.cq.forms.core.components.models.form.DatePicker"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      class="cmp-adaptiveform-datepicker"
      data-sly-use.template="core/wcm/components/commons/v1/templates.html"
@@ -28,12 +28,12 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-cmp-hook-adaptiveform-datepicker="input"
      data-sly-test="${!error}">
-     <div data-sly-call="${label.label @componentId=component.id, labelValue=datepicker.label.value, labelVisible=datepicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>
-     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=datepicker.description, bemBlock='cmp-adaptiveform-datepicker'}"></div>
+     <div data-sly-call="${label.label @componentId=component.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>
+     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <input type="date"
-            id="${datepicker.id}"
-            readonly="${datepicker.readOnly}"
-            required="${datepicker.required}"
-            placeholder="${datepicker.placeHolder}"
-            data-cmp-required-message="${datepicker.constraintMessages.required}"/>
+            id="${datePicker.id}"
+            readonly="${datePicker.readOnly}"
+            required="${datePicker.required}"
+            placeholder="${datePicker.placeHolder}"
+            data-cmp-required-message="${datePicker.constraintMessages.required}"/>
 </div>

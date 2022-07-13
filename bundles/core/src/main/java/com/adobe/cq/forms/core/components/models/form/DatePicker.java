@@ -15,39 +15,25 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
+ * Defines the form {@code DatePicker} Sling Model used for the {@code /apps/core/fd/components/form/datepicker/v1/datepicker} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface TextInput extends Field, NumberConstraint, DateConstraint, StringConstraint {
+public interface DatePicker extends Field, DateConstraint {
 
     /**
-     * Returns {@code true} if multi line, otherwise {@code false}.
-     *
-     * @return {@code true} if multi line, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @JsonIgnore
-    default boolean isMultiLine() {
-        return false;
-    }
-
-    /**
-     * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
-     * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
-     *
+     * @see Field#getDefault()
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    @Nullable
-    default String getAutoComplete() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @Override
+    default Object getDefault() {
         return null;
     }
-
 }
