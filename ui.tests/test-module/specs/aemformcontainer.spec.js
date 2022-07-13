@@ -91,13 +91,13 @@ describe('Page - Authoring', function () {
     });
 });
 
+/*
 describe('Page - Authoring - Wizard', function () {
     context('Open Editor - Wizard', function () {
         beforeEach(function () {
             const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
             cy.visit(baseUrl);
             cy.login(baseUrl);
-            //cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
             cy.openAuthoringWithFeatureToggles(pagePath,["FT_CQ-4343036","FT_CQ-4339424"]);
         });
 
@@ -108,7 +108,7 @@ describe('Page - Authoring - Wizard', function () {
             cy.get(wizardSelectors.wizardCancelButton).click();
         });
 
-        /*it('open toolbar, select wizard and create a Form', function() {
+        it('open toolbar, select wizard and create a Form', function() {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.get("[data-action='createFormViaWizard']").should('be.visible');
             cy.invokeEditableAction("[data-action='createFormViaWizard']");
@@ -125,7 +125,7 @@ describe('Page - Authoring - Wizard', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("coral-taglist[name='./formRef']")
                 .should("have.value", "/content/dam/formsanddocuments/" + formName);
-        });*/
+        });
 
         afterEach(function() {
             cy.disableToggles();
@@ -137,3 +137,4 @@ describe('Page - Authoring - Wizard', function () {
         });
     });
 });
+*/

@@ -157,12 +157,6 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
     cy.openSiteAuthoring(pagePath);
 });
 
-// Cypress command to open authoring page after configuring feature toggles
-Cypress.Commands.add("openAuthoringWithFeatureToggles", (pagePath, toggles) => {
-    cy.enableToggles(toggles);
-    cy.openSiteAuthoring(pagePath);
-});
-
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
@@ -281,30 +275,3 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
 });
 
-// enable toggles
-Cypress.Commands.add("enableToggles", (toggles) => {
-    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
-    cy.visit(baseUrl);
-    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
-    cy.get("span[id='enabledToggles1']").type(toggles[0]);
-
-    let toggleIndex = 1;
-    let textAreaId = 3;
-    while (toggleIndex < toggles.length) {
-        cy.get("input[value='+']").first().click();
-        cy.get("span[id='enabledToggles" + textAreaId++ + "']").type(toggles[toggleIndex++]);
-    }
-
-    cy.get('button').contains( 'Save').click();
-});
-
-// disable toggles
-Cypress.Commands.add("disableToggles", () => {
-    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
-    cy.visit(baseUrl);
-    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
-    cy.get("textarea[name='enabledToggles']").each(item => {
-        cy.get("input[value='-']").first().click();
-    });
-    cy.get('button').contains( 'Save').click();
-});
