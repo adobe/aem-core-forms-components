@@ -265,25 +265,12 @@
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                             fieldLabel="Type"
                                             name="./displayPatternType">
-                                        <datasource
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
-                                                guideDataModel="basic"
-                                                guideNodeClass="guideTextBox"
-                                                type="formatters"/>
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.changePatternList('displayPattern', true);"/>
                                     </displayPatternType>
                                     <displayPictureClause
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldLabel="Pattern"
                                             name="./displayPictureClause">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.changePatternText('displayPattern');"
-                                                af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.changePatternText('displayPattern');"/>
                                     </displayPictureClause>
                                 </items>
                             </displayPatternGroup>
@@ -301,25 +288,12 @@
                                             name="./displayIsSameAsValidate"
                                             text="Same as display pattern"
                                             value="true">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.sameAsDisplayValPatternChange();"
-                                                af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.sameAsDisplayValPatternChange();"/>
                                     </sameAsDisplayPattern>
                                     <validationPatternType
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                             fieldLabel="Type"
                                             name="./validationPatternType">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.changePatternList('validationPattern', true);"/>
-                                        <datasource
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
-                                                guideDataModel="basic"
-                                                guideNodeClass="guideTextBox"
-                                                type="formatters"/>
                                     </validationPatternType>
                                     <validatePictureClause
                                             jcr:primaryType="nt:unstructured"
@@ -327,10 +301,6 @@
                                             fieldDescription="Regular Expression is permitted."
                                             fieldLabel="Pattern"
                                             name="./validatePictureClause">
-                                        <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.changePatternText('validationPattern');"
-                                                af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.changePatternText('validationPattern');"/>
                                     </validatePictureClause>
                                     <validatePictureClauseMessage
                                             jcr:primaryType="nt:unstructured"
