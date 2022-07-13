@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import readData from "../utils";
+import Utils from "../utils";
 
 export default class FormField {
 
@@ -22,7 +22,7 @@ export default class FormField {
         this.formContainer = params.formContainer;
         this.parent = params.parent || params.formContainer;
         this.element = params.element; //html element of field
-        this.options = readData(this.element, this.getClass());  //dataset of field
+        this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         let el = this.element.getElementsByTagName(this.getTagName());
         if (el && el.length > 0) {
             this.setId(el[0].id);
@@ -35,7 +35,7 @@ export default class FormField {
     }
 
     getFormContainerPath() {
-        return this.options["formcontainer"];
+        return this.options["adaptiveformcontainerPath"];
     }
 
     getId() {

@@ -14,8 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-(function($) {
+(function() {
 
+    "use strict";
     class FormContainer {
         constructor(params) {
             this._model = FormView.createFormInstance(params._formJson);
@@ -46,8 +47,6 @@
         }
 
     }
-
-    "use strict";
     const NS = "cmp";
     const IS = "adaptiveFormContainer";
     const selectors = {
@@ -56,12 +55,12 @@
     async function onDocumentReady() {
         let elements = document.querySelectorAll(selectors.self);
         for (let i = 0; i < elements.length; i++) {
-            const dataset = FormView.readData(elements[i], IS);
+            const dataset = FormView.Utils.readData(elements[i], IS);
             const containerPath = dataset["path"];
-            const formJson = await $.getJSON(containerPath + ".model.json");
+            const formJson = await FormView.Utils.getJson(containerPath + ".model.json");
             console.log("model json from server ", formJson);
             let formContainer =  new FormContainer({_formJson: formJson, _path: containerPath});
-            const event = new CustomEvent("FormContainerInitialised", { "detail": formContainer });
+            const event = new CustomEvent(FormView.Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
             document.dispatchEvent(event);
         }
     }
@@ -71,4 +70,4 @@
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
 
-})(jQuery);
+})();
