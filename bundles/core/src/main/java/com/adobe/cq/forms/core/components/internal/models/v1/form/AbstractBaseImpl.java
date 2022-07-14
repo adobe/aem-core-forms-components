@@ -47,9 +47,17 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String description; // long description as per current spec
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltip")
+    @Nullable
+    protected String tooltip;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltipVisible")
+    @Default(booleanValues = false)
+    protected boolean tooltipVisible;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
     @Nullable
-    protected String typeJcr;
+    protected String typeJcr; // todo: note this should never be array, we infer array types based on other metadata
     private Type type;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -95,14 +103,11 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Integer minItems;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = 0)
-    protected int minItems;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = -1)
-    protected int maxItems;
+    protected Integer maxItems;
 
     /** End **/
 
@@ -152,6 +157,25 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
+    @Override
+    public @Nullable String getTooltip() {
+        return tooltip;
+    }
+
+    @Override
+    public boolean isTooltipVisible() {
+        return tooltipVisible;
+    }
+
+    @JsonIgnore
+    public @NotNull Map<String, Object> getCustomProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        if (tooltip != null) {
+            customProperties.put("tooltipVisible", tooltipVisible);
+        }
+        return customProperties;
+    }
+
     /**
      * Returns the reference to the data model
      *
@@ -169,7 +193,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     public String getScreenReaderText() {
         // needs to be represented as json formula since labels, name, description can be dynamic, and hence
         // screen reader text can be dynamic
-        String screenReaderText = "$name";
+        String screenReaderText = null; // only if assist priority is set in JCR, we return screenReaderText to the client
         if (AssistPriority.LABEL.equals(assistPriority)) {
             Label label = getLabel();
             if (label != null) {
@@ -437,9 +461,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     public @NotNull String getExportedType() {
         return resource.getResourceType();
     }
-
-    @JsonIgnore
-    protected abstract @NotNull Map<String, Object> getCustomProperties();
 
     @Override
     public boolean isRequired() {

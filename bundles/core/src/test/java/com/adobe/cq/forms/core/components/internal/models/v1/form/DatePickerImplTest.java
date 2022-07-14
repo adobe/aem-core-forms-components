@@ -146,7 +146,7 @@ public class DatePickerImplTest {
     @Test
     void testGetDefault() {
         DatePicker datePicker = getDatepickerUnderTest(PATH_DATEPICKER);
-        assertEquals(new Date("Mon Feb 07 2022 05:30:00 GMT+0530"), datePicker.getDefault());
+        assertArrayEquals(new Object[] { new Date("Mon Feb 07 2022 05:30:00 GMT+0530") }, datePicker.getDefault());
     }
 
     @Test

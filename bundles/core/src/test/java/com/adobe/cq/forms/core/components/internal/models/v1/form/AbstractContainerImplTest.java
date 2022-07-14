@@ -30,14 +30,14 @@ public class AbstractContainerImplTest {
     void testGetMinItems() {
         AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
         Mockito.when(abstractContainerMock.getMinItems()).thenCallRealMethod();
-        assertEquals(0, abstractContainerMock.getMinItems());
+        assertEquals(null, abstractContainerMock.getMinItems());
     }
 
     @Test
     void testGetMaxItems() {
         AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
         Mockito.when(abstractContainerMock.getMaxItems()).thenCallRealMethod();
-        assertEquals(0, abstractContainerMock.getMaxItems());
+        assertEquals(null, abstractContainerMock.getMaxItems());
     }
 
 }

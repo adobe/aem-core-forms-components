@@ -33,7 +33,7 @@ public interface DatePicker extends Field, DateConstraint {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
     @Override
-    default Object getDefault() {
+    default Object[] getDefault() {
         return null;
     }
 }

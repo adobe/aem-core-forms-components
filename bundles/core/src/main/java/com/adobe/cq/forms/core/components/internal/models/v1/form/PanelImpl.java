@@ -16,55 +16,33 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.DropDown;
+import com.adobe.cq.forms.core.components.models.form.Panel;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
-    adapters = { DropDown.class,
+    adapters = { Panel.class,
         ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_DROP_DOWN_V1 })
+    resourceType = { FormConstants.RT_FD_FORM_PANEL_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelect")
-    @Default(booleanValues = false)
-    protected boolean multiSelect;
+public class PanelImpl extends AbstractContainerImpl implements Panel {
 
     @Override
     protected FieldType getDefaultFieldType() {
-        return FieldType.DROP_DOWN;
-    }
-
-    @Override
-    public Integer getMinItems() {
-        return minItems;
-    }
-
-    @Override
-    public Integer getMaxItems() {
-        return maxItems;
-    }
-
-    @Override
-    public Boolean isMultiSelect() {
-        return multiSelect;
+        return FieldType.PANEL;
     }
 
     @Override
     public Type getType() {
-        if (isMultiSelect()) {
+        if (minItems != null && maxItems != null) {
             return Type.ARRAY;
         } else {
-            return super.getType();
+            return Type.OBJECT;
         }
     }
 }

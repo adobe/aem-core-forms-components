@@ -15,17 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +43,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     @Nullable
-    protected Object defaultValue;
+    protected Object[] defaultValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholder")
     @Nullable
@@ -62,14 +60,6 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
     @Nullable
     protected String dataFormat;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltip")
-    @Nullable
-    protected String tooltip;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltipVisible")
-    @Default(booleanValues = false)
-    protected boolean tooltipVisible;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minLength")
     @Nullable
@@ -120,11 +110,19 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    public Object getDefault() {
-        if (defaultValue instanceof Calendar) {
-            return ((Calendar) defaultValue).getTime();
+    public Object[] getDefault() {
+        if (defaultValue != null) {
+            return Arrays.stream(defaultValue)
+                .map(p -> {
+                    if (p instanceof Calendar) {
+                        return ((Calendar) p).getTime();
+                    } else {
+                        return p;
+                    }
+                })
+                .toArray();
         }
-        return defaultValue;
+        return null;
     }
 
     @Override
@@ -149,24 +147,5 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     public String getDataFormat() {
         return dataFormat;
-    }
-
-    @Override
-    public @Nullable String getTooltip() {
-        return tooltip;
-    }
-
-    @Override
-    public boolean isTooltipVisible() {
-        return tooltipVisible;
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (tooltip != null) {
-            customProperties.put("tooltipVisible", tooltipVisible);
-        }
-        return customProperties;
     }
 }

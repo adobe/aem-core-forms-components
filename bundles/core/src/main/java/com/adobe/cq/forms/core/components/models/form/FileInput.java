@@ -15,37 +15,23 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * A interface which specifies the different form container constraints
+ * Defines the form {@code FileInput} Sling Model used for the {@code /apps/core/fd/components/form/fileinput/v1/fileinput} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface ContainerConstraint {
-    /**
-     * Returns the minimum items of the container (ie array data type)
-     *
-     * @return the minimum items
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default Integer getMinItems() {
-        return null;
-    }
+public interface FileInput extends Field, FileConstraint, ContainerConstraint {
 
     /**
-     * Returns the maximum items of the container (ie array data type)
+     * Returns {@code true} if multiple files can be selected, {@code false} otherwise
      *
-     * @return the maximum items
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @return {@code true} if multiple files can be selected, {@code false} otherwise
      */
-    @Nullable
-    default Integer getMaxItems() {
-        return null;
-    }
-
-    // todo: add initial items here
+    @JsonIgnore
+    Boolean isMultiple();
 }
