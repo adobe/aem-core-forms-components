@@ -27,16 +27,16 @@ import static org.junit.Assert.assertEquals;
 @ExtendWith(AemContextExtension.class)
 public class ContainerConstraintTest {
     @Test
-    void testGetMaxFileSize() {
+    void testGetMinItems() {
         ContainerConstraint containerConstraintMock = Mockito.mock(ContainerConstraint.class);
         Mockito.when(containerConstraintMock.getMinItems()).thenCallRealMethod();
-        assertEquals(1, containerConstraintMock.getMinItems());
+        assertEquals(null, containerConstraintMock.getMinItems());
     }
 
     @Test
-    void testGetAccept() {
+    void testGetMaxItems() {
         ContainerConstraint containerConstraintMock = Mockito.mock(ContainerConstraint.class);
         Mockito.when(containerConstraintMock.getMaxItems()).thenCallRealMethod();
-        assertEquals(-1, containerConstraintMock.getMaxItems());
+        assertEquals(null, containerConstraintMock.getMaxItems());
     }
 }

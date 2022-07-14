@@ -15,10 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Defines the form {@code Field} Sling Model used for form field component.
@@ -88,29 +88,9 @@ public interface Field extends Base, BaseConstraint {
      * @return default value of the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default Object getDefault() {
+    @JsonSerialize(using = DefaultValueSerializer.class)
+    default Object[] getDefault() {
         return null;
     }
 
-    /**
-     * Returns the tool tip of the field
-     *
-     * @return the tool tip of the field
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
-     */
-    @Nullable
-    default String getTooltip() {
-        return null;
-    }
-
-    /**
-     * Returns {@code true} if tooltip should always be visible, otherwise {@code false}.
-     *
-     * @return {@code true} if tooltip should always be visible, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
-     */
-    @JsonIgnore
-    default boolean isTooltipVisible() {
-        return false;
-    }
 }

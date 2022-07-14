@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
@@ -25,23 +26,29 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.DropDown;
+import com.adobe.cq.forms.core.components.models.form.FileInput;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
-    adapters = { DropDown.class,
+    adapters = { FileInput.class,
         ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_DROP_DOWN_V1 })
+    resourceType = { FormConstants.RT_FD_FORM_FILE_INPUT_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
+public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelect")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelection")
     @Default(booleanValues = false)
-    protected boolean multiSelect;
+    protected boolean multiSelection;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxFileSize")
+    protected String maxFileSize;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "accept")
+    protected String[] accept;
 
     @Override
     protected FieldType getDefaultFieldType() {
-        return FieldType.DROP_DOWN;
+        return FieldType.FILE_INPUT;
     }
 
     @Override
@@ -55,16 +62,26 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     }
 
     @Override
-    public Boolean isMultiSelect() {
-        return multiSelect;
-    }
-
-    @Override
     public Type getType() {
-        if (isMultiSelect()) {
+        if (isMultiple()) {
             return Type.ARRAY;
         } else {
             return super.getType();
         }
+    }
+
+    @Override
+    public Boolean isMultiple() {
+        return multiSelection;
+    }
+
+    @Override
+    public String getMaxFileSize() {
+        return maxFileSize;
+    }
+
+    @Override
+    public String[] getAccept() {
+        return ArrayUtils.clone(accept);
     }
 }

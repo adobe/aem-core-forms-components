@@ -15,37 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * A interface which specifies the different form container constraints
+ * Defines the form {@code CheckBoxGroup} Sling Model used for the {@code /apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup}
+ * component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface ContainerConstraint {
-    /**
-     * Returns the minimum items of the container (ie array data type)
-     *
-     * @return the minimum items
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default Integer getMinItems() {
-        return null;
-    }
+public interface CheckBoxGroup extends Field, OptionsConstraint, ContainerConstraint {
 
-    /**
-     * Returns the maximum items of the container (ie array data type)
-     *
-     * @return the maximum items
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default Integer getMaxItems() {
-        return null;
-    }
-
-    // todo: add initial items here
 }

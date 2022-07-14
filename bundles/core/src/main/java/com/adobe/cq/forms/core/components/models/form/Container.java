@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Container extends ContainerExporter {
+public interface Container extends Base, ContainerExporter {
 
     /**
      * Returns the list of items present inside the container as an array.

@@ -61,6 +61,28 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    @Nullable
+    @JsonIgnore
+    @Override
+    default String getFieldType() {
+        // explicitly setting null, since form container does not have a field type, but other containers like panel have a field type
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    default boolean isEnabled() {
+        // explicitly setting true, since form container does not have enabled property, but other containers like panel have a field type
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    default boolean isVisible() {
+        // explicitly setting true, since form container does not have visible property, but other containers like panel have a field type
+        return true;
+    }
+
     /**
      * Returns the form title
      *

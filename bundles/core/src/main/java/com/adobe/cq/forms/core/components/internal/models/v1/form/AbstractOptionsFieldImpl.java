@@ -54,13 +54,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         if (enums == null) {
             return null;
         } else {
+            // todo: we can only typecast to number or boolean if type is present in JCR, for array types, we need to store the type of each
+            // array element in JCR
+            // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            if (this.getType().equals(Type.NUMBER)) {
+            if (Type.fromString(typeJcr).equals(Type.NUMBER)) {
                 return Arrays.stream(enums)
                     .filter(Objects::nonNull)
                     .map(Integer::parseInt)
                     .toArray(Integer[]::new);
-            } else if (this.getType().equals(Type.BOOLEAN)) {
+            } else if (Type.fromString(typeJcr).equals(Type.BOOLEAN)) {
                 return Arrays.stream(enums)
                     .filter(Objects::nonNull)
                     .map(Boolean::parseBoolean)

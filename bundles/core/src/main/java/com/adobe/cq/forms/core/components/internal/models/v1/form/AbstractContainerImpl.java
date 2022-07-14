@@ -25,6 +25,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
@@ -44,14 +45,24 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @SlingObject
     private Resource resource;
 
+    private List<? extends ComponentExporter> childrenModels;
+
     @Override
-    public int getMinItems() {
+    public Integer getMinItems() {
         return minItems;
     }
 
     @Override
-    public int getMaxItems() {
+    public Integer getMaxItems() {
         return maxItems;
+    }
+
+    @Override
+    public List<? extends ComponentExporter> getItems() {
+        if (childrenModels == null) {
+            childrenModels = getChildrenModels(request, ComponentExporter.class);
+        }
+        return childrenModels;
     }
 
     protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {

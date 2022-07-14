@@ -14,7 +14,6 @@
         "richText": false,
         "value": "def"
       },
-      "screenReaderText": "$name",
       "type": "string",
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }

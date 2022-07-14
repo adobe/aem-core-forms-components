@@ -39,6 +39,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -119,7 +120,7 @@ public class TextInputImplTest {
     @Test
     void testGetDefault() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals("abc", textInput.getDefault());
+        assertArrayEquals(new String[] { "abc" }, textInput.getDefault());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDefault()).thenCallRealMethod();
         assertEquals(null, textInputMock.getDefault());
@@ -128,7 +129,7 @@ public class TextInputImplTest {
     @Test
     void testGetNumberDefault() {
         TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
-        assertEquals(150, ((Long) numberTextInput.getDefault()).intValue());
+        assertArrayEquals(new Long[] { 150L }, numberTextInput.getDefault());
     }
 
     @Test

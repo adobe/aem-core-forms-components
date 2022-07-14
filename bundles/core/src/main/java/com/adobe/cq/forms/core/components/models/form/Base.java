@@ -346,4 +346,26 @@ public interface Base extends Component {
     default Map<String, Object> getProperties() {
         return Collections.emptyMap();
     }
+
+    /**
+     * Returns the tool tip of the field
+     *
+     * @return the tool tip of the field
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    default String getTooltip() {
+        return null;
+    }
+
+    /**
+     * Returns {@code true} if tooltip should always be visible, otherwise {@code false}.
+     *
+     * @return {@code true} if tooltip should always be visible, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default boolean isTooltipVisible() {
+        return false;
+    }
 }
