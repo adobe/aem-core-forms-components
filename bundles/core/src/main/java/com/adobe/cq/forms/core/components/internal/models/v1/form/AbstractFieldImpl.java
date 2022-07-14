@@ -15,16 +15,18 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 
@@ -33,23 +35,25 @@ import com.adobe.cq.forms.core.components.models.form.Field;
  */
 public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Field {
 
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean readOnly;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "_value")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     @Nullable
-    protected Object defaultValue;
+    protected Object[] defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholderText")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholder")
     @Nullable
     protected String placeholder;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayPictureClause")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayFormat")
     @Nullable
     protected String displayFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editPictureClause")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editFormat")
     @Nullable
     protected String editFormat;
 
@@ -57,13 +61,45 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String dataFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minLength")
     @Nullable
-    protected String shortDescription;
+    protected Integer minLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "shortVisible")
-    @Default(booleanValues = false)
-    protected boolean shortDescriptionVisible;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxLength")
+    @Nullable
+    protected Integer maxLength;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
+    @Nullable
+    protected Long maximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @Nullable
+    protected Long minimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
+    @Nullable
+    protected Date minimumDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximumDate")
+    @Nullable
+    protected Date maximumDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @Nullable
+    protected Long exclusiveMinimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
+    @Nullable
+    protected Long exclusiveMaximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumDate")
+    @Nullable
+    protected Date exclusiveMinimumDate;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumDate")
+    @Nullable
+    protected Date exclusiveMaximumDate;
 
     @SlingObject
     private Resource resource;
@@ -74,8 +110,19 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    public Object getDefault() {
-        return defaultValue;
+    public Object[] getDefault() {
+        if (defaultValue != null) {
+            return Arrays.stream(defaultValue)
+                .map(p -> {
+                    if (p instanceof Calendar) {
+                        return ((Calendar) p).getTime();
+                    } else {
+                        return p;
+                    }
+                })
+                .toArray();
+        }
+        return null;
     }
 
     @Override
@@ -100,25 +147,5 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     public String getDataFormat() {
         return dataFormat;
-    }
-
-    @Override
-    public @Nullable String getShortDescription() {
-        return shortDescription;
-    }
-
-    @Override
-    public boolean isShortDescriptionVisible() {
-        return shortDescriptionVisible;
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (shortDescription != null) {
-            customProperties.put("shortDescription", shortDescription);
-            customProperties.put("shortDescriptionVisible", shortDescriptionVisible);
-        }
-        return customProperties;
     }
 }

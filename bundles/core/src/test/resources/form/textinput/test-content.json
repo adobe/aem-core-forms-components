@@ -5,13 +5,32 @@
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
-    "longDescription" : "dummy",
+    "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
-    "bindRef" : "a.b",
+    "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
-    "shortDescription": "test-short-description"
+    "tooltip": "test-short-description",
+    "default" : "abc"
+  },
+  "number-textinput" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "type" : "number",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "maximum" : 100,
+    "minimum" : 10,
+    "default" : 150
   },
   "multiline-textinput" : {
     "jcr:primaryType": "nt:unstructured",
@@ -20,7 +39,7 @@
     "multiLine" : true,
     "jcr:title" : "def",
     "hideTitle" : false,
-    "longDescription" : "dummy",
+    "description" : "dummy",
     "visible" : false
   }
 }

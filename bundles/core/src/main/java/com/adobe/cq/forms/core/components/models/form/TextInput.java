@@ -15,18 +15,18 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput} component.
+ * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface TextInput extends Field {
+public interface TextInput extends Field, NumberConstraint, DateConstraint, StringConstraint {
 
     /**
      * Returns {@code true} if multi line, otherwise {@code false}.
@@ -40,32 +40,14 @@ public interface TextInput extends Field {
     }
 
     /**
-     * @see Base#getFieldType()
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @NotNull
-    @Override
-    default String getFieldType() {
-        return FieldType.TEXT_INPUT.getValue();
-    }
-
-    /**
-     * Returns {@code true} if autocomplete, otherwise {@code false}.
+     * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
+     * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
      *
-     * @return {@code true} if autocomplete, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    default boolean isAutoComplete() {
-        return false;
-    }
-
-    /**
-     * The autofillFieldKeyword.
-     *
-     * @return autofillFieldKeyword.
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
-     */
-    default String getAutofillFieldKeyword() {
+    @Nullable
+    default String getAutoComplete() {
         return null;
     }
+
 }

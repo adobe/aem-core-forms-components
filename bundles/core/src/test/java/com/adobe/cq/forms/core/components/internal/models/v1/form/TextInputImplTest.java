@@ -28,6 +28,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -38,6 +39,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -47,6 +49,7 @@ public class TextInputImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXTINPUT_1 = CONTENT_ROOT + "/textinput";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
+    private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -68,9 +71,6 @@ public class TextInputImplTest {
     void testFieldType() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
-        TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getFieldType()).thenCallRealMethod();
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInputMock.getFieldType());
     }
 
     @Test
@@ -118,12 +118,36 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetDefault() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertArrayEquals(new String[] { "abc" }, textInput.getDefault());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getDefault()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getDefault());
+    }
+
+    @Test
+    void testGetNumberDefault() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertArrayEquals(new Long[] { 150L }, numberTextInput.getDefault());
+    }
+
+    @Test
     void testGetScreenReaderText() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals("Custom screen reader text", textInput.getScreenReaderText());
+        assertEquals("'Custom screen reader text'", textInput.getScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, textInputMock.getScreenReaderText());
+    }
+
+    @Test
+    void testGetHtmlScreenReaderText() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals("Custom screen reader text", textInput.getHtmlScreenReaderText());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getHtmlScreenReaderText()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getHtmlScreenReaderText());
     }
 
     @Test
@@ -199,6 +223,42 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetType() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals(BaseConstraint.Type.STRING, textInput.getType());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getType()).thenCallRealMethod();
+        assertEquals(BaseConstraint.Type.STRING, textInputMock.getType());
+    }
+
+    @Test
+    void testGetNumberType() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(BaseConstraint.Type.NUMBER, numberTextInput.getType());
+    }
+
+    @Test
+    void testGetMaximum() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(100, numberTextInput.getMaximum().intValue());
+    }
+
+    @Test
+    void testGetMinimum() {
+        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        assertEquals(10, numberTextInput.getMinimum().intValue());
+    }
+
+    @Test
+    void testGetTooltip() {
+        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        assertEquals("test-short-description", textInput.getTooltip());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getTooltip()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getTooltip());
+    }
+
+    @Test
     void testGetConstraintMessages() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
@@ -225,8 +285,9 @@ public class TextInputImplTest {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
         Map<String, Object> properties = textInput.getProperties();
         assertFalse(properties.isEmpty());
-        assertEquals("test-short-description", String.valueOf(properties.get("shortDescription")));
-        assertFalse((boolean) properties.get("shortDescriptionVisible"));
+        // get custom properties of "af:layout"
+        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
+        assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
 
     @Test
@@ -239,33 +300,24 @@ public class TextInputImplTest {
     @Test
     void testGetShortDescription() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getShortDescription()).thenCallRealMethod();
-        assertEquals(null, textInputMock.getShortDescription());
+        Mockito.when(textInputMock.getTooltip()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getTooltip());
     }
 
     @Test
     void testIsShortDescriptionVisible() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.isShortDescriptionVisible()).thenCallRealMethod();
-        assertEquals(false, textInputMock.isShortDescriptionVisible());
+        Mockito.when(textInputMock.isTooltipVisible()).thenCallRealMethod();
+        assertEquals(false, textInputMock.isTooltipVisible());
     }
 
     @Test
-    void testIsAutoComplete() {
+    void testGetAutoComplete() {
         TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals(false, textInput.isAutoComplete());
+        assertEquals(null, textInput.getAutoComplete());
         TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.isAutoComplete()).thenCallRealMethod();
-        assertEquals(false, textInputMock.isAutoComplete());
-    }
-
-    @Test
-    void testGetAutofillFieldKeyword() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
-        assertEquals(null, textInput.getAutofillFieldKeyword());
-        TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getAutofillFieldKeyword()).thenCallRealMethod();
-        assertEquals(null, textInputMock.getAutofillFieldKeyword());
+        Mockito.when(textInputMock.getAutoComplete()).thenCallRealMethod();
+        assertEquals(null, textInputMock.getAutoComplete());
     }
 
     @Test

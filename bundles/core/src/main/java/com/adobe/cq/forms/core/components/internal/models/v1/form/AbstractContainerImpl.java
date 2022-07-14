@@ -20,14 +20,12 @@ import java.util.List;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
@@ -38,14 +36,6 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
  */
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Base, Container, ContainerConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = 0)
-    protected int minItems;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(intValues = -1)
-    protected int maxItems;
-
     @OSGiService
     private SlingModelFilter slingModelFilter;
 
@@ -55,14 +45,24 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @SlingObject
     private Resource resource;
 
+    private List<? extends ComponentExporter> childrenModels;
+
     @Override
-    public int getMinItems() {
+    public Integer getMinItems() {
         return minItems;
     }
 
     @Override
-    public int getMaxItems() {
+    public Integer getMaxItems() {
         return maxItems;
+    }
+
+    @Override
+    public List<? extends ComponentExporter> getItems() {
+        if (childrenModels == null) {
+            childrenModels = getChildrenModels(request, ComponentExporter.class);
+        }
+        return childrenModels;
     }
 
     protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {

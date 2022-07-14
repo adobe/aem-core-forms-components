@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import readData, {registerMutationObserver} from "./utils";
+import Utils from "./utils";
 import {createFormInstance} from "@aemforms/af-core";
 import FormField from "./view/FormField";
+import {Constants} from "./constants";
 
 window.af = {
     formsRuntime: {
@@ -26,7 +27,7 @@ window.af = {
             formContainer: {},
             utils: {}
         },
-        event: {}
+        events: {}
     }
 }
-export {createFormInstance, FormField, readData, registerMutationObserver};
+export {createFormInstance, FormField, Constants, Utils};

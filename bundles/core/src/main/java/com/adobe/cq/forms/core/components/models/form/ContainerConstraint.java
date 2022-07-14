@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -30,8 +31,9 @@ public interface ContainerConstraint {
      * @return the minimum items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default int getMinItems() {
-        return 1;
+    @Nullable
+    default Integer getMinItems() {
+        return null;
     }
 
     /**
@@ -40,8 +42,9 @@ public interface ContainerConstraint {
      * @return the maximum items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default int getMaxItems() {
-        return -1;
+    @Nullable
+    default Integer getMaxItems() {
+        return null;
     }
 
     // todo: add initial items here

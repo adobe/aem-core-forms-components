@@ -1,0 +1,31 @@
+{
+  "id": "dropdown-6fb0d7f4c0",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "drop-down",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "properties": {
+    "af:layout" : {
+      "tooltipVisible": false
+    }
+  },
+  "enforceEnum":false,
+  "enum" : [0, 1, 2],
+  "enumNames" : ["m", "f", "o"],
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "type": "number",
+  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+}

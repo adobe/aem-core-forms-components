@@ -7,19 +7,20 @@
   "readOnly": false,
   "fieldType": "text-input",
   "description" : "dummy",
-  "autoComplete": false,
+  "tooltip": "test-short-description",
   "properties": {
-    "shortDescription": "test-short-description",
-    "shortDescriptionVisible": false
+    "af:layout" : {
+      "tooltipVisible": false
+    }
   },
+  "default" : "abc",
   "label": {
     "visible": true,
     "value": "def",
     "richText": false
   },
   "dataRef":"a.b",
-
-  "screenReaderText": "Custom screen reader text",
+  "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
     "type":"incorrect type"
   },
