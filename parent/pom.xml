@@ -459,11 +459,10 @@
                 <plugin>
                     <groupId>com.day.jcr.vault</groupId>
                     <artifactId>content-package-maven-plugin</artifactId>
-                    <version>0.0.24</version>
+                    <version>1.0.4</version>
                     <configuration>
                         <targetURL>${quickstart.url}/crx/packmgr/service.jsp</targetURL>
                         <failOnError>true</failOnError>
-                        <failOnMissingEmbed>true</failOnMissingEmbed>
                     </configuration>
                 </plugin>
                 <!-- Apache Filevault Package Plugin -->

@@ -104,18 +104,12 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.day.jcr.vault</groupId>
-                <artifactId>content-package-maven-plugin</artifactId>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
                     <group>${vault.package.group}</group>
-                    <properties>
-                        <acHandling>overwrite</acHandling>
-                        <description>${project.description}</description>
-                        <created>${buildNumber}</created>
-                        <createdBy>${vault.package.company}</createdBy>
-                    </properties>
-                    <filterSource>${basedir}/META-INF/vault/filter.xml</filterSource>
+                    <packageType>content</packageType>
                     <dependencies>
                         <dependency>
                             <group>adobe/cq60</group>
@@ -129,6 +123,10 @@
                         </dependency>
                     </dependencies>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.day.jcr.vault</groupId>
+                <artifactId>content-package-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.rat</groupId>

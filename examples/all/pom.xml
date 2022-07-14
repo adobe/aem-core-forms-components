@@ -62,21 +62,7 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <allowIndexDefinitions>true</allowIndexDefinitions>
-                    <embeddedTarget>/apps/core/forms/install</embeddedTarget>
-                    <embeddeds>
-                        <embedded>
-                            <groupId>com.adobe.aem</groupId>
-                            <artifactId>core-forms-components-core</artifactId>
-                            <filter>true</filter>
-                            <target>/apps/core/forms/install</target>
-                        </embedded>
-                    </embeddeds>
                     <subPackages>
-                        <subPackage>
-                            <groupId>com.adobe.aem</groupId>
-                            <artifactId>core-forms-components-apps</artifactId>
-                            <filter>true</filter>
-                        </subPackage>
                         <subPackage>
                             <groupId>com.adobe.aem</groupId>
                             <artifactId>core-forms-components-examples-apps</artifactId>
