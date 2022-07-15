@@ -37,8 +37,11 @@ public interface BaseConstraint {
      */
     public enum Type {
         STRING("string"),
+        STRING_ARRAY("string[]"),
         NUMBER("number"),
+        NUMBER_ARRAY("number[]"),
         BOOLEAN("boolean"),
+        BOOLEAN_ARRAY("boolean[]"),
         OBJECT("object"),
         ARRAY("array"),
         FILE("file"),

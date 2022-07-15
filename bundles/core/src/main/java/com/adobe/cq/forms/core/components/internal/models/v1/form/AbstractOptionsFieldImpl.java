@@ -58,12 +58,12 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            if (Type.fromString(typeJcr).equals(Type.NUMBER)) {
+            if (Type.fromString(typeJcr).equals(Type.NUMBER) || Type.fromString(typeJcr).equals(Type.NUMBER_ARRAY)) {
                 return Arrays.stream(enums)
                     .filter(Objects::nonNull)
                     .map(Integer::parseInt)
                     .toArray(Integer[]::new);
-            } else if (Type.fromString(typeJcr).equals(Type.BOOLEAN)) {
+            } else if (Type.fromString(typeJcr).equals(Type.BOOLEAN) || Type.fromString(typeJcr).equals(Type.BOOLEAN_ARRAY)) {
                 return Arrays.stream(enums)
                     .filter(Objects::nonNull)
                     .map(Boolean::parseBoolean)

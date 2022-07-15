@@ -29,7 +29,7 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "number",
+    "type" : "number[]",
     "multiSelect" : true,
     "default" : [0, 1],
     "enum" : [0, 1, 2],

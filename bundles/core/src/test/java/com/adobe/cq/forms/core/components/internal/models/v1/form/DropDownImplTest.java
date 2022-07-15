@@ -268,7 +268,7 @@ public class DropDownImplTest {
     @Test
     void testGetMultiSelectType() {
         DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
-        assertEquals(BaseConstraint.Type.ARRAY, dropdown.getType());
+        assertEquals(BaseConstraint.Type.NUMBER_ARRAY, dropdown.getType());
     }
 
     @Test

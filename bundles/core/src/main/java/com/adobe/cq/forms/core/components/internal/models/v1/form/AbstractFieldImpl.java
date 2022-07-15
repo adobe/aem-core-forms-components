@@ -110,6 +110,11 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
+    public boolean isRequired() {
+        return required;
+    }
+
+    @Override
     public Object[] getDefault() {
         if (defaultValue != null) {
             return Arrays.stream(defaultValue)

@@ -1,21 +1,24 @@
 {
-  "id": "dropdown-c0d54fed4e",
+  "id": "numberinput-4b399a633a",
   "required": false,
   "name": "abc",
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "drop-down",
+  "fieldType": "number-input",
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
     "af:layout" : {
-      "tooltipVisible": false
+      "tooltipVisible": false,
+      "leadDigits": 2,
+      "fracDigits" : 4
     }
   },
-  "enforceEnum":false,
-  "enum" : [0, 1, 2],
-  "enumNames" : ["m", "f", "o"],
+  "maximum": 2000000,
+  "minimum": 10000,
+  "exclusiveMaximum": 2000002,
+  "exclusiveMinimum": 10002,
   "label": {
     "visible": true,
     "value": "def",
@@ -26,9 +29,6 @@
   "constraintMessages":{
     "type":"incorrect type"
   },
-  "default" : [0, 1],
-  "type": "number[]",
-  "minItems" : 1,
-  "maxItems" : 2,
-  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+  "type": "number",
+  ":type": "core/fd/components/form/numberinput/v1/numberinput"
 }

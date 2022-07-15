@@ -27,14 +27,13 @@ import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
  */
-public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Base, Container, ContainerConstraint {
+public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
