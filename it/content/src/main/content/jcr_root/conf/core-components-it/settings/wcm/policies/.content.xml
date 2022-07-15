@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="cq:Page">
+    <core-components-it jcr:primaryType="nt:unstructured">
+        <components jcr:primaryType="nt:unstructured">
+            <form jcr:primaryType="nt:unstructured">
+                <container jcr:primaryType="nt:unstructured">
+                    <policy_1657606299305
+                      jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                      jcr:lastModifiedBy="admin"
+                      jcr:primaryType="nt:unstructured"
+                      jcr:title="formcontainer-policy"
+                      sling:resourceType="wcm/core/components/policy/policy"
+                      components="/apps/forms-components-examples/components/form/textinput">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </policy_1657606299305>
+                </container>
+            </form>
+        </components>
+    </core-components-it>
+</jcr:root>
