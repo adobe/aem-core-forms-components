@@ -47,23 +47,50 @@ For a list of requirements for previous versions, see [Historical System Require
 
 This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.  
 
-## Installation
+## Building
 
-1. Clone this repository.
-2. Run a `mvn clean install` in the root folder to install the artifacts to your local Maven repository.
-3. Switch to the `all` project and run a `mvn clean install content-package:install`.
+### Compliling the Core Components
 
-### Easy install with the "all" package
-
-If you want to build all the modules yourself and get all the latest (yet) **unreleased** changes, just build and install all the modules with the following command at the root of the repository:
-
+To compile your own version of the Core Components, you can build and install everything on your running AEM instance by issuing the following command in the top level folder of the project:
+```shell
+mvn clean install -PautoInstallPackage
 ```
-mvn clean install -PautoInstallAll,include-wcm-components-examples
+You can also install individual packages/bundles by issuing the following command in the top-level folder of the project:
+
+```shell
+mvn clean install -PautoInstallPackage -pl <project_name(s)> -am
 ```
-This installs everything by default to `localhost:4502` without any context path. You can also configure the install location with the following maven properties:
-* `aem.host`: the name of the AEM instance
-* `aem.port`: the port number of the AEM instance
-* `aem.contextPath`: the context path of your AEM instance (if not `/`)
+
+With AEM as a Cloud Service SDK, use the cloud profile as follows to deploy the components into /libs instead of /apps:
+```shell
+mvn clean install -PautoInstallPackage,cloud
+```
+
+Note that:
+
+* -pl/-projects option specifies the list of projects that you want to install
+* -am/-also-make options specifies that dependencies should also be built
+
+For convenience, the following deployment profiles are provided when running the Maven install goal with mvn install:
+
+* `autoInstallAll`: Install everything to the AEM author instance.
+* `autoInstallPackage`: Install the ui.content and ui.apps content packages to the AEM author instance.
+* `autoInstallPackagePublish`: Install the ui.content and ui.apps content packages to the AEM publish instance.
+
+* The hostname and port of the instance can be changed with the following user defined properties:
+
+* `aem.host` and `aem.port` for the author instance.
+* `aem.publish.host` and `aem.publish.port` for the publish instance.
+
+### AEM as a Cloud Service SDK
+When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
+(in conjunction with previously documented profiles) to generate cloud-ready artifacts 
+(with components located in `/libs` instead of `/apps`). 
+To allow recompilation of the HTL scripts, you should disable `aem-precompiled-scripts` bundle.
+
+Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365), 
+please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
+working with the AEM as a Cloud Service SDK!
 
 ### UberJar
 
