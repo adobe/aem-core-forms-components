@@ -61,23 +61,23 @@ You can also install individual packages/bundles by issuing the following comman
 mvn clean install -PautoInstallPackage -pl <project_name(s)> -am
 ```
 
-With AEM as a Cloud Service SDK, use the cloud profile as follows to deploy the components into /libs instead of /apps:
+With AEM as a Cloud Service SDK, use the cloud profile as follows to deploy the components into `/libs` instead of `/apps`:
 ```shell
 mvn clean install -PautoInstallPackage,cloud
 ```
 
 Note that:
 
-* -pl/-projects option specifies the list of projects that you want to install
-* -am/-also-make options specifies that dependencies should also be built
+* `-pl/-projects` option specifies the list of projects that you want to install
+* `-am/-also-make` options specifies that dependencies should also be built
 
-For convenience, the following deployment profiles are provided when running the Maven install goal with mvn install:
+For convenience, the following deployment profiles are provided when running the Maven install goal with `mvn install`:
 
 * `autoInstallAll`: Install everything to the AEM author instance.
 * `autoInstallPackage`: Install the ui.content and ui.apps content packages to the AEM author instance.
 * `autoInstallPackagePublish`: Install the ui.content and ui.apps content packages to the AEM publish instance.
 
-* The hostname and port of the instance can be changed with the following user defined properties:
+The hostname and port of the instance can be changed with the following user defined properties:
 
 * `aem.host` and `aem.port` for the author instance.
 * `aem.publish.host` and `aem.publish.port` for the publish instance.
@@ -129,7 +129,7 @@ to the `content-package-maven-plugin`.
 ## Using Pre-release versions
 In order to use components under pre-release:  
 1. Enable the pre-release channel. Instructions at https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/release-notes/prerelease.html?lang=en
-2. Replace `core-forms-components-*` version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project. This can be done by updating `<core.forms.components.version>x.y.z</core.forms.components.version>` in the top level pom.xml of archetype project.
+   1. Replace `core-forms-components-*` version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project. This can be done by updating `<core.forms.components.version>x.y.z</core.forms.components.version>` in the top level pom.xml of archetype project.
 
 Contents in the pre-release are contained in the `pre-release` branch.
 
