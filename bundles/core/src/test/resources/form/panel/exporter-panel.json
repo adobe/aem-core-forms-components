@@ -29,7 +29,6 @@
     "value" : "dependent names",
     "visible": true
   },
-  "required": false,
   "visible": true,
   "enabled": true,
   "name": "abc",

@@ -23,6 +23,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Panel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -35,6 +36,12 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Override
     protected FieldType getDefaultFieldType() {
         return FieldType.PANEL;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isRequired() {
+        return false; // overriding since base is defining isRequired, to avoid creating a new interface, added jsonIgnore here
     }
 
     @Override

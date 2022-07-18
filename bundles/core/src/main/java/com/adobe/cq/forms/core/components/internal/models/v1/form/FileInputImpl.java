@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
@@ -63,11 +65,11 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public Type getType() {
-        if (isMultiple()) {
-            return Type.ARRAY;
-        } else {
-            return super.getType();
-        }
+        // if (isMultiple()) {
+        // return Type.ARRAY;
+        // } else {
+        return super.getType(); // we don't return array but rather type stored in JCR, for example, file[]
+        // }
     }
 
     @Override
@@ -81,7 +83,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     }
 
     @Override
-    public String[] getAccept() {
-        return ArrayUtils.clone(accept);
+    public List<String> getAccept() {
+        return Arrays.asList(accept);
     }
 }

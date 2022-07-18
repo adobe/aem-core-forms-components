@@ -1,7 +1,7 @@
 {
-  "dropdown" : {
+  "fileinput" : {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
@@ -12,13 +12,13 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "number",
-    "enum" : [0, 1, 2],
-    "enumNames" : ["m", "f", "o"]
+    "type" : "file",
+    "maxFileSize" : "4MB",
+    "accept" : ["audio/*", "video/*", "image/*"]
   },
-  "multiselect-dropdown" : {
+  "multiselect-fileinput" : {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
@@ -29,12 +29,11 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "number[]",
-    "multiSelect" : true,
-    "default" : [0, 1],
-    "enum" : [0, 1, 2],
-    "enumNames" : ["m", "f", "o"],
+    "type" : "file[]",
+    "multiSelection" : true,
     "minItems" : 1,
-    "maxItems" : 2
+    "maxItems" : 2,
+    "maxFileSize" : "4GB",
+    "accept" : ["text/*", "application/pdf"]
   }
 }

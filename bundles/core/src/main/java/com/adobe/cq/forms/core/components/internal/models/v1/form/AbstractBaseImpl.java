@@ -463,11 +463,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     }
 
     @Override
-    public boolean isRequired() {
-        return required;
-    }
-
-    @Override
     public Type getType() {
         return type;
     }

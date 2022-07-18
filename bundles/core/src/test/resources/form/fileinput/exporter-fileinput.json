@@ -1,11 +1,11 @@
 {
-  "id": "dropdown-c0d54fed4e",
+  "id": "fileinput-8857e83bbf",
   "required": false,
   "name": "abc",
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "drop-down",
+  "fieldType": "file-input",
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
@@ -13,22 +13,22 @@
       "tooltipVisible": false
     }
   },
-  "enforceEnum":false,
-  "enum" : [0, 1, 2],
-  "enumNames" : ["m", "f", "o"],
   "label": {
     "visible": true,
     "value": "def",
     "richText": false
   },
+  "maxFileSize": "4MB",
   "dataRef":"a.b",
   "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
     "type":"incorrect type"
   },
-  "default" : [0, 1],
-  "type": "number[]",
-  "minItems" : 1,
-  "maxItems" : 2,
-  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+  "type": "file",
+  "accept": [
+    "audio/*",
+    "video/*",
+    "image/*"
+  ],
+  ":type": "core/fd/components/form/fileinput/v1/fileinput"
 }

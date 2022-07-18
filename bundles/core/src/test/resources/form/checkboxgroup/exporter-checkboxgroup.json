@@ -1,11 +1,11 @@
 {
-  "id": "dropdown-c0d54fed4e",
+  "id": "checkboxgroup-93e681dfb9",
   "required": false,
   "name": "abc",
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "drop-down",
+  "fieldType": "checkbox-group",
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
@@ -13,7 +13,7 @@
       "tooltipVisible": false
     }
   },
-  "enforceEnum":false,
+  "enforceEnum":true,
   "enum" : [0, 1, 2],
   "enumNames" : ["m", "f", "o"],
   "label": {
@@ -30,5 +30,5 @@
   "type": "number[]",
   "minItems" : 1,
   "maxItems" : 2,
-  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup"
 }

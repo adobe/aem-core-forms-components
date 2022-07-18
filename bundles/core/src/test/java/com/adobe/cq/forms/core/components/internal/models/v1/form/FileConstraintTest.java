@@ -22,7 +22,9 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.components.models.form.FileConstraint;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @ExtendWith(AemContextExtension.class)
 public class FileConstraintTest {
@@ -31,13 +33,13 @@ public class FileConstraintTest {
     void testGetMaxFileSize() {
         FileConstraint fileConstraintMock = Mockito.mock(FileConstraint.class);
         Mockito.when(fileConstraintMock.getMaxFileSize()).thenCallRealMethod();
-        assertEquals("2MB", fileConstraintMock.getMaxFileSize());
+        assertEquals(FileConstraint.DEFAULT_MAX_FILE_SIZE, fileConstraintMock.getMaxFileSize());
     }
 
     @Test
     void testGetAccept() {
         FileConstraint fileConstraintMock = Mockito.mock(FileConstraint.class);
         Mockito.when(fileConstraintMock.getAccept()).thenCallRealMethod();
-        assertEquals(new String[] { "audio/*", "video/*", "image/*", "text/*", "application/pdf" }, fileConstraintMock.getAccept());
+        assertThat(FileConstraint.DEFAULT_ACCEPT, is(fileConstraintMock.getAccept()));
     }
 }

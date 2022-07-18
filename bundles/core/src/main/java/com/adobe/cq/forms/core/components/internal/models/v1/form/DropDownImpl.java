@@ -58,13 +58,4 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     public Boolean isMultiSelect() {
         return multiSelect;
     }
-
-    @Override
-    public Type getType() {
-        if (isMultiSelect()) {
-            return Type.ARRAY;
-        } else {
-            return super.getType();
-        }
-    }
 }

@@ -63,12 +63,12 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
     @Override
     public Long getExclusiveMaximum() {
-        return exclusiveMinimum;
+        return exclusiveMaximum;
     }
 
     @Override
     public Long getExclusiveMinimum() {
-        return exclusiveMaximum;
+        return exclusiveMinimum;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
             customProperties.put("leadDigits", leadDigits);
         }
         if (fracDigits != null) {
-            customProperties.put("leadDigits", fracDigits);
+            customProperties.put("fracDigits", fracDigits);
         }
         return customProperties;
     }
