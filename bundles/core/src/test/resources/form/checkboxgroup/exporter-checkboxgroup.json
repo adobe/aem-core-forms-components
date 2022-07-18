@@ -1,0 +1,34 @@
+{
+  "id": "checkboxgroup-93e681dfb9",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "checkbox-group",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "properties": {
+    "af:layout" : {
+      "tooltipVisible": false
+    }
+  },
+  "enforceEnum":true,
+  "enum" : [0, 1, 2],
+  "enumNames" : ["m", "f", "o"],
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "default" : [0, 1],
+  "type": "number[]",
+  "minItems" : 1,
+  "maxItems" : 2,
+  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+}

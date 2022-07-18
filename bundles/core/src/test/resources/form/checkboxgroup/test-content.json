@@ -1,0 +1,35 @@
+{
+  "checkboxgroup": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "name": "abc",
+    "jcr:title": "def",
+    "hideTitle": false,
+    "description": "dummy",
+    "visible": false,
+    "assistPriority": "custom",
+    "dataRef": "a.b",
+    "custom": "Custom screen reader text",
+    "typeMessage": "incorrect type",
+    "tooltip": "test-short-description",
+    "type": "number[]",
+    "multiSelect": true,
+    "default": [
+      0,
+      1
+    ],
+    "enum": [
+      0,
+      1,
+      2
+    ],
+    "enforceEnum" : true,
+    "enumNames": [
+      "m",
+      "f",
+      "o"
+    ],
+    "minItems": 1,
+    "maxItems": 2
+  }
+}
