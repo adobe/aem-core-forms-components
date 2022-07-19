@@ -57,7 +57,7 @@ describe('Page - Authoring', function () {
   }
 
   context('Open Forms Editor', function() {
-    const pagePath = "/content/forms/af/core-components-examples/blank",
+    const pagePath = "/content/forms/af/core-components-it/blank",
         textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
         textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
         textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();

@@ -62,21 +62,7 @@
                         <cloudManagerTarget>none</cloudManagerTarget>
                     </properties>
                     <allowIndexDefinitions>true</allowIndexDefinitions>
-                    <embeddedTarget>/apps/core/forms/install</embeddedTarget>
-                    <embeddeds>
-                        <embedded>
-                            <groupId>com.adobe.aem</groupId>
-                            <artifactId>core-forms-components-core</artifactId>
-                            <filter>true</filter>
-                            <target>/apps/core/forms/install</target>
-                        </embedded>
-                    </embeddeds>
                     <subPackages>
-                        <subPackage>
-                            <groupId>com.adobe.aem</groupId>
-                            <artifactId>core-forms-components-apps</artifactId>
-                            <filter>true</filter>
-                        </subPackage>
                         <subPackage>
                             <groupId>com.adobe.aem</groupId>
                             <artifactId>core-forms-components-examples-apps</artifactId>
@@ -98,6 +84,32 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>autoInstallExamples</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.day.jcr.vault</groupId>
+                        <artifactId>content-package-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install-package</id>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                                <configuration>
+                                    <targetURL>${quickstart.url}/crx/packmgr/service.jsp</targetURL>
+                                    <failOnError>true</failOnError>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>include-wcm-components-examples</id>
             <activation>
