@@ -41,6 +41,10 @@
     padding: 10px 15px;
 }
 
+.base__shortdescription--hidden {
+    visibility: hidden;
+}
+
 .cmp-adaptiveform-textinput__questionmark {
     &:extend(.base__questionmark);
 }
@@ -51,4 +55,8 @@
 
 .cmp-adaptiveform-textinput__shortdescription {
     &:extend(.base__shortdescription);
+}
+
+.cmp-adaptiveform-textinput__shortdescription--hidden {
+    &:extend(.base__shortdescription--hidden);
 }
