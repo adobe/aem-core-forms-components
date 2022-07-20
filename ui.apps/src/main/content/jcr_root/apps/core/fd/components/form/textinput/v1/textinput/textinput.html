@@ -26,7 +26,7 @@
      data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}"></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, label=text.label.value, bemBlock='cmp-adaptiveform-textinput'}"></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               aria-multiline="true"
               aria-label="${text.screenReaderText ? text.screenReaderText : text.label.value}"
