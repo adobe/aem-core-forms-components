@@ -16,13 +16,13 @@
 (function() {
 
     "use strict";
-    class DatePicker extends FormView.FormField {
+    class TextInput extends FormView.FormField {
 
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormDatePicker";
+        static IS = "adaptiveFormTextInput";
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            dateElement: "input[type=date]"
+            textElement: ".cmp-adaptiveform-textinput__widget"
         };
 
         constructor(params) {
@@ -30,24 +30,24 @@
         }
 
         getClass() {
-            return DatePicker.IS;
+            return TextInput.IS;
         }
 
         setValue(value) {
-            let dateInput = this.element.querySelector(DatePicker.selectors.dateElement);
-            dateInput.value = value;
+            let textInput = this.element.querySelector(TextInput.selectors.textElement);
+            textInput.value = value;
         }
     }
 
     function onFormContainerInitialised(e) {
         console.log("FormContainerInitialised Received", e.detail);
         let formContainer =  e.detail;
-        let fieldElements = document.querySelectorAll(DatePicker.selectors.self);
+        let fieldElements = document.querySelectorAll(TextInput.selectors.self);
         for (let i = 0; i < fieldElements.length; i++) {
-            let datePickerField = new DatePicker({element: fieldElements[i]});
-            formContainer.addField(datePickerField);
+            let textInputField = new TextInput({element: fieldElements[i]});
+            formContainer.addField(textInputField);
         }
-        FormView.Utils.registerMutationObserver(DatePicker);
+        FormView.Utils.registerMutationObserver(TextInput);
     }
     document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
 })();

@@ -4,4 +4,5 @@
           jcr:description="Allow visitors to input date"
           jcr:primaryType="cq:Component"
           jcr:title="Adaptive Form Date Picker (v1)"
+          sling:resourceSuperType="core/fd/components/form/base/v1/base"
           componentGroup=".core-adaptiveform"/>
