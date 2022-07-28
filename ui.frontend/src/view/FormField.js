@@ -23,10 +23,7 @@ export default class FormField {
         this.parent = params.parent || params.formContainer;
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
-        let el = this.element.getElementsByTagName(this.getTagName());
-        if (el && el.length > 0) {
-            this.setId(el[0].id);
-        }
+        this.setId(this.element.id);
         this.bindEventListeners();
     }
 

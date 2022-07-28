@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            jcr:mixinTypes="[sling:VanityPath]"
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Adaptive Forms::Rule Editor"
+            sling:resourceType="granite/ui/components/coral/foundation/page"
+            sling:vanityPath="/aem/af/expeditor">
+        <head jcr:primaryType="nt:unstructured">
+            <viewport
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/admin/page/viewport"/>
+            <meta
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/meta"
+                    content="chrome=1"
+                    name="X-UA-Compatible"/>
+            <favicon
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/page/favicon"/>
+            <clientlibs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/includeclientlibs"
+                    categories="[coralui3,forms.lodash,fd.expeditor.main,granite.ui.coral.foundation,guides.common,guides.commonAuthoring,guides.expeditor.runtime,core.forms.components.expeditor]"/>
+        </head>
+        <body
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/page/body">
+            <items jcr:primaryType="nt:unstructured">
+                <editor
+                        granite:class="rule-editor-section"
+                        granite:id="rule-editor-section"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                        <metadata
+                                granite:class="rule-metainfo"
+                                granite:id="rule-metainfo"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="/apps/core/fd/components/expeditor/metadata"/>
+                        <expeditor-container
+                                granite:id="expeditor-container"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <exp-editor
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="fd/expeditor/renderers/fulltoucheditor"/>
+                            </items>
+                        </expeditor-container>
+                    </items>
+                </editor>
+            </items>
+        </body>
+    </jcr:content>
+</jcr:root>
