@@ -19,6 +19,10 @@
     window.CQ = window.CQ || {};
     window.CQ.FormsCoreComponents = window.CQ.FormsCoreComponents || {};
     window.CQ.FormsCoreComponents.editorhooks =  window.CQ.FormsCoreComponents.editorhooks || {};
+    /**
+     * Opens the rule editor in a separate iframe for an editable
+     * @param editable
+     */
     window.CQ.FormsCoreComponents.editorhooks.openRuleEditor = function (editable) {
         let existingRuleEditorFrame = document.getElementById('af-rule-editor');
         if (existingRuleEditorFrame) {

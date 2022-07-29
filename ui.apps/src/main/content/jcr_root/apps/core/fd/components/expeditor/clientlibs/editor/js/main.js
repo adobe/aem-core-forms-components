@@ -24,7 +24,7 @@
     $(document).on('foundation-contentloaded', function () {
         fetchFormMetadata();
         if (form.path) {
-            initialiseExpressionEditor(form.path, form.selectedFieldId);
+            initialiseExpressionEditor(form.path, form.selectedFieldId, form.selectedFieldPath);
         }
     });
 
@@ -144,14 +144,16 @@
         }
     }
 
-    var initialiseExpressionEditor =  function (formPath, fieldId) {
+    var initialiseExpressionEditor =  function (formPath, fieldId, fieldPath) {
         $.get(Granite.HTTP.externalize(formPath) + '.model.json', function(formJson) {
-            let treeJson = _tranformFormJsonToTreeJson(formJson)
-            _initialiseExpressionEditorInternal(treeJson, fieldId);
+            $.get(Granite.HTTP.externalize(fieldPath) + '.json', function(fieldJson){
+                let treeJson = _tranformFormJsonToTreeJson(formJson);
+                _initialiseExpressionEditorInternal(treeJson, fieldId, fieldJson);
+            })
         });
     };
 
-    var _initialiseExpressionEditorInternal = function (treeJson, fieldId) {
+    var _initialiseExpressionEditorInternal = function (treeJson, fieldId, fieldJson) {
         var closeHandler = function () {
             let iframe = window.parent.document.getElementById("af-rule-editor");
             if (iframe) {
@@ -177,9 +179,9 @@
 
         var functionsConfig = expeditor.rb.FunctionsConfig;
         functionsConfig.dragDataHandler = dragDataHandler;
-
+        var config = _getConfiguration(treeJson, fieldId);
         var editor = new expeditor.ExpressionEditor({
-            config : _getConfiguration(treeJson, fieldId),
+            config : config,
             closeHandler : closeHandler,
             saveHandler : saveHandler,
             navigationTreeConfig : {
@@ -198,6 +200,12 @@
             doNotSaveIncompleteRule : true
         });
         editor.show();
+        if (fieldJson.rules) {
+            var ctx = new expeditor.ExpEditorContext(config),
+                ruleJsonModel = JSON.parse(fieldJson.rules),
+                model = expeditor.Utils.ModelFactory.fromJson(ruleJsonModel, ctx);
+            editor._showRule(model);
+        }
     };
 
 
