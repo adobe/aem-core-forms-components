@@ -14,18 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-    cq:actions="[EDIT,DELETE,INSERT,COPYMOVE]"
-    jcr:primaryType="cq:EditConfig">
-    <cq:actionConfigs jcr:primaryType="nt:unstructured">
-        <editexpression
-            jcr:primaryType="nt:unstructured"
-            condition="fd.core.formExists"
-            handler="fd.core.openFormForEditing"
-            icon="alias"
-            text="Edit in a new window"/>
-    </cq:actionConfigs>
-    <cq:listeners
-        jcr:primaryType="cq:EditListenersConfig"
-        afteredit="REFRESH_PARENT"/>
-</jcr:root>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:ClientLibraryFolder"
+    allowProxy="{Boolean}true"
+    categories="[core.forms.components.aemform.v2.formapp]"
+    dependencies="core.forms.components.aemform.v1.formapp"/>
