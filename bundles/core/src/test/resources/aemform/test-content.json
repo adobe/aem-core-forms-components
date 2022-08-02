@@ -33,6 +33,21 @@
                         "sling:resourceType": "core/fd/components/aemform/v1/aemform",
                         "usePageLocale" : "true",
                         "height" : "abc"
+                    },
+                    "aemformv2-1" : {
+                        "jcr:primaryType": "nt:unstructured",
+                        "sling:resourceType": "core/fd/components/aemform/v2/aemform",
+                        "height": "100",
+                        "thankyouPage": "/a/b/c",
+                        "thankyouConfig": "page",
+                        "formType": "adaptiveForm",
+                        "formRef": "/content/forms/af/abc",
+                        "themeRef": "/content/dam/formsanddocuments-themes/abc",
+                        "submitType": "inline",
+                        "cssClientlib": "abc.def",
+                        "useiframe" : "true",
+                        "usePageLocale" : "true",
+                        "enableFocusOnFirstField" : true
                     }
                 }
             }
