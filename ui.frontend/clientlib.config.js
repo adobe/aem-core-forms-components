@@ -27,7 +27,7 @@ const CLIENTLIB_DIR = path.join(
     'apps',
     'core',
     'fd',
-    'components'
+    'clientlibs'
 );
 
 const libsBaseConfig = {
@@ -44,7 +44,7 @@ module.exports = {
   libs: [
     {
       ...libsBaseConfig,
-      name: 'clientlib-core-forms-components-runtime',
+      name: 'core-forms-components-runtime',
       categories: ['core.forms.components.runtime'],
       assets: {
         js: ['dist/main.js']
