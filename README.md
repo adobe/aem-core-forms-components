@@ -18,7 +18,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Page Authoring Components
 
--   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+-   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
 
 ### Forms And Communications Portal
 
