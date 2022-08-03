@@ -1,0 +1,40 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
+<sly data-sly-call="${clientlib.all @ categories='coralui3'}"/>
+<sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
+<sly data-sly-test="${!wcmmode.disabled && !form.isFormSelected}">
+    <sly data-sly-call="${clientLib.all @ categories='core.forms.components.aemform.v2'}"/>
+    <div class="cmp-aemform--no-form-selected">
+        ${'Select a form to embed.' @ i18n, locale=request.locale} <br/>
+        ${'Tap' @ i18n, locale=request.locale}
+        <coral-icon icon="wrench" size="XS"></coral-icon>
+        ${'to embed an existing form or use ' @ i18n, locale=request.locale}
+        <coral-icon icon="addCircle" size="XS"></coral-icon>
+        ${'to create and embed a new form.' @ i18n, locale=request.locale}
+    </div>
+</sly>
+<div class="cmp-aemform__content"
+     data-sly-test.af="${form.isAdaptiveForm || form.isMCDocument}"
+     data-form-page-path="${form.formEditPagePath}"
+     data-sly-use.guideConstants="com.adobe.aemds.guide.utils.GuideConstants">
+    <sly data-sly-call="${clientLib.css @ categories=['guide.core.common']}"/>
+    <sly data-sly-test.isParentWCMModeDisabled="${wcmmode.disabled}"/>
+    <sly data-sly-test.isWCMModePreview="${wcmmode.preview}"/>
+    <sly data-sly-use="${'formcontainer.js' @ wcmmode=isWCMModePreview ? 'preview' : 'disabled', themeOverride=form.themePath, pageFallbackClientlib=guideConstants.THEME_DEFAULT_CLIENTLIB, parentWcmModeDisabled=isParentWCMModeDisabled, afAcceptLang=form.locale}" data-sly-resource="${ @ path=form.formPagePath, wcmmode=isWCMModePreview ? 'preview' : 'disabled'}" />
+    <sly data-sly-call="${clientLib.css @ categories=[form.cssClientlib]}"/>
+</div>

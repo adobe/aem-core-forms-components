@@ -61,10 +61,6 @@ describe('Page - Authoring', function () {
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            // check if adaptive form is selected by default
-            cy.get("[name='./formType']")
-                .should("be.visible")
-                .should("have.value", "adaptiveForm");
             // check for dynamic operations performed using JS
             cy.get("[name='./thankyouConfig'][value='message']")
                 .should("be.visible")
