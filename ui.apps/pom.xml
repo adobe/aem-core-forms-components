@@ -268,6 +268,7 @@
                                 <phase>prepare-package</phase>
                                 <configuration>
                                     <tasks>
+                                        <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
                                         <!--

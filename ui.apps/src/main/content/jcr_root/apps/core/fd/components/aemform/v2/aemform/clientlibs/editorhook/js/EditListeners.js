@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2020 Adobe
+ ~ Copyright 2022 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -13,26 +13,23 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-(function (Granite) {
-    window.aemform = window.aemform || {};
-    window.aemform.v2 = window.aemform.v2 || {};
-    window.aemform.v2.constants = window.aemform.v2.constants || {};
-    window.aemform.v2.constants = {
+(function (Granite, ns) {
+    ns.aemform.v2.constants = {
         "AEM_FORM_SELECTOR" : "[data-form-page-path]",
         "AEM_FORM_CONTAINER_SELECTOR" : ".cmp-aemform",
         "AEM_FORM_WIZARD_LINK" : "/libs/fd/fm/base/content/commons/wizardspalink.html"
     };
 
-    window.aemform.v2.openFormForEditing = function (editable) {
-        var htmlElement = $(window.aemform.v2.constants.AEM_FORM_SELECTOR, editable.dom).addBack("[data-form-page-path]"),
+    ns.aemform.v2.actions.openFormForEditing = function (editable) {
+        var htmlElement = $(ns.aemform.v2.constants.AEM_FORM_SELECTOR, editable.dom).addBack("[data-form-page-path]"),
             formPath = htmlElement.attr("data-form-page-path"),
             url = Granite.HTTP.externalize("/editor.html" + formPath + ".html");
         window.open(url);
     };
 
-    window.aemform.v2.openCreateFormWizard = function (editable) {
+    ns.aemform.v2.actions.openCreateFormWizard = function (editable) {
         $.ajax({
-            url: Granite.HTTP.externalize(window.aemform.v2.constants.AEM_FORM_WIZARD_LINK),
+            url: Granite.HTTP.externalize(ns.aemform.v2.constants.AEM_FORM_WIZARD_LINK),
             type: "GET",
             success: function(data){
                 var wizardURL = new URL($(data).get(0).href);
@@ -46,16 +43,16 @@
         });
     }
 
-    window.aemform.v2.formExists = function (editable) {
-        return $(window.aemform.v2.constants.AEM_FORM_SELECTOR, editable.dom).addBack(window.aemform.v2.constants.AEM_FORM_SELECTOR).length > 0;
+    ns.aemform.v2.actions.formExists = function (editable) {
+        return $(ns.aemform.v2.constants.AEM_FORM_SELECTOR, editable.dom).addBack(ns.aemform.v2.constants.AEM_FORM_SELECTOR).length > 0;
     };
 
-    window.aemform.v2.aemFormExistsInPage = function () {
-        return Granite.author.ContentFrame.getDocument().find(window.aemform.v2.constants.AEM_FORM_CONTAINER_SELECTOR).length > 0;
+    ns.aemform.v2.actions.aemFormExistsInPage = function () {
+        return Granite.author.ContentFrame.getDocument().find(ns.aemform.v2.constants.AEM_FORM_CONTAINER_SELECTOR).length > 0;
     };
 
-    window.aemform.v2.featureEnabled = function (editable) {
+    ns.aemform.v2.actions.featureEnabled = function (editable) {
         return Granite.Toggles.isEnabled("FT_CQ-4343036");
     };
 
-}(window.Granite));
+}(window.Granite, CQ.FormsCoreComponents));

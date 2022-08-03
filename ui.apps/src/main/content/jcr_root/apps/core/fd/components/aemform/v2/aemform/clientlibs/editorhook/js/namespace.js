@@ -13,19 +13,10 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-(function (channel, ns) {
-
-    // once the layer is switched, check if AEM form component exists in the page
-    // if aem form component exists, then refresh the page, so that we can show the test data in wcmmode preview
-    channel.on("editor-frame-mode-changed.aemform", function () {
-        if (ns.aemform && ns.aemform.v2 && ns.aemform.v2.actions && ns.aemform.v2.actions.aemFormExistsInPage()) {
-            // check if the cookie is wcmmode preview
-            var wcModeCookie = $.cookie("wcmmode");
-            if (wcModeCookie == "preview" || wcModeCookie == "edit") {
-                // reload the page
-                window.location.reload();
-            }
-        }
-    });
-
-}($(document), CQ.FormsCoreComponents));
+(function() {
+    window.CQ = window.CQ || {};
+    window.CQ.FormsCoreComponents = window.CQ.FormsCoreComponents || {};
+    window.CQ.FormsCoreComponents.aemform = window.CQ.FormsCoreComponents.aemform || {};
+    window.CQ.FormsCoreComponents.aemform.v2 = window.CQ.FormsCoreComponents.aemform.v2 || {};
+    window.CQ.FormsCoreComponents.aemform.v2.actions = {};
+})();

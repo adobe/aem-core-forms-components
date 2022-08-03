@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2020 Adobe
+  ~ Copyright 2022 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
         <editexpression
             jcr:primaryType="nt:unstructured"
-            condition="aemform.v2.formExists"
-            handler="aemform.v2.openFormForEditing"
+            condition="CQ.FormsCoreComponents.aemform.v2.actions.formExists"
+            handler="CQ.FormsCoreComponents.aemform.v2.actions.openFormForEditing"
             icon="alias"
             text="Edit in a new window"/>
         <createFormViaWizard
             jcr:primaryType="nt:unstructured"
-            condition="aemform.v2.featureEnabled"
-            handler="aemform.v2.openCreateFormWizard"
+            condition="CQ.FormsCoreComponents.aemform.v2.actions.featureEnabled"
+            handler="CQ.FormsCoreComponents.aemform.v2.actions.openCreateFormWizard"
             icon="addCircle"
             text="Create Form"/>
     </cq:actionConfigs>
