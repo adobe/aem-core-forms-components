@@ -22,9 +22,10 @@
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-            <accordion
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/accordion">
+            <tabs
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                             jcr:primaryType="nt:unstructured"
@@ -293,7 +294,7 @@
                         <items jcr:primaryType="nt:unstructured"/>
                     </patterns>
                 </items>
-            </accordion>
+            </tabs>
         </items>
     </content>
 </jcr:root>
