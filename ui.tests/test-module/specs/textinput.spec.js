@@ -32,11 +32,23 @@ describe('Page - Authoring', function () {
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
-    cy.get('body').click(0,0);
+    cy.get('body').click( 0,0);
   }
 
-  const testTextInputBehaviour = function(textInputEditPathSelector, textInputDrop) {
-    dropTextInputInContainer();
+  const dropTextInputInSites = function() {
+    const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+    cy.selectLayer("Edit");
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
+    cy.get('body').click( 0,0);
+  }
+
+  const testTextInputBehaviour = function(textInputEditPathSelector, textInputDrop, isSites) {
+    if (isSites) {
+      dropTextInputInSites();
+    } else {
+      dropTextInputInContainer();
+    }
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     // Check If Dialog Options Are Visible
@@ -78,9 +90,9 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/textinput",
+        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/textinput",
         textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
@@ -88,12 +100,12 @@ describe('Page - Authoring', function () {
     });
 
     it('insert aem forms TextInput', function () {
-      dropTextInputInContainer();
+      dropTextInputInSites();
       cy.deleteComponentByPath(textInputDrop);
     });
 
     it('open edit dialog of aem forms TextInput', function() {
-      testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
+      testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
     after(function() {
