@@ -15,8 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -486,5 +487,81 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
         }
         return customProperties;
+    }
+
+    private Entry<String, String> sanitizeRules(Entry<String, Object> entry) {
+        Entry<String, String> updatedEntry;
+        Object ruleValue = entry.getValue();
+        if (ruleValue instanceof String) {
+            updatedEntry = new AbstractMap.SimpleEntry<>(entry.getKey(), (String) ruleValue);
+        } else {
+            updatedEntry = new AbstractMap.SimpleEntry<>(entry.getKey(), "");
+        }
+        return updatedEntry;
+    }
+
+    private boolean isRuleValid(String key) {
+        // todo: add all the writable properties in the spec
+        String[] VALID_RULES = new String[] { "visible", "value", "enabled", "label", "required" };
+        return Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(key));
+    }
+
+    private boolean isEventValid(String key) {
+        // todo: add all the events in the spec
+        String[] VALID_RULES = new String[] { "click", "submit", "initialize", "load", "change" };
+        return Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(key) || key.startsWith("custom:"));
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String> getRules() {
+        Resource ruleNode = resource.getChild("fd:rules");
+        if (ruleNode != null) {
+            ValueMap ruleNodeProps = ruleNode.getValueMap();
+            Map<String, String> rules = ruleNodeProps.entrySet()
+                .stream()
+                .map(this::sanitizeRules)
+                .filter(entry -> entry.getValue().length() > 0 && this.isRuleValid(entry.getKey()))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return rules;
+        }
+        return Collections.emptyMap();
+    }
+
+    private Entry<String, String[]> sanitizeEvent(Entry<String, Object> entry) {
+        Entry<String, String[]> updatedEntry;
+        Object eventValue = entry.getValue();
+        String[] empty = new String[0];
+        String[] arrayEventValue;
+        String key = entry.getKey();
+        if (eventValue instanceof String) {
+            arrayEventValue = new String[1];
+            arrayEventValue[0] = (String) eventValue;
+        } else if (eventValue instanceof String[]) {
+            arrayEventValue = (String[]) eventValue;
+        } else {
+            arrayEventValue = empty;
+        }
+        if (key.startsWith("custom_")) {
+            key = "custom:";
+        }
+        updatedEntry = new AbstractMap.SimpleEntry<>(key, arrayEventValue);
+        return updatedEntry;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String[]> getEvents() {
+        Resource ruleNode = resource.getChild("fd:events");
+        if (ruleNode != null) {
+            ValueMap ruleNodeProps = ruleNode.getValueMap();
+            Map<String, String[]> rules = ruleNodeProps.entrySet()
+                .stream()
+                .map(this::sanitizeEvent)
+                .filter(entry -> entry.getValue().length > 0 && this.isEventValid(entry.getKey()))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return rules;
+        }
+        return Collections.emptyMap();
     }
 }

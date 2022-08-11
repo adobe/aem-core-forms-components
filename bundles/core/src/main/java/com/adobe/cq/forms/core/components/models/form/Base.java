@@ -368,4 +368,16 @@ public interface Base extends Component {
     default boolean isTooltipVisible() {
         return false;
     }
+
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String> getRules() {
+        return Collections.emptyMap();
+    }
+
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String[]> getEvents() {
+        return Collections.emptyMap();
+    }
 }

@@ -30,5 +30,11 @@
   "exclusiveMaximum": "2022-02-08",
   "maximum": "2022-02-09",
   "default" : "2022-02-07",
-  ":type": "core/fd/components/form/datepicker/v1/datepicker"
+  ":type": "core/fd/components/form/datepicker/v1/datepicker",
+  "rules" : {
+    "visible" : "true()",
+    "value" : "false()",
+    "label" : "{value : 'some label'}",
+    "enabled" : "true()"
+  }
 }
