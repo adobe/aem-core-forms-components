@@ -35,7 +35,7 @@
                 var wizardURL = new URL($(data).get(0).href);
                 wizardURL.searchParams.append('embedAt', btoa(editable.path));
                 wizardURL.searchParams.append('redirectUrl', btoa(window.location.href));
-                window.open(Granite.HTTP.externalize(wizardURL.href), "_top");
+                window.open(Granite.HTTP.externalize(wizardURL.href), "_self");
             },
             error: function (error) {
                 console.log("Error: " + error);
