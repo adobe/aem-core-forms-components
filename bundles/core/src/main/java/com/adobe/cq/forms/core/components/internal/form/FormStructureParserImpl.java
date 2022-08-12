@@ -26,18 +26,25 @@ import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
     adapters = FormStructureParser.class)
 public class FormStructureParserImpl implements FormStructureParser {
 
+    private static final String FORM_CONTAINER_RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
     @SlingObject
     private Resource resource;
 
     @Override
     public String getFormContainerPath() {
-        // TODO: handle panel case also later.
-        // currently is assumes that the field is directly inside form container.
-        Resource parent = resource.getParent();
-        if (parent != null) {
-            return parent.getPath();
+        return getFormContainerPath(resource);
+    }
+
+    private String getFormContainerPath(Resource resource) {
+        if (resource == null) {
+            return null;
         }
-        return null;
+
+        if (resource.isResourceType(FORM_CONTAINER_RESOURCE_TYPE)) {
+            return resource.getPath();
+        }
+
+        return getFormContainerPath(resource.getParent());
     }
 
 }
