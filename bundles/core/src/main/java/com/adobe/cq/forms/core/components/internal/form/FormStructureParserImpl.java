@@ -21,12 +21,13 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
+
 @Model(
     adaptables = Resource.class,
     adapters = FormStructureParser.class)
 public class FormStructureParserImpl implements FormStructureParser {
 
-    private static final String FORM_CONTAINER_RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
     @SlingObject
     private Resource resource;
 
@@ -40,7 +41,7 @@ public class FormStructureParserImpl implements FormStructureParser {
             return null;
         }
 
-        if (resource.isResourceType(FORM_CONTAINER_RESOURCE_TYPE)) {
+        if (resource.isResourceType(RT_FD_FORM_CONTAINER_V2)) {
             return resource.getPath();
         }
 
