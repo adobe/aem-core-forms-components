@@ -17,6 +17,9 @@
     "enumNames" : ["yes", "no"],
     "fd:rules" : {
       "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
     }
   }
 }

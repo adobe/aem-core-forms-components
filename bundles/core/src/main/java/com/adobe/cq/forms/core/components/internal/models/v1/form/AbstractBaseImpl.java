@@ -543,7 +543,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             arrayEventValue = empty;
         }
         if (key.startsWith("custom_")) {
-            key = "custom:";
+            key = "custom:" + key.substring("custom_".length());
         }
         updatedEntry = new AbstractMap.SimpleEntry<>(key, arrayEventValue);
         return updatedEntry;
