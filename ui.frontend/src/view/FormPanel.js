@@ -13,22 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "./utils";
-import {createFormInstance} from "@aemforms/af-core";
-import FormField from "./view/FormField";
-import FormPanel from "./view/FormPanel";
-import {Constants} from "./constants";
 
-window.af = {
-    formsRuntime: {
-        model: {
-            form: {}
-        },
-        view: {
-            formContainer: {},
-            utils: {}
-        },
-        events: {}
+import Utils from "../utils";
+import FormField from "./FormField";
+
+export default class FormPanel extends FormField {
+
+    constructor(params) {
+        super(params);
+        if (this.element.id) {
+            this.setId(this.element.id);
+        }
+        this.children = [];
+        //todo repeat
+        /*if (this._model.type == 'array') {
+        }*/
+    }
+
+    getTagName() {
+        return "No_Tag";
+    }
+
+    bindEventListeners() {
+        //todo, can utilize options
+    }
+
+    addChild(childView) {
+        //let childModel = childView.getModel();
+        //let childModelId = childModel.getId();
+        //push it as a map in case of array
+        this.children.push(childView);
     }
 }
-export {createFormInstance, FormField, FormPanel, Constants, Utils};

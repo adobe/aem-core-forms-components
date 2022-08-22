@@ -16,6 +16,13 @@
 
 export const Constants = {
     NS : "cmp",
-    FORM_CONTAINER_INITIALISED : "AF_FormContainerInitialised"
+    FORM_CONTAINER_INITIALISED : "AF_FormContainerInitialised",
+    VALID : "data-cmp-valid",
+    ENABLED : "data-cmp-enabled",
+    VISIBLE : "data-cmp-visible",
+    ACTIVE : "data-cmp-active",
+    ARIA_DISABLED : "aria-disabled",
+    ARIA_HIDDEN : "aria-hidden",
+    ARIA_INVALID : "aria-invalid"
 }
 

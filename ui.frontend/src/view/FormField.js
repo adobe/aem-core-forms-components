@@ -20,7 +20,7 @@ export default class FormField {
 
     constructor(params) {
         this.formContainer = params.formContainer;
-        this.parent = params.parent || params.formContainer;
+        //this.parent = params.parent || params.formContainer; no need of this, as we intend to set parent view
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
@@ -43,6 +43,7 @@ export default class FormField {
         this.element.addEventListener('change', (event) => {
             this._model.value = event.target.value;
         });
+        //implementing classes will generally add focus and blur
     }
 
     setModel(model) {
@@ -57,23 +58,32 @@ export default class FormField {
        throw new Error ("Not Implemented");
     }
 
-    getTagName() {
-        throw new Error ("Not Implemented");
-    }
-
     setValue(value) {
        throw new Error("Not implemented");
     }
 
+    setFocus() {
+        throw new Error("Not implemented");
+    }
+
+    setParent(parentView) {
+        this.parentView = parentView;
+        if (this.parentView.addChild) {
+            this.parentView.addChild(this);
+        }
+    }
+
+    //link class of state, single function to handle various properties of state
+    setState(state) {
+        throw new Error("Not implemented");
+    }
+
     subscribe() {
+        this.setState(this._model);
         this._model.subscribe((action) => {
             let state = action.target.getState();
-            if (!state.valid) {
-                alert(state.errorMessage);
-                this.setValue(null);
-            } else {
-                this.setValue(state.value);
-            }
+            //action.changes[{prop, newValue, currValue}]
+            this.setState(state);
         });
     }
 }
