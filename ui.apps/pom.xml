@@ -308,6 +308,9 @@
                                         <filter>
                                             <root>/libs/core/fd/components</root>
                                         </filter>
+                                        <filter>
+                                            <root>/libs/core/fd/clientlibs</root>
+                                        </filter>
                                     </filters>
                                     <classifier>cloud</classifier>
                                 </configuration>

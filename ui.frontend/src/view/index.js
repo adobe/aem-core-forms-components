@@ -13,31 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-(function() {
-
-    "use strict";
-    class FormContainerV2 extends FormView.FormContainer {
-
-    }
-    const NS = "cmp";
-    const IS = "adaptiveFormContainer";
-    const selectors = {
-        self: "[data-" + NS + '-is="' + IS + '"]'
-    };
-
-    async function onDocumentReady() {
-        const formContainer = FormView.Utils.setupFormContainer(({
-            _formJson, _path
-        }) => {
-            return new FormContainerV2({_formJson, _path});
-        }, selectors.self, IS)
-    }
-
-    if (document.readyState !== "loading") {
-        onDocumentReady();
-    } else {
-        document.addEventListener("DOMContentLoaded", onDocumentReady);
-    }
-
-})();
+import FormContainer from "./FormContainer";
+import FormField from "./FormField";
+export {FormField, FormContainer}

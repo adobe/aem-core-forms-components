@@ -46,7 +46,11 @@ export default class FormField {
     }
 
     setModel(model) {
-        this._model = model;
+        if (typeof this._model === "undefined" || this._model === null) {
+            this._model = model;
+        } else {
+            throw "Re-initializing model is not permitted"
+        }
     }
 
     getModel() {
