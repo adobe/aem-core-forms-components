@@ -12,6 +12,7 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
+    "fieldType": "number-input",
     "type" : "number",
     "leadDigits" : 2,
     "fracDigits" : 4,

@@ -32,6 +32,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
@@ -64,11 +65,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     }
 
     @Override
-    public FieldType getDefaultFieldType() {
+    public String getFieldType() {
         if (isMultiLine()) {
-            return FieldType.MULTILINE_INPUT;
+            return FieldType.MULTILINE_INPUT.getValue();
         } else {
-            return FieldType.TEXT_INPUT;
+            return super.getFieldType();
         }
     }
 
