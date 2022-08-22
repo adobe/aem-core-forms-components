@@ -16,6 +16,31 @@
       "visible" : false
     }
   },
+  "rules-panel": {
+    "name" : "abc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/panel/v1/panel",
+    "jcr:title": "dependent names",
+    "description" : "dependent names description",
+    "tooltip" : "dependent names tooltip",
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "visible" : false
+    },
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured",
+      "visible" : "some expression"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured",
+      "change" : "some expression 2"
+    }
+  },
   "array-panel": {
     "name" : "abc",
     "jcr:primaryType": "nt:unstructured",
