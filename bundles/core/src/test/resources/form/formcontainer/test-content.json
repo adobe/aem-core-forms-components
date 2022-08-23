@@ -30,6 +30,7 @@
       "hideTitle" : false,
       "description" : "dummy",
       "fieldType" : "text-input",
+      "fd:translationIds" : "{\"jcr:title\":\"guideContainer##textinput##jcr:title##5598\",\"placeholder\":\"guideContainer##textinput##description##5648\"}",
       "visible" : false
     },
     "action": "/a/b",
