@@ -26,6 +26,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.DropDown;
+import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -38,11 +39,6 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelect")
     @Default(booleanValues = false)
     protected boolean multiSelect;
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.DROP_DOWN;
-    }
 
     @Override
     public Integer getMinItems() {

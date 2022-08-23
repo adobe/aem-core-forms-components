@@ -25,6 +25,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.DatePicker;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
@@ -37,11 +38,6 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
     public String getFormat() {
         return Format.DATE.toString();
-    }
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.DATE_INPUT;
     }
 
     @Override

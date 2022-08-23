@@ -23,6 +23,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Panel;
+import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -32,11 +33,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     resourceType = { FormConstants.RT_FD_FORM_PANEL_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PanelImpl extends AbstractContainerImpl implements Panel {
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.PANEL;
-    }
 
     @JsonIgnore
     @Override
