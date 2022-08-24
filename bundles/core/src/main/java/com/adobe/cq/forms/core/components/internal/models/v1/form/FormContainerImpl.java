@@ -23,15 +23,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
@@ -46,15 +45,15 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.day.cq.dam.api.Asset;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
@@ -62,11 +61,8 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
 
     private static final Logger logger = LoggerFactory.getLogger(FormContainerImpl.class);
 
-    @Self
+    @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private SlingHttpServletRequest request;
-
-    @ScriptVariable
-    private SlingHttpServletResponse response;
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -74,7 +70,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @OSGiService
     private ModelFactory modelFactory;
 
-    @ScriptVariable
+    @SlingObject
     private Resource resource;
 
     // @ScriptVariable
@@ -116,7 +112,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Override
     public List<? extends ComponentExporter> getItems() {
         if (childrenModels == null) {
-            childrenModels = getChildrenModels(request, ComponentExporter.class);
+            childrenModels = getChildrenModels(ComponentExporter.class);
         }
         return childrenModels;
     }
@@ -182,7 +178,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     public Map<String, Object> getModel() {
         Map<String, Object> jsonMap = null;
         if (StringUtils.isNotEmpty(documentPath)
-            && this.request.getResourceResolver().getResource(documentPath) != null) {
+            && this.request != null && this.request.getResourceResolver().getResource(documentPath) != null) {
             // the json is coming from DAM
             final Resource assetResource = request.getResourceResolver().getResource(documentPath);
             if (assetResource != null) {
@@ -201,7 +197,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
                 }
             }
         } else {
-            FormContainer formContainer = modelFactory.getModelFromWrappedRequest(request, resource, FormContainer.class);
+            FormContainer formContainer = resource.adaptTo(FormContainer.class);
             ObjectMapper mapper = new ObjectMapper();
             jsonMap = mapper.convertValue(formContainer, new TypeReference<Map<String, Object>>() {});
         }
@@ -209,10 +205,10 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     }
 
     // todo: its similar to other container code, but could not find a better way to do this
-    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    protected <T> List<T> getChildrenModels(@NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+            T model = child.adaptTo(modelClass);
             if (model != null) {
                 models.add(model);
             }

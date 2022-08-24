@@ -27,10 +27,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.DropDown;
-import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -59,7 +56,7 @@ public class DropDownImplTest {
 
     @Test
     void testExportedType() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(FormConstants.RT_FD_FORM_DROP_DOWN_V1, dropdown.getExportedType());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getExportedType()).thenCallRealMethod();
@@ -68,13 +65,13 @@ public class DropDownImplTest {
 
     @Test
     void testFieldType() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(Base.FieldType.DROP_DOWN.getValue(), dropdown.getFieldType());
     }
 
     @Test
     void testGetLabel() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("def", dropdown.getLabel().getValue());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getLabel()).thenCallRealMethod();
@@ -91,7 +88,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetName() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("abc", dropdown.getName());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getName()).thenCallRealMethod();
@@ -100,7 +97,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetDataRef() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("a.b", dropdown.getDataRef());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getDataRef()).thenCallRealMethod();
@@ -109,7 +106,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetDescription() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("dummy", dropdown.getDescription());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getDescription()).thenCallRealMethod();
@@ -118,7 +115,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetScreenReaderText() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("'Custom screen reader text'", dropdown.getScreenReaderText());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getScreenReaderText()).thenCallRealMethod();
@@ -127,7 +124,7 @@ public class DropDownImplTest {
 
     @Test
     void testIsVisible() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(false, dropdown.isVisible());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isVisible()).thenCallRealMethod();
@@ -136,7 +133,7 @@ public class DropDownImplTest {
 
     @Test
     void testIsEnabled() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(true, dropdown.isEnabled());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isEnabled()).thenCallRealMethod();
@@ -145,7 +142,7 @@ public class DropDownImplTest {
 
     @Test
     void testIsReadOnly() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(false, dropdown.isReadOnly());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isReadOnly()).thenCallRealMethod();
@@ -154,7 +151,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetPlaceHolder() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(null, dropdown.getPlaceHolder());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getPlaceHolder()).thenCallRealMethod();
@@ -163,7 +160,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetDisplayFormat() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(null, dropdown.getDisplayFormat());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getDisplayFormat()).thenCallRealMethod();
@@ -172,7 +169,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetEditFormat() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(null, dropdown.getEditFormat());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getEditFormat()).thenCallRealMethod();
@@ -181,7 +178,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetDataFormat() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(null, dropdown.getDataFormat());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getDataFormat()).thenCallRealMethod();
@@ -190,7 +187,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetTooltip() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals("test-short-description", dropdown.getTooltip());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getTooltip()).thenCallRealMethod();
@@ -199,7 +196,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetConstraintMessages() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         Map<Base.ConstraintType, String> constraintsMessages = dropdown.getConstraintMessages();
         assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
         DropDown dropdownMock = Mockito.mock(DropDown.class);
@@ -209,19 +206,19 @@ public class DropDownImplTest {
 
     @Test
     void testJSONExport() throws Exception {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN));
     }
 
     @Test
     void testMultiSelectJSONExport() throws Exception {
-        DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_MULTISELECT_DROPDOWN));
     }
 
     @Test
     void testGetProperties() throws Exception {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         Map<String, Object> properties = dropdown.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "af:layout"
@@ -252,13 +249,13 @@ public class DropDownImplTest {
 
     @Test
     void testGetEnum() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertArrayEquals(new Integer[] { 0, 1, 2 }, dropdown.getEnums());
     }
 
     @Test
     void testGetType() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertEquals(BaseConstraint.Type.NUMBER, dropdown.getType());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getType()).thenCallRealMethod();
@@ -267,19 +264,19 @@ public class DropDownImplTest {
 
     @Test
     void testGetMultiSelectType() {
-        DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         assertEquals(BaseConstraint.Type.NUMBER_ARRAY, dropdown.getType());
     }
 
     @Test
     void testGetMultiSelectDefault() {
-        DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
     }
 
     @Test
     void testGetMultiSelectMinItems() {
-        DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         assertEquals(1, dropdown.getMinItems().intValue());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getMinItems()).thenCallRealMethod();
@@ -288,7 +285,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetMultiSelectMaxItems() {
-        DropDown dropdown = getDropDownUnderTest(PATH_MULTISELECT_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         assertEquals(2, dropdown.getMaxItems().intValue());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getMaxItems()).thenCallRealMethod();
@@ -297,7 +294,7 @@ public class DropDownImplTest {
 
     @Test
     void testGetEnumNames() {
-        DropDown dropdown = getDropDownUnderTest(PATH_DROPDOWN);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         assertArrayEquals(new String[] { "m", "f", "o" }, dropdown.getEnumNames());
     }
 
@@ -312,11 +309,5 @@ public class DropDownImplTest {
         DropDown dropdown = request.adaptTo(DropDown.class);
         String appliedCssClasses = dropdown.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
-    }
-
-    private DropDown getDropDownUnderTest(String resourcePath) {
-        context.currentResource(resourcePath);
-        MockSlingHttpServletRequest request = context.request();
-        return request.adaptTo(DropDown.class);
     }
 }

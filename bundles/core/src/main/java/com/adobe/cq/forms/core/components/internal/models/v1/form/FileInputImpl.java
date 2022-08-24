@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -32,7 +33,7 @@ import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FileInput.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_FILE_INPUT_V1 })
