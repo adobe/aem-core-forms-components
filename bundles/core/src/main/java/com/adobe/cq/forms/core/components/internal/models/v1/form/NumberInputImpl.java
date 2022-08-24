@@ -29,6 +29,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -45,11 +46,6 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fracDigits")
     @Nullable
     protected Integer fracDigits;
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.NUMBER_INPUT;
-    }
 
     @Override
     public Long getMinimum() {

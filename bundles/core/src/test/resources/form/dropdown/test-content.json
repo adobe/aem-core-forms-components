@@ -12,6 +12,7 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
+    "fieldType": "drop-down",
     "type" : "number",
     "enum" : [0, 1, 2],
     "enumNames" : ["m", "f", "o"]
@@ -25,6 +26,7 @@
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
+    "fieldType": "drop-down",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",

@@ -31,6 +31,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -45,11 +46,6 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     @Nullable
     protected String orientationJcr;
     private Orientation orientation;
-
-    @Override
-    public FieldType getDefaultFieldType() {
-        return FieldType.CHECKBOX;
-    }
 
     @PostConstruct
     private void initCheckBoxModel() {

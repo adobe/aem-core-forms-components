@@ -10,6 +10,7 @@
     "assistPriority": "custom",
     "dataRef": "a.b",
     "custom": "Custom screen reader text",
+    "fieldType": "checkbox-group",
     "typeMessage": "incorrect type",
     "tooltip": "test-short-description",
     "type": "number[]",

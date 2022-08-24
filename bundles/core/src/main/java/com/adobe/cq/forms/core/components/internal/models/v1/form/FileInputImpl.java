@@ -29,6 +29,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -47,11 +48,6 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "accept")
     protected String[] accept;
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.FILE_INPUT;
-    }
 
     @Override
     public Integer getMinItems() {
