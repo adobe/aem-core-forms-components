@@ -19,7 +19,8 @@
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
-     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"></sly>
 <div class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
      id="${component.id}"
@@ -52,4 +53,5 @@
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.shortDescriptionVisible, shortDescription=text.shortDescription, bemBlock='cmp-adaptiveform-textinput'}">
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-textinput'}"></div>
 </div>

@@ -20,12 +20,14 @@ use(function () {
   var labelPath = 'core/fd/components/commons/v1/fieldTemplates/label.html';
   var shortDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/shortDescription.html";
   var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
-  var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html"
+  var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html";
+  var errorMessagePath = "core/fd/components/commons/v1/fieldTemplates/errorMessage.html";
   return {
     labelPath: labelPath,
     shortDescriptionPath: shortDescriptionPath,
     longDescriptionPath: longDescriptionPath,
     questionMarkPath: questionMarkPath,
+    errorMessagePath: errorMessagePath,
     clientlibs: clientlibsArr
   }
 });

@@ -32,7 +32,8 @@
             widget: `.${TextInput.bemBlock}__widget`,
             label: `.${TextInput.bemBlock}__label`,
             description: `.${TextInput.bemBlock}__longdescription`,
-            qm: `.${TextInput.bemBlock}__questionmark`
+            qm: `.${TextInput.bemBlock}__questionmark`,
+            errorDiv: `.${TextInput.bemBlock}__errorMessage`,
         };
 
         constructor(params) {
@@ -41,6 +42,7 @@
             this.description = this.element.querySelector(TextInput.selectors.description)
             this.label = this.descriptionDiv = this.element.querySelector(TextInput.selectors.label)
             this.qm = this.descriptionDiv = this.element.querySelector(TextInput.selectors.qm)
+            this.errorDiv = this.element.querySelector(TextInput.selectors.errorDiv)
         }
 
         setModel(model) {
@@ -120,6 +122,29 @@
 
         _updateValue(value) {
             this.widget.value = value;
+            this._runValidations(this.widget);
+        }
+
+        _runValidations(widget) {
+            const model = this._model._jsonModel;
+            let validationObj = {isError: false, errorMessage: ''};
+            this._runRequiredValidation(widget, model, validationObj);
+            this._toggleErrorMark(validationObj);
+        }
+
+        _runRequiredValidation(widget, model, validationObj) {
+            if (model.required && widget.value === '') {
+                validationObj.isError = true;
+                validationObj.errorMessage = model.constraintMessages['required'];
+            }
+        }
+
+        _toggleErrorMark({isError, errorMessage}) {
+            if (isError) {
+                this.errorDiv.innerHTML = errorMessage;
+            } else {
+                this.errorDiv.innerHTML = '';
+            }
         }
 
         subscribe() {

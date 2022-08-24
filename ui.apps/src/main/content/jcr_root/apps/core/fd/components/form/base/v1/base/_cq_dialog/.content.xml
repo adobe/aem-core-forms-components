@@ -67,7 +67,7 @@
                                     checked="{Boolean}false"
                                     fieldLabel="Required field"
                                     labelledBy="Mandatory"
-                                    name="./mandatory"
+                                    name="./required"
                                     granite:class="cmp-adaptiveform-base__required"
                                     text="Required field"
                                     value="true">
