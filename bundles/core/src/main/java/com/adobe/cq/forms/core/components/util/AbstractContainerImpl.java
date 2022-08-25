@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -42,7 +41,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     private ModelFactory modelFactory;
 
     @SlingObject
-    private Resource resource;
+    protected Resource resource;
 
     private List<? extends ComponentExporter> childrenModels;
 
@@ -59,15 +58,16 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @Override
     public List<? extends ComponentExporter> getItems() {
         if (childrenModels == null) {
-            childrenModels = getChildrenModels(request, ComponentExporter.class);
+            childrenModels = getChildrenModels(ComponentExporter.class);
         }
         return childrenModels;
     }
 
-    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    protected <T> List<T> getChildrenModels(@NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
+
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+            T model = child.adaptTo(modelClass);
             if (model != null) {
                 models.add(model);
             }

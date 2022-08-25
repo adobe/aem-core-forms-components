@@ -18,7 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.adobe.cq.forms.core.components.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
@@ -34,7 +35,7 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
      * @return {@code true} if multi line, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    @JsonIgnore
+    @JsonView(Views.Author.class)
     default boolean isMultiLine() {
         return false;
     }
