@@ -238,7 +238,7 @@
                                     defaultValue=""
                                     fieldLabel="Maximum Number of Characters"
                                     min="0"
-                                    name="./maxChars"/>
+                                    name="./maxLength"/>
                             <minLength
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__minlength"

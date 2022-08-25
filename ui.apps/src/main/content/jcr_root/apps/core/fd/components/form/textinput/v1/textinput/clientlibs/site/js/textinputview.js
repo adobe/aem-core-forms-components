@@ -129,6 +129,7 @@
             const model = this._model._jsonModel;
             let validationObj = {isError: false, errorMessage: ''};
             this._runRequiredValidation(widget, model, validationObj);
+            this._runMinMaxValidation(widget, model, validationObj);
             this._toggleErrorMark(validationObj);
         }
 
@@ -136,6 +137,22 @@
             if (model.required && widget.value === '') {
                 validationObj.isError = true;
                 validationObj.errorMessage = model.constraintMessages['required'];
+            }
+        }
+
+        _runMinMaxValidation(widget, model, validationObj) {
+            const widgetValue = widget.value;
+            if (model.minLength) {
+                if (widgetValue.length < model.minLength) {
+                    validationObj.isError = true;
+                    validationObj.errorMessage = 'The number of characters must be greater than or equal to ' + model.minLength;
+                }
+            }
+            if (model.maxLength) {
+                if (widgetValue.length > model.maxLength) {
+                    validationObj.isError = true;
+                    validationObj.errorMessage = 'The number of characters must be lesser than or equal to ' + model.maxLength;
+                }
             }
         }
 
