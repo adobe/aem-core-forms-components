@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -31,9 +32,10 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { CheckBox.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_V1 })
 @Exporter(
@@ -45,11 +47,6 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     @Nullable
     protected String orientationJcr;
     private Orientation orientation;
-
-    @Override
-    public FieldType getDefaultFieldType() {
-        return FieldType.CHECKBOX;
-    }
 
     @PostConstruct
     private void initCheckBoxModel() {

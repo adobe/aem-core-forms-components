@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 
@@ -25,7 +26,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormContainerImpl.RESOURCE_TYPE })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)

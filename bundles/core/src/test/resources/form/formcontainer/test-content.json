@@ -11,6 +11,7 @@
       "jcr:title" : "def",
       "hideTitle" : false,
       "description" : "dummy",
+      "fieldType" : "text-input",
       "visible" : false
     },
     "action": "/a/b",
@@ -28,6 +29,7 @@
       "jcr:title" : "def",
       "hideTitle" : false,
       "description" : "dummy",
+      "fieldType" : "text-input",
       "visible" : false
     },
     "action": "/a/b",

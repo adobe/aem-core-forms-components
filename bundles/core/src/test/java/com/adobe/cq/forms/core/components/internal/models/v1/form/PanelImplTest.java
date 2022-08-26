@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +46,7 @@ public class PanelImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PANEL = CONTENT_ROOT + "/panel";
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panel";
-
+    private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panel";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -80,7 +79,7 @@ public class PanelImplTest {
 
     @Test
     void testExportedType() throws Exception {
-        Panel panel = getPanelUnderTest(PATH_PANEL);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         assertEquals(FormConstants.RT_FD_FORM_PANEL_V1, panel.getExportedType());
         Panel panelMock = Mockito.mock(Panel.class);
         Mockito.when(panelMock.getExportedType()).thenCallRealMethod();
@@ -89,31 +88,32 @@ public class PanelImplTest {
 
     @Test
     void testGetId() throws Exception {
-        Panel panel = getPanelUnderTest(PATH_PANEL);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         assertNotNull(panel.getId());
     }
 
     @Test
     void testGetName() throws Exception {
-        Panel panel = getPanelUnderTest(PATH_PANEL);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        ;
         assertEquals("abc", panel.getName());
     }
 
     @Test
     void testJSONExport() throws Exception {
-        Panel panel = getPanelUnderTest(PATH_PANEL);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL));
     }
 
     @Test
     void testArrayPanelJSONExport() throws Exception {
-        Panel panel = getPanelUnderTest(PATH_ARRAY_PANEL);
+        Panel panel = Utils.getComponentUnderTest(PATH_ARRAY_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_ARRAY_PANEL));
     }
 
-    private Panel getPanelUnderTest(String resourcePath) throws Exception {
-        context.currentResource(resourcePath);
-        MockSlingHttpServletRequest request = context.request();
-        return request.adaptTo(Panel.class);
+    @Test
+    void testRulesPanelJSONExport() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_RULES_PANEL, Panel.class, context);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_RULES_PANEL));
     }
 }

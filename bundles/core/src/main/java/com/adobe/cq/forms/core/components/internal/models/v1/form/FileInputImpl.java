@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -29,9 +30,10 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FileInput.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_FILE_INPUT_V1 })
@@ -47,11 +49,6 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "accept")
     protected String[] accept;
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.FILE_INPUT;
-    }
 
     @Override
     public Integer getMinItems() {

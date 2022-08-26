@@ -30,8 +30,10 @@ import static org.junit.Assert.*;
 @ExtendWith(AemContextExtension.class)
 public class FormStructureParserImplTest {
     private static final String BASE = "/form/formstructparser";
-    private static final String CONTENT_ROOT = "/content";
-    private static final String PATH_DATEPICKER = CONTENT_ROOT + "/formcontainerv2/datepicker";
+    private static final String CONTENT_ROOT = "/content/myTestPage";
+    private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/jcr:content";
+
+    private static final String FORM_CONTAINER_PATH = JCR_CONTENT_PATH + "/formcontainerv2";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -42,8 +44,35 @@ public class FormStructureParserImplTest {
 
     @Test
     void testFormContainerPath() {
-        FormStructureParser formStructureParser = getFormStructureParserUnderTest(PATH_DATEPICKER);
-        assertEquals(CONTENT_ROOT + "/formcontainerv2", formStructureParser.getFormContainerPath());
+        String path = FORM_CONTAINER_PATH + "/datepicker";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
+    void testFormContainerPathInsideContainers() {
+        String path = FORM_CONTAINER_PATH + "/container1";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+
+        formStructureParser = getFormStructureParserUnderTest(path + "/datepicker1");
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+
+        formStructureParser = getFormStructureParserUnderTest(path + "/container2");
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+
+        formStructureParser = getFormStructureParserUnderTest(path + "/container2/text");
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
+    void testFormContainerPathForPathOutsideFormContainer() {
+        String path = JCR_CONTENT_PATH + "/container3";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertNull(formStructureParser.getFormContainerPath());
+
+        formStructureParser = getFormStructureParserUnderTest(path + "/text1");
+        assertNull(formStructureParser.getFormContainerPath());
     }
 
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {

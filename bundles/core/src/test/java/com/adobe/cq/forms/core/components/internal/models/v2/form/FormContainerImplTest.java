@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -78,7 +77,7 @@ public class FormContainerImplTest {
 
     @Test
     void testExportedType() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("core/fd/components/form/container/v2/container", formContainer.getExportedType());
         FormContainer formContainerMock = Mockito.mock(FormContainer.class);
         Mockito.when(formContainerMock.getExportedType()).thenCallRealMethod();
@@ -87,31 +86,25 @@ public class FormContainerImplTest {
 
     @Test
     void testGetId() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getId());
     }
 
     @Test
     void testGetAction() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/a/b", formContainer.getMetaData().getAction());
     }
 
     @Test
     void testGetDataUrl() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/c/d", formContainer.getMetaData().getDataUrl());
     }
 
     @Test
     void testJSONExport() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
-    }
-
-    private FormContainer getFormContainerUnderTest(String resourcePath) throws Exception {
-        context.currentResource(resourcePath);
-        MockSlingHttpServletRequest request = context.request();
-        return request.adaptTo(FormContainer.class);
     }
 }

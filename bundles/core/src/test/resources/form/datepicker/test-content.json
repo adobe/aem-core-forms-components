@@ -9,6 +9,7 @@
     "visible" : false,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
+    "fieldType": "date-input",
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
