@@ -19,6 +19,7 @@
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
@@ -27,8 +28,8 @@
      data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}"></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
+    <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               aria-label="${text.label.visible && text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
@@ -49,7 +50,8 @@
            data-cmp-hook-adaptiveform-textinput="input"
            placeholder="${text.placeHolder}"
            data-cmp-required-message="${text.constraintMessages.required}"/>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.shortDescriptionVisible, shortDescription=text.shortDescription, bemBlock='cmp-adaptiveform-textinput'}">
+    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.shortDescriptionVisible, shortDescription=text.shortDescription, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
 </div>

@@ -32,7 +32,8 @@
             widget: `.${TextInput.bemBlock}__widget`,
             label: `.${TextInput.bemBlock}__label`,
             description: `.${TextInput.bemBlock}__longdescription`,
-            qm: `.${TextInput.bemBlock}__questionmark`
+            qm: `.${TextInput.bemBlock}__questionmark`,
+            errorDiv: `.${TextInput.bemBlock}__errorMessage`
         };
 
         constructor(params) {
@@ -41,6 +42,7 @@
             this.description = this.element.querySelector(TextInput.selectors.description)
             this.label = this.descriptionDiv = this.element.querySelector(TextInput.selectors.label)
             this.qm = this.descriptionDiv = this.element.querySelector(TextInput.selectors.qm)
+            this.errorDiv = this.element.querySelector(TextInput.selectors.errorDiv)
         }
 
         setModel(model) {
@@ -66,11 +68,7 @@
         }
 
         _dataAttribute(attr) {
-            return `data-${TextInput.NS}-${TextInput.IS}-${attr}`
-        }
-
-        _cssClass(clsName) {
-            return `cmp-${TextInput.IS}--${clsName}`
+            return `data-${TextInput.bemBlock}-${attr}`
         }
 
         /**
@@ -81,13 +79,11 @@
          * @param className
          * @private
          */
-        _toggle(property, dataAttribute, className) {
+        _toggle(property, dataAttribute, value) {
             if (property === false) {
-                this.element.setAttribute(dataAttribute, true);
-                this.element.classList.add(className);
+                this.element.setAttribute(dataAttribute, value);
             } else {
                 this.element.removeAttribute(dataAttribute);
-                this.element.classList.remove(className);
             }
         }
 
@@ -97,7 +93,7 @@
          * @private
          */
         _updateVisible(visible) {
-            this._toggle(visible, this._dataAttribute('hidden'), this._cssClass('hidden'))
+            this._toggle(visible, this._dataAttribute('hidden'), true)
         }
 
         /**
@@ -106,12 +102,20 @@
          * @private
          */
         _updateEnable(enable) {
-            this._toggle(enable, this._dataAttribute('disabled'), this._cssClass('disabled'))
+            this._toggle(enable, this._dataAttribute('disabled'), true)
             if (enable === false) {
                 this.widget.setAttribute("disabled", true);
             } else {
                 this.widget.removeAttribute("disabled");
             }
+        }
+
+        _updateValid(valid, state) {
+            this._toggle(valid, this._dataAttribute('valid'))
+        }
+
+        _updateErrorMessage(errorMessage, state) {
+            this.errorDiv.innerHTML = state.errorMessage;
         }
 
         getClass() {
@@ -130,7 +134,7 @@
                 changes.forEach(change => {
                     const fn = changeHandlerName(change.propertyName);
                     if (typeof this[fn] === "function") {
-                        this[fn](change.currentValue)
+                        this[fn](change.currentValue, state)
                     } else {
                         console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                     }
