@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.internal.models.v1.form;
+package com.adobe.cq.forms.core.components.util;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -42,7 +42,6 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -70,6 +69,11 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
     @Nullable
     protected String dataRef;
+
+    // mandatory property else adapt should fail for adaptive form components
+    @ValueMapValue(name = "fieldType")
+    protected String fieldTypeJcr;
+    private FieldType fieldType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -130,10 +134,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected void initBaseModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
         type = Type.fromString(typeJcr);
+        // first check if this is in the supported list of field type
+        fieldType = FieldType.fromString(fieldTypeJcr);
     }
-
-    @JsonIgnore
-    protected abstract FieldType getDefaultFieldType();
 
     /**
      * Returns label of the form field
@@ -256,7 +259,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      */
     @Override
     public String getFieldType() {
-        return getDefaultFieldType().getValue();
+        return fieldType.getValue();
     }
 
     /**

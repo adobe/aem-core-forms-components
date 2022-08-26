@@ -21,6 +21,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
+
 @Model(
     adaptables = Resource.class,
     adapters = FormStructureParser.class)
@@ -31,13 +33,19 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     @Override
     public String getFormContainerPath() {
-        // TODO: handle panel case also later.
-        // currently is assumes that the field is directly inside form container.
-        Resource parent = resource.getParent();
-        if (parent != null) {
-            return parent.getPath();
+        return getFormContainerPath(resource);
+    }
+
+    private String getFormContainerPath(Resource resource) {
+        if (resource == null) {
+            return null;
         }
-        return null;
+
+        if (resource.isResourceType(RT_FD_FORM_CONTAINER_V2)) {
+            return resource.getPath();
+        }
+
+        return getFormContainerPath(resource.getParent());
     }
 
 }

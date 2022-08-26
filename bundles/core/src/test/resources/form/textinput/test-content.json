@@ -12,7 +12,8 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "default" : "abc"
+    "default" : "abc",
+    "fieldType": "text-input"
   },
   "number-textinput" : {
     "jcr:primaryType": "nt:unstructured",
@@ -28,6 +29,7 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
+    "fieldType": "text-input",
     "maximum" : 100,
     "minimum" : 10,
     "default" : 150
@@ -37,6 +39,7 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "name" : "abc",
     "multiLine" : true,
+    "fieldType": "multiline-input",
     "jcr:title" : "def",
     "hideTitle" : false,
     "description" : "dummy",

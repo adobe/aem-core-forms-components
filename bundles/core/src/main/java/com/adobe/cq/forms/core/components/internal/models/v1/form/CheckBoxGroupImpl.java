@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 
@@ -23,19 +24,15 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
+import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { CheckBoxGroup.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_GROUP_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements CheckBoxGroup {
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.CHECKBOX_GROUP;
-    }
 
     @Override
     public Integer getMinItems() {

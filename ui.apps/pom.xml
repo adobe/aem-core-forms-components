@@ -85,9 +85,6 @@
                             <root>/apps/core/fd/components</root>
                         </filter>
                         <filter>
-                            <root>/apps/core/fd/expeditor</root>
-                        </filter>
-                        <filter>
                             <root>/apps/core/fd/clientlibs</root>
                         </filter>
                     </filters>
@@ -307,6 +304,9 @@
                                     <filters>
                                         <filter>
                                             <root>/libs/core/fd/components</root>
+                                        </filter>
+                                         <filter>
+                                            <root>/libs/core/fd/clientlibs</root>
                                         </filter>
                                     </filters>
                                     <classifier>cloud</classifier>
