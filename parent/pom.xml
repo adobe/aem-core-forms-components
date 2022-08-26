@@ -1122,9 +1122,9 @@
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
                 <!-- <version>2022.04.12.02-220401</version> -->
-                <version>2022.08.17</version>
+                <version>2022.08.24</version>
                 <scope>system</scope>
-                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.17.00.jar</systemPath>
+                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.24.00.jar</systemPath>
             </dependency>
 
             <dependency>
