@@ -152,6 +152,18 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    // this event will automatically be unbound when this
+    // test ends because it's attached to 'cy'
+    cy.on('uncaught:exception', (err, runnable) => {
+        expect(err.message).to.include('Page info could not be');
+        // using mocha's async done callback to finish
+        // this test so we prove that an uncaught exception
+        // was thrown
+        done();
+        // return false to prevent the error from
+        // failing this test
+        return false;
+    });
     cy.visit(baseUrl);
     cy.login(baseUrl);
     cy.openSiteAuthoring(pagePath);
@@ -211,7 +223,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
 
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
-    cy.get(actionSelector).click();
+    cy.get(actionSelector).trigger("click");
 });
 
 // cypress command to initialize event handler on channel
