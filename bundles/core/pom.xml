@@ -438,14 +438,6 @@
         </dependency>
 
         <!-- AEM and forms sdk versions -->
-
-        <dependency>
-            <groupId>com.adobe.aemds.guide</groupId>
-            <artifactId>aemds-guide-core</artifactId>
-            <version>7.0.719-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- the below order of dependencies is very critical -->
         <dependency>
             <groupId>com.adobe.aem</groupId>
