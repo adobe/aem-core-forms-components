@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
+import com.adobe.cq.forms.core.components.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -91,6 +93,16 @@ public interface Field extends Base, BaseConstraint {
     @JsonSerialize(using = DefaultValueSerializer.class)
     default Object[] getDefault() {
         return null;
+    }
+
+    @JsonView(Views.Author.class)
+    default boolean getDorExclusion() {
+        return false;
+    }
+
+    @JsonView(Views.Author.class)
+    default String getDorColspan() {
+        return "";
     }
 
 }

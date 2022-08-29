@@ -15,10 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import javax.annotation.Nullable;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
@@ -32,5 +36,22 @@ import com.adobe.cq.forms.core.components.models.form.FormContainer;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends com.adobe.cq.forms.core.components.internal.models.v1.form.FormContainerImpl implements
     FormContainer {
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorTemplateRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorType;
+
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
+
+    public String getDorTemplateRef() {
+        return dorTemplateRef;
+    }
+
+    public String getDorType() {
+        return dorType;
+    }
 }

@@ -21,8 +21,10 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -163,4 +165,27 @@ public interface FormContainer extends Container {
     default String getFormData() {
         return "";
     }
+
+    /**
+     * Returns {@code dor template path}
+     *
+     * @return {@code dor template path}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonView(Views.Author.class)
+    default String getDorTemplateRef() {
+        return "";
+    }
+
+    /**
+     * Returns {@code dor type }
+     *
+     * @return {@code dor type}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonView(Views.Author.class)
+    default String getDorType() {
+        return "";
+    }
+
 }

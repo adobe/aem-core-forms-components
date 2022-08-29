@@ -104,6 +104,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @SlingObject
     private Resource resource;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected String dorColspan;
+
     @Override
     public boolean isReadOnly() {
         return readOnly;
@@ -152,5 +160,15 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     public String getDataFormat() {
         return dataFormat;
+    }
+
+    @Override
+    public boolean getDorExclusion() {
+        return dorExclusion;
+    }
+
+    @Override
+    public String getDorColspan() {
+        return dorColspan;
     }
 }
