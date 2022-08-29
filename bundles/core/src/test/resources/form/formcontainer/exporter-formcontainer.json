@@ -19,6 +19,7 @@
     }
   ],
   ":type": "core/fd/components/form/container/v1/container",
+  "fieldType" : "form",
   "metadata": {
     "dataUrl": "/c/d",
     "action": "/a/b",

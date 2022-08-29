@@ -18,6 +18,7 @@
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
+  "fieldType" : "form",
   "metadata": {
     "action": "/a/b",
     "dataUrl": "/c/d",

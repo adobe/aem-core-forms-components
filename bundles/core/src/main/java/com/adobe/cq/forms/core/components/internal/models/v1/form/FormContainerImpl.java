@@ -17,8 +17,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,11 +26,7 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.OSGiService;
-import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -41,11 +35,10 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
+import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.dam.api.Asset;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -57,21 +50,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FormContainerImpl extends AbstractComponentImpl implements FormContainer {
+public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
 
     private static final Logger logger = LoggerFactory.getLogger(FormContainerImpl.class);
-
-    @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private SlingHttpServletRequest request;
-
-    @OSGiService
-    private SlingModelFilter slingModelFilter;
-
-    @OSGiService
-    private ModelFactory modelFactory;
-
-    @SlingObject
-    private Resource resource;
 
     // @ScriptVariable
     // private Page currentPage;
@@ -100,21 +81,11 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Default(values = "")
     protected String documentPath;
 
-    private List<? extends ComponentExporter> childrenModels;
-
     // overriding since AF 2.0 specification does not have id but we need the API for rendering
     @Override
     @JsonIgnore
     public String getId() {
         return super.getId();
-    }
-
-    @Override
-    public List<? extends ComponentExporter> getItems() {
-        if (childrenModels == null) {
-            childrenModels = getChildrenModels(ComponentExporter.class);
-        }
-        return childrenModels;
     }
 
     @Override
@@ -202,17 +173,5 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
             jsonMap = mapper.convertValue(formContainer, new TypeReference<Map<String, Object>>() {});
         }
         return jsonMap;
-    }
-
-    // todo: its similar to other container code, but could not find a better way to do this
-    protected <T> List<T> getChildrenModels(@NotNull Class<T> modelClass) {
-        List<T> models = new ArrayList<>();
-        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            T model = child.adaptTo(modelClass);
-            if (model != null) {
-                models.add(model);
-            }
-        }
-        return models;
     }
 }

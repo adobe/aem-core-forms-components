@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Container extends Base, ContainerExporter {
+public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     /**
      * Returns the list of items present inside the container as an array.
@@ -54,6 +54,13 @@ public interface Container extends Base, ContainerExporter {
     @JsonIgnore
     default Map<String, ? extends ComponentExporter> getExportedItems() {
         return Collections.emptyMap();
+    }
+
+    @JsonIgnore
+    @Override
+    default boolean isRequired() {
+        // explicitly setting null, since containers don't have required property
+        return false;
     }
 
     @NotNull
