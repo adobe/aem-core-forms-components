@@ -136,6 +136,16 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      */
     private Map<ConstraintType, String> constraintMessages = null;
 
+    /**
+     * Predicate to check if a map entry is non empty
+     * return true if and only if
+     * 1) the value is not of type string and non empty or
+     * 2) the value is of type string[] and has more than 1 elements
+     */
+    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
+        .getValue()).length() > 0)
+        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+
     @PostConstruct
     protected void initBaseModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
@@ -506,27 +516,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         }
         return customProperties;
     }
-
-    /**
-     * checks the rule entry and if the vlaue is not of type string sets it to empty string
-     *
-     * @param entry
-     * @return
-     */
-    private Entry<String, String> sanitizeRules(Entry<String, Object> entry) {
-        Entry<String, String> updatedEntry;
-        Object ruleValue = entry.getValue();
-        if (ruleValue instanceof String) {
-            updatedEntry = new AbstractMap.SimpleEntry<>(entry.getKey(), (String) ruleValue);
-        } else {
-            updatedEntry = new AbstractMap.SimpleEntry<>(entry.getKey(), "");
-        }
-        return updatedEntry;
-    }
-
-    private Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj.getValue())
-        .length() > 0)
-        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
 
     @Override
     @NotNull
