@@ -36,6 +36,8 @@
         ruleEditorFrame.style.display = "block";
         ruleEditorFrame.style.width = "100%";
         ruleEditorFrame.style.height = "100%";
+        ruleEditorFrame.style.top = "0";
+        ruleEditorFrame.style.left = "0";
         ruleEditorFrame.style.position = "fixed";
         document.body.appendChild(ruleEditorFrame);
     }
