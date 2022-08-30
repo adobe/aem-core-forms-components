@@ -108,9 +108,5 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
-    after(function() {
-      // clean up the operations performed in the test
-      cy.enableOrDisableTutorials(true);
-    });
   });
 });

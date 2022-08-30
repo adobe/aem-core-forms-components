@@ -18,11 +18,13 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
@@ -58,17 +60,22 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @Override
     public List<? extends ComponentExporter> getItems() {
         if (childrenModels == null) {
-            childrenModels = getChildrenModels(ComponentExporter.class);
+            childrenModels = getChildrenModels(request, ComponentExporter.class);
         }
         return childrenModels;
     }
 
-    protected <T> List<T> getChildrenModels(@NotNull Class<T> modelClass) {
+    protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
 
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
             if (!child.getName().startsWith("fd:")) {
-                T model = child.adaptTo(modelClass);
+                T model = null;
+                if (request != null) {
+                    model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+                } else {
+                    model = child.adaptTo(modelClass);
+                }
                 if (model != null) {
                     models.add(model);
                 }

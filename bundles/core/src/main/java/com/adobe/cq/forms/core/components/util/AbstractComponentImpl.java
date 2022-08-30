@@ -38,6 +38,8 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.ComponentContext;
 
+// this class is copied from WCM, since for forms adapting via slingRequest is optional
+
 /**
  * Abstract class that can be used as a base class for {@link Component} implementations.
  */

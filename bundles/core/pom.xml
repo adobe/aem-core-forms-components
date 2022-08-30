@@ -56,6 +56,7 @@
         <jacoco.data.file>${project.build.directory}/jacoco.exec</jacoco.data.file>
         <formatter.config>./eclipse-formatter.xml</formatter.config>
         <baseline.skip>false</baseline.skip>
+        <main.basedir>${project.basedir}/../../parent</main.basedir>
     </properties>
 
     <build>
@@ -437,9 +438,7 @@
         </dependency>
 
         <!-- AEM and forms sdk versions -->
-
         <!-- the below order of dependencies is very critical -->
-
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>

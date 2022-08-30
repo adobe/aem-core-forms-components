@@ -1,0 +1,64 @@
+{
+  "jcr:primaryType": "dam:Asset",
+  "jcr:createdBy": "admin",
+  "jcr:content": {
+    "jcr:primaryType": "dam:AssetContent",
+    "type": "guide",
+    "guide": "1",
+    "sling:resourceType": "fd/fm/af/render",
+    "dictionary": {
+      "jcr:primaryType": "nt:unstructured",
+      "de": {
+        "jcr:primaryType": "sling:OrderedFolder",
+        "jcr:mixinTypes": [
+          "mix:language"
+        ],
+        "jcr:createdBy": "translation-job-service",
+        "jcr:language": "de",
+        "sling:basename": "/content/dam/formsanddocuments/demo/jcr:content/dictionary",
+        "jcr:created": "Fri Aug 05 2022 16:45:12 GMT+0530",
+        "temp": {
+          "jcr:primaryType": "nt:folder",
+          "jcr:mixinTypes": [
+            "sling:Message"
+          ],
+          "jcr:createdBy": "translation-job-service",
+          "sling:message": "Adaptive Form V2 (IT)",
+          "sling:key": "jcr:title##6249",
+          "jcr:created": "Fri Aug 05 2022 16:45:12 GMT+0530"
+        },
+        "temp1": {
+          "jcr:primaryType": "nt:folder",
+          "jcr:mixinTypes": [
+            "sling:Message"
+          ],
+          "jcr:createdBy": "translation-job-service",
+          "sling:message": "def 1",
+          "sling:key": "guideContainer##textinput##jcr:title##5598",
+          "jcr:created": "Fri Aug 05 2022 16:45:12 GMT+0530"
+        },
+        "temp2": {
+          "jcr:primaryType": "nt:folder",
+          "jcr:mixinTypes": [
+            "sling:Message"
+          ],
+          "jcr:createdBy": "translation-job-service",
+          "sling:message": "dummy 1",
+          "sling:key": "guideContainer##textinput##description##5648",
+          "jcr:created": "Fri Aug 05 2022 16:45:12 GMT+0530"
+        }
+      }
+    },
+    "metadata": {
+      "jcr:primaryType": "nt:unstructured",
+      "availableInMobileApp": false,
+      "author": "admin",
+      "allowedRenderFormat": "HTML",
+      "fd:version": "2.0",
+      "title": "Adaptive Form V2 (IT)",
+      "formmodel": "none",
+      "dorType": "none",
+      "hasCustomThumbnail": false
+    }
+  }
+}
