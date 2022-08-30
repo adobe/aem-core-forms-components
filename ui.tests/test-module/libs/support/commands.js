@@ -211,7 +211,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
 
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
-    cy.get(actionSelector).click();
+    cy.get(actionSelector).should('be.visible').click({force: true});
 });
 
 // cypress command to initialize event handler on channel

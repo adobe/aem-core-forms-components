@@ -9,6 +9,7 @@
         <guideContainer
                 fd:version="2.0"
                 jcr:primaryType="nt:unstructured"
+                fieldType="form"
                 sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
     </jcr:content>
