@@ -129,10 +129,6 @@ describe('Link - Authoring', function () {
                 .should("have.attr", "href", "#")
                 .should("have.attr", "target", "_self");
         });
-
-        after(function() {
-            // clean up the operations performed in the test
-            cy.enableOrDisableTutorials(true);
-        });
+        
     });
 });
