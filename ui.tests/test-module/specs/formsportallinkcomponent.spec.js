@@ -129,6 +129,6 @@ describe('Link - Authoring', function () {
                 .should("have.attr", "href", "#")
                 .should("have.attr", "target", "_self");
         });
-        
+
     });
 });
