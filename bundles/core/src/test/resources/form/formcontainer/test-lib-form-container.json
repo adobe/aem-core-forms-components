@@ -1,0 +1,11 @@
+{
+  "jcr:primaryType": "cq:Component",
+  "jcr:createdBy": "admin",
+  "jcr:title": "Adaptive Form Container (v2)",
+  "cq:isContainer": true,
+  "jcr:created": "Mon Aug 01 2022 13:07:05 GMT+0530",
+  "sling:resourceSuperType": "core/fd/components/form/container/v1/container",
+  "jcr:description": "Container allowing to construct adaptive forms",
+  "cq:icon": "form",
+  "componentGroup": "Core Adaptive Form"
+}

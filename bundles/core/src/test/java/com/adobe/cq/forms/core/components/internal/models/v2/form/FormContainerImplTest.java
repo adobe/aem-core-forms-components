@@ -15,21 +15,31 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.i18n.ResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.MockResourceBundle;
+import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.aemds.guide.service.GuideLocalizationService;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -42,14 +52,21 @@ import static org.junit.Assert.assertNotNull;
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
     private static final String BASE = "/form/formcontainer";
-    private static final String CONTENT_ROOT = "/content";
+    private static final String CONTENT_PAGE_ROOT = "/content/forms/af/demo";
+    private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
+    private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
+    private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
     void setUp() {
-        context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+        context.load().json(BASE + "/test-localization-content.json", CONTENT_DAM_ROOT); // required for localization
+        context.load().json(BASE + "/test-page-content.json", CONTENT_PAGE_ROOT); // required for localization since we traverse the
+                                                                                  // resource up to find page
+        context.load().json(BASE + "/test-lib-form-container.json", LIB_FORM_CONTAINER); // required since v2 container resource type should
+                                                                                         // be v1 for localization to work
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -103,8 +120,39 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetLocalizedValue() throws Exception {
+        FormContainer formContainer = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
+        TextInput textInput = (TextInput) formContainer.getItems().stream()
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(null);
+        assertEquals("dummy 1", textInput.getDescription());
+    }
+
+    @Test
     void testJSONExport() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+    }
+
+    private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
+        context.currentResource(resourcePath);
+        // added this since AF API expects this to be present
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
+            Mockito.mock(GuideLocalizationService.class));
+        Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+            "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+        resourceBundle.putAll(new HashMap<String, String>() {
+            {
+                put("guideContainer##textinput##description##5648", "dummy 1");
+            }
+        });
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
+        request.setParameterMap(paramMap);
+        return request.adaptTo(FormContainer.class);
     }
 }

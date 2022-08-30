@@ -42,6 +42,8 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -49,11 +51,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
+    private I18n i18n = null;
+    private static final String PN_DESCRIPTION = "description";
+    private static final String PN_TOOLTIP = "tooltip";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltip")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_TOOLTIP)
     @Nullable
     protected String tooltip;
 
@@ -136,6 +142,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         type = Type.fromString(typeJcr);
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
+        if (request != null) {
+            i18n = GuideUtils.getI18n(request, resource);
+        }
     }
 
     /**
@@ -146,7 +155,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      */
     @Override
     public Label getLabel() {
-        return new LabelImpl(resource, getName());
+        return new LabelImpl(resource, getName(), i18n);
     }
 
     /**
@@ -169,7 +178,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     public @Nullable String getTooltip() {
-        return tooltip;
+        return translate(PN_TOOLTIP, tooltip);
     }
 
     @Override
@@ -248,7 +257,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     public String getDescription() {
-        return description;
+        return translate(PN_DESCRIPTION, description);
     }
 
     /**
@@ -385,85 +394,85 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         @Override
         @Nullable
         public String getTypeConstraintMessage() {
-            return properties.get(PN_TYPE_MESSAGE, String.class);
+            return translate(PN_TYPE_MESSAGE, properties.get(PN_TYPE_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getRequiredConstraintMessage() {
-            return properties.get(PN_REQUIRED_MESSAGE, String.class);
+            return translate(PN_REQUIRED_MESSAGE, properties.get(PN_REQUIRED_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinimumConstraintMessage() {
-            return properties.get(PN_MINIMUM_MESSAGE, String.class);
+            return translate(PN_MINIMUM_MESSAGE, properties.get(PN_MINIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaximumConstraintMessage() {
-            return properties.get(PN_MAXIMUM_MESSAGE, String.class);
+            return translate(PN_MAXIMUM_MESSAGE, properties.get(PN_MAXIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinLengthConstraintMessage() {
-            return properties.get(PN_MINLENGTH_MESSAGE, String.class);
+            return translate(PN_MINLENGTH_MESSAGE, properties.get(PN_MINLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxLengthConstraintMessage() {
-            return properties.get(PN_MAXLENGTH_MESSAGE, String.class);
+            return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getStepConstraintMessage() {
-            return properties.get(PN_STEP_MESSAGE, String.class);
+            return translate(PN_STEP_MESSAGE, properties.get(PN_STEP_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getFormatConstraintMessage() {
-            return properties.get(PN_FORMAT_MESSAGE, String.class);
+            return translate(PN_FORMAT_MESSAGE, properties.get(PN_FORMAT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getPatternConstraintMessage() {
-            return properties.get(PN_PATTERN_MESSAGE, String.class);
+            return translate(PN_PATTERN_MESSAGE, properties.get(PN_PATTERN_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinItemsConstraintMessage() {
-            return properties.get(PN_MINITEMS_MESSAGE, String.class);
+            return translate(PN_MINITEMS_MESSAGE, properties.get(PN_MINITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxItemsConstraintMessage() {
-            return properties.get(PN_MAXITEMS_MESSAGE, String.class);
+            return translate(PN_MAXITEMS_MESSAGE, properties.get(PN_MAXITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getUniqueItemsConstraintMessage() {
-            return properties.get(PN_UNIQUEITEMS_MESSAGE, String.class);
+            return translate(PN_UNIQUEITEMS_MESSAGE, properties.get(PN_UNIQUEITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getEnforceEnumConstraintMessage() {
-            return properties.get(PN_ENFORCEENUM_MESSAGE, String.class);
+            return translate(PN_ENFORCEENUM_MESSAGE, properties.get(PN_ENFORCEENUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getValidationExpressionConstraintMessage() {
-            return properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class);
+            return translate(PN_VALIDATIONEXPRESSION_MESSAGE, properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class));
         }
     }
 
@@ -500,7 +509,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     /**
      * checks the rule entry and if the vlaue is not of type string sets it to empty string
-     * 
+     *
      * @param entry
      * @return
      */
@@ -548,7 +557,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      * * removing events where the handler is not of type string or string[]
      * * converts all the event handlers into string[] for easy consumption
      * * updates custom event key (as we cannot save custom:eventName in JCR)
-     * 
+     *
      * @param entry the event entry to manipulate
      * @return the updated event entry
      */
@@ -593,5 +602,21 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             return events;
         }
         return Collections.emptyMap();
+    }
+
+    @Nullable
+    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
+        // if author mode return the property value
+        boolean editMode = true;
+        if (request != null) {
+            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        }
+        if (editMode) {
+            return propertyValue;
+        }
+        if (StringUtils.isBlank(propertyValue)) {
+            return null;
+        }
+        return ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
     }
 }

@@ -60,6 +60,7 @@ public interface Base extends Component {
         CHECKBOX("checkbox"),
         BUTTON("button"),
         PANEL("panel"),
+        FORM("form"),
         CHECKBOX_GROUP("checkbox-group");
 
         private String value;
