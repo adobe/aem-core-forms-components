@@ -27,10 +27,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -60,7 +57,7 @@ public class TextInputImplTest {
 
     @Test
     void testExportedType() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(FormConstants.RT_FD_FORM_TEXT_V1, textInput.getExportedType());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getExportedType()).thenCallRealMethod();
@@ -69,13 +66,13 @@ public class TextInputImplTest {
 
     @Test
     void testFieldType() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
     }
 
     @Test
     void testGetLabel() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("def", textInput.getLabel().getValue());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getLabel()).thenCallRealMethod();
@@ -92,7 +89,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetName() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("abc", textInput.getName());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getName()).thenCallRealMethod();
@@ -101,7 +98,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetDataRef() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("a.b", textInput.getDataRef());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDataRef()).thenCallRealMethod();
@@ -110,7 +107,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetDescription() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("dummy", textInput.getDescription());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDescription()).thenCallRealMethod();
@@ -119,7 +116,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetDefault() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertArrayEquals(new String[] { "abc" }, textInput.getDefault());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDefault()).thenCallRealMethod();
@@ -128,13 +125,13 @@ public class TextInputImplTest {
 
     @Test
     void testGetNumberDefault() {
-        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT, TextInput.class, context);
         assertArrayEquals(new Long[] { 150L }, numberTextInput.getDefault());
     }
 
     @Test
     void testGetScreenReaderText() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("'Custom screen reader text'", textInput.getScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getScreenReaderText()).thenCallRealMethod();
@@ -143,7 +140,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetHtmlScreenReaderText() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("Custom screen reader text", textInput.getHtmlScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getHtmlScreenReaderText()).thenCallRealMethod();
@@ -152,7 +149,7 @@ public class TextInputImplTest {
 
     @Test
     void testIsVisible() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(false, textInput.isVisible());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isVisible()).thenCallRealMethod();
@@ -161,7 +158,7 @@ public class TextInputImplTest {
 
     @Test
     void testIsEnabled() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(true, textInput.isEnabled());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isEnabled()).thenCallRealMethod();
@@ -170,7 +167,7 @@ public class TextInputImplTest {
 
     @Test
     void testIsReadOnly() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(false, textInput.isReadOnly());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isReadOnly()).thenCallRealMethod();
@@ -179,7 +176,7 @@ public class TextInputImplTest {
 
     @Test
     void testIsMultiLine() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(false, textInput.isMultiLine());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isMultiLine()).thenCallRealMethod();
@@ -188,7 +185,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetPlaceHolder() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(null, textInput.getPlaceHolder());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getPlaceHolder()).thenCallRealMethod();
@@ -197,7 +194,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetDisplayFormat() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(null, textInput.getDisplayFormat());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDisplayFormat()).thenCallRealMethod();
@@ -206,7 +203,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetEditFormat() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(null, textInput.getEditFormat());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getEditFormat()).thenCallRealMethod();
@@ -215,7 +212,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetDataFormat() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(null, textInput.getDataFormat());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDataFormat()).thenCallRealMethod();
@@ -224,7 +221,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetType() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals(BaseConstraint.Type.STRING, textInput.getType());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getType()).thenCallRealMethod();
@@ -233,25 +230,25 @@ public class TextInputImplTest {
 
     @Test
     void testGetNumberType() {
-        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT, TextInput.class, context);
         assertEquals(BaseConstraint.Type.NUMBER, numberTextInput.getType());
     }
 
     @Test
     void testGetMaximum() {
-        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT, TextInput.class, context);
         assertEquals(100, numberTextInput.getMaximum().intValue());
     }
 
     @Test
     void testGetMinimum() {
-        TextInput numberTextInput = getTextInputUnderTest(PATH_NUMBER_TEXTINPUT);
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT, TextInput.class, context);
         assertEquals(10, numberTextInput.getMinimum().intValue());
     }
 
     @Test
     void testGetTooltip() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("test-short-description", textInput.getTooltip());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getTooltip()).thenCallRealMethod();
@@ -260,7 +257,7 @@ public class TextInputImplTest {
 
     @Test
     void testGetConstraintMessages() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
         assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
         TextInput textInputMock = Mockito.mock(TextInput.class);
@@ -270,19 +267,19 @@ public class TextInputImplTest {
 
     @Test
     void testJSONExport() throws Exception {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_1));
     }
 
     @Test
     void testMultiLineJSONExport() throws Exception {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_2);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_2, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_2));
     }
 
     @Test
     void testGetProperties() throws Exception {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         Map<String, Object> properties = textInput.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "af:layout"
@@ -313,7 +310,8 @@ public class TextInputImplTest {
 
     @Test
     void testGetAutoComplete() {
-        TextInput textInput = getTextInputUnderTest(PATH_TEXTINPUT_1);
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
+        ;
         assertEquals(null, textInput.getAutoComplete());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getAutoComplete()).thenCallRealMethod();
@@ -328,14 +326,8 @@ public class TextInputImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setResource(resource);
         Mockito.doReturn("mystyle").when(componentStyleInfoMock).getAppliedCssClasses();
-        TextInput textInput = request.adaptTo(TextInput.class);
+        TextInput textInput = context.currentResource().adaptTo(TextInput.class);
         String appliedCssClasses = textInput.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
-    }
-
-    private TextInput getTextInputUnderTest(String resourcePath) {
-        context.currentResource(resourcePath);
-        MockSlingHttpServletRequest request = context.request();
-        return request.adaptTo(TextInput.class);
     }
 }

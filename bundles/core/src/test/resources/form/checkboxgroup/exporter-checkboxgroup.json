@@ -30,5 +30,10 @@
   "type": "number[]",
   "minItems" : 1,
   "maxItems" : 2,
-  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+  "events" : {
+    "change" : ["e1", "e2"],
+    "click": ["e1"],
+    "custom:event" : ["e2"]
+  }
 }

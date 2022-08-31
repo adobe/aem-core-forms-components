@@ -89,11 +89,6 @@ describe('Page/Form Authoring', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 });
-
-                after(function () {
-                    // clean up the operations performed in the test
-                    cy.enableOrDisableTutorials(true);
-                });
         });
 
 });

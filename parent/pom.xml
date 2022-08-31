@@ -65,6 +65,7 @@
     <!-- ====================================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.basedir>${project.basedir}</main.basedir>
 
         <aem.host>localhost</aem.host>
         <aem.port>4502</aem.port>
@@ -1116,10 +1117,14 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- Temporarily added, system path needs to be removed later -->
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.04.12.02-220401</version>
+                <!-- <version>2022.04.12.02-220401</version> -->
+                <version>2022.08.29</version>
+                <scope>system</scope>
+                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath>
             </dependency>
 
             <dependency>

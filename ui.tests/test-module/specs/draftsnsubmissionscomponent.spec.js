@@ -78,10 +78,5 @@ describe('Drafts And Submissions - Authoring', function () {
                 .click()
                 .should("not.exist");
         });
-
-        after(function() {
-            // clean up the operations performed in the test
-            cy.enableOrDisableTutorials(true);
-        });
     });
 });

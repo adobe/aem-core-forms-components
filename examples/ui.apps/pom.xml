@@ -52,6 +52,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vault.package.version>${project.version}</vault.package.version>
+        <main.basedir>${project.basedir}/../../parent</main.basedir>
     </properties>
 
     <!-- ====================================================================== -->

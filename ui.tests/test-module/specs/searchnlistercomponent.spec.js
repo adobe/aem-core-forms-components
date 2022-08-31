@@ -118,10 +118,5 @@ describe('Search And Lister - Authoring', function () {
                 .click()
                 .should("not.exist");
         });
-
-        after(function() {
-            // clean up the operations performed in the test
-            cy.enableOrDisableTutorials(true);
-        });
     });
 });

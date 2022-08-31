@@ -20,8 +20,13 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import com.adobe.aemds.guide.utils.GuideUtils;
+import com.day.cq.i18n.I18n;
 
 /**
  * Utility helper functions for components.
@@ -43,6 +48,42 @@ public class ComponentUtils {
     @NotNull
     public static String getEncodedPath(@NotNull String path) {
         return new String(Base64.getEncoder().encode(path.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Translates the given property as per the {@link I18n} object passed
+     * 
+     * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
+     *            index)
+     * @param propertyName name of the property
+     * @param resource reference to the {@link Resource}
+     * @param i18n reference to the {@link I18n} object
+     * @return translated value
+     */
+    @NotNull
+    public static String translate(@NotNull String propertyValue, @NotNull String propertyName, @NotNull Resource resource,
+        @Nullable I18n i18n) {
+        return translate(propertyValue, propertyName, resource.getValueMap(), i18n);
+    }
+
+    /**
+     * Translates the given property as per the {@link I18n} object passed
+     * 
+     * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
+     *            index)
+     * @param propertyName name of the property
+     * @param valueMap reference to the {@link ValueMap}
+     * @param i18n reference to the {@link I18n} object
+     * @return translated value
+     */
+    @NotNull
+    public static String translate(@NotNull String propertyValue, @NotNull String propertyName, @NotNull ValueMap valueMap,
+        @Nullable I18n i18n) {
+        String translatedValue = propertyValue;
+        if (i18n != null) {
+            translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
+        }
+        return translatedValue;
     }
 
     /**

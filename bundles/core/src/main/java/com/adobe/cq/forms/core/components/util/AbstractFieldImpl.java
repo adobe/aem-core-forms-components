@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.internal.models.v1.form;
+package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +36,7 @@ import com.adobe.cq.forms.core.components.models.form.Field;
 public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Field {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
+    private static final String PN_PLACEHOLDER = "placeholder";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
@@ -45,7 +46,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Object[] defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "placeholder")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_PLACEHOLDER)
     @Nullable
     protected String placeholder;
 
@@ -133,7 +134,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     @Nullable
     public String getPlaceHolder() {
-        return placeholder;
+        return translate(PN_PLACEHOLDER, placeholder);
     }
 
     @Override

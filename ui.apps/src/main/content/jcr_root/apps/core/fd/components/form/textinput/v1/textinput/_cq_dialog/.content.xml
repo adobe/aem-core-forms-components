@@ -252,7 +252,7 @@
                     </basic>
                     <patterns
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="patterns"
+                            jcr:title="Patterns"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <displayPatternGroup

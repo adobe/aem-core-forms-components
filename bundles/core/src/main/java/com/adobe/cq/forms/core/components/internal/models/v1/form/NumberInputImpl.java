@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -29,9 +30,10 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { NumberInput.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_NUMBER_INPUT_V1 })
@@ -45,11 +47,6 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fracDigits")
     @Nullable
     protected Integer fracDigits;
-
-    @Override
-    protected FieldType getDefaultFieldType() {
-        return FieldType.NUMBER_INPUT;
-    }
 
     @Override
     public Long getMinimum() {

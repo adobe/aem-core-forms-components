@@ -9,6 +9,7 @@
     "visible" : false,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
+    "fieldType": "date-input",
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
@@ -16,6 +17,13 @@
     "exclusiveMinimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
     "exclusiveMaximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
     "maximumDate": "Wed Feb 09 2022 05:30:00 GMT+0530",
-    "default": "Mon Feb 07 2022 05:30:00 GMT+0530"
+    "default": "Mon Feb 07 2022 05:30:00 GMT+0530",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured",
+      "visible" : "true()",
+      "value" : "false()",
+      "label" : "{value : 'some label'}",
+      "enabled" : "true()"
+    }
   }
 }

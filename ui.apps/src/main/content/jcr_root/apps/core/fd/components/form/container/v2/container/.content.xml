@@ -5,5 +5,5 @@
     jcr:description="Container allowing to construct adaptive forms"
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Container (v2)"
-    sling:resourceSuperType="wcm/foundation/components/responsivegrid"
+    sling:resourceSuperType="core/fd/components/form/container/v1/container"
     componentGroup=".core-wcm"/>

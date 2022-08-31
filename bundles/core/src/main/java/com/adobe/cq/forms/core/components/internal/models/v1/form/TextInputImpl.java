@@ -20,31 +20,28 @@ import java.util.Date;
 import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { TextInput.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_TEXT_V1 })
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
-
-    @ScriptVariable
-    private ValueMap properties;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
@@ -64,11 +61,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     }
 
     @Override
-    public FieldType getDefaultFieldType() {
+    public String getFieldType() {
         if (isMultiLine()) {
-            return FieldType.MULTILINE_INPUT;
+            return FieldType.MULTILINE_INPUT.getValue();
         } else {
-            return FieldType.TEXT_INPUT;
+            return super.getFieldType();
         }
     }
 

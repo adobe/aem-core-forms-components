@@ -60,6 +60,7 @@ public interface Base extends Component {
         CHECKBOX("checkbox"),
         BUTTON("button"),
         PANEL("panel"),
+        FORM("form"),
         CHECKBOX_GROUP("checkbox-group");
 
         private String value;
@@ -367,5 +368,29 @@ public interface Base extends Component {
     @JsonIgnore
     default boolean isTooltipVisible() {
         return false;
+    }
+
+    /**
+     * Returns the rules defined for the component after filtering out invalid rules
+     * If no rules are defined, returns an empty map
+     * 
+     * @return map containing the rules and their expressions
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String> getRules() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Returns the events defined for the component after filtering out invalid rules
+     * 
+     * @return map containing the events and their expressions
+     *         If no rules are defined, returns an empty map
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String[]> getEvents() {
+        return Collections.emptyMap();
     }
 }
