@@ -33,7 +33,7 @@
             label: `.${TextInput.bemBlock}__label`,
             description: `.${TextInput.bemBlock}__longdescription`,
             qm: `.${TextInput.bemBlock}__questionmark`,
-            errorDiv: `.${TextInput.bemBlock}__errorMessage`
+            errorDiv: `.${TextInput.bemBlock}__errormessage`
         };
 
         constructor(params) {
@@ -111,7 +111,11 @@
         }
 
         _updateValid(valid, state) {
-            this._toggle(valid, this._dataAttribute('valid'))
+            this._toggle(valid, this._dataAttribute('invalid'), !valid)
+            if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
+                const errMessage = valid === true ? '' : 'There is an error in the field';
+                this.errorDiv.innerHTML = errMessage
+            }
         }
 
         _updateErrorMessage(errorMessage, state) {
