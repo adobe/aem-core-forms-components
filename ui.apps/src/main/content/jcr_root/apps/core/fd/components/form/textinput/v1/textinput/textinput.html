@@ -49,7 +49,7 @@
            data-cmp-hook-adaptiveform-textinput="input"
            placeholder="${text.placeHolder}"
            data-cmp-required-message="${text.constraintMessages.required}"/>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.shortDescriptionVisible, shortDescription=text.shortDescription, bemBlock='cmp-adaptiveform-textinput'}">
+    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}">
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}"></div>
 </div>
