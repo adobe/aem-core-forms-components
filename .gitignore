@@ -8,7 +8,7 @@
 .DS_Store
 
 # auto-generated clientlib
-ui.apps/src/main/content/jcr_root/apps/core/fd/clientlibs/**
+ui.apps/src/main/content/jcr_root/apps/core/fd/clientlibs/core-forms-components-runtime-base/**
 
 # Ignore Maven stuff
 target/
