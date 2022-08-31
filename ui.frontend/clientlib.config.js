@@ -47,7 +47,8 @@ module.exports = {
       name: 'core-forms-components-runtime',
       categories: ['core.forms.components.runtime'],
       assets: {
-        js: ['dist/main.js']
+        js: ['dist/main.js'],
+        resources: ['dist/main.js.map']
       }
     }
   ]

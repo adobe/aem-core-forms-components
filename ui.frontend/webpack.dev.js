@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
@@ -21,6 +22,10 @@ const path = require('path');
 module.exports = () => {
     return merge(common, {
         mode: 'development',
-        devtool: 'source-map'
+        devtool: false,
+        plugins: [new webpack.SourceMapDevToolPlugin({
+            append: '\n//# sourceMappingURL=/libs/core/fd/clientlibs/core-forms-components-runtime/resources/[name].js.map',
+            filename: '[name].js.map'
+        })],
     });
 };

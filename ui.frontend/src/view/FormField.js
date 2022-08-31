@@ -24,7 +24,6 @@ export default class FormField {
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
-        this.bindEventListeners();
     }
 
     setId(id) {
@@ -39,12 +38,6 @@ export default class FormField {
         return this.id;
     }
 
-    bindEventListeners() {
-        this.element.addEventListener('change', (event) => {
-            this._model.value = event.target.value;
-        });
-    }
-
     setModel(model) {
         if (typeof this._model === "undefined" || this._model === null) {
             this._model = model;
@@ -53,31 +46,26 @@ export default class FormField {
         }
     }
 
+    /**
+     * toggles the html element based on the property. If the property is false, then adds the data-attribute and
+     * css class
+     * @param property
+     * @param dataAttribute
+     * @param value
+     */
+    toggle(property, dataAttribute, value) {
+        if (property === false) {
+            this.element.setAttribute(dataAttribute, value);
+        } else {
+            this.element.removeAttribute(dataAttribute);
+        }
+    }
+
     getModel() {
         return this._model;
     }
 
-    getClass() {
-       throw new Error ("Not Implemented");
-    }
-
-    getTagName() {
-        throw new Error ("Not Implemented");
-    }
-
-    setValue(value) {
-       throw new Error("Not implemented");
-    }
-
     subscribe() {
-        this._model.subscribe((action) => {
-            let state = action.target.getState();
-            if (!state.valid) {
-                alert(state.errorMessage);
-                this.setValue(null);
-            } else {
-                this.setValue(state.value);
-            }
-        });
+        throw "the field does not subscribe to the model"
     }
 }
