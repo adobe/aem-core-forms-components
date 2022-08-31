@@ -15,8 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
@@ -128,6 +135,16 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      * Holds the constraint messages
      */
     private Map<ConstraintType, String> constraintMessages = null;
+
+    /**
+     * Predicate to check if a map entry is non empty
+     * return true if and only if
+     * 1) the value is not of type string and non empty or
+     * 2) the value is of type string[] and has more than 1 elements
+     */
+    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
+        .getValue()).length() > 0)
+        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
 
     @PostConstruct
     protected void initBaseModel() {
@@ -498,6 +515,82 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
         }
         return customProperties;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String> getRules() {
+        String[] VALID_RULES = new String[] { "visible", "value", "enabled", "label", "required" };
+
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
+            .getKey()));
+
+        Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
+
+        Resource ruleNode = resource.getChild("fd:rules");
+        if (ruleNode != null) {
+            ValueMap ruleNodeProps = ruleNode.getValueMap();
+            Map<String, String> rules = ruleNodeProps.entrySet()
+                .stream()
+                .filter(isRuleValid)
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return rules;
+        }
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Sanitizes the event entry by
+     * * removing invalid event names,
+     * * removing events where the handler is not of type string or string[]
+     * * converts all the event handlers into string[] for easy consumption
+     * * updates custom event key (as we cannot save custom:eventName in JCR)
+     *
+     * @param entry the event entry to manipulate
+     * @return the updated event entry
+     */
+    private Stream<Entry<String, String[]>> sanitizeEvent(Entry<String, Object> entry) {
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+
+        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
+            Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
+        Predicate<Map.Entry<String, Object>> isEventValid = isEntryNonEmpty.and(isEventNameValid);
+
+        Stream<Entry<String, String[]>> updatedEntry;
+        Object eventValue = entry.getValue();
+        String[] arrayEventValue;
+        String key = entry.getKey();
+        if (key.startsWith("custom_")) {
+            key = "custom:" + key.substring("custom_".length());
+        }
+        if (!isEventValid.test(entry)) {
+            updatedEntry = Stream.empty();
+        } else {
+            if (eventValue instanceof String) {
+                arrayEventValue = new String[1];
+                arrayEventValue[0] = (String) eventValue;
+            } else {
+                arrayEventValue = (String[]) eventValue;
+            }
+            updatedEntry = Stream.of(new AbstractMap.SimpleEntry<>(key, arrayEventValue));
+        }
+        return updatedEntry;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String[]> getEvents() {
+        Resource eventNode = resource.getChild("fd:events");
+        if (eventNode != null) {
+            ValueMap eventNodeProps = eventNode.getValueMap();
+            Map<String, String[]> events = eventNodeProps.entrySet()
+                .stream()
+                .flatMap(this::sanitizeEvent)
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return events;
+        }
+        return Collections.emptyMap();
     }
 
     @Nullable

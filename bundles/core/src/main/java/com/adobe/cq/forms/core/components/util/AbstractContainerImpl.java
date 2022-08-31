@@ -69,14 +69,16 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         List<T> models = new ArrayList<>();
 
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            T model = null;
-            if (request != null) {
-                model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
-            } else {
-                model = child.adaptTo(modelClass);
-            }
-            if (model != null) {
-                models.add(model);
+            if (!child.getName().startsWith("fd:")) {
+                T model = null;
+                if (request != null) {
+                    model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+                } else {
+                    model = child.adaptTo(modelClass);
+                }
+                if (model != null) {
+                    models.add(model);
+                }
             }
         }
         return models;

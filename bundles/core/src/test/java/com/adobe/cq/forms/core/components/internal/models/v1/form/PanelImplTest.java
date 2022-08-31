@@ -46,7 +46,7 @@ public class PanelImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PANEL = CONTENT_ROOT + "/panel";
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panel";
-
+    private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panel";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -109,5 +109,11 @@ public class PanelImplTest {
     void testArrayPanelJSONExport() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_ARRAY_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_ARRAY_PANEL));
+    }
+
+    @Test
+    void testRulesPanelJSONExport() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_RULES_PANEL, Panel.class, context);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_RULES_PANEL));
     }
 }
