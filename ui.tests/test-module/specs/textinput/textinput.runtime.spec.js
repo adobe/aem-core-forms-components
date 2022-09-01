@@ -1,6 +1,6 @@
 describe("Form with Text Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/blank.html"
+    const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-textinput'
     const IS = "adaptiveFormTextInput"
     const selectors = {
