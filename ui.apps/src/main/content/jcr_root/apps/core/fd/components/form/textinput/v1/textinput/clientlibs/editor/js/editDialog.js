@@ -67,19 +67,6 @@
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
-
-    function handleAutoComplete(dialog) {
-        var textInputAutoComplete = dialog.find(TEXTINPUT_AUTOCOMPLETE)[0];
-        var textInputAutofill = dialog.find(TEXTINPUT_AUTOFILL_FIELD_KEYWORD);
-        var isChecked = function() {return textInputAutoComplete.checked};
-        var hideAndShowElements = function() {
-            Utils.checkAndDisplay(textInputAutofill)(isChecked);
-        };
-        hideAndShowElements();
-        textInputAutoComplete.on("change", function() {
-            hideAndShowElements();
-        });
-    }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAutoComplete, handleRichText);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
 
 })(jQuery);
