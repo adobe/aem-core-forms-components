@@ -16,38 +16,49 @@
 (function() {
 
     "use strict";
-    class DatePicker extends FormView.FormField {
+    class DatePicker extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
+        static bemBlock = 'cmp-adaptiveform-datepicker'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            dateElement: "input[type=date]"
+            widget: `.${DatePicker.bemBlock}__widget`,
+            label: `.${DatePicker.bemBlock}__label`,
+            description: `.${DatePicker.bemBlock}__longdescription`,
+            qm: `.${DatePicker.bemBlock}__questionmark`,
+            errorDiv: `.${DatePicker.bemBlock}__errormessage`
         };
 
         constructor(params) {
             super(params);
         }
 
-        getClass() {
-            return DatePicker.IS;
+        getWidget() {
+            return this.element.querySelector(DatePicker.selectors.widget);
         }
 
-        setValue(value) {
-            let dateInput = this.element.querySelector(DatePicker.selectors.dateElement);
-            dateInput.value = value;
+        getDescription() {
+            return this.element.querySelector(DatePicker.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(DatePicker.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(DatePicker.selectors.errorDiv);
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            this.widget.addEventListener('blur', (e) => {
+                this._model.value = e.target.value;
+            })
         }
     }
 
-    function onFormContainerInitialised(e) {
-        console.log("FormContainerInitialised Received", e.detail);
-        let formContainer =  e.detail;
-        let fieldElements = document.querySelectorAll(DatePicker.selectors.self);
-        for (let i = 0; i < fieldElements.length; i++) {
-            let datePickerField = new DatePicker({element: fieldElements[i]});
-            formContainer.addField(datePickerField);
-        }
-        FormView.Utils.registerMutationObserver(DatePicker);
-    }
-    document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new DatePicker({element})
+    }, DatePicker.selectors.self);
 })();
