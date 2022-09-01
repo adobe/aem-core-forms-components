@@ -35,14 +35,6 @@
                             jcr:title="Basic"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <html5Type
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              fieldDescription="Enable to use HTML5 input type in the field."
-                              fieldLabel="Use HTML5 Input Type"
-                              name="./html5Type"
-                              text="Use HTML5 Input Type"
-                              value="text"/>
                             <value
                                     wrapperClass="cmp-adaptiveform-textinput__value"
                                     jcr:primaryType="nt:unstructured"
@@ -231,6 +223,12 @@
                                       value="cc-type"/>
                                 </items>
                             </autocomplete>
+                        </items>
+                    </basic>
+                    <validation
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
                             <maxChars
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__maxchars"
@@ -239,6 +237,13 @@
                                     fieldLabel="Maximum Number of Characters"
                                     min="0"
                                     name="./maxLength"/>
+                            <maxCharsMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when more than maximum characters are entered"
+                                    granite:class="cmp-adaptiveform-base__maxcharsmessage"
+                                    fieldLabel="Max Chars Error Message"
+                                    name="./maxLengthMessage"/>
                             <minLength
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__minlength"
@@ -247,48 +252,19 @@
                                     fieldLabel="Minimum Number of Characters"
                                     min="0"
                                     name="./minLength"/>
-                        </items>
-                    </basic>
-                    <patterns
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                            <displayPatternGroup
+                            <minCharsMessage
                                     jcr:primaryType="nt:unstructured"
-                                    jcr:title="Display Pattern"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                    title="Display Pattern">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <displayPatternType
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            fieldLabel="Type"
-                                            name="./displayPatternType">
-                                    </displayPatternType>
-                                    <displayPictureClause
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                            fieldLabel="Pattern"
-                                            name="./displayFormat">
-                                    </displayPictureClause>
-                                </items>
-                            </displayPatternGroup>
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when less than minimum characters are entered"
+                                    granite:class="cmp-adaptiveform-base__mincharsmessage"
+                                    fieldLabel="Min Chars Error Message"
+                                    name="./minLengthMessage"/>
                             <validationPatternGroup
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Validation Pattern"
                                     sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
                                     title="Validation Pattern">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <sameAsDisplayPattern
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                            autoWidth="true"
-                                            fieldLabel="Same as display pattern"
-                                            name="./displayIsSameAsValidate"
-                                            text="Same as display pattern"
-                                            value="true">
-                                    </sameAsDisplayPattern>
                                     <validationPatternType
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
@@ -310,6 +286,12 @@
                                 </items>
                             </validationPatternGroup>
                         </items>
+                    </validation>
+                    <patterns
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Patterns"
+                            sling:hideResource="{Boolean}true"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
                     </patterns>
                     <help
                             jcr:primaryType="nt:unstructured"
