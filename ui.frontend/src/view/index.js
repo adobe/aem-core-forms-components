@@ -13,19 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
-const path = require('path');
-
-module.exports = () => {
-    return merge(common, {
-        mode: 'development',
-        devtool: false,
-        plugins: [new webpack.SourceMapDevToolPlugin({
-            append: '\n//# sourceMappingURL=/libs/core/fd/clientlibs/core-forms-components-runtime/resources/[name].js.map',
-            filename: '[name].js.map'
-        })],
-    });
-};
+import FormContainer from "./FormContainer";
+import FormField from "./FormField";
+import FormFieldBase from "./FormFieldBase";
+export {FormField, FormContainer, FormFieldBase}

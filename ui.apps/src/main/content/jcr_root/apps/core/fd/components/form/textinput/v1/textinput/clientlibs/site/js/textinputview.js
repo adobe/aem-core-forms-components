@@ -16,38 +16,57 @@
 (function() {
 
     "use strict";
-    class TextInput extends FormView.FormField {
+    class TextInput extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
+        /**
+         * Each FormField has a data attribute class that is prefixed along with the global namespace to
+         * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
+         * data-{NS}-{IS}-x=""
+         * @type {string}
+         */
         static IS = "adaptiveFormTextInput";
+        static bemBlock = 'cmp-adaptiveform-textinput'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            textElement: ".cmp-adaptiveform-textinput__widget"
+            widget: `.${TextInput.bemBlock}__widget`,
+            label: `.${TextInput.bemBlock}__label`,
+            description: `.${TextInput.bemBlock}__longdescription`,
+            qm: `.${TextInput.bemBlock}__questionmark`,
+            errorDiv: `.${TextInput.bemBlock}__errormessage`
         };
 
         constructor(params) {
             super(params);
+            this.qm = this.element.querySelector(TextInput.selectors.qm)
         }
 
-        getClass() {
-            return TextInput.IS;
+        getWidget() {
+            return this.element.querySelector(TextInput.selectors.widget);
         }
 
-        setValue(value) {
-            let textInput = this.element.querySelector(TextInput.selectors.textElement);
-            textInput.value = value;
+        getDescription() {
+            return this.element.querySelector(TextInput.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(TextInput.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(TextInput.selectors.errorDiv);
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            this.widget.addEventListener('blur', (e) => {
+                this._model.value = e.target.value;
+            })
         }
     }
 
-    function onFormContainerInitialised(e) {
-        console.log("FormContainerInitialised Received", e.detail);
-        let formContainer =  e.detail;
-        let fieldElements = document.querySelectorAll(TextInput.selectors.self);
-        for (let i = 0; i < fieldElements.length; i++) {
-            let textInputField = new TextInput({element: fieldElements[i]});
-            formContainer.addField(textInputField);
-        }
-        FormView.Utils.registerMutationObserver(TextInput);
-    }
-    document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new TextInput({element})
+    }, TextInput.selectors.self);
+
 })();

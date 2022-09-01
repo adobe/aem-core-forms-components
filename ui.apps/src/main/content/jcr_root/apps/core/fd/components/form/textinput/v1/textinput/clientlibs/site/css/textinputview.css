@@ -1,0 +1,37 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-textinput
+    ELEMENT cmp-adaptiveform-textinput__label
+    ELEMENT cmp-adaptiveform-textinput__widget
+    ELEMENT cmp-adaptiveform-textinput__questionmark
+    ELEMENT cmp-adaptiveform-textinput__shortdescription
+    ELEMENT cmp-adaptiveform-textinput__longdescription
+*/
+
+.cmp-adaptiveform-textinput {
+
+}
+
+.cmp-adaptiveform-textinput__widget {
+
+}
+
+.cmp-adaptiveform-textinput__label {
+
+}
+
+.cmp-adaptiveform-textinput__longdescription {
+
+}
+
+.cmp-adaptiveform-textinput__shortdescription {
+
+}
+
+.cmp-adaptiveform-textinput__questionmark {
+
+}
+
+[data-cmp-adaptiveform-textinput-hidden=true] {
+    display: none;
+}
