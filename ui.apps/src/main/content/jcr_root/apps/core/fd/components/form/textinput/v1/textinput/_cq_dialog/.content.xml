@@ -48,7 +48,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Default Value"
-                                    name="./_value"/>
+                                    name="./default"/>
                             <richTextValue
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__richtextvalue"
@@ -134,26 +134,25 @@
                                     value="true">
                             </allowRichText>
                             <autocomplete
-                              granite:class="cmp-adaptiveform-textinput__autocomplete"
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              name="./autocomplete"
-                              text="Enable Autofill"
-                              fieldDescription="Enable to autofill the field value from information saved in the autofill browser settings."
-                              value="true">
-                            </autocomplete>
-                            <autofillFieldKeyword
                               wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
                               fieldLabel="Autofill Attribute"
                               forceSelection="{Boolean}true"
-                              name="./autofillFieldKeyword"
-                              value="name">
+                              name="./autocomplete"
+                              value="off">
                                 <options
                                   jcr:primaryType="nt:unstructured"
                                   sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
                                 <items jcr:primaryType="nt:unstructured">
+                                    <off
+                                      jcr:primaryType="nt:unstructured"
+                                      text="off"
+                                      value="off"/>
+                                    <on
+                                      jcr:primaryType="nt:unstructured"
+                                      text="on"
+                                      value="on"/>
                                     <name
                                       jcr:primaryType="nt:unstructured"
                                       text="name"
@@ -231,7 +230,7 @@
                                       text="cc-type"
                                       value="cc-type"/>
                                 </items>
-                            </autofillFieldKeyword>
+                            </autocomplete>
                             <maxChars
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__maxchars"
@@ -239,7 +238,7 @@
                                     defaultValue=""
                                     fieldLabel="Maximum Number of Characters"
                                     min="0"
-                                    name="./maxChars"/>
+                                    name="./maxLength"/>
                             <minLength
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__minlength"
@@ -271,7 +270,7 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldLabel="Pattern"
-                                            name="./displayPictureClause">
+                                            name="./displayFormat">
                                     </displayPictureClause>
                                 </items>
                             </displayPatternGroup>
@@ -301,7 +300,7 @@
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldDescription="Regular Expression is permitted."
                                             fieldLabel="Pattern"
-                                            name="./validatePictureClause">
+                                            name="./pattern">
                                     </validatePictureClause>
                                     <validatePictureClauseMessage
                                             jcr:primaryType="nt:unstructured"

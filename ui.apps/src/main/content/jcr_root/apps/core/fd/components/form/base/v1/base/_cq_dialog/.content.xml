@@ -61,14 +61,14 @@
                                     granite:class="cmp-adaptiveform-base__placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Placeholder Text"
-                                    name="./placeholderText"/>
+                                    name="./placeholder"/>
                             <required
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     checked="{Boolean}false"
                                     fieldLabel="Required field"
                                     labelledBy="Mandatory"
-                                    name="./mandatory"
+                                    name="./required"
                                     granite:class="cmp-adaptiveform-base__required"
                                     text="Required field"
                                     value="true">
@@ -92,7 +92,7 @@
                                     emptyText="Data Model Bind Reference"
                                     fieldDescription="A valid bind reference can have  alphanumeric characters, parenthesis, dot, hyphen, at the rate, forward slash, asterisk, dollar and underscore."
                                     fieldLabel="Data Model Bind Reference"
-                                    name="./bindRef">
+                                    name="./dataRef">
                                 <granite:data
                                         jcr:primaryType="nt:unstructured"
                                         node-bindref-validation=""
@@ -186,7 +186,7 @@
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                               fieldLabel="Short Description"
-                              name="./shortDescription"
+                              name="./tooltip"
                               useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                     <links jcr:primaryType="nt:unstructured">
@@ -254,14 +254,14 @@
                             <shortDescVisible
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              name="./shortVisible"
+                              name="./tooltipVisible"
                               text="Always show short description"
                               value="true"/>
                             <longDescription
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                     fieldLabel="Long Description"
-                                    name="./longDescription"
+                                    name="./description"
                                     useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                     <links jcr:primaryType="nt:unstructured">
