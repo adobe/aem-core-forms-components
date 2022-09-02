@@ -1,11 +1,7 @@
-describe.skip("Form with Text Input", () => {
+describe("Form with Datepicker", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
-    const bemBlock = 'cmp-adaptiveform-textinput'
-    const IS = "adaptiveFormTextInput"
-    const selectors = {
-        textinput : `[data-cmp-is="${IS}"]`
-    }
+    const pagePath = "content/forms/af/core-components-it/samples/datepicker/basic.html"
+    const bemBlock = 'cmp-adaptiveform-datepicker'
 
     let formContainer = null
 
@@ -45,7 +41,7 @@ describe.skip("Form with Text Input", () => {
     it(" model's changes are reflected in the html ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        model.value = "some other value"
+        model.value = "2020-10-10"
         checkHTML(model.id, model.getState()).then(() => {
             model.visible = false
             return checkHTML(model.id, model.getState())
@@ -58,7 +54,7 @@ describe.skip("Form with Text Input", () => {
     it(" html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        const input = "value"
+        const input = "2020-10-10"
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input)
         })

@@ -1,0 +1,37 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-textinput
+    ELEMENT cmp-adaptiveform-textinput__label
+    ELEMENT cmp-adaptiveform-textinput__widget
+    ELEMENT cmp-adaptiveform-textinput__questionmark
+    ELEMENT cmp-adaptiveform-textinput__shortdescription
+    ELEMENT cmp-adaptiveform-textinput__longdescription
+*/
+
+.cmp-adaptiveform-datepicker {
+
+}
+
+.cmp-adaptiveform-datepicker__widget {
+
+}
+
+.cmp-adaptiveform-datepicker__label {
+
+}
+
+.cmp-adaptiveform-datepicker__longdescription {
+
+}
+
+.cmp-adaptiveform-datepicker__shortdescription {
+
+}
+
+.cmp-adaptiveform-datepicker__questionmark {
+
+}
+
+[data-cmp-adaptiveform-datepicker-hidden=true] {
+    display: none;
+}
