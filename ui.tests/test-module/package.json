@@ -32,11 +32,11 @@
     "pretest-cloud": "npm run lint",
     "clean": "rm -rf node_modules reports",
     "cypress:open": "./node_modules/.bin/cypress open",
-    "cypress:run": ".node_modules/.bin/cypress run --browser chrome --headless",
+    "cypress:run": "./node_modules/.bin/cypress run --browser chrome --headless",
     "delete:reports": "rm target/reports/* || true",
     "prereport": "npm run delete:reports",
     "cypress-native-dependencies": "sudo apt-get update && sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb",
-    "test:ci": ".node_modules/.bin/cypress run",
+    "test:ci": "./node_modules/.bin/cypress run",
     "test:ci:chrome": "./node_modules/.bin/cypress run --browser chrome",
     "test:ci:firefox": "./node_modules/.bin/cypress run --browser firefox",
     "test:ci:record": "./node_modules/.bin/cypress run --record"

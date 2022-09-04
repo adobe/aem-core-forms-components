@@ -14,7 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-import Utils from "../utils";
 import FormField from "./FormField";
 
 export default class FormPanel extends FormField {
@@ -28,10 +27,6 @@ export default class FormPanel extends FormField {
         //todo repeat
         /*if (this._model.type == 'array') {
         }*/
-    }
-
-    getTagName() {
-        return "No_Tag";
     }
 
     bindEventListeners() {

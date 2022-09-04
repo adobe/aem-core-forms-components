@@ -14,18 +14,42 @@
  * limitations under the License.
  ******************************************************************************/
 
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
 const path = require('path');
 
-module.exports = () => {
-    return merge(common, {
-        mode: 'development',
-        devtool: false,
-        plugins: [new webpack.SourceMapDevToolPlugin({
-            append: '\n//# sourceMappingURL=/libs/core/fd/clientlibs/core-forms-components-runtime/resources/[name].js.map',
-            filename: '[name].js.map'
-        })],
-    });
+const CLIENTLIB_DIR = path.join(
+    __dirname,
+    '..',
+    'ui.apps',
+    'src',
+    'main',
+    'content',
+    'jcr_root',
+    'apps',
+    'core',
+    'fd',
+    'clientlibs'
+);
+
+const libsBaseConfig = {
+  allowProxy: true,
+  serializationFormat: 'xml',
+  cssProcessor: ['default:none', 'min:none'],
+  jsProcessor: ['default:none', 'min:none']
+};
+
+// Config for `aem-clientlib-generator`
+module.exports = {
+  context: __dirname,
+  clientLibRoot: CLIENTLIB_DIR,
+  libs: [
+    {
+      ...libsBaseConfig,
+      name: 'core-forms-components-runtime-base',
+      categories: ['core.forms.components.runtime.base'],
+      assets: {
+        js: ['dist/main.js'],
+        resources: ['dist/main.js.map']
+      }
+    }
+  ]
 };

@@ -17,83 +17,7 @@
 (function() {
 
     "use strict";
-    class FormContainer {
-        constructor(params) {
-            this._model = FormView.createFormInstance(params._formJson);
-            this._path = params._path;
-            this._fields = {};
-            this._deferredParents = {};
-        }
-        /**
-         * returns the form field view
-         * @param fieldId
-         */
-        getField(fieldId) {
-            if (this._fields.hasOwnProperty(fieldId)) {
-                return this._fields[fieldId];
-            }
-            return null;
-        }
-
-        getPath() {
-            return this._path;
-        }
-
-        getModel(id) {
-            return id ? this._model.getElement(id) : this._model;
-        }
-
-        setFocus(id) {
-            if (id) {
-                let fieldView = this._fields[id];
-                if (fieldView && fieldView.setFocus) {
-                    fieldView.setFocus();
-                } else {
-                    // todo proper error handling, for AF 2.0 model exceptions as well
-                    // logging the error right now.
-                    console.log("View on which focus is to be set, not initialized.");
-                }
-            } else {
-                //todo
-                // if id is not defined, focus on the first field of the form
-                // should be governed by a configuration to be done later on
-            }
-        }
-
-        addField(fieldView) {
-            if (fieldView.getFormContainerPath() === this._path) {
-                let fieldId = fieldView.getId();
-                this._fields[fieldId] = fieldView;
-                let model = this.getModel(fieldId);
-                fieldView.setModel(model);
-
-                //todo fix parentId for non form elements, right now parent id might be non form element
-                let parentId = model.parent.id;
-                if (parentId != '$form') {
-                    let parentView = this._fields[parentId];
-                    //if parent view has been initialized then add parent relationship, otherwise add it to deferred parent-child relationship
-                    if (parentView) {
-                        fieldView.setParent(parentView);
-                    } else {
-                        if (!this._deferredParents[parentId]) {
-                            this._deferredParents[parentId] = [];
-                        }
-                        this._deferredParents[parentId].push(fieldView);
-                    }
-                }
-
-                // check if field id is in deferred relationship, if it is add parent child relationships
-                if (this._deferredParents[fieldId]) {
-                    let childList = this._deferredParents[fieldId];
-                    for (let index = 0; index < childList.length; index++) {
-                        childList[index].setParent(fieldView);
-                    }
-                    // remove the parent from deferred parents, once child-parent relationship is established
-                    delete this._deferredParents[fieldId];
-                }
-                fieldView.subscribe();
-            }
-        }
+    class FormContainerV2 extends FormView.FormContainer {
 
     }
     const NS = "cmp";
@@ -101,18 +25,15 @@
     const selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]'
     };
+
     async function onDocumentReady() {
-        let elements = document.querySelectorAll(selectors.self);
-        for (let i = 0; i < elements.length; i++) {
-            const dataset = FormView.Utils.readData(elements[i], IS);
-            const containerPath = dataset["path"];
-            const formJson = await FormView.Utils.getJson(containerPath + ".model.json");
-            console.log("model json from server ", formJson);
-            let formContainer =  new FormContainer({_formJson: formJson, _path: containerPath});
-            const event = new CustomEvent(FormView.Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
-            document.dispatchEvent(event);
-        }
+        const formContainer = FormView.Utils.setupFormContainer(({
+            _formJson, _path
+        }) => {
+            return new FormContainerV2({_formJson, _path});
+        }, selectors.self, IS)
     }
+
     if (document.readyState !== "loading") {
         onDocumentReady();
     } else {

@@ -20,15 +20,20 @@ export default class FormField {
 
     constructor(params) {
         this.formContainer = params.formContainer;
-        //this.parent = params.parent || params.formContainer; no need of this, as we intend to set parent view
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
-        this.bindEventListeners();
     }
 
     setId(id) {
         this.id = id;
+    }
+
+    setParent(parentView) {
+        this.parentView = parentView;
+        if (this.parentView.addChild) {
+            this.parentView.addChild(this);
+        }
     }
 
     getFormContainerPath() {
@@ -39,51 +44,34 @@ export default class FormField {
         return this.id;
     }
 
-    bindEventListeners() {
-        this.element.addEventListener('change', (event) => {
-            this._model.value = event.target.value;
-        });
-        //implementing classes will generally add focus and blur
+    setModel(model) {
+        if (typeof this._model === "undefined" || this._model === null) {
+            this._model = model;
+        } else {
+            throw "Re-initializing model is not permitted"
+        }
     }
 
-    setModel(model) {
-        this._model = model;
+    /**
+     * toggles the html element based on the property. If the property is false, then adds the data-attribute and
+     * css class
+     * @param property
+     * @param dataAttribute
+     * @param value
+     */
+    toggle(property, dataAttribute, value) {
+        if (property === false) {
+            this.element.setAttribute(dataAttribute, value);
+        } else {
+            this.element.removeAttribute(dataAttribute);
+        }
     }
 
     getModel() {
         return this._model;
     }
 
-    getClass() {
-       throw new Error ("Not Implemented");
-    }
-
-    setValue(value) {
-       throw new Error("Not implemented");
-    }
-
-    setFocus() {
-        throw new Error("Not implemented");
-    }
-
-    setParent(parentView) {
-        this.parentView = parentView;
-        if (this.parentView.addChild) {
-            this.parentView.addChild(this);
-        }
-    }
-
-    //link class of state, single function to handle various properties of state
-    setState(state) {
-        throw new Error("Not implemented");
-    }
-
     subscribe() {
-        this.setState(this._model);
-        this._model.subscribe((action) => {
-            let state = action.target.getState();
-            //action.changes[{prop, newValue, currValue}]
-            this.setState(state);
-        });
+        throw "the field does not subscribe to the model"
     }
 }

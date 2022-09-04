@@ -15,8 +15,7 @@
  ******************************************************************************/
 import Utils from "./utils";
 import {createFormInstance} from "@aemforms/af-core";
-import FormField from "./view/FormField";
-import FormPanel from "./view/FormPanel";
+import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
 import {Constants} from "./constants";
 
 window.af = {
@@ -31,4 +30,4 @@ window.af = {
         events: {}
     }
 }
-export {createFormInstance, FormField, FormPanel, Constants, Utils};
+export {createFormInstance, FormField, FormPanel, FormFieldBase, FormContainer, Constants, Utils};

@@ -763,7 +763,7 @@
                             <exclude>**/test/resources/mockito-extensions/*</exclude>
                             <!-- Ignore auto generated webpack file -->
                             <exclude>**/dist/main.js</exclude>
-                            <exclude>**/apps/core/fd/clientlibs/core-forms-components-runtime/js/main.js</exclude>
+                            <exclude>**/apps/core/fd/clientlibs/core-forms-components-runtime-base/js/main.js</exclude>
                         </excludes>
                     </configuration>
                     <executions>

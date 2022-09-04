@@ -55,6 +55,7 @@ BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__questionmark
     ELEMENT cmp-adaptiveform-textinput__shortdescription
     ELEMENT cmp-adaptiveform-textinput__longdescription
+    ELEMENT cmp-adaptiveform-textinput__errormessage
 ```
 
 ## JavaScript Data Attribute Bindings
