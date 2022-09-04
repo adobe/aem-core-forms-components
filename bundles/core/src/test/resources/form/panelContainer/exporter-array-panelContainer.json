@@ -1,0 +1,42 @@
+{
+  "id": "panelContainer-32573c3305",
+  "items": [
+    {
+      "id": "textinput-f37531fa33",
+      "description": "dummy",
+      "required": false,
+      "name": "abc",
+      "visible": false,
+      "enabled": true,
+      "readOnly": false,
+      "fieldType": "text-input",
+      "label": {
+        "visible": true,
+        "richText": false,
+        "value": "def"
+      },
+      "type": "string",
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  ],
+  ":type": "core/fd/components/form/panelContainer/v1/panelContainer",
+  "fieldType" : "panel",
+  "tooltip" : "dependent names tooltip",
+  "description" : "dependent names description",
+  "type" : "array",
+  "minItems": 1,
+  "maxItems": 10,
+  "label" : {
+    "richText": false,
+    "value" : "dependent names",
+    "visible": true
+  },
+  "visible": true,
+  "enabled": true,
+  "name": "abc",
+  "properties": {
+    "af:layout": {
+      "tooltipVisible": false
+    }
+  }
+}

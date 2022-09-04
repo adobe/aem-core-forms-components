@@ -23,7 +23,8 @@ var formsConstants = {
                 "fplinkcomponent"  : "/apps/forms-components-examples/components/linkcomponent",
                 "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
-                "formtextinput": "/apps/forms-components-examples/components/form/textinput"
+                "formtextinput": "/apps/forms-components-examples/components/form/textinput",
+                "panelContainer": "/apps/forms-components-examples/components/form/panelContainer"
             }
         }
     },
