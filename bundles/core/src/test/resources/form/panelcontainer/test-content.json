@@ -1,8 +1,8 @@
 {
-  "panelContainer": {
+  "panelcontainer": {
     "name" : "abc",
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/panelContainer/v1/panelContainer",
+    "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "jcr:title": "dependent names",
     "description" : "dependent names description",
     "tooltip" : "dependent names tooltip",
@@ -18,10 +18,10 @@
       "visible" : false
     }
   },
-  "rules-panelContainer": {
+  "rules-panelcontainer": {
     "name" : "abc",
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/panelContainer/v1/panelContainer",
+    "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "jcr:title": "dependent names",
     "description" : "dependent names description",
     "tooltip" : "dependent names tooltip",
@@ -45,10 +45,10 @@
       "change" : "some expression 2"
     }
   },
-  "array-panelContainer": {
+  "array-panelcontainer": {
     "name" : "abc",
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/panelContainer/v1/panelContainer",
+    "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "type": "array",
     "minItems": 1,
     "maxItems": 10,

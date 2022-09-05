@@ -31,15 +31,15 @@ describe('Page - Authoring', function () {
     const responsiveGridDropZone = "Drag components here",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelContainer);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelcontainer);
     cy.get('body').click( 0,0);
   }
 
   const dropPanelInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/panelContainer/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelContainer);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelcontainer);
     cy.get('body').click( 0,0);
   }
 
@@ -85,7 +85,7 @@ describe('Page - Authoring', function () {
   })
 
   context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/panelContainer",
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/panelcontainer",
         panelContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/panelcontainer",
         panelContainerEditPathSelector = "[data-path='" + panelContainerEditPath + "']";
 

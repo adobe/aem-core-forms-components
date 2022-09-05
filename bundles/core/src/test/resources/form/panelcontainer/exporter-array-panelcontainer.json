@@ -1,8 +1,8 @@
 {
-  "id": "panelContainer-b073c0eb1c",
+  "id": "panelcontainer-c551a729ed",
   "items": [
     {
-      "id": "textinput-7449644d60",
+      "id": "textinput-fae1400d3e",
       "description": "dummy",
       "required": false,
       "name": "abc",
@@ -19,11 +19,13 @@
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  ":type": "core/fd/components/form/panelContainer/v1/panelContainer",
+  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
   "fieldType" : "panel",
   "tooltip" : "dependent names tooltip",
   "description" : "dependent names description",
-  "type" : "object",
+  "type" : "array",
+  "minItems": 1,
+  "maxItems": 10,
   "label" : {
     "richText": false,
     "value" : "dependent names",

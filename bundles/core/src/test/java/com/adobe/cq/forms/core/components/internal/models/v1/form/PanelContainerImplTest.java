@@ -42,11 +42,11 @@ import static org.junit.Assert.assertNotNull;
 
 @ExtendWith(AemContextExtension.class)
 public class PanelContainerImplTest {
-    private static final String BASE = "/form/panelContainer";
+    private static final String BASE = "/form/panelcontainer";
     private static final String CONTENT_ROOT = "/content";
-    private static final String PATH_PANEL = CONTENT_ROOT + "/panelContainer";
-    private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panelContainer";
-    private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panelContainer";
+    private static final String PATH_PANEL = CONTENT_ROOT + "/panelcontainer";
+    private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panelcontainer";
+    private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panelcontainer";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach

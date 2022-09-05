@@ -68,6 +68,13 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
+     * Sets the focus on component's widget.
+     */
+    setFocus() {
+        this.widget.focus();
+    }
+
+    /**
      * applies full state of the field to the HTML. Generally done just after the model is bound to the field
      * @param state
      * @private

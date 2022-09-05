@@ -21,19 +21,10 @@ export default class FormPanel extends FormField {
 
     constructor(params) {
         super(params);
-        if (this.element.id) {
-            this.setId(this.element.id);
-        }
         this.children = [];
-        //todo repeat
-        /*if (this._model.type == 'array') {
-        }*/
     }
 
     addChild(childView) {
-        //let childModel = childView.getModel();
-        //let childModelId = childModel.getId();
-        //push it as a map in case of array
         this.children.push(childView);
     }
 

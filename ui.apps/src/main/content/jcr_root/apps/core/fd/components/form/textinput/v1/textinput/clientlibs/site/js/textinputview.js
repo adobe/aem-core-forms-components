@@ -57,10 +57,6 @@
             return this.element.querySelector(TextInput.selectors.errorDiv);
         }
 
-        setFocus() {
-            this.widget.focus();
-        }
-
         setModel(model) {
             super.setModel(model);
             this.widget.addEventListener('blur', (e) => {
