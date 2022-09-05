@@ -83,6 +83,11 @@ export const Constants = {
     /**
      * aria attribute to mark the dragged component invalid.
      */
-    ARIA_INVALID : "aria-invalid"
+    ARIA_INVALID : "aria-invalid",
+
+    /**
+     * Event to trigger when GuideBridge Initialisation Begins
+     */
+    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart"
 }
 

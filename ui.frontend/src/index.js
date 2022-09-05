@@ -17,6 +17,7 @@ import Utils from "./utils";
 import {createFormInstance} from "@aemforms/af-core";
 import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
 import {Constants} from "./constants";
+import GuideBridge from "./GuideBridge";
 
 window.af = {
     formsRuntime: {
@@ -30,4 +31,5 @@ window.af = {
         events: {}
     }
 }
-export {createFormInstance, FormField, FormPanel, FormFieldBase, FormContainer, Constants, Utils};
+window.guideBridge = new GuideBridge();
+export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils};

@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "../src/utils";
 
-test('readData test', () => {
-    let element = {
-        dataset: {
-            "cmpIs" : "datepicker",
-            "cmpFormcontainer": "/apps/mysite/container"
-        }
+export default class FormData {
+    #data;
+    #contentType;
+    #attachments;
+
+    constructor(params) {
+        this.#data = params.data;
+        this.#contentType = "application/json";
+        this.#attachments = params.attachments;
     }
-    let expected = {
-        formcontainer: element.dataset.cmpFormcontainer
+
+    getData() {
+        return this.#data;
     }
-    let result = Utils.readData(element, "cmp");
-    expect(result.formcontainer).toBe(expected.formcontainer);
-});
+
+    getContentType() {
+        return this.#contentType;
+    }
+
+    getAttachments() {
+        return this.#attachments;
+    }
+
+}

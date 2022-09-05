@@ -1,0 +1,30 @@
+{
+  "fieldType": "form",
+  "items": [
+    {
+      "id": "textinput-664a822c49",
+      "type": "string",
+      "fieldType": "text-input",
+      "required": false,
+      "name": "textinput1662370110841",
+      "visible": true,
+      "enabled": true,
+      "readOnly": false,
+      "maxLength": 5,
+      "label": {
+        "visible": true,
+        "richText": false,
+        "value": "Text Input"
+      },
+      ":type": "forms-components-examples/components/form/textinput"
+    }
+  ],
+  "metadata": {
+    "dataUrl": "",
+    "action": "",
+    "locale": "en-us",
+    "version": "1.0.0",
+    "grammar": "json-formula-1.0.0"
+  },
+  ":type": "forms-components-examples/components/form/container"
+}
