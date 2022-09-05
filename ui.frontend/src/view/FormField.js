@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
+import {Constants} from "../constants";
 import Utils from "../utils";
 
 export default class FormField {
@@ -33,6 +34,20 @@ export default class FormField {
         this.parentView = parentView;
         if (this.parentView.addChild) {
             this.parentView.addChild(this);
+        }
+    }
+
+    setActive() {
+        this.element.setAttribute(Constants.ACTIVE, true);
+        if (this.parentView && this.parentView.setActive) {
+            this.parentView.setActive();
+        }
+    }
+
+    setInactive() {
+        this.element.setAttribute(Constants.ACTIVE, false);
+        if (this.parentView && this.parentView.setInactive) {
+            this.parentView.setInactive();
         }
     }
 

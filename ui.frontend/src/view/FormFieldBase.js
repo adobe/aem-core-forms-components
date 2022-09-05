@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import Constants from "../constants";
+import {Constants} from "../constants";
 import FormField from './FormField'
 
 export default class FormFieldBase extends FormField {
