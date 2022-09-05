@@ -57,11 +57,29 @@
             return this.element.querySelector(TextInput.selectors.errorDiv);
         }
 
+        setActive() {
+            this.toggle(true, FormView.Constants.ACTIVE, false);
+        }
+
+        setInactive() {
+            this.toggle(false, FormView.Constants.ACTIVE, false);
+        }
+
         setModel(model) {
             super.setModel(model);
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
-            })
+                this.setInactive();
+                if (this.parentView && this.parentView.setInactive) {
+                    this.parentView.setInactive();
+                }
+            });
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
+                if (this.parentView && this.parentView.setActive) {
+                    this.parentView.setActive();
+                }
+            });
         }
     }
 

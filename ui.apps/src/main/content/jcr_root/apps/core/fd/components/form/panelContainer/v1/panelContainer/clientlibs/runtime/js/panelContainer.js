@@ -109,14 +109,7 @@
         }
     }
 
-    function setup(event) {
-        let formContainer =  event.detail;
-        let panelElements = document.querySelectorAll(Panel.selectors.self);
-        for (let i = 0; i < panelElements.length; i++) {
-            let panel = new Panel({element: panelElements[i], formContainer: formContainer});
-            formContainer.addField(panel);
-        }
-        FormView.Utils.registerMutationObserver(Panel);
-    }
-    document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, setup);
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new Panel({element})
+    }, Panel.selectors.self);
 })();

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import Utils from "../utils";
+import Constants from "../constants";
 import FormField from './FormField'
 
 export default class FormFieldBase extends FormField {
@@ -90,7 +90,9 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateVisible(visible) {
-        this.toggle(visible, this.dataAttribute('hidden'), true)
+        this.toggle(visible, this.dataAttribute('hidden'), true);
+        this.toggle(visible, Constants.ARIA_HIDDEN, true);
+        this.toggle(visible, Constants.VISIBLE, false);
     }
 
     /**
@@ -99,7 +101,9 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateEnable(enable) {
-        this.toggle(enable, this.dataAttribute('disabled'), true)
+        this.toggle(enable, this.dataAttribute('disabled'), true);
+        this.toggle(enable, Constants.ARIA_DISABLED, true);
+        this.toggle(enable, Constants.ENABLED, false);
         if (enable === false) {
             this.widget.setAttribute("disabled", true);
         } else {
@@ -108,10 +112,12 @@ export default class FormFieldBase extends FormField {
     }
 
     _updateValid(valid, state) {
-        this.toggle(valid, this.dataAttribute('invalid'), !valid)
+        this.toggle(valid, this.dataAttribute('invalid'), !valid);
+        this.toggle(valid, Constants.ARIA_INVALID, true);
+        this.toggle(valid, Constants.VALID, false);
         if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
             const errMessage = valid === true ? '' : 'There is an error in the field';
-            this.errorDiv.innerHTML = errMessage
+            this.errorDiv.innerHTML = errMessage;
         }
     }
 

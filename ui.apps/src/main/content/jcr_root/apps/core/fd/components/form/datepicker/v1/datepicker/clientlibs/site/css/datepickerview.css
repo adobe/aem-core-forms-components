@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-.cmp-adaptiveform-textinput {
-
-}
-
-.cmp-adaptiveform-textinput__widget {
+.cmp-adaptiveform-datepicker {
 
 }
 
-.cmp-adaptiveform-textinput__label {
+.cmp-adaptiveform-datepicker__widget {
 
 }
 
-.cmp-adaptiveform-textinput__longdescription {
+.cmp-adaptiveform-datepicker__label {
 
 }
 
-.cmp-adaptiveform-textinput__shortdescription {
+.cmp-adaptiveform-datepicker__longdescription {
 
 }
 
-.cmp-adaptiveform-textinput__questionmark {
+.cmp-adaptiveform-datepicker__shortdescription {
 
 }
 
-[data-cmp-adaptiveform-textinput-hidden=true] {
+.cmp-adaptiveform-datepicker__questionmark {
+
+}
+
+[data-cmp-adaptiveform-datepicker-hidden=true] {
     display: none;
 }
