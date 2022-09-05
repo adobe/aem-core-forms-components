@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with Datepicker", () => {
+describe.skip("Form with Datepicker", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/datepicker/basic.html"
     const bemBlock = 'cmp-adaptiveform-datepicker'
