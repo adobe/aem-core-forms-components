@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "./utils";
-import {createFormInstance} from "@aemforms/af-core";
-import {FormField, FormContainer, FormFieldBase} from "./view";
-import {Constants} from "./constants";
-import GuideBridge from "./GuideBridge";
 
-window.af = {
-    formsRuntime: {
-        model: {
-            form: {}
-        },
-        view: {
-            formContainer: {},
-            utils: {}
-        },
-        events: {}
+export default class FormData {
+    #data;
+    #contentType;
+    #attachments;
+
+    constructor(params) {
+        this.#data = params.data;
+        this.#contentType = "application/json";
+        this.#attachments = params.attachments;
     }
+
+    getData() {
+        return this.#data;
+    }
+
+    getContentType() {
+        return this.#contentType;
+    }
+
+    getAttachments() {
+        return this.#attachments;
+    }
+
 }
-window.guideBridge = new GuideBridge();
-export {createFormInstance, FormField, FormFieldBase, FormContainer, Constants, Utils};

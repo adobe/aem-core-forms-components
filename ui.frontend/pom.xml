@@ -76,6 +76,15 @@
                                 <arguments>run build:prod</arguments>
                             </configuration>
                         </execution>
+                        <execution>
+                            <id>run tests</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>test</arguments>
+                            </configuration>
+                        </execution>
                     </executions>
                 </plugin>
             </plugins>
