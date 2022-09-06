@@ -24,6 +24,7 @@ export default class FormField {
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
+        this.active = false;
     }
 
     setId(id) {
@@ -38,17 +39,25 @@ export default class FormField {
     }
 
     setActive() {
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+        if (!this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+        }
         if (this.parentView && this.parentView.setActive) {
             this.parentView.setActive();
         }
     }
 
     setInactive() {
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
+        if (this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
+        }
         if (this.parentView && this.parentView.setInactive) {
             this.parentView.setInactive();
         }
+    }
+
+    isActive() {
+        return this.active;
     }
 
     getFormContainerPath() {

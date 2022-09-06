@@ -131,7 +131,7 @@ export default class FormFieldBase extends FormField {
     }
 
     getClass() {
-        return this.constructor.IS
+        return this.constructor.IS;
     }
 
     subscribe() {

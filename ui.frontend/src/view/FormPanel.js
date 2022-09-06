@@ -15,9 +15,9 @@
  ******************************************************************************/
 
 import {Constants} from "../constants";
-import FormField from "./FormField";
+import FormFieldBase from "./FormFieldBase";
 
-export default class FormPanel extends FormField {
+export default class FormPanel extends FormFieldBase {
 
     constructor(params) {
         super(params);
@@ -28,12 +28,6 @@ export default class FormPanel extends FormField {
         this.children.push(childView);
     }
 
-    setModel(model) {
-        super.setModel(model);
-        const state = this._model.getState();
-        this._applyState(state);
-    }
-
     /**
      * applies full state of the field to the HTML. Generally done just after the model is bound to the field
      * @param state
@@ -42,16 +36,6 @@ export default class FormPanel extends FormField {
     _applyState(state) {
         this._updateVisible(state.visible);
         this._updateEnable(state.enabled);
-    }
-
-    /**
-     * updates html based on visible state
-     * @param visible
-     * @private
-     */
-    _updateVisible(visible) {
-        this.toggle(visible, Constants.ARIA_HIDDEN, true);
-        this.toggle(visible, Constants.DATA_ATTRIBUTE_VISIBLE, false);
     }
 
     /**
