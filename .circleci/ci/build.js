@@ -24,7 +24,7 @@ const configuration = ci.collectConfiguration();
 console.log(configuration);
 
 ci.stage('Build Project');
-ci.sh('mvn -B clean install');
+ci.sh('mvn -B clean install -Pcloud');
 
 ci.stage('Collect test results');
 const testFolder = path.resolve(process.cwd(), 'test-results/junit');
