@@ -19,16 +19,12 @@
                 fieldType="date-input"
                 jcr:primaryType="nt:unstructured"
                 name="dateinput1"
-                type="string"
-                format="date"
                 jcr:title="Date Input 1"
                 sling:resourceType="forms-components-examples/components/form/datepicker"/>
             <dateinput2
                     fieldType="date-input"
                     jcr:primaryType="nt:unstructured"
                     name="dateinput2"
-                    type="string"
-                    format="date"
                     jcr:title="Date Input 2"
                     sling:resourceType="forms-components-examples/components/form/datepicker"/>
         </guideContainer>

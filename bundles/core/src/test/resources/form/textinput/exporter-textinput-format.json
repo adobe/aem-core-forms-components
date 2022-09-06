@@ -1,0 +1,30 @@
+{
+  "id": "textinput-566534ba93",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "text-input",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "properties": {
+    "af:layout" : {
+      "tooltipVisible": false
+    }
+  },
+  "default" : "abc",
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "type": "string",
+  "format" : "email",
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}
