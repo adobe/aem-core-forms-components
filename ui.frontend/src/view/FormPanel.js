@@ -40,12 +40,8 @@ export default class FormPanel extends FormField {
      * @private
      */
     _applyState(state) {
-        this._updateVisible(state.visible)
-        this._updateEnable(state.visible)
-    }
-
-    dataAttribute(attr) {
-        return `data-${this.constructor.bemBlock}-${attr}`
+        this._updateVisible(state.visible);
+        this._updateEnable(state.enabled);
     }
 
     /**
@@ -54,9 +50,8 @@ export default class FormPanel extends FormField {
      * @private
      */
     _updateVisible(visible) {
-        this.toggle(visible, this.dataAttribute('hidden'), true);
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
-        this.toggle(visible, Constants.VISIBLE, false);
+        this.toggle(visible, Constants.DATA_ATTRIBUTE_VISIBLE, false);
     }
 
     /**
@@ -65,15 +60,13 @@ export default class FormPanel extends FormField {
      * @private
      */
     _updateEnable(enable) {
-        this.toggle(enable, this.dataAttribute('disabled'), true);
         this.toggle(enable, Constants.ARIA_DISABLED, true);
-        this.toggle(enable, Constants.ENABLED, false);
+        this.toggle(enable, Constants.DATA_ATTRIBUTE_ENABLED, false);
     }
 
     _updateValid(valid, state) {
-        this.toggle(valid, this.dataAttribute('invalid'), !valid);
         this.toggle(valid, Constants.ARIA_INVALID, true);
-        this.toggle(valid, Constants.VALID, false);
+        this.toggle(valid, Constants.DATA_ATTRIBUTE_VALID, false);
     }
 
     subscribe() {

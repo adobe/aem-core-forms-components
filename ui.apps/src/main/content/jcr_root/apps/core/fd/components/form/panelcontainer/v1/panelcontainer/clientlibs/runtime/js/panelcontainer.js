@@ -38,6 +38,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new Panel({element})
+        return new Panel({element, formContainer})
     }, Panel.selectors.self);
 })();

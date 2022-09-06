@@ -47,28 +47,28 @@ export const Constants = {
      * value true for valid
      * value false for invalid
      */
-    VALID : "data-cmp-valid",
+    DATA_ATTRIBUTE_VALID : "data-cmp-valid",
 
     /**
      * data attribute to mark the dragged component enabled or disabled.
      * value true for enabled
      * value false for disabled
      */
-    ENABLED : "data-cmp-enabled",
+    DATA_ATTRIBUTE_ENABLED : "data-cmp-enabled",
 
     /**
      * data attribute to mark the dragged component visible or invisible.
      * value true for visible
      * value false for invisible
      */
-    VISIBLE : "data-cmp-visible",
+    DATA_ATTRIBUTE_VISIBLE : "data-cmp-visible",
 
     /**
      * data attribute to mark the dragged component active or inactive.
      * value true for active
      * value false for inactive
      */
-    ACTIVE : "data-cmp-active",
+    DATA_ATTRIBUTE_ACTIVE : "data-cmp-active",
 
     /**
      * aria attribute to mark the dragged component disabled.

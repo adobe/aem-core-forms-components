@@ -38,14 +38,14 @@ export default class FormField {
     }
 
     setActive() {
-        this.element.setAttribute(Constants.ACTIVE, true);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
         if (this.parentView && this.parentView.setActive) {
             this.parentView.setActive();
         }
     }
 
     setInactive() {
-        this.element.setAttribute(Constants.ACTIVE, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
         if (this.parentView && this.parentView.setInactive) {
             this.parentView.setInactive();
         }

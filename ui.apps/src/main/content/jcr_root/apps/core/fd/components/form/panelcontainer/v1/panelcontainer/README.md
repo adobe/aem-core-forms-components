@@ -62,6 +62,9 @@ The following properties are written to JCR for this Panel Container component a
 ```
 BLOCK cmp-container
 ```
+## JavaScript Data Attribute Bindings
+
+Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
 ### Enabling Panel Container Editing Functionality
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:

@@ -70,7 +70,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TextInput({element})
+        return new TextInput({element, formContainer})
     }, TextInput.selectors.self);
 
 })();

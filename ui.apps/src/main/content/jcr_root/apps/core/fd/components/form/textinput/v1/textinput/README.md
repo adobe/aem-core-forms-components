@@ -60,7 +60,7 @@ BLOCK cmp-adaptiveform-textinput
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormPanel"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
 The following attributes can be added to the same element to provide options:
 

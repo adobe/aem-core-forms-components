@@ -63,6 +63,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new DatePicker({element})
+        return new DatePicker({element, formContainer})
     }, DatePicker.selectors.self);
 })();
