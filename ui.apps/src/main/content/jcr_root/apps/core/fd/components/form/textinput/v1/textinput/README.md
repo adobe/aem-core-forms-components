@@ -54,7 +54,10 @@ BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__widget
     ELEMENT cmp-adaptiveform-textinput__questionmark
     ELEMENT cmp-adaptiveform-textinput__shortdescription
+      MOD cmp-adaptiveform-textinput__shortdescription--tooltip
+      MOD cmp-adaptiveform-textinput__shortdescription--hidden
     ELEMENT cmp-adaptiveform-textinput__longdescription
+      MOD cmp-adaptiveform-textinput__longdescription--hidden
     ELEMENT cmp-adaptiveform-textinput__errormessage
 ```
 
