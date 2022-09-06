@@ -171,11 +171,13 @@ export default class FormFieldBase extends FormField {
         const questionMarkDiv = this.getQuestionMarkDiv(),
             descriptionDiv = this.getDescription(),
             longdescriptionHiddenBem = this.constructor.bemBlock + '__longdescription--hidden';
-        questionMarkDiv.onclick = function() {
-            if (descriptionDiv.classList.contains(longdescriptionHiddenBem)) {
-                descriptionDiv.classList.remove(longdescriptionHiddenBem);
-            } else {
-                descriptionDiv.classList.add(longdescriptionHiddenBem);
+        if (questionMarkDiv && descriptionDiv) {
+            questionMarkDiv.onclick = function() {
+                if (descriptionDiv.classList.contains(longdescriptionHiddenBem)) {
+                    descriptionDiv.classList.remove(longdescriptionHiddenBem);
+                } else {
+                    descriptionDiv.classList.add(longdescriptionHiddenBem);
+                }
             }
         }
     }
