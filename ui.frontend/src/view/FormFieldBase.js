@@ -85,7 +85,7 @@ export default class FormFieldBase extends FormField {
         });
         this.widget.addEventListener("mouseout", () => {
             this._showHideTooltip(false);
-        })
+        });
     }
 
     /**
