@@ -61,10 +61,31 @@ export default class FormFieldBase extends FormField {
 
     }
 
+    /**
+     * implementation should return the tooltip / short description div
+     */
+    getTooltipDiv() {
+
+    }
+
+    /**
+     * Implementation should return the questionMark div
+     */
+    getQuestionMarkDiv() {
+
+    }
+
     setModel(model) {
         super.setModel(model);
         const state = this._model.getState();
         this._applyState(state);
+        this._addQuestionMarkHandler();
+        this.widget.addEventListener("mouseover", () => {
+            this._showHideTooltip( true);
+        });
+        this.widget.addEventListener("mouseout", () => {
+            this._showHideTooltip(false);
+        })
     }
 
     /**
@@ -121,6 +142,42 @@ export default class FormFieldBase extends FormField {
 
     _updateValue(value) {
         this.widget.value = value;
+    }
+
+
+    _showHideTooltip(show) {
+        const toolTip = this.getTooltipDiv(),
+            bemBlock = this.constructor.bemBlock,
+            tooltipVisible = this._model.properties['af:layout'] ? this._model.properties['af:layout'].tooltipVisible : false,
+            hiddenBem = bemBlock + '__shortdescription--hidden',
+            tooltipBem = bemBlock + '__shortdescription--tooltip';
+        // If tooltip is always visible then no need to toggle.
+        if (toolTip && !tooltipVisible) {
+            if(show) {
+                toolTip.classList.remove(hiddenBem);
+                toolTip.classList.add(tooltipBem);
+            } else {
+                toolTip.classList.add(hiddenBem);
+                toolTip.classList.remove(tooltipBem);
+            }
+        }
+    }
+
+    /**
+     * Shows or Hides Description Based on click of '?' mark.
+     * @private
+     */
+    _addQuestionMarkHandler() {
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
+            longdescriptionHiddenBem = this.constructor.bemBlock + '__longdescription--hidden';
+        questionMarkDiv.onclick = function() {
+            if (descriptionDiv.classList.contains(longdescriptionHiddenBem)) {
+                descriptionDiv.classList.remove(longdescriptionHiddenBem);
+            } else {
+                descriptionDiv.classList.add(longdescriptionHiddenBem);
+            }
+        }
     }
 
     getClass() {

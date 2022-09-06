@@ -33,7 +33,8 @@
             label: `.${TextInput.bemBlock}__label`,
             description: `.${TextInput.bemBlock}__longdescription`,
             qm: `.${TextInput.bemBlock}__questionmark`,
-            errorDiv: `.${TextInput.bemBlock}__errormessage`
+            errorDiv: `.${TextInput.bemBlock}__errormessage`,
+            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -55,6 +56,14 @@
 
         getErrorDiv() {
             return this.element.querySelector(TextInput.selectors.errorDiv);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(TextInput.selectors.tooltipDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(TextInput.selectors.qm);
         }
 
         setModel(model) {
