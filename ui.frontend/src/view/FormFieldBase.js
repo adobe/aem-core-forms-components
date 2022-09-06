@@ -25,7 +25,6 @@ export default class FormFieldBase extends FormField {
         this.description = this.getDescription();
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
-        this.setId(this.element.id);
     }
 
     /**
