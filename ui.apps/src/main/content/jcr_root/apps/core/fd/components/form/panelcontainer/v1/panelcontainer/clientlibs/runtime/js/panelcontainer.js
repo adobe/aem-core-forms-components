@@ -13,26 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-.cmp-adaptiveform-datepicker {
+(function() {
 
-}
+    class Panel extends FormView.FormPanel {
 
-.cmp-adaptiveform-datepicker__widget {
+        static NS = FormView.Constants.NS;
+        static IS = "adaptiveFormPanel";
 
-}
+        static selectors  = {
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+        };
 
-.cmp-adaptiveform-datepicker__label {
+        constructor(params) {
+            super(params);
+        }
 
-}
+        getClass() {
+            return Panel.IS;
+        }
 
-.cmp-adaptiveform-datepicker__longdescription {
+        setFocus() {
+            this.setActive();
+        }
+    }
 
-}
-
-.cmp-adaptiveform-datepicker__shortdescription {
-
-}
-
-.cmp-adaptiveform-datepicker__questionmark {
-
-}
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new Panel({element, formContainer})
+    }, Panel.selectors.self);
+})();

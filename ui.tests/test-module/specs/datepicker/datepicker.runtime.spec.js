@@ -27,15 +27,17 @@ describe("Form with Datepicker", () => {
     });
 
     const checkHTML = (id, state) => {
-        const visible = state.visible
-        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`
-        const passHiddenAttributeCheck = `${visible === false ? "" : "not."}have.attr`
+        const visible = state.visible;
+        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const value = state.value
         cy.get(`#${id}`)
             .should(passVisibleCheck)
-            .should(passHiddenAttributeCheck, `data-${bemBlock}-hidden`);
-        cy.get(`#${id}`).should(passDisabledAttributeCheck, `data-${bemBlock}-disabled`);
+            .invoke('attr', 'data-cmp-visible')
+            .should('eq', visible.toString());
+        cy.get(`#${id}`)
+            .invoke('attr', 'data-cmp-enabled')
+            .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
