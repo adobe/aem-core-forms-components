@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -76,13 +77,43 @@ public class AccordionImpl extends PanelImpl implements Accordion {
         return FieldType.ACCORDION.getValue();
     }
 
+    public enum Heading {
+
+        H1("h1"),
+        H2("h2"),
+        H3("h3"),
+        H4("h4"),
+        H5("h5"),
+        H6("h6");
+
+        private String element;
+
+        Heading(String element) {
+            this.element = element;
+        }
+
+        public static Heading getHeading(String value) {
+            for (Heading heading : values()) {
+                if (StringUtils.equalsIgnoreCase(heading.element, value)) {
+                    return heading;
+                }
+            }
+            return null;
+        }
+
+        public String getElement() {
+            return element;
+        }
+
+    }
+
     /*
      * /**
      * The {@link Heading} object for the HTML element
      * to use for accordion headers.
-     * 
-     * private Heading heading;
      */
+    private Heading heading;
+
     @Override
     public boolean isSingleExpansion() {
         return singleExpansion;
@@ -101,43 +132,39 @@ public class AccordionImpl extends PanelImpl implements Accordion {
         return Arrays.copyOf(expandedItemNames, expandedItemNames.length);
     }
 
-    /*
-     * @Override
-     * public String getHeadingElement() {
-     * if (heading == null) {
-     * heading = Heading.getHeading(headingElement);
-     * if (heading == null) {
-     * heading = Heading.getHeading(currentStyle.get(PN_DESIGN_HEADING_ELEMENT, String.class));
-     * }
-     * }
-     * if (heading != null) {
-     * return heading.getElement();
-     * }
-     * return null;
-     * }
-     */
+    public String getHeadingElement() {
+        if (heading == null) {
+            heading = Heading.getHeading(headingElement);
+            if (heading == null) {
+                heading = Heading.H1;
+            }
+        }
+        if (heading != null) {
+            return heading.getElement();
+        }
+        return null;
+    }
 
     /*
      * DataLayerProvider implementation of field getters
      */
-    /*
-     * public String[] getDataLayerShownItems() {
-     * if (expandedItems == null) {
-     * return new String[0];
-     * }
-     * 
-     * if (expandedItemIds == null) {
-     * List<String> expandedItemsName = Arrays.asList(expandedItems);
-     * 
-     * expandedItemIds = this.getItems().stream()
-     * .filter(item -> expandedItemsName.contains(item.getName()))
-     * .map(Component::getData)
-     * .filter(Objects::nonNull)
-     * .map(ComponentData::getId)
-     * .toArray(String[]::new);
-     * }
-     * 
-     * return Arrays.copyOf(expandedItemIds, expandedItemIds.length);
-     * }
-     */
+
+    // public String[] getDataLayerShownItems() {
+    // if (expandedItems == null) {
+    // return new String[0];
+    // }
+    //
+    // if (expandedItemIds == null) {
+    // List<String> expandedItemsName = Arrays.asList(expandedItems);
+    //
+    // expandedItemIds = this.getItems().stream()
+    // .filter(item -> expandedItemsName.contains(item.getName()))
+    // .map(Component::getData)
+    // .filter(Objects::nonNull)
+    // .map(ComponentData::getId)
+    // .toArray(String[]::new);
+    // }
+    //
+    // return Arrays.copyOf(expandedItemIds, expandedItemIds.length);
+    // }
 }
