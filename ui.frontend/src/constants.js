@@ -42,6 +42,48 @@ export const Constants = {
      */
     FORM_CONTAINER_DATA_ATTRIBUTE: "adaptiveformcontainerPath",
 
+    /**
+     * data attribute to mark the dragged component valid or invalid.
+     * value true for valid
+     * value false for invalid
+     */
+    DATA_ATTRIBUTE_VALID : "data-cmp-valid",
+
+    /**
+     * data attribute to mark the dragged component enabled or disabled.
+     * value true for enabled
+     * value false for disabled
+     */
+    DATA_ATTRIBUTE_ENABLED : "data-cmp-enabled",
+
+    /**
+     * data attribute to mark the dragged component visible or invisible.
+     * value true for visible
+     * value false for invisible
+     */
+    DATA_ATTRIBUTE_VISIBLE : "data-cmp-visible",
+
+    /**
+     * data attribute to mark the dragged component active or inactive.
+     * value true for active
+     * value false for inactive
+     */
+    DATA_ATTRIBUTE_ACTIVE : "data-cmp-active",
+
+    /**
+     * aria attribute to mark the dragged component disabled.
+     */
+    ARIA_DISABLED : "aria-disabled",
+
+    /**
+     * aria attribute to mark the dragged component hidden.
+     */
+    ARIA_HIDDEN : "aria-hidden",
+
+    /**
+     * aria attribute to mark the dragged component invalid.
+     */
+    ARIA_INVALID : "aria-invalid",
 
     /**
      * Event to trigger when GuideBridge Initialisation Begins

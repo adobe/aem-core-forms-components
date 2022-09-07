@@ -47,6 +47,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Default(booleanValues = false)
     protected boolean multiLine;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String format;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
     @Nullable
     protected String pattern;
@@ -132,5 +136,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public Date getExclusiveMinimumDate() {
         return ComponentUtils.clone(exclusiveMinimumDate);
+    }
+
+    @Override
+    @Nullable
+    public String getFormat() {
+        return format;
     }
 }
