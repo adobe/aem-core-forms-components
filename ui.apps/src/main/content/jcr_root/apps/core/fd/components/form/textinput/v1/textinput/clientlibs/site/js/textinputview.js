@@ -61,16 +61,12 @@
             super.setModel(model);
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
-                this.setInactive();
-            });
-            this.widget.addEventListener('focus', (e) => {
-                this.setActive();
-            });
+            })
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TextInput({element, formContainer})
+        return new TextInput({element})
     }, TextInput.selectors.self);
 
 })();

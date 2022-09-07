@@ -166,15 +166,6 @@ public interface Base extends Component {
         public String toString() {
             return value;
         }
-
-        /**
-         * returns the name of the property which stores the value of the error message for the constraint
-         * 
-         * @return string
-         */
-        public String getMessageProperty() {
-            return value + "Message";
-        }
     }
 
     /**

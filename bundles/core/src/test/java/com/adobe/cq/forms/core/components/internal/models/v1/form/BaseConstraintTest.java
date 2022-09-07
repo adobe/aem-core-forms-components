@@ -34,6 +34,13 @@ public class BaseConstraintTest {
     }
 
     @Test
+    void testGetFormat() {
+        BaseConstraint baseConstraintMock = Mockito.mock(BaseConstraint.class);
+        Mockito.when(baseConstraintMock.getFormat()).thenCallRealMethod();
+        assertEquals(null, baseConstraintMock.getFormat());
+    }
+
+    @Test
     void testIsRequired() {
         BaseConstraint baseConstraintMock = Mockito.mock(BaseConstraint.class);
         Mockito.when(baseConstraintMock.isRequired()).thenCallRealMethod();

@@ -37,3 +37,7 @@
 .cmp-adaptiveform-textinput__questionmark {
 
 }
+
+[data-cmp-adaptiveform-textinput-hidden=true] {
+    display: none;
+}
