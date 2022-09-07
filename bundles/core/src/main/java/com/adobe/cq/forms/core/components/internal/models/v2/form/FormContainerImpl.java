@@ -19,18 +19,81 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormContainerImpl.RESOURCE_TYPE })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FormContainerImpl extends com.adobe.cq.forms.core.components.internal.models.v1.form.FormContainerImpl implements
+public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String thankyouMessage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String thankyouPage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String title;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String data;
+
+    @Override
+    @Nullable
+    public String getThankYouMessage() {
+        return thankyouMessage;
+    }
+
+    @Override
+    @Nullable
+    public String getThankYouPage() {
+        return thankyouPage;
+    }
+
+    @Override
+    public FormMetaData getMetaData() {
+        return new FormMetaDataImpl(resource);
+    }
+
+    @Override
+    @Nullable
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    @Nullable
+    public String getFormData() {
+        return data;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getEncodedCurrentPagePath() {
+        if (getCurrentPage() != null) {
+            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+        } else {
+            return null;
+        }
+    }
 }
