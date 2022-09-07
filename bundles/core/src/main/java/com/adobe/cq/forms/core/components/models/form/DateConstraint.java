@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface DateConstraint {
+public interface DateConstraint extends FormatConstraint {
 
     /**
      * Returns the minimum value for the date. The constraint is applicable only for field with type date
@@ -74,4 +74,8 @@ public interface DateConstraint {
     @JsonProperty("exclusiveMinimum")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
     Date getExclusiveMinimumDate();
+
+    default String getFormat() {
+        return Format.DATE.toString();
+    }
 }

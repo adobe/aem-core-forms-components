@@ -247,6 +247,26 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
     return cy.wrap(isEventComplete); // return a chainable object
 });
 
+const waitForFormInit = () => {
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        const promise = new Cypress.Promise((resolve, reject) => {
+            const listener1 = e => {
+                console.error(`received ${INIT_EVENT}`)
+                resolve(e.detail)
+            };
+            console.error(`waiting for ${INIT_EVENT}`)
+            document.addEventListener(INIT_EVENT, listener1);
+        })
+        return promise
+    });
+}
+
+Cypress.Commands.add("previewForm", (formPath) => {
+    const pagePath = `${formPath}?wcmmode=disabled`
+    return cy.openPage(pagePath).then(waitForFormInit)
+})
+
 // cypress command to delete component by path
 Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,

@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import {createFormInstance} from "@aemforms/af-core";
+import {createFormInstance} from "@aemforms/af-core/lib";
+
 export default class FormContainer {
     constructor(params) {
-        this._model = FormView.createFormInstance(params._formJson);
+        this._model = createFormInstance(params._formJson);
         this._path = params._path;
         this._fields = {};
     }
@@ -41,6 +42,10 @@ export default class FormContainer {
             fieldView.setModel(this.getModel(fieldView.getId()));
             fieldView.subscribe();
         }
+    }
+
+    getPath() {
+        return this._path;
     }
 
 }

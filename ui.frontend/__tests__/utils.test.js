@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import readData from "../src/utils";
+import Utils from "../src/utils";
 
 test('readData test', () => {
     let element = {
@@ -25,6 +25,6 @@ test('readData test', () => {
     let expected = {
         formcontainer: element.dataset.cmpFormcontainer
     }
-    let result = readData(element, "cmp");
+    let result = Utils.readData(element, "cmp");
     expect(result.formcontainer).toBe(expected.formcontainer);
 });

@@ -16,11 +16,14 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -37,9 +40,8 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
-    public String getFormat() {
-        return Format.DATE.toString();
-    }
+    @SlingObject
+    private Resource resource;
 
     @Override
     public Date getMinimumDate() {
@@ -59,5 +61,18 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
     @Override
     public Date getExclusiveMinimumDate() {
         return ComponentUtils.clone(exclusiveMinimumDate);
+    }
+
+    public @NotNull Map<ConstraintType, String> getConstraintMessages() {
+        Map<ConstraintType, String> res = super.getConstraintMessages();
+        String msg = getConstraintMessage(ConstraintType.MINIMUM);
+        if (msg != null) {
+            res.put(ConstraintType.MINIMUM, msg);
+        }
+        msg = getConstraintMessage(ConstraintType.MAXIMUM);
+        if (msg != null) {
+            res.put(ConstraintType.MAXIMUM, msg);
+        }
+        return res;
     }
 }

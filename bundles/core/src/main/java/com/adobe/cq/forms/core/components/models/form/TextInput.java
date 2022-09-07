@@ -50,4 +50,15 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
         return null;
     }
 
+    /**
+     * Returns the format of the form field as specified in the json schema specification(for example, date, binary etc)
+     *
+     * @return the format of the form field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getFormat() {
+        return null;
+    }
+
 }

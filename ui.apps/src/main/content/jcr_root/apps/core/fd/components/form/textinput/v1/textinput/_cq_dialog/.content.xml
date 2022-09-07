@@ -289,9 +289,9 @@
                     </validation>
                     <patterns
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
-                            sling:hideResource="{Boolean}true"
+                            jcr:title="Formats"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
                     </patterns>
                     <help
                             jcr:primaryType="nt:unstructured"

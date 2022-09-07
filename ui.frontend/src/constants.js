@@ -41,5 +41,11 @@ export const Constants = {
      * data-{NS}-{ComponentClass}-adaptiveformcontainerPath
      */
     FORM_CONTAINER_DATA_ATTRIBUTE: "adaptiveformcontainerPath",
+
+
+    /**
+     * Event to trigger when GuideBridge Initialisation Begins
+     */
+    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart"
 }
 
