@@ -45,12 +45,12 @@ export default class FormPanel extends FormFieldBase {
      */
     _updateEnable(enable) {
         this.toggle(enable, Constants.ARIA_DISABLED, true);
-        this.toggle(enable, Constants.DATA_ATTRIBUTE_ENABLED, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
     }
 
     _updateValid(valid, state) {
         this.toggle(valid, Constants.ARIA_INVALID, true);
-        this.toggle(valid, Constants.DATA_ATTRIBUTE_VALID, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
     }
 
     subscribe() {

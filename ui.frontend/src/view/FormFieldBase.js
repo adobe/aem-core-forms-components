@@ -93,7 +93,7 @@ export default class FormFieldBase extends FormField {
      */
     _updateVisible(visible) {
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
-        this.toggle(visible, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
     }
 
     /**
@@ -103,7 +103,7 @@ export default class FormFieldBase extends FormField {
      */
     _updateEnable(enable) {
         this.toggle(enable, Constants.ARIA_DISABLED, true);
-        this.toggle(enable, Constants.DATA_ATTRIBUTE_ENABLED, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
         if (enable === false) {
             this.widget.setAttribute("disabled", true);
             this.widget.setAttribute(Constants.ARIA_DISABLED, true);
@@ -115,7 +115,7 @@ export default class FormFieldBase extends FormField {
 
     _updateValid(valid, state) {
         this.toggle(valid, Constants.ARIA_INVALID, true);
-        this.toggle(valid, Constants.DATA_ATTRIBUTE_VALID, false);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
         if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
             const errMessage = valid === true ? '' : 'There is an error in the field';
             this.errorDiv.innerHTML = errMessage;

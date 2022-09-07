@@ -14,6 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-[data-cmp-visible=false] {
+[data-cmp-visible="false"] {
     display: none;
 }
