@@ -170,13 +170,22 @@ export default class FormFieldBase extends FormField {
     _addQuestionMarkHandler() {
         const questionMarkDiv = this.getQuestionMarkDiv(),
             descriptionDiv = this.getDescription(),
-            longdescriptionHiddenBem = this.constructor.bemBlock + '__longdescription--hidden';
+            longdescriptionHiddenBem = this.constructor.bemBlock + '__longdescription--hidden',
+            tooltipVisible = this._model.properties['af:layout'] ? this._model.properties['af:layout'].tooltipVisible : false,
+            toolTip = this.getTooltipDiv(),
+            tooltipHiddenBem = this.constructor.bemBlock + '__shortdescription--hidden';
         if (questionMarkDiv && descriptionDiv) {
             questionMarkDiv.onclick = function() {
                 if (descriptionDiv.classList.contains(longdescriptionHiddenBem)) {
                     descriptionDiv.classList.remove(longdescriptionHiddenBem);
+                    if (tooltipVisible && toolTip) {
+                        toolTip.classList.add(tooltipHiddenBem);
+                    }
                 } else {
                     descriptionDiv.classList.add(longdescriptionHiddenBem);
+                    if (tooltipVisible && toolTip) {
+                        toolTip.classList.remove(tooltipHiddenBem);
+                    }
                 }
             }
         }
