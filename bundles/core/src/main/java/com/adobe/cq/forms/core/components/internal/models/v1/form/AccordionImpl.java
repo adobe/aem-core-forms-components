@@ -71,6 +71,11 @@ public class AccordionImpl extends PanelImpl implements Accordion {
      * The cached node names of the expanded items for which there is a valid matching child resource.
      */
     private String[] expandedItemNames;
+    //
+    // /**
+    // * The cached model IDs of the expanded items for which there is a valid matching child resource.
+    // */
+    // private String[] expandedItemIds;
 
     @Override
     public String getFieldType() {
@@ -139,10 +144,7 @@ public class AccordionImpl extends PanelImpl implements Accordion {
                 heading = Heading.H1;
             }
         }
-        if (heading != null) {
-            return heading.getElement();
-        }
-        return null;
+        return heading.getElement();
     }
 
     /*
@@ -157,7 +159,7 @@ public class AccordionImpl extends PanelImpl implements Accordion {
     // if (expandedItemIds == null) {
     // List<String> expandedItemsName = Arrays.asList(expandedItems);
     //
-    // expandedItemIds = this.getItems().stream()
+    // expandedItemIds = this.getItems2().stream()
     // .filter(item -> expandedItemsName.contains(item.getName()))
     // .map(Component::getData)
     // .filter(Objects::nonNull)

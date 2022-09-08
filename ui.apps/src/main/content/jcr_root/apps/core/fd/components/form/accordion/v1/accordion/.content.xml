@@ -19,5 +19,5 @@
     jcr:description="Displays content as an accordion"
     jcr:primaryType="cq:Component"
     jcr:title="Accordion (v1)"
-    sling:resourceSuperType="core/fd/components/form/container/v2/container"
+    sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
     componentGroup="AF core ww"/>

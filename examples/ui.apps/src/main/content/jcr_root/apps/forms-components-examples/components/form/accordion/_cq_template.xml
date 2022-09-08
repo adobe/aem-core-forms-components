@@ -2,11 +2,13 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
     xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="nt:unstructured">
     <item_1 jcr:primaryType="nt:unstructured"
-            jcr:title="Item 1"
+            jcr:title="Item1"
+            name="Item1"
             sling:resourceType="core/fd/components/form/container/v2/container"
             layout="responsiveGrid"/>
     <item_2 jcr:primaryType="nt:unstructured"
-            jcr:title="Item 2"
+            jcr:title="Item2"
+            name="Item2"
             sling:resourceType="core/fd/components/form/container/v2/container"
             layout="responsiveGrid"/>
 </jcr:root>
