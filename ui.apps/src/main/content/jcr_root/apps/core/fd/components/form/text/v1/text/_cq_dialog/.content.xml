@@ -50,11 +50,6 @@
                             <enabled-typehint
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
-                            <css
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="CSS Class"
-                                    name="./css"/>
                         </items>
                     </basic>
                     <help

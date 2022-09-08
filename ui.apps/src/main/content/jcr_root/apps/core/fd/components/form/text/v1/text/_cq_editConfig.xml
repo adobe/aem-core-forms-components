@@ -5,13 +5,13 @@
           cq:dialogMode="floating"
           cq:layout="editbar"
           cq:disableTargeting="{Boolean}true">
-    <cq:listeners
-            jcr:primaryType="cq:EditListenersConfig"
-            afterdelete="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"
-            afteredit="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"
-            afterinsert="guidelib.author.editConfigListeners.GUIDE_AFTER_INSERT"
-            aftermove="guidelib.author.editConfigListeners.REFRESH_GUIDE"
-            beforeedit="guidelib.author.editConfigListeners.updateTextVariableList"/>
+<!--    <cq:listeners-->
+<!--            jcr:primaryType="cq:EditListenersConfig"-->
+<!--            afterdelete="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"-->
+<!--            afteredit="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"-->
+<!--            afterinsert="guidelib.author.editConfigListeners.GUIDE_AFTER_INSERT"-->
+<!--            aftermove="guidelib.author.editConfigListeners.REFRESH_GUIDE"-->
+<!--            beforeedit="guidelib.author.editConfigListeners.updateTextVariableList"/>-->
     <cq:inplaceEditing
             jcr:primaryType="cq:InplaceEditingConfig"
             active="{Boolean}true"
@@ -184,48 +184,48 @@
             </uiSettings>
         </inplaceEditingTextConfig>
     </cq:inplaceEditing>
-    <cq:actionConfigs jcr:primaryType="nt:unstructured">
-        <editexpression
-                jcr:primaryType="nt:unstructured"
-                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
-                order="after CONFIGURE"
-                icon="bidRule"
-                text="Edit Rules"/>
-        <som
-                jcr:primaryType="nt:unstructured"
-                handler="guidelib.author.editConfigListeners.getSOM"
-                text="View SOM Expression"/>
-        <saveInPanel
-                jcr:primaryType="nt:unstructured"
-                handler="guidelib.author.editConfigListeners.openSaveInPanelDialog"
-                text="Group Objects In Panel"/>
-        <replace
-                jcr:primaryType="nt:unstructured"
-                handler="guidelib.author.editConfigListeners.replaceGuideComponent"
-                text="Replace"/>
-        <merge
-                jcr:primaryType="nt:unstructured"
-                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isChildOfTable(editable) &amp;&amp; !guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable);}"
-                handler="guidelib.author.editConfigListeners.mergeTableCell"
-                hidden="{Boolean}true"
-                text="Merge"/>
-        <split
-                jcr:primaryType="nt:unstructured"
-                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isChildOfTable(editable) &amp;&amp; !guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable);}"
-                handler="guidelib.author.editConfigListeners.splitTableCell"
-                hidden="{Boolean}true"
-                text="Split Cells"/>
-        <addcolumn
-                jcr:primaryType="nt:unstructured"
-                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable); }"
-                handler="guidelib.author.AuthorUtils.GuideTableEdit.addCol"
-                hidden="{Boolean}true"
-                text="Add Column"/>
-        <delcolumn
-                jcr:primaryType="nt:unstructured"
-                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable); }"
-                handler="guidelib.author.AuthorUtils.GuideTableEdit.deleteCol"
-                hidden="{Boolean}true"
-                text="Delete Column"/>
-    </cq:actionConfigs>
+<!--    <cq:actionConfigs jcr:primaryType="nt:unstructured">-->
+<!--        <editexpression-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"-->
+<!--                order="after CONFIGURE"-->
+<!--                icon="bidRule"-->
+<!--                text="Edit Rules"/>-->
+<!--        <som-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                handler="guidelib.author.editConfigListeners.getSOM"-->
+<!--                text="View SOM Expression"/>-->
+<!--        <saveInPanel-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                handler="guidelib.author.editConfigListeners.openSaveInPanelDialog"-->
+<!--                text="Group Objects In Panel"/>-->
+<!--        <replace-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                handler="guidelib.author.editConfigListeners.replaceGuideComponent"-->
+<!--                text="Replace"/>-->
+<!--        <merge-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isChildOfTable(editable) &amp;&amp; !guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable);}"-->
+<!--                handler="guidelib.author.editConfigListeners.mergeTableCell"-->
+<!--                hidden="{Boolean}true"-->
+<!--                text="Merge"/>-->
+<!--        <split-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isChildOfTable(editable) &amp;&amp; !guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable);}"-->
+<!--                handler="guidelib.author.editConfigListeners.splitTableCell"-->
+<!--                hidden="{Boolean}true"-->
+<!--                text="Split Cells"/>-->
+<!--        <addcolumn-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable); }"-->
+<!--                handler="guidelib.author.AuthorUtils.GuideTableEdit.addCol"-->
+<!--                hidden="{Boolean}true"-->
+<!--                text="Add Column"/>-->
+<!--        <delcolumn-->
+<!--                jcr:primaryType="nt:unstructured"-->
+<!--                condition="function(editable){ return guidelib.author.AuthorUtils.GuideTableEdit.isHeaderCell(editable); }"-->
+<!--                handler="guidelib.author.AuthorUtils.GuideTableEdit.deleteCol"-->
+<!--                hidden="{Boolean}true"-->
+<!--                text="Delete Column"/>-->
+<!--    </cq:actionConfigs>-->
 </jcr:root>
