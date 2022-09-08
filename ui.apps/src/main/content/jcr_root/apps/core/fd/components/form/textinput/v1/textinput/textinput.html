@@ -36,6 +36,8 @@
               readonly="${text.readOnly}"
               required="${text.required}"
               placeholder="${text.placeHolder}"
+              minlength="${text.minLength}"
+              maxlength="${text.maxLength}"
               data-cmp-required-message="${text.constraintMessages.required}">${text.default}</textarea>
     <input data-sly-test="${!useTextarea}"
            class="cmp-adaptiveform-textinput__widget"
@@ -46,6 +48,8 @@
            readonly="${text.readOnly}"
            required="${text.required}"
            placeholder="${text.placeHolder}"
+           minlength="${text.minLength}"
+           maxlength="${text.maxLength}"
            data-cmp-required-message="${text.constraintMessages.required}"/>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
