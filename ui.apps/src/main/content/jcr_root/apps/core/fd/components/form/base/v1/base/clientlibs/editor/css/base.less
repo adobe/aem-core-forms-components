@@ -52,3 +52,29 @@
 .cmp-adaptiveform-textinput__shortdescription {
     &:extend(.base__shortdescription);
 }
+
+.cmp-tabs__tablist {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    list-style: none;
+}
+
+.cmp-tabs__tab {
+    box-sizing: border-box;
+    border-bottom: 1px solid transparent;
+    padding: .5rem 1rem;
+    cursor: pointer;
+
+    &--active {
+        border-color: inherit;
+    }
+}
+
+.cmp-tabs__tabpanel {
+    display: none;
+
+    &--active {
+        display: block;
+    }
+}
