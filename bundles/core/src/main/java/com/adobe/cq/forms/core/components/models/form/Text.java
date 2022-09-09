@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import com.adobe.cq.wcm.core.components.models.Component;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -26,24 +25,24 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface Text extends Field {
 
-//    /**
-//     * Retrieves the text value to be displayed.
-//     *
-//     * @return the text value to be displayed, or {@code null} if no value can be returned
-//     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
-//     */
-//    default String getText() {
-//        return null;
-//    }
-//
-//    /**
-//     * Checks if the text to be displayed is rich text or not.
-//     *
-//     * @return {@code true} if the text is rich (HTML formatting), {@code false otherwise}
-//     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
-//     */
-//    default boolean isRichText() {
-//        return false;
-//    }
+    /**
+     * Retrieves the text value to be displayed.
+     *
+     * @return the text value to be displayed, or {@code null} if no value can be returned
+     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
+     */
+    default String getText() {
+        return null;
+    }
+
+    /**
+     * Checks if the text to be displayed is rich text or not.
+     *
+     * @return {@code true} if the text is rich (HTML formatting), {@code false otherwise}
+     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
+     */
+    default boolean isRichText() {
+        return false;
+    }
 
 }
