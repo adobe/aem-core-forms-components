@@ -49,4 +49,11 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
             return Type.OBJECT;
         }
     }
+
+    // @NotNull
+    // protected List<PanelContainerItemImpl> readItems() {
+    // return getChildren().stream()
+    // .map(res -> new PanelContainerItemImpl(null, res, getId(), component, getCurrentPage()))// todo: what's LinkManager?
+    // .collect(Collectors.toList());
+    // }
 }

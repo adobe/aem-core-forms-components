@@ -61,4 +61,6 @@ public final class FormConstants {
 
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
+
+    public final static String RT_FD_FORM_ACCORDION_V1 = RT_FD_FORM_PREFIX + "accordion/v1/accordion";
 }
