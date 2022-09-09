@@ -84,4 +84,30 @@
     } else {
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
+
+    class Text extends FormView.FormFieldBase {
+
+            static NS = FormView.Constants.NS;
+            static IS = "adaptiveFormText";
+
+            static selectors  = {
+                self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+            };
+
+            constructor(params) {
+                super(params);
+            }
+
+            getClass() {
+                return Text.IS;
+            }
+
+            setFocus() {
+                this.setActive();
+            }
+        }
+
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new Text({element, formContainer})
+    }, Text.selectors.self);
 })();

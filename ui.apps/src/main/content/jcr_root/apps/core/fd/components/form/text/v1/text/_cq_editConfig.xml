@@ -15,13 +15,13 @@
     <cq:inplaceEditing
             jcr:primaryType="cq:InplaceEditingConfig"
             active="{Boolean}true"
-            configPath="inplaceEditingTextConfig"
+            configPath="inplaceEditingConfig"
             editorType="text">
-        <inplaceEditingTextConfig
+        <inplaceEditingConfig
                 jcr:primaryType="cq:Widget"
                 hideLabel="{Boolean}true"
-                name="./_value"
-                textPropertyName="./_value"
+                name="./text"
+                textPropertyName="./text"
                 xtype="richtext">
             <rtePlugins jcr:primaryType="nt:unstructured">
                 <footnoteplugin
@@ -182,7 +182,7 @@
                     </additionalClasses>
                 </cui>
             </uiSettings>
-        </inplaceEditingTextConfig>
+        </inplaceEditingConfig>
     </cq:inplaceEditing>
 <!--    <cq:actionConfigs jcr:primaryType="nt:unstructured">-->
 <!--        <editexpression-->
