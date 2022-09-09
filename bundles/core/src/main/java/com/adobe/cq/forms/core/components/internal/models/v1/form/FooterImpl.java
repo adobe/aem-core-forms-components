@@ -34,4 +34,8 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FooterImpl extends AbstractFieldImpl implements Footer {
 
+    @Override
+    public String getText() {
+        return "helloWorldFooter";
+    }
 }

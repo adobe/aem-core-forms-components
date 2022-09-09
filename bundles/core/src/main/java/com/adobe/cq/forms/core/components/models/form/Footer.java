@@ -30,5 +30,6 @@ public interface Footer extends Field, FileConstraint, ContainerConstraint {
      *
      * @return {@code true} if multiple files can be selected, {@code false} otherwise
      */
+    String getText();
 
 }
