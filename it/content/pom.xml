@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.100-SNAPSHOT</version>
+        <version>1.0.27-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -182,13 +182,6 @@
             <version>${project.version}</version>
             <type>zip</type>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.granite.toggle</groupId>
-            <artifactId>com.adobe.granite.toggle.impl.dev</artifactId>
-            <version>1.1.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

@@ -18,7 +18,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Page Authoring Components
 
--   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+-   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
 
 ### Forms And Communications Portal
 
@@ -38,7 +38,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ | 
-| 1.0.16                | 2.20.2              | Continual                    | 8, 11 | 3.3.9+ |
+| 1.0.26                | 2.20.2              | Continual                    | 8, 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
@@ -81,18 +81,6 @@ The hostname and port of the instance can be changed with the following user def
 
 * `aem.host` and `aem.port` for the author instance.
 * `aem.publish.host` and `aem.publish.port` for the publish instance.
-
-### Building and Installing examples
-
-We have a set of example proxy components to demonstrate how the existing components can be customized or
-new components can be added. The `examples` module contains the code for all the components
-
-To build and install that, from the examples directory (or from the root directory), 
-run the following command
-
-```shell
-mvn clean install -PautoInstallExamples,include-wcm-components-examples
-```
 
 ### AEM as a Cloud Service SDK
 When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
