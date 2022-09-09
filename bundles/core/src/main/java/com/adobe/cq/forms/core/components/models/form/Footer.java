@@ -23,13 +23,15 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface Footer extends Field, FileConstraint, ContainerConstraint {
+public interface Footer extends Base {
 
     /**
      * Returns {@code true} if multiple files can be selected, {@code false} otherwise
      *
      * @return {@code true} if multiple files can be selected, {@code false} otherwise
      */
-    String getText();
+    default String getValue() {
+        return null;
+    }
 
 }

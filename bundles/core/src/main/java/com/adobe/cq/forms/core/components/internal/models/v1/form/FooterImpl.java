@@ -24,7 +24,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Footer;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -32,10 +32,10 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_FOOTER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FooterImpl extends AbstractFieldImpl implements Footer {
+public class FooterImpl extends AbstractBaseImpl implements Footer {
 
     @Override
-    public String getText() {
-        return "helloWorldFooter";
+    public String getValue() {
+        return value;
     }
 }
