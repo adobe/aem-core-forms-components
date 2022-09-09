@@ -1,0 +1,9 @@
+.cmp-adaptiveform-radiobutton { }
+.cmp-adaptiveform-radiobutton__widget { }
+.cmp-adaptiveform-radiobutton__label { }
+.cmp-adaptiveform-radiobutton__longdescription { }
+.cmp-adaptiveform-radiobutton__shortdescription { }
+.cmp-adaptiveform-radiobutton__questionmark { }
+[data-cmp-adaptiveform-radiobutton-hidden="true"] {
+    display: none
+}
