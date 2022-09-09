@@ -10,7 +10,8 @@
   "tooltip": "test-short-description",
   "properties": {
     "af:layout" : {
-      "tooltipVisible": false
+      "tooltipVisible": false,
+      "orientation": "horizontal"
     }
   },
   "enforceEnum":true,
