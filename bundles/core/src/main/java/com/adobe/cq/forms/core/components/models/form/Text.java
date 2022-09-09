@@ -23,15 +23,14 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Text extends Field {
-
+public interface Text extends Base {
     /**
      * Retrieves the text value to be displayed.
      *
      * @return the text value to be displayed, or {@code null} if no value can be returned
-     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
      */
-    default String getText() {
+    default String getValue() {
         return null;
     }
 
@@ -39,10 +38,9 @@ public interface Text extends Field {
      * Checks if the text to be displayed is rich text or not.
      *
      * @return {@code true} if the text is rich (HTML formatting), {@code false otherwise}
-     * @since com.adobe.cq.wcm.core.components.models 11.0.0; marked <code>default</code> in 12.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
      */
     default boolean isRichText() {
         return false;
     }
-
 }

@@ -18,7 +18,6 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Adaptive Form Text field"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          extraClientlibs="[core.forms.components.text.v1.editor]"
           trackingFeature="core-components:adaptiveform-text:v1">
     <content
             granite:class="cmp-adaptiveform-text__editdialog"
