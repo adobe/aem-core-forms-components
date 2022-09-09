@@ -36,6 +36,8 @@ public final class FormConstants {
 
     /** The resource type for text input v1 */
     public static final String RT_FD_FORM_TEXT_V1 = RT_FD_FORM_PREFIX + "textinput/v1/textinput";
+    public static final String RT_FD_FORM_HEADER_V1 = RT_FD_FORM_PREFIX + "header/v1/header";
+    public static final String RT_FD_FORM_FOOTER_V1 = RT_FD_FORM_PREFIX + "footer/v1/footer";
     /** The resource type for checkbox v1 */
     public static final String RT_FD_FORM_CHECKBOX_V1 = RT_FD_FORM_PREFIX + "checkbox/v1/checkbox";
 
