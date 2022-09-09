@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form File Attachment"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.fileinput.v1.editor]"
+    trackingFeature="core-components:adaptiveform-fileinput:v1">
+    <content
+        granite:class="cmp-adaptiveform-fileinput__editdialog"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <placeholder
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                            <multiSelection
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    sling:orderBefore="fieldLayout"
+                                    granite:class="cmp-adaptiveform-fileinput__multiselection"
+                                    name="./multiSelection"
+                                    text="Allow multiple files"
+                                    value="true"/>
+
+                            <minimum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-fileinput__minimumFiles"
+                                    sling:orderBefore="fieldLayout"
+                                    defaultValue=""
+                                    fieldLabel="Minimum number files"
+                                    name="./minimum"/>
+                            <maximum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-fileinput__maximumFiles"
+                                    sling:orderBefore="fieldLayout"
+                                    defaultValue=""
+                                    fieldLabel="maximum number files"
+                                    name="./maximum"/>
+
+                            <buttonText
+                                    wrapperClass="cmp-adaptiveform-fileinput__buttontext"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldLabel="Upload Button Title"
+                                    name="./buttonText">
+                            </buttonText>
+
+                            <fileSizeLimit
+                                    wrapperClass="cmp-adaptiveform-fileinput__filesizelimit"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    fieldLabel="Maximum File Size (MB)"
+                                    name="./maxFileSize"
+                                    defaultValue=""
+                                    sling:orderBefore="fieldLayout">
+                            </fileSizeLimit>
+                            <mimeType
+                                    wrapperClass="cmp-adaptiveform-fileinput__mimetype"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
+                                    fieldLabel="Supported File Types"
+                                    defaultValue=""
+                                    sling:orderBefore="fieldLayout">
+                                <field
+                                        name="./accept"
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                />
+                            </mimeType>
+
+                            <type jcr:primaryType="nt:unstructured"
+                                  sling:orderBefore="fieldLayout"
+                                  wrapperClass="cmp-adaptiveform-fileinput__type"
+                                  granite:class="cmp-adaptiveform-fileinput__type"
+                                  sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                  fieldLabel="Type of the Field"
+                                  name="./type"
+                                  value="file">
+                            </type>
+
+                            <showComment
+                                    wrapperClass="cmp-adaptiveform-fileinput__showcomments"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    sling:orderBefore="fieldLayout"
+                                    name="./showComment"
+                                    text="Show upload comments"
+                                    value="true"
+                                    >
+                            </showComment>
+                            <excludeFromDor
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                            <guideGlobalLazyField
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                        </items>
+                    </basic>
+                    <validation
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                    </validation>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Help Content"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </help>
+                    <patterns
+                            jcr:primaryType="nt:unstructured"
+                            sling:hideResource="{Boolean}true"/>
+                    <accessibility
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Accessibility"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </accessibility>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
