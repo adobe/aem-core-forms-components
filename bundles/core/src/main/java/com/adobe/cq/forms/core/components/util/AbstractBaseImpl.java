@@ -83,6 +83,10 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    protected String format;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     protected String validationExpression;
 
     // using old jcr property names to allow easy conversion from foundation to core components
@@ -299,38 +303,37 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         return enabled;
     }
 
-    protected String getConstraintMessage(ConstraintType type) {
-        String propName = type.getMessageProperty();
-        ValueMap properties = resource.getValueMap();
-        return translate(propName, properties.get(propName, String.class));
-    }
-
     @Override
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
         if (constraintMessages == null) {
             constraintMessages = new LinkedHashMap<>();
             ConstraintMessages msgs = new ConstraintMessagesProvider();
-            putConstraintMessage(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
-            putConstraintMessage(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
+            put(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
+            put(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
             if (this.getType().equals(Type.STRING)) {
-                putConstraintMessage(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
-                putConstraintMessage(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
-                putConstraintMessage(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
-                putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
+                put(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
+                put(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
+                put(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
+                put(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
+                String format = this.getFormat();
+                if (format != null && format.equals(Format.DATE.toString())) {
+                    put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                    put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                }
             }
 
             if (this.getType().equals(Type.NUMBER)) {
-                putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
             }
 
             // todo: add the following conditionally
-            putConstraintMessage(ConstraintType.STEP, msgs.getStepConstraintMessage());
-            putConstraintMessage(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
-            putConstraintMessage(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
-            putConstraintMessage(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
-            putConstraintMessage(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
-            putConstraintMessage(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
+            put(ConstraintType.STEP, msgs.getStepConstraintMessage());
+            put(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
+            put(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
+            put(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
+            put(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
+            put(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
         }
         return constraintMessages;
     }
@@ -338,7 +341,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     /**
      * Put non-blank named values in constraint messages map.
      */
-    private void putConstraintMessage(ConstraintType name, String value) {
+    private void put(ConstraintType name, String value) {
         if (StringUtils.isNotBlank(value)) {
             constraintMessages.put(name, value);
         }
@@ -491,6 +494,12 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    @Nullable
+    public String getFormat() {
+        return format;
     }
 
     @Override

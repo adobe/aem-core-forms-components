@@ -16,5 +16,4 @@
 import FormContainer from "./FormContainer";
 import FormField from "./FormField";
 import FormFieldBase from "./FormFieldBase";
-import FormPanel from "./FormPanel";
-export {FormField, FormContainer, FormFieldBase, FormPanel}
+export {FormField, FormContainer, FormFieldBase}

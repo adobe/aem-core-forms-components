@@ -36,3 +36,7 @@
 .cmp-adaptiveform-datepicker__questionmark {
 
 }
+
+[data-cmp-adaptiveform-datepicker-hidden=true] {
+    display: none;
+}

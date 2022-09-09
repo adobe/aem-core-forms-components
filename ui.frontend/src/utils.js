@@ -116,11 +116,11 @@ export default class Utils {
             let formContainer =  e.detail;
             let fieldElements = document.querySelectorAll(fieldSelector);
             for (let i = 0; i < fieldElements.length; i++) {
-                let field = fieldCreator({
-                    "element" : fieldElements[i],
-                    "formContainer" : formContainer
+                let textInputField = fieldCreator({
+                    element : fieldElements[i],
+                    formContainer
                 });
-                formContainer.addField(field);
+                formContainer.addField(textInputField);
             }
             Utils.registerMutationObserver(fieldCreator, fieldSelector, fieldClass);
         }

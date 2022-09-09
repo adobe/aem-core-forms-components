@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../constants";
+import Utils from "../utils";
 import FormField from './FormField'
 
 export default class FormFieldBase extends FormField {
@@ -25,6 +25,7 @@ export default class FormFieldBase extends FormField {
         this.description = this.getDescription();
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
+        this.setId(this.element.id);
     }
 
     /**
@@ -67,13 +68,6 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * Sets the focus on component's widget.
-     */
-    setFocus() {
-        this.widget.focus();
-    }
-
-    /**
      * applies full state of the field to the HTML. Generally done just after the model is bound to the field
      * @param state
      * @private
@@ -82,8 +76,12 @@ export default class FormFieldBase extends FormField {
         if (state.value) {
             this._updateValue(state.value);
         }
-        this._updateVisible(state.visible);
-        this._updateEnable(state.enabled);
+        this._updateVisible(state.visible)
+        this._updateEnable(state.visible)
+    }
+
+    dataAttribute(attr) {
+        return `data-${this.constructor.bemBlock}-${attr}`
     }
 
     /**
@@ -92,8 +90,7 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateVisible(visible) {
-        this.toggle(visible, Constants.ARIA_HIDDEN, true);
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
+        this.toggle(visible, this.dataAttribute('hidden'), true)
     }
 
     /**
@@ -102,23 +99,19 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateEnable(enable) {
-        this.toggle(enable, Constants.ARIA_DISABLED, true);
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
+        this.toggle(enable, this.dataAttribute('disabled'), true)
         if (enable === false) {
             this.widget.setAttribute("disabled", true);
-            this.widget.setAttribute(Constants.ARIA_DISABLED, true);
         } else {
             this.widget.removeAttribute("disabled");
-            this.widget.removeAttribute(Constants.ARIA_DISABLED);
         }
     }
 
     _updateValid(valid, state) {
-        this.toggle(valid, Constants.ARIA_INVALID, true);
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+        this.toggle(valid, this.dataAttribute('invalid'), !valid)
         if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
             const errMessage = valid === true ? '' : 'There is an error in the field';
-            this.errorDiv.innerHTML = errMessage;
+            this.errorDiv.innerHTML = errMessage
         }
     }
 
@@ -131,7 +124,7 @@ export default class FormFieldBase extends FormField {
     }
 
     getClass() {
-        return this.constructor.IS;
+        return this.constructor.IS
     }
 
     subscribe() {

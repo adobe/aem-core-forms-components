@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface StringConstraint extends BaseConstraint, FormatConstraint {
+public interface StringConstraint extends BaseConstraint {
 
     /**
      * Returns the minimum length of the data. The constraint is applicable only for field with type string
