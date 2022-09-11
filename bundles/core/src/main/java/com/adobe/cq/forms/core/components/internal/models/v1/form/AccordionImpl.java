@@ -45,7 +45,7 @@ import com.adobe.cq.forms.core.components.models.form.Accordion;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class AccordionImpl extends PanelImpl implements Accordion {
+public class AccordionImpl extends PanelContainerImpl implements Accordion {
 
     /**
      * Flag indicating if single expansion is enabled.
