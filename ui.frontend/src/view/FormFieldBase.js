@@ -194,9 +194,7 @@ export default class FormFieldBase extends FormField {
 
     _showHideTooltip(show) {
         const tooltipDiv = this.getTooltipDiv(),
-            bemBlock = this.constructor.bemBlock,
-            tooltipVisible = this._isTooltipAlwaysVisible(),
-            tooltipBem = bemBlock + '__shortdescription--tooltip';
+            tooltipVisible = this._isTooltipAlwaysVisible();
         // If tooltip is always visible then no need to toggle.
         if (tooltipDiv && !tooltipVisible) {
             if(show) {
