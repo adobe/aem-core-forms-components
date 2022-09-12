@@ -64,17 +64,13 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
      */
     @Override
     public String getImageSrc() throws RepositoryException, IOException {
-        System.out.println(" starting for image data empty:");
         image = new Image(this.resource);
 
         Boolean containsData = (image.getData() != null);
-        System.out.println(" Check for image data :" + String.valueOf(containsData));
         if (containsData) {
             image.setSelector(".img");
-            System.out.println(" Check for image data full :" + image.getSrc());
             return image.getSrc();
         } else {
-            System.out.println(" Check for image data empty:");
             return "";
         }
     }

@@ -33,7 +33,6 @@ public interface StaticImage extends Field, BaseConstraint {
      */
     @Nullable
     default String getImageSrc() throws RepositoryException, IOException {
-        System.out.println(" Check for image data empty:");
         return null;
     }
 
