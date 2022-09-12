@@ -64,7 +64,7 @@
     display: none;
 }
 
-.cmp-adaptiveform-textinput__shortdescription--tooltip {
+[data-cmp-adaptiveform-textinput-shortdescription-tooltip=true] {
     position: absolute;
     transform: translateX(0%);
     background-color: #4d4b4b;
@@ -75,7 +75,7 @@
     border-radius: 20px;
 }
 
-.cmp-adaptiveform-textinput__shortdescription--tooltip::after {
+[data-cmp-adaptiveform-textinput-shortdescription-tooltip=true]::after {
     content: "";
     position: absolute;
     left: 50%;

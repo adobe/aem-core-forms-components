@@ -201,10 +201,10 @@ export default class FormFieldBase extends FormField {
         if (tooltipDiv && !tooltipVisible) {
             if(show) {
                 this._showHideTooltipDiv(true);
-                tooltipDiv.classList.add(tooltipBem);
+                this._toggleAttribute(tooltipDiv, false, this.dataAttribute('shortdescription-tooltip'), true);
             } else {
                 this._showHideTooltipDiv(false);
-                tooltipDiv.classList.remove(tooltipBem);
+                this._toggleAttribute(tooltipDiv, true, this.dataAttribute('shortdescription-tooltip'), true);
             }
         }
     }
