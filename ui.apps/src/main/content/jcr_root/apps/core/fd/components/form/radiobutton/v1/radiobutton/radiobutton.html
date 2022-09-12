@@ -21,12 +21,14 @@
             <div data-sly-call="${label.label @componentId=component.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}"></div> 
             <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}"></div> 
             <div data-sly-list="${radioButton.enums}">
-                <input type="radio" name="${radioButton.name}" class="cmp-adaptiveform-radibButton__widget" readonly="${radioButton.readOnly}" required="${radioButton.required}" value="${item}">
-                <label>${radioButton.enumNames[itemList.index]}</label>
-            </div> 
-            <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=datePicker.tooltipVisible, shortDescription=datePicker.tooltip, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap> 
-            </div> 
-            <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div> 
+                <label aria-label="${radioButton.enumNames[itemList.index]}">
+                    <input type="radio" name="${radioButton.name}" class="cmp-adaptiveform-radibButton__widget" readonly="${radioButton.readOnly}" required="${radioButton.required}" value="${item}" checked="${radioButton.enums[itemList.index] == radioButton.default ? true : false}">
+                    ${radioButton.enumNames[itemList.index]}
+                </label>
+            </div>
+            <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=datePicker.tooltipVisible, shortDescription=datePicker.tooltip, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap>
+            </div>
+            <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
             <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div> 
         </div>
     </body>

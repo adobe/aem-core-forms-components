@@ -68,9 +68,3 @@ BLOCK cmp-adaptiveform-radiobutton
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormRadioButton"` attribute to the wrapper block to enable initialization of the JavaScript component.
-
-The following attributes can be added to the same element to provide options:
-
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
-
-A `data-cmp-hook-adaptiveform-radiobutton="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.

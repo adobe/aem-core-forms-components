@@ -17,50 +17,29 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-radiobutton__editdialog",
-        TEXTINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__allowrichtext",
-        TEXTINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxlength",
-        TEXTINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__minlength",
+        RADIOBUTTON_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__customtext",
+        RADIOBUTTON_ASSISTPRIORITY_VALUE = 'input[name="./assistPriority"]',
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
     /**
-     * Toggles the visibility of the maxLength, minLength, placeholder field based on the checked state of
-     * the allowRichText checkbox
+     * Shows custom text box depending on the value of assist priority of radio button
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleValueChanged(dialog) {
-        var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
-        var textInputMaxLength = dialog.find(TEXTINPUT_MAXLENGTH);
-        var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);
-        var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
-        var textInputValue = dialog.find(TEXTINPUT_VALUE);
-        var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
-        var listOfElements = [textInputMaxLength, textInputMinLength, basePlaceHolder, textInputValue];
-
-        var isNotChecked = function() {return !isChecked()};
-        var isChecked = function() {return component.checked};
+        var component = $(RADIOBUTTON_ASSISTPRIORITY_VALUE);
+        var customtext = dialog.find(RADIOBUTTON_CUSTOMTEXT);
         var hideAndShowElements = function() {
-            // hide other elements
-            Utils.checkAndDisplay(listOfElements)(isNotChecked);
-            // show rich text
-            Utils.checkAndDisplay(textInputRichTextValue)(isChecked);
+            if(component[0].value === "custom"){
+                customtext.show();
+            } else {
+                customtext.hide();
+            }
         };
         hideAndShowElements();
-        component.on("change", function() {
+        dialog.on("change", component, function() {
             hideAndShowElements();
         });
-        var changeFormFields = Utils.manipulateNameAndValue([textInputValue[0], textInputRichTextValue[0]]);
-        if (isChecked()) {
-            var richTextContainer = textInputRichTextValue.parent('.richtext-container');
-            var richTextEditable = richTextContainer.find(".cq-RichText-editable");
-            var filteredValue = Utils.encodeScriptableTags(textInputValue[0].value);
-            richTextEditable.empty().append(filteredValue);
-            changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
-        } else {
-            //Removing html tags from content and setting it to default text field
-            var filteredValue =  $('<div>').html(textInputValue[0].value).text();
-            changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
-        }
     }
     Utils.initializeEditDialog(EDIT_DIALOG)(handleValueChanged);
 
