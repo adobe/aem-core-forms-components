@@ -19,4 +19,9 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 @ConsumerType
 public interface TermsAndConditions {
+    
+    
+    default String getTncTextContent() {
+        return null;
+    }
 }

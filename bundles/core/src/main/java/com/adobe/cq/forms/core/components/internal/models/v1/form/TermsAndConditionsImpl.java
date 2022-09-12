@@ -32,17 +32,18 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, defaultInjectionStrategy=DefaultInjectionStrategy.OPTIONAL, adapters = { TermsAndConditions.class,
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { TermsAndConditions.class,
         ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_TNC_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAndConditions {
     
-    @ValueMapValue(name = "tncCheckBoxContent")
+    @ValueMapValue(name = "tncTextContent", injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
-    protected String tncCheckBoxContent;
+    protected String tncTextContent;
     
-    public String getCBContent() {
-        return tncCheckBoxContent;
+    
+    public String getTncTextContent() {
+        return tncTextContent;
     }
     
 }
