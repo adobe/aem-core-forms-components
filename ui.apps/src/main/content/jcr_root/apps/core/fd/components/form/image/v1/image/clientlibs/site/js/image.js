@@ -30,9 +30,7 @@
          */
         var initImage = function(component) {
             var dmImage = component.matches("[data-cmp-dmimage]");
-             console.log("------testing...dmimage ")
             if (dmImage) {
-                console.log("------testing...")
                 var image = component.querySelector("img");
                 CMP.image.dynamicMedia.setDMAttributes(component, image);
             }
