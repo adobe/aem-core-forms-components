@@ -1,0 +1,33 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2021 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<div id="${component.id}"
+	data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+	data-sly-use.tnc="com.adobe.cq.forms.core.components.models.form.TermsAndConditions"
+	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+	data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+	<div>
+	Terms And Conditions
+	</div>
+	<div>
+		<input type="text" value="${tnc.tncTextContent}"
+			placeholder="Text related to the terms and conditions come here" />
+	</div>
+	<div>
+		<input type="checkbox" /> ${tnc.tncConsentText}
+	</div>
+
+</div>
