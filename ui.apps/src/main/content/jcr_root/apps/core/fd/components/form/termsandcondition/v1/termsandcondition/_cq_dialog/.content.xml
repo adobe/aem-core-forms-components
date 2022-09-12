@@ -18,9 +18,9 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Terms and Conditions"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.title.v2.editor]"
-    helpPath="https://www.adobe.com/go/aem_cmp_termsandcondition_v3"
-    trackingFeature="core-components:termsandcondition:v3">
+    extraClientlibs="[core.wcm.components.termsandconditions.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_cmp_termsandcondition_v1"
+    trackingFeature="core-components:termsandcondition:v1">
    <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -200,68 +200,6 @@
                                         bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel"/>	
                         </items>
                     </basic>
-                    <validation
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                            <maxLength
-                                    jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-textinput__maxlength"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Maximum Number of Characters"
-                                    min="0"
-                                    name="./maxLength"/>
-                            <maxLengthMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum characters are entered"
-                                    granite:class="cmp-adaptiveform-base__maxlengthmessage"
-                                    fieldLabel="Max Chars Error Message"
-                                    name="./maxLengthMessage"/>
-                            <minLength
-                                    jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-textinput__minlength"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Minimum Number of Characters"
-                                    min="0"
-                                    name="./minLength"/>
-                            <minLengthMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when less than minimum characters are entered"
-                                    granite:class="cmp-adaptiveform-base__minlengthmessage"
-                                    fieldLabel="Min Chars Error Message"
-                                    name="./minLengthMessage"/>
-                            <validationPatternGroup
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Validation Pattern"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                    title="Validation Pattern">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <validationPatternType
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            fieldLabel="Type"
-                                            name="./validationPatternType">
-                                    </validationPatternType>
-                                    <validatePictureClause
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                            fieldDescription="Regular Expression is permitted."
-                                            fieldLabel="Pattern"
-                                            name="./pattern">
-                                    </validatePictureClause>
-                                    <validatePictureClauseMessage
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                            fieldLabel="Error Message"
-                                            name="./validatePictureClauseMessage"/>
-                                </items>
-                            </validationPatternGroup>
-                        </items>
-                    </validation>
                     <patterns
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Patterns"

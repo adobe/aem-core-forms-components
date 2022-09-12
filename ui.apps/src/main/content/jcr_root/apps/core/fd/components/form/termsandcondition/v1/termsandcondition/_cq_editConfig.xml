@@ -20,9 +20,7 @@
         jcr:primaryType="cq:InplaceEditingConfig"
         active="{Boolean}true"
         configPath="inplaceEditingConfig"
-        editorType="title">
-        <inplaceEditingConfig
-            jcr:primaryType="nt:unstructured"
-            titleTag="[h1,h2,h3,h4,h5,h6]"/>
+        editorType="tnc">
+       
     </cq:inplaceEditing>
 </jcr:root>
