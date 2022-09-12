@@ -46,7 +46,7 @@
                     enumNames="[Item 1, Item 2, Item 3, Item 4]"
                     fieldType="checkbox-group"
                     mandatoryMessage="This is a required checkboxgroup"
-                    name="checkboxgroup1662722663424"
+                    name="checkboxgroup1662722663425"
                     orientation="vertical"
                     textIsRich="[true,true]"
                     type="string[]"

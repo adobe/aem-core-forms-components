@@ -31,7 +31,7 @@ describe('Page - Authoring', function () {
     const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Check Box Group", afConstants.components.forms.resourceType.formcheckboxgroup);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form CheckBox Group", afConstants.components.forms.resourceType.formcheckboxgroup);
     cy.get('body').click( 0,0);
   }
 
@@ -75,12 +75,12 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    it('insert TextInput in form container', function () {
+    it('insert CheckBoxGroup in form container', function () {
       dropCheckBoxGroupInContainer();
       cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-    it ('open edit dialog of TextInput', function(){
+    it ('open edit dialog of CheckboxGroup', function(){
       testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
     })
   })

@@ -13,23 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Text Input (v1)
+Adaptive Form CheckBox Group (v1)
 ====
-Adaptive Form Text input field component written in HTL.
+Adaptive Form CheckBox Group component written in HTL.
 
 ## Features
 
 * Provides the following type of input:
-  * text
-  * textarea
+  * checkbox
 * Custom constraint messages for the above types
 * Styles
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
+The Form CheckBox Group component uses the `com.adobe.cq.forms.core.components.models.form.CheckBoxGroup` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form CheckBox Group component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
@@ -39,12 +38,15 @@ The following properties are written to JCR for this Form Text component and are
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
+9. `./type` - defines the data type of the value
+9. `./enum` - defines the set of possible values for this field
+10. `./enumNames` - defines the user-friendly text to display for the possible options of the field.
 
 ## Client Libraries
-The component provides a `core.forms.components.textinput.v1` client library category that contains a JavaScript
+The component provides a `core.forms.components.checkboxgroup.v1` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
+It also provides a `core.forms.components.checkboxgroup.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description
@@ -60,12 +62,11 @@ BLOCK cmp-adaptiveform-textinput
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormCheckBoxGroup"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
 The following attributes can be added to the same element to provide options:
 
 1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
 
-A `data-cmp-hook-adaptiveform-textinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
 
 

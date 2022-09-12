@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with Text Input", () => {
+describe("Form with CheckBoxGroup Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkboxgroup'
@@ -78,9 +78,18 @@ describe("Form with Text Input", () => {
     it(" html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        const input = ['1']
+
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            expect(model.getState().value).to.equal(input)
+            let mval = model.getState().value
+            cy.wrap(model.getState().value).each(($el, index) => {
+                expect($el).to.include(mval[index])
+            })
+        })
+        cy.get(`#${id}`).find("input").eq(2).click().then(x => {
+            let mval = model.getState().value
+            cy.wrap(model.getState().value).each(($el, index) => {
+                expect($el).to.include(mval[index])
+            })
         })
     });
 

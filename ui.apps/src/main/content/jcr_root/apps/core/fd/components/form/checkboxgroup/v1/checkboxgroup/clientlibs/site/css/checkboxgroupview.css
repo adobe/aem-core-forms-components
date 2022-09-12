@@ -1,11 +1,11 @@
 /**
 ## BEM Description
-BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__label
-    ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
+BLOCK cmp-adaptiveform-checkboxgroup
+    ELEMENT cmp-adaptiveform-checkboxgroup__label
+    ELEMENT cmp-adaptiveform-checkboxgroup__widget
+    ELEMENT cmp-adaptiveform-checkboxgroup__questionmark
+    ELEMENT cmp-adaptiveform-checkboxgroup__shortdescription
+    ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
 */
 
 .cmp-adaptiveform-checkboxgroup {
