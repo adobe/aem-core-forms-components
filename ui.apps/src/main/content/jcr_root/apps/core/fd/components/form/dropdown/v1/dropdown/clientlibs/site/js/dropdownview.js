@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class TextInput extends FormView.FormFieldBase {
+    class DropDown extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -25,36 +25,36 @@
          * data-{NS}-{IS}-x=""
          * @type {string}
          */
-        static IS = "adaptiveFormTextInput";
-        static bemBlock = 'cmp-adaptiveform-textinput'
+        static IS = "adaptiveFormDropDown";
+        static bemBlock = 'cmp-adaptiveform-dropdown'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${TextInput.bemBlock}__widget`,
-            label: `.${TextInput.bemBlock}__label`,
-            description: `.${TextInput.bemBlock}__longdescription`,
-            qm: `.${TextInput.bemBlock}__questionmark`,
-            errorDiv: `.${TextInput.bemBlock}__errormessage`
+            widget: `.${DropDown.bemBlock}__widget`,
+            label: `.${DropDown.bemBlock}__label`,
+            description: `.${DropDown.bemBlock}__longdescription`,
+            qm: `.${DropDown.bemBlock}__questionmark`,
+            errorDiv: `.${DropDown.bemBlock}__errormessage`
         };
 
         constructor(params) {
             super(params);
-            this.qm = this.element.querySelector(TextInput.selectors.qm)
+            this.qm = this.element.querySelector(DropDown.selectors.qm)
         }
 
         getWidget() {
-            return this.element.querySelector(TextInput.selectors.widget);
+            return this.element.querySelector(DropDown.selectors.widget);
         }
 
         getDescription() {
-            return this.element.querySelector(TextInput.selectors.description);
+            return this.element.querySelector(DropDown.selectors.description);
         }
 
         getLabel() {
-            return this.element.querySelector(TextInput.selectors.label);
+            return this.element.querySelector(DropDown.selectors.label);
         }
 
         getErrorDiv() {
-            return this.element.querySelector(TextInput.selectors.errorDiv);
+            return this.element.querySelector(DropDown.selectors.errorDiv);
         }
 
         setModel(model) {
@@ -66,7 +66,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TextInput({element})
-    }, TextInput.selectors.self);
+        return new DropDown({element})
+    }, DropDown.selectors.self);
 
 })();

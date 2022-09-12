@@ -40,11 +40,13 @@
         <!-- Should this logic of associating enums with enumNames be part of sling model?
              Should we convert it into a map (key-value) pair and then use it in the markup instead of using the common index-->
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
+            <div data-sly-test.enum="${dropdown.enums[enumNameList.index]}" data-sly-unwrap>
                 <option data-sly-test.isDefault="${dropdown.default && dropdown.default[0] == enumName}"
-                        value="${dropdown.enums[enumNameList.index]}"
+                        value="${enum}"
                         selected>${enumName}</option>
                 <option data-sly-test="${!isDefault}"
-                        value="${dropdown.enums[enumNameList.index]}">${enumName}</option>
+                        value="${enum}">${enumName}</option>
+            </div>
         </div>
     </select>
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap>
