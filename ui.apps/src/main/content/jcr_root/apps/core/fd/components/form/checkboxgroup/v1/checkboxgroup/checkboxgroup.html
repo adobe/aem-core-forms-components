@@ -41,7 +41,7 @@
                             checked="${checkboxgroup.enums[itemList.index] == checkboxgroup.value ? true : false}"
                             aria-required="${checkboxgroup.required}">
                     <div class="cmp-adaptiveform-checkboxgroup__widget__label right">
-                        <label>${checkboxgroup.enumNames[itemList.index]}</label>
+                        <label for="${component.id}${'_'}${itemList.index}__widget">${checkboxgroup.enumNames[itemList.index]}</label>
                     </div>
                 </div>
             </div>
