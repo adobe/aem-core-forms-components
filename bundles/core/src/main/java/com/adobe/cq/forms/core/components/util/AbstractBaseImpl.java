@@ -18,9 +18,11 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -573,15 +575,16 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @NotNull
     public Map<String, String[]> getEvents() {
         Resource eventNode = resource.getChild("fd:events");
+        Set<Entry<String, Object>> eventSet = new HashSet<>();
+        eventSet.add(new AbstractMap.SimpleEntry<>("custom_setProperty", "$event.payload"));
         if (eventNode != null) {
             ValueMap eventNodeProps = eventNode.getValueMap();
-            Map<String, String[]> events = eventNodeProps.entrySet()
-                .stream()
-                .flatMap(this::sanitizeEvent)
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-            return events;
+            eventSet.addAll(eventNodeProps.entrySet());
         }
-        return Collections.emptyMap();
+        Map<String, String[]> userEvents = eventSet.stream()
+            .flatMap(this::sanitizeEvent)
+            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+        return userEvents;
     }
 
     @Nullable

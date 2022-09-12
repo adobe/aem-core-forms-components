@@ -27,6 +27,9 @@
   "constraintMessages":{
     "type":"incorrect type"
   },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
   "type": "boolean",
   ":type": "core/fd/components/form/checkbox/v1/checkbox"
 }

@@ -30,5 +30,8 @@
     "video/*",
     "image/*"
   ],
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
   ":type": "core/fd/components/form/fileinput/v1/fileinput"
 }

@@ -16,7 +16,10 @@
         "value": "def"
       },
       "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput",
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      }
     }
   ],
   ":type": "core/fd/components/form/panel/v1/panel",
@@ -41,6 +44,7 @@
     "visible" : "some expression"
   },
   "events" : {
-    "change" : ["some expression 2"]
+    "change" : ["some expression 2"],
+    "custom:setProperty" : ["$event.payload"]
   }
 }
