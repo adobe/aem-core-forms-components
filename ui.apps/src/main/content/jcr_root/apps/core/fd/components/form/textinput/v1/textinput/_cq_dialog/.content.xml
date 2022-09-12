@@ -41,28 +41,6 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Default Value"
                                     name="./default"/>
-                            <imageUpload
-                                    granite:id="imageUploadId"
-                                    sling:orderBefore="visible"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/imageupload"
-                                    assetButtonText="Browse Assets"
-                                    async="{Boolean}true"
-                                    autoStart="{Boolean}false"
-                                    class="cq-droptarget"
-                                    fieldLabel="Image"
-                                    fileNameParameter="./fileName"
-                                    fileReferenceParameter="./fileReference"
-                                    mimeTypes="[image]"
-                                    multiple="{Boolean}false"
-                                    name="./file"
-                                    predicate="nosystem"
-                                    rootPath="/content/dam"
-                                    sizeLimit="{Long}100000000"
-                                    text="Upload"
-                                    title="Upload Image"
-                                    uploadUrl="${requestPathInfo.suffix}"
-                                    useHTML5="{Boolean}true"/>
                             <richTextValue
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__richtextvalue"
