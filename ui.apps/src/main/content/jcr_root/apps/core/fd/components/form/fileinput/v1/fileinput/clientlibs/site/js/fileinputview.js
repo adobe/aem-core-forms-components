@@ -15,71 +15,134 @@
  ******************************************************************************/
 (function() {
 
-    "use strict";
-    class FileInput extends FormView.FormFieldBase {
+	"use strict";
+	class FileInput extends FormView.FormFieldBase {
 
-        static NS = FormView.Constants.NS;
-        /**
-         * Each FormField has a data attribute class that is prefixed along with the global namespace to
-         * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
-         * data-{NS}-{IS}-x=""
-         * @type {string}
-         */
-        static IS = "adaptiveFormFileInput";
-        static bemBlock = 'cmp-adaptiveform-fileinput'
-        static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${FileInput.bemBlock}__widget`,
-            label: `.${FileInput.bemBlock}__label`,
-            description: `.${FileInput.bemBlock}__longdescription`,
-            qm: `.${FileInput.bemBlock}__questionmark`,
-            errorDiv: `.${FileInput.bemBlock}__errormessage`
-        };
+		static NS = FormView.Constants.NS;
+		/**
+		 * Each FormField has a data attribute class that is prefixed along with the global namespace to
+		 * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
+		 * data-{NS}-{IS}-x=""
+		 * @type {string}
+		 */
+		static IS = "adaptiveFormFileInput";
+		static bemBlock = 'cmp-adaptiveform-fileinput'
+		static selectors = {
+			self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+			widget: `.${FileInput.bemBlock}__widget`,
+			label: `.${FileInput.bemBlock}__label`,
+			description: `.${FileInput.bemBlock}__longdescription`,
+			qm: `.${FileInput.bemBlock}__questionmark`,
+			errorDiv: `.${FileInput.bemBlock}__errormessage`
+		};
 
-        constructor(params) {
-            super(params);
-            this.qm = this.element.querySelector(FileInput.selectors.qm)
-        }
+		constructor(params) {
+			super(params);
+			this.qm = this.element.querySelector(FileInput.selectors.qm)
+		}
 
-        getWidget() {
-            return this.element.querySelector(FileInput.selectors.widget);
-        }
+		getWidget() {
+			return this.element.querySelector(FileInput.selectors.widget);
+		}
 
-        getDescription() {
-            return this.element.querySelector(FileInput.selectors.description);
-        }
+		getDescription() {
+			return this.element.querySelector(FileInput.selectors.description);
+		}
 
-        getLabel() {
-            return this.element.querySelector(FileInput.selectors.label);
-        }
+		getLabel() {
+			return this.element.querySelector(FileInput.selectors.label);
+		}
 
-        getErrorDiv() {
-            return this.element.querySelector(FileInput.selectors.errorDiv);
-        }
+		getErrorDiv() {
+			return this.element.querySelector(FileInput.selectors.errorDiv);
+		}
 
-        setModel(model) {
-            super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-            })
-        }
-    }
-    document.getElementById("fileInput").addEventListener("change", function(event) {
-        var file = event.target.files[0];
-    	console.log(file);
-        console.log(file.name);
-        var a = document.createElement('a');
-        var linkText = document.createTextNode(file.name);
-        a.appendChild(linkText);
-        a.title = file.name;
-        a.href = "http://example.com";
-        document.body.appendChild(a);
-        var br = document.createElement("br");
-        document.body.appendChild(br);
-    },false);
+		setModel(model) {
+			super.setModel(model);
+			this.widget.addEventListener('blur', (e) => {
+				this._model.value = e.target.value;
+			})
+		}
+	}
 
-    FormView.Utils.setupField(({element, formContainer}) => {
-        return new FileInput({element})
-    }, FileInput.selectors.self);
+	var attachedFilesCount = 0;
+	var fileID = document.getElementById("fileInput");
+	fileID.addEventListener("change", function(event) {
+		var file = event.target.files[0];
+		if (fileID.getAttribute("multi") == 'FILE') {
+			if (attachedFilesCount === 0) {
+				var _a = document.createElement('a');
+				var linkText = document.createTextNode(file.name);
+				_a.appendChild(linkText);
+				_a.setAttribute("id", "linkId");
+				_a.title = file.name;
+				_a.href = "#stockContent";
+				document.body.appendChild(_a);
+			} else if (attachedFilesCount !== 0) {
+				var element = document.getElementById("linkId");
+				element.remove(); // Removes the anchor element
+				var _a = document.createElement('a');
+				var linkText = document.createTextNode(file.name);
+				_a.appendChild(linkText);
+				_a.setAttribute("id", "linkId");
+				_a.title = file.name;
+				_a.href = "#stockContent";
+				document.body.appendChild(_a);
+			}
+			var element = document.getElementById("linkId");
+			element.onclick = function() {
+				if (file) {
+					if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
+						window.navigator.msSaveOrOpenBlob(file, file.name);
+					} else {
+						var url = window.URL.createObjectURL(file);
+						window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+					}
+				}
+			}
+			attachedFilesCount = parseInt(attachedFilesCount + event.target.files.length);
+		}
+
+		if (fileID.getAttribute("multi") == 'FILE_ARRAY') {
+			var linkId = "linkId";
+			var id = linkId.concat(attachedFilesCount);
+			if (attachedFilesCount < fileID.getAttribute("maxFiles")) {
+				attachedFilesCount = parseInt(attachedFilesCount + event.target.files.length);
+				var _a = document.createElement('a');
+				var linkText = document.createTextNode(file.name);
+				_a.appendChild(linkText);
+				_a.setAttribute("id", id);
+				_a.title = file.name;
+				_a.href = "#stockContent";
+				document.body.appendChild(_a);
+				var br = document.createElement("br");
+				document.body.appendChild(br);
+
+				var element = document.getElementById(id);
+				element.onclick = function() {
+					if (file) {
+						if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
+							window.navigator.msSaveOrOpenBlob(file, file.name);
+						} else {
+							var url = window.URL.createObjectURL(file);
+							window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+						}
+					}
+				}
+			}
+		}
+
+
+	}, false);
+
+
+	FormView.Utils.setupField(({
+		element,
+		formContainer
+	}) => {
+		return new FileInput({
+			element
+		})
+	}, FileInput.selectors.self);
 
 })();

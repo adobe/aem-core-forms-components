@@ -13,23 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Text Input (v1)
+Adaptive Form File Input (v1)
 ====
-Adaptive Form Text input field component written in HTL.
+Adaptive Form File input field component written in HTL.
 
 ## Features
 
 * Provides the following type of input:
+  * file
   * text
-  * textarea
 * Custom constraint messages for the above types
 * Styles
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
+The Form File component uses the `com.adobe.cq.forms.core.components.models.form.FileInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form File component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
@@ -41,21 +41,21 @@ The following properties are written to JCR for this Form Text component and are
 8. `./readOnly` - if set to `true`, the filed will be read only
 
 ## Client Libraries
-The component provides a `core.forms.components.textinput.v1` client library category that contains a JavaScript
+The component provides a `core.forms.components.fileinput.v1` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
+It also provides a `core.forms.components.fileinput.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__label
-    ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
-    ELEMENT cmp-adaptiveform-textinput__errormessage
+    ELEMENT cmp-adaptiveform-fileinput__label
+    ELEMENT cmp-adaptiveform-fileinput__widget
+    ELEMENT cmp-adaptiveform-fileinput__questionmark
+    ELEMENT cmp-adaptiveform-fileinput__shortdescription
+    ELEMENT cmp-adaptiveform-fileinput__longdescription
+    ELEMENT cmp-adaptiveform-fileinput__errormessage
 ```
 
 ## JavaScript Data Attribute Bindings
@@ -66,6 +66,6 @@ The following attributes can be added to the same element to provide options:
 
 1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
 
-A `data-cmp-hook-adaptiveform-textinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
+A `data-cmp-hook-adaptiveform-fileinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
 
 
