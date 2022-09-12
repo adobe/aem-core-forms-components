@@ -43,7 +43,7 @@ public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAn
     @Inject
     protected String tncTextContent;
 
-    @ValueMapValue(name = "tncConsentText")
+    @ValueMapValue(name = "tncConsentText", injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     @Default(values = "I agree to the terms & conditions")
     protected String tncConsentText;
@@ -52,7 +52,7 @@ public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAn
         return tncTextContent;
     }
 
-    public String getTncConsentTextContent() {
+    public String getTncConsentText() {
         return tncConsentText;
     }
 }
