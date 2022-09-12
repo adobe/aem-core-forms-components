@@ -62,13 +62,13 @@
 
         setModel(model) {
             super.setModel(model);
-            const widgets = this.widget
-            for (let i = 0; i < widgets.length; i++) {
-                let self = widgets[i]
-                widgets[i].addEventListener('change', (e) => {
+            let widgets = this.widget
+            widgets.forEach(widget => {
+                let self = widget
+                widget.addEventListener('change', (e) => {
                     this._handleChange(self)
                 })
-            }
+            })
         }
 
         _handleChange(widget) {
@@ -108,28 +108,27 @@
             return tmpValue;
         }
 
-        _updateValue(value, t) {
+        _updateValue(value) {
             console.log("aaaaaaa")
-            const widgets = this.widget
-            for (let i = 0; i < widgets.length; i++) {
-                let widget = widgets[i]
-                if (value.includes(widget.value)) {
+            let widgets = this.widget
+            widgets.forEach(widget => {
+                if (value.includes(this._getSelectedValue(widget.value))) {
+                    widget.checked = true
                     widget.setAttribute("checked", "checked")
                     widget.setAttribute("aria-checked", true)
                 } else {
+                    widget.checked = false
                     widget.removeAttribute("checked");
                     widget.setAttribute("aria-checked", false);
                 }
-
-            }
+            }, this)
         }
 
         _updateEnable(enable) {
             this.toggle(enable, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enable);
-            const widgets = this.widget
-            for (let i = 0; i < widgets.length; i++) {
-                let widget = widgets[i]
+            let widgets = this.widget
+            widgets.forEach(widget => {
                 if (enable === false) {
                     widget.setAttribute("disabled", true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
@@ -137,7 +136,7 @@
                     widget.removeAttribute("disabled");
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
-            }
+            });
         }
 
     }

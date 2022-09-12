@@ -24,6 +24,7 @@ var formsConstants = {
                 "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
+                "formcheckboxgroup": "/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer"
             }
         }
