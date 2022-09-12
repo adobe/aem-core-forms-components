@@ -49,13 +49,14 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="true"/>
                             <description
+                                    granite:class="cmp-adaptiveform-image__description"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Description"
                                     name="./jcr:description"/>
                             <file
-                                    granite:class="cmp-image__editor-file-upload"
+                                    granite:class="cmp-adaptiveform-image-file-upload"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
@@ -65,14 +66,16 @@
                                     mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
                                     name="./file"/>
                             <alt
+                                    granite:class="cmp-adaptiveform-image-alt"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Alternate Text"
                                     name="./altText"/>
                             <excludeFromDor
+                                    granite:class="cmp-adaptiveform-image-excludeFromDor"
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     fieldDescription="Checking this will skip this component to be part of Document of Record."
                                     fieldLabel="Exclude from Document of Record"
                                     text="Exclude from Document of Record"
