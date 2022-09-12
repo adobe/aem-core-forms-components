@@ -18,7 +18,7 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the form {@code FileInput} Sling Model used for the {@code /apps/core/fd/components/form/fileinput/v1/fileinput} component.
+ * Defines the form {@code Footer} Sling Model used for the {@code /apps/core/fd/components/form/footer/v1/footer} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -26,9 +26,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 public interface Footer extends Base {
 
     /**
-     * Returns {@code true} if multiple files can be selected, {@code false} otherwise
-     *
-     * @return {@code true} if multiple files can be selected, {@code false} otherwise
+     * Gives value of footer
      */
     default String getValue() {
         return null;
