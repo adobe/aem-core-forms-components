@@ -139,10 +139,12 @@ export default class FormFieldBase extends FormField {
     }
 
     _toggleAttribute(element, property, dataAttribute, value) {
-        if (property === false) {
-            element.setAttribute(dataAttribute, value);
-        } else {
-            element.removeAttribute(dataAttribute);
+        if (element) {
+            if (property === false) {
+                element.setAttribute(dataAttribute, value);
+            } else {
+                element.removeAttribute(dataAttribute);
+            }
         }
     }
 
