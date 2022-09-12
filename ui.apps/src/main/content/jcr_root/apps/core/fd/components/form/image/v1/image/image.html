@@ -13,12 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image"
+<div data-sly-use.image="com.adobe.cq.forms.core.components.models.form.StaticImage"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
-     data-sly-test="${image.src}"
+     data-sly-test="${image.imageSrc}"
      data-cmp-dmimage="${image.dmImage}"
      data-cmp-smartcroprendition="${image.smartCropRendition}"
-     data-cmp-src="${image.srcUriTemplate ? image.srcUriTemplate : image.src}"
+     data-cmp-src="${image.imageSrc}"
      data-asset-id="${image.uuid}"
      id="${image.id}"
      data-cmp-data-layer="${image.data.json}"
@@ -36,7 +36,7 @@
              itemprop="contentUrl"
              width="${image.width}" height="${image.height}"
              sizes="${image.sizes}"
-             alt="${image.alt || true}" title="${image.displayPopupTitle && image.title}"/>
+             alt="${image.altText || true}" title="${image.displayPopupTitle && image.title}"/>
     </a>
     <span class="cmp-image__title" itemprop="caption" data-sly-test="${!image.displayPopupTitle && image.title}">${image.title}</span>
     <meta itemprop="caption" content="${image.title}" data-sly-test="${image.displayPopupTitle && image.title}">

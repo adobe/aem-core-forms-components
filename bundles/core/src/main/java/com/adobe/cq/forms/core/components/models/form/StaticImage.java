@@ -15,9 +15,36 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.io.IOException;
+
+import javax.jcr.RepositoryException;
+
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 @ConsumerType
-public interface Image extends Field, BaseConstraint {
+public interface StaticImage extends Field, BaseConstraint {
 
+    /**
+     * Returns the source where the image is present.
+     *
+     * @return the source where the image is present
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getImageSrc() throws RepositoryException, IOException {
+        System.out.println(" Check for image data empty:");
+        return null;
+    }
+
+    /**
+     * Returns the source where the image is present.
+     *
+     * @return the source where the image is present
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getAltText() {
+        return null;
+    }
 }
