@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
-    xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="nt:unstructured">
+    xmlns:jcr="http://www.jcp.org/jcr/1.0" jcr:primaryType="nt:unstructured"
+    fieldType="accordion">
     <item_1 jcr:primaryType="nt:unstructured"
             jcr:title="item_1"
             name="item_1"
-            sling:resourceType="core/fd/components/form/container/v2/container"
+            fieldType="panel"
+            sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
             layout="responsiveGrid"/>
     <item_2 jcr:primaryType="nt:unstructured"
             jcr:title="item_2"
             name="item_2"
-            sling:resourceType="core/fd/components/form/container/v2/container"
+            fieldType="panel"
+            sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
             layout="responsiveGrid"/>
 </jcr:root>
 
