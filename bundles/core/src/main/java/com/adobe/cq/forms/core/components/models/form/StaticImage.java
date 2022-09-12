@@ -37,13 +37,25 @@ public interface StaticImage extends Field, BaseConstraint {
     }
 
     /**
-     * Returns the source where the image is present.
+     * Returns the alternate text in place of image.
      *
-     * @return the source where the image is present
+     * @return the alternate text in place of image
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
     default String getAltText() {
         return null;
     }
+
+    /**
+     * Returns the excluded from dor field of image.
+     *
+     * @return the excluded from dor of image
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default Boolean isExcludeFromDor() {
+        return null;
+    }
+
 }

@@ -16,7 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.jcr.RepositoryException;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -26,7 +28,7 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -57,6 +59,10 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
     @Nullable
     protected String imageSrc;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean excludeFromDor;
+
     /**
      * Returns the source where the image is present.
      *
@@ -83,6 +89,31 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
     @Override
     public String getAltText() {
         return altText;
+    }
+
+    /**
+     * Returns the excluded from dor field of the Image configured in the authoring dialog.
+     *
+     * @return String representing alternate text
+     */
+    @Override
+    public Boolean isExcludeFromDor() {
+        return excludeFromDor;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getCustomProperties() {
+        Map<String, Object> customProperties = super.getCustomProperties();
+        if (altText != null) {
+            customProperties.put("altText", altText);
+        }
+        if (excludeFromDor != null) {
+            customProperties.put("excludeFromDor", excludeFromDor);
+        }
+        if (imageSrc != null) {
+            customProperties.put("imageSrc", imageSrc);
+        }
+        return customProperties;
     }
 
 }
