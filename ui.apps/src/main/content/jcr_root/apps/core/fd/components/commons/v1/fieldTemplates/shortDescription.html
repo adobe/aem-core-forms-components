@@ -1,7 +1,5 @@
 <template data-sly-template.shortDescription="${@ componentId, shortDescriptionVisible, shortDescription, bemBlock}">
-    <sly data-sly-test.bemElement="${'{0}__{1}' @ format=[bemBlock, 'shortdescription']}"></sly>
-    <sly data-sly-test.bemElementHidden="${'{0} {1}--{2}' @ format=[bemElement, bemElement,'hidden']}"></sly>
-    <div id="${componentId}-shortDescription" class="${shortDescriptionVisible? bemElement : bemElementHidden}" data-sly-test="${shortDescription}">
-      ${shortDescription @context='html'}
-    </div>
+  <div id="${componentId}-shortDescription" class="${bemBlock}__shortdescription" data-sly-test="${shortDescription}">
+    ${shortDescription @context='html'}
+  </div>
 </template>

@@ -34,10 +34,6 @@
     padding-right: 1rem;
 }
 
-.cmp-adaptiveform-textinput__longdescription--hidden {
-    display:none;
-}
-
 .cmp-adaptiveform-textinput__shortdescription {
     font-size: .875rem;
     margin: 0px;
@@ -60,7 +56,11 @@
     display: none;
 }
 
-.cmp-adaptiveform-textinput__shortdescription--hidden {
+[data-cmp-adaptiveform-textinput-longdescription-hidden=true] {
+    display: none;
+}
+
+[data-cmp-adaptiveform-textinput-shortdescription-hidden=true] {
     display: none;
 }
 

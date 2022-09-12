@@ -79,13 +79,6 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this._applyState(state);
-        this._addQuestionMarkHandler();
-        this.widget.addEventListener("mouseover", () => {
-            this._showHideTooltip( true);
-        });
-        this.widget.addEventListener("mouseout", () => {
-            this._showHideTooltip(false);
-        });
     }
 
     /**
@@ -99,6 +92,58 @@ export default class FormFieldBase extends FormField {
         }
         this._updateVisible(state.visible)
         this._updateEnable(state.visible)
+        this._initializeHelpContent();
+    }
+
+    _initializeHelpContent() {
+        this._showHideTooltipDiv(false);
+        this._showHideLongDescriptionDiv(false);
+        if (this.getTooltipDiv()) {
+            if (this._isTooltipAlwaysVisible()) {
+                this._showHideTooltipDiv(true);
+            } else {
+                this.widget.addEventListener("mouseover", () => {
+                    this._showHideTooltip( true);
+                });
+                this.widget.addEventListener("mouseout", () => {
+                    this._showHideTooltip(false);
+                });
+            }
+        }
+        if (this.getDescription()) {
+            this._addHelpIconHandler();
+        }
+    }
+
+    /**
+     *
+     * @param show If true then <div> containing tooltip(Short Description) will be shown else hidden
+     * @private
+     */
+    _showHideTooltipDiv(show) {
+        this._toggleAttribute(this.getTooltipDiv(), show, this.dataAttribute('shortdescription-hidden'), true);
+    }
+
+    /**
+     *
+     * @param show If true then <div> containing description(Long Description) will be shown
+     * @private
+     */
+    _showHideLongDescriptionDiv(show) {
+        this._toggleAttribute(this.getDescription(), show, this.dataAttribute('longdescription-hidden'), true);
+    }
+
+    _isTooltipAlwaysVisible() {
+        const state = this._model.getState();
+        return state && state.properties['af:layout'] && state.properties['af:layout'].tooltipVisible;
+    }
+
+    _toggleAttribute(element, property, dataAttribute, value) {
+        if (property === false) {
+            element.setAttribute(dataAttribute, value);
+        } else {
+            element.removeAttribute(dataAttribute);
+        }
     }
 
     dataAttribute(attr) {
@@ -146,19 +191,18 @@ export default class FormFieldBase extends FormField {
 
 
     _showHideTooltip(show) {
-        const toolTip = this.getTooltipDiv(),
+        const tooltipDiv = this.getTooltipDiv(),
             bemBlock = this.constructor.bemBlock,
-            tooltipVisible = this._model.properties['af:layout'] ? this._model.properties['af:layout'].tooltipVisible : false,
-            hiddenBem = bemBlock + '__shortdescription--hidden',
+            tooltipVisible = this._isTooltipAlwaysVisible(),
             tooltipBem = bemBlock + '__shortdescription--tooltip';
         // If tooltip is always visible then no need to toggle.
-        if (toolTip && !tooltipVisible) {
+        if (tooltipDiv && !tooltipVisible) {
             if(show) {
-                toolTip.classList.remove(hiddenBem);
-                toolTip.classList.add(tooltipBem);
+                this._showHideTooltipDiv(true);
+                tooltipDiv.classList.add(tooltipBem);
             } else {
-                toolTip.classList.add(hiddenBem);
-                toolTip.classList.remove(tooltipBem);
+                this._showHideTooltipDiv(false);
+                tooltipDiv.classList.remove(tooltipBem);
             }
         }
     }
@@ -167,24 +211,24 @@ export default class FormFieldBase extends FormField {
      * Shows or Hides Description Based on click of '?' mark.
      * @private
      */
-    _addQuestionMarkHandler() {
+    _addHelpIconHandler() {
         const questionMarkDiv = this.getQuestionMarkDiv(),
             descriptionDiv = this.getDescription(),
-            longdescriptionHiddenBem = this.constructor.bemBlock + '__longdescription--hidden',
-            tooltipVisible = this._model.properties['af:layout'] ? this._model.properties['af:layout'].tooltipVisible : false,
-            toolTip = this.getTooltipDiv(),
-            tooltipHiddenBem = this.constructor.bemBlock + '__shortdescription--hidden';
+            tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
+
+        const self = this;
         if (questionMarkDiv && descriptionDiv) {
             questionMarkDiv.onclick = function() {
-                if (descriptionDiv.classList.contains(longdescriptionHiddenBem)) {
-                    descriptionDiv.classList.remove(longdescriptionHiddenBem);
-                    if (tooltipVisible && toolTip) {
-                        toolTip.classList.add(tooltipHiddenBem);
+                const isLongDescriptionHidden = descriptionDiv.getAttribute(self.dataAttribute('longdescription-hidden'));
+                if (isLongDescriptionHidden) {
+                    self._showHideLongDescriptionDiv(true);
+                    if (tooltipAlwaysVisible) {
+                        self._showHideTooltipDiv(false);
                     }
                 } else {
-                    descriptionDiv.classList.add(longdescriptionHiddenBem);
-                    if (tooltipVisible && toolTip) {
-                        toolTip.classList.remove(tooltipHiddenBem);
+                    self._showHideLongDescriptionDiv(false);
+                    if (tooltipAlwaysVisible) {
+                        self._showHideTooltipDiv(true);
                     }
                 }
             }
