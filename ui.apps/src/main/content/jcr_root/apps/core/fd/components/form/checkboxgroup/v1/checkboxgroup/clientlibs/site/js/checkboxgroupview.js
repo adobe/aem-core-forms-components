@@ -66,53 +66,25 @@
             widgets.forEach(widget => {
                 let self = widget
                 widget.addEventListener('change', (e) => {
-                    this._handleChange(self)
+                    this._updateModelValue(self)
                 })
             })
         }
 
-        _handleChange(widget) {
-            this._updateModelValue(widget)
-        }
-
         _updateModelValue(widget) {
-            let oldValue = (this._model.value|| []).slice()
-            let widgetVal = this._getSelectedValue(widget.value)
-            let newValue = oldValue
-
-            if (widget.checked)
-                newValue.push(widgetVal)
-            else {
-                const index = oldValue.indexOf(widgetVal);
-                if (index > -1) { // only splice array when item is found
-                    oldValue.splice(index, 1); // 2nd parameter means remove one item only
+            let value = []
+            this.widget.forEach(widget => {
+                if (widget.checked) {
+                    value.push(widget.value)
                 }
-                newValue = oldValue
-            }
-            this._model.value = newValue
+            }, this)
+            this._model.value = value
         }
 
-        _getSelectedValue(value) {
-            let dataType = this._model.type, tmpValue;
-            switch (dataType) {
-                case "number[]":
-                    tmpValue = parseInt(value);
-                    break;
-                case "boolean[]":
-                    tmpValue = (value === 'true');
-                    break;
-                default:
-                    tmpValue = value;
-                    break;
-            }
-            return tmpValue;
-        }
-
-        _updateValue(value) {
-            console.log("aaaaaaa")
-            let widgets = this.widget
-            widgets.forEach(widget => {
-                if (value.includes(this._getSelectedValue(widget.value))) {
+        _updateValue(modelValue) {
+            let selectedWidgetValues = modelValue.map(String);
+            this.widget.forEach(widget => {
+                if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
                     widget.setAttribute("checked", "checked")
                     widget.setAttribute("aria-checked", true)
