@@ -23,7 +23,6 @@ import java.util.stream.StreamSupport;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
-import com.adobe.granite.ui.components.ds.ValueMapResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -41,6 +40,7 @@ import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ExpressionResolver;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
@@ -124,32 +124,33 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             String dataModel = getParameter(config, DATA_MODEL, request, "");
             String fieldType = getParameter(config, FIELD_TYPE, request, "");
             actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request.getResourceResolver(), type, dataModel,fieldType).iterator());
+                request.getResourceResolver(), type, dataModel, fieldType).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<Resource> getDataSourceResources(ResourceResolver resourceResolver, FormMetaDataType type, String dataModel, String fieldType) {
+    private List<Resource> getDataSourceResources(ResourceResolver resourceResolver, FormMetaDataType type, String dataModel,
+        String fieldType) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
-                    metaDataList=formMetaData.getFormatters(fieldType);
-                    while(metaDataList.hasNext()){
-                        FormsManager.ComponentDescription componentDescription=metaDataList.next();
-                        Resource formatterResource=resourceResolver.getResource(componentDescription.getResourceType());
+                    metaDataList = formMetaData.getFormatters(fieldType);
+                    while (metaDataList.hasNext()) {
+                        FormsManager.ComponentDescription componentDescription = metaDataList.next();
+                        Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
                         if (formatterResource != null) {
-                            String path=formatterResource.getPath();
+                            String path = formatterResource.getPath();
                             ValueMap formatterResourceValueMap = formatterResource.getValueMap();
                             Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
                             while (it.hasNext()) {
                                 Map.Entry<String, Object> entry = it.next();
                                 String key = entry.getKey();
-                                //This condition is sufficient for property guideComponentType to get ignored
+                                // This condition is sufficient for property guideComponentType to get ignored
                                 if (key.startsWith("pattern")) {
-                                    Map<String,Object> respObj = new HashMap<>();
+                                    Map<String, Object> respObj = new HashMap<>();
                                     String value = (String) entry.getValue();
                                     String[] arr = value.split("=", 2);
                                     respObj.put("text", arr[0]);
@@ -158,7 +159,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                                     resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
                                 }
                             }
-                            Map<String,Object> customEntry = new HashMap<>();
+                            Map<String, Object> customEntry = new HashMap<>();
                             customEntry.put("text", "Custom");
                             customEntry.put("value", "custom");
                             ValueMap vm = new ValueMapDecorator(customEntry);
@@ -178,11 +179,11 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                                 .contains(dataModel.toLowerCase());
                         })
                         .collect(Collectors.toList()).iterator();
-                    resources=this.getResourceListFromComponentDescription(metaDataList,resourceResolver);
+                    resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
                     break;
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
-                    resources=this.getResourceListFromComponentDescription(metaDataList,resourceResolver);
+                    resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
                     break;
             }
         }
@@ -190,8 +191,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private List<Resource> getResourceListFromComponentDescription(
-            Iterator<FormsManager.ComponentDescription> metaDataList,
-            ResourceResolver resourceResolver){
+        Iterator<FormsManager.ComponentDescription> metaDataList,
+        ResourceResolver resourceResolver) {
         List<Resource> resources = new ArrayList<>();
         if (metaDataList != null) {
             while (metaDataList.hasNext()) {

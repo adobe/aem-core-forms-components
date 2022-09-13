@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ConsumerType
 public interface NumberInput extends Field, NumberConstraint {
 
-
     @Nullable
     @JsonIgnore
     String getEditFormat();

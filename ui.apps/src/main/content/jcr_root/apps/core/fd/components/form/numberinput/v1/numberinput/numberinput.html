@@ -20,29 +20,33 @@
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
-     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.numberinput="com.adobe.cq.forms.core.components.models.form.NumberInput"></sly>
+
+
+
 <div class="cmp-adaptiveform-numberinput"
      data-cmp-is="adaptiveFormNumberInput"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-     id="${component.id}"
-     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.numberinput="com.adobe.cq.forms.core.components.models.form.NumberInput"
 
+     id="${component.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, bemBlock='cmp-adaptiveform-numberinput'}"></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
-        <input
-               class="cmp-adaptiveform-numberinput__widget"
-               aria-label="${numberinput.label.visible && numberinput.label.value}"
-               type="number"
-               name="${numberinput.name}"
-
-               value="${numberinput.default}"
-               readonly="${numberinput.readOnly}"
-               required="${numberinput.required}"
-               data-cmp-hook-adaptiveform-numberinput="input"
-               placeholder="${numberinput.placeHolder}"
-               data-cmp-required-message="${numberinput.constraintMessages.required}"/>
+    <input
+            class="cmp-adaptiveform-numberinput__widget"
+            aria-label="${numberinput.label.visible && numberinput.label.value}"
+            type="number"
+            name="${numberinput.name}"
+            value="${numberinput.default}"
+            max="${numberinput.maximum}"
+            min="${numberinput.minimum}"
+            readonly="${numberinput.readOnly}"
+            required="${numberinput.required}"
+            data-cmp-hook-adaptiveform-numberinput="input"
+            placeholder="${numberinput.placeHolder}"
+            data-cmp-required-message="${numberinput.constraintMessages.required}"/>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=numberinput.tooltipVisible, shortDescription=numberinput.tooltip, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap>
     </div>
