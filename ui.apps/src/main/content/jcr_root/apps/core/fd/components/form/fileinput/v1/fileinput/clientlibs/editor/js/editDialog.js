@@ -18,6 +18,8 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-fileinput__editdialog",
         FILEINPUT_MULTISELECTION = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__multiselection",
         FILEINPUT_TYPE=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__type",
+        FILEINPUT_MINITEMS=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFiles",
+        FILEINPUT_MAXITEMS=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFiles",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -29,15 +31,29 @@
     function handleMultiSelection(dialog) {
         var component = dialog.find(FILEINPUT_MULTISELECTION)[0];
         var fileinputType=dialog.find(FILEINPUT_TYPE)[0];
-        var listOfElements = [fileinputType];
-
-        var isNotChecked = function() {return !isChecked()};
+        var fileinputMinItems=dialog.find(FILEINPUT_MINITEMS);
+        var fileinputMaxItems=dialog.find(FILEINPUT_MAXITEMS);
+        var listOfElements = [fileinputMinItems,fileinputMaxItems];
+        var isNotChecked = function() {return isChecked()};
         var isChecked = function() {return component.checked};
-        console.log("isChecked:",component.checked);
-        if(component.checked)
+        var hideAndShowElements = function() {
+
+             // hide minItems elements
+            Utils.checkAndDisplay(listOfElements)(isNotChecked);
+        };
+        hideAndShowElements();
+        component.on("change", function() {
+            hideAndShowElements();
+        });
+
+        if(component.checked){
          fileinputType.attributes.value.value="file[]";
-        else
+
+         }
+        else{
          fileinputType.attributes.value.value="file";
+         }
+
     }
     Utils.initializeEditDialog(EDIT_DIALOG)(handleMultiSelection);
 
