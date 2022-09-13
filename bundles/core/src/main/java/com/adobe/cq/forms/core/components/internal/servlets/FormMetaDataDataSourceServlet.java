@@ -16,24 +16,21 @@
 package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.Spliterator;
-import java.util.Spliterators;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +54,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     private static final String TYPE = "type";
     private static final String DATA_MODEL = "guideDataModel";
+
+    private static final String FIELD_TYPE = "fieldType";
     private static final String NN_DIALOG = "cq:dialog";
 
     /**
@@ -66,7 +65,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
      */
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
-        PREFILL_ACTION("prefillServiceProvider");
+        PREFILL_ACTION("prefillServiceProvider"),
+        FORMATTERS("formatters");
 
         private String value;
 
@@ -122,18 +122,50 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         if (config != null) {
             FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
             String dataModel = getParameter(config, DATA_MODEL, request, "");
+            String fieldType = getParameter(config, FIELD_TYPE, request, "");
             actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request.getResourceResolver(), type, dataModel).iterator());
+                request.getResourceResolver(), type, dataModel,fieldType).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<Resource> getDataSourceResources(ResourceResolver resourceResolver, FormMetaDataType type, String dataModel) {
+    private List<Resource> getDataSourceResources(ResourceResolver resourceResolver, FormMetaDataType type, String dataModel, String fieldType) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
+                case FORMATTERS:
+                    metaDataList=formMetaData.getFormatters(fieldType);
+                    while(metaDataList.hasNext()){
+                        FormsManager.ComponentDescription componentDescription=metaDataList.next();
+                        Resource formatterResource=resourceResolver.getResource(componentDescription.getResourceType());
+                        if (formatterResource != null) {
+                            String path=formatterResource.getPath();
+                            ValueMap formatterResourceValueMap = formatterResource.getValueMap();
+                            Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
+                            while (it.hasNext()) {
+                                Map.Entry<String, Object> entry = it.next();
+                                String key = entry.getKey();
+                                //This condition is sufficient for property guideComponentType to get ignored
+                                if (key.startsWith("pattern")) {
+                                    Map<String,Object> respObj = new HashMap<>();
+                                    String value = (String) entry.getValue();
+                                    String[] arr = value.split("=", 2);
+                                    respObj.put("text", arr[0]);
+                                    respObj.put("value", arr[1]);
+                                    ValueMap vm = new ValueMapDecorator(respObj);
+                                    resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
+                                }
+                            }
+                            Map<String,Object> customEntry = new HashMap<>();
+                            customEntry.put("text", "Custom");
+                            customEntry.put("value", "custom");
+                            ValueMap vm = new ValueMapDecorator(customEntry);
+                            resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
+                        }
+                    }
+                    break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
                     Set<String> uniques = new HashSet<>();
@@ -146,18 +178,26 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                                 .contains(dataModel.toLowerCase());
                         })
                         .collect(Collectors.toList()).iterator();
+                    resources=this.getResourceListFromComponentDescription(metaDataList,resourceResolver);
                     break;
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
+                    resources=this.getResourceListFromComponentDescription(metaDataList,resourceResolver);
                     break;
             }
+        }
+        return resources;
+    }
 
-            if (metaDataList != null) {
-                while (metaDataList.hasNext()) {
-                    FormsManager.ComponentDescription description = metaDataList.next();
-                    Resource syntheticResource = createResource(resourceResolver, description);
-                    resources.add(syntheticResource);
-                }
+    private List<Resource> getResourceListFromComponentDescription(
+            Iterator<FormsManager.ComponentDescription> metaDataList,
+            ResourceResolver resourceResolver){
+        List<Resource> resources = new ArrayList<>();
+        if (metaDataList != null) {
+            while (metaDataList.hasNext()) {
+                FormsManager.ComponentDescription description = metaDataList.next();
+                Resource syntheticResource = createResource(resourceResolver, description);
+                resources.add(syntheticResource);
             }
         }
         return resources;
