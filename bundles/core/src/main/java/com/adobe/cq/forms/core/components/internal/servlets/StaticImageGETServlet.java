@@ -69,16 +69,16 @@ public class StaticImageGETServlet extends AbstractImageServlet {
     @Override
     protected void writeLayer(SlingHttpServletRequest req,
         SlingHttpServletResponse resp,
-        ImageContext c, Layer layer)
+        ImageContext imageContext, Layer layer)
         throws IOException, RepositoryException {
 
-        Image image = new Image(c.resource);
+        Image image = new Image(imageContext.resource);
         if (!image.hasContent()) {
-            if (c.defaultResource != null) {
-                if (isRemovedDiff(c)) {
-                    image = new Image(c.diffInfo.getContent());
+            if (imageContext.defaultResource != null) {
+                if (isRemovedDiff(imageContext)) {
+                    image = new Image(imageContext.diffInfo.getContent());
                 } else {
-                    image = new Image(c.defaultResource);
+                    image = new Image(imageContext.defaultResource);
                 }
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -87,7 +87,7 @@ public class StaticImageGETServlet extends AbstractImageServlet {
         }
 
         // get style and set constraints
-        image.loadStyleData(c.style);
+        image.loadStyleData(imageContext.style);
 
         // get pure layer
         layer = image.getLayer(false, false, false);
@@ -104,7 +104,7 @@ public class StaticImageGETServlet extends AbstractImageServlet {
             modified |= image.resize(layer) != null;
 
             // apply diff if needed (because we create the layer inline)
-            modified |= applyDiff(layer, c);
+            modified |= applyDiff(layer, imageContext);
         }
 
         // don't cache images on authoring instances
