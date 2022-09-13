@@ -31,9 +31,9 @@
                 super(params);
             }
 
-           getWidget() {
+            getWidget() {
                 return this.element.querySelector(Text.selectors.widget);
-           }
+            }
 
             getClass() {
                 return Text.IS;
