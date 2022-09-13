@@ -16,8 +16,19 @@
 
 <!-- This is a sightly file-- where you will write HTL to define markup for your component -->
 <div data-sly-use.footer="com.adobe.cq.forms.core.components.models.form.Footer"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+     data-cmp-is="adaptiveFormFooter"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-     id="${component.id}">${footer.value @ context='html' }</div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-cmp-visible="${footer.visible}"
+     id="${component.id}">
+
+    <div class="cmp-adaptiveform-footer__widget">
+        <div data-sly-unwrap>${footer.value @ context='html' }</div>
+    </div>
+
+</div>
 
 <!--<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"-->
 <!--     data-sly-test.clientlibCategories="${page.clientLibCategories}"-->
