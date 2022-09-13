@@ -45,10 +45,6 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @SlingObject
     protected Resource resource;
 
-    //
-    // @Self
-    // protected LinkManager linkManager;
-
     private List<? extends ComponentExporter> childrenModels;
 
     @Override
@@ -60,48 +56,6 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     public Integer getMaxItems() {
         return maxItems;
     }
-    //
-    // /**
-    // * The list of child items.
-    // */
-    // protected List<ListItem> items;
-    // protected List<Resource> childComponents;
-    //
-    // @NotNull
-    // protected abstract List<? extends ListItem> readItems();
-    //
-    // @NotNull
-    // protected Resource getEffectiveResource() {
-    // if (this.resource instanceof TemplatedResource) {
-    // return this.resource;
-    // }
-    // return Optional.ofNullable((Resource)this.resource.adaptTo(TemplatedResource.class))
-    // .orElse(Optional.ofNullable((Resource)this.request.adaptTo(TemplatedResource.class))
-    // .orElse(this.resource));
-    // }
-    //
-    // @NotNull
-    // protected List<Resource> getChildren() {
-    // if (childComponents == null) {
-    // Resource effectiveResource = this.getEffectiveResource();
-    // childComponents = Optional.ofNullable(request.getResourceResolver().adaptTo(ComponentManager.class))
-    // .map(componentManager ->
-    // StreamSupport.stream(effectiveResource.getChildren().spliterator(), false)
-    // .filter(res -> Objects.nonNull(componentManager.getComponentOfResource(res))))
-    // .orElseGet(Stream::empty)
-    // .collect(Collectors.toList());
-    // }
-    // return childComponents;
-    // }
-    //
-    // @JsonIgnore
-    // @NotNull
-    // public List<ListItem> getItems2() {
-    // if (items == null) {
-    // items = readItems().stream().map(i -> (ListItem) i).collect(Collectors.toList());
-    // }
-    // return items;
-    // }
 
     @Override
     public List<? extends ComponentExporter> getItems() {

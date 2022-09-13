@@ -15,11 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -48,39 +43,11 @@ import com.adobe.cq.forms.core.components.models.form.Accordion;
 public class AccordionImpl extends PanelContainerImpl implements Accordion {
 
     /**
-     * Flag indicating if single expansion is enabled.
-     */
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private boolean singleExpansion;
-
-    /**
-     * Array of expanded items.
-     */
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    private String[] expandedItems;
-
-    /**
      * The heading element.
      */
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String headingElement;
-
-    /**
-     * The cached node names of the expanded items for which there is a valid matching child resource.
-     */
-    private String[] expandedItemNames;
-    //
-    // /**
-    // * The cached model IDs of the expanded items for which there is a valid matching child resource.
-    // */
-    // private String[] expandedItemIds;
-
-    @Override
-    public String getFieldType() {
-        return FieldType.ACCORDION.getValue();
-    }
 
     public enum Heading {
 
@@ -109,7 +76,6 @@ public class AccordionImpl extends PanelContainerImpl implements Accordion {
         public String getElement() {
             return element;
         }
-
     }
 
     /*
@@ -118,24 +84,6 @@ public class AccordionImpl extends PanelContainerImpl implements Accordion {
      * to use for accordion headers.
      */
     private Heading heading;
-
-    @Override
-    public boolean isSingleExpansion() {
-        return singleExpansion;
-    }
-
-    @Override
-    public String[] getExpandedItems() {
-        if (expandedItemNames == null) {
-            this.expandedItemNames = Optional.ofNullable(this.expandedItems)
-                .map(Arrays::stream)
-                .orElse(Stream.empty())
-                .filter(Objects::nonNull)
-                .filter(item -> Objects.nonNull(resource.getChild(item)))
-                .toArray(String[]::new);
-        }
-        return Arrays.copyOf(expandedItemNames, expandedItemNames.length);
-    }
 
     public String getHeadingElement() {
         if (heading == null) {
@@ -147,26 +95,4 @@ public class AccordionImpl extends PanelContainerImpl implements Accordion {
         return heading.getElement();
     }
 
-    /*
-     * DataLayerProvider implementation of field getters
-     */
-
-    // public String[] getDataLayerShownItems() {
-    // if (expandedItems == null) {
-    // return new String[0];
-    // }
-    //
-    // if (expandedItemIds == null) {
-    // List<String> expandedItemsName = Arrays.asList(expandedItems);
-    //
-    // expandedItemIds = this.getItems2().stream()
-    // .filter(item -> expandedItemsName.contains(item.getName()))
-    // .map(Component::getData)
-    // .filter(Objects::nonNull)
-    // .map(ComponentData::getId)
-    // .toArray(String[]::new);
-    // }
-    //
-    // return Arrays.copyOf(expandedItemIds, expandedItemIds.length);
-    // }
 }
