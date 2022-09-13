@@ -41,12 +41,12 @@
                                     granite:class="cmp-adaptiveform-numberinput__type"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                     fieldLabel="Type"
-                                    emptyText="Select"
                                     name="./type">
                                 <items jcr:primaryType="nt:unstructured">
                                     <decimal
                                             jcr:primaryType="nt:unstructured"
                                             text="Decimal"
+                                            selected="true"
                                             value="number"/>
                                     <integer
                                             jcr:primaryType="nt:unstructured"
