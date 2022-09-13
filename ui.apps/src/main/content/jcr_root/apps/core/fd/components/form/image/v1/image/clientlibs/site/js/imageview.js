@@ -19,7 +19,7 @@
      class Image extends FormView.FormFieldBase {
 
             static NS = FormView.Constants.NS;
-            static IS = "adaptiveFormimage";
+            static IS = "adaptiveFormImage";
             static bemBlock = 'cmp-adaptiveform-image';
 
             static selectors  = {
