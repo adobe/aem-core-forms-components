@@ -25,6 +25,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -51,7 +52,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    private I18n i18n = null;
+    protected I18n i18n = null;
     private static final String PN_DESCRIPTION = "description";
     private static final String PN_TOOLTIP = "tooltip";
 
@@ -148,9 +149,14 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         type = Type.fromString(typeJcr);
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
-        if (request != null) {
+        if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
+    }
+
+    @Override
+    public void setI18n(@Nonnull I18n i18n) {
+        this.i18n = i18n;
     }
 
     /**
@@ -587,7 +593,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
         // if author mode return the property value
-        boolean editMode = true;
+        boolean editMode = i18n == null;
         if (request != null) {
             editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
         }
