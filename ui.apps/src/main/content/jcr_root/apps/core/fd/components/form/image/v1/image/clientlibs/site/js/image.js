@@ -78,4 +78,29 @@
         document.addEventListener("DOMContentLoaded", window.CMP.image.v3.init);
     }
 
-}(window.document));
+class Image extends FormView.FormFieldBase {
+
+            static NS = FormView.Constants.NS;
+            static IS = "adaptiveFormimage";
+
+            static selectors  = {
+                self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+            };
+
+            constructor(params) {
+                super(params);
+            }
+
+            getClass() {
+                return Image.IS;
+            }
+
+            setFocus() {
+                this.setActive();
+            }
+        }
+
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new Image({element, formContainer})
+    }, Image.selectors.self);
+})();

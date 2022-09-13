@@ -18,6 +18,6 @@
     cq:icon="image"
     jcr:description="Smart Adaptive Image"
     jcr:primaryType="cq:Component"
-    jcr:title="Image (v3)"
+    jcr:title="Image (v1)"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
     componentGroup=".core-adaptiveform"/>
