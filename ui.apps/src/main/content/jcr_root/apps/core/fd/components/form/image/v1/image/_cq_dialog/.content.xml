@@ -57,20 +57,6 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Alternate Text"
                                     name="./altText"/>
-                            <excludeFromDor
-                                    granite:class="cmp-adaptiveform-image-excludeFromDor"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    fieldDescription="Checking this will skip this component to be part of Document of Record."
-                                    fieldLabel="Exclude from Document of Record"
-                                    text="Exclude from Document of Record"
-                                    name="./excludeFromDor"
-                                    value="true"/>
-                            <excludeFromDor-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./excludeFromDor@TypeHint"
-                                    value="Boolean"/>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"
