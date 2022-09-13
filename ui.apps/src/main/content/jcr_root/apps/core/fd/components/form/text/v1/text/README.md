@@ -27,7 +27,7 @@ Text component written in HTL that provides a section of rich text.
 The Title component uses the `com.adobe.cq.wcm.core.components.models.Text` Sling model as its Use-object. The current implementation reads
 the following resource properties:
 
-1. `./text` - the actual text to be rendered
+1. `./value` - the actual text to be rendered
 2. `./textIsRich` - flag determining if the rendered text is rich or not, useful for applying the correct HTL display context
 3. `./id` - defines the component HTML ID attribute.
 

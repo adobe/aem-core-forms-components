@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -23,15 +22,13 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
-import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
-import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -41,6 +38,7 @@ import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilde
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractBaseImpl implements Text {
 
+    @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     private boolean textIsRich;
@@ -53,13 +51,5 @@ public class TextImpl extends AbstractBaseImpl implements Text {
     @Override
     public boolean isRichText() {
         return textIsRich;
-    }
-
-    @Override
-    @NotNull
-    protected ComponentData getComponentData() {
-        return DataLayerBuilder.extending(super.getComponentData()).asComponent()
-            .withText(() -> StringUtils.defaultIfEmpty(this.getValue(), StringUtils.EMPTY))
-            .build();
     }
 }
