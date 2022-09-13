@@ -115,5 +115,5 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
         }
         return customProperties;
     }
-
+    
 }

@@ -45,8 +45,7 @@ import com.day.image.Layer;
     service = { Servlet.class },
     property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
-        "sling.servlet.methods=GET",
-        "sling.servlet.extensions=png"
+        "sling.servlet.methods=GET"
     })
 public class StaticImageGETServlet extends AbstractImageServlet {
 
