@@ -4,5 +4,5 @@
     jcr:description="Smart Adaptive Image"
     jcr:primaryType="cq:Component"
     jcr:title="Image (v1)"
-    sling:resourceSuperType="core/fd/components/form/base/v1/base"
+    sling:resourceSuperType="core/fd/components/form/image/v1/image"
     componentGroup=".core-adaptiveform"/>

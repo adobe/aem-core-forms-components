@@ -16,4 +16,4 @@
 
 #base=css
 
-image.less
+imageview.less
