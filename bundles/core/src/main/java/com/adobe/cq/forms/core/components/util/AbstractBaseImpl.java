@@ -25,6 +25,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -51,7 +52,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    private I18n i18n = null;
+    protected I18n i18n = null;
     private static final String PN_DESCRIPTION = "description";
     private static final String PN_TOOLTIP = "tooltip";
 
@@ -80,10 +81,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @ValueMapValue(name = "fieldType")
     protected String fieldTypeJcr;
     private FieldType fieldType;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String format;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -152,9 +149,14 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         type = Type.fromString(typeJcr);
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
-        if (request != null) {
+        if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
+    }
+
+    @Override
+    public void setI18n(@Nonnull I18n i18n) {
+        this.i18n = i18n;
     }
 
     /**
@@ -303,37 +305,38 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         return enabled;
     }
 
+    protected String getConstraintMessage(ConstraintType type) {
+        String propName = type.getMessageProperty();
+        ValueMap properties = resource.getValueMap();
+        return translate(propName, properties.get(propName, String.class));
+    }
+
     @Override
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
         if (constraintMessages == null) {
             constraintMessages = new LinkedHashMap<>();
             ConstraintMessages msgs = new ConstraintMessagesProvider();
-            put(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
-            put(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
+            putConstraintMessage(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
+            putConstraintMessage(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
             if (this.getType().equals(Type.STRING)) {
-                put(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
-                put(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
-                put(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
-                put(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
-                String format = this.getFormat();
-                if (format != null && format.equals(Format.DATE.toString())) {
-                    put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                    put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
-                }
+                putConstraintMessage(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
+                putConstraintMessage(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
+                putConstraintMessage(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
+                putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
             }
 
             if (this.getType().equals(Type.NUMBER)) {
-                put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
             }
 
             // todo: add the following conditionally
-            put(ConstraintType.STEP, msgs.getStepConstraintMessage());
-            put(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
-            put(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
-            put(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
-            put(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
-            put(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.STEP, msgs.getStepConstraintMessage());
+            putConstraintMessage(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
+            putConstraintMessage(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
+            putConstraintMessage(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
         }
         return constraintMessages;
     }
@@ -341,7 +344,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     /**
      * Put non-blank named values in constraint messages map.
      */
-    private void put(ConstraintType name, String value) {
+    private void putConstraintMessage(ConstraintType name, String value) {
         if (StringUtils.isNotBlank(value)) {
             constraintMessages.put(name, value);
         }
@@ -498,12 +501,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     @Nullable
-    public String getFormat() {
-        return format;
-    }
-
-    @Override
-    @Nullable
     public String getValidationExpression() {
         return validationExpression;
     }
@@ -596,7 +593,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
         // if author mode return the property value
-        boolean editMode = true;
+        boolean editMode = i18n == null;
         if (request != null) {
             editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
         }

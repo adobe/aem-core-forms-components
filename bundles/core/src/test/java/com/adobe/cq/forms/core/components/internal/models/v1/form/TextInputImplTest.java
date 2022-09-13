@@ -48,6 +48,8 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
+    private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -275,6 +277,12 @@ public class TextInputImplTest {
     void testMultiLineJSONExport() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_2, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_2));
+    }
+
+    @Test
+    void testFormatJSONExport() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_FORMAT_TEXTINPUT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_FORMAT_TEXTINPUT));
     }
 
     @Test

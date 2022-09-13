@@ -87,40 +87,6 @@ public interface BaseConstraint {
         }
     }
 
-    public enum Format {
-        DATE("date");
-
-        private String value;
-
-        Format(String value) {
-            this.value = value;
-        }
-
-        public static Type fromString(String value) {
-            for (Type type : Type.values()) {
-                if (StringUtils.equals(value, type.value)) {
-                    return type;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * Returns the string value of this enum constant.
-         *
-         * @return the string value of this enum constant
-         */
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return value;
-        }
-    }
-
     /**
      * Returns {@code true} if field is required, otherwise {@code false}.
      *
@@ -139,17 +105,6 @@ public interface BaseConstraint {
      */
     default Type getType() {
         return Type.STRING;
-    }
-
-    /**
-     * Returns the format of the form field as specified in the json schema specification(for example, date, binary etc)
-     *
-     * @return the format of the form field
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default String getFormat() {
-        return null;
     }
 
     /**

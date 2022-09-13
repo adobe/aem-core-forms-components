@@ -40,6 +40,8 @@ public class DatePickerImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
 
+    private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -204,6 +206,12 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
+    }
+
+    @Test
+    void testJSONExportMessage() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_MESSAGE, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_MESSAGE));
     }
 
     @Test

@@ -17,6 +17,8 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +28,7 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +41,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
+import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.dam.api.Asset;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,9 +53,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
+public class FormContainerImpl extends AbstractComponentImpl implements FormContainer {
+    // not extending from AbstractBase since v1 container does not have mandatory field injections
 
     private static final Logger logger = LoggerFactory.getLogger(FormContainerImpl.class);
+
+    @SlingObject
+    private Resource resource;
 
     // @ScriptVariable
     // private Page currentPage;
@@ -142,6 +149,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         } else {
             return null;
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public List<? extends ComponentExporter> getItems() {
+        return Collections.emptyList();
     }
 
     @Override
