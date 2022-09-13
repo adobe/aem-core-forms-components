@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Text (v2)
+Text (v1)
 ====
 Text component written in HTL that provides a section of rich text.
 
@@ -24,23 +24,25 @@ Text component written in HTL that provides a section of rich text.
 * Styles
 
 ### Use Object
-The Title component uses the `com.adobe.cq.wcm.core.components.models.Text` Sling model as its Use-object. The current implementation reads
+The Title component uses the `com.adobe.cq.forms.core.components.models.form` Sling model as its Use-object. The current implementation reads
 the following resource properties:
 
-1. `./value` - the actual text to be rendered
-2. `./textIsRich` - flag determining if the rendered text is rich or not, useful for applying the correct HTL display context
-3. `./id` - defines the component HTML ID attribute.
+1. `./name` - defines the name of the field, which will be submitted with the form data
+2. `./value` - the actual text to be rendered is stored here
+3. `./textIsRich` - flag determining if the rendered text is rich or not, useful for applying the correct HTL display context
+4. `./id` - defines the component HTML ID attribute
+5. `./dataRef` - data model reference specified
+6. `./fieldType` - field type for adaptive form component
 
 ## BEM Description
 ```
-BLOCK cmp-text
-    ELEMENT cmp-text__paragraph
+BLOCK cmp-adaptiveform-text
+    ELEMENT cmp-adaptiveform-text__widget
 ```
 
-## Information
-* **Vendor**: Adobe
-* **Version**: v2
-* **Compatibility**: AEM 6.3
-* **Status**: production-ready
-* **Documentation**: [https://www.adobe.com/go/aem\_cmp\_text\_v2](https://www.adobe.com/go/aem_cmp_text_v2)
-* **Component Library**: [https://www.adobe.com/go/aem\_cmp\_library\_text](https://www.adobe.com/go/aem_cmp_library_text)
+## Client Libraries
+The component provides a `core.forms.components.text.v1.runtime` client library category that contains a JavaScript
+component. It should be added to a relevant site client library using the `embed` property.
+
+## JavaScript Data Attribute Bindings
+Apply a `data-cmp-is="adaptiveFormText"` attribute to the wrapper block to enable initialization of the JavaScript component.
