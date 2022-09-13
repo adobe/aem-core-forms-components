@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +27,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -402,5 +405,16 @@ public interface Base extends Component {
     @JsonInclude(Include.NON_EMPTY)
     default Map<String, String[]> getEvents() {
         return Collections.emptyMap();
+    }
+
+    /**
+     * Sets i18n object
+     * 
+     * @param i18n reference to the {@link I18n} object
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default void setI18n(@Nonnull I18n i18n) {
+        // empty body
     }
 }
