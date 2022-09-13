@@ -51,13 +51,13 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__label
-    ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
-    ELEMENT cmp-adaptiveform-textinput__errormessage
+BLOCK cmp-adaptiveform-checkboxgroup
+    ELEMENT cmp-adaptiveform-checkboxgroup__label
+    ELEMENT cmp-adaptiveform-checkboxgroup__widget
+    ELEMENT cmp-adaptiveform-checkboxgroup__questionmark
+    ELEMENT cmp-adaptiveform-checkboxgroup__shortdescription
+    ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
+    ELEMENT cmp-adaptiveform-checkboxgroup__errormessage
 ```
 
 ## JavaScript Data Attribute Bindings
