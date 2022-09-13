@@ -20,6 +20,10 @@ BLOCK cmp-adaptiveform-checkboxgroup
 
 }
 
+.cmp-adaptiveform-checkboxgroup__widget__label {
+    display: inline;
+}
+
 .cmp-adaptiveform-checkboxgroup__longdescription {
 
 }
@@ -30,6 +34,19 @@ BLOCK cmp-adaptiveform-checkboxgroup
 
 .cmp-adaptiveform-checkboxgroup__questionmark {
 
+}
+
+.cmp-adaptiveform-checkboxgroup-item {
+    margin-right: 5px;
+    padding-left: 0;
+}
+
+.cmp-adaptiveform-checkboxgroup-item.HORIZONTAL{
+    display: inline-block;
+}
+
+.cmp-adaptiveform-checkboxgroup-item.VERTICAL{
+    display: block;
 }
 
 [data-cmp-adaptiveform-checkboxgroup-hidden=true] {
