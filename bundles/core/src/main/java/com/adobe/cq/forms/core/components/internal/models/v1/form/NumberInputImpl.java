@@ -40,14 +40,6 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "leadDigits")
-    @Nullable
-    protected Integer leadDigits;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fracDigits")
-    @Nullable
-    protected Integer fracDigits;
-
     @Override
     public Long getMinimum() {
         return minimum;
@@ -66,27 +58,5 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Override
     public Long getExclusiveMinimum() {
         return exclusiveMinimum;
-    }
-
-    @Override
-    public @Nullable Integer getLeadDigits() {
-        return leadDigits;
-    }
-
-    @Override
-    public @Nullable Integer getFracDigits() {
-        return fracDigits;
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = super.getCustomProperties();
-        if (leadDigits != null) {
-            customProperties.put("leadDigits", leadDigits);
-        }
-        if (fracDigits != null) {
-            customProperties.put("fracDigits", fracDigits);
-        }
-        return customProperties;
     }
 }
