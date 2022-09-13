@@ -29,7 +29,7 @@ public interface Footer extends Base {
      * Gives value of footer
      */
     default String getValue() {
-        return "© YYYY Company name | All rights reserved";
+        return null;
     }
 
 }
