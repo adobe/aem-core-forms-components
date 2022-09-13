@@ -175,4 +175,12 @@
             </uiSettings>
         </inplaceEditingConfig>
     </cq:inplaceEditing>
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+                order="after CONFIGURE"
+                icon="bidRule"
+                text="Edit Rules"/>
+    </cq:actionConfigs>
 </jcr:root>
