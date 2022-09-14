@@ -13,7 +13,10 @@
       "tooltipVisible": false,
       "leadDigits": 2,
       "fracDigits" : 4
-    }
+    },
+    "fd:dor":{
+      "dorExclusion":false,
+      "dorColspan":null}
   },
   "maximum": 2000000,
   "minimum": 10000,

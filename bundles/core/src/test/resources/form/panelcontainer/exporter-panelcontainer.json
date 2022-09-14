@@ -1,40 +1,50 @@
 {
-  "id": "panelcontainer-94f9ea9e7d",
-  "items": [
+  "id":"panelcontainer-94f9ea9e7d",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "type":"object",
+  "fieldType":"panel",
+  "name":"abc",
+  "visible":true,
+  "enabled":true,
+  "items":[
     {
-      "id": "textinput-6c994d85b4",
-      "description": "dummy",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
+      "id":"textinput-6c994d85b4",
+      "description":"dummy",
+      "type":"string",
+      "fieldType":"text-input",
+      "required":false,
+      "name":"abc",
+      "visible":false,
+      "enabled":true,
+      "readOnly":false,
+      "label":{
+        "visible":true,
+        "richText":false,
+        "value":"def"
       },
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
+      "properties": {
+        "fd:dor":{
+          "dorExclusion":false,
+          "dorColspan":null
+        }
+      },
+      ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
-  "fieldType" : "panel",
-  "tooltip" : "dependent names tooltip",
-  "description" : "dependent names description",
-  "type" : "object",
-  "label" : {
-    "richText": false,
-    "value" : "dependent names",
-    "visible": true
+  "label":{
+    "visible":true,
+    "richText":false,
+    "value":"dependent names"
   },
-  "visible": true,
-  "enabled": true,
-  "name": "abc",
   "properties": {
     "af:layout": {
-      "tooltipVisible": false
+      "tooltipVisible":false
+    },
+    "fd:dor":{
+      "dorType":null,
+      "dorTemplateRef":null
     }
-  }
+  },
+  ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
 }
