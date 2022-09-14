@@ -18,22 +18,27 @@
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
-<div
+<div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.datePicker="com.adobe.cq.forms.core.components.models.form.DatePicker"
-     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-datepicker"
-     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
      data-cmp-is="adaptiveFormDatePicker"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-     data-cmp-hook-adaptiveform-datepicker="input"
-     id="${datePicker.id}"
-     data-sly-test="${!error}">
+     id="${component.id}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
      <div data-sly-call="${label.label @componentId=component.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <input type="date"
+            name="${datePicker.name}"
+            class="cmp-adaptiveform-datepicker__widget"
             readonly="${datePicker.readOnly}"
             required="${datePicker.required}"
             placeholder="${datePicker.placeHolder}"
-            data-cmp-required-message="${datePicker.constraintMessages.required}"/>
+            min="${datePicker.minimumDate}"
+            max="${datePicker.maximumDate}"/>
+     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=datePicker.tooltipVisible, shortDescription=datePicker.tooltip, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap>
+     </div>
+     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
+     <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
 </div>

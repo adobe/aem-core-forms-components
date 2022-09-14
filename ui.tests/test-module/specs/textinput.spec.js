@@ -52,8 +52,6 @@ describe('Page - Authoring', function () {
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     // Check If Dialog Options Are Visible
-    cy.get("[name='./html5Type']")
-    .should("exist");
     cy.get("[name='./multiLine']")
     .should("exist");
     cy.get("[name='./autocomplete']")
@@ -61,7 +59,7 @@ describe('Page - Authoring', function () {
 
     // Checking some dynamic behaviours
     cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
-    cy.get(".cmp-adaptiveform-textinput__maxchars").invoke('css', 'display').should('equal','none');
+    cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal','none');
     cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
     cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
     cy.get('.cq-dialog-cancel').click();
@@ -108,9 +106,5 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
-    after(function() {
-      // clean up the operations performed in the test
-      cy.enableOrDisableTutorials(true);
-    });
   });
 });

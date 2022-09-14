@@ -31,6 +31,19 @@
       "o"
     ],
     "minItems": 1,
-    "maxItems": 2
+    "maxItems": 2,
+    "fd:rules" : {
+      "xyz" : "abcd",
+      "visible" : 1,
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured",
+      "initialize" : 1,
+      "event1" : "invalid",
+      "change" : ["e1", "e2"],
+      "click": "e1",
+      "custom_event" : "e2"
+    }
   }
 }

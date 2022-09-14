@@ -20,12 +20,11 @@ import java.util.Date;
 import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -36,7 +35,7 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { TextInput.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_TEXT_V1 })
 @Exporter(
@@ -44,12 +43,13 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
-    @ScriptVariable
-    private ValueMap properties;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean multiLine;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String format;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
     @Nullable
@@ -136,5 +136,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public Date getExclusiveMinimumDate() {
         return ComponentUtils.clone(exclusiveMinimumDate);
+    }
+
+    @Override
+    @Nullable
+    public String getFormat() {
+        return format;
     }
 }

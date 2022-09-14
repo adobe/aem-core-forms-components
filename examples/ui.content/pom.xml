@@ -18,7 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.17-SNAPSHOT</version>
+        <version>1.0.100-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -52,6 +52,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vault.package.version>${project.version}</vault.package.version>
+        <main.basedir>${project.basedir}/../../parent</main.basedir>
     </properties>
 
     <!-- ====================================================================== -->

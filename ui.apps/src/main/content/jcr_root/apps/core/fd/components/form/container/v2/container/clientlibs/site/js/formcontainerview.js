@@ -17,34 +17,7 @@
 (function() {
 
     "use strict";
-    class FormContainer {
-        constructor(params) {
-            this._model = FormView.createFormInstance(params._formJson);
-            this._path = params._path;
-            this._fields = {};
-        }
-        /**
-         * returns the form field view
-         * @param fieldId
-         */
-        getField(fieldId) {
-            if (this._fields.hasOwnProperty(fieldId)) {
-                return this._fields[fieldId];
-            }
-            return null;
-        }
-
-        getModel(id) {
-            return id ? this._model.getElement(id) : this._model;
-        }
-
-        addField(fieldView) {
-            if (fieldView.getFormContainerPath() === this._path) {
-                this._fields[fieldView.getId()] = fieldView;
-                fieldView.setModel(this.getModel(fieldView.getId()));
-                fieldView.subscribe();
-            }
-        }
+    class FormContainerV2 extends FormView.FormContainer {
 
     }
     const NS = "cmp";
@@ -52,18 +25,15 @@
     const selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]'
     };
+
     async function onDocumentReady() {
-        let elements = document.querySelectorAll(selectors.self);
-        for (let i = 0; i < elements.length; i++) {
-            const dataset = FormView.Utils.readData(elements[i], IS);
-            const containerPath = dataset["path"];
-            const formJson = await FormView.Utils.getJson(containerPath + ".model.json");
-            console.log("model json from server ", formJson);
-            let formContainer =  new FormContainer({_formJson: formJson, _path: containerPath});
-            const event = new CustomEvent(FormView.Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
-            document.dispatchEvent(event);
-        }
+        const formContainer = FormView.Utils.setupFormContainer(({
+            _formJson, _path
+        }) => {
+            return new FormContainerV2({_formJson, _path});
+        }, selectors.self, IS)
     }
+
     if (document.readyState !== "loading") {
         onDocumentReady();
     } else {

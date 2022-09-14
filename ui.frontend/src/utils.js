@@ -48,10 +48,12 @@ export default class Utils {
 
     /**
      * Registers the mutation observer for a form component
-     * @param formFieldClass class of the form component
+     * @param fieldCreator function to create a field
+     * @param fieldSelector
+     * @param dataAttributeClass
      */
 
-    static registerMutationObserver(formFieldClass) {
+    static registerMutationObserver(fieldCreator, fieldSelector, dataAttributeClass) {
         let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
         let body = document.querySelector("body");
         let observer = new MutationObserver(function (mutations) {
@@ -61,12 +63,15 @@ export default class Utils {
                 if (nodesArray.length > 0) {
                     nodesArray.forEach(function (addedNode) {
                         if (addedNode.querySelectorAll) {
-                            var elementsArray = [].slice.call(addedNode.querySelectorAll(formFieldClass.selectors.self));
+                            var elementsArray = [].slice.call(addedNode.querySelectorAll(fieldSelector));
                             elementsArray.forEach(function (element) {
-                                let dataset = FormView.readData(element, formFieldClass.IS);
-                                let formContainerPath = dataset["adaptiveformcontainerPath"];
+                                let dataset = Utils.readData(element, dataAttributeClass);
+                                let formContainerPath = dataset[Constants.FORM_CONTAINER_DATA_ATTRIBUTE];
                                 let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
-                                let formField = new formFieldClass({element: element});
+                                let formField = fieldCreator({
+                                    element : element,
+                                    formContainer
+                                });
                                 formContainer.addField(formField);
                             });
                         }
@@ -97,5 +102,53 @@ export default class Utils {
             };
             xhr.send();
         });
+    }
+
+    /**
+     * execute a callback after the Form Container is initialized
+     * @param fieldCreator a function to return an instance of FormField
+     * @param fieldSelector {string} a css selector to identify the HTML Element.
+     * @param fieldClass data attribute to read the field data from
+     */
+    static setupField(fieldCreator, fieldSelector, fieldClass) {
+        const onInit = (e) => {
+            console.log("FormContainerInitialised Received", e.detail);
+            let formContainer =  e.detail;
+            let fieldElements = document.querySelectorAll(fieldSelector);
+            for (let i = 0; i < fieldElements.length; i++) {
+                let field = fieldCreator({
+                    "element" : fieldElements[i],
+                    "formContainer" : formContainer
+                });
+                formContainer.addField(field);
+            }
+            Utils.registerMutationObserver(fieldCreator, fieldSelector, fieldClass);
+        }
+        document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
+    }
+
+    /**
+     *
+     * @param createFormContainer
+     * @param formContainerSelector
+     */
+    static async setupFormContainer(createFormContainer, formContainerSelector, formContainerClass) {
+        let elements = document.querySelectorAll(formContainerSelector);
+        for (let i = 0; i < elements.length; i++) {
+            const dataset = Utils.readData(elements[i], formContainerClass);
+            const _path = dataset["path"];
+            if (_path == null) {
+                console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
+            } else {
+                const _formJson = await Utils.getJson(_path + ".model.json");
+                console.log("model json from server ", _formJson);
+                const formContainer = createFormContainer({
+                    _formJson,
+                    _path
+                });
+                const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
+                document.dispatchEvent(event);
+            }
+        }
     }
 }

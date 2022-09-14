@@ -15,6 +15,12 @@
     "type" : "boolean",
     "enum" : [true, false],
     "fieldType": "checkbox",
-    "enumNames" : ["yes", "no"]
+    "enumNames" : ["yes", "no"],
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
   }
 }

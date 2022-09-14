@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +27,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -60,6 +63,7 @@ public interface Base extends Component {
         CHECKBOX("checkbox"),
         BUTTON("button"),
         PANEL("panel"),
+        FORM("form"),
         CHECKBOX_GROUP("checkbox-group");
 
         private String value;
@@ -163,6 +167,15 @@ public interface Base extends Component {
         @JsonValue
         public String toString() {
             return value;
+        }
+
+        /**
+         * returns the name of the property which stores the value of the error message for the constraint
+         * 
+         * @return string
+         */
+        public String getMessageProperty() {
+            return value + "Message";
         }
     }
 
@@ -367,5 +380,40 @@ public interface Base extends Component {
     @JsonIgnore
     default boolean isTooltipVisible() {
         return false;
+    }
+
+    /**
+     * Returns the rules defined for the component after filtering out invalid rules
+     * If no rules are defined, returns an empty map
+     * 
+     * @return map containing the rules and their expressions
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String> getRules() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Returns the events defined for the component after filtering out invalid rules
+     * 
+     * @return map containing the events and their expressions
+     *         If no rules are defined, returns an empty map
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String[]> getEvents() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Sets i18n object
+     * 
+     * @param i18n reference to the {@link I18n} object
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default void setI18n(@Nonnull I18n i18n) {
+        // empty body
     }
 }

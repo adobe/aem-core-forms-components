@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.17-SNAPSHOT</version>
+    <version>1.0.100-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -65,6 +65,7 @@
     <!-- ====================================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.basedir>${project.basedir}</main.basedir>
 
         <aem.host>localhost</aem.host>
         <aem.port>4502</aem.port>
@@ -762,7 +763,7 @@
                             <exclude>**/test/resources/mockito-extensions/*</exclude>
                             <!-- Ignore auto generated webpack file -->
                             <exclude>**/dist/main.js</exclude>
-                            <exclude>**/apps/core/fd/clientlibs/core-forms-components-runtime/js/main.js</exclude>
+                            <exclude>**/apps/core/fd/clientlibs/core-forms-components-runtime-base/js/main.js</exclude>
                         </excludes>
                     </configuration>
                     <executions>
@@ -1116,10 +1117,14 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- Temporarily added, system path needs to be removed later -->
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.04.12.02-220401</version>
+                <!-- <version>2022.04.12.02-220401</version> -->
+                <version>2022.08.29</version>
+                <scope>system</scope>
+                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath>
             </dependency>
 
             <dependency>

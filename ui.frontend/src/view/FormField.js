@@ -14,21 +14,50 @@
  * limitations under the License.
  ******************************************************************************/
 
+import {Constants} from "../constants";
 import Utils from "../utils";
 
 export default class FormField {
 
     constructor(params) {
         this.formContainer = params.formContainer;
-        this.parent = params.parent || params.formContainer;
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
-        this.bindEventListeners();
+        this.active = false;
     }
 
     setId(id) {
         this.id = id;
+    }
+
+    setParent(parentView) {
+        this.parentView = parentView;
+        if (this.parentView.addChild) {
+            this.parentView.addChild(this);
+        }
+    }
+
+    setActive() {
+        if (!this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+        }
+        if (this.parentView && this.parentView.setActive) {
+            this.parentView.setActive();
+        }
+    }
+
+    setInactive() {
+        if (this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
+        }
+        if (this.parentView && this.parentView.setInactive) {
+            this.parentView.setInactive();
+        }
+    }
+
+    isActive() {
+        return this.active;
     }
 
     getFormContainerPath() {
@@ -39,41 +68,34 @@ export default class FormField {
         return this.id;
     }
 
-    bindEventListeners() {
-        this.element.addEventListener('change', (event) => {
-            this._model.value = event.target.value;
-        });
+    setModel(model) {
+        if (typeof this._model === "undefined" || this._model === null) {
+            this._model = model;
+        } else {
+            throw "Re-initializing model is not permitted"
+        }
     }
 
-    setModel(model) {
-        this._model = model;
+    /**
+     * toggles the html element based on the property. If the property is false, then adds the data-attribute and
+     * css class
+     * @param property
+     * @param dataAttribute
+     * @param value
+     */
+    toggle(property, dataAttribute, value) {
+        if (property === false) {
+            this.element.setAttribute(dataAttribute, value);
+        } else {
+            this.element.removeAttribute(dataAttribute);
+        }
     }
 
     getModel() {
         return this._model;
     }
 
-    getClass() {
-       throw new Error ("Not Implemented");
-    }
-
-    getTagName() {
-        throw new Error ("Not Implemented");
-    }
-
-    setValue(value) {
-       throw new Error("Not implemented");
-    }
-
     subscribe() {
-        this._model.subscribe((action) => {
-            let state = action.target.getState();
-            if (!state.valid) {
-                alert(state.errorMessage);
-                this.setValue(null);
-            } else {
-                this.setValue(state.value);
-            }
-        });
+        throw "the field does not subscribe to the model"
     }
 }

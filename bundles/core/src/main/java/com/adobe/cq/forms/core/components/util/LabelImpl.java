@@ -20,6 +20,7 @@ import org.apache.sling.api.resource.ValueMap;
 
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.i18n.I18n;
 
 public class LabelImpl implements Label {
 
@@ -29,10 +30,12 @@ public class LabelImpl implements Label {
 
     private ValueMap properties;
     private String defaultTitle;
+    private I18n i18n;
 
-    public LabelImpl(Resource field, String defaultTitle) {
+    public LabelImpl(Resource field, String defaultTitle, I18n i18n) {
         this.properties = field.getValueMap();
         this.defaultTitle = defaultTitle;
+        this.i18n = i18n;
     }
 
     /**
@@ -65,6 +68,6 @@ public class LabelImpl implements Label {
      */
     @Override
     public String getValue() {
-        return properties.get(PN_TITLE, this.defaultTitle);
+        return ComponentUtils.translate(properties.get(PN_TITLE, this.defaultTitle), PN_TITLE, properties, i18n);
     }
 }

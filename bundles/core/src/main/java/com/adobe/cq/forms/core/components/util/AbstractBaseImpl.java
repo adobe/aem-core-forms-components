@@ -15,9 +15,17 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -35,7 +43,8 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
+import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -43,11 +52,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractBaseImpl extends AbstractComponentImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
+    protected I18n i18n = null;
+    private static final String PN_DESCRIPTION = "description";
+    private static final String PN_TOOLTIP = "tooltip";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltip")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_TOOLTIP)
     @Nullable
     protected String tooltip;
 
@@ -68,10 +81,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fieldType")
     protected String fieldTypeJcr;
     private FieldType fieldType;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String format;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -124,12 +133,30 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      */
     private Map<ConstraintType, String> constraintMessages = null;
 
+    /**
+     * Predicate to check if a map entry is non empty
+     * return true if and only if
+     * 1) the value is not of type string and non empty or
+     * 2) the value is of type string[] and has more than 1 elements
+     */
+    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
+        .getValue()).length() > 0)
+        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+
     @PostConstruct
     protected void initBaseModel() {
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
         type = Type.fromString(typeJcr);
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
+        if (request != null && i18n == null) {
+            i18n = GuideUtils.getI18n(request, resource);
+        }
+    }
+
+    @Override
+    public void setI18n(@Nonnull I18n i18n) {
+        this.i18n = i18n;
     }
 
     /**
@@ -140,7 +167,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
      */
     @Override
     public Label getLabel() {
-        return new LabelImpl(resource, getName());
+        return new LabelImpl(resource, getName(), i18n);
     }
 
     /**
@@ -163,7 +190,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     public @Nullable String getTooltip() {
-        return tooltip;
+        return translate(PN_TOOLTIP, tooltip);
     }
 
     @Override
@@ -242,7 +269,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     public String getDescription() {
-        return description;
+        return translate(PN_DESCRIPTION, description);
     }
 
     /**
@@ -278,37 +305,38 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         return enabled;
     }
 
+    protected String getConstraintMessage(ConstraintType type) {
+        String propName = type.getMessageProperty();
+        ValueMap properties = resource.getValueMap();
+        return translate(propName, properties.get(propName, String.class));
+    }
+
     @Override
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
         if (constraintMessages == null) {
             constraintMessages = new LinkedHashMap<>();
             ConstraintMessages msgs = new ConstraintMessagesProvider();
-            put(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
-            put(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
+            putConstraintMessage(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
+            putConstraintMessage(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
             if (this.getType().equals(Type.STRING)) {
-                put(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
-                put(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
-                put(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
-                put(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
-                String format = this.getFormat();
-                if (format != null && format.equals(Format.DATE.toString())) {
-                    put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                    put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
-                }
+                putConstraintMessage(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
+                putConstraintMessage(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
+                putConstraintMessage(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
+                putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
             }
 
             if (this.getType().equals(Type.NUMBER)) {
-                put(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                put(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
             }
 
             // todo: add the following conditionally
-            put(ConstraintType.STEP, msgs.getStepConstraintMessage());
-            put(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
-            put(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
-            put(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
-            put(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
-            put(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.STEP, msgs.getStepConstraintMessage());
+            putConstraintMessage(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.MAX_ITEMS, msgs.getMaxItemsConstraintMessage());
+            putConstraintMessage(ConstraintType.ENFORCE_ENUM, msgs.getEnforceEnumConstraintMessage());
+            putConstraintMessage(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
+            putConstraintMessage(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
         }
         return constraintMessages;
     }
@@ -316,7 +344,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     /**
      * Put non-blank named values in constraint messages map.
      */
-    private void put(ConstraintType name, String value) {
+    private void putConstraintMessage(ConstraintType name, String value) {
         if (StringUtils.isNotBlank(value)) {
             constraintMessages.put(name, value);
         }
@@ -371,6 +399,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         private static final String PN_MAXITEMS_MESSAGE = "maxItemsMessage";
         private static final String PN_UNIQUEITEMS_MESSAGE = "uniqueItemsMessage";
         private static final String PN_ENFORCEENUM_MESSAGE = "enforceEnumMessage";
+
         private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property name as in
                                                                                             // foundation
 
@@ -379,85 +408,85 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         @Override
         @Nullable
         public String getTypeConstraintMessage() {
-            return properties.get(PN_TYPE_MESSAGE, String.class);
+            return translate(PN_TYPE_MESSAGE, properties.get(PN_TYPE_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getRequiredConstraintMessage() {
-            return properties.get(PN_REQUIRED_MESSAGE, String.class);
+            return translate(PN_REQUIRED_MESSAGE, properties.get(PN_REQUIRED_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinimumConstraintMessage() {
-            return properties.get(PN_MINIMUM_MESSAGE, String.class);
+            return translate(PN_MINIMUM_MESSAGE, properties.get(PN_MINIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaximumConstraintMessage() {
-            return properties.get(PN_MAXIMUM_MESSAGE, String.class);
+            return translate(PN_MAXIMUM_MESSAGE, properties.get(PN_MAXIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinLengthConstraintMessage() {
-            return properties.get(PN_MINLENGTH_MESSAGE, String.class);
+            return translate(PN_MINLENGTH_MESSAGE, properties.get(PN_MINLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxLengthConstraintMessage() {
-            return properties.get(PN_MAXLENGTH_MESSAGE, String.class);
+            return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getStepConstraintMessage() {
-            return properties.get(PN_STEP_MESSAGE, String.class);
+            return translate(PN_STEP_MESSAGE, properties.get(PN_STEP_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getFormatConstraintMessage() {
-            return properties.get(PN_FORMAT_MESSAGE, String.class);
+            return translate(PN_FORMAT_MESSAGE, properties.get(PN_FORMAT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getPatternConstraintMessage() {
-            return properties.get(PN_PATTERN_MESSAGE, String.class);
+            return translate(PN_PATTERN_MESSAGE, properties.get(PN_PATTERN_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinItemsConstraintMessage() {
-            return properties.get(PN_MINITEMS_MESSAGE, String.class);
+            return translate(PN_MINITEMS_MESSAGE, properties.get(PN_MINITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxItemsConstraintMessage() {
-            return properties.get(PN_MAXITEMS_MESSAGE, String.class);
+            return translate(PN_MAXITEMS_MESSAGE, properties.get(PN_MAXITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getUniqueItemsConstraintMessage() {
-            return properties.get(PN_UNIQUEITEMS_MESSAGE, String.class);
+            return translate(PN_UNIQUEITEMS_MESSAGE, properties.get(PN_UNIQUEITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getEnforceEnumConstraintMessage() {
-            return properties.get(PN_ENFORCEENUM_MESSAGE, String.class);
+            return translate(PN_ENFORCEENUM_MESSAGE, properties.get(PN_ENFORCEENUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getValidationExpressionConstraintMessage() {
-            return properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class);
+            return translate(PN_VALIDATIONEXPRESSION_MESSAGE, properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class));
         }
     }
 
@@ -473,12 +502,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     @Override
     @Nullable
-    public String getFormat() {
-        return format;
-    }
-
-    @Override
-    @Nullable
     public String getValidationExpression() {
         return validationExpression;
     }
@@ -490,5 +513,97 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
         }
         return customProperties;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String> getRules() {
+        String[] VALID_RULES = new String[] { "visible", "value", "enabled", "label", "required" };
+
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
+            .getKey()));
+
+        Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
+
+        Resource ruleNode = resource.getChild("fd:rules");
+        if (ruleNode != null) {
+            ValueMap ruleNodeProps = ruleNode.getValueMap();
+            Map<String, String> rules = ruleNodeProps.entrySet()
+                .stream()
+                .filter(isRuleValid)
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return rules;
+        }
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Sanitizes the event entry by
+     * * removing invalid event names,
+     * * removing events where the handler is not of type string or string[]
+     * * converts all the event handlers into string[] for easy consumption
+     * * updates custom event key (as we cannot save custom:eventName in JCR)
+     *
+     * @param entry the event entry to manipulate
+     * @return the updated event entry
+     */
+    private Stream<Entry<String, String[]>> sanitizeEvent(Entry<String, Object> entry) {
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+
+        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
+            Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
+        Predicate<Map.Entry<String, Object>> isEventValid = isEntryNonEmpty.and(isEventNameValid);
+
+        Stream<Entry<String, String[]>> updatedEntry;
+        Object eventValue = entry.getValue();
+        String[] arrayEventValue;
+        String key = entry.getKey();
+        if (key.startsWith("custom_")) {
+            key = "custom:" + key.substring("custom_".length());
+        }
+        if (!isEventValid.test(entry)) {
+            updatedEntry = Stream.empty();
+        } else {
+            if (eventValue instanceof String) {
+                arrayEventValue = new String[1];
+                arrayEventValue[0] = (String) eventValue;
+            } else {
+                arrayEventValue = (String[]) eventValue;
+            }
+            updatedEntry = Stream.of(new AbstractMap.SimpleEntry<>(key, arrayEventValue));
+        }
+        return updatedEntry;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, String[]> getEvents() {
+        Resource eventNode = resource.getChild("fd:events");
+        if (eventNode != null) {
+            ValueMap eventNodeProps = eventNode.getValueMap();
+            Map<String, String[]> events = eventNodeProps.entrySet()
+                .stream()
+                .flatMap(this::sanitizeEvent)
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            return events;
+        }
+        return Collections.emptyMap();
+    }
+
+    @Nullable
+    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
+        // if author mode return the property value
+        boolean editMode = i18n == null;
+        if (request != null) {
+            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        }
+        if (editMode) {
+            return propertyValue;
+        }
+        if (StringUtils.isBlank(propertyValue)) {
+            return null;
+        }
+        return ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
     }
 }

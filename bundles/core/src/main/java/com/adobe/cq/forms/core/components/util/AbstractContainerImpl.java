@@ -24,9 +24,11 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 
@@ -42,7 +44,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     private ModelFactory modelFactory;
 
     @SlingObject
-    private Resource resource;
+    protected Resource resource;
 
     private List<? extends ComponentExporter> childrenModels;
 
@@ -64,12 +66,23 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return childrenModels;
     }
 
-    protected <T> List<T> getChildrenModels(@NotNull SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
+
         for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            T model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
-            if (model != null) {
-                models.add(model);
+            if (!child.getName().startsWith("fd:")) {
+                T model = null;
+                if (request != null) {
+                    model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+                } else {
+                    model = child.adaptTo(modelClass);
+                    if (model instanceof Base && i18n != null) {
+                        ((Base) model).setI18n(i18n);
+                    }
+                }
+                if (model != null) {
+                    models.add(model);
+                }
             }
         }
         return models;

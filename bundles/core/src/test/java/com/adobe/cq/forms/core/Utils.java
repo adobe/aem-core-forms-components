@@ -26,13 +26,15 @@ import javax.json.JsonReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.internal.jackson.DefaultMethodSkippingModuleProvider;
 import com.adobe.cq.wcm.core.components.internal.jackson.PageModuleProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wcm.testing.mock.aem.junit5.AemContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Testing utilities.
@@ -57,7 +59,7 @@ public class Utils {
         DefaultMethodSkippingModuleProvider defaultMethodSkippingModuleProvider = new DefaultMethodSkippingModuleProvider();
         mapper.registerModule(defaultMethodSkippingModuleProvider.getModule());
         try {
-            mapper.writer().writeValue(writer, model);
+            mapper.writerWithView(Views.Publish.class).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
                 e.getMessage()));
@@ -140,6 +142,14 @@ public class Utils {
         } catch (NoSuchFieldException e) {
             return null;
         }
+    }
+
+    public static <T> T getComponentUnderTest(String resourcePath, Class<T> clazz, AemContext context) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        assertNotNull("resource adaptation should not be null", context.currentResource().adaptTo(clazz));
+        assertNotNull("request adaptation should not be null", request.adaptTo(clazz));
+        return request.adaptTo(clazz);
     }
 
 }
