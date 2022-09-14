@@ -62,31 +62,18 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Placeholder Text"
                                     name="./placeholder"/>
-                            <requiredMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when required field left empty."
-                                    granite:class="cmp-adaptiveform-base__requiredmessage"
-                                    fieldLabel="Required Field Message"
-                                    name="./requiredMessage"/>
-                            <validateExpressionMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="Displayed when validation script fails."
-                                    fieldLabel="Script Validation Message"
-                                    name="./validateExpressionMessage"/>
-                            <dataref
+                            <bindref
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
                                     emptyText="Data Model Bind Reference"
-                                    fieldDescription="A valid bind reference can have alphanumeric characters, parenthesis, dot, hyphen, at the rate, forward slash, asterisk, dollar and underscore."
+                                    fieldDescription="A valid bind reference can have  alphanumeric characters, parenthesis, dot, hyphen, at the rate, forward slash, asterisk, dollar and underscore."
                                     fieldLabel="Data Model Bind Reference"
                                     name="./dataRef">
                                 <granite:data
                                         jcr:primaryType="nt:unstructured"
                                         node-bindref-validation=""
                                         bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel"/>
-                            </dataref>
+                            </bindref>
                             <visible
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
@@ -139,6 +126,19 @@
                                 text="Required field"
                                 value="true">
                         </required>
+                        <mandatoryMessage
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                fieldDescription="Error message shown when required field left empty."
+                                granite:class="cmp-adaptiveform-base__mandatorymessage"
+                                fieldLabel="Required Field Message"
+                                name="./requiredMessage"/>
+                        <validateExpMessage
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldDescription="Displayed when validation script fails."
+                                fieldLabel="Script Validation Message"
+                                name="./validateExpressionMessage"/>
                     </items>
                     </validation>
                     <help
@@ -221,7 +221,7 @@
                               name="./tooltipVisible"
                               text="Always show short description"
                               value="true"/>
-                            <description
+                            <longDescription
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                     fieldLabel="Long Description"
@@ -289,7 +289,7 @@
                                         </fullscreen>
                                     </cui>
                                 </uiSettings>
-                            </description>
+                            </longDescription>
                         </items>
                     </help>
                     <accessibility

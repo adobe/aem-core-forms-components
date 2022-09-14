@@ -15,20 +15,20 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-          jcr:primaryType="nt:unstructured"
-          jcr:title="Adaptive Form Text Input field"
-          sling:resourceType="cq/gui/components/authoring/dialog"
-          extraClientlibs="[core.forms.components.textinput.v1.editor]"
-          trackingFeature="core-components:adaptiveform-textinput:v1">
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form Text Input field"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.textinput.v1.editor]"
+    trackingFeature="core-components:adaptiveform-textinput:v1">
     <content
-            granite:class="cmp-adaptiveform-textinput__editdialog"
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="granite/ui/components/coral/foundation/container">
+        granite:class="cmp-adaptiveform-textinput__editdialog"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
-                    maximized="{Boolean}true">
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                             jcr:primaryType="nt:unstructured"
@@ -126,108 +126,108 @@
                                     value="true">
                             </allowRichText>
                             <autocomplete
-                                    wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
-                                    fieldLabel="Autofill Attribute"
-                                    forceSelection="{Boolean}true"
-                                    name="./autocomplete"
-                                    value="off">
+                              wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                              fieldLabel="Autofill Attribute"
+                              forceSelection="{Boolean}true"
+                              name="./autocomplete"
+                              value="off">
                                 <options
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                  jcr:primaryType="nt:unstructured"
+                                  sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
                                 <items jcr:primaryType="nt:unstructured">
                                     <off
-                                            jcr:primaryType="nt:unstructured"
-                                            text="off"
-                                            value="off"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="off"
+                                      value="off"/>
                                     <on
-                                            jcr:primaryType="nt:unstructured"
-                                            text="on"
-                                            value="on"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="on"
+                                      value="on"/>
                                     <name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="name"
-                                            value="name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="name"
+                                      value="name"/>
                                     <first_x0020_name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="given-name"
-                                            value="given-name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="given-name"
+                                      value="given-name"/>
                                     <address
-                                            jcr:primaryType="nt:unstructured"
-                                            text="street-address"
-                                            value="street-address"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="street-address"
+                                      value="street-address"/>
                                     <zip
-                                            jcr:primaryType="nt:unstructured"
-                                            text="postal-code"
-                                            value="postal-code"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="postal-code"
+                                      value="postal-code"/>
                                     <card_x0020_name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-name"
-                                            value="cc-name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-name"
+                                      value="cc-name"/>
                                     <middle_x0020_name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="additional-name"
-                                            value="additional-name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="additional-name"
+                                      value="additional-name"/>
                                     <last_x0020_name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="family-name"
-                                            value="family-name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="family-name"
+                                      value="family-name"/>
                                     <address-line1
-                                            jcr:primaryType="nt:unstructured"
-                                            text="address-line1"
-                                            value="address-line1"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="address-line1"
+                                      value="address-line1"/>
                                     <address-line2
-                                            jcr:primaryType="nt:unstructured"
-                                            text="address-line2"
-                                            value="address-line2"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="address-line2"
+                                      value="address-line2"/>
                                     <address-level1
-                                            jcr:primaryType="nt:unstructured"
-                                            text="address-level1"
-                                            value="address-level1"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="address-level1"
+                                      value="address-level1"/>
                                     <address-level2
-                                            jcr:primaryType="nt:unstructured"
-                                            text="address-level2"
-                                            value="address-level2"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="address-level2"
+                                      value="address-level2"/>
                                     <country
-                                            jcr:primaryType="nt:unstructured"
-                                            text="country"
-                                            value="country"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="country"
+                                      value="country"/>
                                     <cc-name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-name"
-                                            value="cc-name"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-name"
+                                      value="cc-name"/>
                                     <cc-number
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-number"
-                                            value="cc-number"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-number"
+                                      value="cc-number"/>
                                     <cc-csc
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-csc"
-                                            value="cc-csc"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-csc"
+                                      value="cc-csc"/>
                                     <cc-exp-month
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-exp-month"
-                                            value="cc-exp-month"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-exp-month"
+                                      value="cc-exp-month"/>
                                     <cc-exp-year
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-exp-year"
-                                            value="cc-exp-year"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-exp-year"
+                                      value="cc-exp-year"/>
                                     <cc-exp
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-exp"
-                                            value="cc-exp"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-exp"
+                                      value="cc-exp"/>
                                     <cc-type
-                                            jcr:primaryType="nt:unstructured"
-                                            text="cc-type"
-                                            value="cc-type"/>
+                                      jcr:primaryType="nt:unstructured"
+                                      text="cc-type"
+                                      value="cc-type"/>
                                 </items>
                             </autocomplete>
                         </items>
                     </basic>
                     <validation
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <maxLength
                                     jcr:primaryType="nt:unstructured"
