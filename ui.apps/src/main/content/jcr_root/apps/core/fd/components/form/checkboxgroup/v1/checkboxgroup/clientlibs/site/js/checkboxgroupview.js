@@ -82,16 +82,17 @@
         }
 
         _updateValue(modelValue) {
+            modelValue = [].concat(modelValue);
             let selectedWidgetValues = modelValue.map(String);
             this.widget.forEach(widget => {
                 if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
-                    widget.setAttribute("checked", "checked")
-                    widget.setAttribute("aria-checked", true)
+                    widget.setAttribute(FormView.Constants.CHECKED, FormView.Constants.CHECKED)
+                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
                 } else {
                     widget.checked = false
-                    widget.removeAttribute("checked");
-                    widget.setAttribute("aria-checked", false);
+                    widget.removeAttribute(FormView.Constants.CHECKED);
+                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
         }
@@ -102,10 +103,10 @@
             let widgets = this.widget
             widgets.forEach(widget => {
                 if (enable === false) {
-                    widget.setAttribute("disabled", true);
+                    widget.setAttribute(FormView.Constants.DISABLED, true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 } else {
-                    widget.removeAttribute("disabled");
+                    widget.removeAttribute(FormView.Constants.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
