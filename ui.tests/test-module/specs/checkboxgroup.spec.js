@@ -54,13 +54,11 @@ describe('Page - Authoring', function () {
     // Check If Dialog Options Are Visible
     cy.get("[name='./type@Delete']")
     .should("exist");
-    cy.get("[name='./enum@TypeHint']")
+    cy.get("[name='./enum']")
     .should("exist");
-    cy.get("[name='./enumNames@TypeHint']")
+    cy.get("[name='./enumNames']")
     .should("exist");
 
-    // Checking some dynamic behaviours
-    cy.get("[name='./required'][type=\"checkbox\"]").should("exist").check();
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(checkBoxGroupDrop);
   }
