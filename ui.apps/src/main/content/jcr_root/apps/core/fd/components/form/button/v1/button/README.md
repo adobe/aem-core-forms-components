@@ -27,10 +27,10 @@ Adaptive Form Button component written in HTL.
 * Custom description/tooltip for help
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
+The button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this button component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
@@ -47,11 +47,11 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__text
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
+BLOCK cmp-button
+    ELEMENT cmp-button__text
+    ELEMENT cmp-button__questionmark
+    ELEMENT cmp-button__shortdescription
+    ELEMENT cmp-button__longdescription
 ```
 
 ## JavaScript Data Attribute Bindings

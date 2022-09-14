@@ -51,8 +51,31 @@
             return this.element.querySelector(Button.selectors.text);
         }
 
+        getType() {
+            return this.element.getAttribute("type");
+        }
+
         setModel(model) {
             super.setModel(model);
+
+            let onClick = () => {};
+
+            if(this.getType() === "reset") {
+                onClick = (event) => {
+                    this.element.closest("form").reset();
+                }
+            } else if(this.getType() === "submit") {
+                onClick = (event) => {
+                    this.element.closest("form").submit();
+                }
+            } else {
+                onClick = (event) => {
+                    // code for click
+                }
+            }
+            this.element.addEventListener("click", function() {
+                console.log("hello")
+            });
         }
 
         getErrorDiv() {
