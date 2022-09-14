@@ -26,12 +26,14 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * A base interface to be extended by all the different types of form elements.
@@ -357,6 +359,19 @@ public interface Base extends Component {
     @NotNull
     @JsonInclude(Include.NON_EMPTY)
     default Map<String, Object> getProperties() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Custom DOR Properties
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 1.1.0
+     */
+
+    @JsonIgnore
+    @JsonView(Views.Author.class)
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, Object> getDorProperties() {
         return Collections.emptyMap();
     }
 

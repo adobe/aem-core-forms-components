@@ -16,12 +16,16 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +51,14 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     protected Resource resource;
 
     private List<? extends ComponentExporter> childrenModels;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected String dorTemplateRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected String dorType;
 
     @Override
     public Integer getMinItems() {
@@ -86,5 +98,14 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
             }
         }
         return models;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorType", dorType);
+        customDorProperties.put("dorTemplateRef", dorTemplateRef);
+        return customDorProperties;
     }
 }

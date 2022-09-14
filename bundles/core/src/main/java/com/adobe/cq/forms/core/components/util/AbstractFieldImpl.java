@@ -18,12 +18,15 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +105,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Date exclusiveMaximumDate;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
+    @Nullable
+    protected String dorColspan;
+
     @SlingObject
     private Resource resource;
 
@@ -153,5 +164,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     public String getDataFormat() {
         return dataFormat;
+    }
+
+    @Override
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        customDorProperties.put("dorColspan", dorColspan);
+        return customDorProperties;
     }
 }
