@@ -4,5 +4,4 @@
     jcr:description="Footer of the page"
     jcr:primaryType="cq:Component"
     jcr:title="Footer"
-    sling:resourceSuperType="core/fd/components/form/base/v1/base"
     componentGroup="Adaptive Form Core Components"/>
