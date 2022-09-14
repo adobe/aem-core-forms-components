@@ -814,6 +814,15 @@
                         <staticAfter>true</staticAfter>
                         <removeUnused>true</removeUnused>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>verify-import-sorting</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>

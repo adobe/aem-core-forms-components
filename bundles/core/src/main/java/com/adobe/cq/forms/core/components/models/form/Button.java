@@ -24,6 +24,9 @@ import org.osgi.annotation.versioning.ConsumerType;
  */
 @ConsumerType
 public interface Button extends Base {
+    public static final String BUTTON = "button";
+    public static final String SUBMIT = "submit";
+    public static final String RESET = "reset";
 
     /**
      * Returns the button text.
@@ -31,17 +34,11 @@ public interface Button extends Base {
      * @return the button text
      * @since com.adobe.cq.wcm.core.components.models 12.8.0
      */
-    default String getText() {
-        return null;
+    default String getButtonType() {
+        return Button.BUTTON;
     }
 
-    /**
-     * Returns the button icon identifier.
-     *
-     * @return the button icon identifier
-     * @since com.adobe.cq.wcm.core.components.models 12.8.0
-     */
-    default String getIcon() {
+    default String getValue() {
         return null;
     }
 
@@ -51,8 +48,7 @@ public interface Button extends Base {
      * @return an accessibility label for the button
      * @since com.adobe.cq.wcm.core.components.models 12.9.0
      */
-    default String getAccessibilityLabel() {
+    default String getScreenReaderText() {
         return null;
     }
-
 }
