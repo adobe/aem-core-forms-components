@@ -107,9 +107,6 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
         if (altText != null) {
             customProperties.put("altText", altText);
         }
-        if (excludeFromDor != null) {
-            customProperties.put("excludeFromDor", excludeFromDor);
-        }
         if (imageSrc != null) {
             customProperties.put("imageSrc", imageSrc);
         }

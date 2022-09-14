@@ -13,37 +13,37 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.image="com.adobe.cq.wcm.core.components.models.Image"
-     data-sly-use.staticImage="com.adobe.cq.forms.core.components.models.form.StaticImage"
+<div data-sly-use.image="com.adobe.cq.forms.core.components.models.form.StaticImage"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
-     data-sly-test="${image.src}"
-     data-cmp-dmimage="${image.dmImage}"
-     data-cmp-smartcroprendition="${image.smartCropRendition}"
-     data-cmp-src="${image.srcUriTemplate ? image.srcUriTemplate : image.src}"
+     data-sly-test="${image.imageSrc}"
+     data-cmp-src="${image.imageSrc}"
      data-asset-id="${image.uuid}"
      id="${image.id}"
      data-cmp-data-layer="${image.data.json}"
-     data-cmp-hook-image="imageV1"
-     class="cmp-image${!wcmmode.disabled ? ' cq-dd-image' : ''}"
+     data-cmp-hook-image="imageV3"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-cmp-is="adaptiveFormImage"
-     itemscope itemtype="http://schema.org/ImageObject">
+     class="cmp-image${!wcmmode.disabled ? ' cq-dd-image' : ''}">
     <a data-sly-unwrap="${!image.imageLink.valid}"
        class="cmp-image__link"
        data-sly-attribute="${image.imageLink.htmlAttributes}"
        data-cmp-clickable="${image.data ? true : false}">
-        <img src="${image.src}"
-             srcset="${image.srcset}"
+        <img src="${image.imageSrc}"
              class="cmp-adaptiveform-image__widget cmp-adaptiveform-image__image"
-             data-cmp-visible="${staticImage.visible}"
+             data-cmp-visible="${image.visible}"
+             srcset="${image.srcset}"
              loading="${image.lazyEnabled ? 'lazy' : ''}"
+             class="cmp-image__image"
              itemprop="contentUrl"
-             width="${staticImage.width}" height="${staticImage.height}"
-             sizes="${staticImage.sizes}"
-             alt="${staticImage.alt || true}" title="${staticImage.title}"/>
+             width="${image.width}" height="${image.height}"
+             sizes="${image.sizes}"
+             alt="${image.altText || true}" title="${image.title}"/>
     </a>
-    <span class="cmp-image__title" itemprop="caption" data-sly-test="${staticImage.title}">${staticImage.title}</span>
-    <meta itemprop="caption" content="${staticImage.title}" data-sly-test="${staticImage.title}">
+    <span class="cmp-image__title" itemprop="caption" data-sly-test="${image.title}">${image.title}</span>
+    <span class="cmp-adaptiveform-image__title" itemprop="caption" data-sly-test="${image.title}">${image.title}</span>
+    <meta itemprop="caption" content="${image.title}" data-sly-test="${image.title}">
 </div>
-<sly data-sly-call="${templates.placeholder @ isEmpty = !image.src, classAppend = 'cmp-image cq-dd-image'}"></sly>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !image.imageSrc, classAppend = 'cmp-image cq-dd-image'}"></sly>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !image.imageSrc, classAppend = 'cmp-adaptiveform-image cq-dd-image'}"></sly>
+

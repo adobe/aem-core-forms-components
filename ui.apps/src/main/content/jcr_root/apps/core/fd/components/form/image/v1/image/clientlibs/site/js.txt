@@ -16,4 +16,4 @@
 
 #base=js
 
-image.js
+imageview.js
