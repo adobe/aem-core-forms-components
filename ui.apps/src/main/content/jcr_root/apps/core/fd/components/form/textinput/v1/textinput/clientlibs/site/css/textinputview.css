@@ -27,18 +27,9 @@
 }
 
 .cmp-adaptiveform-textinput__longdescription {
-    font-size: .875rem;
-    padding-left: 1rem;
-    padding-bottom: 0.125rem;
-    padding-top: 0.125rem;
-    padding-right: 1rem;
 }
 
 .cmp-adaptiveform-textinput__shortdescription {
-    font-size: .875rem;
-    margin: 0px;
-    clear: both;
-    border-radius: 4px 4px 3px 3px;
 }
 
 .cmp-adaptiveform-textinput__questionmark {
@@ -56,31 +47,10 @@
     display: none;
 }
 
-[data-cmp-adaptiveform-textinput-longdescription-hidden=true] {
+[data-cmp-longdescription-hidden=true] {
     display: none;
 }
 
-[data-cmp-adaptiveform-textinput-shortdescription-hidden=true] {
+[data-cmp-shortdescription-hidden=true] {
     display: none;
-}
-
-[data-cmp-adaptiveform-textinput-shortdescription-tooltip=true] {
-    position: absolute;
-    transform: translateX(0%);
-    background-color: #4d4b4b;
-    color: #fff;
-    white-space: nowrap;
-    border: 15px solid;
-    padding: 5px 10px;
-    border-radius: 20px;
-}
-
-[data-cmp-adaptiveform-textinput-shortdescription-tooltip=true]::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -50%;
-    transform: translateX(-50%);
-    border: 15px solid;
-    border-color: #0000 #0000 #4d4b4b #0000;
 }
