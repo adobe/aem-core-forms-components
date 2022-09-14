@@ -28,27 +28,11 @@ public interface Button extends Base {
     public static final String SUBMIT = "submit";
     public static final String RESET = "reset";
 
-    /**
-     * Returns the button text.
-     *
-     * @return the button text
-     * @since com.adobe.cq.wcm.core.components.models 12.8.0
-     */
     default String getButtonType() {
         return Button.BUTTON;
     }
 
     default String getValue() {
-        return null;
-    }
-
-    /**
-     * Returns an accessibility label for the button.
-     *
-     * @return an accessibility label for the button
-     * @since com.adobe.cq.wcm.core.components.models 12.9.0
-     */
-    default String getScreenReaderText() {
         return null;
     }
 }

@@ -5,4 +5,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Button (v1)"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
-    componentGroup="WKND.Content"/>
+    componentGroup=".core-adaptiveform"/>

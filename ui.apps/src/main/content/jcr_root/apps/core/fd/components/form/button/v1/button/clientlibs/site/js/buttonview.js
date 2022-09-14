@@ -39,6 +39,10 @@
             this.qm = this.element.querySelector(Button.selectors.qm)
         }
 
+        getWidget() {
+            return this.element;
+        }
+
         getDescription() {
             return this.element.querySelector(Button.selectors.description);
         }
@@ -49,6 +53,14 @@
 
         setModel(model) {
             super.setModel(model);
+        }
+
+        getErrorDiv() {
+            return null;
+        }
+
+        _updateValue(value) {
+            // do nothing
         }
     }
 
