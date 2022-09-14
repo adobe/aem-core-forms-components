@@ -31,8 +31,8 @@
     var selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]',
         active: {
-            tab: "cmp-adaptiveFormTabs__tab--active",
-            tabpanel: "cmp-adaptiveFormTabs__tabpanel--active"
+            tab: "cmp-tabs__tab--active",
+            tabpanel: "cmp-tabs__tabpanel--active"
         }
     };
 
@@ -48,10 +48,28 @@
         constructor(params) {
             super(params);
             const {element} = params;
+            console.log("==============",element.id);
             this.cacheElements(element);
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.refreshActive();
             this.bindEvents();
+            if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
+                /*
+                 * Editor message handling:
+                 * - subscribe to "cmp.panelcontainer" message requests sent by the editor frame
+                 * - check that the message data panel container type is correct and that the id (path) matches this specific Tabs component
+                 * - if so, route the "navigate" operation to enact a navigation of the Tabs based on index data
+                 */
+                CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
+                var _self = this;
+                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
+                    if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
+                        if (message.data.operation === "navigate") {
+                            _self.navigate(message.data.index);
+                        }
+                    }
+                });
+            }
         }
 
         /**
@@ -67,7 +85,7 @@
 
             for (var i = 0; i < hooks.length; i++) {
                 var hook = hooks[i];
-                if (hook.closest("." + NS + "-" + IS) === this._elements.self) { // only process own tab elements
+                if (hook.closest("[data-cmp-is="+IS+"]") === this._elements.self) { // only process own tab elements
                    var key = hook.dataset[NS + "Hook" + "Adaptiveformtabs"];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
@@ -240,7 +258,8 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
+        console.log("=========== setupField", element.id);
         return new Tabs({element, formContainer})
     }, Tabs.selectors.self);
-
+    
 }());
