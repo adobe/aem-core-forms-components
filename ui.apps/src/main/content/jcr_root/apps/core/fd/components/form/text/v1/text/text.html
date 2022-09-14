@@ -23,7 +23,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-cmp-visible="${textModel.visible}"
      class="cmp-adaptiveform-text">
-    <div class="cmp-adaptiveform-text__widget">
+    <div class="cmp-adaptiveform-text__widget" tabindex="0">
         <div data-sly-unwrap="${textModel.isRichText}">${text @ context = textModel.isRichText ? 'html' : 'text'}</div>
     </div>
 </div>
