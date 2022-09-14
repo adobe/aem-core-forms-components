@@ -82,7 +82,7 @@
                 for (var i = 0; i < buttons.length; i++) {
                     (function(index) {
                         buttons[i].addEventListener("click", function(event) {
-                            that.toggle(index);
+                            that.toggleItemAtIndex(index);
                             that.focusButton(index);
                         });
                         buttons[i].addEventListener("keydown", function(event) {
@@ -103,7 +103,7 @@
                 window.CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
                     if (message.data && message.data.type === "cmp-accordion" && message.data.id === that.element.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
-                            that.toggle(message.data.index);
+                            that.toggleItemAtIndex(message.data.index);
                         }
                     }
                 });
@@ -168,7 +168,7 @@
                 case Accordion.keyCodes.ENTER:
                 case Accordion.keyCodes.SPACE:
                     event.preventDefault();
-                    this.toggle(index);
+                    this.toggleItemAtIndex(index);
                     this.focusButton(index);
                     break;
                 default:
@@ -182,7 +182,7 @@
          * @private
          * @param {Number} index The index of the item to toggle
          */
-        toggle(index) {
+        toggleItemAtIndex(index) {
             var item = this._elements["item"][index];
             if (item) {
                 // ensure only a single item is expanded

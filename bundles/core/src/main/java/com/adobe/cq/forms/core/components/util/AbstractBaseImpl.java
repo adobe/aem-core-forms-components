@@ -78,8 +78,8 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = "fieldType", injectionStrategy = InjectionStrategy.OPTIONAL)
-    public String fieldTypeJcr;
+    @ValueMapValue(name = "fieldType")
+    protected String fieldTypeJcr;
     private FieldType fieldType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

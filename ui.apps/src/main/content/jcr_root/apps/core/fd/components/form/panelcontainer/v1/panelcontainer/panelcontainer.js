@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2019 Adobe
+ ~ Copyright 2021 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -13,16 +13,17 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.models.form;
 
-import org.osgi.annotation.versioning.ConsumerType;
+use(function () {
 
-/**
- * Defines the {@code Accordion} Sling Model used for the {@code /apps/core/wcm/components/accordion} component.
- *
- * @since com.adobe.cq.wcm.core.components.models 12.8.0
- */
-@ConsumerType
-public interface Accordion extends Panel {
-
-}
+  var labelPath = 'core/fd/components/commons/v1/fieldTemplates/label.html';
+  var shortDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/shortDescription.html";
+  var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
+  var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html";
+  return {
+    labelPath: labelPath,
+    shortDescriptionPath: shortDescriptionPath,
+    longDescriptionPath: longDescriptionPath,
+    questionMarkPath: questionMarkPath
+  }
+});

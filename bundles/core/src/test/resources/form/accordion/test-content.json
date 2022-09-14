@@ -1,0 +1,17 @@
+{
+  "accordion": {
+    "id": "accordion-6a713848c0",
+    "type": "object",
+    "fieldType": "accordion",
+    "sling:resourceType" : "core/fd/components/form/accordion/v1/accordion",
+    "name": "accordion",
+    "visible": true,
+    "enabled": true,
+    "headingElement": "h1",
+    "label": {
+      "visible": true,
+      "richText": false,
+      "value": "accordion"
+    }
+  }
+}

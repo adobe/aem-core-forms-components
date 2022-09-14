@@ -14,7 +14,15 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <div data-sly-use.accordion="com.adobe.cq.forms.core.components.models.form.Accordion"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-panelcontainer="${wcmmode.edit && 'accordion'}"
+     data-sly-use.renderer="${'accordion.js'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      id="${accordion.id}"
      class="cmp-accordion"
      data-cmp-is="accordion"
@@ -34,7 +42,7 @@
                     aria-controls="${item.id}-panel"
                     type="button"
                     data-cmp-hook-accordion="button">
-                <span class="cmp-accordion__title">${item.id}</span>
+                <span class="cmp-accordion__title">${item.name}</span>
                 <span class="cmp-accordion__icon"></span>
             </button>
         </h3>
@@ -48,4 +56,10 @@
     </div>
     <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}"></sly>
+
+    <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+
+
+
 </div>

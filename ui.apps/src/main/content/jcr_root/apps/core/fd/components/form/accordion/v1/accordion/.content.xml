@@ -20,4 +20,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Accordion (v1)"
     sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
-    componentGroup="AF core ww"/>
+    componentGroup=".core-adaptiveform"/>

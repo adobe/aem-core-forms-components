@@ -27,5 +27,11 @@
                 itemActiveSelector: "[data-cmp-hook-accordion='item'][data-cmp-expanded] [data-cmp-hook-accordion='panel']"
             });
         }
+
+
+
+
+
+
     });
 })(jQuery(document));

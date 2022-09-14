@@ -1,0 +1,15 @@
+{
+  "id": "accordion-6a713848c0",
+  "type": "object",
+  "fieldType": "accordion",
+  "name": "accordion",
+  "visible": true,
+  "enabled": true,
+  "headingElement": "h1",
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "accordion"
+  },
+  ":type": "core/fd/components/form/accordion/v1/accordion"
+}
