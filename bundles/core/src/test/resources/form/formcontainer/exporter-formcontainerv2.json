@@ -14,11 +14,23 @@
         "richText": false,
         "value": "def"
       },
+      "properties":{
+        "fd:dor":{
+          "dorExclusion":false,
+          "dorColspan":null
+        }
+      },
       "type": "string",
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
   "fieldType" : "form",
+  "properties":{
+    "fd:dor":{
+      "dorType":null,
+      "dorTemplateRef":null
+    }
+  },
   "metadata": {
     "action": "/a/b",
     "dataUrl": "/c/d",

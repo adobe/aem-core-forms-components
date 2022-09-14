@@ -54,6 +54,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     protected I18n i18n = null;
     private static final String PN_DESCRIPTION = "description";
+
+    public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+
     private static final String PN_TOOLTIP = "tooltip";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
@@ -205,6 +208,11 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
             customProperties.put("tooltipVisible", tooltipVisible);
         }
         return customProperties;
+    }
+
+    public @NotNull Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        return customDorProperties;
     }
 
     /**
@@ -510,6 +518,9 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         Map<String, Object> customProperties = new LinkedHashMap<>();
         if (getCustomProperties().size() != 0) {
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
+        }
+        if (getDorProperties().size() != 0) {
+            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         return customProperties;
     }
