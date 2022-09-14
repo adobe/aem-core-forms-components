@@ -59,9 +59,23 @@
 
         setModel(model) {
             super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
+            let widgets = this.widget
+            widgets.forEach(widget => {
+                let self = widget
+                widget.addEventListener('change', (e) => {
+                    this._updateModelValue(self)
+                })
             })
+        }
+
+        _updateModelValue(widget) {
+            let value;
+            this.widget.forEach(widget => {
+                if (widget.checked) {
+                    value = widget.value
+                }
+            }, this)
+            this._model.value = value
         }
     }
 

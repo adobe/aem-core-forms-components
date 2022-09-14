@@ -17,8 +17,8 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-radiobutton__editdialog",
+        RADIOBUTTON_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__assistprioritycustom",
         RADIOBUTTON_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__customtext",
-        RADIOBUTTON_ASSISTPRIORITY_VALUE = 'input[name="./assistPriority"]',
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -26,21 +26,22 @@
      * Shows custom text box depending on the value of assist priority of radio button
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
-    function handleValueChanged(dialog) {
-        var component = $(RADIOBUTTON_ASSISTPRIORITY_VALUE);
+    function handleAssistPriorityChange(dialog) {
+        var assistpriority = dialog.find(RADIOBUTTON_ASSISTPRIORITY);
         var customtext = dialog.find(RADIOBUTTON_CUSTOMTEXT);
         var hideAndShowElements = function() {
-            if(component[0].value === "custom"){
+            if(assistpriority[0].value === "custom"){
                 customtext.show();
             } else {
                 customtext.hide();
             }
         };
         hideAndShowElements();
-        dialog.on("change", component, function() {
+        dialog.on("change", assistpriority, function() {
             hideAndShowElements();
         });
     }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValueChanged);
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange);
 
 })(jQuery);

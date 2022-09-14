@@ -19,7 +19,7 @@ Adaptive form Radio Button component written in HTL.
 
 ## Features
 
-* Provides the following type of input:
+* Provides the following type of input in form of radio button:
     * string
     * boolean
     * number
@@ -36,8 +36,8 @@ The following properties are written to JCR for this Radio Button component and 
 2. `./jcr:title` - defines the label to use for this field
 3. `./hideTitle` - if set to `true`, the label of this field will be hidden
 4. `./type` - defines the type of values(string, boolean, number) which can be accepted
-5. `./enum` - an array[] of type defines the available values for selection
-6. `./enumNames` - an array[] of strings defines the display value of the enum
+5. `./enum` - an array[] of type, defines the available values for selection
+6. `./enumNames` - an array[] of strings, defines the display value of the enum
 7. `./default` - defines the default value of the field
 8. `./alignment` - defines how should the options be displayed, horizontally or vertically.
 9. `./description` - defines a help message that can be rendered in the field as a hint for the user
