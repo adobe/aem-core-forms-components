@@ -63,8 +63,9 @@
 <!--                    </linkDialogConfig>-->
 <!--                </links>-->
                 <misctools
-                        jcr:primaryType="nt:unstructured"
-                        features="*"/>
+                    jcr:primaryType="nt:unstructured"
+                    features="specialchars">
+                </misctools>
                 <edit
                         jcr:primaryType="nt:unstructured"
                         features="*"/>

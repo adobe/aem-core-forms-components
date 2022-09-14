@@ -57,9 +57,9 @@
                     <patterns
                             jcr:primaryType="nt:unstructured"
                             sling:hideResource="{Boolean}true"/>
-                    <accessibility
-                            jcr:primaryType="nt:unstructured"
-                            sling:hideResource="{Boolean}true"/>
+<!--                    <accessibility-->
+<!--                            jcr:primaryType="nt:unstructured"-->
+<!--                            sling:hideResource="{Boolean}true"/>-->
                     <validation
                             jcr:primaryType="nt:unstructured"
                             sling:hideResource="{Boolean}true"/>

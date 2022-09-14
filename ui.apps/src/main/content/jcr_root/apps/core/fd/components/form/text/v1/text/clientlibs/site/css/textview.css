@@ -21,7 +21,3 @@
 .cmp-adaptiveform-text__widget {
 
 }
-
-[data-cmp-visible=false] {
-    display: none;
-}
