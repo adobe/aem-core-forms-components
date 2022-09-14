@@ -99,14 +99,15 @@ export default class FormFieldBase extends FormField {
     _initializeHelpContent() {
         // Initializing Tooltip
         if (!this._isTooltipAlwaysVisible()) {
-            if (this.getWidget()) {
-                const state = this._model.getState();
-                let txt =  '';
-                if (state) {
-                    // Short description is saved as rich text. Hence, removing html tags for title attribute
-                    txt = state.tooltip ? state.tooltip.replace(/<\/?[^>]+(>|$)/g, "") : '';
-                }
-                this.getWidget().setAttribute('title', txt);
+            const state = this._model.getState();
+            let txt =  '';
+            if (state) {
+                // Short description is saved as rich text. Hence, removing html tags for title attribute
+                txt = state.tooltip ? state.tooltip.replace(/<\/?[^>]+(>|$)/g, "") : '';
+            }
+            const widget = this.getWidget();
+            if (widget) {
+                widget.setAttribute('title', txt);
             }
         }
         // Initializing Hint ('?') and long description.
