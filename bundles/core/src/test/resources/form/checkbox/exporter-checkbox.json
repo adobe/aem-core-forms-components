@@ -13,9 +13,10 @@
       "tooltipVisible": false,
       "orientation" : "horizontal"
     },
-    "fd:dor":{
+    "fd:dor": {
       "dorExclusion":false,
-      "dorColspan":null}
+      "dorColspan":null
+    }
   },
   "enforceEnum":false,
   "enum" : [true, false],

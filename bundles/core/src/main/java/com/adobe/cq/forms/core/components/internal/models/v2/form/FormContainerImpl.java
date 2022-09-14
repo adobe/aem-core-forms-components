@@ -15,12 +15,16 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -41,6 +45,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
+
+    private static String DOR_TYPE = "dorType";
+    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -92,6 +99,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         return data;
     }
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected String dorTemplateRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @javax.annotation.Nullable
+    protected String dorType;
+
     @Override
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
@@ -100,5 +115,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         } else {
             return null;
         }
+    }
+
+    @Override
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put(DOR_TYPE, dorType);
+        customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        return customDorProperties;
     }
 }

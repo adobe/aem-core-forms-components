@@ -23,7 +23,7 @@
         "richText":false,
         "value":"def"
       },
-      "properties":{
+      "properties": {
         "fd:dor":{
           "dorExclusion":false,
           "dorColspan":null
@@ -45,10 +45,6 @@
   "properties":{
     "af:layout":{
       "tooltipVisible":false
-    },
-    "fd:dor":{
-      "dorType":null,
-      "dorTemplateRef":null
     }
   },
   "rules": {

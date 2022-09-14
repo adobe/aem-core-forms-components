@@ -210,11 +210,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         return customProperties;
     }
 
-    public @NotNull Map<String, Object> getDorProperties() {
-        Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        return customDorProperties;
-    }
-
     /**
      * Returns the reference to the data model
      *

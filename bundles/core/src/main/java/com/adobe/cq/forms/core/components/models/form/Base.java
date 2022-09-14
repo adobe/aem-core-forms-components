@@ -368,7 +368,6 @@ public interface Base extends Component {
      * @since com.adobe.cq.forms.core.components.models.form 1.1.0
      */
 
-    @JsonIgnore
     @JsonView(Views.Author.class)
     @JsonInclude(Include.NON_EMPTY)
     default Map<String, Object> getDorProperties() {

@@ -42,10 +42,6 @@
   "properties":{
     "af:layout":{
       "tooltipVisible":false
-    },
-    "fd:dor":{
-      "dorType":null,
-      "dorTemplateRef":null
     }
   },
   ":type":"core/fd/components/form/panel/v1/panel"

@@ -12,9 +12,10 @@
     "af:layout" : {
       "tooltipVisible": false
     },
-    "fd:dor":{
+    "fd:dor": {
       "dorExclusion":false,
-      "dorColspan":null}
+      "dorColspan":null
+    }
   },
   "label": {
     "visible": true,
