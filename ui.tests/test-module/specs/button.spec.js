@@ -62,6 +62,8 @@ describe('Button - Authoring', function () {
             .should("exist");
         cy.get("[name='./description']")
             .should("exist");
+        // cy.get("[name='./icon']")
+        //     .should("exist");
 
 
         // Checking some dynamic behaviours

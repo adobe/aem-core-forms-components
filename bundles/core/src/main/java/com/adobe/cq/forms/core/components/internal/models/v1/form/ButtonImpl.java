@@ -23,7 +23,6 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -38,8 +37,6 @@ import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
     resourceType = { FormConstants.RT_FD_FORM_BUTTON_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ButtonImpl extends AbstractBaseImpl implements Button {
-    @Self
-    private SlingHttpServletRequest request;
 
     // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type")
     // @Default(values = Button.BUTTON)
