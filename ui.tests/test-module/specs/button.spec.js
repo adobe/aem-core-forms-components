@@ -52,17 +52,20 @@ describe('Button - Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
-        // cy.get("[name='./multiLine']")
-        //     .should("exist");
-        // cy.get("[name='./autocomplete']")
-        //     .should("exist");
+        cy.get("[name='./name']")
+            .should("exist");
+        cy.get("[name='./visible']")
+            .should("exist");
+        cy.get("coral-checkbox[name='./enabled']")
+            .should("exist");
+        cy.get("[name='./tooltip']")
+            .should("exist");
+        cy.get("[name='./description']")
+            .should("exist");
+
 
         // Checking some dynamic behaviours
-        //cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
-        // cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal','none');
-        // cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
-        // cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
-        // cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(buttonDrop);
     }
 
@@ -90,7 +93,7 @@ describe('Button - Authoring', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/button",
             buttonEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/button",
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
-            buttonDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+            buttonDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formbutton.split("/").pop();
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
