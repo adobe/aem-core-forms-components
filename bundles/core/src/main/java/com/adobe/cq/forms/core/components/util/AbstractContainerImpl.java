@@ -41,6 +41,9 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
  */
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
 
+    private static String DOR_TYPE = "dorType";
+    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
+
     @OSGiService
     private SlingModelFilter slingModelFilter;
 
@@ -104,8 +107,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @NotNull
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put("dorType", dorType);
-        customDorProperties.put("dorTemplateRef", dorTemplateRef);
+        customDorProperties.put(DOR_TYPE, dorType);
+        customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
         return customDorProperties;
     }
 }
