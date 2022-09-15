@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
+/**
+ * JavaScript class to represent Adaptive Form data
+ * @class AfFormData
+ */
 export default class AfFormData {
     #data;
     #contentType;
@@ -25,18 +28,34 @@ export default class AfFormData {
         this.#attachments = params.attachments;
     }
 
+    /**
+     * Returns actual form data
+     */
     getData() {
         return this.#data;
     }
 
+    /**
+     * Returns Content type of form data
+     */
     getContentType() {
         return this.#contentType;
     }
 
+    /**
+     * Returns list of attachments
+     */
     getAttachments() {
         return this.#attachments;
     }
 
+    /**
+     * This returns the html form data representation of adaptive form data. This could be used to submit the adaptive form data to
+     * external end point from the client. The HTML form data contains the following the key / value pairs:
+     * 1. data -> contains form data represented as string
+     * 2. contentType -> contains content type of form data (it would be application/xml or application/json)
+     * @returns {*}
+     */
     toHTMLFormData() {
         let formData = new FormData();
         if (this.#contentType) {

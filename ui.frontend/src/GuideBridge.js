@@ -42,30 +42,50 @@ export default class GuideBridge {
             if (connectHandler.formContainerPath === formContainerPath) {
                 connectHandler.handler.call(connectHandler.context);
             }
-            if (! connectHandler.formContainerPath) {
+            if (!connectHandler.formContainerPath) {
                 //backward compatibility
                 connectHandler.handler.call(connectHandler.context);
             }
         });
     }
 
-    getData() {
+    /**
+     * returns string representation of form data
+     * @param {object} options input to the getFormDataString API
+     * @param {function} [options.success] callback which receives the result of the API
+     * in case of success.
+     */
+    getFormDataString(options) {
         let formModel = this.getFormModel();
         if (!formModel) {
             throw new Error("formModel is not defined");
         }
-        return formModel.exportData();
-    }
-
-    getFormDataObject(options) {
-        let data = this.getData();
-        let formData = new AfFormData({"data": data});
+        let formData = new AfFormData({"data": formModel.exportData()});
         let resultObject = new Response({"data": formData});
         if (options && typeof options.success === 'function') {
             options.success(resultObject);
         }
     }
 
+    /**
+     * Returns FormData object {@link AfFormData} containing form data and attachments
+     * @param {object} options input to the getFormDataObject API
+     * @param {function} [options.success] callback which receives the result of the API
+     * in case of success.
+     */
+    getFormDataObject(options) {
+        this.getFormDataString({success: function (resultObject) {
+            if (options && typeof options.success === 'function') {
+                options.success(resultObject);
+            }
+        }});
+    }
+
+    /**
+     * returns the Form Instance associated with the GuideBridge.
+     * Can return null, if no form instance is found.
+     * @returns {null|object}
+     */
     getFormModel() {
         if (this.#formContainerPath) {
             return this.#guideContainerMap[this.#formContainerPath];
@@ -81,6 +101,10 @@ export default class GuideBridge {
         return null;
     }
 
+    /**
+     * Validates the Adaptive Form.
+     * @returns {boolean} true if the form was valid, false otherwise
+     */
     validate() {
         let formModel = this.getFormModel();
         if (!formModel) {
@@ -90,6 +114,27 @@ export default class GuideBridge {
         return !(validationErrors && validationErrors.length > 0);
     }
 
+    /**
+     * Specify a callback function which is called/notified when Adaptive Form gets initialized. After Adaptive
+     * Form is initialized GuideBridge is ready for interaction and one can call any API.
+     *
+     * The callback can also be registered after the Form gets initialized. In that case, the callback will be
+     * called immediately.
+     *
+     * @summary Register a callback to be executed when the Adaptive Form gets initialized
+     * @param handler {function} function that would be called when guideBridge is ready for interaction. The
+     * signature of the callback should be
+     * ```
+     * function() {
+     *     // app specific code here
+     * }
+     * ```
+     * @param {object} [context] _this_ object in the callback function will point to context
+     * @example
+     * guideBridge.connect(function() {
+     *    console.log("Hurrah! Guide Bridge Activated");
+     * })
+     */
     connect(handler, context, formContainerPath) {
         context = context || this;
         if (formContainerPath) {
@@ -109,6 +154,14 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * All GuideBridge APIs (except {@link GuideBridge#connect|connect}) require Adaptive Form to be initialized.
+     * Checking the return value of this API is not necessary if guideBridge API is called only after the
+     * <a href="#wait-form-ready">Form is initialized</a>
+     * @summary Whether the Adaptive Form has been initialized or not
+     *
+     * @returns {boolean} true if the Adaptive Form is ready for interaction, false otherwise
+     */
     isConnected() {
         if (this.getFormModel()) {
             return true;
@@ -116,6 +169,9 @@ export default class GuideBridge {
         return false;
     }
 
+    /**
+     * @summary Disables the adaptive form, i.e. it disables all the fields and buttons.
+     */
     disableForm() {
         let formModel = this.getFormModel();
         if (formModel) {

@@ -16,8 +16,8 @@
 
 export default class HTTPAPILayer {
 
-    static async getFormDefinition(formContainerPath) {
-        return await this.#getJson(formContainerPath + ".model.json");
+    static async getFormDefinition(formId) {
+        return await this.#getJson("/adobe/forms/af/v1/" + formId);
     }
 
     static async getPrefillData(formId, dataRef) {
