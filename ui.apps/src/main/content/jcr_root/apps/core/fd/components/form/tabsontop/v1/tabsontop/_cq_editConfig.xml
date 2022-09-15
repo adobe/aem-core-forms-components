@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+      jcr:primaryType="cq:EditConfig"
+      cq:actions="[edit,-,copymove,delete,-,insert,-]"
+      cq:dialogMode="floating"
+      cq:layout="editbar"
+      cq:disableTargeting="{Boolean}true">
+    <cq:listeners
+        jcr:primaryType="cq:EditListenersConfig"
+        afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+                order="after CONFIGURE"
+                icon="bidRule"
+                text="Edit Rules"/>
+    </cq:actionConfigs>
+</jcr:root>
