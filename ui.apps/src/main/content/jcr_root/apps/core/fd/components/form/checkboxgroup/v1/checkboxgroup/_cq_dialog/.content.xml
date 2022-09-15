@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form CheckBoxGroup field"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.checkboxgroup.v1.editor]"
+    trackingFeature="core-components:adaptiveform-checkboxgroup:v1">
+    <content
+        granite:class="cmp-adaptiveform-checkboxgroup__editdialog"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <placeholder
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                            <type
+                                    wrapperClass="cmp-adaptiveform-checkboxgroup__type"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    sling:orderBefore="enum"
+                                    fieldLabel="Data Type of the Value"
+                                    name="./type"
+                                    key="String"
+                                    value="string[]">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <string jcr:primaryType="nt:unstructured" text="String" value="string[]"/>
+                                    <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean[]"/>
+                                    <number jcr:primaryType="nt:unstructured" text="Number" value="number[]"/>
+                                </items>
+                            </type>
+                            <enum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    fieldDescription="Enter Enum Values"
+                                    fieldLabel="Enum">
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        name="./enum"
+                                        required="{Boolean}false"/>
+                            </enum>
+                            <enumNames
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
+                                    fieldDescription="Enter values to be displayed."
+                                    fieldLabel="Enum Names">
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        name="./enumNames"
+                                        required="{Boolean}false"/>
+                            </enumNames>
+                            <alignment
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                    fieldLabel="Item Alignment"
+                                    name="./orientation"
+                                    text="Item Alignment">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <horizontal
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
+                                            checked="true"
+                                            text="Horizontal"
+                                            value="horizontal"/>
+                                    <vertical
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
+                                            text="Vertical"
+                                            value="vertical"/>
+                                </items>
+                            </alignment>
+                            <value
+                                    wrapperClass="cmp-adaptiveform-checkboxgroup__value"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    fieldDescription="Enter Default Values"
+                                    fieldLabel="Default Value">
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        name="./default"
+                                        required="{Boolean}false"/>
+                            </value>
+                        </items>
+                    </basic>
+                    <patterns
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Patterns"
+                            sling:hideResource="{Boolean}true"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                    </patterns>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Help Content"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </help>
+                    <accessibility jcr:primaryType="nt:unstructured"
+                                   jcr:title="Accessibility"
+                                   sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <assistPriority
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                            <assistPriorityCustom
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:orderBefore="customText"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    wrapperClass="cmp-adaptiveform-radiobutton__assistprioritycustom"
+                                    fieldLabel="Screen reader precedence"
+                                    name="./assistPriority"
+                                    value="">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <empty
+                                            jcr:primaryType="nt:unstructured"
+                                            text=""
+                                            value=""/>
+                                    <customText
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Custom text"
+                                            value="custom"/>
+                                    <caption
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Title"
+                                            value="caption"/>
+                                </items>
+                            </assistPriorityCustom>
+                        </items>
+                    </accessibility>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

@@ -86,8 +86,24 @@ export const Constants = {
     ARIA_INVALID : "aria-invalid",
 
     /**
+     * aria attribute to mark the dragged component checked.
+     */
+    ARIA_CHECKED : "aria-checked",
+
+    /**
      * Event to trigger when GuideBridge Initialisation Begins
      */
-    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart"
+    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart",
+
+    /**
+     * attribute to mark the dragged component disabled.
+     */
+    DISABLED : "disabled",
+
+    /**
+     * attribute to mark the dragged component checked.
+     */
+    CHECKED : "checked"
+
 }
 

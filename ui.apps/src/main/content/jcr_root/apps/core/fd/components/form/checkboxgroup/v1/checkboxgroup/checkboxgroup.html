@@ -1,0 +1,55 @@
+    <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      ~ Copyright 2022 Adobe
+      ~
+      ~ Licensed under the Apache License, Version 2.0 (the "License");
+      ~ you may not use this file except in compliance with the License.
+      ~ You may obtain a copy of the License at
+      ~
+      ~     http://www.apache.org/licenses/LICENSE-2.0
+      ~
+      ~ Unless required by applicable law or agreed to in writing, software
+      ~ distributed under the License is distributed on an "AS IS" BASIS,
+      ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      ~ See the License for the specific language governing permissions and
+      ~ limitations under the License.
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+    <sly data-sly-use.renderer="${'checkboxgroup.js'}"
+         data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+         data-sly-use.label="${renderer.labelPath}"
+         data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+         data-sly-use.longDescription="${renderer.longDescriptionPath}"
+         data-sly-use.errorMessage="${renderer.errorMessagePath}"
+         data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+
+    <div class="cmp-adaptiveform-checkboxgroup"
+         data-cmp-is="adaptiveFormCheckBoxGroup"
+         id="${component.id}"
+         data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+         data-sly-use.checkboxgroup="com.adobe.cq.forms.core.components.models.form.CheckBoxGroup"
+         data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+         data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+        <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+
+        <div class="cmp-adaptiveform-checkboxgroup-items">
+            <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
+                <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name} ${checkboxgroup.orientation} ">
+                    <input class="cmp-adaptiveform-checkboxgroup__widget left" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
+                           aria-describedby="${checkboxgroup.labelForId}_desc"
+                            name="${checkboxgroup.name}"
+                            value="${checkboxgroup.enums[itemList.index].toString}"
+                           checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
+                            aria-required="${checkboxgroup.required}">
+                    <div class="cmp-adaptiveform-checkboxgroup__widget__label right">
+                        <label for="${component.id}${'_'}${itemList.index}__widget">${checkboxgroup.enumNames[itemList.index]}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=checkboxgroup.tooltipVisible, shortDescription=checkboxgroup.tooltip, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap>
+        </div>
+        <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+        <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    </div>
