@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 @ConsumerType
-public interface StaticImage extends Field, BaseConstraint {
+public interface StaticImage extends Field {
 
     /**
      * Returns the source where the image is present.

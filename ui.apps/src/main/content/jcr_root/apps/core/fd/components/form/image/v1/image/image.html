@@ -44,6 +44,5 @@
     <span class="cmp-adaptiveform-image__title" itemprop="caption" data-sly-test="${image.title}">${image.title}</span>
     <meta itemprop="caption" content="${image.title}" data-sly-test="${image.title}">
 </div>
-<sly data-sly-call="${templates.placeholder @ isEmpty = !image.imageSrc, classAppend = 'cmp-image cq-dd-image'}"></sly>
 <sly data-sly-call="${templates.placeholder @ isEmpty = !image.imageSrc, classAppend = 'cmp-adaptiveform-image cq-dd-image'}"></sly>
 
