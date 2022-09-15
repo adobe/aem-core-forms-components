@@ -26,7 +26,8 @@ var formsConstants = {
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
                 "formtext": "/apps/forms-components-examples/components/form/text",
-                "footer": "/apps/forms-components-examples/components/form/footer"
+                "footer": "/apps/forms-components-examples/components/form/footer",
+                "formbutton": "/apps/forms-components-examples/components/form/button",
             }
         }
     },
