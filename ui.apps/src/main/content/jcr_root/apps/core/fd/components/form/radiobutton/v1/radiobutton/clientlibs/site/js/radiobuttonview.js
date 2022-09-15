@@ -59,6 +59,11 @@
 
         setModel(model) {
             super.setModel(model);
+            model.getState().enum.forEach(i =>{
+                if(model.getState().value == i){
+                    this._model.value = i;
+                }
+            });
             let widgets = this.widget
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
