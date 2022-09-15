@@ -89,11 +89,16 @@ public class Utils {
             fail("Unable to find test file " + expectedJsonResource + ".");
         }
         IOUtils.closeQuietly(is);
+        // this is added so that other components like form portal, aem form etc don't get validated against schema
         if (model instanceof Base) {
             Utils.testSchemaValidation(model);
         }
     }
 
+    /**
+     * The given model is validated against adaptive form specification
+     * @param model reference to the sling model
+     */
     public static void testSchemaValidation(@NotNull Object model) {
         InputStream jsonStream = getJson(model);
         // create instance of the ObjectMapper class
@@ -101,12 +106,14 @@ public class Utils {
         // create an instance of the JsonSchemaFactory using version flag
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/adaptive-form.schema.json");
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.11.0-Pre/adaptive-form.schema.json");
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
+            // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
+            // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
-                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/form.json");
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.11.0-Pre/form.json");
                 JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
