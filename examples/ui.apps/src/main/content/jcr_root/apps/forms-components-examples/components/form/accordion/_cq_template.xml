@@ -6,13 +6,13 @@
             jcr:title="item_1"
             name="item_1"
             fieldType="panel"
-            sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+            sling:resourceType="forms-components-examples/components/form/panelcontainer"
             layout="responsiveGrid"/>
     <item_2 jcr:primaryType="nt:unstructured"
             jcr:title="item_2"
             name="item_2"
             fieldType="panel"
-            sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+            sling:resourceType="forms-components-examples/components/form/panelcontainer"
             layout="responsiveGrid"/>
 </jcr:root>
 

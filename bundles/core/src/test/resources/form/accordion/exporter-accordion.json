@@ -1,7 +1,7 @@
 {
   "id": "accordion-6a713848c0",
   "type": "object",
-  "fieldType": "accordion",
+  "fieldType": "panel",
   "name": "accordion",
   "visible": true,
   "enabled": true,

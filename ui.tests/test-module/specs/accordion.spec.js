@@ -98,24 +98,26 @@ describe('Page - Authoring', function () {
     })
   })
 
-  // context('Open Sites Editor', function () {
-  //   const   pagePath = "/content/core-components-examples/library/adaptive-form/accordion",
-  //       accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/accordion",
-  //       accordionEditPathSelector = "[data-path='" + accordionEditPath + "']";
-  //
-  //   beforeEach(function () {
-  //     // this is done since cypress session results in 403 sometimes
-  //     cy.openAuthoring(pagePath);
-  //   });
-  //
-  //   it('insert aem forms Accordion', function () {
-  //     dropAccordionInSites();
-  //     cy.deleteComponentByPath(accordionEditPath);
-  //   });
-  //
-  //   it('open edit dialog of aem forms Accordion', function() {
-  //     testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
-  //   });
-  //
-  // });
+  context('Open Sites Editor', function () {
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/accordion",
+        accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/accordion",
+        accordionEditPathSelector = "[data-path='" + accordionEditPath + "']";
+
+    beforeEach(function () {
+      // this is done since cypress session results in 403 sometimes
+      cy.openAuthoring(pagePath);
+    });
+
+    it('insert aem forms Accordion', function () {
+      dropAccordionInSites();
+      cy.deleteComponentByPath(accordionEditPath);
+    });
+
+
+    // todo: intermittent failure
+    it('open edit dialog of aem forms Accordion', function() {
+      testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
+    });
+
+  });
 });

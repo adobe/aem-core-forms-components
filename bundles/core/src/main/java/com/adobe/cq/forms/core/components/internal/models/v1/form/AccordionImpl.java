@@ -49,7 +49,7 @@ public class AccordionImpl extends PanelContainerImpl implements Accordion {
     private String headingElement;  // todo: set it form UI.
 
     public String getHeadingElement() {
-        return headingElement != null ? headingElement : "h1";
+        return headingElement != null ? headingElement : "h3";
     }
 
 }

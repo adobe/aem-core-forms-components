@@ -21,8 +21,8 @@
     cq:layout="editbar"
     cq:disableTargeting="{Boolean}true">
     <cq:listeners
-            jcr:primaryType="cq:EditListenersConfig"
-            afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
+    jcr:primaryType="cq:EditListenersConfig"
+    afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
         <editexpression
             jcr:primaryType="nt:unstructured"
