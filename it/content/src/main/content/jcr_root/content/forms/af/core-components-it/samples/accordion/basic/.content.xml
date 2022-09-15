@@ -20,7 +20,7 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/accordion"
-                fieldType="accordion">
+                fieldType="panel">
                 <item_1
                     jcr:primaryType="nt:unstructured"
                     jcr:title="item_1"
