@@ -58,7 +58,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-radiobutton
     ELEMENT cmp-adaptiveform-radiobutton__label
-    ELEMENT cmp-adaptiveform-radiobutton__widget
+    ELEMENT cmp-adaptiveform-radiobutton__option
+        ELEMENT cmp-adaptiveform-radiobutton__option__label
+        ELEMENT cmp-adaptiveform-radiobutton__option__widget
     ELEMENT cmp-adaptiveform-radiobutton__questionmark
     ELEMENT cmp-adaptiveform-radiobutton__shortdescription
     ELEMENT cmp-adaptiveform-radiobutton__longdescription

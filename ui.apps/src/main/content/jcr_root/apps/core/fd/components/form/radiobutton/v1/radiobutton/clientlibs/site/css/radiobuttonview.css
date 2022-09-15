@@ -1,9 +1,6 @@
-.cmp-adaptiveform-radiobutton__items.HORIZONTAL{
-    display: inline-block;
+.cmp-adaptiveform-radiobutton__option.HORIZONTAL{
+    display: inline-flex;
 }
-.cmp-adaptiveform-radiobutton__items.VERTICAL{
-    display: block;
-}
-[data-cmp-adaptiveform-radiobutton-hidden="true"] {
-    display: none
+.cmp-adaptiveform-radiobutton__option.VERTICAL{
+    display: flex;
 }

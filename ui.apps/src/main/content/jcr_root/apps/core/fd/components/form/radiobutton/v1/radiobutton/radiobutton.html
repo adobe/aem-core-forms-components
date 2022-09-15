@@ -28,15 +28,15 @@
      data-cmp-is="adaptiveFormRadioButton"
      id="${component.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}"></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}"></div>
+    <div data-sly-call="${label.label @componentId=component.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
 
     <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
-        <div class="cmp-adaptiveform-radiobutton__items ${radioButton.name} ${radioButton.orientation}">
-            <label aria-label="${radioButton.enumNames[itemList.index]}">
+        <div class="cmp-adaptiveform-radiobutton__option ${radioButton.orientation}">
+            <label class="cmp-adaptiveform-radiobutton__option__label" aria-label="${radioButton.enumNames[itemList.index]}">
                 <input type="radio"
                        name="${radioButton.name}"
-                       class="cmp-adaptiveform-radiobutton__widget"
+                       class="cmp-adaptiveform-radiobutton__option__widget"
                        id="${component.id}${'_'}${itemList.index}__widget"
                        value="${item}"
                        aria-describedby="${radioButton.labelForId}_desc"
