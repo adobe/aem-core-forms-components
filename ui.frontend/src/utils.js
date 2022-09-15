@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 import {Constants} from "./constants";
+import HTTPAPILayer from "./HTTPAPILayer";
 
 
 export default class Utils {
@@ -87,23 +88,6 @@ export default class Utils {
             subtree: true,
             childList: true,
             characterData: true
-        });
-    }
-
-    static getJson(url) {
-        return new Promise(resolve => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.responseType = 'json';
-            xhr.onload = function () {
-                let status = xhr.status;
-                if (status === 200) {
-                    resolve(xhr.response);
-                } else {
-                    resolve(null);
-                }
-            };
-            xhr.send();
         });
     }
 
@@ -183,10 +167,22 @@ export default class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await Utils.getJson(_path + ".model.json");
-                console.log("model json from server ", _formJson);
+                const _formsList = await HTTPAPILayer.getFormsList();
+                const formPath = _path.substring(0, _path.indexOf("/jcr:content/guideContainer"));
+                const _form = _formsList.items.find((form) => {return form.path === formPath});
+                console.debug('fetched form',  _form);
+                const params = new Proxy(new URLSearchParams(window.location.search), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+                let _prefillData;
+                if (params.dataRef) {
+                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef);
+                }
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
+                console.debug("fetched model json", _formJson);
                 const formContainer = createFormContainer({
                     _formJson,
+                    _prefillData,
                     _path
                 });
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-export default class FormData {
+export default class AfFormData {
     #data;
     #contentType;
     #attachments;
@@ -35,6 +35,24 @@ export default class FormData {
 
     getAttachments() {
         return this.#attachments;
+    }
+
+    toHTMLFormData() {
+        let formData = new FormData();
+        if (this.#contentType) {
+            formData.append("contentType", this.#contentType);
+        }
+        formData.append("data", this.#data);
+        //todo: handle attachments
+        return formData;
+    }
+
+    toJsObject() {
+        return {
+            "data" : this.#data,
+            "contentType" : this.#contentType,
+            "attachments" : this.#attachments
+        }
     }
 
 }

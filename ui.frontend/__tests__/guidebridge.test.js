@@ -32,6 +32,16 @@ test('GuideBridge test', () => {
        expect(guideBridge.validate()).toBeTruthy();
        formModel.importData({"textinput1662370110841" : "test123"});
        expect(guideBridge.validate()).toBeFalsy();
+       formModel.importData({"textinput1662370110841" : "test"});
+
+       guideBridge.getFormDataObject({
+           success : function(result) {
+               expect(result.data.toHTMLFormData()).toBeInstanceOf(FormData);
+           },
+           error : function (error) {
+               expect(error).toBeFalsy();
+           }
+       });
    });
    var formContainer = new FormContainer({
        _formJson: formJson,

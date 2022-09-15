@@ -16,7 +16,7 @@
 
 import {Constants} from "./constants";
 import Response from "./Response";
-import FormData from "./FormData";
+import AfFormData from "./FormData";
 
 export default class GuideBridge {
 
@@ -59,8 +59,8 @@ export default class GuideBridge {
 
     getFormDataObject(options) {
         let data = this.getData();
-        let formData = new FormData({data: data});
-        let resultObject = new Response({data: formData});
+        let formData = new AfFormData({"data": data});
+        let resultObject = new Response({"data": formData});
         if (options && typeof options.success === 'function') {
             options.success(resultObject);
         }
