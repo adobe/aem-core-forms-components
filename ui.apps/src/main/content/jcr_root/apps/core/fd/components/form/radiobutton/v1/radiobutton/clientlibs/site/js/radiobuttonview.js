@@ -42,7 +42,7 @@
         }
 
         getWidget() {
-            return this.element.querySelector(RadioButton.selectors.widget);
+            return this.element.querySelectorAll(RadioButton.selectors.widget);
         }
 
         getDescription() {
@@ -61,21 +61,39 @@
             super.setModel(model);
             let widgets = this.widget
             widgets.forEach(widget => {
-                let self = widget
                 widget.addEventListener('change', (e) => {
-                    this._updateModelValue(self)
+                    this._model.value = e.target.value
                 })
             })
         }
 
-        _updateModelValue(widget) {
-            let value;
+        _updateEnable(enable) {
+            this.toggle(enable, FormView.Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enable);
+            let widgets = this.widget
+            widgets.forEach(widget => {
+                if (enable === false) {
+                    widget.setAttribute("disabled", true);
+                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                } else {
+                    widget.removeAttribute("disabled");
+                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+                }
+            });
+        }
+
+        _updateValue(modelValue) {
             this.widget.forEach(widget => {
-                if (widget.checked) {
-                    value = widget.value
+                if (modelValue == widget.value) {
+                    widget.checked = true
+                    widget.setAttribute("checked", "checked")
+                    widget.setAttribute("aria-checked", true)
+                } else {
+                    widget.checked = false
+                    widget.removeAttribute("checked");
+                    widget.setAttribute("aria-checked", false);
                 }
             }, this)
-            this._model.value = value
         }
     }
 

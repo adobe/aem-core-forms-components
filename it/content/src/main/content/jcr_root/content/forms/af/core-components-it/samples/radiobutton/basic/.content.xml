@@ -2,15 +2,14 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:deviceGroups="[mobile/groups/responsive]"
         cq:lastModified="{Date}2022-09-13T16:10:13.429+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="radio-test"
         jcr:language="en"
-        sling:resourceType="forms-components-examples/components/page"
-        guideComponentType="fd/af/templates">
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Adaptive Form V2 (IT)"
+        sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.0"
                 jcr:primaryType="nt:unstructured"
@@ -30,7 +29,7 @@
                     enumNames="[Item 1,Item 2]"
                     fieldType="radio-group"
                     mandatoryMessage="This is a required radiobutton"
-                    name="radiobutton1662719628881"
+                    name="radiobutton"
                     orientation="vertical"
                     textIsRich="[true,true]"
                     type="number"
@@ -41,7 +40,7 @@
                     jcr:lastModified="{Date}2022-09-13T12:29:23.767+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="Radio Button"
+                    jcr:title="Radio Button 2"
                     sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
                     enabled="{Boolean}true"
                     enum="[0,1,2,3]"

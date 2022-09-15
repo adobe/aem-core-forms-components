@@ -21,8 +21,8 @@
         BASE_ASSISTPRIORITY = ".cmp-adaptiveform-base__assistpriority",
         BASE_VISIBLE = ".cmp-adaptiveform-base__visible",
         BASE_ENABLED = ".cmp-adaptiveform-base__enabled",
-        RADIOBUTTON_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
-        RADIOBUTTON_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
+        BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
+        BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext";
 
 
@@ -86,8 +86,8 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function prefillEnumNames(dialog) {
-        var visibleEnumNames = dialog.find(RADIOBUTTON_ENUMNAMES_VISIBLE);
-        var hiddenEnumNames = dialog.find(RADIOBUTTON_ENUMNAMES_HIDDEN);
+        var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
+        var hiddenEnumNames = dialog.find(BASE_ENUMNAMES_HIDDEN);
         for (var i = 0; i < hiddenEnumNames.length; i++) {
             visibleEnumNames[i].value = hiddenEnumNames[i].value;
             hiddenEnumNames[i].remove();
