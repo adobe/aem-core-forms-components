@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import Utils from "../utils";
+import {Constants} from "../constants";
 import FormField from './FormField'
 
 export default class FormFieldBase extends FormField {
@@ -25,7 +25,6 @@ export default class FormFieldBase extends FormField {
         this.description = this.getDescription();
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
-        this.setId(this.element.id);
         this.longDescriptionHiddenAttribute = 'data-cmp-longdescription-hidden';
     }
 
@@ -80,6 +79,13 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this._applyState(state);
+    }
+
+    /**
+     * Sets the focus on component's widget.
+     */
+    setFocus() {
+        this.widget.focus();
     }
 
     /**
@@ -140,17 +146,14 @@ export default class FormFieldBase extends FormField {
         return state && state.properties && state.properties['af:layout'] && state.properties['af:layout'].tooltipVisible;
     }
 
-    dataAttribute(attr) {
-        return `data-${this.constructor.bemBlock}-${attr}`
-    }
-
     /**
      * updates html based on visible state
      * @param visible
      * @private
      */
     _updateVisible(visible) {
-        this.toggle(visible, this.dataAttribute('hidden'), true)
+        this.toggle(visible, Constants.ARIA_HIDDEN, true);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
     }
 
     /**
@@ -159,19 +162,23 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateEnable(enable) {
-        this.toggle(enable, this.dataAttribute('disabled'), true)
+        this.toggle(enable, Constants.ARIA_DISABLED, true);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
         if (enable === false) {
             this.widget.setAttribute("disabled", true);
+            this.widget.setAttribute(Constants.ARIA_DISABLED, true);
         } else {
             this.widget.removeAttribute("disabled");
+            this.widget.removeAttribute(Constants.ARIA_DISABLED);
         }
     }
 
     _updateValid(valid, state) {
-        this.toggle(valid, this.dataAttribute('invalid'), !valid)
+        this.toggle(valid, Constants.ARIA_INVALID, true);
+        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
         if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
             const errMessage = valid === true ? '' : 'There is an error in the field';
-            this.errorDiv.innerHTML = errMessage
+            this.errorDiv.innerHTML = errMessage;
         }
     }
 
@@ -212,7 +219,7 @@ export default class FormFieldBase extends FormField {
     }
 
     getClass() {
-        return this.constructor.IS
+        return this.constructor.IS;
     }
 
     subscribe() {

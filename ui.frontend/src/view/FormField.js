@@ -14,20 +14,50 @@
  * limitations under the License.
  ******************************************************************************/
 
+import {Constants} from "../constants";
 import Utils from "../utils";
 
 export default class FormField {
 
     constructor(params) {
         this.formContainer = params.formContainer;
-        this.parent = params.parent || params.formContainer;
         this.element = params.element; //html element of field
         this.options = Utils.readData(this.element, this.getClass());  //dataset of field
         this.setId(this.element.id);
+        this.active = false;
     }
 
     setId(id) {
         this.id = id;
+    }
+
+    setParent(parentView) {
+        this.parentView = parentView;
+        if (this.parentView.addChild) {
+            this.parentView.addChild(this);
+        }
+    }
+
+    setActive() {
+        if (!this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+        }
+        if (this.parentView && this.parentView.setActive) {
+            this.parentView.setActive();
+        }
+    }
+
+    setInactive() {
+        if (this.isActive()) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
+        }
+        if (this.parentView && this.parentView.setInactive) {
+            this.parentView.setInactive();
+        }
+    }
+
+    isActive() {
+        return this.active;
     }
 
     getFormContainerPath() {
