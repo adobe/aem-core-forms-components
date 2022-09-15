@@ -28,8 +28,12 @@ export default class Utils {
     static readData(element, clazz) {
         const data = element.dataset;
         let options = {};
-        const capitalized = clazz.charAt(0).toUpperCase() + clazz.substring(1)
-        const reserved = ["is", "hook" + capitalized];
+        const reserved = ["is"];
+        //clazz is never passed, do we need this?
+        if (clazz) {
+            const capitalized = clazz.charAt(0).toUpperCase() + clazz.substring(1);
+            reserved.push("hook" + capitalized);
+        }
 
         for (let key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -48,14 +52,14 @@ export default class Utils {
 
     /**
      * Registers the mutation observer for a form component
+     * @param formContainer
      * @param fieldCreator function to create a field
      * @param fieldSelector
      * @param dataAttributeClass
      */
 
-    static registerMutationObserver(fieldCreator, fieldSelector, dataAttributeClass) {
+    static registerMutationObserver(formContainer, fieldCreator, fieldSelector, dataAttributeClass) {
         let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-        let body = document.querySelector("body");
         let observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
                 // needed for IE
@@ -65,12 +69,9 @@ export default class Utils {
                         if (addedNode.querySelectorAll) {
                             var elementsArray = [].slice.call(addedNode.querySelectorAll(fieldSelector));
                             elementsArray.forEach(function (element) {
-                                let dataset = Utils.readData(element, dataAttributeClass);
-                                let formContainerPath = dataset[Constants.FORM_CONTAINER_DATA_ATTRIBUTE];
-                                let formContainer = window.af.formsRuntime.view.formContainer[formContainerPath];
                                 let formField = fieldCreator({
-                                    element : element,
-                                    formContainer
+                                    "element" : element,
+                                    "formContainer" : formContainer
                                 });
                                 formContainer.addField(formField);
                             });
@@ -80,7 +81,9 @@ export default class Utils {
             });
         });
 
-        observer.observe(body, {
+        const pathAttr = '[data-cmp-path="' + formContainer.getPath() + '"]';
+        const formContainerElement = document.querySelector(pathAttr);
+        observer.observe(formContainerElement, {
             subtree: true,
             childList: true,
             characterData: true
@@ -122,9 +125,48 @@ export default class Utils {
                 });
                 formContainer.addField(field);
             }
-            Utils.registerMutationObserver(fieldCreator, fieldSelector, fieldClass);
+            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
         }
         document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
+    }
+
+    /**
+     * Removes all references of field from views, Form Container
+     * @param fieldView
+     */
+    static removeFieldReferences(fieldView) {
+        let childViewList = fieldView.children;
+        if (childViewList) {
+            for (let index = 0; index < childViewList.length; index++) {
+                this.removeFieldReferences(childViewList[index]);
+            }
+        }
+        delete fieldView.formContainer._fields[fieldView.id];
+    }
+
+    /**
+     * Update the id inside the given html element
+     * @param htmlElement
+     * @param oldId
+     * @param newId
+     */
+    static updateId(htmlElement, oldId, newId) {
+        let elementWithId = htmlElement.querySelectorAll("#" + oldId)[0];
+        if (elementWithId) {
+            elementWithId.id = newId;
+        }
+    }
+
+    /**
+     * Registers handler on elements on hook
+     * @param parentElement
+     * @param hook
+     * @param handler
+     */
+    static registerClickHandler(parentElement, hook, handler) {
+        const buttons = parentElement.querySelectorAll(hook);
+        buttons.forEach(
+            (button) => button.addEventListener('click', (event) => handler));
     }
 
     /**

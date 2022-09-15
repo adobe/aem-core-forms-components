@@ -43,6 +43,16 @@ export const Constants = {
     FORM_CONTAINER_DATA_ATTRIBUTE: "adaptiveformcontainerPath",
 
     /**
+     * data attribute to be added on clickable element to repeat a repeatable panel
+     */
+    DATA_HOOK_ADD_INSTANCE:"data-cmp-hook-add-instance",
+
+    /**
+     * data attribute to be added on element to remove a repeatable panel
+     */
+    DATA_HOOK_REMOVE_INSTANCE:"data-cmp-hook-remove-instance",
+
+    /**
      * data attribute to mark the dragged component valid or invalid.
      * value true for valid
      * value false for invalid

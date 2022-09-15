@@ -78,6 +78,10 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-container
+  ELEMENT cmp-container__label
+  ELEMENT cmp-container__questionmark
+  ELEMENT cmp-container__shortdescription
+  ELEMENT cmp-container__longdescription
 ```
 ## JavaScript Data Attribute Bindings
 
