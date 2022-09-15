@@ -16,4 +16,5 @@
 (function() {
     "use strict";
 
+    // required to toggle value field for submit and reset button
 })();

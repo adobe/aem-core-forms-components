@@ -28,9 +28,9 @@ public interface Button extends Base {
     public static final String SUBMIT = "submit";
     public static final String RESET = "reset";
 
-    default String getButtonType() {
-        return Button.BUTTON;
-    }
+    // default String getType() {
+    // return Button.BUTTON;
+    // }
 
     default String getValue() {
         return null;

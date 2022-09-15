@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
+// import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -41,18 +41,18 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Self
     private SlingHttpServletRequest request;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type")
-    @Default(values = Button.BUTTON)
-    protected String buttonType;
+    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type")
+    // @Default(values = Button.BUTTON)
+    // private String type;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "value")
     @Nullable
     protected String value;
 
-    @Override
-    public String getButtonType() {
-        return buttonType;
-    }
+    // @Override
+    // public String getType() {
+    // return type;
+    // }
 
     @Override
     public String getValue() {
