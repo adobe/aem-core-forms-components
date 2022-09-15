@@ -95,15 +95,16 @@ export const Constants = {
      */
     GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart",
 
-    /**
-     * attribute to mark the dragged component disabled.
-     */
-    DISABLED : "disabled",
+    HTML_ATTRS : {
+        /**
+         * attribute to mark the dragged component disabled.
+         */
+        DISABLED : "disabled",
 
-    /**
-     * attribute to mark the dragged component checked.
-     */
-    CHECKED : "checked"
-
+        /**
+         * attribute to mark the dragged component checked.
+         */
+        CHECKED : "checked"
+    }
 }
 

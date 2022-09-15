@@ -3,6 +3,6 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Check Box Group"
   fieldType="checkbox-group"
-  type="string[]"
+  type="number[]"
   enum="[0,1]"
   enumNames="[Item 1, Item 2]"/>

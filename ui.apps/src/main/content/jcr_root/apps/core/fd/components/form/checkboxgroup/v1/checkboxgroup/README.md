@@ -53,7 +53,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__label
-    ELEMENT cmp-adaptiveform-checkboxgroup__widget
+    ELEMENT cmp-adaptiveform-checkboxgroup__widgets
+    ELEMENT cmp-adaptiveform-checkbox__widget
+    ELEMENT cmp-adaptiveform-checkbox__label
     ELEMENT cmp-adaptiveform-checkboxgroup__questionmark
     ELEMENT cmp-adaptiveform-checkboxgroup__shortdescription
     ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
@@ -63,10 +65,6 @@ BLOCK cmp-adaptiveform-checkboxgroup
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormCheckBoxGroup"` attribute to the wrapper block to enable initialization of the JavaScript component.
-
-The following attributes can be added to the same element to provide options:
-
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
 
 
 
