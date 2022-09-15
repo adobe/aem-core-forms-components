@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonReader;
@@ -27,11 +28,21 @@ import javax.json.JsonReader;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.NotNull;
 
+import com.adobe.cq.forms.core.components.internal.models.v2.form.FormContainerImpl;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.internal.jackson.DefaultMethodSkippingModuleProvider;
 import com.adobe.cq.wcm.core.components.internal.jackson.PageModuleProvider;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.base.Joiner;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 
 import static org.junit.Assert.*;
@@ -41,17 +52,7 @@ import static org.junit.Assert.*;
  */
 public class Utils {
 
-    /**
-     * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
-     * this method will test the JSON export of the model and compare it to the JSON object provided by the
-     * {@code expectedJsonResource}.
-     *
-     * @param model
-     *            the Sling Model
-     * @param expectedJsonResource
-     *            the class path resource providing the expected JSON object
-     */
-    public static void testJSONExport(Object model, String expectedJsonResource) {
+    public static InputStream getJson(Object model) {
         Writer writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
         PageModuleProvider pageModuleProvider = new PageModuleProvider();
@@ -64,7 +65,22 @@ public class Utils {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
                 e.getMessage()));
         }
-        JsonReader outputReader = Json.createReader(IOUtils.toInputStream(writer.toString()));
+        return IOUtils.toInputStream(writer.toString());
+    }
+
+    /**
+     * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
+     * this method will test the JSON export of the model and compare it to the JSON object provided by the
+     * {@code expectedJsonResource}.
+     *
+     * @param model
+     *            the Sling Model
+     * @param expectedJsonResource
+     *            the class path resource providing the expected JSON object
+     */
+    public static void testJSONExport(Object model, String expectedJsonResource) {
+        InputStream modeInputStream = getJson(model);
+        JsonReader outputReader = Json.createReader(modeInputStream);
         InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
         if (is != null) {
             JsonReader expectedReader = Json.createReader(is);
@@ -73,6 +89,40 @@ public class Utils {
             fail("Unable to find test file " + expectedJsonResource + ".");
         }
         IOUtils.closeQuietly(is);
+        if (model instanceof Base) {
+            Utils.testSchemaValidation(model);
+        }
+    }
+
+    public static void testSchemaValidation(@NotNull Object model) {
+        InputStream jsonStream = getJson(model);
+        // create instance of the ObjectMapper class
+        ObjectMapper objectMapper = new ObjectMapper();
+        // create an instance of the JsonSchemaFactory using version flag
+        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        try {
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/adaptive-form.schema.json");
+            JsonSchema schema = schemaFactory.getSchema(schemaStream);
+            // read data from the stream and store it into JsonNode
+            JsonNode json = objectMapper.readTree(jsonStream);
+            if (!(model instanceof FormContainerImpl)) {
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/form.json");
+                JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
+                ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
+                json = formContainerTemplateNode;
+            }
+            // create set of validation message and store result in it
+            Set<ValidationMessage> validationResult = schema.validate(json);
+            // show the validation errors
+            if (!validationResult.isEmpty()) {
+                // show all the validation error
+                fail(String.format("Error found during schema validation : %s",
+                    Joiner.on(" ").join(validationResult)));
+            }
+        } catch (IOException ex) {
+            fail(String.format("Unable to validate form model definition : %s",
+                ex.getMessage()));
+        }
     }
 
     /**

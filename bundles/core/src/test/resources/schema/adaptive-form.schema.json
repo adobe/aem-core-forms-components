@@ -1,0 +1,1068 @@
+{
+  "$id": "classpath:/schema/adaptive-form.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "FormElement": {
+      "allOf": [
+        {
+          "$ref": "./adaptive-form-properties.schema.json"
+        },
+        {
+          "$ref": "./adaptive-form-data-constraints.schema.json"
+        },
+        {
+          "$ref": "./adaptive-form-property-restrictions.schema.json"
+        }
+      ]
+    },
+    "TextField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "text-input",
+              "multiline-input"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "text-input",
+              "multiline-input"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "required",
+                "pattern",
+                "maxLength",
+                "minLength",
+                "minimum",
+                "enforceEnum",
+                "maximum",
+                "step",
+                "value"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "fieldType",
+            "label",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "default",
+            "emptyValue",
+            "readOnly",
+            "displayFormat",
+            "editFormat",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "enum",
+            "enumNames",
+            "type",
+            "required",
+            "validationExpression",
+            "pattern",
+            "format",
+            "maxLength",
+            "minLength",
+            "enforceEnum",
+            "minimum",
+            "maximum",
+            "step",
+            "tooltip",
+            "constraintMessages",
+            "properties",
+            "id"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in text-input"
+          }
+        },
+        "errorMessage": {
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid TextField field type. It should be text-input"
+          }
+        }
+      }
+    },
+    "NumberField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "number-input"
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "number"
+          },
+          "fieldType": {
+            "const": "number-input"
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "enforceEnum",
+                "required",
+                "minimum",
+                "maximum",
+                "step",
+                "value",
+                "label"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "fieldType",
+            "label",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "default",
+            "emptyValue",
+            "readOnly",
+            "displayFormat",
+            "editFormat",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "enum",
+            "enumNames",
+            "properties",
+            "type",
+            "required",
+            "validationExpression",
+            "enforceEnum",
+            "minimum",
+            "maximum",
+            "step",
+            "constraintMessages",
+            "tooltip",
+            "id",
+            "exclusiveMaximum",
+            "exclusiveMinimum"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in NumberField"
+          }
+        }
+      }
+    },
+    "SwitchField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "switch",
+              "checkbox"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "switch",
+              "checkbox"
+            ]
+          },
+          "enum": {
+            "type": "array",
+            "maxItems": 2
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "required",
+                "enforceEnum",
+                "value"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "fieldType",
+            "label",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "default",
+            "emptyValue",
+            "readOnly",
+            "displayFormat",
+            "editFormat",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "enum",
+            "enumNames",
+            "type",
+            "required",
+            "validationExpression",
+            "enforceEnum",
+            "constraintMessages",
+            "properties",
+            "tooltip",
+            "id"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in SwitchField"
+          }
+        },
+        "errorMessage": {
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid SwitchField field type. It should be either switch or checkbox"
+          }
+        },
+        "anyOf": [
+          {
+            "type": "object",
+            "required": [
+              "enum"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "boolean"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        ]
+      }
+    },
+    "DateField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "date-input"
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "date-input"
+          },
+          "type": {
+            "const": "string"
+          },
+          "format": {
+            "const": "date"
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "required",
+                "enforceEnum",
+                "minimum",
+                "maximum",
+                "value",
+                "label"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "fieldType",
+            "label",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "default",
+            "emptyValue",
+            "readOnly",
+            "displayFormat",
+            "editFormat",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "enum",
+            "enumNames",
+            "type",
+            "format",
+            "required",
+            "validationExpression",
+            "enforceEnum",
+            "minimum",
+            "maximum",
+            "constraintMessages",
+            "properties",
+            "tooltip",
+            "id",
+            "exclusiveMaximum",
+            "exclusiveMinimum"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in DateField"
+          }
+        },
+        "errorMessage": {
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid DateField field type. It should be date-input"
+          }
+        }
+      }
+    },
+    "SelectionField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "drop-down",
+              "checkbox-group"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "drop-down",
+              "checkbox-group"
+            ]
+          },
+          "type": {
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "string[]",
+              "number[]",
+              "boolean[]"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "value",
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "required",
+                "enforceEnum",
+                "minimum",
+                "maximum",
+                "step",
+                "pattern",
+                "maxLength",
+                "minLength",
+                "minItems",
+                "maxItems",
+                "label"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "fieldType",
+            "label",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "default",
+            "emptyValue",
+            "readOnly",
+            "displayFormat",
+            "editFormat",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "enum",
+            "enumNames",
+            "type",
+            "required",
+            "validationExpression",
+            "pattern",
+            "format",
+            "maxLength",
+            "minLength",
+            "enforceEnum",
+            "minimum",
+            "maximum",
+            "step",
+            "constraintMessages",
+            "properties",
+            "tooltip",
+            "id",
+            "minItems",
+            "maxItems"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in SelectionField"
+          }
+        },
+        "required": [
+          "enum"
+        ],
+        "errorMessage": {
+          "required": {
+            "enum": "Options are missing from selection. Add an empty enum array"
+          },
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid SelectionField field type. It should be either drop-down or checkbox-group"
+          }
+        }
+      }
+    },
+    "RadioGroupField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "radio-group"
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "radio-group"
+          },
+          "type": {
+            "enum": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                ":type",
+                "value",
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "enum",
+                "enumNames",
+                "required",
+                "enforceEnum"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "anyOf": [
+            {
+              "enum": [
+                "name",
+                "fieldType",
+                "label",
+                "description",
+                "dataRef",
+                "visible",
+                "enabled",
+                "default",
+                "emptyValue",
+                "readOnly",
+                "displayFormat",
+                "editFormat",
+                "placeholder",
+                "screenReaderText",
+                "rules",
+                "events",
+                "enum",
+                "enumNames",
+                "type",
+                "required",
+                "validationExpression",
+                "enforceEnum",
+                "constraintMessages",
+                "properties",
+                "tooltip",
+                "id"
+              ]
+            }
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in RadioGroupField"
+          }
+        },
+        "required": [
+          "enum"
+        ],
+        "errorMessage": {
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid radio group field type. It should be radio-group"
+          }
+        }
+      }
+    },
+    "FileField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "file-input"
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "file-input"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "visible",
+                "enabled",
+                "readOnly",
+                "maxFileSize",
+                "accept",
+                "label"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "name",
+            "label",
+            "fieldType",
+            "description",
+            "dataRef",
+            "visible",
+            "enabled",
+            "emptyValue",
+            "readOnly",
+            "screenReaderText",
+            "rules",
+            "events",
+            "type",
+            "required",
+            "validationExpression",
+            "format",
+            "constraintMessages",
+            "maxFileSize",
+            "accept",
+            "properties",
+            "tooltip",
+            "id",
+            "minItems",
+            "maxItems"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in file-input"
+          }
+        }
+      }
+    },
+    "StaticField": {
+      "title": "Static Field represents the Field that do not capture value from the user but can be",
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "plain-text",
+              "button"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "plain-text",
+              "button"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "value",
+                "description",
+                "visible",
+                "enabled",
+                "label"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            "name",
+            "label",
+            "default",
+            "description",
+            "value",
+            "fieldType",
+            "dataRef",
+            "visible",
+            "placeholder",
+            "screenReaderText",
+            "rules",
+            "events",
+            "properties"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in StaticField"
+          }
+        }
+      }
+    },
+    "Panel": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "panel"
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/Container"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "fieldType": {
+                "enum": [
+                  "panel"
+                ]
+              },
+              "type": {
+                "enum": [
+                  "object",
+                  "array"
+                ]
+              },
+              "rules": {
+                "type": "object",
+                "propertyNames": {
+                  "enum": [
+                    "value",
+                    "description",
+                    "visible",
+                    "enabled",
+                    "required",
+                    "minItems",
+                    "maxItems"
+                  ]
+                }
+              }
+            },
+            "propertyNames": {
+              "enum": [
+                ":type",
+                "name",
+                "fieldType",
+                "label",
+                "description",
+                "dataRef",
+                "visible",
+                "enabled",
+                "screenReaderText",
+                "items",
+                "rules",
+                "events",
+                "type",
+                "required",
+                "validationExpression",
+                "minItems",
+                "maxItems",
+                "constraintMessages",
+                "properties",
+                "tooltip",
+                "id"
+              ],
+              "errorMessage": {
+                "enum": "${0} property is not allowed in Panel"
+              }
+            },
+            "required": [
+              "items"
+            ]
+          }
+        ]
+      }
+    },
+    "CustomElement": {
+      "if": {
+        "allOf": [
+          {
+            "type": "object",
+            "not": {
+              "required": [
+                "fieldType"
+              ]
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              ":type"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          ":type": {
+            "type": "string",
+            "pattern": "^custom:[a-zA-Z/-]+"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Child"
+            }
+          },
+          ":itemsOrder": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          ":items": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/Child"
+            }
+          }
+        },
+        "required": [
+          ":type"
+        ],
+        "dependencies": {
+          ":items": {
+            "type": "object",
+            "required": [
+              ":type",
+              ":itemsOrder"
+            ]
+          }
+        }
+      }
+    },
+    "Child": {
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "fieldType"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                ":type"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "enum"
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "items"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/FormElement"
+            },
+            {
+              "$ref": "#/$defs/FileField"
+            },
+            {
+              "$ref": "#/$defs/NumberField"
+            },
+            {
+              "$ref": "#/$defs/DateField"
+            },
+            {
+              "$ref": "#/$defs/SwitchField"
+            },
+            {
+              "$ref": "#/$defs/SelectionField"
+            },
+            {
+              "$ref": "#/$defs/RadioGroupField"
+            },
+            {
+              "$ref": "#/$defs/TextField"
+            },
+            {
+              "$ref": "#/$defs/Panel"
+            },
+            {
+              "$ref": "#/$defs/StaticField"
+            },
+            {
+              "$ref": "#/$defs/CustomElement"
+            }
+          ]
+        }
+      ],
+      "errorMessage": "Object doesn't match any field type"
+    },
+    "Container": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Child"
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./adaptive-form-properties.schema.json"
+    },
+    {
+      "$ref": "#/$defs/Container"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        },
+        "events": {
+          "type": "object",
+          "propertyNames": {
+            "anyOf": [
+              {
+                "enum": [
+                  "submit",
+                  "reset"
+                ]
+              },
+              {
+                "pattern": "custom:[a-zA-Z0-9]+"
+              }
+            ]
+          }
+        },
+        "adaptiveform": {
+          "const": "0.11.0-Pre"
+        },
+        ":type": {
+          "type": "string",
+          "title": "A hint to the rendering engine for rendering custom components."
+        },
+        "id": {
+          "type": "string",
+          "title": "unique identifier for a form element"
+        },
+        "fieldType": {
+          "const": "form"
+        },
+        "action": {
+          "title": "URL indicating the endpoint where the data would be submitted when submit event is triggered",
+          "type": "string",
+          "format": "uri"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "grammar": {
+              "const": "json-formula-1.0.0"
+            },
+            "formattingLanguage": {
+              "const": "xfa-picture-clause"
+            }
+          },
+          "required": [
+            "version"
+          ]
+        },
+        "lang": {
+          "type": "string",
+          "title": "The language in which the Form was authored.",
+          "description": "The language needs to be defined as per the [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) tag"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 140,
+          "title": "A user friendly one line title for the form"
+        },
+        "description": {
+          "type": "string",
+          "title": "A user friendly description of the form"
+        }
+      },
+      "required": [
+        "metadata",
+        "items",
+        "adaptiveform"
+      ],
+      "propertyNames": {
+        "enum": [
+          "adaptiveform",
+          "metadata",
+          "data",
+          "items",
+          "lang",
+          "title",
+          "description",
+          "action",
+          "events",
+          "properties",
+          "fieldType",
+          ":type"
+        ],
+        "errorMessage": {
+          "enum": "${0} property is not allowed in Form"
+        }
+      },
+      "errorMessage": {
+        "required": {
+          "adaptiveform": "Unable to find the adaptiveform spec version this document is compatible to.",
+          "items": "Form doesn't contain items.",
+          "metadata": "The versioning information for the document is missing."
+        }
+      }
+    }
+  ]
+}

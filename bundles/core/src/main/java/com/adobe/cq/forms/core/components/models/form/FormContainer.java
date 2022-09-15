@@ -50,6 +50,16 @@ public interface FormContainer extends Container {
     FormMetaData getMetaData();
 
     /**
+     * Returns the version of the adaptive form specification
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonProperty("adaptiveform")
+    default String getAdaptiveFormVersion() {
+        return "0.11.0-Pre";
+    }
+
+    /**
      * Returns a unique identifier
      *
      * @return unique identifier
