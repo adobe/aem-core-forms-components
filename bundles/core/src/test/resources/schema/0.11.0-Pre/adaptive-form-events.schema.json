@@ -1,5 +1,5 @@
 {
-  "id": "classpath:/schema/adaptive-form-even.schema.json",
+  "id": "classpath:/schema/0.11.0-Pre/adaptive-form-even.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Specify what operations to perform on certain user or custom events.",
   "description": "Events is a dictionary of eventName to the actions to perform. Whenever the event is dispatched the expressions defined on that event are evaluated. The return value of that expression is applied to the field. The return value of the expression can be either of\n  * null, literal or array: The value property of the field is set to the return value\n  * dictionary: The field json is merged with the returned dictionary\n  * empty dictionary: the field should not be modified.",

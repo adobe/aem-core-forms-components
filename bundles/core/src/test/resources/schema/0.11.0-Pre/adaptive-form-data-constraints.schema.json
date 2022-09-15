@@ -1,5 +1,5 @@
 {
-  "$id": "classpath:/schema/adaptive-form-data-constraints.schema.json",
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form-data-constraints.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Constraints applicable to fields",
   "type": "object",

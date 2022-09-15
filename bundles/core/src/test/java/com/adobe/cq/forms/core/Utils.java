@@ -97,6 +97,7 @@ public class Utils {
 
     /**
      * The given model is validated against adaptive form specification
+     * 
      * @param model reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {

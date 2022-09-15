@@ -1,5 +1,5 @@
 {
-  "$id": "classpath:/schema/adaptive-form-property-restrictions.schema.json",
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form-property-restrictions.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$defs": {
     "Date": {

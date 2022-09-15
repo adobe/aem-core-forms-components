@@ -1,5 +1,5 @@
 {
-  "$id": "classpath:/schema/adaptive-form.schema.json",
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$defs": {
     "FormElement": {
