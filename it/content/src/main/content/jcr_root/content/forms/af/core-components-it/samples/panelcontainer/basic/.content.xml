@@ -23,7 +23,7 @@
                     description="&lt;p>panel long&lt;/p>&#xd;&#xa;"
                     enabled="{Boolean}true"
                     fieldType="panel"
-                    maxItems="2"
+                    maxItems="4"
                     minItems="0"
                     name="panelcontainer1662449848339"
                     roleAttribute="toolbar"
