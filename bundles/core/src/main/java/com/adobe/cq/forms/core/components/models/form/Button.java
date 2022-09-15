@@ -24,15 +24,21 @@ import org.osgi.annotation.versioning.ConsumerType;
  */
 @ConsumerType
 public interface Button extends Base {
-    public static final String BUTTON = "button";
-    public static final String SUBMIT = "submit";
-    public static final String RESET = "reset";
-
-    // default String getType() {
-    // return Button.BUTTON;
-    // }
-
     default String getValue() {
+        return null;
+    }
+
+    /**
+     * Returns the button icon identifier.
+     *
+     * @return the button icon identifier
+     * @since com.adobe.cq.wcm.core.components.models 12.8.0
+     */
+    default String getIcon() {
+        return null;
+    }
+
+    default String getDefault() {
         return null;
     }
 }

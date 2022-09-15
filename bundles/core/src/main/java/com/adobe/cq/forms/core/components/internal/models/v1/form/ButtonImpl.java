@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-// import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -38,21 +37,30 @@ import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ButtonImpl extends AbstractBaseImpl implements Button {
 
-    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type")
-    // @Default(values = Button.BUTTON)
-    // private String type;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "value")
     @Nullable
     protected String value;
 
-    // @Override
-    // public String getType() {
-    // return type;
-    // }
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "icon")
+    @Nullable
+    private String icon;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    @Nullable
+    private String defaultValue;
 
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public String getIcon() {
+        return icon;
+    }
+
+    @Override
+    public String getDefault() {
+        return defaultValue;
     }
 }

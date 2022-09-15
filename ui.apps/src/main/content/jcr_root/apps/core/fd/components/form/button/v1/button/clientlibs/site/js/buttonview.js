@@ -34,9 +34,8 @@
             qm: `.${Button.bemBlock}__questionmark`,
         };
 
-        constructor(params) {
-            super(params);
-            this.qm = this.element.querySelector(Button.selectors.qm)
+        get qm() {
+            return this.element.querySelector(Button.selectors.qm);
         }
 
         getWidget() {
@@ -55,7 +54,7 @@
             super.setModel(model);
 
             this.element.addEventListener("click", () => {
-                this.model.executeExpression("clickExp");
+                this._model.executeExpression("clickExp");
             });
         }
 

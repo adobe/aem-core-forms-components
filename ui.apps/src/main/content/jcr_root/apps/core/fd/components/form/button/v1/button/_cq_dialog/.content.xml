@@ -21,56 +21,49 @@
   extraClientlibs="[core.forms.components.button.v1.editor]"
   trackingFeature="core-components:adaptiveform-button:v1">
   <content
-        granite:class="cmp-button__editdialog"
+    granite:class="cmp-button__editdialog"
+    jcr:primaryType="nt:unstructured"
+    sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+      <tabs
         jcr:primaryType="nt:unstructured"
-        sling:resourceType="granite/ui/components/coral/foundation/container">
-        <items jcr:primaryType="nt:unstructured">
-            <tabs
+        sling:resourceType="granite/ui/components/coral/foundation/tabs"
+        maximized="{Boolean}true">
+        <items 
+          jcr:primaryType="nt:unstructured"
+          sling:hideChildren="[validation]">
+            <basic
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Basic"
+              sling:resourceType="granite/ui/components/coral/foundation/container">
+              <items 
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="granite/ui/components/coral/foundation/tabs"
-                maximized="{Boolean}true">
-                <items 
+                sling:hideChildren="[hideTitle,placeholder]">
+                <value
                   jcr:primaryType="nt:unstructured"
-                  sling:hideChildren="[validation]">
-                    <basic
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Basic"
-                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items 
-                          jcr:primaryType="nt:unstructured"
-                          sling:hideChildren="[hideTitle,placeholder]">
-                          <value
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                              fieldLabel="Button Value"
-                              granite:hide="{Boolean}true"
-                              name="./value"/>
-                          <type
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                            fieldLabel="Button Type"
-                            name="./type"
-                            granite:hide="{Boolean}true">
-                            <items jcr:primaryType="nt:unstructured">
-                                <button
-                                    jcr:primaryType="nt:unstructured"
-                                    selected="{Boolean}true"
-                                    text="Button"
-                                    value="button"/>
-                                <submit
-                                    jcr:primaryType="nt:unstructured"
-                                    text="Submit"
-                                    value="submit"/>
-                                <reset
-                                    jcr:primaryType="nt:unstructured"
-                                    text="Reset"
-                                    value="reset"/>
-                            </items>
-                        </type>
-                        </items>
-                    </basic>
-                </items>
-            </tabs>
+                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                  fieldLabel="Value"
+                  fieldDescription="Value of button"
+                  granite:hide="{Boolean}true"
+                  name="./value"/>
+                <default
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                  fieldLabel="Default"
+                  fieldDescription="Default value of button"
+                  granite:hide="{Boolean}true"
+                  name="./default"/>
+                <icon
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                  fieldDescription="Icon identifier for displaying an icon in the button."
+                  fieldLabel="Icon"
+                  sling:orderBefore ="bindref"
+                  name="./icon"/>
+              </items>
+            </basic>
         </items>
-    </content>
+      </tabs>
+    </items>
+  </content>
 </jcr:root>
