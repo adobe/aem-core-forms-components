@@ -99,27 +99,14 @@ export default class FormFieldBase extends FormField {
         }
         this._updateVisible(state.visible)
         this._updateEnable(state.visible)
-        this._initializeHelpContent();
+        this._initializeHelpContent(state);
     }
 
-    _initializeHelpContent() {
-        // Initializing Tooltip
-        if (!this._isTooltipAlwaysVisible()) {
-            const state = this._model.getState();
-            let txt =  '';
-            if (state) {
-                // Short description is saved as rich text. Hence, removing html tags for title attribute
-                txt = state.tooltip ? state.tooltip.replace(/<\/?[^>]+(>|$)/g, "") : '';
-            }
-            const widget = this.getWidget();
-            if (widget) {
-                widget.setAttribute('title', txt);
-            }
-        }
+    _initializeHelpContent(state) {
         // Initializing Hint ('?') and long description.
         this._showHideLongDescriptionDiv(false);
         if (this.getDescription()) {
-            this._addHelpIconHandler();
+            this._addHelpIconHandler(state);
         }
     }
 
@@ -141,8 +128,7 @@ export default class FormFieldBase extends FormField {
         this.toggleAttribute(this.getDescription(), show, this.longDescriptionHiddenAttribute, true);
     }
 
-    _isTooltipAlwaysVisible() {
-        const state = this._model.getState();
+    _isTooltipAlwaysVisible(state) {
         return state && state.properties && state.properties['af:layout'] && state.properties['af:layout'].tooltipVisible;
     }
 
@@ -194,14 +180,14 @@ export default class FormFieldBase extends FormField {
      * Shows or Hides Description Based on click of '?' mark.
      * @private
      */
-    _addHelpIconHandler() {
+    _addHelpIconHandler(state) {
         const questionMarkDiv = this.getQuestionMarkDiv(),
             descriptionDiv = this.getDescription(),
-            tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
-
+            tooltipAlwaysVisible = this._isTooltipAlwaysVisible(state);
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
-            questionMarkDiv.onclick = function() {
+            questionMarkDiv.onclick = function(e) {
+                e.preventDefault();
                 const isLongDescriptionHidden = descriptionDiv.getAttribute(self.longDescriptionHiddenAttribute);
                 if (isLongDescriptionHidden) {
                     self._showHideLongDescriptionDiv(true);

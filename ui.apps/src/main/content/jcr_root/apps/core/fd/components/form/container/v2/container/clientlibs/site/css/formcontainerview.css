@@ -17,3 +17,11 @@
 [data-cmp-visible="false"] {
     display: none;
 }
+
+[data-cmp-longdescription-hidden=true] {
+    display: none;
+}
+
+[data-cmp-shortdescription-hidden=true] {
+    display: none;
+}
