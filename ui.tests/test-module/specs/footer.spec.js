@@ -43,7 +43,7 @@ describe('Page - Authoring', function () {
     cy.get('body').click( 0,0);
   }
 
-  const testFooterBehaviour = function(imageEditPathSelector, imageDrop, isSites) {
+  const testFooterBehaviour = function(imageEditPathSelector, footerDrop, isSites) {
     if (isSites) {
       dropFooterInSites();
     } else {
@@ -51,7 +51,7 @@ describe('Page - Authoring', function () {
     }
 //    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
 //    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-    cy.deleteComponentByPath(imageDrop);
+    cy.deleteComponentByPath(footerDrop);
   }
 
   context('Open Forms Editor', function() {

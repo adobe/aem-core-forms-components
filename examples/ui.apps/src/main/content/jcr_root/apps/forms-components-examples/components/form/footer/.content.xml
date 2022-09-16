@@ -5,4 +5,4 @@
           jcr:primaryType="cq:Component"
           jcr:title="Footer"
           sling:resourceSuperType="core/fd/components/form/footer/v1/footer"
-          componentGroup="Adaptive Form Core Components"/>
+          componentGroup="Core Component Examples"/>
