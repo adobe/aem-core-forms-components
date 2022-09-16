@@ -70,25 +70,25 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(dropdown);
     }
 
-    // context('Open Forms Editor', function() {
-    //     const pagePath = "/content/forms/af/core-components-it/blank",
-    //         dropDownEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/dropdown",
-    //         dropDownEditPathSelector = "[data-path='" + dropDownEditPath + "']",
-    //         dropdown = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formdropdown.split("/").pop();
-    //     beforeEach(function () {
-    //         // this is done since cypress session results in 403 sometimes
-    //         cy.openAuthoring(pagePath);
-    //     });
-    //
-    //     it('insert Dropdown in form container', function () {
-    //         insertDropDownInContainer();
-    //         cy.deleteComponentByPath(dropdown);
-    //     });
-    //
-    //     it ('open edit dialog of Dropdown', function(){
-    //         testDropDownBehaviour(dropDownEditPathSelector, dropdown);
-    //     })
-    // })
+    context('Open Forms Editor', function() {
+        const pagePath = "/content/forms/af/core-components-it/blank",
+            dropDownEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/dropdown",
+            dropDownEditPathSelector = "[data-path='" + dropDownEditPath + "']",
+            dropdown = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formdropdown.split("/").pop();
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
+
+        it('insert Dropdown in form container', function () {
+            insertDropDownInContainer();
+            cy.deleteComponentByPath(dropdown);
+        });
+
+        it ('open edit dialog of Dropdown', function(){
+            testDropDownBehaviour(dropDownEditPathSelector, dropdown);
+        })
+    })
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/dropdown",
