@@ -59,6 +59,11 @@ describe('Page - Authoring', function () {
 
     cy.get("[name='./visible'][type=\"checkbox\"]").should("exist").check();
     cy.get('.cq-dialog-cancel').click();
+
+    const input = "abc"
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textEditPathSelector);
+    cy.invokeEditableAction("[data-action='EDIT']");
+    cy.get("[title='Save'][type='button']").click();
     cy.deleteComponentByPath(textDrop);
   }
 
