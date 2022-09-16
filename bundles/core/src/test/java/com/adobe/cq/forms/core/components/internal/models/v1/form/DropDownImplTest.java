@@ -221,7 +221,7 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         Map<String, Object> properties = dropdown.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }

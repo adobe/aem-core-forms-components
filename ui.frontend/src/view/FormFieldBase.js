@@ -129,7 +129,7 @@ export default class FormFieldBase extends FormField {
     }
 
     _isTooltipAlwaysVisible(state) {
-        return state && state.properties && state.properties['af:layout'] && state.properties['af:layout'].tooltipVisible;
+        return state && state.properties && state.properties['afs:layout'] && state.properties['afs:layout'].tooltipVisible;
     }
 
     /**

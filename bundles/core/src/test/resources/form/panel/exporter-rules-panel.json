@@ -33,7 +33,7 @@
   "enabled": true,
   "name": "abc",
   "properties": {
-    "af:layout": {
+    "afs:layout": {
       "tooltipVisible": false
     }
   },

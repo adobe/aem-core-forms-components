@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @ConsumerType
 public interface Base extends Component {
 
-    public final String CUSTOM_PROPERTY_WRAPPER = "af:layout";
+    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout";
     public final String DATE_FORMATTER = "yyyy-MM-dd";
 
     /**
