@@ -59,11 +59,6 @@
 
         setModel(model) {
             super.setModel(model);
-            model.getState().enum.forEach(i =>{
-                if(model.getState().value == i){
-                    this._model.value = i;
-                }
-            });
             let widgets = this.widget
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
@@ -89,7 +84,7 @@
 
         _updateValue(modelValue) {
             this.widget.forEach(widget => {
-                if (modelValue == widget.value) {
+                if (modelValue.toString() == widget.value.toString()) {
                     widget.checked = true
                     widget.setAttribute(FormView.Constants.CHECKED, FormView.Constants.CHECKED)
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)

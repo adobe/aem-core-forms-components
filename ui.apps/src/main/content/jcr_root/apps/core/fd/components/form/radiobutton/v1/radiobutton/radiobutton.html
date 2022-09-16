@@ -38,9 +38,9 @@
                        name="${radioButton.name}"
                        class="cmp-adaptiveform-radiobutton__option__widget"
                        id="${component.id}${'_'}${itemList.index}__widget"
-                       value="${item}"
+                       value="${item.toString}"
                        aria-describedby="${radioButton.labelForId}_desc"
-                       checked="${radioButton.enums[itemList.index].toString == radioButton.default[0].toString}"
+                       checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                        aria-required="${radioButton.required}">
                 <span>${radioButton.enumNames[itemList.index]}</span>
             </label>
