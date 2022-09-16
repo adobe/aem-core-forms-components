@@ -93,4 +93,24 @@ describe("Form with CheckBoxGroup Input", () => {
         })
     });
 
+    it(" should show error messages in the HTML ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[1]
+        const model = formContainer._model.getElement(id)
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            let mval = model.getState().value
+            cy.wrap(model.getState().value).each(($el, index) => {
+                expect($el).to.include(mval[index])
+            })
+        })
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"This is a custom required checkboxgroup")
+        })
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
+        })
+    });
+
 })

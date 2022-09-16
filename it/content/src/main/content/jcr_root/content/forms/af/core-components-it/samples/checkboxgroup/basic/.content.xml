@@ -27,11 +27,9 @@
                     enum="[0,1,2,3]"
                     enumNames="[Item 1, Item 2, Item 3, Item 4]"
                     fieldType="checkbox-group"
-                    mandatoryMessage="This is a required checkboxgroup"
                     name="checkboxgroup1662722663424"
                     orientation="vertical"
-                    textIsRich="[true,true]"
-                    type="string[]"
+                    type="number[]"
                     visible="{Boolean}true"/>
             <checkboxgroup2
                     jcr:lastModified="{Date}2022-09-10T23:45:20.572+05:30"
@@ -45,11 +43,11 @@
                     enum="[0,1,2,3]"
                     enumNames="[Item 1, Item 2, Item 3, Item 4]"
                     fieldType="checkbox-group"
-                    mandatoryMessage="This is a required checkboxgroup"
+                    mandatoryMessage="This is a custom required checkboxgroup"
+                    required="true"
                     name="checkboxgroup1662722663425"
                     orientation="vertical"
-                    textIsRich="[true,true]"
-                    type="string[]"
+                    type="number[]"
                     visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
