@@ -93,7 +93,7 @@
                         <container
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="core-components-examples/components/form/container">
-                            <textinput_demo
+                            <text_demo
                               jcr:title="text"
                               fieldType="text"
                               jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
