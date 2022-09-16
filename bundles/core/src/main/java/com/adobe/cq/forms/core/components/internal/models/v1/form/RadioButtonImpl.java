@@ -31,6 +31,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.RadioButton;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -59,6 +60,7 @@ public class RadioButtonImpl extends AbstractOptionsFieldImpl implements RadioBu
     }
 
     @Override
+    @JsonIgnore
     public Orientation getOrientation() {
         return orientation;
     }

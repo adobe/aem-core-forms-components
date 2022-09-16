@@ -28,10 +28,10 @@
                     enum="[0,1]"
                     enumNames="[Item 1,Item 2]"
                     fieldType="radio-group"
+                    required="true"
                     mandatoryMessage="This is a required radiobutton"
                     name="radiobutton"
                     orientation="vertical"
-                    textIsRich="[true,true]"
                     type="number"
                     visible="{Boolean}true"/>
             <radiobutton_12345
@@ -48,9 +48,9 @@
                     fieldType="radio-group"
                     name="radiobutton_12345"
                     orientation="horizontal"
-                    textIsRich="[true,true]"
                     type="string"
-                    visible="{Boolean}true"/>
+                    visible="{Boolean}true"
+                    default="0"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
