@@ -24,7 +24,8 @@ var formsConstants = {
                 "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
-                "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer"
+                "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
+                "footer": "/apps/forms-components-examples/components/form/footer"
             }
         }
     },
