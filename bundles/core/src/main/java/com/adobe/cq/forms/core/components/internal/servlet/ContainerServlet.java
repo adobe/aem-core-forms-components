@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.wcm.core.components.internal.models.v1.PanelContainerImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.day.cq.wcm.api.WCMMode;
 
 /**
@@ -48,7 +48,7 @@ import com.day.cq.wcm.api.WCMMode;
     property = {
         "sling.servlet.methods=" + HttpConstants.METHOD_POST,
         "sling.servlet.methods=" + HttpConstants.METHOD_GET,
-        "sling.servlet.resourceTypes=" + PanelContainerImpl.RESOURCE_TYPE,
+        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_PANEL_CONTAINER_V1,
         "sling.servlet.selectors=" + ContainerServlet.SELECTOR,
         "sling.servlet.extensions=" + ContainerServlet.EXTENSION
     })
