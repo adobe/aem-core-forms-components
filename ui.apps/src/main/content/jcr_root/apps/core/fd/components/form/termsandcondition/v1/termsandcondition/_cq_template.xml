@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Terms And Conditions"
-    fieldType="terms-and-condition"/>
+    fieldType="terms-and-condition">
+      <text
+        jcr:primaryType="nt:unstructured"
+        jcr:title=""
+        placeholder="Text related to the terms and conditions come here"
+        fieldType="text-input"
+        sling:resourceType="/libs/core/fd/components/form/textinput/v1/textinput"
+      />
+      <link
+        jcr:primaryType="nt:unstructured"
+        jcr:title="link"
+        enum="[]"
+        enumNames="[]"
+        fieldType="checkbox-group"
+        sling:resourceType="/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+      />
+      <checkbox
+        jcr:primaryType="nt:unstructured"
+        jcr:title=""
+        enum="[true]"
+        enumNames="[I agree to the terms &#38; conditions]"
+        fieldType="checkbox-group"
+        sling:resourceType="/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+      />
+</jcr:root>

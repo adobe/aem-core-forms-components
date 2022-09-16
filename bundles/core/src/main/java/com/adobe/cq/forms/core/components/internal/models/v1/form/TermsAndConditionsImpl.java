@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import javax.inject.Inject;
 
+// import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -39,20 +40,53 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAndConditions {
 
-    @ValueMapValue(name = "tncTextContent", injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Inject
-    protected String tncTextContent;
+    // @ValueMapValue(name = "tncTextContent", injectionStrategy = InjectionStrategy.OPTIONAL)
+    // @Inject
+    // protected String tncTextContent;
 
-    @ValueMapValue(name = "tncConsentText", injectionStrategy = InjectionStrategy.OPTIONAL)
+    // @ValueMapValue(name = "tncConsentText", injectionStrategy = InjectionStrategy.OPTIONAL)
+    // @Inject
+    // @Default(values = "I agree to the terms & conditions")
+    // protected String tncConsentText;
+
+    @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     @Default(values = "I agree to the terms & conditions")
-    protected String tncConsentText;
+    protected String title;
 
-    public String getTncTextContent() {
-        return tncTextContent;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean showAsLink;
+
+    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
+    // @Inject
+    // private String[] enums;
+
+    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
+    // @Inject
+    // private String[] enumNames;
+
+    // public String getTncTextContent() {
+    // return tncTextContent;
+    // }
+
+    // public String getTncConsentText() {
+    // return tncConsentText;
+    // }
+
+    public String getTitle() {
+        return title;
     }
 
-    public String getTncConsentText() {
-        return tncConsentText;
+    public boolean getShowAsLink() {
+        return showAsLink;
     }
+
+    // public String[] getEnums() {
+    // return ArrayUtils.clone(enums);
+    // }
+
+    // public String[] getEnumNames() {
+    // return ArrayUtils.clone(enumNames);
+    // }
 }

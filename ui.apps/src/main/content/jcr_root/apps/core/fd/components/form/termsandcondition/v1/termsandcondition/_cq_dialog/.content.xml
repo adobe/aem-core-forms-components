@@ -14,216 +14,109 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-    jcr:primaryType="nt:unstructured"
-    jcr:title="Terms and Conditions"
-    sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.termsandconditions.v1.editor]"
-    helpPath="https://www.adobe.com/go/aem_cmp_termsandcondition_v1"
-    trackingFeature="core-components:termsandcondition:v1">
-   <content
-        jcr:primaryType="nt:unstructured"
-        sling:resourceType="granite/ui/components/coral/foundation/container">
-        <items jcr:primaryType="nt:unstructured">
-            <tabs
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="granite/ui/components/coral/foundation/tabs"
-                maximized="{Boolean}true">
-                <items jcr:primaryType="nt:unstructured">
-                    <basic
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Basic"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                        <name jcr:primaryType="nt:unstructured"
-							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-							fieldLabel="Name" name="./name" required="{Boolean}true">
-                            <granite:data
-                               jcr:primaryType="nt:unstructured"
-                               node-name-validation=""/>
-                        </name>
-                        <title
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                            fieldLabel="Title"
-                            name="./title"/>
-                        <hideTitle
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                            name="./hideTitle"
-                            text="Hide title"
-                            value="false"/>
-                        <required
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                            checked="{Boolean}false"
-                            fieldLabel="Required field"
-                            labelledBy="Mandatory"
-                            name="./mandatory"
-                            granite:class="cmp-adaptiveform-datepicker__required"
-                            text="Required field"
-                            value="true">
-                        </required>
-                        <mandatoryMessage
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                            fieldDescription="Error message shown when required field left empty."
-                            granite:class="cmp-adaptiveform-base__mandatorymessage"
-                            fieldLabel="Required Field Message"
-                            name="./mandatoryMessage"/>
-                        <bindref
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
-                                    emptyText="Data Model Bind Reference"
-                                    fieldDescription="A valid bind reference can have  alphanumeric characters, parenthesis, dot, hyphen, at the rate, forward slash, asterisk, dollar and underscore."
-                                    fieldLabel="Data Model Bind Reference"
-                                    name="./dataRef">
-                          <granite:data
-                                        jcr:primaryType="nt:unstructured"
-                                        node-bindref-validation=""
-                                        bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel"/>
-                        </bindref>
-                         <visible
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    granite:class="cmp-adaptiveform-base__visible"
-                                    name="./visible"
-                                    text="Hide Object"
-                                    uncheckedValue="true"
-                                    value="false">
-                            </visible>
-                            <visible-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./visible@TypeHint"
-                                    value="Boolean"/>
-                            <enabled
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    granite:class="cmp-adaptiveform-base__enabled"
-                                    name="./enabled"
-                                    text="Disable Object"
-                                    uncheckedValue="true"
-                                    value="false">
-                            </enabled>
-                            <checkbox-content
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                            fieldLabel="Consent Text"
-                            name="./tncConsentText"/>
-               
-                            <description
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                    fieldLabel="Content For Terms and Conditions"
-                                    name="./tncTextContent"
-                                    useFixedInlineToolbar="{Boolean}true"
-                                    removeSingleParagraphContainer="{Boolean}true">
-                                <rtePlugins jcr:primaryType="nt:unstructured">
-                                    <links jcr:primaryType="nt:unstructured">
-                                        <linkDialogConfig
-                                                jcr:primaryType="nt:unstructured"
-                                                height="{Long}316">
-                                            <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
-                                        </linkDialogConfig>
-                                    </links>
-                                    <format
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <lists
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <justify
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <keys
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <paraformat
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <misctools
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <fullscreen
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                </rtePlugins>
-                                <uiSettings jcr:primaryType="nt:unstructured">
-                                    <cui jcr:primaryType="nt:unstructured">
-                                        <inline
-                                                jcr:primaryType="nt:unstructured"
-                                                toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <justify
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
-                                                        ref="justify"/>
-                                                <lists
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
-                                                        ref="lists"/>
-                                            </popovers>
-                                        </inline>
-                                        <fullscreen
-                                                jcr:primaryType="nt:unstructured"
-                                                toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <styles
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="styles:getStyles:styles-pulldown"
-                                                        ref="styles"/>
-                                                <paraformat
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="paraformat:getFormats:paraformat-pulldown"
-                                                        ref="paraformat"/>
-                                            </popovers>
-                                        </fullscreen>
-                                    </cui>
-                                </uiSettings>
-                            </description>
-                             <show-approval-options
-	                            jcr:primaryType="nt:unstructured"
-	                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-	                            name="./showApprovalOption"
-	                            text="Show approval options"
-	                            value="false"/>
-	                         <show-as-popup
-	                            jcr:primaryType="nt:unstructured"
-	                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-	                            name="./showAsPopUp"
-	                            text="Show as a pop-up"
-	                            value="false"/>
-	                            <granite:data
-                                        jcr:primaryType="nt:unstructured"
-                                        node-bindref-validation=""
-                                        bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel"/>	
-                        </items>
-                    </basic>
-                    <patterns
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
-                            sling:hideResource="{Boolean}true"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                    </patterns>
-                    <help
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Help Content"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured"/>
-                    </help>
-                    <accessibility
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Accessibility"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured"/>
-                    </accessibility>
-                    <styletab
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/include"
-                            path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
-                </items>
-            </tabs>
-        </items>
-    </content>
+<jcr:root 
+  xmlns:sling="http://sling.apache.org/jcr/sling/1.0" 
+  xmlns:granite="http://www.adobe.com/jcr/granite/1.0" 
+  xmlns:cq="http://www.day.com/jcr/cq/1.0" 
+  xmlns:jcr="http://www.jcp.org/jcr/1.0" 
+  xmlns:nt="http://www.jcp.org/jcr/nt/1.0" 
+  jcr:primaryType="nt:unstructured" 
+  jcr:title="Terms and Conditions" 
+  sling:resourceType="cq/gui/components/authoring/dialog" 
+  extraClientlibs="[core.forms.components.termsandcondition.v1.editor]" 
+  helpPath="https://www.adobe.com/go/aem_cmp_termsandcondition_v1" 
+  trackingFeature="core-components:termsandcondition:v1"
+>
+  <content 
+    jcr:primaryType="nt:unstructured" 
+    sling:resourceType="granite/ui/components/coral/foundation/container"
+    granite:class="cmp-adaptiveform-termsandcondition__editdialog"
+    >
+      <items jcr:primaryType="nt:unstructured">
+        <tabs 
+          jcr:primaryType="nt:unstructured" 
+          sling:resourceType="granite/ui/components/coral/foundation/tabs" 
+          maximized="{Boolean}true"
+          >
+            <items jcr:primaryType="nt:unstructured">
+              <basic 
+                jcr:primaryType="nt:unstructured" 
+                jcr:title="Basic" 
+                sling:resourceType="granite/ui/components/coral/foundation/container"
+                >
+                  <items jcr:primaryType="nt:unstructured">
+                    <name 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
+                      fieldLabel="Name" 
+                      name="./name" 
+                      required="{Boolean}true"
+                      >
+                        <granite:data jcr:primaryType="nt:unstructured" node-name-validation="" />
+                    </name>
+                    <title 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
+                      fieldLabel="Title" 
+                      name="./title" 
+                    />
+                    <hideTitle 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" 
+                      name="./hideTitle" 
+                      text="Hide title" 
+                      value="false" 
+                    />
+                    <showAsLink 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" 
+                      name="./showAsLink" 
+                      value="true"
+                      text="Show link for terms and conditions" 
+                      granite:class="cmp-adaptiveform-termsandcondition__showlink"
+                    />
+                    <!-- <enum 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="granite/ui/components/coral/foundation/form/multifield" 
+                      fieldDescription="Enter display text for link" 
+                      fieldLabel="Link Text"
+                      wrapperClass="cmp-adaptiveform-termsandcondition__enum"
+                    >
+                        <field 
+                          jcr:primaryType="nt:unstructured" 
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
+                          name="./enum" 
+                          required="{Boolean}false"
+                        />
+                    </enum>
+                    <enumNames 
+                      jcr:primaryType="nt:unstructured" 
+                      sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield" 
+                      fieldDescription="Enter link url" 
+                      fieldLabel="Link"
+                      wrapperClass="cmp-adaptiveform-termsandcondition__enumNames"
+                    >
+                      <field 
+                        jcr:primaryType="nt:unstructured" 
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
+                        name="./enumNames" 
+                        required="{Boolean}false"
+                      />
+                    </enumNames> -->
+                    <granite:data 
+                      jcr:primaryType="nt:unstructured" 
+                      node-bindref-validation="" 
+                      bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel" 
+                    />
+                  </items>
+              </basic>
+              <styletab 
+                jcr:primaryType="nt:unstructured" 
+                sling:resourceType="granite/ui/components/coral/foundation/include" 
+                path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab" 
+              />
+            </items>
+        </tabs>
+      </items>
+  </content>
 </jcr:root>

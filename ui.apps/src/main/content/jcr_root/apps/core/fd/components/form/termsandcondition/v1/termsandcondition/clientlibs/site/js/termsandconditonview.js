@@ -47,14 +47,26 @@
             return this.element.querySelector(TermsAndConditon.selectors.label);
         }
 
+        scrollHandler(event) {
+          // console.log('===', this.widget.offsetHeight + this.widget.scrollTop, this.widget.scrollHeight);
+          if (this.widget.offsetHeight + this.widget.scrollTop >= this.widget.scrollHeight) {  
+            console.log('=====scrolled to bottom')  
+          }  
+        }
+
+        removeHandler() {
+          this.widget.removeEventListener('scroll', this.scrollHandler);
+        }
 
         setModel(model) {
-           
+          // console.log('=====set model', model);
+          // super.setModel(model);
+          // this.widget.addEventListener('scroll', this.scrollHandler);
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TermsAndConditon ({element})
+        return new TermsAndConditon ({element, formContainer})
     }, TermsAndConditon.selectors.self);
 
 })();
