@@ -82,6 +82,18 @@ The hostname and port of the instance can be changed with the following user def
 * `aem.host` and `aem.port` for the author instance.
 * `aem.publish.host` and `aem.publish.port` for the publish instance.
 
+### Building and Installing examples
+
+We have a set of example proxy components to demonstrate how the existing components can be customized or
+new components can be added. The `examples` module contains the code for all the components
+
+To build and install that, from the examples directory (or from the root directory), 
+run the following command
+
+```shell
+mvn clean install -PautoInstallExamples,include-wcm-components-examples
+```
+
 ### AEM as a Cloud Service SDK
 When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
 (in conjunction with previously documented profiles) to generate cloud-ready artifacts 

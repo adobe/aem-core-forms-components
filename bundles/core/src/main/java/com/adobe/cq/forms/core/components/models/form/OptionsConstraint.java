@@ -48,7 +48,7 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonProperty("enum")
-    Object[] enums();
+    Object[] getEnums();
 
     /**
      * Returns a user friendly text to display for the possible options to be shown to the end user.
@@ -57,5 +57,5 @@ public interface OptionsConstraint {
      * @return the list of enum names
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    String[] enumNames();
+    String[] getEnumNames();
 }

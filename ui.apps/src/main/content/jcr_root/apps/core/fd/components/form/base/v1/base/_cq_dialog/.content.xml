@@ -22,9 +22,10 @@
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-            <accordion
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/accordion">
+            <tabs
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                             jcr:primaryType="nt:unstructured"
@@ -60,38 +61,14 @@
                                     granite:class="cmp-adaptiveform-base__placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Placeholder Text"
-                                    name="./placeholderText"/>
-                            <required
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    checked="{Boolean}false"
-                                    fieldLabel="Required field"
-                                    labelledBy="Mandatory"
-                                    name="./mandatory"
-                                    granite:class="cmp-adaptiveform-base__required"
-                                    text="Required field"
-                                    value="true">
-                            </required>
-                            <mandatoryMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when required field left empty."
-                                    granite:class="cmp-adaptiveform-base__mandatorymessage"
-                                    fieldLabel="Required Field Message"
-                                    name="./mandatoryMessage"/>
-                            <validateExpMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="Displayed when validation script fails."
-                                    fieldLabel="Script Validation Message"
-                                    name="./validateExpMessage"/>
+                                    name="./placeholder"/>
                             <bindref
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
                                     emptyText="Data Model Bind Reference"
                                     fieldDescription="A valid bind reference can have  alphanumeric characters, parenthesis, dot, hyphen, at the rate, forward slash, asterisk, dollar and underscore."
                                     fieldLabel="Data Model Bind Reference"
-                                    name="./bindRef">
+                                    name="./dataRef">
                                 <granite:data
                                         jcr:primaryType="nt:unstructured"
                                         node-bindref-validation=""
@@ -125,49 +102,6 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                     name="./enabled@TypeHint"
                                     value="Boolean"/>
-                            <colspan
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
-                                    disabled="false"
-                                    emptyText=""
-                                    fieldDescription="Enter number of columns the field should span. Supported only for Responsive layout."
-                                    fieldLabel="Colspan"
-                                    name="./colspan"
-                                    renderReadOnly="false">
-                                <options
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
-                                <items jcr:primaryType="nt:unstructured">
-                                    <empty
-                                            jcr:primaryType="nt:unstructured"
-                                            text=""
-                                            value=""/>
-                                    <v1
-                                            jcr:primaryType="nt:unstructured"
-                                            text="1"
-                                            value="1"/>
-                                    <v2
-                                            jcr:primaryType="nt:unstructured"
-                                            text="2"
-                                            value="2"/>
-                                    <v3
-                                            jcr:primaryType="nt:unstructured"
-                                            text="3"
-                                            value="3"/>
-                                    <v4
-                                            jcr:primaryType="nt:unstructured"
-                                            text="4"
-                                            value="4"/>
-                                    <v5
-                                            jcr:primaryType="nt:unstructured"
-                                            text="5"
-                                            value="5"/>
-                                    <v6
-                                            jcr:primaryType="nt:unstructured"
-                                            text="6"
-                                            value="6"/>
-                                </items>
-                            </colspan>
                             <toBeRemoved
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
@@ -176,6 +110,37 @@
                                 jcr:primaryType="nt:unstructured"
                                 active="{Boolean}true"/>
                     </basic>
+                    <validation
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Validation"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                        <required
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                checked="{Boolean}false"
+                                fieldLabel="Required field"
+                                labelledBy="Mandatory"
+                                name="./required"
+                                granite:class="cmp-adaptiveform-base__required"
+                                text="Required field"
+                                value="true">
+                        </required>
+                        <mandatoryMessage
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                fieldDescription="Error message shown when required field left empty."
+                                granite:class="cmp-adaptiveform-base__mandatorymessage"
+                                fieldLabel="Required Field Message"
+                                name="./mandatoryMessage"/>
+                        <validateExpMessage
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldDescription="Displayed when validation script fails."
+                                fieldLabel="Script Validation Message"
+                                name="./validateExpMessage"/>
+                    </items>
+                    </validation>
                     <help
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Help Content"
@@ -185,7 +150,7 @@
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                               fieldLabel="Short Description"
-                              name="./shortDescription"
+                              name="./tooltip"
                               useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                     <links jcr:primaryType="nt:unstructured">
@@ -253,14 +218,14 @@
                             <shortDescVisible
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              name="./shortVisible"
+                              name="./tooltipVisible"
                               text="Always show short description"
                               value="true"/>
                             <longDescription
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                     fieldLabel="Long Description"
-                                    name="./longDescription"
+                                    name="./description"
                                     useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
                                     <links jcr:primaryType="nt:unstructured">
@@ -376,13 +341,39 @@
                         </items>
                     </accessibility>
                     <patterns
-                            jcr:title="Patterns"
                             jcr:primaryType="nt:unstructured"
+                            jcr:title="Formats"
+                            sling:hideResource="{Boolean}true"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured"/>
+                        <items jcr:primaryType="nt:unstructured">
+                            <displayPatternGroup
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Display Format"
+                                sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                title="Display Format">
+                            <items jcr:primaryType="nt:unstructured">
+                                <displayPatternType
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                        fieldLabel="Type"
+                                        name="./displayPatternType">
+                                </displayPatternType>
+                                <displayPictureClause
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldLabel="Format"
+                                        name="./displayFormat">
+                                </displayPictureClause>
+                            </items>
+                        </displayPatternGroup>
+                        </items>
                     </patterns>
+                    <styletab
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
                 </items>
-            </accordion>
+            </tabs>
         </items>
     </content>
 </jcr:root>

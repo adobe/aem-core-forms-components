@@ -47,7 +47,7 @@ describe('Page/Form Authoring', function () {
 
         context("Open Forms Editor", function () {
             // we can use these values to log in
-            const pagePath = "/content/forms/af/core-components-examples/blank",
+            const pagePath = "/content/forms/af/core-components-it/blank",
                 formContainerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
                 formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
                 formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
@@ -88,11 +88,6 @@ describe('Page/Form Authoring', function () {
                 it('open edit dialog of adaptive form container component', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
-                });
-
-                after(function () {
-                    // clean up the operations performed in the test
-                    cy.enableOrDisableTutorials(true);
                 });
         });
 

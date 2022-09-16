@@ -15,6 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -25,6 +29,10 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface FileConstraint {
 
+    String DEFAULT_MAX_FILE_SIZE = "2MB";
+
+    List<String> DEFAULT_ACCEPT = Collections.unmodifiableList(Arrays.asList("audio/*", "video/*", "image/*", "text/*", "application/pdf"));
+
     /**
      * Returns the Maximum file size (in IEC specification) that a field can accept. The constraint is
      * applicable for file attachment field
@@ -33,7 +41,7 @@ public interface FileConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getMaxFileSize() {
-        return "2MB";
+        return DEFAULT_MAX_FILE_SIZE;
     }
 
     /**
@@ -43,7 +51,7 @@ public interface FileConstraint {
      * @return the list of standard IANA media types
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default String[] getAccept() {
-        return new String[] { "audio/*", "video/*", "image/*", "text/*", "application/pdf" };
+    default List<String> getAccept() {
+        return DEFAULT_ACCEPT;
     }
 }

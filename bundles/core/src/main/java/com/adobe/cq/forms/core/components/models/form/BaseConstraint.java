@@ -37,8 +37,11 @@ public interface BaseConstraint {
      */
     public enum Type {
         STRING("string"),
+        STRING_ARRAY("string[]"),
         NUMBER("number"),
+        NUMBER_ARRAY("number[]"),
         BOOLEAN("boolean"),
+        BOOLEAN_ARRAY("boolean[]"),
         OBJECT("object"),
         ARRAY("array"),
         FILE("file"),
@@ -102,17 +105,6 @@ public interface BaseConstraint {
      */
     default Type getType() {
         return Type.STRING;
-    }
-
-    /**
-     * Returns the format of the form field as specified in the json schema specification(for example, date, binary etc)
-     *
-     * @return the format of the form field
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default String getFormat() {
-        return null;
     }
 
     /**

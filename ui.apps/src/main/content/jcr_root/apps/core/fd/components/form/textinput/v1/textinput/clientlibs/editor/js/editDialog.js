@@ -18,7 +18,7 @@
 
     var EDIT_DIALOG = ".cmp-adaptiveform-textinput__editdialog",
         TEXTINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__allowrichtext",
-        TEXTINPUT_MAXCHARS = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxchars",
+        TEXTINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxlength",
         TEXTINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__minlength",
         BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
         TEXTINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__value",
@@ -29,18 +29,18 @@
 
 
     /**
-     * Toggles the visibility of the maxChars, minLength, placeholder field based on the checked state of
+     * Toggles the visibility of the maxLength, minLength, placeholder field based on the checked state of
      * the allowRichText checkbox
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleRichText(dialog) {
         var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
-        var textInputMaxChars = dialog.find(TEXTINPUT_MAXCHARS);
+        var textInputMaxLength = dialog.find(TEXTINPUT_MAXLENGTH);
         var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);
         var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
         var textInputValue = dialog.find(TEXTINPUT_VALUE);
         var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
-        var listOfElements = [textInputMaxChars, textInputMinLength, basePlaceHolder, textInputValue];
+        var listOfElements = [textInputMaxLength, textInputMinLength, basePlaceHolder, textInputValue];
 
         var isNotChecked = function() {return !isChecked()};
         var isChecked = function() {return component.checked};
@@ -67,19 +67,6 @@
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
-
-    function handleAutoComplete(dialog) {
-        var textInputAutoComplete = dialog.find(TEXTINPUT_AUTOCOMPLETE)[0];
-        var textInputAutofill = dialog.find(TEXTINPUT_AUTOFILL_FIELD_KEYWORD);
-        var isChecked = function() {return textInputAutoComplete.checked};
-        var hideAndShowElements = function() {
-            Utils.checkAndDisplay(textInputAutofill)(isChecked);
-        };
-        hideAndShowElements();
-        textInputAutoComplete.on("change", function() {
-            hideAndShowElements();
-        });
-    }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAutoComplete, handleRichText);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
 
 })(jQuery);
