@@ -23,6 +23,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -52,6 +54,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String clientLibRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String title;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -62,6 +68,24 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     public String getThankYouMessage() {
         return thankyouMessage;
+    }
+
+    @Override
+    @Nullable
+    public String getClientLibRef() {
+        return clientLibRef;
+    }
+
+    @Override
+    @Nullable
+    public String getSchemaRef() {
+        return GuideContainer.from(resource).getSchemaRef();
+    }
+
+    @Override
+    @Nullable
+    public GuideSchemaType getSchemaType() {
+        return GuideContainer.from(resource).getSchema();
     }
 
     @Override

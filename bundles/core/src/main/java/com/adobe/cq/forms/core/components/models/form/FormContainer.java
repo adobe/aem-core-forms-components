@@ -21,6 +21,8 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -41,6 +43,13 @@ public interface FormContainer extends Container {
     String PN_RUNTIME_DOCUMENT_PATH = "formModelDocumentPath";
 
     /**
+     * Name of the resource property that defines the reference to the client lib
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
+
+    /**
      * Returns form metadata {@link FormMetaData}
      *
      * @return form meta data
@@ -48,6 +57,42 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("metadata")
     FormMetaData getMetaData();
+
+    /**
+     * Returns schema reference
+     *
+     * @return reference to schema
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getSchemaRef() {
+        return null;
+    }
+
+    /**
+     * Returns schema type {@link GuideSchemaType}
+     *
+     * @return schema type
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default GuideSchemaType getSchemaType() {
+        return null;
+    }
+
+    /**
+     * Returns name of the client lib category
+     *
+     * @return name of the client lib category
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getClientLibRef() {
+        return null;
+    }
 
     /**
      * Returns a unique identifier
