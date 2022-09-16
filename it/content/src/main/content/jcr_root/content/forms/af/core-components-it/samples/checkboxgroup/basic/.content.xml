@@ -46,7 +46,7 @@
                     mandatoryMessage="This is a custom required checkboxgroup"
                     required="true"
                     name="checkboxgroup1662722663425"
-                    orientation="vertical"
+                    orientation="horizontal"
                     type="number[]"
                     visible="{Boolean}true"/>
         </guideContainer>

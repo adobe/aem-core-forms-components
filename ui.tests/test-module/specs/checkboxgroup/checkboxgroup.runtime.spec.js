@@ -66,6 +66,11 @@ describe("Form with CheckBoxGroup Input", () => {
         const model = formContainer._model.getElement(id)
         const val = Array('1','2')
         model.value = '1'
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widgets .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'VERTICAL')
+        const [id2, fieldView2] = Object.entries(formContainer._fields)[1]
+        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widgets .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'HORIZONTAL')
+
+
         checkHTML(model.id, model.getState()).then(() => {
             model.visible = false
             return checkHTML(model.id, model.getState())
