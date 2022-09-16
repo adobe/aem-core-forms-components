@@ -250,7 +250,7 @@ public class DropDownImplTest {
     @Test
     void testGetEnum() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertArrayEquals(new Integer[] { 0, 1, 2 }, dropdown.getEnums());
+        assertArrayEquals(new Long[] { 0L, 1L, 2L }, dropdown.getEnums());
     }
 
     @Test

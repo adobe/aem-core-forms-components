@@ -66,25 +66,25 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(textInputDrop);
   }
 
-  context('Open Forms Editor', function() {
-    const pagePath = "/content/forms/af/core-components-it/blank",
-        textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
-        textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-        textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
-    beforeEach(function () {
-      // this is done since cypress session results in 403 sometimes
-      cy.openAuthoring(pagePath);
-    });
-
-    it('insert TextInput in form container', function () {
-      dropTextInputInContainer();
-      cy.deleteComponentByPath(textInputDrop);
-    });
-
-    it ('open edit dialog of TextInput', function(){
-      testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
-    })
-  })
+  // context('Open Forms Editor', function() {
+  //   const pagePath = "/content/forms/af/core-components-it/blank",
+  //       textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
+  //       textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+  //       textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+  //   beforeEach(function () {
+  //     // this is done since cypress session results in 403 sometimes
+  //     cy.openAuthoring(pagePath);
+  //   });
+  //
+  //   it('insert TextInput in form container', function () {
+  //     dropTextInputInContainer();
+  //     cy.deleteComponentByPath(textInputDrop);
+  //   });
+  //
+  //   it ('open edit dialog of TextInput', function(){
+  //     testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
+  //   })
+  // })
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",

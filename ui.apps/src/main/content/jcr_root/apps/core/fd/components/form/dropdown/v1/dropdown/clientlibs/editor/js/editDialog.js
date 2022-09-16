@@ -15,58 +15,78 @@
  ******************************************************************************/
 (function($) {
     "use strict";
-
-    var EDIT_DIALOG = ".cmp-adaptiveform-textinput__editdialog",
-        TEXTINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__allowrichtext",
-        TEXTINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxlength",
-        TEXTINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__minlength",
-        BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
-        TEXTINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__value",
-        TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
-        TEXTINPUT_AUTOCOMPLETE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autocomplete",
-        TEXTINPUT_AUTOFILL_FIELD_KEYWORD = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autofillfieldkeyword",
+    var EDIT_DIALOG = ".cmp-adaptiveform-dropdown__editdialog",
+        DROPDOWN_ALLOWMULTISELECT = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__allowmultiselect",
+        DROPDOWN_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvalue",
+        DROPDOWN_DEFAULTVALUEMULTISELCET = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvaluemultiselect",
+        DROPDOWN_SAVEVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__savevaluetype",
+        TYPE = EDIT_DIALOG + " input[name='./type']",
+        DEFAULT = EDIT_DIALOG + " input[name='./default@ValueFrom']",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
     /**
-     * Toggles the visibility of the maxLength, minLength, placeholder field based on the checked state of
-     * the allowRichText checkbox
+     * Updates the save value types to their array equivalents when multi-select is toggled.
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
-    function handleRichText(dialog) {
-        var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
-        var textInputMaxLength = dialog.find(TEXTINPUT_MAXLENGTH);
-        var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);
-        var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
-        var textInputValue = dialog.find(TEXTINPUT_VALUE);
-        var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
-        var listOfElements = [textInputMaxLength, textInputMinLength, basePlaceHolder, textInputValue];
+    function handleSaveValueDropDown(dialog) {
+        var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
+            saveValueDropdown = dialog.find(DROPDOWN_SAVEVALUE),
+            type = dialog.find(TYPE),
+            saveTypes = ['string', 'number', 'boolean'];
 
-        var isNotChecked = function() {return !isChecked()};
-        var isChecked = function() {return component.checked};
-        var hideAndShowElements = function() {
-            // hide other elements
-            Utils.checkAndDisplay(listOfElements)(isNotChecked);
-            // show rich text
-            Utils.checkAndDisplay(textInputRichTextValue)(isChecked);
-        };
+        var updateSaveValueType = function() {
+            var index = parseInt(saveValueDropdown.val());
+            if(multiSelect.checked) {
+               type.val(saveTypes[index] + '[]');
+            } else {
+                type.val(saveTypes[index]);
+            }
+        }
+        // triggered when dialog is launched
+        updateSaveValueType();
+        saveValueDropdown.on("change", function() {
+            updateSaveValueType();
+        });
+        multiSelect.on("change", function() {
+            updateSaveValueType();
+        });
+    }
+
+    /**
+     * Handles the default value field in the dialog appropriately when multi-select is toggled.
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     */
+    function handleDefaultValue(dialog) {
+        var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
+            defaultValue = dialog.find(DROPDOWN_DEFAULTVALUE),
+            defaultValueMS = dialog.find(DROPDOWN_DEFAULTVALUEMULTISELCET),
+            defaultField = dialog.find(DEFAULT);
+
+        var isMutiSelect = function () {
+            return multiSelect.checked;
+        }
+
+        var isNotMutiSelect = function () {
+            return !isMutiSelect();
+        }
+
+        var hideAndShowElements = function () {
+            Utils.checkAndDisplay(defaultValueMS)(isMutiSelect);
+            Utils.checkAndDisplay(defaultValue)(isNotMutiSelect);
+            // also assign the value to ./default
+            if(isMutiSelect()) {
+                defaultField.val("./defaultMultiSelect");
+            } else {
+                defaultField.val("./defaultSingleSelect");
+            }
+        }
         hideAndShowElements();
-        component.on("change", function() {
+        multiSelect.on("change", function() {
             hideAndShowElements();
         });
-        var changeFormFields = Utils.manipulateNameAndValue([textInputValue[0], textInputRichTextValue[0]]);
-        if (isChecked()) {
-            var richTextContainer = textInputRichTextValue.parent('.richtext-container');
-            var richTextEditable = richTextContainer.find(".cq-RichText-editable");
-            var filteredValue = Utils.encodeScriptableTags(textInputValue[0].value);
-            richTextEditable.empty().append(filteredValue);
-            changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
-        } else {
-            //Removing html tags from content and setting it to default text field
-            var filteredValue =  $('<div>').html(textInputValue[0].value).text();
-            changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
-        }
     }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
 
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue);
 })(jQuery);
