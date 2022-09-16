@@ -15,6 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+/**
+ * Defines the {@code FormStructureParser} Sling Model to access the form container path from page or any child.
+ *
+ * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ */
+@ProviderType
 public interface FormStructureParser {
 
     /**
@@ -22,5 +30,11 @@ public interface FormStructureParser {
      * @returns the path of the form container in which the component is there
      */
     String getFormContainerPath();
+
+    /**
+     *
+     * @returns reference to the client lib stored in the form container
+     */
+    String getClientLibRefFromFormContainer();
 
 }

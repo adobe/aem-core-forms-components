@@ -21,8 +21,12 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -41,6 +45,13 @@ public interface FormContainer extends Container {
     String PN_RUNTIME_DOCUMENT_PATH = "formModelDocumentPath";
 
     /**
+     * Name of the resource property that defines the reference to the client lib
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
+
+    /**
      * Returns form metadata {@link FormMetaData}
      *
      * @return form meta data
@@ -57,6 +68,43 @@ public interface FormContainer extends Container {
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
         return "0.11.0-Pre";
+    }
+
+    /*
+     * Returns schema reference
+     *
+     * @return reference to schema
+     * 
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonView(Views.Author.class)
+    default String getSchemaRef() {
+        return null;
+    }
+
+    /**
+     * Returns schema type {@link GuideSchemaType}
+     *
+     * @return schema type
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonView(Views.Author.class)
+    default GuideSchemaType getSchemaType() {
+        return null;
+    }
+
+    /**
+     * Returns name of the client lib category
+     *
+     * @return name of the client lib category
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getClientLibRef() {
+        return null;
     }
 
     /**
