@@ -130,6 +130,7 @@ export default class GuideBridge {
      * }
      * ```
      * @param {object} [context] _this_ object in the callback function will point to context
+     * @param formContainerPath optional param. It captures the form container you want the GuideBridge APIs to interact with.
      * @example
      * guideBridge.connect(function() {
      *    console.log("Hurrah! Guide Bridge Activated");
@@ -163,10 +164,7 @@ export default class GuideBridge {
      * @returns {boolean} true if the Adaptive Form is ready for interaction, false otherwise
      */
     isConnected() {
-        if (this.getFormModel()) {
-            return true;
-        }
-        return false;
+        return !!this.getFormModel();
     }
 
     /**

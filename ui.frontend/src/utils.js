@@ -167,9 +167,7 @@ export default class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formsList = await HTTPAPILayer.getFormsList();
-                const formPath = _path.substring(0, _path.indexOf("/jcr:content/guideContainer"));
-                const _form = _formsList.items.find((form) => {return form.path === formPath});
+                const _form = await HTTPAPILayer.getForm(_path);
                 console.debug('fetched form',  _form);
                 const params = new Proxy(new URLSearchParams(window.location.search), {
                     get: (searchParams, prop) => searchParams.get(prop),
