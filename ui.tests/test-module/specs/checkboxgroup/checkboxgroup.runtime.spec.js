@@ -84,15 +84,14 @@ describe("Form with CheckBoxGroup Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
 
+        cy.log(model.getState().value)
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
             cy.log(model.getState().value)
-
             expect(model.getState().value).to.contain('1');
         })
 
         cy.get(`#${id}`).find("input").eq(2).click().then(x => {
             cy.log(model.getState().value)
-
             expect(model.getState().value).to.contain('2');
         })
     });
@@ -102,10 +101,8 @@ describe("Form with CheckBoxGroup Input", () => {
         const model = formContainer._model.getElement(id)
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            let mval = model.getState().value
-            cy.wrap(model.getState().value).each(($el, index) => {
-                expect($el).to.include(mval[index])
-            })
+            cy.log(model.getState().value)
+            expect(model.getState().value).to.contain('1');
         })
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
