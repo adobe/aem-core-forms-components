@@ -29,7 +29,7 @@
                     fieldType="checkbox-group"
                     name="checkboxgroup1662722663424"
                     orientation="vertical"
-                    type="number[]"
+                    type="string[]"
                     visible="{Boolean}true"/>
             <checkboxgroup2
                     jcr:lastModified="{Date}2022-09-10T23:45:20.572+05:30"
@@ -47,7 +47,7 @@
                     required="true"
                     name="checkboxgroup1662722663425"
                     orientation="horizontal"
-                    type="number[]"
+                    type="string[]"
                     visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
