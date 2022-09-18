@@ -48,7 +48,6 @@
         constructor(params) {
             super(params);
             const {element} = params;
-            console.log("==============",element.id);
             this.cacheElements(element);
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.refreshActive();
