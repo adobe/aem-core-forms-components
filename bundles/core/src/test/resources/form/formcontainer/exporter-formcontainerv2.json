@@ -16,8 +16,7 @@
       },
       "properties":{
         "fd:dor":{
-          "dorExclusion":false,
-          "dorColspan":null
+          "dorExclusion":false
         }
       },
       "type": "string",

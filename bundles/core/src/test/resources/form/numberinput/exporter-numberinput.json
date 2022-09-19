@@ -15,8 +15,7 @@
       "fracDigits" : 4
     },
     "fd:dor": {
-      "dorExclusion":false,
-      "dorColspan":null
+      "dorExclusion":false
     }
   },
   "maximum": 2000000,

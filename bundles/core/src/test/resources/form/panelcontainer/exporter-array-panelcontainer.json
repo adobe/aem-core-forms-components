@@ -27,8 +27,7 @@
       },
       "properties":{
         "fd:dor":{
-          "dorExclusion":false,
-          "dorColspan":null
+          "dorExclusion":false
         }
       },
       ":type":"core/fd/components/form/textinput/v1/textinput"

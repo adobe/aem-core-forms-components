@@ -171,7 +171,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
         customDorProperties.put("dorExclusion", dorExclusion);
-        customDorProperties.put("dorColspan", dorColspan);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
         return customDorProperties;
     }
 }

@@ -365,7 +365,7 @@ public interface Base extends Component {
     /**
      * Custom DOR Properties
      *
-     * @since com.adobe.cq.forms.core.components.models.form 1.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
 
     @JsonView(Views.Author.class)

@@ -13,8 +13,7 @@
       "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion":false,
-      "dorColspan":null
+      "dorExclusion":false
     }
   },
   "enforceEnum":false,
