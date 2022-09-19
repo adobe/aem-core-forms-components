@@ -28,6 +28,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,13 +53,17 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     @Default(booleanValues = false)
     protected boolean showAsLink;
 
-    // @JsonIgnore
-    // @ValueMapValue(name = "fieldType")
-    // protected String fieldTypeJcr;
+    @JsonIgnore
+    @Override
+    public String getFieldType() {
+        return null;
+    }
 
-    // @JsonIgnore
-    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
-    // protected String typeJcr;
+    @JsonIgnore
+    @Override
+    public Type getType() {
+        return BaseConstraint.Type.STRING;
+    }
 
     public String getTitle() {
         return title;
@@ -68,13 +73,11 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
         return showAsLink;
     }
 
-    // @Override
-    // public String getFieldType() {
-    // return null;
-    // }
+    // @JsonIgnore
+    // @ValueMapValue(name = "fieldType")
+    // protected String fieldTypeJcr;
 
-    // @Override
-    // public Type getType() {
-    // return null;
-    // }
+    // @JsonIgnore
+    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
+    // protected String typeJcr;
 }
