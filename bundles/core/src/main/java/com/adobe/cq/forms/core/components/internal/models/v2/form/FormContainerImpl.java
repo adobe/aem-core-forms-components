@@ -99,14 +99,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         return data;
     }
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @javax.annotation.Nullable
-    protected String dorTemplateRef;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @javax.annotation.Nullable
-    protected String dorType;
-
     @Override
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
@@ -121,8 +113,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @NotNull
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put(DOR_TYPE, dorType);
-        customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        if (dorType != null) {
+            customDorProperties.put(DOR_TYPE, dorType);
+        }
+        if (dorTemplateRef != null) {
+            customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        }
         return customDorProperties;
     }
 }

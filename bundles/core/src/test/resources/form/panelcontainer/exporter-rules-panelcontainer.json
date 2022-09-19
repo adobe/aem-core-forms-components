@@ -23,11 +23,6 @@
         "visible":true,
         "value":"def"
       },
-      "properties": {
-        "fd:dor":{
-          "dorExclusion":false
-        }
-      },
       ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],

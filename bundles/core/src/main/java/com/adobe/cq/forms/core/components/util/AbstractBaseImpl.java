@@ -59,6 +59,14 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
 
     private static final String PN_TOOLTIP = "tooltip";
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorTemplateRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorType;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
     @Nullable
     protected String description; // long description as per current spec
@@ -514,7 +522,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         if (getCustomProperties().size() != 0) {
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
         }
-        if (getDorProperties().size() != 0) {
+        if (dorType != null && dorType.equals("generate") && getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         return customProperties;
