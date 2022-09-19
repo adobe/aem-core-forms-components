@@ -25,7 +25,6 @@ export default class FormFieldBase extends FormField {
         this.description = this.getDescription();
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
-        this.longDescriptionHiddenAttribute = 'data-cmp-longdescription-hidden';
     }
 
     /**
@@ -34,7 +33,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getWidget() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -42,7 +41,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getDescription() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -50,7 +49,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getLabel() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -58,21 +57,21 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getErrorDiv() {
-
+        throw "method not implemented";
     }
 
     /**
      * implementation should return the tooltip / short description div
      */
     getTooltipDiv() {
-
+        throw "method not implemented";
     }
 
     /**
      * Implementation should return the questionMark div
      */
     getQuestionMarkDiv() {
-
+        throw "method not implemented";
     }
 
     setModel(model) {
@@ -116,7 +115,7 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _showHideTooltipDiv(show) {
-        this.toggleAttribute(this.getTooltipDiv(), show, 'data-cmp-shortdescription-hidden', true);
+        this.toggleAttribute(this.getTooltipDiv(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
     }
 
     /**
@@ -125,7 +124,7 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _showHideLongDescriptionDiv(show) {
-        this.toggleAttribute(this.getDescription(), show, this.longDescriptionHiddenAttribute, true);
+        this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
     }
 
     _isTooltipAlwaysVisible(state) {
@@ -188,8 +187,8 @@ export default class FormFieldBase extends FormField {
         if (questionMarkDiv && descriptionDiv) {
             questionMarkDiv.onclick = function(e) {
                 e.preventDefault();
-                const isLongDescriptionHidden = descriptionDiv.getAttribute(self.longDescriptionHiddenAttribute);
-                if (isLongDescriptionHidden) {
+                const longDescriptionVisibleAttribute = descriptionDiv.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+                if (longDescriptionVisibleAttribute === 'false') {
                     self._showHideLongDescriptionDiv(true);
                     if (tooltipAlwaysVisible) {
                         self._showHideTooltipDiv(false);
