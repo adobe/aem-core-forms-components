@@ -84,6 +84,9 @@
                         <filter>
                             <root>/apps/core/fd/components</root>
                         </filter>
+                        <filter>
+                            <root>/apps/core/fd/clientlibs</root>
+                        </filter>
                     </filters>
                     <packageType>application</packageType>
                     <dependencies>
@@ -275,6 +278,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/textinput/v1/textinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v1/datepicker/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         -->
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/portallister/v1/portallister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/searchlister/v1/searchlister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
@@ -302,6 +306,9 @@
                                     <filters>
                                         <filter>
                                             <root>/libs/core/fd/components</root>
+                                        </filter>
+                                         <filter>
+                                            <root>/libs/core/fd/clientlibs</root>
                                         </filter>
                                     </filters>
                                     <classifier>cloud</classifier>

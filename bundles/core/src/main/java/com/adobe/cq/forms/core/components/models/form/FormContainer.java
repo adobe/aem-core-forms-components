@@ -61,6 +61,46 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    @Override
+    default String getFieldType() {
+        return FieldType.FORM.getValue();
+    }
+
+    @JsonIgnore
+    @Override
+    default boolean isEnabled() {
+        // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    default Label getLabel() {
+        // explicitly setting null, since form container does not have label, but other containers like panel have a label
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    default boolean isVisible() {
+        // explicitly setting true, since form container does not have visible property, but other containers like panel have visible
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    default String getName() {
+        // explicitly setting null, since form container does not have name property, but other containers like panel have a name
+        return null;
+    }
+
+    @JsonIgnore
+    @Override
+    default BaseConstraint.Type getType() {
+        // explicitly setting null, since form container does not have type property, but other containers like panel have a type
+        return null;
+    }
+
     /**
      * Returns the form title
      *

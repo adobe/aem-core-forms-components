@@ -1,0 +1,24 @@
+{
+  "numberinput" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "fieldType": "number-input",
+    "type" : "number",
+    "leadDigits" : 2,
+    "fracDigits" : 4,
+    "minimum" : 10000,
+    "maximum" : 2000000,
+    "exclusiveMinimum" : 10002,
+    "exclusiveMaximum" : 2000002
+  }
+}

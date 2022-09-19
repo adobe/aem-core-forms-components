@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +27,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.day.cq.i18n.I18n;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -36,6 +40,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 @ConsumerType
 public interface Base extends Component {
+
+    public final String CUSTOM_PROPERTY_WRAPPER = "af:layout";
+    public final String DATE_FORMATTER = "yyyy-MM-dd";
 
     /**
      * Defines the view type. Possible values: {@code text-input}, {@code multiline-input}, {@code number-input}, {@code date-input},
@@ -56,7 +63,8 @@ public interface Base extends Component {
         CHECKBOX("checkbox"),
         BUTTON("button"),
         PANEL("panel"),
-        CHECKBOX_GROUP("checkbox-goup");
+        FORM("form"),
+        CHECKBOX_GROUP("checkbox-group");
 
         private String value;
 
@@ -85,7 +93,7 @@ public interface Base extends Component {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
-         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         * @since com.adobe.cq.forms.core.components.models.form 0.0.1
          */
         public String getValue() {
             return value;
@@ -160,6 +168,66 @@ public interface Base extends Component {
         public String toString() {
             return value;
         }
+
+        /**
+         * returns the name of the property which stores the value of the error message for the constraint
+         * 
+         * @return string
+         */
+        public String getMessageProperty() {
+            return value + "Message";
+        }
+    }
+
+    /**
+     * Defines the assist priority type. Possible values: {@code custom}, {@code description}, {@code label}, {@code name}
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    public enum AssistPriority {
+        CUSTOM("custom"),
+        DESCRIPTION("description"),
+        LABEL("label"),
+        NAME("name");
+
+        private String value;
+
+        AssistPriority(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
+         * representation
+         *
+         * @param value the string representation for which an enum value should be returned
+         * @return the corresponding enum value, if one was found
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public static AssistPriority fromString(String value) {
+            for (AssistPriority type : AssistPriority.values()) {
+                if (StringUtils.equals(value, type.value)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
+         */
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        @JsonValue
+        public String toString() {
+            return value;
+        }
     }
 
     /**
@@ -207,13 +275,26 @@ public interface Base extends Component {
     }
 
     /**
-     * Returns the string to indicate the text to be read by screen readers
+     * Returns json formula rule to indicate the text to be read by screen readers based on the {@link AssistPriority} configured.
      *
-     * @return the screen reader text
+     * @return the screen reader text as json formula rule
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
     default String getScreenReaderText() {
+        return null;
+    }
+
+    /**
+     * Returns the string to indicate the text to be read by screen readers. This
+     * could be used on server side to compute initial rendition
+     *
+     * @return the screen reader text
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getHtmlScreenReaderText() {
         return null;
     }
 
@@ -254,7 +335,7 @@ public interface Base extends Component {
      */
     @NotNull
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<ConstraintType, String> getConstraintsMessages() {
+    default Map<ConstraintType, String> getConstraintMessages() {
         return Collections.emptyMap();
     }
 
@@ -277,5 +358,62 @@ public interface Base extends Component {
     @JsonInclude(Include.NON_EMPTY)
     default Map<String, Object> getProperties() {
         return Collections.emptyMap();
+    }
+
+    /**
+     * Returns the tool tip of the field
+     *
+     * @return the tool tip of the field
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @Nullable
+    default String getTooltip() {
+        return null;
+    }
+
+    /**
+     * Returns {@code true} if tooltip should always be visible, otherwise {@code false}.
+     *
+     * @return {@code true} if tooltip should always be visible, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default boolean isTooltipVisible() {
+        return false;
+    }
+
+    /**
+     * Returns the rules defined for the component after filtering out invalid rules
+     * If no rules are defined, returns an empty map
+     * 
+     * @return map containing the rules and their expressions
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String> getRules() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Returns the events defined for the component after filtering out invalid rules
+     * 
+     * @return map containing the events and their expressions
+     *         If no rules are defined, returns an empty map
+     */
+    @NotNull
+    @JsonInclude(Include.NON_EMPTY)
+    default Map<String, String[]> getEvents() {
+        return Collections.emptyMap();
+    }
+
+    /**
+     * Sets i18n object
+     * 
+     * @param i18n reference to the {@link I18n} object
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default void setI18n(@Nonnull I18n i18n) {
+        // empty body
     }
 }

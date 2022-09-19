@@ -1,0 +1,40 @@
+{
+  "id": "datepicker-00447787e6",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "date-input",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "properties": {
+    "af:layout" : {
+      "tooltipVisible": false
+    }
+  },
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "type": "string",
+  "format": "date",
+  "minimum": "2022-02-04",
+  "exclusiveMinimum": "2022-02-05",
+  "exclusiveMaximum": "2022-02-08",
+  "maximum": "2022-02-09",
+  "default" : "2022-02-07",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker",
+  "rules" : {
+    "visible" : "true()",
+    "value" : "false()",
+    "label" : "{value : 'some label'}",
+    "enabled" : "true()"
+  }
+}

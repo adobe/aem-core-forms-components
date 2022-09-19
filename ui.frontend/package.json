@@ -1,0 +1,37 @@
+{
+  "name": "ui.frontend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "jest",
+    "build:dev": "webpack --config webpack.dev.js && clientlib --verbose clientlib-dev.config.js",
+    "build:prod": "webpack --config webpack.prod.js && clientlib --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
+    "aem-clientlib-generator": "^1.8.0",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-merge": "^5.8.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src",
+      "__tests__/mocks"
+    ],
+    "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "@aemforms/af-core": "^0.18.0"
+  }
+}

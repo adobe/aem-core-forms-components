@@ -1,25 +1,6 @@
 {
-  "items": [
-    {
-      "id": "textinput-2be05cc42b",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "autoComplete": false,
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
-      },
-      "screenReaderText": "abc",
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
-    }
-  ],
   ":type": "core/fd/components/form/container/v1/container",
+  "fieldType" : "form",
   "metadata": {
     "dataUrl": "/c/d",
     "action": "/a/b",
