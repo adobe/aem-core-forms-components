@@ -78,7 +78,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fieldType")
+    @ValueMapValue(name = "fieldType")
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
@@ -399,7 +399,6 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         private static final String PN_MAXITEMS_MESSAGE = "maxItemsMessage";
         private static final String PN_UNIQUEITEMS_MESSAGE = "uniqueItemsMessage";
         private static final String PN_ENFORCEENUM_MESSAGE = "enforceEnumMessage";
-
         private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property name as in
                                                                                             // foundation
 
