@@ -75,7 +75,7 @@ public interface FormContainer extends Container {
      *
      * @return reference to schema
      * 
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
     @JsonView(Views.Author.class)
@@ -87,7 +87,7 @@ public interface FormContainer extends Container {
      * Returns schema type {@link GuideSchemaType}
      *
      * @return schema type
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
     @JsonView(Views.Author.class)
@@ -99,7 +99,7 @@ public interface FormContainer extends Container {
      * Returns name of the client lib category
      *
      * @return name of the client lib category
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
     @JsonIgnore
