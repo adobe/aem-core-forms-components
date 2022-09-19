@@ -71,10 +71,11 @@ context('Open Sites Editor', function () {
         cy.openAuthoring(pagePath);
     });
 
-    it('insert aem forms Page Header', function () {
-        dropPageHeaderInSites();
-        cy.deleteComponentByPath(pageheaderDrop);
-    });
+    // removing the testing for site editor for now
+    // it('insert aem forms Page Header', function () {
+    //     dropPageHeaderInSites();
+    //     cy.deleteComponentByPath(pageheaderDrop);
+    // });
 
     // it('open edit dialog of aem forms PageHeader', function() {
     //     testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);

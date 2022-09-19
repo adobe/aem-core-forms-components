@@ -25,7 +25,8 @@ var formsConstants = {
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
-                "pageheader": "/apps/forms-components-examples/components/form/pageheader"
+                // "pageheader": "/apps/forms-components-examples/components/form/pageheader"
+                "pageheader":"/libs/core/fd/components/form/pageheader/v1/pageheader" // somehow libs path is working for pageheader component giving apps path gives component not found
             }
         }
     },
