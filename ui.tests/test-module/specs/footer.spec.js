@@ -25,7 +25,6 @@ const commons = require('../libs/commons/commons'),
  * Testing Footer with Sites Editor
  */
 describe('Page - Authoring', function () {
-  // we can use these values to log in
 
   const dropFooterInContainer = function() {
     const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
@@ -49,8 +48,6 @@ describe('Page - Authoring', function () {
     } else {
       dropFooterInContainer();
     }
-//    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
-//    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.deleteComponentByPath(footerDrop);
   }
 
@@ -73,26 +70,4 @@ describe('Page - Authoring', function () {
       testFooterBehaviour(footerEditPathSelector, footerDrop);
     })
   })
-
-//  context('Open Sites Editor', function () {
-//    const   pagePath = "/content/core-components-examples/library/adaptive-form/footer",
-//        imageEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/footer",
-//        imageEditPathSelector = "[data-path='" + imageEditPath + "']",
-//        imageDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formimage.split("/").pop();
-//
-//    beforeEach(function () {
-//      // this is done since cypress session results in 403 sometimes
-//      cy.openAuthoring(pagePath);
-//    });
-//
-//    it('insert aem forms Footer', function () {
-//      dropFooterInSites();
-//      cy.deleteComponentByPath(imageDrop);
-//    });
-//
-//    it('open edit dialog of aem forms Footer', function() {
-//      testFooterBehaviour(imageEditPathSelector, imageDrop, true);
-//    });
-//
-//  });
 });
