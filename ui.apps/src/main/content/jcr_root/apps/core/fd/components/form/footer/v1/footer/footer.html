@@ -15,5 +15,8 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
 <div class="cmp-adaptiveform-footer">
-    <div class="cmp-adaptiveform-footer__text" data-sly-resource="${'text' @ resourceType='/libs/core/wcm/components/text/v2/text'}"></div>
+    <sly data-sly-list.tab="${resource.listChildren}">
+        <div class="cmp-adaptiveform-footer__text" data-sly-resource="${tab.path}" ></div>
+
+    </sly>
 </div>
