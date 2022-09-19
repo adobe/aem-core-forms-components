@@ -17,7 +17,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import javax.inject.Inject;
 
-// import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -30,49 +29,36 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { TermsAndConditions.class,
-        ComponentExporter.class },
+    adapters = { TermsAndConditions.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_TNC_V1 })
-@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAndConditions {
+@Exporter(
+    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
+    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+public class TermsAndConditionsImpl extends AbstractContainerImpl implements TermsAndConditions {
 
-    // @ValueMapValue(name = "tncTextContent", injectionStrategy = InjectionStrategy.OPTIONAL)
-    // @Inject
-    // protected String tncTextContent;
-
-    // @ValueMapValue(name = "tncConsentText", injectionStrategy = InjectionStrategy.OPTIONAL)
-    // @Inject
-    // @Default(values = "I agree to the terms & conditions")
-    // protected String tncConsentText;
-
+    @JsonIgnore
     @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     @Default(values = "I agree to the terms & conditions")
     protected String title;
 
+    @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean showAsLink;
 
-    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
-    // @Inject
-    // private String[] enums;
+    // @JsonIgnore
+    // @ValueMapValue(name = "fieldType")
+    // protected String fieldTypeJcr;
 
-    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
-    // @Inject
-    // private String[] enumNames;
-
-    // public String getTncTextContent() {
-    // return tncTextContent;
-    // }
-
-    // public String getTncConsentText() {
-    // return tncConsentText;
-    // }
+    // @JsonIgnore
+    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
+    // protected String typeJcr;
 
     public String getTitle() {
         return title;
@@ -82,11 +68,13 @@ public class TermsAndConditionsImpl extends AbstractFieldImpl implements TermsAn
         return showAsLink;
     }
 
-    // public String[] getEnums() {
-    // return ArrayUtils.clone(enums);
+    // @Override
+    // public String getFieldType() {
+    // return null;
     // }
 
-    // public String[] getEnumNames() {
-    // return ArrayUtils.clone(enumNames);
+    // @Override
+    // public Type getType() {
+    // return null;
     // }
 }
