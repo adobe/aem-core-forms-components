@@ -30,6 +30,7 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${DropDown.bemBlock}__widget`,
+            options: `.${DropDown.bemBlock}__option`,
             label: `.${DropDown.bemBlock}__label`,
             description: `.${DropDown.bemBlock}__longdescription`,
             qm: `.${DropDown.bemBlock}__questionmark`,
@@ -57,11 +58,39 @@
             return this.element.querySelector(DropDown.selectors.errorDiv);
         }
 
+        _checkIfEqual(value, optionValue, multiSelect) {
+            if(multiSelect) {
+                return value.includes(optionValue);
+            }
+            return value === optionValue;
+        }
+        _updateValue(value) {
+                let isMultiSelect = this._model.isArrayType();
+                [...this.widget].forEach((option) => {
+                    if(this._checkIfEqual(value, option.value, isMultiSelect)) {
+                        option.setAttribute('selected', 'selected')
+                    } else {
+                        option.removeAttribute('selected');
+                    }
+                });
+        }
+
+
         setModel(model) {
             super.setModel(model);
             this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-            })
+                if(this._model.isArrayType()) {
+                    let valueArray = [];
+                    [...this.widget].forEach((option) => {
+                        if(option.selected) {
+                            valueArray.push(option.value);
+                        }
+                    });
+                    this._model.value = valueArray;
+                } else {
+                    this._model.value = e.target.value;
+                }
+            });
         }
     }
 

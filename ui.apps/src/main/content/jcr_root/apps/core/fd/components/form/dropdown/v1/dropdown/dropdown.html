@@ -41,6 +41,7 @@
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
             <div data-sly-test.enum="${dropdown.enums[enumNameList.index]}" data-sly-unwrap>
                 <option value="${enum}"
+                        class="cmp-adaptiveform-dropdown__option"
                         data-sly-attribute.selected="${enum in dropdown.default ? 'selected' : ''}">${enumName}</option>
             </div>
         </div>
