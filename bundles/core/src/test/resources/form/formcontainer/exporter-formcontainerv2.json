@@ -24,6 +24,12 @@
     }
   ],
   "fieldType" : "form",
+  "properties": {
+    "fd:dor": {
+      "dorType":"generate",
+      "dorTemplateRef":"xyz"
+    }
+  },
   "metadata": {
     "action": "/a/b",
     "dataUrl": "/c/d",

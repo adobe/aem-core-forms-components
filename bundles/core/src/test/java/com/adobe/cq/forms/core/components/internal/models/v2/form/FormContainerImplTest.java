@@ -123,8 +123,8 @@ public class FormContainerImplTest {
     @Test
     void testGetDorProperties() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals("generate",formContainer.getDorProperties().get("dorType"));
-        assertEquals("xyz",formContainer.getDorProperties().get("dorTemplateRef"));
+        assertEquals("generate", formContainer.getDorProperties().get("dorType"));
+        assertEquals("xyz", formContainer.getDorProperties().get("dorTemplateRef"));
     }
 
     @Test
