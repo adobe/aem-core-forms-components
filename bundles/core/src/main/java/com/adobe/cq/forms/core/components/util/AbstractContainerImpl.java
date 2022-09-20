@@ -38,10 +38,10 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
 
     @OSGiService
-    private SlingModelFilter slingModelFilter;
+    protected SlingModelFilter slingModelFilter;
 
     @OSGiService
-    private ModelFactory modelFactory;
+    protected ModelFactory modelFactory;
 
     @SlingObject
     protected Resource resource;

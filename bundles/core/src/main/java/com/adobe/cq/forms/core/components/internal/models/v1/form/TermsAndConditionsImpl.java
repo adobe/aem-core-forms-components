@@ -15,6 +15,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -24,10 +27,13 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
@@ -42,16 +48,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TermsAndConditionsImpl extends AbstractContainerImpl implements TermsAndConditions {
 
+    private static final String TEXT_INPUT = "text-input";
+
     @JsonIgnore
     @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
     @Inject
     @Default(values = "I agree to the terms & conditions")
-    protected String title;
+    private String title;
 
     @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
-    protected boolean showAsLink;
+    private boolean showAsLink;
 
     @JsonIgnore
     @Override
@@ -73,11 +81,28 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
         return showAsLink;
     }
 
-    // @JsonIgnore
-    // @ValueMapValue(name = "fieldType")
-    // protected String fieldTypeJcr;
+    @Override
+    protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+        List<T> models = new ArrayList<>();
 
-    // @JsonIgnore
-    // @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
-    // protected String typeJcr;
+        int i = 0;  // remove this when <link> logic changes to 'check-box' instead of 'checkbox-grp'.
+        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
+            if (!child.getName().startsWith("fd:")) {
+                T model = null;
+                if (request != null)
+                    model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+                else
+                    model = child.adaptTo(modelClass);
+
+                if (model != null) {
+                    i++;
+                    // i++ / i == 2, this needs to change to actual link hiding. For now, hiding in case of 2nd element.
+                    if ((this.showAsLink && ((Base) model).getFieldType().equals(TEXT_INPUT)) || (!this.showAsLink && i == 2))
+                        continue;
+                    models.add(model);
+                }
+            }
+        }
+        return models;
+    }
 }
