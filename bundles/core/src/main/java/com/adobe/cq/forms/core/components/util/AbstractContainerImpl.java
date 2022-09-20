@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 
@@ -75,6 +76,9 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                     model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
                 } else {
                     model = child.adaptTo(modelClass);
+                    if (model instanceof Base && i18n != null) {
+                        ((Base) model).setI18n(i18n);
+                    }
                 }
                 if (model != null) {
                     models.add(model);

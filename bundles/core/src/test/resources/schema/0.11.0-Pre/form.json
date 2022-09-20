@@ -1,0 +1,14 @@
+{
+  "items": [
+  ],
+  "fieldType" : "form",
+  "metadata": {
+    "action": "/a/b",
+    "dataUrl": "/c/d",
+    "locale": "en-us",
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "adaptiveform":"0.11.0-Pre",
+  ":type": "core/fd/components/form/container/v2/container"
+}
