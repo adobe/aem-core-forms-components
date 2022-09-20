@@ -3,6 +3,6 @@
     cq:icon="dropdown"
     jcr:description="Allows visitors choose from dropdown"
     jcr:primaryType="cq:Component"
-    jcr:title="Adaptive Form DropDown (v1)"
+    jcr:title="Adaptive Form Dropdown component"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
     componentGroup=".core-adaptiveform"/>

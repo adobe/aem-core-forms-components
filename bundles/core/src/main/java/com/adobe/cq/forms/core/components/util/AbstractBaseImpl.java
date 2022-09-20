@@ -70,7 +70,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
     @Nullable
     protected String typeJcr; // todo: note this should never be array, we infer array types based on other metadata
-    private Type type;
+    protected Type type;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
     @Nullable

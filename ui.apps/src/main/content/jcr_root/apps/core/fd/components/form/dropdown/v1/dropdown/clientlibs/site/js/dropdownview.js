@@ -38,7 +38,7 @@
 
         constructor(params) {
             super(params);
-            this.qm = this.element.querySelector(DropDown.selectors.qm)
+            this.qm = this.element.querySelector(DropDown.selectors.qm);
         }
 
         getWidget() {
