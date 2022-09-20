@@ -48,10 +48,10 @@
 
         if(component.checked){
          fileinputType.attributes.value.value="file[]";
-
          }
         else{
          fileinputType.attributes.value.value="file";
+         fileinputMinItems.attributes.value.value=null;
          }
 
     }

@@ -136,13 +136,8 @@
 	}, false);
 
 
-	FormView.Utils.setupField(({
-		element,
-		formContainer
-	}) => {
-		return new FileInput({
-			element
-		})
-	}, FileInput.selectors.self);
+	 FormView.Utils.setupField(({element, formContainer}) => {
+            return new FileInput({element, formContainer})
+        }, FileInput.selectors.self);
 
 })();

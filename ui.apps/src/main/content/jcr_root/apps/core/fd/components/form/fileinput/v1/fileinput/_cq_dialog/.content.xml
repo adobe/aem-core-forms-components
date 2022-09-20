@@ -48,17 +48,17 @@
                                     value="true"/>
 
                             <minimum
+                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFiles"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                   granite:class="cmp-adaptiveform-fileinput__minimumFiles"
                                     sling:orderBefore="fieldLayout"
                                     defaultValue=""
                                     fieldLabel="Minimum number files"
                                     name="./minItems"/>
                             <maximum
+                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFiles"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    granite:class="cmp-adaptiveform-fileinput__maximumFiles"
                                     sling:orderBefore="fieldLayout"
                                     defaultValue=""
                                     fieldLabel="maximum number files"
@@ -126,6 +126,37 @@
                     <validation
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <minFilesMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when less than minimum Files are uploaded"
+                                    granite:class="cmp-adaptiveform-fileinput__minmessage"
+                                    fieldLabel="Min Files Error Message"
+                                    name="./minItemsMessage"/>
+                            <maxFilesMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when more than maximum Files are uploaded"
+                                    granite:class="cmp-adaptiveform-fileinput__maxmessage"
+                                    fieldLabel="Max Files Error Message"
+                                    name="./maxItemsMessage"/>
+                            <maxFileSizeMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when more than maximum File Size files are uploaded"
+                                    granite:class="cmp-adaptiveform-fileinput__maxfilesizemessage"
+                                    fieldLabel="Max File Size Error Message"
+                                    name="./maxFileSizeMessage"/>
+                            <acceptMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types"
+                                    granite:class="cmp-adaptiveform-fileinput__acceptemessage"
+                                    fieldLabel="File Type Error Message"
+                                    name="./acceptMessage"/>
+
+                        </items>
                     </validation>
                     <help
                             jcr:primaryType="nt:unstructured"

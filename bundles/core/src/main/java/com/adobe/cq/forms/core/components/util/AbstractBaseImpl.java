@@ -235,6 +235,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
                 putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
             }
 
+            putConstraintMessage(ConstraintType.MAXFILESIZE, msgs.getMaxFileSizeConstraintMessage());
+            putConstraintMessage(ConstraintType.ACCEPT, msgs.getAcceptConstraintMessage());
+
             // todo: add the following conditionally
             putConstraintMessage(ConstraintType.STEP, msgs.getStepConstraintMessage());
             putConstraintMessage(ConstraintType.MIN_ITEMS, msgs.getMinItemsConstraintMessage());
@@ -272,6 +275,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
         String getMaxLengthConstraintMessage();
 
+        String getMaxFileSizeConstraintMessage();
+
+        String getAcceptConstraintMessage();
+
         String getStepConstraintMessage();
 
         String getFormatConstraintMessage();
@@ -297,6 +304,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         private static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
         private static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
         private static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
+        // for fileInput min, max number of files, maximum file size and accept of file type messages
+        private static final String PN_MAXFILESIZE_MESSAGE = "maxFileSizeMessage";
+        private static final String PN_ACCEPT_MESSAGE = "acceptMessage";
+
         private static final String PN_STEP_MESSAGE = "stepMessage";
         private static final String PN_FORMAT_MESSAGE = "formatMessage";
         private static final String PN_PATTERN_MESSAGE = "validatePictureClauseMessage"; // reusing the same property name as in foundation
@@ -343,6 +354,18 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         @Nullable
         public String getMaxLengthConstraintMessage() {
             return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, String.class));
+        }
+
+        @Override
+        @Nullable
+        public String getMaxFileSizeConstraintMessage() {
+            return translate(PN_MAXFILESIZE_MESSAGE, properties.get(PN_MAXFILESIZE_MESSAGE, String.class));
+        }
+
+        @Override
+        @Nullable
+        public String getAcceptConstraintMessage() {
+            return translate(PN_ACCEPT_MESSAGE, properties.get(PN_ACCEPT_MESSAGE, String.class));
         }
 
         @Override
