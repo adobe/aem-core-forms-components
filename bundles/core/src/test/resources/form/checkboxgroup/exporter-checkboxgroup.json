@@ -11,6 +11,9 @@
   "properties": {
     "af:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "enforceEnum":true,

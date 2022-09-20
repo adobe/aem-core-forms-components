@@ -26,12 +26,12 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -167,7 +167,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    @NotNull
+    @JsonIgnore
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
         customDorProperties.put("dorExclusion", dorExclusion);

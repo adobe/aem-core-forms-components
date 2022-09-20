@@ -522,7 +522,7 @@ public abstract class AbstractBaseImpl extends AbstractComponentImpl implements 
         if (getCustomProperties().size() != 0) {
             customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
         }
-        if (dorType != null && dorType.equals("generate") && getDorProperties().size() > 0) {
+        if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         return customProperties;
