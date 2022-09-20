@@ -29,39 +29,18 @@
         static bemBlock = 'cmp-adaptiveform-termsandcondition'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            textinput: `.${TermsAndConditon.bemBlock}__textinput`,
             label: `.${TermsAndConditon.bemBlock}__label`,
+            text: `.${TermsAndConditon.bemBlock}__text`,
+            link: `.${TermsAndConditon.bemBlock}__link`,
             checkbox: `.${TermsAndConditon.bemBlock}__checkbox`
         };
 
         constructor(params) {
             super(params);
-            //this.qm = this.element.querySelector(TermsAndConditon.selectors.qm)
-        }
-
-        getWidget() {
-            return this.element.querySelector(TermsAndConditon.selectors.textinput);
-        }
-
-        getLabel() {
-            return this.element.querySelector(TermsAndConditon.selectors.label);
-        }
-
-        scrollHandler(event) {
-          // console.log('===', this.widget.offsetHeight + this.widget.scrollTop, this.widget.scrollHeight);
-          if (this.widget.offsetHeight + this.widget.scrollTop >= this.widget.scrollHeight) {  
-            console.log('=====scrolled to bottom')  
-          }  
-        }
-
-        removeHandler() {
-          this.widget.removeEventListener('scroll', this.scrollHandler);
         }
 
         setModel(model) {
-          // console.log('=====set model', model);
-          // super.setModel(model);
-          // this.widget.addEventListener('scroll', this.scrollHandler);
+          super.setModel(model);
         }
     }
 

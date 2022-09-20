@@ -21,29 +21,10 @@
 	data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
 	data-sly-use.tnc="com.adobe.cq.forms.core.components.models.form.TermsAndConditions"
 	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-	data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-
-	<div>
-		<label class="cmp-adaptiveform-termsandcondition__label">
-			<!-- Terms And Conditions -->
-      ${tnc.title}
-		</label>
-	</div>
-	<div>
-		<!-- <input class="cmp-adaptiveform-termsandcondition__textinput"
-			type="text" value="${tnc.tncTextContent @context = 'html'}"
-			placeholder="Text related to the terms and conditions come here" /> -->
-    <!-- <div class="cmp-adaptiveform-termsandcondition__textinput">${tnc.tncTextContent @context = 'html'}</div> -->
-    <div data-sly-test="${!tnc.showAsLink}" data-sly-resource="${'text' @ resourceType='/libs/core/fd/components/form/textinput/v1/textinput'}"></div>
-    <div data-sly-test="${tnc.showAsLink}" data-sly-resource="${'link' @ resourceType='/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup'}"></div>
-	</div>
-	<div>
-		<!-- <input class="cmp-adaptiveform-termsandcondition__checkbox" type="checkbox" />
-		<label
-			class="cmp-adaptiveform-textinput__checkboxlabel">
-			${tnc.tncConsentText}
-		</label> -->
-    <div data-sly-resource="${'checkbox' @ resourceType='/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup'}"></div>
-	</div>
-
+	data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+  >
+    <label class="cmp-adaptiveform-termsandcondition__label">${tnc.title}</label>
+    <div class="cmp-adaptiveform-termsandcondition__text" data-sly-test="${!tnc.showAsLink}" data-sly-resource="${'text'}"></div>
+    <div class="cmp-adaptiveform-termsandcondition__link" data-sly-test="${tnc.showAsLink}" data-sly-resource="${'link'}"></div>
+    <div class="cmp-adaptiveform-termsandcondition__checkbox" data-sly-resource="${'checkbox'}"></div>
 </div>

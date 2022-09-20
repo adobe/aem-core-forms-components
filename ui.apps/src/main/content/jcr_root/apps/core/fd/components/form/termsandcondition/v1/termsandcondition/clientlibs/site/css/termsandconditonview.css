@@ -19,59 +19,17 @@
 }
 
 .cmp-adaptiveform-termsandcondition__label {
-	color: #666666;
-    line-height: 1.42857143;
-    font-size: 1rem;
-    font-weight: normal;
-    margin-bottom: 2px;
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+.cmp-adaptiveform-termsandcondition__text {
+	
+}
+
+.cmp-adaptiveform-termsandcondition__link {
+
 }
 
 .cmp-adaptiveform-termsandcondition__checkbox {
-	background-color: initial;
-    cursor: default;
-    appearance: auto;
-    box-sizing: border-box;
-    margin: 3px 3px 3px 4px;
-    padding: initial;
-    border: initial;
-}
 
-.cmp-adaptiveform-termsandcondition__textinput {
-	background: #ffffff;
-    width: 30%;
-    height: 40%;
-    border-style: solid;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-bottom-width: 1px;
-    border-right-width: 1px;
-    border-color: #cccccc;
-    margin-bottom: 0.25rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-bottom-right-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #969696;
-    max-height: 160px;
-    overflow: scroll;
-}
-
-.cmp-adaptiveform-textinput__checkboxlabel {
-	color: #666666;
-    line-height: 1.42857143;
-    font-size: 1rem;
-    font-weight: normal;
-    margin-bottom: 2px;
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    font-family: "Arial";
 }
