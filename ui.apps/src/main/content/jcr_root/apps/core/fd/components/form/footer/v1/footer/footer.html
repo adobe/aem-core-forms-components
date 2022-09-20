@@ -15,8 +15,8 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
 <div class="cmp-adaptiveform-footer">
-    <sly data-sly-list.tab="${resource.listChildren}">
-        <div class="cmp-adaptiveform-footer__text" data-sly-resource="${tab.path}" ></div>
+    <sly data-sly-list.child="${resource.listChildren}">
+        <div class="cmp-adaptiveform-footer__text" data-sly-resource="${child.path}" ></div>
 
     </sly>
 </div>

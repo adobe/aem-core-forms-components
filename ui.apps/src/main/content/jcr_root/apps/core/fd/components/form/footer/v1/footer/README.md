@@ -26,6 +26,11 @@ Footer component written in HTL.
 ### Use Object
 The Panel Container component uses the `/libs/core/wcm/components/text/v2/text` component and its Sling model as its Use-object.
 
+## BEM Description
+```
+BLOCK cmp-adaptiveform-footer
+    ELEMENT cmp-adaptiveform-footer__text
+```
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
