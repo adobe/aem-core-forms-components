@@ -67,8 +67,6 @@ BLOCK cmp-adaptiveform-dropdown
 
 Apply a `data-cmp-is="adaptiveFormDropDown"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
-The following attributes can be added to the same element to provide options:
 
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
 
 
