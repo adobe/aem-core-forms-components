@@ -27,7 +27,13 @@
 }
 
 .cmp-adaptiveform-termsandcondition__link {
-
+  
+}
+.cmp-adaptiveform-termsandcondition__link input{
+  visibility: hidden;
+}
+.cmp-adaptiveform-termsandcondition__link label{
+  margin-left: -20px;
 }
 
 .cmp-adaptiveform-termsandcondition__checkbox {

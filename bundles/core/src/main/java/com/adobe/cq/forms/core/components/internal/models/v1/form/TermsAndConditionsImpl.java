@@ -34,7 +34,6 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,17 +60,17 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     @Default(booleanValues = false)
     private boolean showAsLink;
 
-    @JsonIgnore
-    @Override
-    public String getFieldType() {
-        return null;
-    }
+    // @JsonIgnore
+    // @Override
+    // public String getFieldType() {
+    // return null;
+    // }
 
-    @JsonIgnore
-    @Override
-    public Type getType() {
-        return BaseConstraint.Type.STRING;
-    }
+    // @JsonIgnore
+    // @Override
+    // public Type getType() {
+    // return BaseConstraint.Type.STRING;
+    // }
 
     public String getTitle() {
         return title;
