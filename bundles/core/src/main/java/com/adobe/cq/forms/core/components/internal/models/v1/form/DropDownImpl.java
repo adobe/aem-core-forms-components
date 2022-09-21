@@ -55,9 +55,4 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     public Boolean isMultiSelect() {
         return multiSelect;
     }
-
-    @Override
-    public boolean isEnforceEnum() {
-        return true;
-    }
 }

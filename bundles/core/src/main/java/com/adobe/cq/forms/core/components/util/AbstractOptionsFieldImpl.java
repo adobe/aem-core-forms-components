@@ -30,7 +30,7 @@ import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl implements OptionsConstraint {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(booleanValues = false)
+    @Default(booleanValues = true)
     private boolean enforceEnum;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
