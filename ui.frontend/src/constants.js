@@ -21,6 +21,7 @@ export const Constants = {
      * component class
      */
     NS : "cmp",
+
     /**
      * @summary Form event to be triggered with a Form container is initialized
      *
@@ -35,6 +36,36 @@ export const Constants = {
      * }
      */
     FORM_CONTAINER_INITIALISED : "AF_FormContainerInitialised",
+
+    /**
+     * @summary Panel event to be triggered when a child view is added to panel view
+     *
+     * @name  AF_PanelChildAdded
+     * @event
+     * @property {object} event
+     * @property {object} event.detail instance of child view that is added
+     * @example
+     * panel.element.on("AF_PanelChildAdded" , function(event) {
+     *      var childView = event.detail;
+     *      ...
+     * }
+     */
+    PANEL_CHILD_ADDED : "AF_PanelChildAdded",
+
+    /**
+     * @summary Panel event to be triggered when a child view is removed from panel view
+     *
+     * @name  AF_PanelChildRemoved
+     * @event
+     * @property {object} event
+     * @property {object} event.detail instance of child view that was removed
+     * @example
+     * panel.element.on("AF_PanelChildRemoved" , function(event) {
+     *      var childView = event.detail;
+     *      ...
+     * }
+     */
+    PANEL_CHILD_REMOVED : "AF_PanelChildRemoved",
 
     /**
      * data attribute to store the form container path. In HTML it will be namespaced
