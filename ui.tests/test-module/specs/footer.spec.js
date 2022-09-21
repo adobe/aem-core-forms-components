@@ -14,60 +14,55 @@
  *  limitations under the License.
  */
 
-
 const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+      sitesSelectors = require('../libs/commons/sitesSelectors'),
+      afConstants = require('../libs/commons/formsConstants');
 
-/**
- * Testing Footer with Sites Editor
- */
-describe('Page - Authoring', function () {
+//Testing footer with forms editor
+describe('Footer - Authoring', function(){
 
-  const dropFooterInContainer = function() {
-    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-    cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Footer", afConstants.components.forms.resourceType.footer);
-    cy.get('body').click( 0,0);
-  }
-
-  const dropFooterInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/footer/jcr:content/root/responsivegrid/demo/component/container/*",
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
-    cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Footer", afConstants.components.forms.resourceType.footer);
-    cy.get('body').click( 0,0);
-  }
-
-  const testFooterBehaviour = function(imageEditPathSelector, footerDrop, isSites) {
-    if (isSites) {
-      dropFooterInSites();
-    } else {
-      dropFooterInContainer();
+    const getPreviewIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
     }
-    cy.deleteComponentByPath(footerDrop);
-  }
 
-  context('Open Forms Editor', function() {
-    const pagePath = "/content/forms/af/core-components-it/blank",
-        footerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/footer",
-        footerEditPathSelector = "[data-path='" + footerEditPath + "']",
-        footerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.footer.split("/").pop();
-    beforeEach(function () {
-      // this is done since cypress session results in 403 sometimes
-      cy.openAuthoring(pagePath);
-    });
+    const insertFooterInContainer = function(){
+        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+              responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+        cy.selectLayer('Edit')
+        cy.insertComponent(responsiveGridDropZoneSelector, "Footer", afConstants.components.forms.resourceType.footer)
+        cy.get('body').click(0,0)
+    }
 
-    it('insert Footer in form container', function () {
-      dropFooterInContainer();
-      cy.deleteComponentByPath(footerDrop);
-    });
+    context('Open Forms editor', function(){
+        const pagePath = "/content/forms/af/core-components-it/blank",
+              footerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/footer/text",
+              footerEditPathSelector = "[data-path='" + footerEditPath + "']",
+              footerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.footer.split("/").pop(),
+              input = 'My Custom Footer'
 
-    it ('open edit dialog of Footer', function(){
-      testFooterBehaviour(footerEditPathSelector, footerDrop);
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
+
+        it('Insert Footer in Form Container', function () {
+            insertFooterInContainer();
+        })
+
+        it('Edit footer in component', function(){
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + footerEditPathSelector)
+            cy.invokeEditableAction("[data-action='EDIT']")
+            getPreviewIframeBody().find('.cmp-adaptiveform-footer__text').should('have.length',1).clear().type(input);
+            cy.invokeEditableAction("[data-action='control#save']")
+            cy.deleteComponentByPath(footerDrop);
+        })
+
     })
-  })
-});
+
+})
+
