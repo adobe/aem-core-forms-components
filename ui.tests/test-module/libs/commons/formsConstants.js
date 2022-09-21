@@ -25,7 +25,8 @@ var formsConstants = {
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
-                "datepicker": "/apps/forms-components-examples/components/form/datepicker"
+                "datepicker": "/apps/forms-components-examples/components/form/datepicker",
+                "formtext": "/apps/forms-components-examples/components/form/text"
             }
         }
     },

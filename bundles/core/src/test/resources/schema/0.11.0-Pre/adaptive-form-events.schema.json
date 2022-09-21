@@ -1,0 +1,76 @@
+{
+  "id": "classpath:/schema/0.11.0-Pre/adaptive-form-even.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Specify what operations to perform on certain user or custom events.",
+  "description": "Events is a dictionary of eventName to the actions to perform. Whenever the event is dispatched the expressions defined on that event are evaluated. The return value of that expression is applied to the field. The return value of the expression can be either of\n  * null, literal or array: The value property of the field is set to the return value\n  * dictionary: The field json is merged with the returned dictionary\n  * empty dictionary: the field should not be modified.",
+  "$defs": {
+    "SingleEventHandler": {
+      "type": "string",
+      "format": "json-formula"
+    },
+    "EventHandler": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SingleEventHandler"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SingleEventHandler"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "click": {
+      "$ref": "#/$defs/EventHandler"
+    },
+    "initialize": {
+      "$ref": "#/$defs/EventHandler"
+    },
+    "focus": {
+      "$ref": "#/$defs/EventHandler"
+    },
+    "blur": {
+      "$ref": "#/$defs/EventHandler"
+    },
+    "change": {
+      "$ref": "#/$defs/EventHandler"
+    },
+    "submit": {
+      "$ref": "#/$defs/EventHandler"
+    }
+  },
+  "propertyNames": {
+    "anyOf": [
+      {
+        "enum": [
+          "click",
+          "initialize",
+          "focus",
+          "blur",
+          "change",
+          "submit"
+        ]
+      },
+      {
+        "pattern": "custom:[a-zA-Z0-9]+"
+      }
+    ],
+    "errorMessage": "${0} is not a valid Event Name. It should be either click, initialize, focus, blur, change or a custom event"
+  },
+  "examples": [
+    {
+      "Terms&Conditions": [
+        {
+          "name": "terms"
+        },
+        {
+          "click": "{value: true}"
+        }
+      ]
+    }
+  ]
+}
