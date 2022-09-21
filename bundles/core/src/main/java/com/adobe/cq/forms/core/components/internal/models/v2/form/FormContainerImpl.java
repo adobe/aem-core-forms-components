@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -43,6 +46,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
+
+    private static String DOR_TYPE = "dorType";
+    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -124,5 +130,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         } else {
             return null;
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        if (dorType != null) {
+            customDorProperties.put(DOR_TYPE, dorType);
+        }
+        if (dorTemplateRef != null) {
+            customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        }
+        return customDorProperties;
     }
 }

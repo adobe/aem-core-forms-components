@@ -108,6 +108,14 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testDorProperties() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
+        assertEquals(true, textInput.getDorProperties().get("dorExclusion"));
+        assertEquals("4", textInput.getDorProperties().get("dorColspan"));
+
+    }
+
+    @Test
     void testGetDescription() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         assertEquals("dummy", textInput.getDescription());
