@@ -1,0 +1,14 @@
+{
+  "text" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/text/v1/text",
+    "name" : "abc",
+    "value" : "<p>xyz</p>",
+    "jcr:title" : "Text",
+    "hideTitle" : false,
+    "visible" : true,
+    "dataRef" : "a.b",
+    "fieldType": "text",
+    "textIsRich": true
+  }
+}

@@ -14,28 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-textinput {
+.cmp-adaptiveform-text {
 
 }
 
-.cmp-adaptiveform-textinput__widget {
+.cmp-adaptiveform-text__widget {
 
 }
-
-.cmp-adaptiveform-textinput__label {
-
-}
-
-.cmp-adaptiveform-textinput__longdescription {
-
-}
-
-.cmp-adaptiveform-textinput__shortdescription {
-
-}
-
-.cmp-adaptiveform-textinput__questionmark {
-
-}
-
-[data-cmp-visible=false]
