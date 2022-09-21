@@ -26,7 +26,7 @@
          * @type {string}
          */
         static IS = "adaptiveFormDropDown";
-        static bemBlock = 'cmp-adaptiveform-dropdown'
+        static bemBlock = 'cmp-adaptiveform-dropdown';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${DropDown.bemBlock}__widget`,
@@ -60,19 +60,25 @@
 
         _checkIfEqual(value, optionValue, multiSelect) {
             if(multiSelect) {
-                return value.includes(optionValue);
+                let isPresent = false;
+                value.forEach((saveValue) => {
+                    if(String(saveValue) === optionValue)  // save value can be number and boolean also.
+                        isPresent = true;
+                })
+                return isPresent;
             }
-            return value === optionValue;
+            return String(value) === optionValue;
         }
+
         _updateValue(value) {
-                let isMultiSelect = this._model.isArrayType();
-                [...this.widget].forEach((option) => {
+            let isMultiSelect = this._model.isArrayType();
+            [...this.widget].forEach((option) => {
                     if(this._checkIfEqual(value, option.value, isMultiSelect)) {
                         option.setAttribute('selected', 'selected')
                     } else {
                         option.removeAttribute('selected');
                     }
-                });
+            });
         }
 
 
