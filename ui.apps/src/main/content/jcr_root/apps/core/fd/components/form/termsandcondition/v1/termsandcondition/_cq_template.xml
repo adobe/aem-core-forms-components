@@ -39,5 +39,9 @@
           jcr:primaryType="nt:unstructured"
           enabled="if($parent.$items[0].$fieldType == 'checkbox', length($parent.$items[0].$value) == length($parent.$items[0].$enum), $field.$enabled)"
         />
+        <fd:events
+          jcr:primaryType="nt:unstructured"
+          custom_scrollDone="{String}{enabled: true()}"
+        />
     </checkbox>
 </jcr:root>
