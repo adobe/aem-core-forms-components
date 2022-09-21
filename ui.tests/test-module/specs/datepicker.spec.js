@@ -47,11 +47,6 @@ describe('Page - Authoring', function () {
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get(bemEditDialog).contains('Validation').click({force:true});
-        // cy.get(bemEditDialog).contains('Basic').click({force:true});
-        // cy.get(bemEditDialog).contains('Help Content').click({force:true});
-        // cy.get(bemEditDialog).contains('Accessibility').click({force:true});
-        // cy.get(bemEditDialog).contains('Formats').click({force:true});
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(datePickerDrop);
     }
@@ -92,25 +87,6 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(datePickerDrop);
     }
 
-    const testDatePickerPatternTab = function (datePickerEditPathSelector, datePickerDrop, isSites) {
-        const bemEditDialog = '.cmp-adaptiveform-datepicker__editdialog'
-        if (isSites) {
-            dropDatePickerInSites();
-        } else {
-            dropDatePickerInContainer();
-        }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get(bemEditDialog).contains('Formats').click({force:true});
-        cy.get("[name='./dataFormat']").should("exist");
-        cy.get("[name='./editFormat']").should("exist");
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(datePickerDrop);
-    }
-
-
-
-
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             datePickerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/datepicker",
@@ -138,10 +114,6 @@ describe('Page - Authoring', function () {
 
         it('verify Validation tab in edit dialog of DatePicker', function () {
             testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop);
-        });
-
-        it('verify Formats tab in edit dialog of DatePicker', function () {
-            testDatePickerPatternTab(datePickerEditPathSelector, datePickerDrop);
         });
 
     });
@@ -172,10 +144,6 @@ describe('Page - Authoring', function () {
 
      it('verify Validation tab in edit dialog of DatePicker', function () {
          testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop, true);
-     });
-
-     it('verify Formats tab in edit dialog of DatePicker', function () {
-         testDatePickerPatternTab(datePickerEditPathSelector, datePickerDrop, true);
      });
 
  });
