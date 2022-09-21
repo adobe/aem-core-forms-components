@@ -21,7 +21,8 @@
         DROPDOWN_DEFAULTVALUEMULTISELCET = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvaluemultiselect",
         DROPDOWN_SAVEVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__savevaluetype",
         TYPE = EDIT_DIALOG + " input[name='./type']",
-        DEFAULT = EDIT_DIALOG + " input[name='./default@ValueFrom']",
+        DEFAULTINPUT = DROPDOWN_DEFAULTVALUE + " input",
+        DEFAULTMUTIINPUT = DROPDOWN_DEFAULTVALUEMULTISELCET + " input[type='text']",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -61,7 +62,8 @@
         var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
             defaultValue = dialog.find(DROPDOWN_DEFAULTVALUE),
             defaultValueMS = dialog.find(DROPDOWN_DEFAULTVALUEMULTISELCET),
-            defaultField = dialog.find(DEFAULT);
+            defaultInput = dialog.find(DEFAULTINPUT),
+            defaultMultiInput = dialog.find(DEFAULTMUTIINPUT);
 
         var isMutiSelect = function () {
             return multiSelect.checked;
@@ -71,14 +73,23 @@
             return !isMutiSelect();
         }
 
+        var changeNameForMultiSelect = function (newName) {
+            [...defaultMultiInput].forEach((input) => {
+                input.name = newName;
+            })
+        }
+
         var hideAndShowElements = function () {
             Utils.checkAndDisplay(defaultValueMS)(isMutiSelect);
             Utils.checkAndDisplay(defaultValue)(isNotMutiSelect);
-            // also assign the value to ./default
+
+            // making sure that ./default of the rendered component is only persisted in jcr
             if(isMutiSelect()) {
-                defaultField.val("./defaultMultiSelect");
+                defaultInput.attr("name","./default@Delete");
+                changeNameForMultiSelect("./default");
             } else {
-                defaultField.val("./defaultSingleSelect");
+                defaultInput.attr("name","./default");
+                changeNameForMultiSelect("./default@Delete");
             }
         }
         hideAndShowElements();
