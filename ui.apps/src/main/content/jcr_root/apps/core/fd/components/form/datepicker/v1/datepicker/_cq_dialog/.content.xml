@@ -21,6 +21,7 @@
           extraClientlibs="[core.forms.components.datepicker.v1.editor]"
           trackingFeature="core-components:adaptiveform-datepicker:v1">
     <content
+            granite:class="cmp-adaptiveform-datepicker__editdialog"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
@@ -32,7 +33,6 @@
                     <basic
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Basic"
-                            granite:class="cmp-adaptiveform-datepicker__editdialog"
                             sling:resourceType="granite/ui/components/coral/foundation/container"
                             active="{Boolean}true"
                             selected="{Boolean}true">
@@ -53,7 +53,6 @@
                     <validation
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Validation"
-                            granite:class="cmp-adaptiveform-datepicker__editdialog"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <minimum
@@ -91,22 +90,18 @@
                     <help
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Help Content"
-                            granite:class="cmp-adaptiveform-datepicker__editdialog"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured"/>
-
                     </help>
                     <accessibility
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Accessibility"
-                            granite:class="cmp-adaptiveform-datepicker__editdialog"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured"/>
                     </accessibility>
                     <patterns
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Formats"
-                            granite:class="cmp-adaptiveform-datepicker__editdialog"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <dataFormat
