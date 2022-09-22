@@ -152,7 +152,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types"
-                                    granite:class="cmp-adaptiveform-fileinput__acceptemessage"
+                                    granite:class="cmp-adaptiveform-fileinput__acceptmessage"
                                     fieldLabel="File Type Error Message"
                                     name="./acceptMessage"/>
 

@@ -21,7 +21,6 @@ Adaptive Form File input field component written in HTL.
 
 * Provides the following type of input:
   * file
-  * text
 * Custom constraint messages for the above types
 * Styles
 
@@ -39,6 +38,16 @@ The following properties are written to JCR for this Form File component and are
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
+9. `./multiSelection` - if set to `true`, the filed will allow to add multiple files in single selection or multiple selections
+10. `./minItems` - if value is selected/provided this will check for minimum number of files that can be attached
+11. `./maxItems` - if value is selected/provided this will check for maximum number of files that can be attached
+12. `./maxFileSize` - if value is selected/provided this will check for maximum file size allowed
+13. `./accept` - defines the type of files accepted to upload
+14. `./showComment` - if set to `true`, comments can be added to attachment
+15. `./minItemsMessage` - defines the message displayed as tooltip when submitting the form if less than allowed minimum files uploaded
+16. `./maxItemsMessage` - defines the message displayed as tooltip when submitting the form if more than allowed maximum files uploaded
+17. `./maxFileSizeMessage` - defines the message displayed as tooltip when submitting the form if the uploaded file size is greater than allowed
+18. `./acceptMessage` - defines the message displayed as tooltip when submitting the form if the uploaded file type is not allowed
 
 ## Client Libraries
 The component provides a `core.forms.components.fileinput.v1` client library category that contains a JavaScript
@@ -49,23 +58,26 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
+BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__label
     ELEMENT cmp-adaptiveform-fileinput__widget
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
     ELEMENT cmp-adaptiveform-fileinput__errormessage
+    ELEMENT cmp-adaptiveform-fileinput__minmessage
+    ELEMENT cmp-adaptiveform-fileinput__maxmessage
+    ELEMENT cmp-adaptiveform-fileinput__maxfilesizemessage
+    ELEMENT cmp-adaptiveform-fileinput__acceptmessage
 ```
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormFileInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
 The following attributes can be added to the same element to provide options:
 
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
+A `data-cmp-hook-adaptiveform-fileinput="input"` attribute should be added to the input  so that the JavaScript is able to target it.
 
-A `data-cmp-hook-adaptiveform-fileinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
-
+Apply a `data-cmp-is="adaptiveFormFileInput"` and `data-cmp-adaptiveformcontainer-path="/content/forms/af/fileinput-test/jcr:content/guideContainer"` attribute to the wrapper block to enable initialization of the JavaScript component.
 

@@ -235,7 +235,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
                 putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
             }
 
-            putConstraintMessage(ConstraintType.MAXFILESIZE, msgs.getMaxFileSizeConstraintMessage());
+            putConstraintMessage(ConstraintType.MAXFILE_SIZE, msgs.getMaxFileSizeConstraintMessage());
             putConstraintMessage(ConstraintType.ACCEPT, msgs.getAcceptConstraintMessage());
 
             // todo: add the following conditionally

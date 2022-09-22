@@ -6,7 +6,7 @@
             "jcr:title"         : "AEM Form Test",
             "sling:resourceType": "core/wcm/components/page/v2/page",
             "jcr:description"   : "AEM Form description",
-            "sling:configRef"   : "/conf/fileinput/content",
+            "sling:configRef"   : "/conf/core-components-examples/content",
             "root"              : {
                 "jcr:primaryType"   : "nt:unstructured",
                 "sling:resourceType": "wcm/foundation/components/responsivegrid",

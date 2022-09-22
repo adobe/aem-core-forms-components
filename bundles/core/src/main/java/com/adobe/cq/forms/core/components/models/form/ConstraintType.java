@@ -42,7 +42,7 @@ public enum ConstraintType {
     UNIQUE_ITEMS("uniqueItems"),
     ENFORCE_ENUM("enforceEnum"),
     VALIDATION_EXPRESSION("validationExpression"),
-    MAXFILESIZE("maxFileSize"),
+    MAXFILE_SIZE("maxFileSize"),
     ACCEPT("accept");
 
     private String value;
