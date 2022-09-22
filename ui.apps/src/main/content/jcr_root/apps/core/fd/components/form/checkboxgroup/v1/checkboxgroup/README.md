@@ -53,7 +53,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__label
-    ELEMENT cmp-adaptiveform-checkboxgroup__widgets
+    ELEMENT cmp-adaptiveform-checkboxgroup__widget
     ELEMENT cmp-adaptiveform-checkbox__widget
     ELEMENT cmp-adaptiveform-checkbox__label
     ELEMENT cmp-adaptiveform-checkboxgroup__questionmark

@@ -90,7 +90,7 @@ describe('Page - Authoring', function () {
 
     // verifying alignment change in preview editor
     getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').should('have.length',2);
-    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').first().should('have.css', "display", "flex");
+    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').first().should('have.css', "display", "block");
 
     cy.deleteComponentByPath(checkBoxGroupDrop);
   }

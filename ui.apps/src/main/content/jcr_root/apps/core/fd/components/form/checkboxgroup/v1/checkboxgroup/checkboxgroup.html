@@ -32,16 +32,19 @@
         <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
-        <div class="cmp-adaptiveform-checkboxgroup__widgets">
+        <div class="cmp-adaptiveform-checkboxgroup__widget">
             <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
                 <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name} ${checkboxgroup.orientation} ">
-                    <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
-                           aria-describedby="${checkboxgroup.labelForId}_desc"
-                            name="${checkboxgroup.name}"
-                            value="${checkboxgroup.enums[itemList.index].toString}"
-                           checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
-                            aria-required="${checkboxgroup.required}">
-                    <label class="cmp-adaptiveform-checkbox__label" for="${component.id}${'_'}${itemList.index}__widget">${checkboxgroup.enumNames[itemList.index]}</label>
+                    <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                           for="${component.id}${'_'}${itemList.index}__widget">
+                        <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
+                               aria-describedby="${checkboxgroup.labelForId}_desc"
+                               name="${checkboxgroup.name}"
+                               value="${checkboxgroup.enums[itemList.index].toString}"
+                               checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
+                               aria-required="${checkboxgroup.required}"/>
+                        <span>${checkboxgroup.enumNames[itemList.index]}</span>
+                    </label>
                 </div>
             </div>
         </div>
