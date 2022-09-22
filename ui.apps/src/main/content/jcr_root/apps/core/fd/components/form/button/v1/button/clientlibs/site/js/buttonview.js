@@ -69,9 +69,7 @@
             super.setModel(model);
 
             this.element.addEventListener("click", () => {
-                this._model.dispatch({
-                    type: "click"
-                });
+                this._model.dispatchEvent(new FormView.Click())
             });
         }
 
