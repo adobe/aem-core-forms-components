@@ -20,12 +20,10 @@
 
             static NS = FormView.Constants.NS;
             static IS = "adaptiveFormImage";
-            static bemBlock = 'cmp-adaptiveform-image';
+            static bemBlock = 'cmp-image';
 
             static selectors  = {
                 self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-                widget: `.${Image.bemBlock}__widget`,
-                title: `.${Image.bemBlock}__title`,
                 image: `.${Image.bemBlock}__image`
             };
 
@@ -38,16 +36,8 @@
             }
 
             getWidget() {
-                return this.element.querySelector(Image.selectors.widget);
-            }
-
-             getTitle() {
-                return this.element.querySelector(Image.selectors.title);
-             }
-
-             getImage() {
                 return this.element.querySelector(Image.selectors.image);
-             }
+            }
             setFocus() {
                 this.setActive();
             }

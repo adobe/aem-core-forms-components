@@ -27,6 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -73,18 +74,9 @@ public class StaticImageGETServlet extends AbstractImageServlet {
         throws IOException, RepositoryException {
 
         Image image = new Image(imageContext.resource);
-        if (!image.hasContent()) {
-            if (imageContext.defaultResource != null) {
-                if (isRemovedDiff(imageContext)) {
-                    image = new Image(imageContext.diffInfo.getContent());
-                } else {
-                    image = new Image(imageContext.defaultResource);
-                }
-            } else {
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
-            }
-        }
+        image = getImage(resp, imageContext, image);
+        if (image == null)
+            return;
 
         // get style and set constraints
         image.loadStyleData(imageContext.style);
@@ -128,13 +120,37 @@ public class StaticImageGETServlet extends AbstractImageServlet {
             layer.write(mimeType, mimeType.equals("image/gif") ? 255 : 1.0, resp.getOutputStream());
         } else {
             // do not re-encode layer, just spool
-            Property data = image.getData();
+
+            extracted(resp, image);
+        }
+        resp.flushBuffer();
+    }
+
+    @Nullable
+    protected Image getImage(SlingHttpServletResponse resp, ImageContext imageContext, Image image) throws IOException {
+        if (!image.hasContent()) {
+            if (imageContext.defaultResource != null) {
+                if (isRemovedDiff(imageContext)) {
+                    image = new Image(imageContext.diffInfo.getContent());
+                } else {
+                    image = new Image(imageContext.defaultResource);
+                }
+            } else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            }
+        }
+        return image;
+    }
+
+    protected void extracted(SlingHttpServletResponse resp, Image image) throws RepositoryException, IOException {
+        Property data = image.getData();
+        if (data != null) {
             InputStream in = data.getStream();
             resp.setContentLength((int) data.getLength());
             resp.setContentType(image.getMimeType());
             IOUtils.copy(in, resp.getOutputStream());
             in.close();
         }
-        resp.flushBuffer();
     }
 }

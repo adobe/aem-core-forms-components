@@ -34,13 +34,13 @@ import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
+import com.day.cq.wcm.foundation.Image;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(AemContextExtension.class)
 public class StaticImageImplTest {
@@ -129,26 +129,19 @@ public class StaticImageImplTest {
         StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
         assertEquals("abc", staticImage.getAltText());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
-        Mockito.when(staticImageMock.getDescription()).thenCallRealMethod();
+        Mockito.when(staticImageMock.getAltText()).thenCallRealMethod();
         assertEquals(null, staticImageMock.getAltText());
     }
 
     @Test
-    void testGetImageSrc() throws RepositoryException, IOException {
+    void testGetWithImageImageSrc() throws RepositoryException, IOException {
         StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-        assertEquals("", staticImage.getImageSrc());
+        Image img = new Image(this.context.currentResource());
+        img.set("test", "/content/image.img.png");
+        img.setSrc("/content/image.img.png");
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getDescription()).thenCallRealMethod();
-        assertEquals(null, staticImageMock.getImageSrc());
-    }
-
-    @Test
-    void testGetExcludeFromDor() throws RepositoryException, IOException {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-        assertEquals(false, staticImage.isExcludeFromDor());
-        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
-        Mockito.when(staticImageMock.getDescription()).thenCallRealMethod();
-        assertEquals(false, staticImageMock.isExcludeFromDor());
+        assertEquals(img.getSrc(), staticImage.getImageSrc());
     }
 
     @Test
@@ -231,25 +224,6 @@ public class StaticImageImplTest {
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), staticImageMock.getConstraintMessages());
-    }
-
-    /*
-     * @Test
-     * void testJSONExport() throws Exception {
-     * StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-     * Utils.testJSONExport(staticImage, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE));
-     * }
-     */
-
-    @Test
-    void testGetProperties() throws Exception {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-        Map<String, Object> properties = staticImage.getProperties();
-        assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
-        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
-        assertNotNull(customProperties.get("altText"));
-        assertNotNull(customProperties.get("imageSrc"));
     }
 
     @Test

@@ -10,8 +10,7 @@
           trackingFeature="core-components:adaptiveform-image:v1">
     <content
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="granite/ui/components/coral/foundation/container"
-            granite:class="cmp-adaptiveform-image__editdialog">
+            sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs
                     jcr:primaryType="nt:unstructured"
@@ -34,14 +33,12 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="true"/>
                             <description
-                                    granite:class="cmp-adaptiveform-image__description"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Description"
                                     name="./jcr:description"/>
                             <file
-                                    granite:class="cmp-adaptiveform-image-file-upload"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
@@ -51,7 +48,6 @@
                                     mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
                                     name="./file"/>
                             <alt
-                                    granite:class="cmp-adaptiveform-image-alt"
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

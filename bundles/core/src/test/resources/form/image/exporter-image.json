@@ -5,28 +5,19 @@
   "visible": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "text-input",
+  "fieldType": "image",
   "description" : "dummy",
   "tooltip": "test-short-description",
   "altText": "abc",
   "excludeFromDor": false,
   "imageSrc" : "core/fd/components/form/image/v1/image",
-  "properties": {
-    "af:layout" : {
-
-    }
-  },
   "default" : "abc",
   "label": {
     "visible": true,
     "value": "def",
     "richText": false
   },
-  "dataRef":"a.b",
   "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
   "type": "string",
   "format" : "email",
   ":type": "core/fd/components/form/image/v1/image"

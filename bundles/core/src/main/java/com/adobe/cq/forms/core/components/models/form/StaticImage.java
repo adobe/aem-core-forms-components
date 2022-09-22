@@ -47,15 +47,4 @@ public interface StaticImage extends Field {
         return null;
     }
 
-    /**
-     * Returns the excluded from dor field of image.
-     *
-     * @return the excluded from dor of image
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    @Nullable
-    default Boolean isExcludeFromDor() {
-        return null;
-    }
-
 }

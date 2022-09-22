@@ -14,6 +14,11 @@
     "tooltip": "test-short-description",
     "default" : "abc",
     "altText": "abc",
+    "file": {
+      "jcr:content": {
+        "jcr:data": "sdsfbdfbfdbf"
+      }
+    },
     "excludeFromDor": false,
     "imageSrc" : "core/fd/components/form/image/v1/image",
     "fieldType": "image"
