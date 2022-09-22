@@ -127,8 +127,8 @@ export default class FormFieldBase extends FormField {
         this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
     }
 
-    _isTooltipAlwaysVisible(state) {
-        return state && state.properties && state.properties['afs:layout'] && state.properties['afs:layout'].tooltipVisible;
+    _isTooltipAlwaysVisible() {
+        return !!this.getLayoutProperties()['tooltipVisible'];
     }
 
     /**
@@ -182,10 +182,10 @@ export default class FormFieldBase extends FormField {
     _addHelpIconHandler(state) {
         const questionMarkDiv = this.getQuestionMarkDiv(),
             descriptionDiv = this.getDescription(),
-            tooltipAlwaysVisible = this._isTooltipAlwaysVisible(state);
+            tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
-            questionMarkDiv.onclick = function(e) {
+            questionMarkDiv.addEventListener('click', (e) => {
                 e.preventDefault();
                 const longDescriptionVisibleAttribute = descriptionDiv.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
                 if (longDescriptionVisibleAttribute === 'false') {
@@ -199,7 +199,7 @@ export default class FormFieldBase extends FormField {
                         self._showHideTooltipDiv(true);
                     }
                 }
-            }
+            });
         }
     }
 

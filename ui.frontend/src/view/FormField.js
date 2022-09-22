@@ -105,6 +105,18 @@ export default class FormField {
         }
     }
 
+    /**
+     * @return 'afs:layout' properties. Empty object if no layout property present
+     */
+    getLayoutProperties() {
+        let layoutProperties = {};
+        const state = this.getModel().getState();
+        if (state && state.properties && state.properties['afs:layout']) {
+            layoutProperties =  state.properties['afs:layout'];
+        }
+        return layoutProperties;
+    }
+
     getModel() {
         return this._model;
     }
