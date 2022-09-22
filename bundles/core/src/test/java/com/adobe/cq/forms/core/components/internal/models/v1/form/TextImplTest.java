@@ -55,24 +55,7 @@ public class TextImplTest {
     @Test
     void testFieldType() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
-        assertEquals(Base.FieldType.TEXT.getValue(), text.getFieldType());
-    }
-
-    @Test
-    void testGetLabel() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
-        assertEquals("Text", text.getLabel().getValue());
-        Text textMock = Mockito.mock(Text.class);
-        Mockito.when(textMock.getLabel()).thenCallRealMethod();
-        assertEquals(null, textMock.getLabel());
-
-        Label labelMock = Mockito.mock(Label.class);
-        Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
-        Mockito.when(labelMock.getValue()).thenCallRealMethod();
-        assertEquals(null, labelMock.getValue());
-        Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(FieldType.PLAIN_TEXT.getValue(), text.getFieldType());
     }
 
     @Test
@@ -118,15 +101,6 @@ public class TextImplTest {
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isVisible()).thenCallRealMethod();
         assertEquals(true, textMock.isVisible());
-    }
-
-    @Test
-    void testIsEnabled() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
-        assertEquals(true, text.isEnabled());
-        Text textMock = Mockito.mock(Text.class);
-        Mockito.when(textMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, textMock.isEnabled());
     }
 
     @Test

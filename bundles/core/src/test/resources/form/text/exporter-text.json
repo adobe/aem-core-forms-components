@@ -1,18 +1,10 @@
 {
   "id": "text-ac0bcff4f3",
-  "type": "string",
   "dataRef": "a.b",
-  "fieldType": "text",
-  "required": false,
+  "fieldType": "plain-text",
   "name": "abc",
   "value": "<p>xyz</p>",
   "visible": true,
-  "enabled": true,
   "richText": true,
-  "label": {
-    "richText": false,
-    "visible": true,
-    "value": "Text"
-  },
   ":type": "core/fd/components/form/text/v1/text"
 }

@@ -27,7 +27,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Text;
-import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -35,7 +35,7 @@ import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TextImpl extends AbstractBaseImpl implements Text {
+public class TextImpl extends AbstractFormComponentImpl implements Text {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
