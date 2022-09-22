@@ -13,6 +13,9 @@
       "tooltipVisible": false,
       "leadDigits": 2,
       "fracDigits" : 4
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "maximum": 2000000,

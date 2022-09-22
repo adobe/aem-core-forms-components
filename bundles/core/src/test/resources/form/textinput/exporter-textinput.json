@@ -11,6 +11,10 @@
   "properties": {
     "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":true,
+      "dorColspan": "4"
     }
   },
   "default" : "abc",

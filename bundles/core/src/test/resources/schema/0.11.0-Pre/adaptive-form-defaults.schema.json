@@ -1,0 +1,255 @@
+{
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form-defaults.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "The schema defines the default field types for Form Fields",
+  "allOf": [
+    {
+      "title": "Default field for capturing date types is date-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "format": {
+            "const": "date"
+          }
+        },
+        "required": [
+          "type",
+          "format"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "date-input"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing file types is file-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "file",
+              "file[]"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "file-input"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing file types is file-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "format": {
+            "enum": [
+              "binary",
+              "data-url"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "format"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "file-input"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing string type is text-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "string"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "text-input"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default Field for capturing number types is number-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "number"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "number-input"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing data that can be only be one of two values is checkbox",
+      "if": {
+        "type": "object",
+        "properties": {
+          "enum": {
+            "type": "array",
+            "maxItems": 2
+          }
+        },
+        "required": [
+          "enum"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "checkbox"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing boolean data is checkbox",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "boolean"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "checkbox"
+          },
+          "enum": {
+            "default": [
+              true,
+              false
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing data that allows only a set of options is drop-down",
+      "if": {
+        "type": "object",
+        "properties": {
+          "enum": {
+            "type": "array",
+            "minItems": 3
+          }
+        },
+        "required": [
+          "enum"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "drop-down"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default field for capturing complex types is panel",
+      "if": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": [
+              "array",
+              "object"
+            ]
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "panel"
+          }
+        }
+      }
+    },
+    {
+      "title": "Default value of dataRef for static text is none",
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "button",
+              "plain-text"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "dataRef": {
+            "default": "none"
+          }
+        }
+      }
+    }
+  ]
+}
