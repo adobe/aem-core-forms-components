@@ -18,12 +18,18 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the {@code Button} Sling Model used for the {@code /apps/core/wcm/components/button} component.
+ * Defines the {@code Button} Sling Model used for the {@code /apps/core/fd/components/form/button} component.
  *
- * @since com.adobe.cq.wcm.core.components.models 12.8.0
+ * @since com.adobe.cq.forms.core.components.models 2.1.0
  */
 @ConsumerType
 public interface Button extends Base {
+    /**
+     * Returns the button value.
+     *
+     * @return the button value
+     * @since com.adobe.cq.forms.core.components.models 2.1.0
+     */
     default String getValue() {
         return null;
     }
@@ -32,12 +38,18 @@ public interface Button extends Base {
      * Returns the button icon identifier.
      *
      * @return the button icon identifier
-     * @since com.adobe.cq.wcm.core.components.models 12.8.0
+     * @since com.adobe.cq.forms.core.components.models 2.1.0
      */
     default String getIcon() {
         return null;
     }
 
+    /**
+     * Returns the button default value.
+     *
+     * @return the button icon identifier
+     * @since com.adobe.cq.forms.core.components.models 2.1.0
+     */
     default String getDefault() {
         return null;
     }

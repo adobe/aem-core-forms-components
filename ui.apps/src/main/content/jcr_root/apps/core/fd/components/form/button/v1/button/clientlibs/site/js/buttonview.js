@@ -30,22 +30,37 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             text: `.${Button.bemBlock}__text`,
-            description: `.${Button.bemBlock}__longdescription`,
-            qm: `.${Button.bemBlock}__questionmark`,
         };
 
+        /**
+         * Return the questionmark element.
+         * @readonly
+         * @returns {HTMLElement}
+         */
         get qm() {
-            return this.element.querySelector(Button.selectors.qm);
+            return document.getElementById(`${this.element.id}-questionMark`);
         }
 
+        /**
+         * Return the widget element that is used to capture the value from the user
+         * @returns {HTMLElement}
+         */
         getWidget() {
             return this.element;
         }
 
+        /**
+         * Return the description element.
+         * @returns {HTMLElement}
+         */
         getDescription() {
-            return this.element.querySelector(Button.selectors.description);
+            return document.getElementById(`${this.element.id}-longDescription`);
         }
 
+        /**
+         * Return the button text element.
+         * @returns {HTMLElement}
+         */
         getText() {
             return this.element.querySelector(Button.selectors.text);
         }
@@ -54,7 +69,9 @@
             super.setModel(model);
 
             this.element.addEventListener("click", () => {
-                this._model.executeExpression("clickExp");
+                this._model.dispatch({
+                    type: "click"
+                });
             });
         }
 
