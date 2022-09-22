@@ -37,7 +37,7 @@
     "value":"dependent names"
   },
   "properties": {
-    "af:layout": {
+    "afs:layout": {
       "tooltipVisible":false
     }
   },
