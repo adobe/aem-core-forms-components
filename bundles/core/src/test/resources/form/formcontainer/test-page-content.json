@@ -22,6 +22,8 @@
       "thankyouPage": "/a/b/c",
       "thankyouMessage": "message",
       "fieldType" : "form",
+      "dorType": "generate",
+      "dorTemplateRef": "xyz",
       "textinput" : {
         "jcr:primaryType": "nt:unstructured",
         "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
