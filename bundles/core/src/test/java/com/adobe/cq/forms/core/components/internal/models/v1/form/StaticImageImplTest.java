@@ -241,13 +241,6 @@ public class StaticImageImplTest {
     }
 
     @Test
-    void testIsShortDescriptionVisible() {
-        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
-        Mockito.when(staticImageMock.isTooltipVisible()).thenCallRealMethod();
-        assertEquals(false, staticImageMock.isTooltipVisible());
-    }
-
-    @Test
     void testStyleSystemClasses() {
         ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
         Resource resource = spy(context.resourceResolver().getResource(PATH_IMAGE));
