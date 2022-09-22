@@ -69,7 +69,7 @@ public class TextInputImplTest {
     @Test
     void testFieldType() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
+        assertEquals(FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
     }
 
     @Test
@@ -268,8 +268,8 @@ public class TextInputImplTest {
     @Test
     void testGetConstraintMessages() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), textInputMock.getConstraintMessages());

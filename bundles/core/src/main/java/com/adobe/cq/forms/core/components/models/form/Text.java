@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Text extends Base {
+public interface Text extends FormComponent {
     /**
      * Retrieves the text value to be displayed.
      *

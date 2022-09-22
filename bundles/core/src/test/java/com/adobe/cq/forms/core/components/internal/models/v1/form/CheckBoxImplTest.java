@@ -29,6 +29,8 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
@@ -67,7 +69,7 @@ public class CheckBoxImplTest {
     @Test
     void testFieldType() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(Base.FieldType.CHECKBOX.getValue(), checkbox.getFieldType());
+        assertEquals(FieldType.CHECKBOX.getValue(), checkbox.getFieldType());
     }
 
     @Test
@@ -198,8 +200,8 @@ public class CheckBoxImplTest {
     @Test
     void testGetConstraintMessages() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        Map<Base.ConstraintType, String> constraintsMessages = checkbox.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = checkbox.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), checkboxMock.getConstraintMessages());
