@@ -17,132 +17,153 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
           xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Container"
+    jcr:title="Adaptive Form Panel"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://www.adobe.com/go/aem_cmp_container_v1"
-    trackingFeature="core-components:container:v1"
-    extraClientlibs="[core.wcm.components.container.v1.editor]">
+    helpPath="https://www.adobe.com/"
+    trackingFeature="core-components:adaptiveform-panel:v1"
+    extraClientlibs="[core.forms.components.panelcontainer.v1.editor]">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container"
-        granite:class="cmp-container__editor">
+        granite:class="cmp-adaptiveform-panelcontainer__editdialog">
         <items jcr:primaryType="nt:unstructured">
             <tabs
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                granite:class="cmp-adaptiveform-base__editdialogbasic"
                 maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
-                    <properties
+                    <basic
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Properties"
+                        jcr:title="Basic"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         margin="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                margin="{Boolean}true">
+                            <name
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/name"/>
+                            <title
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/title"/>
+                            <layout
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    fieldLabel="Layout"
+                                    name="./layout">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <layout
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                fieldLabel="Layout"
-                                                name="./layout">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <default
-                                                        jcr:primaryType="nt:unstructured"
-                                                        text="(Default)"
-                                                        value=""/>
-                                                    <simple
-                                                        jcr:primaryType="nt:unstructured"
-                                                        text="Simple"
-                                                        value="simple"/>
-                                                    <responsive
-                                                        jcr:primaryType="nt:unstructured"
-                                                        text="Responsive Grid"
-                                                        value="responsiveGrid"/>
-                                                </items>
-                                                <granite:rendercondition
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/foundation/renderconditions/simple"
-                                                    expression="${!cqDesign.layoutDisabled}"/>
-                                            </layout>
-                                            <backgroundColor
-                                                granite:hide="${!cqDesign.backgroundColorEnabled || cqDesign.backgroundColorSwatchesOnly}"
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
-                                                fieldLabel="Background Color"
-                                                name="./backgroundColor"
-                                                showDefaultColors="{Boolean}false"
-                                                showProperties="{Boolean}true"
-                                                showSwatches="{Boolean}true">
-                                                <datasource
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                            </backgroundColor>
-                                            <backgroundColorSwatchesOnly
-                                                granite:hide="${!cqDesign.backgroundColorEnabled || !cqDesign.backgroundColorSwatchesOnly}"
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
-                                                fieldLabel="Background Color"
-                                                name="./backgroundColor"
-                                                showDefaultColors="{Boolean}false"
-                                                showProperties="{Boolean}false"
-                                                showSwatches="{Boolean}true"
-                                                variant="swatch">
-                                                <datasource
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                                <granite:data
-                                                    jcr:primaryType="nt:unstructured"
-                                                    cmp-container-v1-dialog-edit-hook="backgroundColorSwatchesOnly"/>
-                                            </backgroundColorSwatchesOnly>
-                                            <backgroundImageAsset
-                                                granite:hide="${!cqDesign.backgroundImageEnabled}"
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
-                                                allowUpload="{Boolean}false"
-                                                autoStart="{Boolean}false"
-                                                class="cq-droptarget"
-                                                fieldLabel="Background Image"
-                                                fileNameParameter="./fileName"
-                                                fileReferenceParameter="./backgroundImageReference"
-                                                mimeTypes="[image/gif,image/jpeg,image/png,image/tiff]"
-                                                multiple="{Boolean}false"
-                                                name="./file"
-                                                title="Upload Image Asset"
-                                                uploadUrl="${suffix.path}"
-                                                useHTML5="{Boolean}true"/>
-                                            <id
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="HTML ID attribute to apply to the component."
-                                                fieldLabel="ID"
-                                                name="./id"/>
-                                            <accessibilityLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Value of an aria-label attribute for the container, which describes the container content."
-                                                fieldLabel="Label"
-                                                name="./accessibilityLabel"
-                                                value=""/>
-                                            <roleAttribute
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="HTML ROLE attribute to apply to the component."
-                                                    fieldLabel="Role"
-                                                    name="./roleAttribute"
-                                                    value=""/>
-                                        </items>
-                                    </column>
+                                    <default
+                                            jcr:primaryType="nt:unstructured"
+                                            text="(Default)"
+                                            value=""/>
+                                    <simple
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Simple"
+                                            value="simple"/>
+                                    <responsive
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Responsive Grid"
+                                            value="responsiveGrid"/>
                                 </items>
-                            </columns>
+                                <granite:rendercondition
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/foundation/renderconditions/simple"
+                                        expression="${!cqDesign.layoutDisabled}"/>
+                            </layout>
+                            <bindref
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/bindref"/>
+                            <visible
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/visible"/>
+                            <visible-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/visible-typehint"/>
+                            <enabled
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/enabled"/>
+                            <enabled-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/enabled-typehint"/>
                         </items>
-                    </properties>
+                    </basic>
+                    <repeat
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Repeat Settings"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <minItems
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Minimum"
+                                    min="0"
+                                    name="./minItems"/>
+                            <maxItems
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Maximum"
+                                    min="-1"
+                                    name="./maxItems"/>
+                        </items>
+                    </repeat>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/help"/>
+                    <accessibility
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Accessibility"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <assistPriority
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/assistPriority"/>
+                            <customText
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/customText"/>
+                            <roleAttribute
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="HTML ROLE attribute to apply to the component."
+                                    fieldLabel="Role"
+                                    name="./roleAttribute"
+                                    value=""/>
+                        </items>
+                    </accessibility>
+                    <background
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Background"
+                            granite:hide="${!cqDesign.backgroundColorEnabled || !cqDesign.backgroundColorSwatchesOnly || !cqDesign.backgroundImageEnabled}"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <backgroundColor
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundColor"/>
+                            <backgroundColorSwatchesOnly
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundColorSwatchesOnly"/>
+                            <backgroundImageAsset
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundImageAsset"/>
+                        </items>
+                    </background>
+                    <cq:styles
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
                 </items>
             </tabs>
         </items>

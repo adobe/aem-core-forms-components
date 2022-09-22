@@ -18,16 +18,16 @@
     "use strict";
 
     var selectors = {
-        dialogContent: ".cmp-container__editor",
-        edit: {
-            backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-edit-hook='backgroundColorSwatchesOnly']"
-        },
-        policy: {
-            backgroundColorEnabled: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorEnabled']",
-            backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorSwatchesOnly']",
-            backgroundColorAllowedSwatches: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorAllowedSwatches']"
-        }
-    };
+            dialogContent: ".cmp-adaptiveform-panelcontainer__editdialog",
+            edit: {
+                backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-edit-hook='backgroundColorSwatchesOnly']"
+            },
+            policy: {
+                backgroundColorEnabled: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorEnabled']",
+                backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorSwatchesOnly']",
+                backgroundColorAllowedSwatches: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorAllowedSwatches']"
+            }
+        };
 
     $(document).on("dialog-loaded", function(e) {
         var $dialog = e.dialog;
