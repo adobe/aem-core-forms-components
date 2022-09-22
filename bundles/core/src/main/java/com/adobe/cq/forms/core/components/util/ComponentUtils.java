@@ -28,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.day.cq.i18n.I18n;
 
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
+
 /**
  * Utility helper functions for components.
  */
@@ -48,6 +50,17 @@ public class ComponentUtils {
     @NotNull
     public static String getEncodedPath(@NotNull String path) {
         return new String(Base64.getEncoder().encode(path.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Checks if the given resource if a core adaptive form container
+     * 
+     * @param resource reference to the {@link Resource}
+     * @return true, if it is an adaptive form container, false otherwise
+     */
+    @NotNull
+    public static boolean isAFContainer(@NotNull Resource resource) {
+        return resource.isResourceType(RT_FD_FORM_CONTAINER_V2);
     }
 
     /**

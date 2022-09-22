@@ -1,0 +1,24 @@
+{
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form-label.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "richText": {
+      "type": "boolean",
+      "default": false,
+      "title": "If the value of the label is to be considered as rich text or plain text"
+    },
+    "visible": {
+      "type": "boolean",
+      "title": "If the field's visible property is false, this property is ignored.",
+      "default": true
+    },
+    "value": {
+      "type": "string",
+      "title": "The content of the label. If the rich text property is set to true, the contents will be considered as Rich Text"
+    }
+  },
+  "required": [
+    "value"
+  ]
+}

@@ -12,6 +12,9 @@
     "af:layout" : {
       "tooltipVisible": false,
       "orientation": "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "enforceEnum":true,
