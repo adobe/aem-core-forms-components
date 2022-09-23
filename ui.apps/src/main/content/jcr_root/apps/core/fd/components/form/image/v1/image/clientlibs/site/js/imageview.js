@@ -23,8 +23,7 @@
             static bemBlock = 'cmp-image';
 
             static selectors  = {
-                self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-                image: `.${Image.bemBlock}__image`
+                self: "[data-" + this.NS + '-is="' + this.IS + '"]'
             };
 
             constructor(params) {
@@ -35,9 +34,31 @@
                 return Image.IS;
             }
 
-            getWidget() {
-                return this.element.querySelector(Image.selectors.image);
-            }
+             getWidget() {
+                 return this.element.querySelector(Text.selectors.widget);
+                 return null;
+             }
+
+             getDescription() {
+                 return null;
+             }
+
+             getLabel() {
+                 return null;
+             }
+
+             getErrorDiv() {
+                 return null;
+             }
+
+             getTooltipDiv() {
+                 return null;
+             }
+
+             getQuestionMarkDiv() {
+                 return null;
+             }
+
             setFocus() {
                 this.setActive();
             }

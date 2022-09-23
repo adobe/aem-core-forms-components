@@ -34,7 +34,6 @@ The following configuration properties are used:
 1. `./fileReference` property or `file` child node - will store either a reference to the image file, or the image file
 2`./name` - defines the name of the field, which will be submitted with the form data
 3`./description` - the actual text to be rendered is stored here
-4`./textIsRich` - flag determining if the rendered text is rich or not, useful for applying the correct HTL display context
 5`./id` - defines the component HTML ID attribute
 6`./altText` - alternate text for image
 7`./fieldType` - field type for adaptive form component
