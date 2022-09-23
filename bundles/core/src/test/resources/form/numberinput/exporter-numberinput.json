@@ -18,6 +18,9 @@
       "dorExclusion":false
     }
   },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
   "maximum": 2000000,
   "minimum": 10000,
   "exclusiveMaximum": 2000002,

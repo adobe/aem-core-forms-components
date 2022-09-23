@@ -28,6 +28,9 @@
           "dorExclusion":false
         }
       },
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      },
       ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
@@ -37,6 +40,7 @@
     "value":"dependent names"
   },
   "events":{
+    "custom:setProperty" : ["$event.payload"],
     "change":[
       "some expression 2"
     ]

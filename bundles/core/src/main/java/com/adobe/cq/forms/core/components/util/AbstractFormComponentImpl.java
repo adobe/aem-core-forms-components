@@ -18,8 +18,10 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -133,18 +135,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
 
-    @Override
-    public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (getDorProperties().size() > 0) {
-            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
-        }
-        if (getCustomProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
-        }
-        return customProperties;
-    }
-
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -154,6 +144,18 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
         .getValue()).length() > 0)
         || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = new LinkedHashMap<>();
+        if (getCustomProperties().size() != 0) {
+            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
+        }
+        if (getDorProperties().size() > 0) {
+            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        return customProperties;
+    }
 
     @Override
     @NotNull
@@ -220,21 +222,22 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @NotNull
     public Map<String, String[]> getEvents() {
         Resource eventNode = resource.getChild("fd:events");
+        Set<Map.Entry<String, Object>> eventSet = new HashSet<>();
+        eventSet.add(new AbstractMap.SimpleEntry<>("custom_setProperty", "$event.payload"));
         if (eventNode != null) {
             ValueMap eventNodeProps = eventNode.getValueMap();
-            Map<String, String[]> events = eventNodeProps.entrySet()
-                .stream()
-                .flatMap(this::sanitizeEvent)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            return events;
+            eventSet.addAll(eventNodeProps.entrySet());
         }
-        return Collections.emptyMap();
+        Map<String, String[]> userEvents = eventSet.stream()
+            .flatMap(this::sanitizeEvent)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return userEvents;
     }
 
     @Nullable
     protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
         // if author mode return the property value
-        boolean editMode = i18n == null;
+        boolean editMode = true;
         if (request != null) {
             editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
         }

@@ -30,7 +30,10 @@
           "dorExclusion":false
         }
       },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type":"core/fd/components/form/textinput/v1/textinput",
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      }
     }
   ],
   "label":{
@@ -43,5 +46,8 @@
       "tooltipVisible":false
     }
   },
-  ":type":"core/fd/components/form/panel/v1/panel"
+  ":type":"core/fd/components/form/panel/v1/panel",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
 }
