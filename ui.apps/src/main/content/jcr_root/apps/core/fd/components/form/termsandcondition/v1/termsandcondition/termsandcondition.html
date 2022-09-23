@@ -23,7 +23,7 @@
 	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
 	data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
   >
-    <label class="cmp-adaptiveform-termsandcondition__label">${tnc.title}</label>
+    <label class="cmp-adaptiveform-termsandcondition__label">${tnc.label.value}</label>
     <div class="cmp-adaptiveform-termsandcondition__text" data-sly-test="${!tnc.showAsLink}" data-sly-resource="${'text'}"></div>
     <div class="cmp-adaptiveform-termsandcondition__link" data-sly-test="${tnc.showAsLink}" data-sly-resource="${'link'}"></div>
     <div class="cmp-adaptiveform-termsandcondition__checkbox" data-sly-resource="${'checkbox'}"></div>

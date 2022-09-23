@@ -18,8 +18,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -50,32 +48,10 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     private static final String TEXT_INPUT = "text-input";
 
     @JsonIgnore
-    @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Inject
-    @Default(values = "I agree to the terms & conditions")
-    private String title;
-
-    @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     private boolean showAsLink;
-
-    // @JsonIgnore
-    // @Override
-    // public String getFieldType() {
-    // return null;
-    // }
-
-    // @JsonIgnore
-    // @Override
-    // public Type getType() {
-    // return BaseConstraint.Type.STRING;
-    // }
-
-    public String getTitle() {
-        return title;
-    }
-
+    
     public boolean getShowAsLink() {
         return showAsLink;
     }

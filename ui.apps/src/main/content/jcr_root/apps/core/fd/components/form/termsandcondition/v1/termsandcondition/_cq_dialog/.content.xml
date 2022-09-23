@@ -45,28 +45,6 @@
                 sling:resourceType="granite/ui/components/coral/foundation/container"
                 >
                   <items jcr:primaryType="nt:unstructured">
-                    <name 
-                      jcr:primaryType="nt:unstructured" 
-                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
-                      fieldLabel="Name" 
-                      name="./name" 
-                      required="{Boolean}true"
-                      >
-                        <granite:data jcr:primaryType="nt:unstructured" node-name-validation="" />
-                    </name>
-                    <title 
-                      jcr:primaryType="nt:unstructured" 
-                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
-                      fieldLabel="Title" 
-                      name="./title" 
-                    />
-                    <hideTitle 
-                      jcr:primaryType="nt:unstructured" 
-                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" 
-                      name="./hideTitle" 
-                      text="Hide title" 
-                      value="false" 
-                    />
                     <showAsLink 
                       jcr:primaryType="nt:unstructured" 
                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" 
@@ -75,46 +53,8 @@
                       text="Show link for terms and conditions" 
                       granite:class="cmp-adaptiveform-termsandcondition__showlink"
                     />
-                    <!-- <enum 
-                      jcr:primaryType="nt:unstructured" 
-                      sling:resourceType="granite/ui/components/coral/foundation/form/multifield" 
-                      fieldDescription="Enter display text for link" 
-                      fieldLabel="Link Text"
-                      wrapperClass="cmp-adaptiveform-termsandcondition__enum"
-                    >
-                        <field 
-                          jcr:primaryType="nt:unstructured" 
-                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
-                          name="./enum" 
-                          required="{Boolean}false"
-                        />
-                    </enum>
-                    <enumNames 
-                      jcr:primaryType="nt:unstructured" 
-                      sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield" 
-                      fieldDescription="Enter link url" 
-                      fieldLabel="Link"
-                      wrapperClass="cmp-adaptiveform-termsandcondition__enumNames"
-                    >
-                      <field 
-                        jcr:primaryType="nt:unstructured" 
-                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield" 
-                        name="./enumNames" 
-                        required="{Boolean}false"
-                      />
-                    </enumNames> -->
-                    <granite:data 
-                      jcr:primaryType="nt:unstructured" 
-                      node-bindref-validation="" 
-                      bindref-datamodel="fd.channelcore.dataObjectsTree.getDataModel" 
-                    />
                   </items>
               </basic>
-              <styletab 
-                jcr:primaryType="nt:unstructured" 
-                sling:resourceType="granite/ui/components/coral/foundation/include" 
-                path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab" 
-              />
             </items>
         </tabs>
       </items>
