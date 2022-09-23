@@ -42,7 +42,7 @@
     ]
   },
   "properties":{
-    "af:layout":{
+    "afs:layout":{
       "tooltipVisible":false
     }
   },

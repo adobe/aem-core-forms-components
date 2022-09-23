@@ -9,8 +9,9 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
-      "tooltipVisible": false
+    "afs:layout" : {
+      "tooltipVisible": false,
+      "orientation": "horizontal"
     },
     "fd:dor": {
       "dorExclusion":false
