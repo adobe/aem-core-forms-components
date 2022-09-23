@@ -9,10 +9,13 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false,
       "leadDigits": 2,
       "fracDigits" : 4
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "events" : {

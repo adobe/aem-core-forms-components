@@ -1,0 +1,27 @@
+{
+  "image" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/image/v1/image",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "default" : "abc",
+    "altText": "abc",
+    "file": {
+      "jcr:content": {
+        "jcr:data": "sdsfbdfbfdbf",
+        "jcr:mimeType": "image/png"
+      }
+    },
+    "excludeFromDor": false,
+    "imageSrc" : "core/fd/components/form/image/v1/image",
+    "fieldType": "image"
+  }
+}

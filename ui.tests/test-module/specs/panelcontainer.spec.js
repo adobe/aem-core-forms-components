@@ -54,12 +54,26 @@ describe('Page - Authoring', function () {
     // Check If Dialog Options Are Visible
     cy.get("[name='./roleAttribute']")
     .should("exist");
-    cy.get("[name='./accessibilityLabel']")
+    cy.get("[name='./name']")
     .should("exist");
-    cy.get("[name='./id']")
+    cy.get("[name='./jcr:title']")
     .should("exist");
     cy.get("[name='./layout']")
     .should("exist");
+    cy.get("[name='./dataRef']")
+        .should("exist");
+    cy.get("[name='./visible']")
+        .should("exist");
+    cy.get("[name='./enabled']")
+        .should("exist");
+    cy.get("[name='./assistPriority']")
+        .should("exist");
+    cy.get("[name='./custom']")
+        .should("exist");
+    cy.get("[name='./minItems']")
+        .should("exist");
+    cy.get("[name='./maxItems']")
+        .should("exist");
 
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(panelContainerDrop);

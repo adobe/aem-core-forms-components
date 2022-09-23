@@ -34,7 +34,9 @@
             class="cmp-adaptiveform-datepicker__widget"
             readonly="${datePicker.readOnly}"
             required="${datePicker.required}"
-            placeholder="${datePicker.placeHolder}" />
+            placeholder="${datePicker.placeHolder}"
+            min="${datePicker.minimumDate}"
+            max="${datePicker.maximumDate}"/>
      <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=datePicker.tooltipVisible, shortDescription=datePicker.tooltip, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap>
      </div>
      <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
