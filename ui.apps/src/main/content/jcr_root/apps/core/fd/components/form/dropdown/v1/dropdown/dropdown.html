@@ -35,8 +35,7 @@
             name="${dropdown.name}"
             readonly="${dropdown.readOnly}"
             required="${dropdown.required}"
-            data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
-            data-cmp-required-message="${dropdown.constraintMessages.required}">
+            data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}">
         <option data-sly-test="${dropdown.placeHolder != null}" value="" disabled selected>${dropdown.placeHolder}</option>
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
             <div data-sly-test.enum="${dropdown.enums[enumNameList.index]}" data-sly-unwrap>
