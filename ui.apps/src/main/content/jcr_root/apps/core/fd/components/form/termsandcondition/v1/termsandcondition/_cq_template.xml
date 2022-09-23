@@ -34,6 +34,7 @@
         fieldType="checkbox-group"
         hideTitle="true"
         enabled="false"
+        type="string[]"
         sling:resourceType="/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
       >
         <fd:rules

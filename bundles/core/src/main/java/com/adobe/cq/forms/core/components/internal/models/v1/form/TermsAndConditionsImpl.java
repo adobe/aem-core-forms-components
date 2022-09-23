@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TermsAndConditionsImpl extends AbstractContainerImpl implements TermsAndConditions {
 
-    private static final String TEXT_INPUT = "text-input";
+    private static final String PLAIN_TEXT = "plain-text";
 
     @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -72,7 +72,7 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
                 if (model != null) {
                     i++;
                     // i++ / i == 2, this needs to change to actual link hiding. For now, hiding in case of 2nd element.
-                    if ((this.showAsLink && ((Base) model).getFieldType().equals(TEXT_INPUT)) || (!this.showAsLink && i == 2))
+                    if ((this.showAsLink && ((FormComponent) model).getFieldType().equals(PLAIN_TEXT)) || (!this.showAsLink && i == 2))
                         continue;
                     models.add(model);
                 }
