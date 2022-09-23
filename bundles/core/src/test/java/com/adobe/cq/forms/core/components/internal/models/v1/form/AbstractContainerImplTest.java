@@ -41,4 +41,12 @@ public class AbstractContainerImplTest {
         assertEquals(null, abstractContainerMock.getMaxItems());
     }
 
+    @Test
+    void testGetDorProperties() {
+        AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
+        Mockito.when(abstractContainerMock.getDorProperties()).thenCallRealMethod();
+        assertEquals(null, abstractContainerMock.getDorProperties().get("dorType"));
+        assertEquals(null, abstractContainerMock.getDorProperties().get("dorTemplateRef"));
+    }
+
 }

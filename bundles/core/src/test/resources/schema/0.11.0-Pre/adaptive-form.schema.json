@@ -715,7 +715,8 @@
             "screenReaderText",
             "rules",
             "events",
-            "properties"
+            "properties",
+            "id"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in StaticField"

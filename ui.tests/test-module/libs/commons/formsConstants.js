@@ -25,6 +25,10 @@ var formsConstants = {
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
+                "formtext": "/apps/forms-components-examples/components/form/text",
+                "footer": "/apps/forms-components-examples/components/form/footer",
+                "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
+                "datepicker": "/apps/forms-components-examples/components/form/datepicker",
                 "formdropdown": "/apps/forms-components-examples/components/form/dropdown"
             }
         }
