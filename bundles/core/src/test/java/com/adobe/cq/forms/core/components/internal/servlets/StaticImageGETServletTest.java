@@ -46,6 +46,7 @@ import com.day.image.Layer;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 
@@ -109,8 +110,7 @@ public class StaticImageGETServletTest {
         MockSlingHttpServletRequest request = context.request();
         Image image = mock(Image.class);
         Layer layer = mock(Layer.class);
-        // Mockito.when(staticImageGETServlet.getLayer(any(),any())).thenReturn(layer);
-        // staticImageGETServlet.writeLayer(request, response, imageContext, layer);
+        staticImageGETServlet.writeLayer(request, response, imageContext, layer);
     }
 
     @Test

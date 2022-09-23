@@ -130,12 +130,16 @@ public class StaticImageGETServlet extends AbstractImageServlet {
 
     protected Layer getLayer(ImageContext imageContext, Image image) throws IOException, RepositoryException {
         Layer layer = null;
-        // get style and set constraints
-        if (image != null) {
-            image.loadStyleData(imageContext.style);
+        try {
+            // get style and set constraints
+            if (image != null) {
+                image.loadStyleData(imageContext.style);
 
-            // get pure layer
-            layer = image.getLayer(false, false, false);
+                // get pure layer
+                layer = image.getLayer(false, false, false);
+            }
+        }catch (Exception e){
+            System.out.println("Exception occured while rendering image "+e);
         }
         return layer;
     }
