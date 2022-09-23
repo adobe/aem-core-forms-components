@@ -39,7 +39,6 @@
 
         constructor(params) {
             super(params);
-            this.qm = this.element.querySelector(TextInput.selectors.qm)
         }
 
         getWidget() {
