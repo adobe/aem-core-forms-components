@@ -133,6 +133,7 @@
                                 granite:class="cmp-adaptiveform-base__mandatorymessage"
                                 fieldLabel="Required Field Message"
                                 name="./mandatoryMessage"/>
+
                         <validateExpMessage
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
