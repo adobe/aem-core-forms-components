@@ -38,6 +38,4 @@
 
 }
 
-[data-cmp-adaptiveform-textinput-hidden=true] {
-    display: none;
-}
+[data-cmp-visible=false]

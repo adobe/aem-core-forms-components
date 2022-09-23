@@ -41,6 +41,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -120,6 +121,13 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetDorProperties() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("generate", formContainer.getDorProperties().get("dorType"));
+        assertEquals("xyz", formContainer.getDorProperties().get("dorTemplateRef"));
+    }
+
+    @Test
     void testGetLocalizedValue() throws Exception {
         FormContainer formContainer = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         TextInput textInput = (TextInput) formContainer.getItems().stream()
@@ -127,6 +135,26 @@ public class FormContainerImplTest {
             .findFirst()
             .orElse(null);
         assertEquals("dummy 1", textInput.getDescription());
+    }
+
+    @Test
+    void testFormContainerWithI18nSetter() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+            "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+        resourceBundle.putAll(new HashMap<String, String>() {
+            {
+                put("guideContainer##textinput##description##5648", "dummy 1");
+            }
+        });
+        I18n i18n = new I18n(resourceBundle);
+        formContainer.setI18n(i18n);
+        TextInput textInput = (TextInput) formContainer.getItems().stream()
+            .filter(Objects::nonNull)
+            .findFirst()
+            .orElse(null);
+        assertEquals("dummy", textInput.getDescription()); // just a dummy test to make sure i18n is set correctly in the resource hierarchy
     }
 
     @Test

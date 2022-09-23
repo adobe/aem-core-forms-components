@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.17-SNAPSHOT</version>
+    <version>1.0.100-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -1075,20 +1075,17 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.9.5</version>
-                <scope>provided</scope>
+                <version>2.13.4</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.12.6.1</version>
-                <scope>provided</scope>
+                <version>2.13.4</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.9.5</version>
-                <scope>provided</scope>
+                <version>2.13.4</version>
             </dependency>
 
             <!--
@@ -1169,6 +1166,12 @@
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-core</artifactId>
                 <version>1.6.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>1.0.72</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

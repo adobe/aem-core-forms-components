@@ -40,6 +40,8 @@ public class DatePickerImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
 
+    private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -59,7 +61,7 @@ public class DatePickerImplTest {
     @Test
     void testFieldType() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(Base.FieldType.DATE_INPUT.getValue(), datePicker.getFieldType());
+        assertEquals(FieldType.DATE_INPUT.getValue(), datePicker.getFieldType());
     }
 
     @Test
@@ -193,8 +195,8 @@ public class DatePickerImplTest {
     @Test
     void testGetConstraintMessages() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = datePicker.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = datePicker.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), datePickerMock.getConstraintMessages());
@@ -204,6 +206,12 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
+    }
+
+    @Test
+    void testJSONExportMessage() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_MESSAGE, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_MESSAGE));
     }
 
     @Test

@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-.cmp-adaptiveform-datepicker {
+.
+cmp-adaptiveform-datepicker {
 
 }
 
@@ -35,8 +36,4 @@
 
 .cmp-adaptiveform-datepicker__questionmark {
 
-}
-
-[data-cmp-adaptiveform-datepicker-hidden=true] {
-    display: none;
 }

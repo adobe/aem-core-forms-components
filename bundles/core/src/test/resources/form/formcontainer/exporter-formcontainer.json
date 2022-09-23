@@ -1,23 +1,4 @@
 {
-  "items": [
-    {
-      "id": "textinput-2be05cc42b",
-      "description": "dummy",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
-      },
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
-    }
-  ],
   ":type": "core/fd/components/form/container/v1/container",
   "fieldType" : "form",
   "metadata": {
@@ -26,5 +7,6 @@
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0",
     "locale": "en-us"
-  }
+  },
+  "adaptiveform":"0.11.0-Pre"
 }

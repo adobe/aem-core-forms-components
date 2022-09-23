@@ -37,7 +37,3 @@
 .cmp-adaptiveform-dropdown__questionmark {
 
 }
-
-[data-cmp-adaptiveform-dropdown-hidden=true] {
-    display: none;
-}

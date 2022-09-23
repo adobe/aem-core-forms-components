@@ -20,7 +20,7 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
-        static bemBlock = 'cmp-adaptiveform-datepicker'
+        static bemBlock = 'cmp-adaptiveform-datepicker';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${DatePicker.bemBlock}__widget`,
@@ -54,11 +54,15 @@
             super.setModel(model);
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
-            })
+                this.setInactive();
+            });
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
+            });
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new DatePicker({element})
+        return new DatePicker({element, formContainer})
     }, DatePicker.selectors.self);
 })();

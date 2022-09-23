@@ -42,8 +42,6 @@ The following properties are written to JCR for this Form Dropdown component and
 9. `./type` - defines the type of values(string, boolean, number) which can be accepted
 10. `./enum` - an array[] of type that defines  the available values for selection
 11. `./enumNames` - an array[] of strings that defines the display value of the enum
-12. `./enforceEnum` - defines whether a user can enter a value that is not present in the enum array. (Always set to `true` for dropdown).
-
 
 ## Client Libraries
 The component provides a `core.forms.components.dropdown.v1` client library category that contains a JavaScript
@@ -66,7 +64,3 @@ BLOCK cmp-adaptiveform-dropdown
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormDropDown"` attribute to the wrapper block to enable initialization of the JavaScript component.
-
-
-
-

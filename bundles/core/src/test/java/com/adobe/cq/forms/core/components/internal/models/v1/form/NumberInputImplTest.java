@@ -28,6 +28,8 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -66,7 +68,7 @@ public class NumberInputImplTest {
     @Test
     void testFieldType() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
-        assertEquals(Base.FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
+        assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
 
     @Test
@@ -197,8 +199,8 @@ public class NumberInputImplTest {
     @Test
     void testGetConstraintMessages() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), numberInputMock.getConstraintMessages());

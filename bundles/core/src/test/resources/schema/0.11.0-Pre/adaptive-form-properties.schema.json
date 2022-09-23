@@ -1,0 +1,322 @@
+{
+  "$id": "classpath:/schema/0.11.0-Pre/adaptive-form-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name of the element. It is also the key in the JSON data, if dataRef is not defined explicitly, that the form produces. If two fields/panels under a same panel have the same name, their values will be same"
+    },
+    "fieldType": {
+      "title": "Type of widget to show to the user for capturing the data",
+      "description": "It can be either be one of the types from the list or a custom type defined by the user. * text-input * number-input * date-input * file-input * drop-down * radio-group * plain-text * checkbox * button * plain-text * panel * multiline-input * panel For custom types the value should match the regex `custom:[A-Za-z-/]+`",
+      "enum": [
+        "text-input",
+        "number-input",
+        "date-input",
+        "file-input",
+        "multiline-input",
+        "drop-down",
+        "radio-group",
+        "checkbox-group",
+        "checkbox",
+        "switch",
+        "plain-text",
+        "button",
+        "panel",
+        "form"
+      ]
+    },
+    ":type": {
+      "type": "string",
+      "title": "A hint to the rendering engine for rendering custom components."
+    },
+    "id": {
+      "type": "string",
+      "title": "unique identifier for a form element"
+    },
+    "label": {
+      "$id": "https://git.corp.adobe.com/pages/livecycle/af2-docs/schema/generated/adaptive-form-label.schema.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "type": "object",
+      "properties": {
+        "richText": {
+          "type": "boolean",
+          "default": false,
+          "title": "If the value of the label is to be considered as rich text or plain text"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "If the field's visible property is false, this property is ignored.",
+          "default": true
+        },
+        "value": {
+          "type": "string",
+          "title": "The content of the label. If the rich text property is set to true, the contents will be considered as Rich Text"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "title": "Extra description to be shown to the user to aid in form filling experience. It can be rich text. Can be used as help text for a field or a top level description for a Panel"
+    },
+    "dataRef": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "The jsonpath of the data instance that is mapped to the field's value.",
+      "description": "It will be defined relative to the parent's dataRef property except for the two conditions. * null signifying don't save the data of this field or panel. * jsonpath begining with \"$.\" signifying that the jsonpath is not relative to the parent's dataRef property.\nIf the parent's dataRef is set to \"none\", then it will be relative to the"
+    },
+    "visible": {
+      "type": "boolean",
+      "title": "whether the field should be visible to author or not"
+    },
+    "enabled": {
+      "type": "boolean",
+      "title": "whether the field is enabled and takes part in rules, events etc. A disabled field can have calculations and custom events"
+    },
+    "default": {
+      "title": "The value of the field when no value is provided by the end user or data model.",
+      "description": "The type of this property should match the value of the `type` property defined in the Field. If not, then a type coercion will be tried and if that fails, the value will be set to null.",
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        }
+      ]
+    },
+    "emptyValue": {
+      "type": [
+        "string"
+      ],
+      "title": "The value when user has not entered any value in the field",
+      "description": "Determines what value should be saved when user has not entered any value in the field. Can be one of\n   * null\n   * undefined\n   * \"\" (empty string) (only valid for dataType = string)",
+      "enum": [
+        "null",
+        "undefined",
+        ""
+      ]
+    },
+    "readOnly": {
+      "type": "boolean",
+      "title": "whether the field should be readOnly to author or not",
+      "description": "Determines how an element is treated: 'readOnly=true' means it cannot be modified by user. It will participate in all the events."
+    },
+    "items": {
+      "title": "Fields/Panels inside a Panel",
+      "description": "If the Fields inside a panel are repeatable then the items should be an array containing only 1 field",
+      "type": "array",
+      "errorMessage": {
+        "oneOf": "Items must be an array with atleast 1 field"
+      }
+    },
+    "displayFormat": {
+      "type": "string",
+      "title": "The format in which the value will be displayed to the user on screen in the field.",
+      "description": "The format in which the value will be displayed to the user on screen in the field. For example when using a currency field, the currency sign should be shown to the user."
+    },
+    "editFormat": {
+      "type": "string",
+      "title": "The format in which the value will be edited by the user.",
+      "description": "The format in which the value will be edited by the user. For instance users in Germany would want to interchange decimal (.) and comma (,) when entering numerical values."
+    },
+    "placeholder": {
+      "type": "string",
+      "title": "The placeholder to show on the widget."
+    },
+    "screenReaderText": {
+      "type": "string",
+      "title": "a json-formula expression to indicate the text to be read by screen readers",
+      "examples": [
+        {
+          "screenReaderText": "title"
+        },
+        {
+          "screenReaderText": "'Hard Coded text to be read by screen readers'"
+        }
+      ]
+    },
+    "rules": {
+      "type": "object",
+      "title": "Rules that modify the property of the object dynamically",
+      "description": "An author can dynamically change any property that is defined in the spec as modifiable. The rules are evaluated whenever the dependency changes. Apart from properties defined on the field, rules can have an extra key `value` which auto computes the value of the field",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "not": {
+          "enum": [
+            "name",
+            "default",
+            "type",
+            "fieldType",
+            "items",
+            "displayFormat",
+            "editFormat",
+            "rules",
+            "events",
+            "props"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "rules": {
+            "required": "$form.maritalStatus.value == 'married'"
+          }
+        },
+        {
+          "lastName": {
+            "name": "lastName",
+            "rules": {
+              "value": "$form.firstName.value & ' ' & $form.lastName.value"
+            }
+          }
+        }
+      ]
+    },
+    "events": {
+      "$id": "https://git.corp.adobe.com/pages/livecycle/af2-docs/schema/generated/adaptive-form-events.schema.json",
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Specify what operations to perform on certain user or custom events.",
+      "description": "Events is a dictionary of eventName to the actions to perform. Whenever the event is dispatched the expressions defined on that event are evaluated. The return value of that expression is applied to the field. The return value of the expression can be either of\n  * null, literal or array: The value property of the field is set to the return value\n  * dictionary: The field json is merged with the returned dictionary\n  * empty dictionary: the field should not be modified.",
+      "type": "object",
+      "properties": {
+        "click": {
+          "$ref": "#/$defs/EventHandler"
+        },
+        "initialize": {
+          "$ref": "#/$defs/EventHandler"
+        },
+        "focus": {
+          "$ref": "#/$defs/EventHandler"
+        },
+        "blur": {
+          "$ref": "#/$defs/EventHandler"
+        },
+        "change": {
+          "$ref": "#/$defs/EventHandler"
+        },
+        "submit": {
+          "$ref": "#/$defs/EventHandler"
+        }
+      },
+      "propertyNames": {
+        "anyOf": [
+          {
+            "enum": [
+              "click",
+              "initialize",
+              "focus",
+              "blur",
+              "change",
+              "submit"
+            ]
+          },
+          {
+            "pattern": "custom:[a-zA-Z0-9]+"
+          }
+        ],
+        "errorMessage": "${0} is not a valid Event Name. It should be either click, initialize, focus, blur, change or a custom event"
+      },
+      "examples": [
+        {
+          "Terms&Conditions": [
+            {
+              "name": "terms"
+            },
+            {
+              "click": "{value: true}"
+            }
+          ]
+        }
+      ]
+    },
+    "enum": {
+      "title": "A list of options to put restrictions on the possible values of the field",
+      "description": "The type of values in the enum array must match the value of the `type` property defined in the field. For array type fields, the type of element in the In case the `type` property is not defined, then the type of elements in the enum becomes the value of the `type` property. If the value of the `type` property doesn't match with the type of values in the `enum` array, then a type coercion will be made to match the `type` property. If the coercion is not possible, then the value will be set to null",
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "boolean",
+          "number"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "enumNames": {
+      "title": "A user friendly text to display for the possible options to be shown to the end user.",
+      "description": "The length of enum and enumNames array must match. In case the length of enum is greator, then those will be used as display text for the user. If the length of enumNames is greator, those will be discarded.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraintMessages": {
+      "title": "An object containing the custom error messages to be shown to the end user on different constraint validation",
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "type",
+          "required",
+          "minimum",
+          "maximum",
+          "minLength",
+          "maxLength",
+          "step",
+          "format",
+          "pattern",
+          "minItems",
+          "maxItems",
+          "maxFileSize",
+          "accept",
+          "uniqueItems",
+          "enforceEnum",
+          "validationExpression"
+        ],
+        "errorMessage": "${0} is not a valid constraintMessage"
+      }
+    },
+    "properties": {
+      "title": "An object containing custom properties that can be modified via rules as well.",
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "SingleEventHandler": {
+      "type": "string",
+      "format": "json-formula"
+    },
+    "EventHandler": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SingleEventHandler"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SingleEventHandler"
+          }
+        }
+      ]
+    }
+  }
+}
