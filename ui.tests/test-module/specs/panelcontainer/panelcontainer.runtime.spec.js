@@ -21,14 +21,18 @@ describe("Form with Panel Container", () => {
     let formContainer = null;
 
     beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
+        cy.previewFormWithPanel(pagePath).then(p => {
             formContainer = p;
-        })
+        });
     });
 
     const checkHTML = (id, state, view, count) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const checkView = () => {
+            expect(view.children.length, "panel has children equal to count").to.equal(count);
+            return cy.get(`#${id}`);
+        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -38,13 +42,10 @@ describe("Form with Panel Container", () => {
             .should('eq', state.enabled.toString());
         expect(state.items.length, "model has children equal to count").to.equal(count);
         if (count == 0) {
-            cy.get(`.${childBemBlock}`).should('not.exist');
+            return cy.get(`.${childBemBlock}`).should('not.exist').then(checkView);
         } else {
-            cy.get(`.${childBemBlock}`).should('have.length', count);
+            return cy.get(`.${childBemBlock}`).should('have.length', count).then(checkView);
         }
-
-        expect(view.children.length, "panel has children equal to count").to.equal(count);
-        return cy.get(`#${id}`);
     };
 
     const checkAddRemoveInstance = (panelId, panelModel, panelView, count, isAdd) => {
@@ -91,6 +92,7 @@ describe("Form with Panel Container", () => {
         const datepickerView = formContainer._fields[datepickerId];
         expect(panelView, "panel view is created").to.not.be.null;
         expect(datepickerView, "panel child view is created").to.not.be.null;
+        expect(panelView.children.length, "panel has one child").to.equal(1);
         expect(panelView.children[0].id, "panel has reference to child view").to.equal(datepickerId);
         expect(datepickerView.parentView.id, "date picker has reference to parent panel view").to.equal(panelId);
     })
