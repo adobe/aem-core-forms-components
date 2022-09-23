@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "./utils";
-import {createFormInstance, Click, Change, Submit, Blur, AddItem, RemoveItem} from "@aemforms/af-core";
-import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
-import {Constants} from "./constants";
-import GuideBridge from "./GuideBridge";
 
-window.af = {
-    formsRuntime: {
-        model: {
-            form: {}
-        },
-        view: {
-            formContainer: {},
-            utils: {}
-        },
-        events: {}
-    }
-}
-window.guideBridge = new GuideBridge();
+.cmp-button {
 
-const Actions = {
-    Click, Change, Submit, Blur, AddItem, RemoveItem
 }
 
-export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions};
+.cmp-button__text {
+
+}
+
+.cmp-button__longdescription {
+
+}
+
+.cmp-button__shortdescription {
+
+}
+
+.cmp-button__questionmark {
+
+}
