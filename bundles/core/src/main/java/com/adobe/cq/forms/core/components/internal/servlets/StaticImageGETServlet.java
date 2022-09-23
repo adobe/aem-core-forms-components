@@ -138,8 +138,8 @@ public class StaticImageGETServlet extends AbstractImageServlet {
                 // get pure layer
                 layer = image.getLayer(false, false, false);
             }
-        }catch (Exception e){
-            System.out.println("Exception occured while rendering image "+e);
+        } catch (Exception e) {
+            System.out.println("Exception occured while rendering image " + e);
         }
         return layer;
     }
