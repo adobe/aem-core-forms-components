@@ -30,6 +30,7 @@ var formsConstants = {
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
+                "formimage": "/apps/forms-components-examples/components/form/image"
             }
         }
     },
