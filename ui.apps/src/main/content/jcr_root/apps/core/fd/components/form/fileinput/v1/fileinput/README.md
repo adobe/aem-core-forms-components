@@ -64,10 +64,6 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
-    ELEMENT cmp-adaptiveform-fileinput__minmessage
-    ELEMENT cmp-adaptiveform-fileinput__maxmessage
-    ELEMENT cmp-adaptiveform-fileinput__maxfilesizemessage
-    ELEMENT cmp-adaptiveform-fileinput__acceptmessage
 ```
 
 ## JavaScript Data Attribute Bindings
@@ -76,7 +72,5 @@ Apply a `data-cmp-is="adaptiveFormFileInput"` attribute to the wrapper block to 
 
 The following attributes can be added to the same element to provide options:
 
-A `data-cmp-hook-adaptiveform-fileinput="input"` attribute should be added to the input  so that the JavaScript is able to target it.
-
-Apply a `data-cmp-is="adaptiveFormFileInput"` and `data-cmp-adaptiveformcontainer-path="/content/forms/af/fileinput-test/jcr:content/guideContainer"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormFileInput"` and `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
