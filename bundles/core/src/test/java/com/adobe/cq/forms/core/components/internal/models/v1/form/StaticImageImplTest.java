@@ -19,6 +19,8 @@ import java.io.IOException;
 
 import javax.jcr.RepositoryException;
 
+import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.models.form.Text;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -158,6 +160,15 @@ public class StaticImageImplTest {
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.isEnabled()).thenCallRealMethod();
         assertEquals(true, staticImageMock.isEnabled());
+    }
+
+
+    @Test
+    void testSrcImage() throws RepositoryException, IOException {
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
+        StaticImage imageMock = Mockito.mock(StaticImage.class);
+        Mockito.when(imageMock.getImageSrc()).thenCallRealMethod();
+        assertEquals(null, imageMock.getImageSrc());
     }
 
     @Test
