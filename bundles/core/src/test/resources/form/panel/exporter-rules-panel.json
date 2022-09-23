@@ -1,46 +1,53 @@
 {
-  "id": "panel-81f441fcab",
+  "id":"panel-81f441fcab",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "type":"object",
+  "fieldType":"panel",
+  "name":"abc",
+  "visible":true,
+  "enabled":true,
   "items": [
     {
-      "id": "textinput-bec585e910",
-      "description": "dummy",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
+      "id":"textinput-bec585e910",
+      "description":"dummy",
+      "type":"string",
+      "fieldType":"text-input",
+      "required":false,
+      "name":"abc",
+      "visible":false,
+      "enabled":true,
+      "readOnly":false,
+      "label":{
+        "visible":true,
+        "richText":false,
+        "value":"def"
       },
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
+      "properties": {
+        "fd:dor":{
+          "dorExclusion":false
+        }
+      },
+      ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  ":type": "core/fd/components/form/panel/v1/panel",
-  "fieldType" : "panel",
-  "tooltip" : "dependent names tooltip",
-  "description" : "dependent names description",
-  "type" : "object",
-  "label" : {
-    "richText": false,
-    "value" : "dependent names",
-    "visible": true
+  "label":{
+    "visible":true,
+    "richText":false,
+    "value":"dependent names"
   },
-  "visible": true,
-  "enabled": true,
-  "name": "abc",
-  "properties": {
-    "af:layout": {
-      "tooltipVisible": false
+  "events":{
+    "change":[
+      "some expression 2"
+    ]
+  },
+  "properties":{
+    "afs:layout":{
+      "tooltipVisible":false
     }
   },
-  "rules" : {
-    "visible" : "some expression"
+  "rules": {
+    "visible":"some expression"
   },
-  "events" : {
-    "change" : ["some expression 2"]
-  }
+  ":type":"core/fd/components/form/panel/v1/panel"
 }

@@ -57,6 +57,9 @@ public final class FormConstants {
     /** The resource type for panel v1 */
     public static final String RT_FD_FORM_PANEL_V1 = RT_FD_FORM_PREFIX + "panel/v1/panel";
 
+    /** The resource type for text v1 */
+    public static final String RT_FD_FORM_TEXT_DRAW_V1 = RT_FD_FORM_PREFIX + "text/v1/text";
+
     public static final String RT_FD_FORM_PANEL_CONTAINER_V1 = RT_FD_FORM_PREFIX + "panelcontainer/v1/panelcontainer";
 
     public static final String RT_FD_FORM_TABS_ON_TOP_V1 = RT_FD_FORM_PREFIX + "tabsontop/v1/tabsontop";

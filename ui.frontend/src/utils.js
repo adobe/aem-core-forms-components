@@ -164,9 +164,10 @@ export default class Utils {
      * @param handler
      */
     static registerClickHandler(parentElement, hook, handler) {
-        const buttons = parentElement.querySelectorAll(hook);
+        const dataAttr = "[" + hook + "]";
+        const buttons = parentElement.querySelectorAll(dataAttr);
         buttons.forEach(
-            (button) => button.addEventListener('click', (event) => handler));
+            (button) => button.addEventListener('click', handler));
     }
 
     /**

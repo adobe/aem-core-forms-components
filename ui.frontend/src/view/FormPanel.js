@@ -111,7 +111,7 @@ export default class FormPanel extends FormFieldBase {
         return instanceArray;
     }
 
-    addChildInstance(getState, state) {
+    addChildInstance(state) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
             return;
@@ -142,7 +142,7 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
-    removeChildInstance(removedModel, state) {
+    removeChildInstance(removedModel) {
         if (this.repeatable) {
             const instanceArray = this._getInstanceArray(removedModel);
             for (let i = 0; i < instanceArray.length; i++) {
@@ -161,14 +161,15 @@ export default class FormPanel extends FormFieldBase {
     }
 
     _registerInstanceHandlers() {
-        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_ADD_INSTANCE, this._addInstance);
-        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_REMOVE_INSTANCE, this._removeInstance);
+        //doesn't support repeatable panel inside repeatable panel
+        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this._addInstance(event)});
+        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this._removeInstance(event)});
     }
 
     _dispatchModelEvent(event, eventName, payload) {
         const customEvent = new CustomEvent(eventName);
         if (payload) {
-            event.payload = payload;
+            customEvent.payload = payload;
         }
         // todo else derive the index and count from event
         this._model.dispatch(customEvent);
@@ -223,9 +224,9 @@ export default class FormPanel extends FormFieldBase {
     _updateItems(prevValue, currentValue, state) {
         //if previous value exists it means remove item is invoked
         if (prevValue) {
-            this.removeChildInstance(prevValue, state);
+            this.removeChildInstance(prevValue);
         } else if (currentValue) {
-            this.addChildInstance(currentValue, state);
+            this.addChildInstance(state);
         }
     }
 }

@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -23,6 +26,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -42,6 +47,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
+    private static String DOR_TYPE = "dorType";
+    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String thankyouMessage;
@@ -49,6 +57,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String thankyouPage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String clientLibRef;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -62,6 +74,29 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     public String getThankYouMessage() {
         return thankyouMessage;
+    }
+
+    @Override
+    public String getAdaptiveFormVersion() {
+        return "0.11.0-Pre";
+    }
+
+    @Override
+    @Nullable
+    public String getClientLibRef() {
+        return clientLibRef;
+    }
+
+    @Override
+    @Nullable
+    public String getSchemaRef() {
+        return GuideContainer.from(resource).getSchemaRef();
+    }
+
+    @Override
+    @Nullable
+    public GuideSchemaType getSchemaType() {
+        return GuideContainer.from(resource).getSchema();
     }
 
     @Override
@@ -95,5 +130,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         } else {
             return null;
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        if (dorType != null) {
+            customDorProperties.put(DOR_TYPE, dorType);
+        }
+        if (dorTemplateRef != null) {
+            customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        }
+        return customDorProperties;
     }
 }

@@ -5,6 +5,8 @@
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
+    "dorExclusion": true,
+    "dorColspan": "4",
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",

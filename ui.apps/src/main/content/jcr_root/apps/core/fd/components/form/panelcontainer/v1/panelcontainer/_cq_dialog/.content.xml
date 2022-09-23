@@ -140,10 +140,10 @@
                                     value=""/>
                         </items>
                     </accessibility>
-                    <style
+                    <background
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Style"
-                            granite:hide="${!cqDesign.backgroundColorEnabled || cqDesign.backgroundColorSwatchesOnly || !cqDesign.backgroundImageEnabled}"
+                            jcr:title="Background"
+                            granite:hide="${!cqDesign.backgroundColorEnabled || !cqDesign.backgroundColorSwatchesOnly || !cqDesign.backgroundImageEnabled}"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <backgroundColor
@@ -158,12 +158,8 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                     path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundImageAsset"/>
-                            <styleselector
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/include"
-                                    path="cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
                         </items>
-                    </style>
+                    </properties>
                 </items>
             </tabs>
         </items>
