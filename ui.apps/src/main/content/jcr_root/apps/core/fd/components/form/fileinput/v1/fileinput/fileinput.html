@@ -30,14 +30,14 @@
     <div data-sly-call="${label.label @componentId=component.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </br>
-    <input name="${file.name}"
+    <input class="cmp-adaptiveform-fileinput__widget"
+           data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
+           name="${file.name}"
            id="fileInput"
            accept="${file.accept}"
            type="file"
-           onClick=document.getElementById("fileInput").click()
            multi="${file.type}"
-           minFiles="${file.minItems}"
-           maxFiles="${file.maxItems}"/>
+    />
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>

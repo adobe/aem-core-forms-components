@@ -64,7 +64,6 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
-    ELEMENT cmp-adaptiveform-fileinput__errormessage
     ELEMENT cmp-adaptiveform-fileinput__minmessage
     ELEMENT cmp-adaptiveform-fileinput__maxmessage
     ELEMENT cmp-adaptiveform-fileinput__maxfilesizemessage
