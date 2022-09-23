@@ -16,7 +16,11 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
