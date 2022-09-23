@@ -7,9 +7,10 @@
       <text
         jcr:primaryType="nt:unstructured"
         jcr:title=""
-        placeholder="Text related to the terms and conditions come here"
-        fieldType="text-input"
-        sling:resourceType="/libs/core/fd/components/form/textinput/v1/textinput"
+        hideTitle="true"
+        value="Text related to the terms and conditions come here"
+        fieldType="plain-text"
+        sling:resourceType="/libs/core/fd/components/form/text/v1/text"
       />
       <link
         jcr:primaryType="nt:unstructured"
