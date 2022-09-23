@@ -105,6 +105,20 @@
                             <toBeRemoved
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
+                            <readonly
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                              granite:class="cmp-adaptiveform-base__readOnly"
+                              name="./readOnly"
+                              value="true"
+                              uncheckedValue="false"
+                              text="Read Only">
+                            </readonly>
+                            <readonly-typehint
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                              name="./readOnly@TypeHint"
+                              value="Boolean"/>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"

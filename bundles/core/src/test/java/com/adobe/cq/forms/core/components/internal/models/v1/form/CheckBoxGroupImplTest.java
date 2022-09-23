@@ -219,7 +219,7 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         Map<String, Object> properties = checkboxGroup.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
