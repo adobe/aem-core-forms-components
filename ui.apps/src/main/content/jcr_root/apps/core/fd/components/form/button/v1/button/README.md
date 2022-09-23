@@ -40,9 +40,7 @@ component. It should be added to a relevant site client library using the `embed
 ```
 BLOCK cmp-button
     ELEMENT cmp-button__text
-    ELEMENT cmp-button__questionmark
-    ELEMENT cmp-button__shortdescription
-    ELEMENT cmp-button__longdescription
+    ELEMENT cmp-button__icon
 ```
 
 ## JavaScript Data Attribute Bindings

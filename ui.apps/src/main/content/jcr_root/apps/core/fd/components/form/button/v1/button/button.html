@@ -33,6 +33,3 @@
 <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
 <span data-sly-test="${button.label.value}" class="cmp-button__text">${button.label.value}</span>
 </button>
-<div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=button.description, bemBlock='cmp-button'}" data-sly-unwrap></div>
-<div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-button'}" data-sly-unwrap></div>
-<div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=button.description, bemBlock='cmp-button'}" data-sly-unwrap></div>
