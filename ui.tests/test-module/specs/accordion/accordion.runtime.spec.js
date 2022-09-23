@@ -106,6 +106,7 @@ describe("Form with Accordion Container", () => {
         });
     });
 
+    // todo: fix this test case
     // it(" add instance and remove instance of model is reflected in html ", () => {
     //     const panelId = formContainer._model.items[0].id;
     //     const panelModel = formContainer._model.getElement(panelId);
