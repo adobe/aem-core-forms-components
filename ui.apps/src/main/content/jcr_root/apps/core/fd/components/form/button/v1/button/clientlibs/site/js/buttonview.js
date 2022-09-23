@@ -67,9 +67,8 @@
 
         setModel(model) {
             super.setModel(model);
-
             this.element.addEventListener("click", () => {
-                this._model.dispatchEvent(new FormView.Click())
+                this._model.dispatchEvent(new FormView.Actions.Click())
             });
         }
 
