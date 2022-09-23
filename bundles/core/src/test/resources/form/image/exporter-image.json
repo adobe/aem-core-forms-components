@@ -1,0 +1,24 @@
+{
+  "id": "image-566534ba93",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "image",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "altText": "abc",
+  "excludeFromDor": false,
+  "imageSrc" : "core/fd/components/form/image/v1/image",
+  "default" : "abc",
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "type": "string",
+  "format" : "email",
+  ":type": "core/fd/components/form/image/v1/image"
+}
