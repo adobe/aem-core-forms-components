@@ -35,7 +35,6 @@
             }
 
              getWidget() {
-                 return this.element.querySelector(Text.selectors.widget);
                  return null;
              }
 
