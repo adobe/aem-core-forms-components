@@ -78,13 +78,28 @@ public class StaticImageGETServlet extends AbstractImageServlet {
         if (image == null)
             return;
 
-        // get style and set constraints
-        image.loadStyleData(imageContext.style);
-
-        // get pure layer
-        layer = image.getLayer(false, false, false);
+        layer = getLayer(imageContext, image);
         boolean modified = false;
 
+        modified = isModified(req, resp, imageContext, layer, image, modified);
+        if (modified) {
+            String mimeType = image.getMimeType();
+            if (ImageHelper.getExtensionFromType(mimeType) == null) {
+                // get default mime type
+                mimeType = "image/png";
+            }
+            resp.setContentType(mimeType);
+            layer.write(mimeType, mimeType.equals("image/gif") ? 255 : 1.0, resp.getOutputStream());
+        } else {
+            // do not re-encode layer, just spool
+
+            extracted(resp, image);
+        }
+        resp.flushBuffer();
+    }
+
+    protected boolean isModified(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext, Layer layer,
+        Image image, boolean modified) throws RepositoryException {
         if (layer != null) {
             // crop
             modified = image.crop(layer) != null;
@@ -110,20 +125,19 @@ public class StaticImageGETServlet extends AbstractImageServlet {
         if ("image/svg+xml".equals(image.getMimeType())) {
             resp.setHeader("Content-Disposition", "attachment");
         }
-        if (modified) {
-            String mimeType = image.getMimeType();
-            if (ImageHelper.getExtensionFromType(mimeType) == null) {
-                // get default mime type
-                mimeType = "image/png";
-            }
-            resp.setContentType(mimeType);
-            layer.write(mimeType, mimeType.equals("image/gif") ? 255 : 1.0, resp.getOutputStream());
-        } else {
-            // do not re-encode layer, just spool
+        return modified;
+    }
 
-            extracted(resp, image);
+    protected Layer getLayer(ImageContext imageContext, Image image) throws IOException, RepositoryException {
+        Layer layer = null;
+        // get style and set constraints
+        if (image != null) {
+            image.loadStyleData(imageContext.style);
+
+            // get pure layer
+            layer = image.getLayer(false, false, false);
         }
-        resp.flushBuffer();
+        return layer;
     }
 
     @Nullable

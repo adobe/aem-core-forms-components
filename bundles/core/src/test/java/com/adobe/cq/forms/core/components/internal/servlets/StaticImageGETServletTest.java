@@ -46,6 +46,7 @@ import com.day.image.Layer;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
@@ -106,6 +107,9 @@ public class StaticImageGETServletTest {
     void testWriteLayer() throws ServletException, IOException, RepositoryException {
         MockSlingHttpServletResponse response = context.response();
         MockSlingHttpServletRequest request = context.request();
+        Image image = mock(Image.class);
+        Layer layer = mock(Layer.class);
+        // Mockito.when(staticImageGETServlet.getLayer(any(),any())).thenReturn(layer);
         // staticImageGETServlet.writeLayer(request, response, imageContext, layer);
     }
 
@@ -127,6 +131,33 @@ public class StaticImageGETServletTest {
         Mockito.when(image.hasContent()).thenReturn(false);
         Image tempImage = staticImageGETServlet.getImage(response, imageContext, image);
         Assertions.assertNotNull(tempImage);
+    }
+
+    @Test
+    void testIsModified() throws ServletException, IOException, RepositoryException {
+        MockSlingHttpServletResponse response = context.response();
+        Image image = mock(Image.class);
+        Layer layer = mock(Layer.class);
+        Assertions.assertFalse(staticImageGETServlet.isModified(request, response, imageContext, layer, image, false));
+    }
+
+    @Test
+    void testIsModifiedWithTrue() throws ServletException, IOException, RepositoryException {
+        MockSlingHttpServletResponse response = context.response();
+        Image image = mock(Image.class);
+        Layer layer = mock(Layer.class);
+        Mockito.when(image.crop(layer)).thenReturn(layer);
+        Mockito.when(image.getMimeType()).thenReturn("image/svg+xml");
+        Assertions.assertTrue(staticImageGETServlet.isModified(request, response, imageContext, layer, image, false));
+    }
+
+    @Test
+    void testGetLayer() throws ServletException, IOException, RepositoryException {
+        MockSlingHttpServletResponse response = context.response();
+        Image image = mock(Image.class);
+        Layer layer = mock(Layer.class);
+        Mockito.when(image.getLayer(anyBoolean(), anyBoolean(), anyBoolean())).thenReturn(layer);
+        Assertions.assertNotNull(staticImageGETServlet.getLayer(imageContext, image));
     }
 
     @Test

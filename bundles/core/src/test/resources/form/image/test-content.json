@@ -16,7 +16,8 @@
     "altText": "abc",
     "file": {
       "jcr:content": {
-        "jcr:data": "sdsfbdfbfdbf"
+        "jcr:data": "sdsfbdfbfdbf",
+        "jcr:mimeType": "image/png"
       }
     },
     "excludeFromDor": false,
