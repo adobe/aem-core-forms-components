@@ -17,12 +17,14 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +43,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RadioButtonImpl extends AbstractOptionsFieldImpl implements RadioButton {
 
-    @ValueMapValue(name = "orientation")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "orientation")
+    @Nullable
     protected String orientationJcr;
     private Orientation orientation;
 

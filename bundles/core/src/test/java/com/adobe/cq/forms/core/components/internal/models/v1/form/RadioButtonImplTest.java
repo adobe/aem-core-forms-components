@@ -59,7 +59,7 @@ public class RadioButtonImplTest {
     @Test
     void testFieldType() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(Base.FieldType.RADIO_GROUP.getValue(), radioButton.getFieldType());
+        assertEquals(FieldType.RADIO_GROUP.getValue(), radioButton.getFieldType());
     }
 
     @Test
@@ -190,8 +190,8 @@ public class RadioButtonImplTest {
     @Test
     void testGetConstraintMessages() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        Map<Base.ConstraintType, String> constraintsMessages = radioButton.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), null);
+        Map<ConstraintType, String> constraintsMessages = radioButton.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), null);
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), radioButtonMock.getConstraintMessages());
@@ -269,6 +269,14 @@ public class RadioButtonImplTest {
     void testGetOrientation() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
         assertEquals(CheckBox.Orientation.VERTICAL, radioButton.getOrientation());
+    }
+
+    @Test
+    void testDorProperties() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
+        assertEquals(true, radioButton.getDorProperties().get("dorExclusion"));
+        assertEquals("4", radioButton.getDorProperties().get("dorColspan"));
+
     }
 
     @Test

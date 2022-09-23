@@ -30,6 +30,10 @@
     "afs:layout": {
       "tooltipVisible": true,
       "orientation": "vertical"
+    },
+    "fd:dor":{
+      "dorExclusion": true,
+      "dorColspan": "4"
     }
   },
   "enum": [

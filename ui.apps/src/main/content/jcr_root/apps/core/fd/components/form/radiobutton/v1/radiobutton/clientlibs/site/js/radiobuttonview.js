@@ -73,10 +73,10 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (enable === false) {
-                    widget.setAttribute(FormView.Constants.DISABLED, true);
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 } else {
-                    widget.removeAttribute(FormView.Constants.DISABLED);
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
@@ -87,11 +87,11 @@
                 this.widget.forEach(widget => {
                     if (widget.value != null && modelValue.toString() == widget.value.toString()) {
                         widget.checked = true;
-                        widget.setAttribute(FormView.Constants.CHECKED, FormView.Constants.CHECKED);
+                        widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
                         widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
                     } else {
                         widget.checked = false;
-                        widget.removeAttribute(FormView.Constants.CHECKED);
+                        widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
                         widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                     }
                 }, this)

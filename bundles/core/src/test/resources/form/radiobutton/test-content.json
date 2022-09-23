@@ -13,6 +13,8 @@
     "jcr:lastModifiedBy": "admin",
     "tooltip": "<p>short description</p>",
     "required": "true",
+    "dorExclusion": true,
+    "dorColspan": "4",
     "assistPriority": "custom",
     "jcr:created": "Tue Sep 13 2022 15:17:35 GMT+0530",
     "enum": [
