@@ -20,23 +20,23 @@
 // This recipe is to test the AEM Forms Portal Link Component functionality
 
 // We are going to test:
-// 1. Search and Lister Component can be added and deleted
+// 1. Link Component can be added and deleted
 // 2. Verify default values set in proxy component
+// 3. Check rendered link
 
 // Be sure to run the aem server
 // before running the tests below.
 
-const sitesSelectors = require('../libs/commons/sitesSelectors'),
-      afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+      afConstants = require('../../libs/commons/formsConstants');
 
-describe('Search And Lister - Authoring', function () {
+describe('Link - Authoring', function () {
     // we can use these values to log in
-    const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchlister",
-            componentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
-            componentEditPathSelector = "[data-path='" + componentEditPath + "']",
-            componentDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
-            componentDropPathSelector = "[data-path='" + componentDropPath + "']";
-
+    const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/link",
+            linkComponentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fplinkcomponent.split("/").pop(),
+            linkComponentEditPathSelector = "[data-path='" + linkComponentEditPath + "']",
+            linkComponentDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.fplinkcomponent.split("/").pop(),
+            linkComponentDropPathSelector = "[data-path='" + linkComponentDropPath + "']";
 
     context('Open Editor', function () {
         beforeEach(function () {
@@ -44,46 +44,47 @@ describe('Search And Lister - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert search and lister component', function () {
+        it('insert link component', function () {
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
-            // Add search and lister component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "Search And Lister", afConstants.components.forms.resourceType.fpsnlcomponent);
+            // Add link component and delete it
+            cy.insertComponent(responsiveGridDropZoneSelector, "Link", afConstants.components.forms.resourceType.fplinkcomponent);
             // once component is added, to remove the overlay from being active, we click on body
             cy.get('body').click(0,0);
-            cy.deleteComponentByPath(componentDropPath);
+            cy.deleteComponentByPath(linkComponentDropPath);
         });
 
         it('verify edit dialog properties', function () {
             const x = "";
-            // click configure action on search and lister component
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
+            // click configure action on link component
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + linkComponentEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
 
             // check if default proxy component values are set correctly
             // Display tab
-            cy.get("[data-foundation-tracking-event*=\"display\"]")
-                .should("be.visible")
-                .click();
             cy.get("[name='./title']")
                 .should("be.visible")
-                .should("have.value", "");
-            cy.get("[name='./layout']")
+                .should("have.value", "Sample Link Component");
+            cy.get("[name='./tooltip']")
                 .should("be.visible")
-                .should("have.value", "card");
-            cy.get("input[name='./disableSearch']")
+                .should("have.value", "Sample Tooltip");
+
+            // Asset Info tab
+            cy.get("[data-foundation-tracking-event*=\"asset info\"]")
                 .should("be.visible")
-                .should("not.be.checked");
-            cy.get("input[name='./disableSorting']")
+                .click();
+
+            cy.get("[name='./assetType']")
                 .should("be.visible")
-                .should("not.be.checked");
-            cy.get("input[name='./htmlTooltip']")
+                .should("have.value", "Adaptive Form");
+
+            cy.get("[name='./adaptiveFormPath']")
                 .should("be.visible")
                 .should("have.value", "");
 
-            // Asset Folder tab, check presence of multifields
-            cy.get("[data-foundation-tracking-event*=\"asset folder\"]")
+            // Query Params tab
+            cy.get("[data-foundation-tracking-event*=\"query params\"]")
                 .should("be.visible")
                 .click();
 
@@ -96,27 +97,38 @@ describe('Search And Lister - Authoring', function () {
                     });
             };
 
-            var folderPathMultifieldSelector = "[data-granite-coral-multifield-name=\"./assetFolders\"]";
-            assertMultifieldLength(cy.get(folderPathMultifieldSelector), 1);
+            // verify no items present in multifield beforehand
+            var queryParamsMultifieldSelector = "[data-granite-coral-multifield-name=\"./queryParams\"]";
+            assertMultifieldLength(cy.get(queryParamsMultifieldSelector), 0);
 
-            // Results tab
-            cy.get("[data-foundation-tracking-event*=\"results\"]")
+            // click add item and don't fill mandatory values
+            cy.get("[coral-multifield-add]")
                 .should("be.visible")
                 .click();
+            assertMultifieldLength(cy.get(queryParamsMultifieldSelector), 1);
 
-            cy.get("input[name='./limit']")
-                .should("be.visible")
-                .should("have.value", "");
-
-            // check no error tooltips visible
+            // check no error tooltips visible, then try submitting and verify error is visible
             cy.get("coral-tooltip[variant=\"error\"]")
                 .should("not.exist");
+            cy.get("button[title=\"Done\"")
+                .should("be.visible")
+                .click();
+            cy.get("coral-tooltip[variant=\"error\"]")
+                .should("be.visible");
 
             // dismiss window via cancel
-            cy.get("button[title=\"Done\"")
+            cy.get("button[title=\"Cancel\"")
                 .should("be.visible")
                 .click()
                 .should("not.exist");
         });
+
+        it('navigate to rendered page and verify link', function () {
+            cy.visit(pagePath + '.html');
+            cy.get("a[class*=\"cmp-link__anchor\"]")
+                .should("have.attr", "href", "#")
+                .should("have.attr", "target", "_self");
+        });
+
     });
 });

@@ -22,8 +22,10 @@ import javax.jcr.RepositoryException;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @ConsumerType
-public interface StaticImage extends Field {
+public interface StaticImage extends FormComponent {
 
     /**
      * Returns the source where the image is present.
@@ -32,7 +34,18 @@ public interface StaticImage extends Field {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
+    @JsonIgnore
     default String getImageSrc() throws RepositoryException, IOException {
+        return null;
+    }
+
+    /**
+     * Retrieves the text value to be displayed.
+     *
+     * @return the text value to be displayed, or {@code null} if no value can be returned
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
+     */
+    default String getValue() {
         return null;
     }
 

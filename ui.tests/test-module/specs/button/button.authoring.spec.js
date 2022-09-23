@@ -15,14 +15,11 @@
  */
 
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
- * Testing TextInput with Sites Editor
+ * Testing Form Button with Sites Editor
  */
 describe('Button - Authoring', function () {
     // we can use these values to log in
@@ -31,7 +28,7 @@ describe('Button - Authoring', function () {
         const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button component", afConstants.components.forms.resourceType.formbutton);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
         cy.get('body').click( 0,0);
     }
 
@@ -39,7 +36,7 @@ describe('Button - Authoring', function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/button/jcr:content/root/responsivegrid/demo/component/container/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button component", afConstants.components.forms.resourceType.formbutton);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
         cy.get('body').click( 0,0);
     }
 
