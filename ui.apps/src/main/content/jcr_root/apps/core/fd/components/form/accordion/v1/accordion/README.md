@@ -1,5 +1,5 @@
 <!--
-Copyright 2019 Adobe
+Copyright 2022 Adobe
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,17 +27,6 @@ Adaptive Form Accordion component written in HTL.
 
 ### Use Object
 The Accordion component uses the `com.adobe.cq.forms.core.components.models.form.Accordion` Sling model as its Use-object.
-
-### Component Policy Configuration Properties
-The following configuration properties are used:
-
-[comment]: <> (1. Heading is not available in forms)
-
-[comment]: <> (1. `./allowedHeadingElements` - the heading elements &#40;`h2` - `h6`, `h1` is omitted for SEO reasons&#41; that are allowed to be selected in the edit dialog.)
-
-[comment]: <> (2. `./headingElement` - the default heading element &#40;`h2` - `h6`, `h1` is omitted for SEO reasons&#41; to use for the accordion headers.)
-
-It is also possible to define the allowed components for the Accordion.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Accordion component and are expected to be available as `Resource` properties:
@@ -83,32 +72,6 @@ The following properties and child nodes are required in the proxy component to 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Accordion as a container component
 2. `./cq:editConfig` - `afterchilddelete`, `afterchildinsert` and `afterchildmove` listeners should be provided via
 the edit configuration of the proxy. `_cq_editConfig.xml` contains the recommended actions and can be copied to the proxy component.
-
-[comment]: <> (The default Accordion site Client Library provides a handler for message requests between the editor and the Accordion.)
-
-[comment]: <> (If the built-in Client Library is not used, a message request handler should be registered:)
-
-[comment]: <> (```)
-
-[comment]: <> (new Granite.author.MessageChannel&#40;"cqauthor", window&#41;.subscribeRequestMessage&#40;"cmp.panelcontainer", function&#40;message&#41; {)
-
-[comment]: <> (    if &#40;message.data && message.data.type === "cmp-accordion" && message.data.id === myAccordionHTMLElement.dataset["cmpPanelcontainerId"]&#41; {)
-
-[comment]: <> (        if &#40;message.data.operation === "navigate"&#41; {)
-
-[comment]: <> (            // handle navigation)
-
-[comment]: <> (        })
-
-[comment]: <> (    })
-
-[comment]: <> (}&#41;;)
-
-[comment]: <> (```)
-
-[comment]: <> (The handler should subscribe to a `cmp.panelcontainer` message that allows routing of a `navigate` operation to ensure)
-
-[comment]: <> (that the UI component is updated when the active item is switched in the editor layer.)
 
 ## Information
 * **Vendor**: Adobe
