@@ -53,7 +53,7 @@ public class ButtonImplTest {
     @Test
     void testFieldType() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(Base.FieldType.BUTTON.getValue(), button.getFieldType());
+        assertEquals(FieldType.BUTTON.getValue(), button.getFieldType());
     }
 
     @Test
