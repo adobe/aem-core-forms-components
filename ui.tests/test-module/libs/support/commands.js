@@ -262,9 +262,30 @@ const waitForFormInit = () => {
     });
 }
 
+const waitForChildViewAddition = () => {
+    return cy.get('[data-cmp-is="adaptiveFormPanel"]')
+        .then((el) => {
+            const ADD_EVENT = "AF_PanelChildAdded";
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    console.error(`received ${ADD_EVENT}`);
+                    resolve(e.detail.formContainer);
+                };
+                console.error(`waiting for ${ADD_EVENT}`);
+                el[0].addEventListener(ADD_EVENT, listener1);
+            })
+            return promise;
+        });
+}
+
 Cypress.Commands.add("previewForm", (formPath) => {
     const pagePath = `${formPath}?wcmmode=disabled`
     return cy.openPage(pagePath).then(waitForFormInit)
+})
+
+Cypress.Commands.add("previewFormWithPanel", (formPath) => {
+    const pagePath = `${formPath}?wcmmode=disabled`
+    return cy.openPage(pagePath).then(waitForChildViewAddition)
 })
 
 // cypress command to delete component by path

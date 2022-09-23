@@ -26,8 +26,8 @@
 // Be sure to run the aem server
 // before running the tests below.
 
-const sitesSelectors = require('../libs/commons/sitesSelectors'),
-      afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+      afConstants = require('../../libs/commons/formsConstants');
 
 describe('Drafts And Submissions - Authoring', function () {
     // we can use these values to log in

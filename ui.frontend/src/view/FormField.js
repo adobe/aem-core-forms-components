@@ -84,11 +84,37 @@ export default class FormField {
      * @param value
      */
     toggle(property, dataAttribute, value) {
-        if (property === false) {
-            this.element.setAttribute(dataAttribute, value);
-        } else {
-            this.element.removeAttribute(dataAttribute);
+       this.toggleAttribute(this.element, property, dataAttribute, value);
+    }
+
+    /**
+     * Toggles the given @param element based on the property. If the property is false, then adds the data-attribute and
+     * css class
+     * @param element
+     * @param property
+     * @param dataAttribute
+     * @param value
+     */
+    toggleAttribute(element, property, dataAttribute, value) {
+        if (element) {
+            if (property === false) {
+                element.setAttribute(dataAttribute, value);
+            } else {
+                element.removeAttribute(dataAttribute);
+            }
         }
+    }
+
+    /**
+     * @return 'afs:layout' properties. Empty object if no layout property present
+     */
+    getLayoutProperties() {
+        let layoutProperties = {};
+        const state = this.getModel().getState();
+        if (state && state.properties && state.properties['afs:layout']) {
+            layoutProperties =  state.properties['afs:layout'];
+        }
+        return layoutProperties;
     }
 
     getModel() {

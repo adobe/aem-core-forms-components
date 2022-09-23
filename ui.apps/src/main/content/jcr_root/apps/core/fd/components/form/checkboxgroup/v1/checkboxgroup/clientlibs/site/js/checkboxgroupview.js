@@ -37,7 +37,8 @@
             label: `.${CheckBoxGroup.bemBlock}__label`,
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
-            errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`
+            errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
+            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -60,6 +61,14 @@
 
         getErrorDiv() {
             return this.element.querySelector(CheckBoxGroup.selectors.errorDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(CheckBoxGroup.selectors.qm);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
         }
 
         setModel(model) {

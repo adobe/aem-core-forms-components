@@ -1,5 +1,5 @@
 <!--
-Copyright 2017 Adobe
+Copyright 2022 Adobe
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Text (v1)
+Adaptive Form Text (v1)
 ====
 Text component written in HTL that provides a section of rich text.
 
@@ -45,4 +45,13 @@ The component provides a `core.forms.components.text.v1.runtime` client library 
 component. It should be added to a relevant site client library using the `embed` property.
 
 ## JavaScript Data Attribute Bindings
-Apply a `data-cmp-is="adaptiveFormText"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the checkbox-group component in the form view:  
+ 1. `data-cmp-is="adaptiveFormText"`
+ 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+ 
+## Information
+* **Vendor**: Adobe
+* **Version**: v1
+* **Compatibility**: Cloud
+* **Status**: production-ready

@@ -36,6 +36,10 @@ public final class FormConstants {
 
     /** The resource type for text input v1 */
     public static final String RT_FD_FORM_TEXT_V1 = RT_FD_FORM_PREFIX + "textinput/v1/textinput";
+
+    /** The resource type for button v1 */
+    public static final String RT_FD_FORM_BUTTON_V1 = RT_FD_FORM_PREFIX + "button/v1/button";
+
     /** The resource type for checkbox v1 */
     public static final String RT_FD_FORM_CHECKBOX_V1 = RT_FD_FORM_PREFIX + "checkbox/v1/checkbox";
 
@@ -64,6 +68,9 @@ public final class FormConstants {
 
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
+
+    /** The resource type for image v1 */
+    public static final String RT_FD_FORM_IMAGE_V1 = RT_FD_FORM_PREFIX + "image/v1/image";
 
     /** The resource type for terms and conditions v1 */
     public static final String RT_FD_FORM_TNC_V1 = RT_FD_FORM_PREFIX + "termsandcondition/v1/termsandcondition";

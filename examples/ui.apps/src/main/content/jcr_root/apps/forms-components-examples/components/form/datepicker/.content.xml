@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-  jcr:description="Adaptive Form Date Picker component"
   jcr:primaryType="cq:Component"
-  jcr:title="Adaptive Form DatePicker component"
+  jcr:title="Adaptive Form Date Picker"
+  jcr:description="Add a field with a calendar widget to select a date."
   sling:resourceSuperType="core/fd/components/form/datepicker/v1/datepicker"
   componentGroup="Core Components Examples"/>

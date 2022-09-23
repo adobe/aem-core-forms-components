@@ -1,0 +1,9 @@
+{
+  "id": "image-7cfd7f1fe4",
+  "name": "abc",
+  "visible": false,
+  "fieldType": "image",
+  "altText": "abc",
+  "value":"/content/image.img.png",
+  ":type": "core/fd/components/form/image/v1/image"
+}

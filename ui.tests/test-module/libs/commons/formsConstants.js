@@ -28,7 +28,9 @@ var formsConstants = {
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
-                "datepicker": "/apps/forms-components-examples/components/form/datepicker"
+                "datepicker": "/apps/forms-components-examples/components/form/datepicker",
+                "formbutton": "/apps/forms-components-examples/components/form/button",
+                "formimage": "/apps/forms-components-examples/components/form/image"
             }
         }
     },

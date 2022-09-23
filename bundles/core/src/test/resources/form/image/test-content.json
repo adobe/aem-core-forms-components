@@ -1,0 +1,20 @@
+{
+  "image" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/image/v1/image",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "visible" : false,
+    "altText": "abc",
+    "file": {
+      "jcr:content": {
+        "jcr:data": "sdsfbdfbfdbf",
+        "jcr:mimeType": "image/png"
+      }
+    },
+    "excludeFromDor": false,
+    "imageSrc" : "core/fd/components/form/image/v1/image",
+    "fieldType": "image"
+  }
+}
