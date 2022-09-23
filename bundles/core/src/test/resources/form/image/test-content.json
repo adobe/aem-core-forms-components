@@ -5,14 +5,7 @@
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
-    "description" : "dummy",
     "visible" : false,
-    "assistPriority" : "custom",
-    "dataRef" : "a.b",
-    "custom" : "Custom screen reader text",
-    "typeMessage" : "incorrect type",
-    "tooltip": "test-short-description",
-    "default" : "abc",
     "altText": "abc",
     "file": {
       "jcr:content": {
