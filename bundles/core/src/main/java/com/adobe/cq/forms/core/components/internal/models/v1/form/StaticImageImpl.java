@@ -32,7 +32,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.wcm.foundation.Image;
 
 @Model(
@@ -42,7 +42,7 @@ import com.day.cq.wcm.foundation.Image;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
+public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
     private Image image;
 
@@ -69,14 +69,29 @@ public class StaticImageImpl extends AbstractFieldImpl implements StaticImage {
         return image.getSrc();
     }
 
+    @Override
+    public String getValue() {
+        try {
+            return getImageSrc();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
     /**
      * Returns the alternate text of the Image configured in the authoring dialog.
      * 
      * @return String representing alternate text
      */
     @Override
+    @Nullable
     public String getAltText() {
         return altText;
     }
 
+    @Override
+    public String getDataRef() {
+        return null;
+    }
 }
