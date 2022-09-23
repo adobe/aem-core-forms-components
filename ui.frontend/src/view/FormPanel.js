@@ -59,8 +59,28 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
+    handleRepeatableChildAddition(event) {
+        //childView = event.detail
+        //This needs to be handled in tabs, accordion, wizard
+    }
+
+    handleRepeatableChildRemoval(event) {
+        //childView = event.detail
+        //This needs to be handled in tabs, accordion, wizard
+    }
+
     addChild(childView) {
         const viewId = childView.id;
+        const dispatchAddEvent = () => {
+            const event = new CustomEvent(Constants.PANEL_CHILD_ADDED, { "detail": childView });
+            this.element.dispatchEvent(event);
+        };
+
+        if (childView.repeatable) {
+            childView.element.addEventListener(Constants.PANEL_CHILD_ADDED, this.handleRepeatableChildAddition);
+            childView.element.addEventListener(Constants.PANEL_CHILD_REMOVED, this.handleRepeatableChildRemoval);
+        }
+
         if (this.repeatable) {
             if (!this._templateHTML) {
                 this.updateTemplate(childView);
@@ -72,11 +92,13 @@ export default class FormPanel extends FormFieldBase {
                 this.children.splice(instanceId, 0, childView);
                 //remove entry from deferred instances
                 delete this._deferredInstances[viewId];
+                dispatchAddEvent();
                 return;
             }
         }
 
         this.children.push(childView);
+        dispatchAddEvent();
     }
 
     _getInstanceArray(state) {
@@ -89,7 +111,7 @@ export default class FormPanel extends FormFieldBase {
         return instanceArray;
     }
 
-    addChildInstance(getState, state) {
+    addChildInstance(state) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
             return;
@@ -120,33 +142,34 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
-    removeChildInstance(removedModel, state) {
+    removeChildInstance(removedModel) {
         if (this.repeatable) {
             const instanceArray = this._getInstanceArray(removedModel);
-            const elementsToRemove = [];
             for (let i = 0; i < instanceArray.length; i++) {
                 const instanceId = instanceArray[i].index;
-                let view = this.children[instanceId];
-                Utils.removeFieldReferences(view);
-                elementsToRemove.push(view.element.parentElement);
+                let childView = this.children[instanceId];
+                Utils.removeFieldReferences(childView);
+                // removing just the parent view HTML child instance, to avoid repainting of UI for removal of each child HTML
+                childView.element.parentElement.remove();
                 this.children.splice(instanceId, 1);
+                const event = new CustomEvent(Constants.PANEL_CHILD_REMOVED, { "detail": childView });
+                this.element.dispatchEvent(event);
             }
-            // removing just the parent view HTML of all child instance, to avoid repainting of UI for removal of each child HTML
-            elementsToRemove.forEach((element) => element.remove());
         } else {
             console.error('Remove child instance is only supported for repeatable panels.');
         }
     }
 
     _registerInstanceHandlers() {
-        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_ADD_INSTANCE, this._addInstance);
-        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_REMOVE_INSTANCE, this._removeInstance);
+        //doesn't support repeatable panel inside repeatable panel
+        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this._addInstance(event)});
+        Utils.registerClickHandler(this.element, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this._removeInstance(event)});
     }
 
     _dispatchModelEvent(event, eventName, payload) {
         const customEvent = new CustomEvent(eventName);
         if (payload) {
-            event.payload = payload;
+            customEvent.payload = payload;
         }
         // todo else derive the index and count from event
         this._model.dispatch(customEvent);
@@ -201,9 +224,9 @@ export default class FormPanel extends FormFieldBase {
     _updateItems(prevValue, currentValue, state) {
         //if previous value exists it means remove item is invoked
         if (prevValue) {
-            this.removeChildInstance(prevValue, state);
+            this.removeChildInstance(prevValue);
         } else if (currentValue) {
-            this.addChildInstance(currentValue, state);
+            this.addChildInstance(state);
         }
     }
 }

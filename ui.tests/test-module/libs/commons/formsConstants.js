@@ -25,7 +25,10 @@ var formsConstants = {
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
-                "accordion": "/apps/forms-components-examples/components/form/accordion"
+                "accordion": "/apps/forms-components-examples/components/form/accordion",
+                "formtext": "/apps/forms-components-examples/components/form/text",
+                "footer": "/apps/forms-components-examples/components/form/footer",
+                "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup"
             }
         }
     },

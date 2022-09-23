@@ -18,7 +18,7 @@ describe("Form with Panel Container", () => {
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
 
-    let formContainer = null
+    let formContainer = null;
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
@@ -26,36 +26,7 @@ describe("Form with Panel Container", () => {
         })
     });
 
-    const checkView = (id, view, count) => {
-        expect(view.children.length, "panel has children equal to count").to.equal(count);
-    }
-
-    const checkViewUpdate = (id, view, count) => {
-        //adding delay for view update via mutation observer after html is appended
-        const delayId = "delayAdder";
-        cy.document().then($document => {
-            cy.get(`#${id}`).then(($div) => {
-                function delay(){
-                    var mydiv = $document.createElement("div");
-                    mydiv.setAttribute("id", delayId);
-                    mydiv.innerText = "This is for adding delay.";
-                    return mydiv;
-                }
-                $div.append(delay)
-            })
-        });
-        return cy.get(`#${delayId}`)
-            .then($el => $el.remove())
-            .then(() => {
-                cy.get(`#${delayId}`).should('not.exist');
-                return cy.get(`#${id}`);
-            })
-            .then(() => {
-                checkView(id, view, count);
-            });
-    }
-
-    const checkHTML = (id, state, count, view) => {
+    const checkHTML = (id, state, view, count) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         cy.get(`#${id}`)
@@ -66,14 +37,46 @@ describe("Form with Panel Container", () => {
             .invoke('attr', 'data-cmp-enabled')
             .should('eq', state.enabled.toString());
         expect(state.items.length, "model has children equal to count").to.equal(count);
-        cy.get(`.${childBemBlock}`).should('have.length', count);
-
-        checkViewUpdate(id, view, count);
-
-        return cy.get(`#${id}`).within((root) => {
+        if (count == 0) {
+            cy.get(`.${childBemBlock}`).should('not.exist');
+        } else {
             cy.get(`.${childBemBlock}`).should('have.length', count);
+        }
+
+        expect(view.children.length, "panel has children equal to count").to.equal(count);
+        return cy.get(`#${id}`);
+    };
+
+    const checkAddRemoveInstance = (panelId, panelModel, panelView, count, isAdd) => {
+        const EVENT_NAME = isAdd ? "AF_PanelChildAdded" : "AF_PanelChildRemoved";
+        let innerResolution = undefined;
+        const innerPromise = new Cypress.Promise((resolve, reject) => {innerResolution = resolve;});
+
+        let resolution = undefined;
+        cy.get(`#${panelId}`).then(panelElement => {
+            const listener1 = e => {
+                console.error(`received ${EVENT_NAME}`);
+                panelElement[0].removeEventListener(EVENT_NAME, listener1);
+                resolution(e.detail);
+            };
+            console.error(`waiting for ${EVENT_NAME}`)
+            panelElement[0].addEventListener(EVENT_NAME, listener1);
+        })
+        .then(() => {
+            const promise = new Cypress.Promise((resolve, reject) => {resolution = resolve;});
+            if (isAdd == true) {
+                panelView._addInstance();
+            } else {
+                panelView._removeInstance();
+            }
+            promise.then(() => {
+                const e = checkHTML(panelId, panelModel.getState(), panelView, count);
+                innerResolution(e);
+            });
         });
-    }
+
+        return innerPromise;
+    };
 
     it(" should get model and view initialized properly and parent child relationship is set ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
@@ -97,12 +100,12 @@ describe("Form with Panel Container", () => {
         const model = formContainer._model.getElement(panelId);
         const panelView = formContainer._fields[panelId];
         const count = 1;
-        checkHTML(model.id, model.getState(), count, panelView).then(() => {
+        checkHTML(model.id, model.getState(), panelView, count).then(() => {
             model.visible = false;
-            return checkHTML(model.id, model.getState(), count, panelView);
+            return checkHTML(model.id, model.getState(), panelView, count);
         }).then(() => {
             model.enable = false;
-            return checkHTML(model.id, model.getState(), count, panelView);
+            return checkHTML(model.id, model.getState(), panelView, count);
         });
     });
 
@@ -110,52 +113,44 @@ describe("Form with Panel Container", () => {
         const panelId = formContainer._model.items[0].id;
         const panelModel = formContainer._model.getElement(panelId);
         const panelView = formContainer._fields[panelId];
+
         panelModel.visible = true;
         panelModel.enable = true;
 
-        let count = 2;
-        panelView._addInstance();
-        checkHTML(panelModel.id, panelModel.getState(), count, panelView)
+
+        checkHTML(panelId, panelModel.getState(), panelView, 1)
+        .then(() => {
+            checkAddRemoveInstance(panelId, panelModel, panelView, 2, true)
             .then(() => {
-                count = 3;
-                //todo add payload tests once this is fixed in model
-                panelView._addInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                count = 4;
-                panelView._addInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                //max is 4 so shouldn't increase
-                panelView._addInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                count = 3;
-                panelView._removeInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                count = 2;
-                panelView._removeInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                count = 1;
-                panelView._removeInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                count = 0;
-                panelView._removeInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                //can't go below zero
-                //todo remove commenting of below line once fixed in model
-                //panelView._removeInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
-            }).then(() => {
-                //after removing all, still one should be able to repeat instance
-                count = 1;
-                panelView._addInstance();
-                return checkHTML(panelModel.id, panelModel.getState(), count, panelView);
+                checkAddRemoveInstance(panelId, panelModel, panelView, 3, true)
+                .then(() => {
+                    checkAddRemoveInstance(panelId, panelModel, panelView, 4, true)
+                    .then(() => {
+                        //max is 4
+                        panelView._addInstance();
+                        checkHTML(panelId, panelModel.getState(), panelView, 4);
+                        checkAddRemoveInstance(panelId, panelModel, panelView, 3)
+                        .then(() => {
+                            checkAddRemoveInstance(panelId, panelModel, panelView, 2)
+                            .then(() => {
+                                checkAddRemoveInstance(panelId, panelModel, panelView, 1)
+                                .then(() => {
+                                    checkAddRemoveInstance(panelId, panelModel, panelView, 0)
+                                    .then(() => {
+                                        //can't go below zero
+                                        //todo uncomment code below, once model remove on zero is fixed
+                                        //panelView._removeInstance();
+                                        //checkHTML(panelId, panelModel.getState(), panelView, 0);
+                                        //ability to add instance from zero
+                                        checkAddRemoveInstance(panelId, panelModel, panelView, 1, true);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
             });
+        });
     });
 
 })
