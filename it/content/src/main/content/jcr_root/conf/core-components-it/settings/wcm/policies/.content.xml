@@ -12,8 +12,9 @@
                       jcr:primaryType="nt:unstructured"
                       jcr:title="formcontainer-policy"
                       sling:resourceType="wcm/core/components/policy/policy"
-                      components="[/apps/forms-components-examples/components/form/textinput,/apps/forms-components-examples/components/form/datepicker,/apps/forms-components-examples/components/form/panelcontainer,/apps/forms-components-examples/components/form/image]">
-                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                      components="[/apps/forms-components-examples/components/form/textinput,/apps/forms-components-examples/components/form/datepicker,/apps/forms-components-examples/components/form/panelcontainer,/apps/forms-components-examples/components/form/text,/apps/forms-components-examples/components/form/footer,/apps/forms-components-examples/components/form/checkboxgroup,/apps/forms-components-examples/components/form/image]">
+                      <jcr:content
+                         jcr:primaryType="nt:unstructured"/>
                     </policy_1657606299305>
                 </container>
             </form>

@@ -16,8 +16,6 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Map;
 
 import javax.jcr.RepositoryException;
 
@@ -29,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -68,7 +66,7 @@ public class StaticImageImplTest {
     @Test
     void testFieldType() {
         StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-        assertEquals(Base.FieldType.IMAGE.getValue(), staticImage.getFieldType());
+        assertEquals(FieldType.IMAGE.getValue(), staticImage.getFieldType());
     }
 
     @Test
@@ -214,16 +212,6 @@ public class StaticImageImplTest {
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getTooltip()).thenCallRealMethod();
         assertEquals(null, staticImageMock.getTooltip());
-    }
-
-    @Test
-    void testGetConstraintMessages() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
-        Map<Base.ConstraintType, String> constraintsMessages = staticImage.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
-        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
-        Mockito.when(staticImageMock.getConstraintMessages()).thenCallRealMethod();
-        assertEquals(Collections.emptyMap(), staticImageMock.getConstraintMessages());
     }
 
     @Test
