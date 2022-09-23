@@ -132,7 +132,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="customText"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    wrapperClass="cmp-adaptiveform-radiobutton__assistprioritycustom"
+                                    granite:class="cmp-adaptiveform-checkboxgroup__assistprioritycustom"
                                     fieldLabel="Screen reader precedence"
                                     name="./assistPriority"
                                     value="">
@@ -151,6 +151,19 @@
                                             value="caption"/>
                                 </items>
                             </assistPriorityCustom>
+                            <customText
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    wrapperClass="cmp-adaptiveform-checkboxgroup__customtext"
+                                    fieldLabel="Custom text">
+                                <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        wrapper-class="custom-text-wrapper"/>
+                                <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        name="./custom"/>
+                            </customText>
                         </items>
                     </accessibility>
                 </items>

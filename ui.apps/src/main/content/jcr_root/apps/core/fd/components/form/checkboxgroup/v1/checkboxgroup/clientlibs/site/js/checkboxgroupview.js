@@ -28,10 +28,12 @@
          */
         static IS = "adaptiveFormCheckBoxGroup";
         static bemBlock = 'cmp-adaptiveform-checkboxgroup'
+        static checkboxBemBlock = 'cmp-adaptiveform-checkbox'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${CheckBoxGroup.bemBlock}__widget`,
-            widgetLabel: `.${CheckBoxGroup.bemBlock}__widget__label`,
+            widgets: `.${CheckBoxGroup.bemBlock}__widgets`,
+            widget: `.${CheckBoxGroup.checkboxBemBlock}__widget`,
+            widgetLabel: `.${CheckBoxGroup.checkboxBemBlock}__label`,
             label: `.${CheckBoxGroup.bemBlock}__label`,
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
@@ -87,11 +89,11 @@
             this.widget.forEach(widget => {
                 if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
-                    widget.setAttribute(FormView.Constants.CHECKED, FormView.Constants.CHECKED)
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.CHECKED)
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
                 } else {
                     widget.checked = false
-                    widget.removeAttribute(FormView.Constants.CHECKED);
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
@@ -103,10 +105,10 @@
             let widgets = this.widget
             widgets.forEach(widget => {
                 if (enable === false) {
-                    widget.setAttribute(FormView.Constants.DISABLED, true);
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 } else {
-                    widget.removeAttribute(FormView.Constants.DISABLED);
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });

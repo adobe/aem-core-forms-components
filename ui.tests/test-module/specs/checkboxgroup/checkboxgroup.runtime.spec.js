@@ -66,6 +66,11 @@ describe("Form with CheckBoxGroup Input", () => {
         const model = formContainer._model.getElement(id)
         const val = Array('1','2')
         model.value = '1'
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'VERTICAL')
+        const [id2, fieldView2] = Object.entries(formContainer._fields)[1]
+        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'HORIZONTAL')
+
+
         checkHTML(model.id, model.getState()).then(() => {
             model.visible = false
             return checkHTML(model.id, model.getState())
@@ -79,17 +84,33 @@ describe("Form with CheckBoxGroup Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
 
+        cy.log(model.getState().value)
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            let mval = model.getState().value
-            cy.wrap(model.getState().value).each(($el, index) => {
-                expect($el).to.include(mval[index])
-            })
+            cy.log(model.getState().value)
+            expect(model.getState().value).to.contain('1');
         })
+
         cy.get(`#${id}`).find("input").eq(2).click().then(x => {
-            let mval = model.getState().value
-            cy.wrap(model.getState().value).each(($el, index) => {
-                expect($el).to.include(mval[index])
-            })
+            cy.log(model.getState().value)
+            expect(model.getState().value).to.contain('2');
+        })
+    });
+
+    it(" should show error messages in the HTML ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[1]
+        const model = formContainer._model.getElement(id)
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            cy.log(model.getState().value)
+            expect(model.getState().value).to.contain('1');
+        })
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"This is a custom required checkboxgroup")
+        })
+
+        cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
         })
     });
 

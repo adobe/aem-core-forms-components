@@ -20,7 +20,7 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
-        static bemBlock = 'cmp-adaptiveform-datepicker'
+        static bemBlock = 'cmp-adaptiveform-datepicker';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${DatePicker.bemBlock}__widget`,

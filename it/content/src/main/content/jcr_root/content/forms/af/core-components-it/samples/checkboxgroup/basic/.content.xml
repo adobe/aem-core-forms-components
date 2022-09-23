@@ -27,10 +27,8 @@
                     enum="[0,1,2,3]"
                     enumNames="[Item 1, Item 2, Item 3, Item 4]"
                     fieldType="checkbox-group"
-                    mandatoryMessage="This is a required checkboxgroup"
                     name="checkboxgroup1662722663424"
                     orientation="vertical"
-                    textIsRich="[true,true]"
                     type="string[]"
                     visible="{Boolean}true"/>
             <checkboxgroup2
@@ -45,10 +43,10 @@
                     enum="[0,1,2,3]"
                     enumNames="[Item 1, Item 2, Item 3, Item 4]"
                     fieldType="checkbox-group"
-                    mandatoryMessage="This is a required checkboxgroup"
+                    mandatoryMessage="This is a custom required checkboxgroup"
+                    required="true"
                     name="checkboxgroup1662722663425"
-                    orientation="vertical"
-                    textIsRich="[true,true]"
+                    orientation="horizontal"
                     type="string[]"
                     visible="{Boolean}true"/>
         </guideContainer>

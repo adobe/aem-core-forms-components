@@ -43,6 +43,15 @@ describe('Page - Authoring', function () {
     cy.get('body').click( 0,0);
   }
 
+  const getPreviewIframeBody = () => {
+    // get the iframe > document > body
+    // and retry until the body element is not empty
+    return cy
+        .get('iframe#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+  }
+
   const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
     if (isSites) {
       dropTextInputInSites();
@@ -59,7 +68,30 @@ describe('Page - Authoring', function () {
     cy.get("[name='./enumNames']")
     .should("exist");
 
-    cy.get('.cq-dialog-cancel').click();
+    // Checking some dynamic behaviours
+    cy.get("[name='./required'][type=\"checkbox\"]").should("exist");
+    cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist");
+
+    // verifying prefill data is working for enum and enumNames
+    cy.get('input[name="./enum"]').should('have.length', 2);
+    cy.get('input[name="./enum"]').first().should('have.value', 0);
+    cy.get('input[name="./enumNames"]').should('have.length', 2);
+    cy.get('input[name="./enumNames"]').first().should('have.value', "Item 1");
+
+    // selecting number as type of the checkbox
+    cy.get('.cmp-adaptiveform-checkboxgroup__type').should("exist").click();
+    cy.get('coral-selectlist-item[value="number[]"]').should("exist").click();
+
+    // selecting vertical alignment as an orientation
+    cy.get('input[name="./orientation"][value="vertical"]').should("exist").click();
+
+    // saving the dialog with changes
+    cy.get('.cq-dialog-submit').click();
+
+    // verifying alignment change in preview editor
+    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').should('have.length',2);
+    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').first().should('have.css', "display", "block");
+
     cy.deleteComponentByPath(checkBoxGroupDrop);
   }
 

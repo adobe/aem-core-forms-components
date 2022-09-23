@@ -1,46 +1,53 @@
 {
-  "id": "panelcontainer-da2cf7dff5",
-  "items": [
+  "id":"panelcontainer-da2cf7dff5",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "type":"object",
+  "fieldType":"panel",
+  "name":"abc",
+  "visible":true,
+  "enabled":true,
+  "items":[
     {
-      "id": "textinput-2d7a7460fa",
-      "description": "dummy",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
+      "id":"textinput-2d7a7460fa",
+      "description":"dummy",
+      "type":"string",
+      "fieldType":"text-input",
+      "required":false,
+      "name":"abc",
+      "visible":false,
+      "enabled":true,
+      "readOnly":false,
+      "label":{
+        "richText":false,
+        "visible":true,
+        "value":"def"
       },
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput"
+      "properties": {
+        "fd:dor":{
+          "dorExclusion":false
+        }
+      },
+      ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
-  "fieldType" : "panel",
-  "tooltip" : "dependent names tooltip",
-  "description" : "dependent names description",
-  "type" : "object",
-  "label" : {
-    "richText": false,
-    "value" : "dependent names",
-    "visible": true
+  "label":{
+    "richText":false,
+    "visible":true,
+    "value":"dependent names"
   },
-  "visible": true,
-  "enabled": true,
-  "name": "abc",
-  "properties": {
-    "af:layout": {
-      "tooltipVisible": false
+  "events":{
+    "change":[
+      "some expression 2"
+    ]
+  },
+  "properties":{
+    "afs:layout":{
+      "tooltipVisible":false
     }
   },
-  "rules" : {
-    "visible" : "some expression"
+  "rules":{
+    "visible":"some expression"
   },
-  "events" : {
-    "change" : ["some expression 2"]
-  }
+  ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

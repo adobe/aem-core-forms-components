@@ -63,16 +63,8 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
         return customProperties;
     }
 
-    /**
-     * Returns the orientation of the checkboxgroup component
-     *
-     * @return {@link CheckBox.Orientation}.
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
-     */
     @JsonIgnore
     public CheckBox.Orientation getOrientation() {
-        if (orientation == null)
-            return CheckBox.Orientation.HORIZONTAL;
         return orientation;
     }
 
