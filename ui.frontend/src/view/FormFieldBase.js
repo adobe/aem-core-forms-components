@@ -33,7 +33,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getWidget() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -41,7 +41,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getDescription() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -49,7 +49,7 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getLabel() {
-
+        throw "method not implemented";
     }
 
     /**
@@ -57,7 +57,21 @@ export default class FormFieldBase extends FormField {
      * @returns
      */
     getErrorDiv() {
+        throw "method not implemented";
+    }
 
+    /**
+     * implementation should return the tooltip / short description div
+     */
+    getTooltipDiv() {
+        throw "method not implemented";
+    }
+
+    /**
+     * Implementation should return the questionMark div
+     */
+    getQuestionMarkDiv() {
+        throw "method not implemented";
     }
 
     setModel(model) {
@@ -82,8 +96,39 @@ export default class FormFieldBase extends FormField {
         if (state.value) {
             this._updateValue(state.value);
         }
-        this._updateVisible(state.visible);
-        this._updateEnable(state.enabled);
+        this._updateVisible(state.visible)
+        this._updateEnable(state.visible)
+        this._initializeHelpContent(state);
+    }
+
+    _initializeHelpContent(state) {
+        // Initializing Hint ('?') and long description.
+        this._showHideLongDescriptionDiv(false);
+        if (this.getDescription()) {
+            this._addHelpIconHandler(state);
+        }
+    }
+
+    /**
+     *
+     * @param show If true then <div> containing tooltip(Short Description) will be shown else hidden
+     * @private
+     */
+    _showHideTooltipDiv(show) {
+        this.toggleAttribute(this.getTooltipDiv(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+    }
+
+    /**
+     *
+     * @param show If true then <div> containing description(Long Description) will be shown
+     * @private
+     */
+    _showHideLongDescriptionDiv(show) {
+        this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+    }
+
+    _isTooltipAlwaysVisible() {
+        return !!this.getLayoutProperties()['tooltipVisible'];
     }
 
     /**
@@ -128,6 +173,34 @@ export default class FormFieldBase extends FormField {
 
     _updateValue(value) {
         this.widget.value = value;
+    }
+
+    /**
+     * Shows or Hides Description Based on click of '?' mark.
+     * @private
+     */
+    _addHelpIconHandler(state) {
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
+            tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
+        const self = this;
+        if (questionMarkDiv && descriptionDiv) {
+            questionMarkDiv.addEventListener('click', (e) => {
+                e.preventDefault();
+                const longDescriptionVisibleAttribute = descriptionDiv.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+                if (longDescriptionVisibleAttribute === 'false') {
+                    self._showHideLongDescriptionDiv(true);
+                    if (tooltipAlwaysVisible) {
+                        self._showHideTooltipDiv(false);
+                    }
+                } else {
+                    self._showHideLongDescriptionDiv(false);
+                    if (tooltipAlwaysVisible) {
+                        self._showHideTooltipDiv(true);
+                    }
+                }
+            });
+        }
     }
 
     getClass() {
