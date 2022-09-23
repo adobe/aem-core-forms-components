@@ -51,7 +51,7 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     private boolean showAsLink;
-    
+
     public boolean getShowAsLink() {
         return showAsLink;
     }
