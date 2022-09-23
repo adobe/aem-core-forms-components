@@ -15,11 +15,11 @@
  */
 
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const commons = require('../../libs/commons/commons'),
+    sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    sitesConstants = require('../../libs/commons/sitesConstants'),
+    guideSelectors = require('../../libs/commons/guideSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
  * Testing TextInput with Sites Editor
@@ -31,7 +31,7 @@ describe('Page - Authoring', function () {
     const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
     cy.get('body').click( 0,0);
   }
 
@@ -39,7 +39,7 @@ describe('Page - Authoring', function () {
     const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Input component", afConstants.components.forms.resourceType.formtextinput);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
     cy.get('body').click( 0,0);
   }
 

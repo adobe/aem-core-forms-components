@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with CheckBoxGroup Input", () => {
+describe("Form Runtime with CheckBoxGroup Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkboxgroup'

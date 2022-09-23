@@ -15,11 +15,8 @@
  */
 
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
  * Testing Panel Container with Sites Editor
@@ -31,7 +28,7 @@ describe('Page - Authoring', function () {
     const responsiveGridDropZone = "Drag components here",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelcontainer);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
     cy.get('body').click( 0,0);
   }
 
@@ -39,7 +36,7 @@ describe('Page - Authoring', function () {
     const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel component", afConstants.components.forms.resourceType.panelcontainer);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
     cy.get('body').click( 0,0);
   }
 
