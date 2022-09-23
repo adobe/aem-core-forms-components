@@ -16,9 +16,6 @@
 
 (function() {
 
-    var NS = "cmp";
-    var IS = "adaptiveFormTabs";
-
     var keyCodes = {
         END: 35,
         HOME: 36,
@@ -28,6 +25,9 @@
         ARROW_DOWN: 40
     };
 
+    var NS = FormView.Constants.NS;
+    var IS = "adaptiveFormTabs";
+
     var selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]',
         active: {
@@ -36,14 +36,8 @@
         }
     };
 
+
     class Tabs extends FormView.FormPanel {
-
-        static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormTabs";
-
-        static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
-        };
 
         constructor(params) {
             super(params);
@@ -100,7 +94,7 @@
         }
 
         getClass() {
-            return Tabs.IS;
+            return IS;
         }
 
         setFocus() {
@@ -257,8 +251,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        console.log("=========== setupField", element.id);
         return new Tabs({element, formContainer})
-    }, Tabs.selectors.self);
+    }, selectors.self);
     
 }());
