@@ -116,10 +116,6 @@
                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                         name="./default"
                                         required="{Boolean}false"/>
-<!--                                <default-->
-<!--                                        jcr:primaryType="nt:unstructured"-->
-<!--                                        sling:resourceType="granite/ui/components/coral/foundation/form/hidden"-->
-<!--                                        name="./default"/>-->
                             </defaultValueMS>
 
                         </items>

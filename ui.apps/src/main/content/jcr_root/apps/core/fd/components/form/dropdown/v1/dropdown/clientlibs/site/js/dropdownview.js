@@ -58,7 +58,7 @@
             return this.element.querySelector(DropDown.selectors.errorDiv);
         }
 
-        _checkIfEqual(value, optionValue, multiSelect) {
+         #checkIfEqual = function(value, optionValue, multiSelect) {
             if(multiSelect) {
                 let isPresent = false;
                 value.forEach((saveValue) => {
@@ -73,7 +73,7 @@
         _updateValue(value) {
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
-                    if(this._checkIfEqual(value, option.value, isMultiSelect)) {
+                    if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                         option.setAttribute('selected', 'selected')
                     } else {
                         option.removeAttribute('selected');

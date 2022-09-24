@@ -65,12 +65,12 @@
             defaultInput = dialog.find(DEFAULTINPUT),
             defaultMultiInput = dialog.find(DEFAULTMUTIINPUT);
 
-        var isMutiSelect = function () {
+        var isMultiSelect = function () {
             return multiSelect.checked;
         }
 
-        var isNotMutiSelect = function () {
-            return !isMutiSelect();
+        var isNotMultiSelect = function () {
+            return !isMultiSelect();
         }
 
         var changeNameForMultiSelect = function (newName) {
@@ -80,11 +80,11 @@
         }
 
         var hideAndShowElements = function () {
-            Utils.checkAndDisplay(defaultValueMS)(isMutiSelect);
-            Utils.checkAndDisplay(defaultValue)(isNotMutiSelect);
+            Utils.checkAndDisplay(defaultValueMS)(isMultiSelect);
+            Utils.checkAndDisplay(defaultValue)(isNotMultiSelect);
 
             // making sure that ./default of the rendered component is only persisted in jcr
-            if(isMutiSelect()) {
+            if(isMultiSelect()) {
                 defaultInput.attr("name","./default@Delete");
                 changeNameForMultiSelect("./default");
             } else {
@@ -97,7 +97,6 @@
             hideAndShowElements();
         });
     }
-
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue);
 })(jQuery);
