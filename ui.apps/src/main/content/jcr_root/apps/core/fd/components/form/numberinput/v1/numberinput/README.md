@@ -13,20 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Text Input (v1)
+Adaptive Form Number Input (v1)
 ====
-Adaptive Form Text input field component written in HTL.
+Adaptive Form Number input field component written in HTL.
 
 ## Features
 
 * Provides the following type of input:
-  * text
-  * textarea
+  * html5 number input
 * Custom constraint messages for the above types
 * Styles
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
+The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.NumberInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
@@ -38,10 +37,16 @@ The following properties are written to JCR for this Form Text component and are
 5. `./description` - defines a help message that can be rendered in the field as a hint for the user
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
+8. `./readOnly` - if set to `true`, the field will be read only
+9. `./minimum` - the minimum value that can be entered in this input
+10. `./maximum` - the maximum value that can be entered in this input
+11. `./minimumMessage` - the message showed to the user if the entered value is less than the minimum value
+12. `./maximumMessage` - the message showed to the user if the entered value is more than the maximum value
+13. `./leadDigits` - the max no of digits before decimal that can be entered if the type of field is Decimal.
+14. `./fracDigits` - the max no of digits after decimal that can be entered if the type of field is Decimal.
 
 ## Client Libraries
-The component provides a `core.forms.components.textinput.v1` client library category that contains a JavaScript
+The component provides a `core.forms.components.numberinput.v1` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.
 
 It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
@@ -49,22 +54,23 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__label
-    ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
+BLOCK cmp-adaptiveform-numberinput
+    ELEMENT cmp-adaptiveform-numberinput
+    ELEMENT cmp-adaptiveform-numberinput__widget
+    ELEMENT cmp-adaptiveform-numberinput__questionmark
+    ELEMENT cmp-adaptiveform-numberinput__shortdescription
+    ELEMENT cmp-adaptiveform-numberinput__longdescription
 ```
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
-
-The following attributes can be added to the same element to provide options:
-
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
-
-A `data-cmp-hook-adaptiveform-textinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
+The following attributes must be added for the initialization of the button component in the form view:
+1. `data-cmp-is="adaptiveFormButton"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 
+## Information
+* **Vendor**: Adobe
+* **Version**: v1
+* **Compatibility**: Cloud
+* **Status**: production-ready

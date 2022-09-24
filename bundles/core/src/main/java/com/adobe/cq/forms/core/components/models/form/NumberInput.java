@@ -30,5 +30,7 @@ public interface NumberInput extends Field, NumberConstraint {
 
     @Nullable
     @JsonIgnore
-    String getEditFormat();
+    default String getEditFormat() {
+        return null;
+    }
 }

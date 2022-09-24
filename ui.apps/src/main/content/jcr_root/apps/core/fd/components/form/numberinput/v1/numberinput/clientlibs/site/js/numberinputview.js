@@ -26,7 +26,9 @@
             widget: `.${NumberInput.bemBlock}__widget`,
             label: `.${NumberInput.bemBlock}__label`,
             description: `.${NumberInput.bemBlock}__longdescription`,
-            errorDiv: `.${NumberInput.bemBlock}__errormessage`
+            errorDiv: `.${NumberInput.bemBlock}__errormessage`,
+            qm: `.${NumberInput.bemBlock}__questionmark`,
+            tooltipDiv: `.${NumberInput.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -51,6 +53,14 @@
 
         getErrorDiv() {
             return this.element.querySelector(NumberInput.selectors.errorDiv);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(NumberInput.selectors.tooltipDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(NumberInput.selectors.qm);
         }
 
         setModel(model) {

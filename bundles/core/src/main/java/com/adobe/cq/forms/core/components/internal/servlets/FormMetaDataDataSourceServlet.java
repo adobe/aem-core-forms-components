@@ -16,7 +16,13 @@
 package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,8 +34,6 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +44,6 @@ import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ExpressionResolver;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
-import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
@@ -137,35 +140,38 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
-                    metaDataList = formMetaData.getFormatters(fieldType);
-                    while (metaDataList.hasNext()) {
-                        FormsManager.ComponentDescription componentDescription = metaDataList.next();
-                        Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
-                        if (formatterResource != null) {
-                            String path = formatterResource.getPath();
-                            ValueMap formatterResourceValueMap = formatterResource.getValueMap();
-                            Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
-                            while (it.hasNext()) {
-                                Map.Entry<String, Object> entry = it.next();
-                                String key = entry.getKey();
-                                // This condition is sufficient for property guideComponentType to get ignored
-                                if (key.startsWith("pattern")) {
-                                    Map<String, Object> respObj = new HashMap<>();
-                                    String value = (String) entry.getValue();
-                                    String[] arr = value.split("=", 2);
-                                    respObj.put("text", arr[0]);
-                                    respObj.put("value", arr[1]);
-                                    ValueMap vm = new ValueMapDecorator(respObj);
-                                    resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
-                                }
-                            }
-                            Map<String, Object> customEntry = new HashMap<>();
-                            customEntry.put("text", "Custom");
-                            customEntry.put("value", "custom");
-                            ValueMap vm = new ValueMapDecorator(customEntry);
-                            resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
-                        }
-                    }
+                    resources = new ArrayList<>();
+                    /*
+                     * metaDataList = formMetaData.getFormatters(fieldType);
+                     * while (metaDataList.hasNext()) {
+                     * FormsManager.ComponentDescription componentDescription = metaDataList.next();
+                     * Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
+                     * if (formatterResource != null) {
+                     * String path = formatterResource.getPath();
+                     * ValueMap formatterResourceValueMap = formatterResource.getValueMap();
+                     * Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
+                     * while (it.hasNext()) {
+                     * Map.Entry<String, Object> entry = it.next();
+                     * String key = entry.getKey();
+                     * // This condition is sufficient for property guideComponentType to get ignored
+                     * if (key.startsWith("pattern")) {
+                     * Map<String, Object> respObj = new HashMap<>();
+                     * String value = (String) entry.getValue();
+                     * String[] arr = value.split("=", 2);
+                     * respObj.put("text", arr[0]);
+                     * respObj.put("value", arr[1]);
+                     * ValueMap vm = new ValueMapDecorator(respObj);
+                     * resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
+                     * }
+                     * }
+                     * Map<String, Object> customEntry = new HashMap<>();
+                     * customEntry.put("text", "Custom");
+                     * customEntry.put("value", "custom");
+                     * ValueMap vm = new ValueMapDecorator(customEntry);
+                     * resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
+                     * }
+                     * }
+                     */
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model

@@ -20,65 +20,8 @@
         NUMERICINPUT_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__type",
         NUMERICINPUT_LEADDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__leaddigits",
         NUMERICINPUT_FRACDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__fracdigits",
-        NUMERICINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displaypattern",
-        NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
-        NUMERICINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__validationpattern",
-        NUMERICINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__validationpictureclause",
         NUMERICINPUT_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__editFormat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
-
-
-
-    function handleDisplayPatternDropDown(dialog) {
-        var displayPatternComponent = dialog.find(NUMERICINPUT_DISPLAYPATTERN)[0];
-        var displayFormatComponent = dialog.find(NUMERICINPUT_DISPLAYFORMAT)[0];
-        var validationPatternComponent=dialog.find(NUMERICINPUT_VALIDATIONPATTERN)[0];
-        var validationFormatComponent=dialog.find(NUMERICINPUT_VALIDATIONFORMAT)[0];
-
-        _manageDisplayPatternDynamicBehaviour();
-        displayPatternComponent.addEventListener("change", _manageDisplayPatternDynamicBehaviour );
-        function _manageDisplayPatternDynamicBehaviour() {
-            var displayPatternSelectedValue = displayPatternComponent.selectedItem.innerHTML;
-            var displayFormatParentDiv=displayFormatComponent.closest("div");
-            switch (displayPatternSelectedValue) {
-                case "Select"     :
-                case "No Pattern" :
-                    displayFormatParentDiv.setAttribute("hidden", true);
-                    break;
-                default           :
-                    displayFormatParentDiv.removeAttribute("hidden");
-            }
-            if(displayPatternSelectedValue!="Custom") {
-                displayFormatComponent.value = displayPatternComponent.value;
-            }
-        }
-
-    }
-
-
-
-    function handleValidationPatternDropdown(dialog){
-        var validationPatternComponent=dialog.find(NUMERICINPUT_VALIDATIONPATTERN)[0];
-        var validationFormatComponent=dialog.find(NUMERICINPUT_VALIDATIONFORMAT)[0];
-        _manageValidationPatternChange();
-        validationPatternComponent.addEventListener("change",_manageValidationPatternChange);
-        function _manageValidationPatternChange(){
-            var validationPatternValue=validationPatternComponent.value;
-            var validationPatternSelectedValue = validationPatternComponent.selectedItem.innerHTML;
-            var validationFormatParentDiv=validationFormatComponent.closest("div");
-            switch (validationPatternSelectedValue) {
-                case "Select"     :
-                case "No Pattern" :
-                    validationFormatParentDiv.setAttribute("hidden", true);
-                    break;
-                default           :
-                    validationFormatParentDiv.removeAttribute("hidden");
-            }
-            if(validationPatternSelectedValue!="Custom") {
-                validationFormatComponent.value = validationPatternValue;
-            }
-        }
-    }
 
     function handleTypeDropdown(dialog) {
         var typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
@@ -92,7 +35,7 @@
             let leadDigitsElement = dialog.find(NUMERICINPUT_LEADDIGITS);
             let fracDigitsParentDivElem = (fracDigitsElement).closest("div")[0];
 
-            if(selectedValue=='decimal'){
+            if(selectedValue === 'number'){
                 var leadDigitsLabel = CQ.I18n.getMessage("Lead digits");
                 leadDigitsElement.siblings("label").text(leadDigitsLabel);
                 fracDigitsParentDivElem.removeAttribute("hidden");
@@ -100,53 +43,6 @@
                 var totalDigitsLabel = CQ.I18n.getMessage("Maximum Number of Digits");
                 leadDigitsElement.siblings("label").text(totalDigitsLabel);
                 fracDigitsParentDivElem.setAttribute("hidden", true);
-            }
-        }
-    }
-
-    function handleDisplayFormat(dialog){
-        var displayPatternComponent = dialog.find(NUMERICINPUT_DISPLAYPATTERN)[0];
-        var displayFormatComponent = dialog.find(NUMERICINPUT_DISPLAYFORMAT)[0];
-        var validationPatternComponent=dialog.find(NUMERICINPUT_VALIDATIONPATTERN)[0];
-        var validationFormatComponent=dialog.find(NUMERICINPUT_VALIDATIONFORMAT)[0];
-
-        _manageDisplayFormatChange()
-        displayFormatComponent.addEventListener("change", _manageDisplayFormatChange );
-        function _manageDisplayFormatChange(){
-            var itemFound=false;
-            if(displayFormatComponent.value!=displayPatternComponent.value){
-                displayPatternComponent.items.getAll().forEach(function (item) {
-                    if (item.value == displayFormatComponent.value) {
-                        item.selected = true;
-                        itemFound = true;
-                    }
-                });
-               if(!itemFound){
-                   displayPatternComponent.value="custom";
-               }
-            }
-
-        }
-    }
-
-    function handleValidationFormat(dialog){
-        var validationPatternComponent=dialog.find(NUMERICINPUT_VALIDATIONPATTERN)[0];
-        var validationFormatComponent=dialog.find(NUMERICINPUT_VALIDATIONFORMAT)[0];
-
-        _manageValidationFormatChange()
-        validationFormatComponent.addEventListener("change", _manageValidationFormatChange );
-        function _manageValidationFormatChange(){
-            var itemFound=false;
-            if(validationFormatComponent.value!=validationPatternComponent.value){
-                validationPatternComponent.items.getAll().forEach(function (item) {
-                    if (item.value == validationFormatComponent.value) {
-                        item.selected = true;
-                        itemFound = true;
-                    }
-                });
-                if(!itemFound){
-                    validationPatternComponent.value="custom";
-                }
             }
         }
     }
@@ -162,7 +58,7 @@
             var fracDigits=fracDigitsElement.value;
             var editFormat="";
             editFormatElement.value=editFormat;
-            if((leadDigits!=null && leadDigits!="" && leadDigits>0) ||(fracDigits!=null && fracDigits!="" && fracDigits>0)) {
+            if (leadDigits || fracDigits) {
                 for (var i = 0; i < leadDigits; i++) {
                     editFormat += "9";
                 }
@@ -195,8 +91,5 @@
             }
         }
     }
-
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleTypeDropdown,handleDisplayPatternDropDown,handleValidationPatternDropdown,
-        handleDisplayFormat,handleValidationFormat,handleDialogSubmit,handleDialogReadyForNumericInput);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleTypeDropdown,handleDialogSubmit,handleDialogReadyForNumericInput);
 })(jQuery);
