@@ -69,4 +69,13 @@ BLOCK cmp-adaptiveform-radiobutton
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormRadioButton"` and `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the radio-button component in the form view:
+1. `data-cmp-is="adaptiveFormRadioButton"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+## Information
+* **Vendor**: Adobe
+* **Version**: v1
+* **Compatibility**: Cloud
+* **Status**: production-ready

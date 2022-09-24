@@ -59,7 +59,7 @@ BLOCK cmp-adaptiveform-datepicker
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the checkbox-group component in the form view:  
+The following attributes must be added for the initialization of the date-picker component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
  

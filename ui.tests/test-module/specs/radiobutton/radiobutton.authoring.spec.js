@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-const sitesSelectors = require('../libs/commons/sitesSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
  * Testing RadioButton with Sites Editor

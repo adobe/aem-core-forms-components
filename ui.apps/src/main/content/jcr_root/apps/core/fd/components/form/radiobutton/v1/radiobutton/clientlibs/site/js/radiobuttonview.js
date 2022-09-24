@@ -33,7 +33,8 @@
             label: `.${RadioButton.bemBlock}__label`,
             description: `.${RadioButton.bemBlock}__longdescription`,
             qm: `.${RadioButton.bemBlock}__questionmark`,
-            errorDiv: `.${RadioButton.bemBlock}__errormessage`
+            errorDiv: `.${RadioButton.bemBlock}__errormessage`,
+            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -51,6 +52,14 @@
 
         getLabel() {
             return this.element.querySelector(RadioButton.selectors.label);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(RadioButton.selectors.qm);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(RadioButton.selectors.tooltipDiv);
         }
 
         getErrorDiv() {

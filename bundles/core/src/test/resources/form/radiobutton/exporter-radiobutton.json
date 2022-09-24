@@ -40,5 +40,8 @@
     "0",
     "1"
   ],
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
   ":type": "core/fd/components/form/radiobutton/v1/radiobutton"
 }
