@@ -10,9 +10,7 @@
   "tooltip": "test-short-description",
   "properties": {
     "afs:layout" : {
-      "tooltipVisible": false,
-      "leadDigits": 2,
-      "fracDigits" : 4
+      "tooltipVisible": false
     },
     "fd:dor": {
       "dorExclusion":false

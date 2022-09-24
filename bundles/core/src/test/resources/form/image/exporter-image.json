@@ -5,5 +5,8 @@
   "fieldType": "image",
   "altText": "abc",
   "value":"/content/image.img.png",
-  ":type": "core/fd/components/form/image/v1/image"
+  ":type": "core/fd/components/form/image/v1/image",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
 }
