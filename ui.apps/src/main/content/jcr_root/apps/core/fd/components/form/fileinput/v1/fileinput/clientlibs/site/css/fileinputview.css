@@ -1,0 +1,33 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-fileinput
+    ELEMENT cmp-adaptiveform-fileinput__label
+    ELEMENT cmp-adaptiveform-fileinput__widget
+    ELEMENT cmp-adaptiveform-fileinput__questionmark
+    ELEMENT cmp-adaptiveform-fileinput__shortdescription
+    ELEMENT cmp-adaptiveform-fileinput__longdescription
+*/
+
+.cmp-adaptiveform-fileinput {
+
+}
+
+.cmp-adaptiveform-fileinput__widget {
+
+}
+
+.cmp-adaptiveform-fileinput__label {
+
+}
+
+.cmp-adaptiveform-fileinput__longdescription {
+
+}
+
+.cmp-adaptiveform-fileinput__shortdescription {
+
+}
+
+.cmp-adaptiveform-fileinput__questionmark {
+
+}
