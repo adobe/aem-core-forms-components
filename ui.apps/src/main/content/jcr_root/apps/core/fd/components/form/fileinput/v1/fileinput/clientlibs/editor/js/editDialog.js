@@ -17,9 +17,9 @@
     "use strict";
     var EDIT_DIALOG = ".cmp-adaptiveform-fileinput__editdialog",
         FILEINPUT_MULTISELECTION = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__multiselection",
-        FILEINPUT_TYPE=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__type",
-        FILEINPUT_MINITEMS=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFiles",
-        FILEINPUT_MAXITEMS=EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFiles",
+        FILEINPUT_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__type",
+        FILEINPUT_MINITEMS = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFiles",
+        FILEINPUT_MAXITEMS = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFiles",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 

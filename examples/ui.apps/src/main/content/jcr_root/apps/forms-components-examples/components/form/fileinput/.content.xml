@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    cq:icon="attach"
-    jcr:description="Adaptive Form File Attachment component"
     jcr:primaryType="cq:Component"
-    jcr:title="Adaptive Form File Attachment component"
+    jcr:title="Adaptive Form File Attachment"
+    jcr:description="Add a button to upload one or more files as form attachment."
     sling:resourceSuperType="core/fd/components/form/fileinput/v1/fileinput"
     componentGroup="Core Components Examples"/>

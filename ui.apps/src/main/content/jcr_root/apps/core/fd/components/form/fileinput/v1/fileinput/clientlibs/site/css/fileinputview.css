@@ -6,10 +6,6 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
-    ELEMENT cmp-adaptiveform-fileinput__minmessage
-    ELEMENT cmp-adaptiveform-fileinput__maxmessage
-    ELEMENT cmp-adaptiveform-fileinput__maxfilesizemessage
-    ELEMENT cmp-adaptiveform-fileinput__acceptmessage
 */
 
 .cmp-adaptiveform-fileinput {
@@ -34,20 +30,4 @@ BLOCK cmp-adaptiveform-fileinput
 
 .cmp-adaptiveform-fileinput__questionmark {
 
-}
-.cmp-adaptiveform-fileinput__minmessage {
-
-}
-.cmp-adaptiveform-fileinput__maxmessage {
-
-}
-.cmp-adaptiveform-fileinput__maxfilesizemessage {
-
-}
-.cmp-adaptiveform-fileinput__acceptmessage {
-
-}
-
-[data-cmp-adaptiveform-fileinput-hidden=true] {
-    display: none;
 }
