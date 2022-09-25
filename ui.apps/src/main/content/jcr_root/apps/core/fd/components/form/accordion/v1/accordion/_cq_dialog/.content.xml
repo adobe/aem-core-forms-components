@@ -20,7 +20,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Accordion"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.forms.components.accordian.v1.editor]"
+    extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.wcm.components.accordion.v1.editor,core.forms.components.panelcontainer.v1.editor]"
     helpPath="https://www.adobe.com/go/aem_cmp_accordion_v1"
     trackingFeature="core-components:accordion:v1">
     <content
@@ -31,44 +31,24 @@
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Basic"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="/libs/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
                     <containerItems
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Items"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <containerItems
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="core/wcm/components/commons/editor/dialog/childreneditor/v1/childreneditor"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </columns>
-                        </items>
-                    </containerItems>
+                        sling:resourceType="granite/ui/components/coral/foundation/container"/>
                     <repeat
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Repeat Settings"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/repeat"/>
                     <help
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/help"/>
                     <accessibility
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Accessibility"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/accessibility"/>
                     <properties
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Properties"

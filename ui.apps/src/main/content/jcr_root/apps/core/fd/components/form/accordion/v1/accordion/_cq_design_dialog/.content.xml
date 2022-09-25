@@ -20,7 +20,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Accordion"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.accordian.v1.editor]"
+    extraClientlibs="[core.wcm.components.accordion.v1.editor]"
     helpPath="https://www.adobe.com/go/aem_cmp_accordion_v1">
     <content
         jcr:primaryType="nt:unstructured"
