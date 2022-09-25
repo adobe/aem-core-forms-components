@@ -25,8 +25,8 @@ describe('Page - Authoring', function () {
   // we can use these values to log in
 
   const dropPanelInContainer = function() {
-    const responsiveGridDropZone = "Drag components here",
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
     cy.get('body').click( 0,0);
