@@ -28,23 +28,17 @@
         static IS = "adaptiveFormButton";
         static bemBlock = 'cmp-button';
         static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            text: `.${Button.bemBlock}__text`,
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
         };
 
-        /**
-         * Return the questionmark element.
-         * @readonly
-         * @returns {HTMLElement}
-         */
-        get qm() {
-            return document.getElementById(`${this.element.id}-questionMark`);
+        getQuestionMarkDiv() {
+            return null;
         }
 
-        /**
-         * Return the widget element that is used to capture the value from the user
-         * @returns {HTMLElement}
-         */
+        getLabel() {
+            return null;
+        }
+
         getWidget() {
             return this.element;
         }
@@ -54,30 +48,22 @@
          * @returns {HTMLElement}
          */
         getDescription() {
-            return document.getElementById(`${this.element.id}-longDescription`);
-        }
-
-        /**
-         * Return the button text element.
-         * @returns {HTMLElement}
-         */
-        getText() {
-            return this.element.querySelector(Button.selectors.text);
-        }
-
-        setModel(model) {
-            super.setModel(model);
-            this.element.addEventListener("click", () => {
-                this._model.dispatchEvent(new FormView.Actions.Click())
-            });
+            return null;
         }
 
         getErrorDiv() {
             return null;
         }
 
-        _updateValue(value) {
-            // do nothing
+        getTooltipDiv() {
+            return null;
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            this.element.addEventListener("click", () => {
+                this._model.dispatch(new FormView.Actions.Click())
+            });
         }
     }
 

@@ -28,6 +28,9 @@
           "dorExclusion":false
         }
       },
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      },
       ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
@@ -40,6 +43,9 @@
     "afs:layout": {
       "tooltipVisible":false
     }
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

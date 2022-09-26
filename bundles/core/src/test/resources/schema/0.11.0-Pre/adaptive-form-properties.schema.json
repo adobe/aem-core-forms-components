@@ -22,6 +22,7 @@
         "checkbox",
         "switch",
         "plain-text",
+        "image",
         "button",
         "panel",
         "form"
@@ -143,15 +144,21 @@
     },
     "screenReaderText": {
       "type": "string",
-      "title": "a json-formula expression to indicate the text to be read by screen readers",
-      "examples": [
-        {
-          "screenReaderText": "title"
-        },
-        {
-          "screenReaderText": "'Hard Coded text to be read by screen readers'"
-        }
-      ]
+      "title": "indicate the text to be read by screen readers"
+    },
+    "richText" : {
+      "type" : "boolean",
+      "title" : "Whether the value should be treated as rich text or not",
+      "description" : "property is applicable for fieldType: text and indicates that the value should be treated as html text or not"
+    },
+    "altText" : {
+      "type" : "string",
+      "title" : "Alternate Text for the Image",
+      "description" : "property is applicable for fieldType: image and indicates alternate text for the image"
+    },
+    "tooltip" : {
+      "type" : "string",
+      "title" : "Tooltip for the Form Fields"
     },
     "rules": {
       "type": "object",

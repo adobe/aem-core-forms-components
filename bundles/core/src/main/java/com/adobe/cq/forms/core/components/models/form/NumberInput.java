@@ -28,21 +28,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ConsumerType
 public interface NumberInput extends Field, NumberConstraint {
 
-    /**
-     * Returns the lead digits for float data type
-     * 
-     * @return lead digits
-     */
     @Nullable
     @JsonIgnore
-    Integer getLeadDigits();
-
-    /**
-     * Returns the fractional digits for float data type
-     * 
-     * @return fractional digits
-     */
-    @Nullable
-    @JsonIgnore
-    Integer getFracDigits();
+    default String getEditFormat() {
+        return null;
+    }
 }

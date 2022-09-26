@@ -29,5 +29,8 @@
     "type":"incorrect type"
   },
   "type": "string",
-  ":type": "core/fd/components/form/textinput/v1/textinput"
+  ":type": "core/fd/components/form/textinput/v1/textinput",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
 }

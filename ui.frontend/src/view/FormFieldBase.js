@@ -25,6 +25,8 @@ export default class FormFieldBase extends FormField {
         this.description = this.getDescription();
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
+        this.qm = this.getQuestionMarkDiv();
+        this.tooltip = this.getTooltipDiv()
     }
 
     /**
@@ -115,7 +117,9 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _showHideTooltipDiv(show) {
-        this.toggleAttribute(this.getTooltipDiv(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.tooltip) {
+            this.toggleAttribute(this.getTooltipDiv(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        }
     }
 
     /**
@@ -124,7 +128,9 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _showHideLongDescriptionDiv(show) {
-        this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.description) {
+            this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        }
     }
 
     _isTooltipAlwaysVisible() {
@@ -147,32 +153,40 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateEnable(enable) {
-        this.toggle(enable, Constants.ARIA_DISABLED, true);
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
-        if (enable === false) {
-            this.widget.setAttribute("disabled", true);
-            this.widget.setAttribute(Constants.ARIA_DISABLED, true);
-        } else {
-            this.widget.removeAttribute("disabled");
-            this.widget.removeAttribute(Constants.ARIA_DISABLED);
+        if (this.widget) {
+            this.toggle(enable, Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
+            if (enable === false) {
+                this.widget.setAttribute("disabled", true);
+                this.widget.setAttribute(Constants.ARIA_DISABLED, true);
+            } else {
+                this.widget.removeAttribute("disabled");
+                this.widget.removeAttribute(Constants.ARIA_DISABLED);
+            }
         }
     }
 
     _updateValid(valid, state) {
-        this.toggle(valid, Constants.ARIA_INVALID, true);
-        this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
-        if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
-            const errMessage = valid === true ? '' : 'There is an error in the field';
-            this.errorDiv.innerHTML = errMessage;
+        if (this.errorDiv) {
+            this.toggle(valid, Constants.ARIA_INVALID, true);
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
+                const errMessage = valid === true ? '' : 'There is an error in the field';
+                this.errorDiv.innerHTML = errMessage;
+            }
         }
     }
 
     _updateErrorMessage(errorMessage, state) {
-        this.errorDiv.innerHTML = state.errorMessage;
+        if (this.errorDiv) {
+            this.errorDiv.innerHTML = state.errorMessage;
+        }
     }
 
     _updateValue(value) {
-        this.widget.value = value;
+        if (this.widget) {
+            this.widget.value = value;
+        }
     }
 
     /**
@@ -180,8 +194,8 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _addHelpIconHandler(state) {
-        const questionMarkDiv = this.getQuestionMarkDiv(),
-            descriptionDiv = this.getDescription(),
+        const questionMarkDiv = this.qm,
+            descriptionDiv = this.description,
             tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
