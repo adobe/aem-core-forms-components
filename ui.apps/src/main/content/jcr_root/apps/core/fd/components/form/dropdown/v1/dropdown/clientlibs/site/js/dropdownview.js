@@ -58,6 +58,14 @@
             return this.element.querySelector(DropDown.selectors.errorDiv);
         }
 
+        getQuestionMarkDiv() {
+            return this.element.querySelector(DropDown.selectors.qm);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(DropDown.selectors.tooltipDiv);
+        }
+
          #checkIfEqual = function(value, optionValue, multiSelect) {
             if(multiSelect) {
                 let isPresent = false;
