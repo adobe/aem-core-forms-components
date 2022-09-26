@@ -115,4 +115,17 @@ public class PanelContainerImplTest {
         Panel panel = Utils.getComponentUnderTest(PATH_RULES_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_RULES_PANEL));
     }
+
+    @Test
+    void testGetDorProperties() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        assertEquals(true, panel.getDorProperties().get("dorExclusion"));
+        assertEquals(false, panel.getDorProperties().get("dorExcludeTitle"));
+        assertEquals(false, panel.getDorProperties().get("dorExcludeDescription"));
+        assertEquals("Following Previous", panel.getDorProperties().get("breakBeforeText"));
+        assertEquals("Continue Filling Parent", panel.getDorProperties().get("breakAfterText"));
+        assertEquals("None", panel.getDorProperties().get("overflow"));
+        assertEquals("columnar", panel.getDorProperties().get("dorLayoutType"));
+        assertEquals("3", panel.getDorProperties().get("dorNumCols"));
+    }
 }
