@@ -22,14 +22,9 @@
         jcr:primaryType="nt:unstructured"
         jcr:title="Logo"
         sling:resourceType="wcm/foundation/components/image"
-        css="logoImage"
-        imageRotate="0"
-        name="logoImage"
-        altText="Company Name"/>
+        name="logoImage"/>
     <text
         jcr:primaryType="nt:unstructured"
         sling:resourceType="wcm/foundation/components/text"
-        value="Company Name Here"
-        css="headerText"
-        name="headerText"/>
+        value="Company Name Here"/>
 </jcr:root>

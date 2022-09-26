@@ -19,4 +19,4 @@
     jcr:description="Section Heading"
     jcr:primaryType="cq:Component"
     jcr:title="Page Header"
-    componentGroup="Adaptive Form Core Component"/>
+    componentGroup=".core-adaptiveform"/>
