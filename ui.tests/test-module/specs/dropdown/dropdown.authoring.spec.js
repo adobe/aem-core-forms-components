@@ -15,11 +15,11 @@
  */
 
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const commons = require('../../libs/commons/commons'),
+    sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    sitesConstants = require('../../libs/commons/sitesConstants'),
+    guideSelectors = require('../../libs/commons/guideSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
  * Testing Dropdown with Sites Editor
