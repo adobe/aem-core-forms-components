@@ -14,7 +14,7 @@
     "validationExpression": "Required Expression"
   },
   "readOnly": false,
-  "enforceEnum": false,
+  "enforceEnum": true,
   "enumNames": [
     "Item 1",
     "Item 2"

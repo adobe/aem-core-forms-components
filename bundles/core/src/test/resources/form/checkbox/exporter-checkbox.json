@@ -17,7 +17,7 @@
       "dorExclusion":false
     }
   },
-  "enforceEnum":false,
+  "enforceEnum":true,
   "enum" : [true, false],
   "enumNames" : ["yes", "no"],
   "label": {
