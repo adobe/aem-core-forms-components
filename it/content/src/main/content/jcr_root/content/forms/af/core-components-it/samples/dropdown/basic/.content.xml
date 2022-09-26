@@ -8,7 +8,7 @@
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
-            jcr:title="dropdown"
+            jcr:title="Adaptive Form V2 (IT)"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.0"
