@@ -20,11 +20,11 @@
 
         static NS = FormView.Constants.NS;
         /**
-         * Each FormField has a data attribute class that is prefixed along with the global namespace to
-         * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
-         * data-{NS}-{IS}-x=""
-         * @type {string}
-         */
+          * Each FormField has a data attribute class that is prefixed along with the global namespace to
+          * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
+          * data-{NS}-{IS}-x=""
+          * @type {string}
+        */
         static IS = "adaptiveFormTermsAndConditon";
         static bemBlock = 'cmp-adaptiveform-termsandcondition'
         static selectors  = {
