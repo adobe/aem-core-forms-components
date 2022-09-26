@@ -9,11 +9,14 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
-  "enforceEnum":false,
+  "enforceEnum":true,
   "enum" : [0, 1, 2],
   "enumNames" : ["m", "f", "o"],
   "label": {
@@ -25,6 +28,9 @@
   "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
     "type":"incorrect type"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   "type": "number",
   ":type": "core/fd/components/form/dropdown/v1/dropdown"

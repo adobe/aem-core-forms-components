@@ -21,6 +21,7 @@ export const Constants = {
      * component class
      */
     NS : "cmp",
+
     /**
      * @summary Form event to be triggered with a Form container is initialized
      *
@@ -37,10 +38,50 @@ export const Constants = {
     FORM_CONTAINER_INITIALISED : "AF_FormContainerInitialised",
 
     /**
+     * @summary Panel event to be triggered when a child view is added to panel view
+     *
+     * @name  AF_PanelChildAdded
+     * @event
+     * @property {object} event
+     * @property {object} event.detail instance of child view that is added
+     * @example
+     * panel.element.on("AF_PanelChildAdded" , function(event) {
+     *      var childView = event.detail;
+     *      ...
+     * }
+     */
+    PANEL_CHILD_ADDED : "AF_PanelChildAdded",
+
+    /**
+     * @summary Panel event to be triggered when a child view is removed from panel view
+     *
+     * @name  AF_PanelChildRemoved
+     * @event
+     * @property {object} event
+     * @property {object} event.detail instance of child view that was removed
+     * @example
+     * panel.element.on("AF_PanelChildRemoved" , function(event) {
+     *      var childView = event.detail;
+     *      ...
+     * }
+     */
+    PANEL_CHILD_REMOVED : "AF_PanelChildRemoved",
+
+    /**
      * data attribute to store the form container path. In HTML it will be namespaced
      * data-{NS}-{ComponentClass}-adaptiveformcontainerPath
      */
     FORM_CONTAINER_DATA_ATTRIBUTE: "adaptiveformcontainerPath",
+
+    /**
+     * data attribute to be added on clickable element to repeat a repeatable panel
+     */
+    DATA_HOOK_ADD_INSTANCE:"data-cmp-hook-add-instance",
+
+    /**
+     * data attribute to be added on element to remove a repeatable panel
+     */
+    DATA_HOOK_REMOVE_INSTANCE:"data-cmp-hook-remove-instance",
 
     /**
      * data attribute to mark the dragged component valid or invalid.
@@ -86,8 +127,25 @@ export const Constants = {
     ARIA_INVALID : "aria-invalid",
 
     /**
+     * aria attribute to mark the dragged component checked.
+     */
+    ARIA_CHECKED : "aria-checked",
+
+    /**
      * Event to trigger when GuideBridge Initialisation Begins
      */
-    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart"
+    GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart",
+
+    HTML_ATTRS : {
+        /**
+         * attribute to mark the dragged component disabled.
+         */
+        DISABLED : "disabled",
+
+        /**
+         * attribute to mark the dragged component checked.
+         */
+        CHECKED : "checked"
+    }
 }
 

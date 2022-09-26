@@ -60,12 +60,6 @@ BLOCK cmp-adaptiveform-textinput
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTextInput"` attribute to the wrapper block to enable initialization of the JavaScript component.
-
-The following attributes can be added to the same element to provide options:
-
-1. `data-cmp-required-message` - populated with requiredMessage from the component's edit dialog
-
-A `data-cmp-hook-adaptiveform-textinput="input"` attribute should be added to the input field or textarea so that the JavaScript is able to target it.
-
-
+The following attributes must be added for the initialization of the text-input component in the form view:  
+ 1. `data-cmp-is="adaptiveFormTextInput"`
+ 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`

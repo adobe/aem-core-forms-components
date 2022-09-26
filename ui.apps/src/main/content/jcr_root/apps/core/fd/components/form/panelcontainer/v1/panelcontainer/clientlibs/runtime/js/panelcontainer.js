@@ -19,9 +19,13 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormPanel";
-
+        static bemBlock = 'cmp-container';
         static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            label: `.${Panel.bemBlock}__label`,
+            description: `.${Panel.bemBlock}__longdescription`,
+            qm: `.${Panel.bemBlock}__questionmark`,
+            tooltipDiv: `.${Panel.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -34,6 +38,30 @@
 
         setFocus() {
             this.setActive();
+        }
+
+        getWidget() {
+            return this.element.querySelector(Panel.selectors.widget);
+        }
+
+        getDescription() {
+            return this.element.querySelector(Panel.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(Panel.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(Panel.selectors.errorDiv);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(Panel.selectors.tooltipDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(Panel.selectors.qm);
         }
     }
 

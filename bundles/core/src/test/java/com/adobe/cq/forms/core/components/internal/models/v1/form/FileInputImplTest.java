@@ -30,6 +30,8 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -71,7 +73,7 @@ public class FileInputImplTest {
     @Test
     void testFieldType() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(Base.FieldType.FILE_INPUT.getValue(), fileInput.getFieldType());
+        assertEquals(FieldType.FILE_INPUT.getValue(), fileInput.getFieldType());
     }
 
     @Test
@@ -220,8 +222,8 @@ public class FileInputImplTest {
     @Test
     void testGetConstraintMessages() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = fileInput.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = fileInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), fileInputMock.getConstraintMessages());
@@ -244,7 +246,7 @@ public class FileInputImplTest {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
         Map<String, Object> properties = fileInput.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }

@@ -22,12 +22,22 @@ use(function () {
   var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
   var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html"
   var errorMessagePath = "core/fd/components/commons/v1/fieldTemplates/errorMessage.html";
+
+
+  var tooltipContent = removeRichTextHtmlTags(this.text.tooltip);
+
+  function removeRichTextHtmlTags(str) {
+    var _str = String(str);
+    return _str.replace(/<\/?[^>]+(>|$)/g, "");
+  }
+
   return {
     labelPath: labelPath,
     shortDescriptionPath: shortDescriptionPath,
     longDescriptionPath: longDescriptionPath,
     questionMarkPath: questionMarkPath,
     errorMessagePath: errorMessagePath,
-    clientlibs: clientlibsArr
+    clientlibs: clientlibsArr,
+    tooltipContent: tooltipContent
   }
 });

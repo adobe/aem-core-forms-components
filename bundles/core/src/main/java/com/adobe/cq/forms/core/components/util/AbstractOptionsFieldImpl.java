@@ -15,9 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -33,7 +30,7 @@ import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl implements OptionsConstraint {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(booleanValues = false)
+    @Default(booleanValues = true)
     private boolean enforceEnum;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
@@ -58,19 +55,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            if (Type.fromString(typeJcr).equals(Type.NUMBER) || Type.fromString(typeJcr).equals(Type.NUMBER_ARRAY)) {
-                return Arrays.stream(enums)
-                    .filter(Objects::nonNull)
-                    .map(Integer::parseInt)
-                    .toArray(Integer[]::new);
-            } else if (Type.fromString(typeJcr).equals(Type.BOOLEAN) || Type.fromString(typeJcr).equals(Type.BOOLEAN_ARRAY)) {
-                return Arrays.stream(enums)
-                    .filter(Objects::nonNull)
-                    .map(Boolean::parseBoolean)
-                    .toArray(Boolean[]::new);
-            } else {
-                return ArrayUtils.clone(enums);
-            }
+            return ComponentUtils.coerce(type, enums);
         }
     }
 
@@ -78,5 +63,13 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     public String[] getEnumNames() {
         // may expose internal representation of mutable object, hence cloning
         return ArrayUtils.clone(enumNames);
+    }
+
+    @Override
+    public Object[] getDefault() {
+        if (defaultValue != null) {
+            return ComponentUtils.coerce(type, defaultValue);
+        }
+        return null;
     }
 }

@@ -62,6 +62,43 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Placeholder Text"
                                     name="./placeholder"/>
+                            <enums jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/container"
+                                   sling:hideResource="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                             sling:orderBefore="bindref"
+                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                             fieldDescription="Pair of Actual and Display Values"
+                                             fieldLabel="Pair of Actual and Display Values">
+                                        <field jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                                               name="./enum">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <enum jcr:primaryType="nt:unstructured"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                      granite:class="cmp-adaptiveform-base__enum"
+                                                      name="./enum"
+                                                      required="{Boolean}true"/>
+                                                <enumNames jcr:primaryType="nt:unstructured"
+                                                           sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                           granite:class="cmp-adaptiveform-base__enumNames"
+                                                           name="./enumNames"
+                                                           required="{Boolean}false"/>
+                                            </items>
+                                        </field>
+                                    </enumOptions>
+                                    <enumNames jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                               granite:hidden="true">
+                                        <field jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                               name="./enumNames"
+                                               granite:class="cmp-adaptiveform-base__enumNamesHidden"
+                                               granite:hidden="true"/>
+                                    </enumNames>
+                                </items>
+                            </enums>
                             <bindref
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
@@ -105,6 +142,20 @@
                             <toBeRemoved
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
+                            <readonly
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                              granite:class="cmp-adaptiveform-base__readOnly"
+                              name="./readOnly"
+                              value="true"
+                              uncheckedValue="false"
+                              text="Read Only">
+                            </readonly>
+                            <readonly-typehint
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                              name="./readOnly@TypeHint"
+                              value="Boolean"/>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"
@@ -133,6 +184,7 @@
                                 granite:class="cmp-adaptiveform-base__mandatorymessage"
                                 fieldLabel="Required Field Message"
                                 name="./mandatoryMessage"/>
+
                         <validateExpMessage
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -368,6 +420,96 @@
                         </displayPatternGroup>
                         </items>
                     </patterns>
+                    <dor
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Document of Record"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <excludeFromDor
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    checked="{Boolean}false"
+                                    name="./dorExclusion"
+                                    text="Exclude from Document of Record"
+                                    value="true"/>
+                            <excludeFromDor-typeHint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    ignoreData="{Boolean}true"
+                                    name="dorExclusion@TypeHint"
+                                    value="Boolean"/>
+                            <dorColspan
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                    disabled="false"
+                                    emptyText=""
+                                    fieldDescription="Enter number of columns the field should span in Document of Record. Supported only for Column layout in Document of Record."
+                                    fieldLabel="Colspan for Document of Record"
+                                    name="./dorColspan"
+                                    renderReadOnly="false">
+                                <options
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                <items jcr:primaryType="nt:unstructured">
+                                    <empty
+                                            jcr:primaryType="nt:unstructured"
+                                            text=""
+                                            value=""/>
+                                    <v1
+                                            jcr:primaryType="nt:unstructured"
+                                            text="1"
+                                            value="1"/>
+                                    <v2
+                                            jcr:primaryType="nt:unstructured"
+                                            text="2"
+                                            value="2"/>
+                                    <v3
+                                            jcr:primaryType="nt:unstructured"
+                                            text="3"
+                                            value="3"/>
+                                    <v4
+                                            jcr:primaryType="nt:unstructured"
+                                            text="4"
+                                            value="4"/>
+                                    <v5
+                                            jcr:primaryType="nt:unstructured"
+                                            text="5"
+                                            value="5"/>
+                                    <v6
+                                            jcr:primaryType="nt:unstructured"
+                                            text="6"
+                                            value="6"/>
+                                    <v7
+                                            jcr:primaryType="nt:unstructured"
+                                            text="7"
+                                            value="7"/>
+                                    <v8
+                                            jcr:primaryType="nt:unstructured"
+                                            text="8"
+                                            value="8"/>
+                                    <v9
+                                            jcr:primaryType="nt:unstructured"
+                                            text="9"
+                                            value="9"/>
+                                    <v10
+                                            jcr:primaryType="nt:unstructured"
+                                            text="10"
+                                            value="10"/>
+                                    <v11
+                                            jcr:primaryType="nt:unstructured"
+                                            text="11"
+                                            value="11"/>
+                                    <v12
+                                            jcr:primaryType="nt:unstructured"
+                                            text="12"
+                                            value="12"/>
+                                </items>
+                            </dorColspan>
+                        </items>
+                        <granite:rendercondition
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="libs/fd/af/dor/rendercondition/tab"/>
+                    </dor>
                     <styletab
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
