@@ -25,7 +25,6 @@ import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.utils.GuideUtils;
 import com.day.cq.i18n.I18n;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
@@ -94,7 +93,7 @@ public class ComponentUtils {
         @Nullable I18n i18n) {
         String translatedValue = propertyValue;
         if (i18n != null) {
-            translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
+            translatedValue = propertyValue; // GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
         }
         return translatedValue;
     }
