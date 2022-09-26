@@ -111,12 +111,12 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     @Override
     public Long getExclusiveMaximum() {
-        return exclusiveMinimum;
+        return exclusiveMaximum;
     }
 
     @Override
     public Long getExclusiveMinimum() {
-        return exclusiveMaximum;
+        return exclusiveMinimum;
     }
 
     @Override

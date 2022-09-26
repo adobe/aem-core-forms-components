@@ -39,5 +39,8 @@
     "value" : "false()",
     "label" : "{value : 'some label'}",
     "enabled" : "true()"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   }
 }

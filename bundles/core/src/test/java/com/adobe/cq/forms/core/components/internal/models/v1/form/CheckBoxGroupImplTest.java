@@ -219,7 +219,7 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         Map<String, Object> properties = checkboxGroup.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
@@ -248,7 +248,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetEnum() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertArrayEquals(new Integer[] { 0, 1, 2 }, checkboxGroup.getEnums());
+        assertArrayEquals(new Long[] { 0L, 1L, 2L }, checkboxGroup.getEnums());
     }
 
     @Test

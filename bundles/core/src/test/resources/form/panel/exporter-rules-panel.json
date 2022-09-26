@@ -23,6 +23,9 @@
         "richText":false,
         "value":"def"
       },
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      },
       "properties": {
         "fd:dor":{
           "dorExclusion":false
@@ -37,6 +40,7 @@
     "value":"dependent names"
   },
   "events":{
+    "custom:setProperty" : ["$event.payload"],
     "change":[
       "some expression 2"
     ]

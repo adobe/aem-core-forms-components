@@ -16,16 +16,19 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
@@ -94,7 +97,7 @@ public class ComponentUtils {
         @Nullable I18n i18n) {
         String translatedValue = propertyValue;
         if (i18n != null) {
-            translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
+            translatedValue = propertyValue; // GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
         }
         return translatedValue;
     }
@@ -111,6 +114,25 @@ public class ComponentUtils {
             .map(Date::getTime)
             .map(Date::new)
             .orElse(null);
+    }
+
+    @NotNull
+    public static Object[] coerce(@NotNull BaseConstraint.Type type, @NotNull Object[] objArr) {
+        if (type.equals(type.NUMBER) || type.equals(type.NUMBER_ARRAY)) {
+            return Arrays.stream(objArr)
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .map(Long::parseLong)
+                .toArray(Long[]::new);
+        } else if (type.equals(type.BOOLEAN) || type.equals(type.BOOLEAN_ARRAY)) {
+            return Arrays.stream(objArr)
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .map(Boolean::parseBoolean)
+                .toArray(Boolean[]::new);
+        } else {
+            return ArrayUtils.clone(objArr);
+        }
     }
 
 }

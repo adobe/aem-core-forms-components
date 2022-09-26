@@ -39,6 +39,8 @@ public interface BaseConstraint {
         STRING("string"),
         STRING_ARRAY("string[]"),
         NUMBER("number"),
+
+        INTEGER("integer"),
         NUMBER_ARRAY("number[]"),
         BOOLEAN("boolean"),
         BOOLEAN_ARRAY("boolean[]"),
