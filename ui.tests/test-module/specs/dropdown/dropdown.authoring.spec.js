@@ -28,8 +28,8 @@ describe('Page - Authoring', function () {
     // we can use these values to log in
 
     const insertDropDownInContainer = function() {
-        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+        const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Dropdown component", afConstants.components.forms.resourceType.formdropdown);
         cy.get('body').click( 0,0);
