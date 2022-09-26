@@ -27,7 +27,8 @@
             label: `.${DatePicker.bemBlock}__label`,
             description: `.${DatePicker.bemBlock}__longdescription`,
             qm: `.${DatePicker.bemBlock}__questionmark`,
-            errorDiv: `.${DatePicker.bemBlock}__errormessage`
+            errorDiv: `.${DatePicker.bemBlock}__errormessage`,
+            tooltipDiv: `.${DatePicker.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -48,6 +49,14 @@
 
         getErrorDiv() {
             return this.element.querySelector(DatePicker.selectors.errorDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(DatePicker.selectors.qm);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(DatePicker.selectors.tooltipDiv);
         }
 
         setModel(model) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+     jcr:primaryType="cq:EditConfig"
+     cq:actions="[edit,-,copymove,delete,-,insert,-]"
+     cq:dialogMode="floating"
+     cq:layout="editbar"
+     cq:disableTargeting="{Boolean}true">
+    <cq:dropTargets jcr:primaryType="nt:unstructured">
+        <image
+                jcr:primaryType="cq:DropTargetConfig"
+                accept="[image/.*]"
+                groups="[media]"
+                propertyName="./fileReference">
+            <parameters
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/components/guideimage"
+                    imageCrop=""
+                    imageMap=""
+                    imageRotate=""/>
+        </image>
+    </cq:dropTargets>
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+                order="after CONFIGURE"
+                icon="bidRule"
+                text="Edit Rules"/>
+    </cq:actionConfigs>
+</jcr:root>

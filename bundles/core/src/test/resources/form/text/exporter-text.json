@@ -6,5 +6,10 @@
   "value": "<p>xyz</p>",
   "visible": true,
   "richText": true,
-  ":type": "core/fd/components/form/text/v1/text"
+  ":type": "core/fd/components/form/text/v1/text",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  }
 }
