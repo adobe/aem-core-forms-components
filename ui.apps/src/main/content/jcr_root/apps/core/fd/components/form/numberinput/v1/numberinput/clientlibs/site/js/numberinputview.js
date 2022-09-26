@@ -63,11 +63,15 @@
             return this.element.querySelector(NumberInput.selectors.qm);
         }
 
+        _updateValue(value) {
+            if (this.widgetObject) {
+                this.widgetObject.setValue(value);
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-            })
+            this.widgetObject = new NumericInputWidget(this.widget, this._model)
         }
     }
 
