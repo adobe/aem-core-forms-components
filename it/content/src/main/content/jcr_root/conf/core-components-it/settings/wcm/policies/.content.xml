@@ -24,7 +24,7 @@
                       jcr:primaryType="nt:unstructured"
                       jcr:title="formcontainer-policy"
                       sling:resourceType="wcm/core/components/policy/policy"
-                      components="[group:Core Components Examples,group:Core Components Examples - Form]">
+                      components="[group:Core Components Examples,group:Core Adaptive Form]">
                       <jcr:content
                          jcr:primaryType="nt:unstructured"/>
                     </policy_1657606299305>
