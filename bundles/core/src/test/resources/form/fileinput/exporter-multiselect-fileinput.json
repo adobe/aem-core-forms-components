@@ -9,8 +9,11 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "label": {
@@ -31,5 +34,8 @@
     "text/*",
     "application/pdf"
   ],
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
   ":type": "core/fd/components/form/fileinput/v1/fileinput"
 }

@@ -66,7 +66,7 @@ public class DropDownImplTest {
     @Test
     void testFieldType() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(Base.FieldType.DROP_DOWN.getValue(), dropdown.getFieldType());
+        assertEquals(FieldType.DROP_DOWN.getValue(), dropdown.getFieldType());
     }
 
     @Test
@@ -197,8 +197,8 @@ public class DropDownImplTest {
     @Test
     void testGetConstraintMessages() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = dropdown.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = dropdown.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), dropdownMock.getConstraintMessages());
@@ -221,7 +221,7 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
         Map<String, Object> properties = dropdown.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
@@ -250,7 +250,7 @@ public class DropDownImplTest {
     @Test
     void testGetEnum() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertArrayEquals(new Integer[] { 0, 1, 2 }, dropdown.getEnums());
+        assertArrayEquals(new Long[] { 0L, 1L, 2L }, dropdown.getEnums());
     }
 
     @Test

@@ -1075,19 +1075,19 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.9.5</version>
+                <version>2.13.4</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.12.6.1</version>
+                <version>2.13.4</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.9.5</version>
+                <version>2.13.4</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -1121,10 +1121,10 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <!-- <version>2022.04.12.02-220401</version> -->
-                <version>2022.08.29</version>
+                <version>2022.08.04.00-220800</version>
+                <!--<version>2022.08.29</version>
                 <scope>system</scope>
-                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath>
+                <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath> -->
             </dependency>
 
             <dependency>
@@ -1169,6 +1169,12 @@
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-core</artifactId>
                 <version>1.6.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>1.0.72</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

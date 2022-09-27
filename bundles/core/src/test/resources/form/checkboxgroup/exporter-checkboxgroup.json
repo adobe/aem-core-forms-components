@@ -9,8 +9,12 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
-      "tooltipVisible": false
+    "afs:layout" : {
+      "tooltipVisible": false,
+      "orientation": "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "enforceEnum":true,
@@ -34,6 +38,7 @@
   "events" : {
     "change" : ["e1", "e2"],
     "click": ["e1"],
-    "custom:event" : ["e2"]
+    "custom:event" : ["e2"],
+    "custom:setProperty" : ["$event.payload"]
   }
 }

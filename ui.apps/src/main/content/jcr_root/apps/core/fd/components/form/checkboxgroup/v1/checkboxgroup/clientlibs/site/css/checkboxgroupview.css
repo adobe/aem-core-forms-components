@@ -1,0 +1,47 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-checkboxgroup
+    ELEMENT cmp-adaptiveform-checkboxgroup__label
+    ELEMENT cmp-adaptiveform-checkboxgroup__widget
+    ELEMENT cmp-adaptiveform-checkboxgroup__questionmark
+    ELEMENT cmp-adaptiveform-checkboxgroup__shortdescription
+    ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
+*/
+
+.cmp-adaptiveform-checkboxgroup {
+
+}
+
+.cmp-adaptiveform-checkboxgroup__widget {
+
+}
+
+.cmp-adaptiveform-checkboxgroup__label {
+
+}
+
+.cmp-adaptiveform-checkboxgroup__widget__label {
+    display: inline;
+}
+
+.cmp-adaptiveform-checkboxgroup__longdescription {
+
+}
+
+.cmp-adaptiveform-checkboxgroup__shortdescription {
+
+}
+
+.cmp-adaptiveform-checkboxgroup__questionmark {
+
+}
+
+.cmp-adaptiveform-checkboxgroup-item {
+}
+
+.cmp-adaptiveform-checkboxgroup-item.HORIZONTAL{
+    display: inline-flex;
+}
+
+.cmp-adaptiveform-checkboxgroup-item.VERTICAL{
+}
