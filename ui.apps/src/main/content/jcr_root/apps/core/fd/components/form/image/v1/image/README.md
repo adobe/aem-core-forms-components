@@ -45,8 +45,8 @@ BLOCK cmp-image
 ```
 
 ## Client Libraries
-The component provides a `core.forms.components.image.v1.runtime` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.image.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 ## JavaScript Data Attribute Bindings
 
