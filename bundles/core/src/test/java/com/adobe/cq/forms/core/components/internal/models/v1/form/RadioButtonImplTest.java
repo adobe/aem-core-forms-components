@@ -238,7 +238,7 @@ public class RadioButtonImplTest {
     @Test
     void testEnforceEnum() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(false, radioButton.isEnforceEnum());
+        assertEquals(true, radioButton.isEnforceEnum());
     }
 
     @Test

@@ -42,6 +42,16 @@
   "properties": {
     "afs:layout": {
       "tooltipVisible":false
+    },
+    "fd:dor": {
+      "dorExclusion" : true,
+      "dorExcludeTitle" : false,
+      "dorExcludeDescription" : false,
+      "breakBeforeText": "Following Previous",
+      "breakAfterText": "Continue Filling Parent",
+      "overflow": "None",
+      "dorNumCols": "3",
+      "dorLayoutType": "columnar"
     }
   },
   "events" : {

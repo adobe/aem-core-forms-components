@@ -5,4 +5,4 @@
     jcr:title="Adaptive Form File Attachment (v1)"
     jcr:description="Add a button to upload one or more files as form attachment."
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
-    componentGroup="Adaptive Form Core Components"/>
+    componentGroup=".core-adaptiveform"/>
