@@ -15,11 +15,8 @@
  */
 
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 /**
  * Testing Accordion with Sites Editor
@@ -28,8 +25,8 @@ describe('Page - Authoring', function () {
   // we can use these values to log in
 
   const dropAccordionInContainer = function() {
-    const responsiveGridDropZone = "Drag components here",
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion component", afConstants.components.forms.resourceType.accordion);
     cy.get('body').click( 0,0);
