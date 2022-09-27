@@ -48,6 +48,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("reading 'extend'")) {
         return false;
     }
+    if (err.message.includes("detected that you returned a promise from a command")) {
+        return false;
+    }
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
