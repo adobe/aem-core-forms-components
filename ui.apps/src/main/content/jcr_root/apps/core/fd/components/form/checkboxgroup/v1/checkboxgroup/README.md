@@ -43,8 +43,8 @@ The following properties are written to JCR for this Form CheckBox Group compone
 10. `./enumNames` - defines the user-friendly text to display for the possible options of the field.
 
 ## Client Libraries
-The component provides a `core.forms.components.checkboxgroup.v1` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.checkboxgroup.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 It also provides a `core.forms.components.checkboxgroup.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.

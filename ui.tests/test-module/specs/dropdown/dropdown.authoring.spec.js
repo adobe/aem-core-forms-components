@@ -31,7 +31,7 @@ describe('Page - Authoring', function () {
         const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Dropdown component", afConstants.components.forms.resourceType.formdropdown);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Drop-down List", afConstants.components.forms.resourceType.formdropdown);
         cy.get('body').click( 0,0);
     }
 
@@ -39,7 +39,7 @@ describe('Page - Authoring', function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/dropdown/jcr:content/root/responsivegrid/demo/component/container/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Dropdown component", afConstants.components.forms.resourceType.formdropdown);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Drop-down List", afConstants.components.forms.resourceType.formdropdown);
         cy.get('body').click( 0,0);
     }
 

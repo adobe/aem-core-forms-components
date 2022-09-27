@@ -15,15 +15,23 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Panel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -32,5 +40,70 @@ import com.adobe.cq.forms.core.components.models.form.Panel;
     resourceType = { FormConstants.RT_FD_FORM_PANEL_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PanelContainerImpl extends PanelImpl {
+
+    private static String DOR_EXCLUDE_TITLE = "dorExcludeTitle";
+    private static String DOR_EXCLUSION = "dorExclusion";
+    private static String DOR_EXCLUDE_DESCRIPTION = "dorExcludeDescription";
+    private static String BREAK_BEFORE_TEXT = "breakBeforeText";
+    private static String BREAK_AFTER_TEXT = "breakAfterText";
+    private static String OVERFLOW = "overflow";
+    private static String DOR_NUM_COLS = "dorNumCols";
+    private static String DOR_LAYOUT_TYPE = "dorLayoutType";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExcludeTitle;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExcludeDescription;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String breakBeforeText;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String breakAfterText;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String overflow;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorNumCols;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorLayoutType;
+
+    @Override
+    @JsonIgnore
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+
+        customDorProperties.put(DOR_EXCLUSION, dorExclusion);
+        customDorProperties.put(DOR_EXCLUDE_TITLE, dorExcludeTitle);
+        customDorProperties.put(DOR_EXCLUDE_DESCRIPTION, dorExcludeDescription);
+
+        if (breakBeforeText != null) {
+            customDorProperties.put(BREAK_BEFORE_TEXT, breakBeforeText);
+        }
+        if (breakAfterText != null) {
+            customDorProperties.put(BREAK_AFTER_TEXT, breakAfterText);
+        }
+        if (overflow != null) {
+            customDorProperties.put(OVERFLOW, overflow);
+        }
+        if (dorNumCols != null) {
+            customDorProperties.put(DOR_NUM_COLS, dorNumCols);
+        }
+        if (dorLayoutType != null) {
+            customDorProperties.put(DOR_LAYOUT_TYPE, dorLayoutType);
+        }
+        return customDorProperties;
+    }
 
 }
