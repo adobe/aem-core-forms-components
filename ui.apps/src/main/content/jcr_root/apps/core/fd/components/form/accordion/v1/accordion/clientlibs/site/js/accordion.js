@@ -32,6 +32,30 @@
             return Accordion.IS;
         }
 
+        getWidget() {
+            return null;
+        }
+
+        getDescription() {
+            return null;
+        }
+
+        getLabel() {
+            return null;
+        }
+
+        getErrorDiv() {
+            return null;
+        }
+
+        getTooltipDiv() {
+            return null;
+        }
+
+        getQuestionMarkDiv() {
+            return null;
+        }
+
         setFocus() {
             this.setActive();
         }
