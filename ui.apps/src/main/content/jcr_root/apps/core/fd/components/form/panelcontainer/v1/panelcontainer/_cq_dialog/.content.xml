@@ -164,6 +164,171 @@
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
                             path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
+                    <dor
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Document of Record"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <excludeFromDor
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                    checked="{Boolean}false"
+                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/dor/items/excludeFromDor"
+                                    value="true"/>
+                            <dorExcludeTitle
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    checked="{Boolean}false"
+                                    name="./dorExcludeTitle"
+                                    text="Exclude title from Document of Record"
+                                    value="true"/>
+                            <dorExcludeTitle-typeHint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    ignoreData="{Boolean}true"
+                                    name="dorExcludeTitle@TypeHint"
+                                    value="Boolean"/>
+                            <dorExcludeDescription
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    checked="{Boolean}false"
+                                    name="./dorExcludeDescription"
+                                    text="Exclude description from Document of Record"
+                                    value="true"/>
+                            <dorExcludeDescription-typeHint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    ignoreData="{Boolean}true"
+                                    name="dorExcludeDescription@TypeHint"
+                                    value="Boolean"/>
+                            <dorPagination
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Pagination"
+                                    sling:resourceType= "fd/af/authoring/components/granite/form/fieldset">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <breakBefore
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/granite/components/paginationpicker"
+                                            fieldLabel="Place"
+                                            name="./breakBeforeText"
+                                            fieldDescription="Specifies where the panel is to be placed."
+                                            type="beforeBreakPaginationType"
+                                            emptyText = "Following Previous"/>
+                                    <breakAfter
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/granite/components/paginationpicker"
+                                            fieldLabel="After"
+                                            name="./breakAfterText"
+                                            fieldDescription="Specifies which area to fill after the panel is placed."
+                                            type="afterBreakPaginationType"
+                                            emptyText = "Continue Filling Parent"/>
+                                    <overflow
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/granite/components/paginationpicker"
+                                            fieldLabel="Overflow"
+                                            fieldDescription="Sets an overflow for a panel that spans pages."
+                                            name="./overflowText"
+                                            type="overflowPaginationType"
+                                            emptyText = "None"/>
+
+                                </items>
+                            </dorPagination>
+
+                            <dorLayoutType
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    disabled="false"
+                                    fieldLabel="Layout for Document of Record"
+                                    name="./dorLayoutType"
+                                    renderReadOnly="false">
+                                <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.showHideDoRLayoutOptions();"
+                                        af.listeners.change="guidelib.touchlib.editLayer.dialogUtils.showHideDoRLayoutOptions();"/>
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Column"
+                                            value="columnar">
+                                    </column>
+                                    <table
+                                            jcr:primaryType="nt:unstructured"
+                                            text="Table"
+                                            value="tabular">
+                                    </table>
+                                </items>
+                            </dorLayoutType>
+                            <dorNumCols
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                    disabled="false"
+                                    fieldLabel="Number of Columns in Document of Record"
+                                    name="./dorNumCols"
+                                    renderReadOnly="false"
+                                    hidden="true">
+                                <options
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                <items jcr:primaryType="nt:unstructured">
+                                    <empty
+                                            jcr:primaryType="nt:unstructured"
+                                            text=""
+                                            value=""/>
+                                    <v1
+                                            jcr:primaryType="nt:unstructured"
+                                            text="1"
+                                            value="1"/>
+                                    <v2
+                                            jcr:primaryType="nt:unstructured"
+                                            text="2"
+                                            value="2"/>
+                                    <v3
+                                            jcr:primaryType="nt:unstructured"
+                                            text="3"
+                                            value="3"/>
+                                    <v4
+                                            jcr:primaryType="nt:unstructured"
+                                            text="4"
+                                            value="4"/>
+                                    <v5
+                                            jcr:primaryType="nt:unstructured"
+                                            text="5"
+                                            value="5"/>
+                                    <v6
+                                            jcr:primaryType="nt:unstructured"
+                                            text="6"
+                                            value="6"/>
+                                    <v7
+                                            jcr:primaryType="nt:unstructured"
+                                            text="7"
+                                            value="7"/>
+                                    <v8
+                                            jcr:primaryType="nt:unstructured"
+                                            text="8"
+                                            value="8"/>
+                                    <v9
+                                            jcr:primaryType="nt:unstructured"
+                                            text="9"
+                                            value="9"/>
+                                    <v10
+                                            jcr:primaryType="nt:unstructured"
+                                            text="10"
+                                            value="10"/>
+                                    <v11
+                                            jcr:primaryType="nt:unstructured"
+                                            text="11"
+                                            value="11"/>
+                                    <v12
+                                            jcr:primaryType="nt:unstructured"
+                                            text="12"
+                                            value="12"/>
+                                </items>
+                            </dorNumCols>
+                        </items>
+                        <granite:rendercondition
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="fd/af/dor/rendercondition/tab"/>
+                    </dor>
                 </items>
             </tabs>
         </items>
