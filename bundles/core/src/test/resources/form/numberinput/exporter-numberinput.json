@@ -10,13 +10,14 @@
   "tooltip": "test-short-description",
   "properties": {
     "afs:layout" : {
-      "tooltipVisible": false,
-      "leadDigits": 2,
-      "fracDigits" : 4
+      "tooltipVisible": false
     },
     "fd:dor": {
       "dorExclusion":false
     }
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   "maximum": 2000000,
   "minimum": 10000,

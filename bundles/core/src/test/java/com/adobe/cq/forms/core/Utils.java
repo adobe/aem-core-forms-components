@@ -31,7 +31,7 @@ import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.forms.core.components.internal.models.v2.form.FormContainerImpl;
-import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.internal.jackson.DefaultMethodSkippingModuleProvider;
 import com.adobe.cq.wcm.core.components.internal.jackson.PageModuleProvider;
@@ -90,7 +90,7 @@ public class Utils {
         }
         IOUtils.closeQuietly(is);
         // this is added so that other components like form portal, aem form etc don't get validated against schema
-        if (model instanceof Base) {
+        if (model instanceof FormComponent) {
             Utils.testSchemaValidation(model);
         }
     }

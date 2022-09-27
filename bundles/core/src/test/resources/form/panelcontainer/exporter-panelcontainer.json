@@ -28,6 +28,9 @@
           "dorExclusion":false
         }
       },
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      },
       ":type":"core/fd/components/form/textinput/v1/textinput"
     }
   ],
@@ -39,7 +42,20 @@
   "properties": {
     "afs:layout": {
       "tooltipVisible":false
+    },
+    "fd:dor": {
+      "dorExclusion" : true,
+      "dorExcludeTitle" : false,
+      "dorExcludeDescription" : false,
+      "breakBeforeText": "Following Previous",
+      "breakAfterText": "Continue Filling Parent",
+      "overflow": "None",
+      "dorNumCols": "3",
+      "dorLayoutType": "columnar"
     }
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
 }
