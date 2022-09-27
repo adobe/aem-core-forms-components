@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Panel Container (v1)
+Adaptive Form Panel Container (v1)
 ====
-Panel Container component written in HTL.
+Adaptive Form Panel Container component written in HTL.
 
 ## Features
 
@@ -84,8 +84,9 @@ BLOCK cmp-container
   ELEMENT cmp-container__longdescription
 ```
 ## JavaScript Data Attribute Bindings
-
-Apply a `data-cmp-is="adaptiveFormPanel"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the panel-container component in the form view:  
+ 1. `data-cmp-is="adaptiveFormPanel"`
+ 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 ### Enabling Panel Container Editing Functionality
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:

@@ -25,27 +25,32 @@
         ARROW_DOWN: 40
     };
 
-    var NS = FormView.Constants.NS;
-    var IS = "adaptiveFormTabs";
-
-    var selectors = {
-        self: "[data-" + NS + '-is="' + IS + '"]',
-        active: {
-            tab: "cmp-tabs__tab--active",
-            tabpanel: "cmp-tabs__tabpanel--active"
-        }
-    };
-
 
     class Tabs extends FormView.FormPanel {
+
+        static NS = FormView.Constants.NS;
+        static IS = "adaptiveFormTabs";
+        static bemBlock = "cmp-tabs";
+
+        static selectors = {
+            self: "[data-" + Tabs.NS + '-is="' + Tabs.IS + '"]',
+            active: {
+                tab: "cmp-tabs__tab--active",
+                tabpanel: "cmp-tabs__tabpanel--active"
+            },
+            label: `.${Tabs.bemBlock}__label`,
+            description: `.${Tabs.bemBlock}__longdescription`,
+            qm: `.${Tabs.bemBlock}__questionmark`,
+            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`
+        };
 
         constructor(params) {
             super(params);
             const {element} = params;
-            this.cacheElements(element);
+            this.#cacheElements(element);
             this._active = this.getActiveIndex(this._elements["tab"]);
-            this.refreshActive();
-            this.bindEvents();
+            this.#refreshActive();
+            this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
                  * Editor message handling:
@@ -58,7 +63,7 @@
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
                     if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
-                            _self.navigate(message.data.index);
+                            _self.#navigate(message.data.index);
                         }
                     }
                 });
@@ -71,15 +76,15 @@
          * @private
          * @param {HTMLElement} wrapper The Tabs wrapper element
          */
-        cacheElements(wrapper) {
+        #cacheElements(wrapper) {
             this._elements = {};
             this._elements.self = wrapper;
-            var hooks = this._elements.self.querySelectorAll("[data-" + NS + "-hook-" + IS + "]");
+            var hooks = this._elements.self.querySelectorAll("[data-" + Tabs.NS + "-hook-" + Tabs.IS + "]");
 
             for (var i = 0; i < hooks.length; i++) {
                 var hook = hooks[i];
-                if (hook.closest("[data-cmp-is="+IS+"]") === this._elements.self) { // only process own tab elements
-                   var key = hook.dataset[NS + "Hook" + "Adaptiveformtabs"];
+                if (hook.closest("[data-cmp-is="+Tabs.IS+"]") === this._elements.self) { // only process own tab elements
+                   var key = hook.dataset[Tabs.NS + "Hook" + "Adaptiveformtabs"];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
                             var tmp = this._elements[key];
@@ -94,11 +99,35 @@
         }
 
         getClass() {
-            return IS;
+            return Tabs.IS;
         }
 
         setFocus() {
             this.setActive();
+        }
+
+        getWidget() {
+            return this.element.querySelector(Tabs.selectors.widget);
+        }
+
+        getDescription() {
+            return this.element.querySelector(Tabs.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(Tabs.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(Tabs.selectors.errorDiv);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(Tabs.selectors.tooltipDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(Tabs.selectors.qm);
         }
 
         /**
@@ -106,19 +135,19 @@
          *
          * @private
          */
-        bindEvents() {
+        #bindEvents() {
             var tabs = this._elements["tab"];
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     var _self = this;
                     (function(index){
                         tabs[index].addEventListener("click", function(event) {
-                            _self.navigateAndFocusTab(index);
+                            _self.#navigateAndFocusTab(index);
                         });
                     }(i));
                     
                     tabs[i].addEventListener("keydown", function(event) {
-                        _self.onKeyDown(event);
+                        _self.#onKeyDown(event);
                     });
                 };
             }
@@ -133,7 +162,7 @@
         getActiveIndex(tabs) {
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
-                    if (tabs[i].classList.contains(selectors.active.tab)) {
+                    if (tabs[i].classList.contains(Tabs.selectors.active.tab)) {
                         return i;
                     }
                 }
@@ -147,9 +176,9 @@
          * @private
          * @param {Object} event The keydown event
          */
-        onKeyDown(event) {
+        #onKeyDown(event) {
             var index = this._active;
-            //TODO this needs to be done
+
             var lastIndex = this._elements["tab"].length - 1;
 
             switch (event.keyCode) {
@@ -157,23 +186,23 @@
                 case keyCodes.ARROW_UP:
                     event.preventDefault();
                     if (index > 0) {
-                        this.navigateAndFocusTab(index - 1);
+                        this.#navigateAndFocusTab(index - 1);
                     }
                     break;
                 case keyCodes.ARROW_RIGHT:
                 case keyCodes.ARROW_DOWN:
                     event.preventDefault();
                     if (index < lastIndex) {
-                        this.navigateAndFocusTab(index + 1);
+                        this.#navigateAndFocusTab(index + 1);
                     }
                     break;
                 case keyCodes.HOME:
                     event.preventDefault();
-                    this.navigateAndFocusTab(0);
+                    this.#navigateAndFocusTab(0);
                     break;
                 case keyCodes.END:
                     event.preventDefault();
-                    this.navigateAndFocusTab(lastIndex);
+                    this.#navigateAndFocusTab(lastIndex);
                     break;
                 default:
                     return;
@@ -185,7 +214,7 @@
          *
          * @private
          */
-        refreshActive() {
+        #refreshActive() {
             var tabpanels = this._elements["tabpanel"];
             var tabs = this._elements["tab"];
 
@@ -193,23 +222,23 @@
                 if (Array.isArray(tabpanels)) {
                     for (var i = 0; i < tabpanels.length; i++) {
                         if (i === parseInt(this._active)) {
-                            tabpanels[i].classList.add(selectors.active.tabpanel);
-                            tabpanels[i].removeAttribute("aria-hidden");
-                            tabs[i].classList.add(selectors.active.tab);
-                            tabs[i].setAttribute("aria-selected", true);
-                            tabs[i].setAttribute("tabindex", "0");
+                            tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
+                            tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
+                            tabs[i].classList.add(Tabs.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
                         } else {
-                            tabpanels[i].classList.remove(selectors.active.tabpanel);
-                            tabpanels[i].setAttribute("aria-hidden", true);
-                            tabs[i].classList.remove(selectors.active.tab);
-                            tabs[i].setAttribute("aria-selected", false);
-                            tabs[i].setAttribute("tabindex", "-1");
+                            tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
+                            tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
+                            tabs[i].classList.remove(Tabs.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
                         }
                     }
                 } else {
                     // only one tab
-                    tabpanels.classList.add(selectors.active.tabpanel);
-                    tabs.classList.add(selectors.active.tab);
+                    tabpanels.classList.add(Tabs.selectors.active.tabpanel);
+                    tabs.classList.add(Tabs.selectors.active.tab);
                 }
             }
         }
@@ -232,9 +261,9 @@
          * @private
          * @param {Number} index The index of the tab to navigate to
          */
-        navigate(index) {
+        #navigate(index) {
             this._active = index;
-            this.refreshActive();
+            this.#refreshActive();
         }
 
         /**
@@ -243,15 +272,15 @@
          * @private
          * @param {Number} index The index of the item to navigate to
          */
-        navigateAndFocusTab(index) {
+        #navigateAndFocusTab(index) {
             var exActive = this._active;
-            this.navigate(index);
+            this.#navigate(index);
             this.focusWithoutScroll(this._elements["tab"][index]);
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Tabs({element, formContainer})
-    }, selectors.self);
+    }, Tabs.selectors.self);
     
 }());

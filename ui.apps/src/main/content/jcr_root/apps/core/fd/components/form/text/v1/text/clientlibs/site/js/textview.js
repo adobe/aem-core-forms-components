@@ -23,8 +23,7 @@
             static bemBlock = 'cmp-adaptiveform-text';
 
             static selectors  = {
-                self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-                widget: `.${Text.bemBlock}__widget`
+                self: "[data-" + this.NS + '-is="' + this.IS + '"]'
             };
 
             constructor(params) {
@@ -32,7 +31,27 @@
             }
 
             getWidget() {
-                return this.element.querySelector(Text.selectors.widget);
+                return null;
+            }
+
+            getDescription() {
+                return null;
+            }
+
+            getLabel() {
+                return null;
+            }
+
+            getErrorDiv() {
+                return null;
+            }
+
+            getTooltipDiv() {
+                return null;
+            }
+
+            getQuestionMarkDiv() {
+                return null;
             }
 
             getClass() {

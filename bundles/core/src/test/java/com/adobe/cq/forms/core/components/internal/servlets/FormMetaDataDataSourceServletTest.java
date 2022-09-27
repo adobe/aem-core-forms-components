@@ -48,7 +48,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
 public class FormMetaDataDataSourceServletTest {
-
+    public static final String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = "core/fd/components/form/container/v1/datasource";
     private static final String TEST_BASE = "/form/formcontainer/datasource";
     private static final String APPS_ROOT = "/apps";
 
