@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2018 Adobe
+  ~ Copyright 2022 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,15 +24,14 @@
   id="${panel.id}"
   class="cmp-tabs"
   aria-labelby="${panel.id}-label"
-  role="${container.roleAttribute}"
   data-panelcontainer="${wcmmode.edit && 'tabs'}"
   data-cmp-is="adaptiveFormTabs"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
   data-placeholder-text="${wcmmode.edit && 'Please drag Tab components here' @ i18n}">
-     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-container'}" data-sly-unwrap></div>
-     <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
-     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-container'}" data-sly-unwrap></div>
-     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+     <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
 
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
@@ -59,4 +58,7 @@
  <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
       data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
 </div>
+<sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
+ <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.tabs.v1.runtime'}"/>
+</sly>
 

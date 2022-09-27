@@ -13,60 +13,50 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Panel Container (v1)
+Tabs (v1)
 ====
-Panel Container component written in HTL.
+Adaptive Form Tabs component written in HTL.
 
 ## Features
 
-* Configurable layout type.
-* Configurable background image and background color:
-    * Background images and colors can be enabled through policy configuration.
-    * Color swatches for background color can be defined through policy configuration.
-    * Background color can be restricted to only allow swatches through policy configuration.
-* Configurable HTML ID attribute.
+* Allows addition of tab items of varying resource type.
 * Allowed components can be configured through policy configuration.
-* Style System support.
+* Ability to force a single panel to be displayed.
+* First tab is selected by default.
 
 ### Use Object
-The Panel Container component uses the `com.adobe.cq.wcm.core.components.models.LayoutContainer` Sling model as its Use-object.
-
-### Component Policy Configuration Properties
-The following configuration properties are used:
-
-1. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`
-2. `./layoutDisabled` - if set to true, it is not allowed to change the layout in the edit dialog
-3. `./backgroundImageEnabled` - defines whether to display a background image option.
-4. `./backgroundColorEnabled` - defines whether to display a background color option.
-5. `./backgroundColorSwatchesOnly` -  defines whether or not to display swatches in the background color picker.
-6. `./allowedColorSwatches` - defines a list of background color swatches that are allowed to be selected by an author.
-
-It is also possible to define the allowed components for the Panel Container.
+The Tabs component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Accordion component and are expected to be available as `Resource` properties:
 
-#### Panel Container Properties
-1. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
-
-#### Common Properties
-1. `./backgroundImageReference` - defines the Panel Container background image.
-2. `./backgroundColor` - defines the Panel Container background color.
-3. `./id` - defines the component HTML ID attribute.
-
-#### Accessibility
-1. `./accessibilityLabel` - defines an accessibility label for the Panel Container.
-2. `./roleAttribute` - defines a role attribute for the Panel Container.
+1. `./jcr:title` - defines the label to use for this panel
+2. `./name` - defines the name of the panel, which will be submitted with the form data
+3. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
+4. `./bindref` - defines the data binding, and how data will be sent
+5. `./visible` - defines initial state of panel visibility
+6. `./enabled` - defines initial state of panel if its enabled or not
+7. `./minItems` - defines minimum number of panel to be repeated
+8. `./maxItems` - defines maximum number of panel to be repeated
+9. `./tooltip` - defines tooltip on panel title
+10. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
 ## BEM Description
 ```
-BLOCK cmp-container
+BLOCK cmp-tabs
+    ELEMENT cmp-tabs__it
+    ELEMENT cmp-tabs__tablist
+    ELEMENT cmp-tabs__tab
+        MOD cmp-tabs__tab--active
+    ELEMENT cmp-tabs__title
+    ELEMENT cmp-tabs__icon
 ```
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormPanel"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormTabs"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
-### Enabling Panel Container Editing Functionality
+### Enabling Editing Functionality
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:
 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Panel Container as a container component
