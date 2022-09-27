@@ -9,6 +9,7 @@
             guideComponentType="fd/af/templates">
         <parsys1
                 jcr:primaryType="nt:unstructured"
+                editable="{Boolean}true"
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         <guideContainer
                 jcr:primaryType="nt:unstructured"
@@ -19,6 +20,7 @@
         </guideContainer>
         <parsys2
                 jcr:primaryType="nt:unstructured"
+                editable="{Boolean}true"
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
