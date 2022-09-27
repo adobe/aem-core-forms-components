@@ -13,6 +13,8 @@
         <guideContainer
                 jcr:primaryType="nt:unstructured"
                 editable="{Boolean}true"
+                fieldType="form"
+                fd:version="2.1"
                 sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
         <parsys2
