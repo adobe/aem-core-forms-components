@@ -32,7 +32,7 @@
                     <basic
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
-                        path="/libs/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
+                        path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
                     <containerItems
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Items"
