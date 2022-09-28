@@ -78,13 +78,39 @@
             return checkHTML(model.id, model.getState(), tabView, count);
         });
     });
-
+    const tabSelector = 'ol li';
+    const tab1 = () => {
+        return cy.get(tabSelector).first();
+    }
+    const tab2 = () => {
+        return cy.get(tabSelector).last();
+    }
     it("switch tab in runtime", () => {
-        const tab2 = cy.get('ol li').contains('Date Input 2');
-        tab2.click();
-        tab2.should('have.class','cmp-tabs__tab--active');
-        const tab1 = cy.get('ol li').contains('Date Input 1');
-        tab1.click();
-        tab1.should('have.class','cmp-tabs__tab--active');
+        tab2().click();
+        tab2().should('have.class','cmp-tabs__tab--active');
+        tab2().should('have.attr','aria-selected','true');
+        tab1().should('have.attr','aria-selected','false');
+        tab1().click();
+        tab1().should('have.class','cmp-tabs__tab--active');
+        tab1().should('have.attr','aria-selected','true');
+        tab2().should('have.attr','aria-selected','false');
+    });
+
+    it("switch tab in runtime using keyboard", () => {
+       
+        tab1().trigger('keydown',{
+            keyCode: 40
+        });
+        
+        tab2().should('have.class','cmp-tabs__tab--active');
+        tab2().should('have.attr','aria-selected','true');
+        tab1().should('have.attr','aria-selected','false');
+
+        tab2().trigger('keydown',{
+            keyCode: 38
+        });
+        tab1().should('have.class','cmp-tabs__tab--active');
+        tab1().should('have.attr','aria-selected','true');
+        tab2().should('have.attr','aria-selected','false');
     });
 });

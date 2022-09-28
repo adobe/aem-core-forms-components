@@ -45,7 +45,10 @@ describe.only('Page - Authoring', function () {
     const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']:last";
     dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
   }
-
+  const dropDatePickerInTabComponent = function() {
+    const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']:last";
+    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+  }
   const dropTabsInSites = function() {
     const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -87,7 +90,7 @@ describe.only('Page - Authoring', function () {
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         tabsPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/tabsontop",
-        panelContainerPathSelector = "[data-path='" + tabsPath + "']";
+        tabsContainerPathSelector = "[data-path='" + tabsPath + "']";
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
@@ -105,8 +108,22 @@ describe.only('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsPath);
     });
 
+    it('switch tabs using dialog select panel button in toolbar', function(){
+      dropTabsInContainer();
+      //Add 2 children in tabs on top component
+      dropTextInputInTabComponent();
+      dropDatePickerInTabComponent();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
+      cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+      const datePickerPath = tabsPath+"/datepicker";
+      //Click datepicker from panel select list
+      cy.get(`[data-id="${datePickerPath}`).click();
+      cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
+      cy.deleteComponentByPath(tabsPath);
+    });
+
     it ('open edit dialog of Tab on top', function(){
-      testPanelBehaviour(panelContainerPathSelector, tabsPath);
+      testPanelBehaviour(tabsContainerPathSelector, tabsPath);
     })
   })
 
