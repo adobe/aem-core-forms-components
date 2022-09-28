@@ -14,60 +14,50 @@
  *  limitations under the License.
  */
 
-const commons = require('../libs/commons/commons'),
-    sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
-    afConstants = require('../libs/commons/formsConstants');
+const afConstants = require("../../libs/commons/formsConstants");
+const sitesSelectors = require("../../libs/commons/sitesSelectors");
+
 
 describe('Page - Authoring', function () {
-
-    const dropTitleInContainer = function () {
-        const responsiveGridDropZone = "Drag components here",
-            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const dropTitleInContainer = function() {
+        const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title component", afConstants.components.forms.resourceType.title);
-        cy.get('body').click(0, 0);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title", afConstants.components.forms.resourceType.title);
+        cy.get('body').click( 0,0);
     }
 
-    const dropTitleInSites = function () {
+    const dropTitleInSites = function() {
         const dataPath = "/content/core-components-examples/library/adaptive-form/title/jcr:content/root/responsivegrid/demo/component/container/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title component", afConstants.components.forms.resourceType.title);
-        cy.get('body').click(0, 0);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title", afConstants.components.forms.resourceType.title);
+        cy.get('body').click( 0,0);
     }
 
-    const testTitleEditDialog = function (titleEditPathSelector, titleDrop, isSites) {
-        if (isSites) {
-            dropTitleInSites();
-        } else {
-            dropTitleInContainer();
-        }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(titleDrop);
-    }
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
             titleEditPathSelector = "[data-path='" + titleEditPath + "']",
-            titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop();
-
+            titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop(),
+            titleBlockBemSelector = '.cmp-adaptiveform-title',
+            editDialogConfigurationSelector = "[data-action='CONFIGURE']";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
         });
 
-        it('checking add and delete in form container', function () {
+        it('insert Title in form container', function () {
             dropTitleInContainer();
             cy.deleteComponentByPath(titleDrop);
         });
 
-        it('open edit dialog of Title', function () {
-            testTitleEditDialog(titleEditPathSelector, titleDrop);
+        it ('check edit dialog availability of Title', function(){
+            dropTitleInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.get(editDialogConfigurationSelector).should('be.visible');
+            cy.deleteComponentByPath(titleDrop);
         });
 
     });
@@ -76,6 +66,7 @@ describe('Page - Authoring', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/title",
             titleEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/title",
             titleEditPathSelector = "[data-path='" + titleEditPath + "']",
+            editDialogConfigurationSelector = "[data-action='CONFIGURE']",
             titleDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.title.split("/").pop();
 
         beforeEach(function () {
@@ -83,14 +74,17 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('checking add and delete in form container', function () {
+        it('insert aem forms Title', function () {
             dropTitleInSites();
             cy.deleteComponentByPath(titleDrop);
         });
 
-        it ('open edit dialog of Title', function(){
-            testTitleEditDialog(titleEditPathSelector, titleDrop, true);
+        it('open edit dialog of aem forms Title', function() {
+            dropTitleInSites();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.get(editDialogConfigurationSelector).should('be.visible');
+            cy.deleteComponentByPath(titleDrop);
         });
 
     });
-});
+})
