@@ -61,6 +61,9 @@ BLOCK cmp-accordion
     ELEMENT cmp-accordion__panel
         MOD cmp-accordion__panel--expanded
         MOD cmp-accordion__panel--hidden
+    ELEMENT cmp-accordion__questionmark
+    ELEMENT cmp-accordion__shortdescription
+    ELEMENT cmp-accordion__longdescription
 ```
 
 ## JavaScript Data Attribute Bindings

@@ -16,4 +16,4 @@
 
 #base=js
 
-accordion.js
+accordionview.js

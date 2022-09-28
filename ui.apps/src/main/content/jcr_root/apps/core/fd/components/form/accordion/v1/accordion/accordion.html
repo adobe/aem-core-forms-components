@@ -18,7 +18,6 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-panelcontainer="${wcmmode.edit && 'accordion'}"
      data-sly-use.renderer="${'accordion.js'}"
-     data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
@@ -58,6 +57,7 @@
     <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && wcmaccordion.items.size < 1}"></sly>
 
+    <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
