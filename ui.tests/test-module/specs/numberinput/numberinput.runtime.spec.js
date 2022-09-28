@@ -60,25 +60,37 @@ describe("Form with Number Input", () => {
     })
 
     it(" model's changes are reflected in the html ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const model = formContainer._model.getElement(id)
-        model.value = 23
-        checkHTML(model.id, model.getState()).then(() => {
-            model.visible = false
-            return checkHTML(model.id, model.getState())
-        }).then(() => {
-            model.enable = false
-            return checkHTML(model.id, model.getState())
-        })
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            model.value = 24
+            checkHTML(model.id, model.getState()).then(() => {
+                model.visible = false
+                return checkHTML(model.id, model.getState())
+            }).then(() => {
+                model.enable = false
+                return checkHTML(model.id, model.getState())
+            })
+        });
     });
 
     it(" html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const model = formContainer._model.getElement(id)
         const input = 23
-        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-            expect(Number(model.getState().value)).to.equal(input)
-        })
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                expect(Number(model.getState().value)).to.equal(input)
+            })
+        });
+    });
+
+    it(" non-number html changes are reflected in model ", () => {
+        const input = "$23"
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                expect(Number(model.getState().value)).to.equal(23)
+            })
+        });
     });
 
 })
