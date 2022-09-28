@@ -63,11 +63,24 @@
             return this.element.querySelector(NumberInput.selectors.qm);
         }
 
+        _updateValue(value) {
+            if (this.widgetObject) {
+                this.widgetObject.setValue(value);
+            } else {
+                super._updateValue(value);
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-            })
+            // only initialize if patterns are set
+            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat) {
+                this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
+            } else {
+                this.getWidget().addEventListener('blur', (e) => {
+                    this._model.value = e.target.value;
+                })
+            }
         }
     }
 

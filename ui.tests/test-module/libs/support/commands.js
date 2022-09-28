@@ -349,3 +349,44 @@ Cypress.Commands.add("disableToggles", () => {
     });
     cy.get('button').contains( 'Save').click();
 });
+
+
+/**
+ * Simulates a paste event.
+ * Modified from https://gist.github.com/nickytonline/bcdef8ef00211b0faf7c7c0e7777aaf6
+ *
+ * @param subject A jQuery context representing a DOM element.
+ * @param pasteOptions Set of options for a simulated paste event.
+ * @param pasteOptions.pastePayload Simulated data that is on the clipboard.
+ * @param pasteOptions.pasteFormat The format of the simulated paste payload. Default value is 'text'.
+ *
+ * @returns The subject parameter.
+ *
+ * @example
+ * cy.get('body').paste({
+ *   pasteType: 'application/json',
+ *   pastePayload: {hello: 'yolo'},
+ * });
+ */
+Cypress.Commands.add(
+    'paste',
+    {prevSubject: true},
+    function (subject, pasteOptions) {
+        const {pastePayload, pasteType} = pasteOptions;
+        const data = pasteType === 'application/json' ? JSON.stringify(pastePayload) : pastePayload;
+        // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
+        const clipboardData = new DataTransfer();
+        clipboardData.setData(pasteType, data);
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
+        // It's possible to construct and dispatch a synthetic paste event, but this will not affect the document's contents.
+        const pasteEvent = new ClipboardEvent('paste', {
+            bubbles: true,
+            cancelable: true,
+            dataType: pasteType,
+            data,
+            clipboardData,
+        });
+        subject[0].dispatchEvent(pasteEvent);
+        return subject;
+    }
+);
