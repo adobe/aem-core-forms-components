@@ -248,7 +248,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetEnum() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertArrayEquals(new Integer[] { 0, 1, 2 }, checkboxGroup.getEnums());
+        assertArrayEquals(new Long[] { 0L, 1L, 2L }, checkboxGroup.getEnums());
     }
 
     @Test

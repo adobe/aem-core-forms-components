@@ -27,8 +27,8 @@ const commons = require('../libs/commons/commons'),
 describe('Page - Authoring', function () {
 
   const dropFooterInContainer = function() {
-    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Footer", afConstants.components.forms.resourceType.footer);
     cy.get('body').click( 0,0);

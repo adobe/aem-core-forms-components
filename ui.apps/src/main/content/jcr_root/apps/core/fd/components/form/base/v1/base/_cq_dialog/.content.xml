@@ -62,6 +62,43 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Placeholder Text"
                                     name="./placeholder"/>
+                            <enums jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/container"
+                                   sling:hideResource="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                             sling:orderBefore="bindref"
+                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                             fieldDescription="Pair of Actual and Display Values"
+                                             fieldLabel="Pair of Actual and Display Values">
+                                        <field jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                                               name="./enum">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <enum jcr:primaryType="nt:unstructured"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                      granite:class="cmp-adaptiveform-base__enum"
+                                                      name="./enum"
+                                                      required="{Boolean}true"/>
+                                                <enumNames jcr:primaryType="nt:unstructured"
+                                                           sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                           granite:class="cmp-adaptiveform-base__enumNames"
+                                                           name="./enumNames"
+                                                           required="{Boolean}false"/>
+                                            </items>
+                                        </field>
+                                    </enumOptions>
+                                    <enumNames jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                               granite:hidden="true">
+                                        <field jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                               name="./enumNames"
+                                               granite:class="cmp-adaptiveform-base__enumNamesHidden"
+                                               granite:hidden="true"/>
+                                    </enumNames>
+                                </items>
+                            </enums>
                             <bindref
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"

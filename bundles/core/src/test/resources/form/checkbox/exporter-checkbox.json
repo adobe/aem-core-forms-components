@@ -17,7 +17,7 @@
       "dorExclusion":false
     }
   },
-  "enforceEnum":false,
+  "enforceEnum":true,
   "enum" : [true, false],
   "enumNames" : ["yes", "no"],
   "label": {
@@ -29,6 +29,9 @@
   "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
     "type":"incorrect type"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   "type": "boolean",
   ":type": "core/fd/components/form/checkbox/v1/checkbox"

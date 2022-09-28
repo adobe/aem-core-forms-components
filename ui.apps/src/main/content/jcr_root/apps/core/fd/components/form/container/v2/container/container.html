@@ -13,21 +13,26 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
 <form data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
       data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
+      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
       action="${container.metadata.action}"
       id="${container.id}"
       data-cmp-is="adaptiveFormContainer"
       data-cmp-path="${resource.path}"
-      class="cmp-adaptiveform-container ${grid.cssClass}">
+      class="cmp-adaptiveform-container ${grid.cssClass} cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}">
+    <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
+         data-sly-use.allowedTemplate="allowedcomponents.html"
+         data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
     <input data-sly-test="${container.thankyouPage}" type="hidden" name=":redirect" value="${container.thankyouPage @ extension='html'}"/>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper">
-        <sly data-sly-repeat.paragraph="${grid.paragraphs}"
+        <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"
              data-sly-resource="${paragraph.path @ resourceType=paragraph.resourceType, decorationTagName='div', cssClassName=paragraph.cssClass}"></sly>
         <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/responsivegrid/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
-             data-sly-test="${wcmmode.edit || wcmmode.preview}"></sly>
+             data-sly-test="${!isAllowedApplicable && (wcmmode.edit || wcmmode.preview)}"></sly>
     </div>
 </form>

@@ -38,6 +38,7 @@
   "events" : {
     "change" : ["e1", "e2"],
     "click": ["e1"],
-    "custom:event" : ["e2"]
+    "custom:event" : ["e2"],
+    "custom:setProperty" : ["$event.payload"]
   }
 }
