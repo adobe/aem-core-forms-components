@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Terms And Conditions"
+    fieldType="panel">
+      <text
+        jcr:primaryType="nt:unstructured"
+        jcr:title=""
+        hideTitle="true"
+        value="Text related to the terms and conditions come here"
+        fieldType="plain-text"
+        sling:resourceType="/libs/core/fd/components/form/text/v1/text"
+      />
+      <link
+        jcr:primaryType="nt:unstructured"
+        jcr:title=""
+        enum="[0]"
+        enumNames="[dummyLink]"
+        fieldType="checkbox-group"
+        hideTitle="true"
+        sling:resourceType="/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+      >
+        <fd:events
+          jcr:primaryType="nt:unstructured"
+          change="{String}{value: values(fromEntries(zip([$event.payload.changes[0].currentValue, $event.payload.changes[0].prevValue][], [$event.payload.changes[0].currentValue, $event.payload.changes[0].prevValue][])))}"
+        />
+      </link>
+      <checkbox
+        jcr:primaryType="nt:unstructured"
+        jcr:title=""
+        enum="[true]"
+        enumNames="[I agree to the terms &#38; conditions]"
+        fieldType="checkbox-group"
+        hideTitle="true"
+        enabled="false"
+        type="string[]"
+        sling:resourceType="/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+      >
+        <fd:rules
+          jcr:primaryType="nt:unstructured"
+          enabled="if($parent.$items[0].$fieldType == 'checkbox', length($parent.$items[0].$value) == length($parent.$items[0].$enum), $field.$enabled)"
+        />
+        <fd:events
+          jcr:primaryType="nt:unstructured"
+          custom_scrollDone="{String}{enabled: true()}"
+        />
+    </checkbox>
+</jcr:root>
