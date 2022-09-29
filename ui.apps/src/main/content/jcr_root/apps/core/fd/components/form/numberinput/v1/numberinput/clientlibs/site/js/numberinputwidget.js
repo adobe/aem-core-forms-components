@@ -13,6 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
+/**
+ * This class is responsible for interacting with the numeric input widget. It implements edit/display format
+ * for numeric input, along with the following features
+ * - Convert's input type number to text to support display/edit format (for example `$` symbol)
+ * - One cannot type or paste alphabets in the html input element
+ */
 class NumericInputWidget {
     #widget=null
     #model=null // passed by reference
@@ -33,7 +40,7 @@ class NumericInputWidget {
         "float":"^[+-]?{digits}*({decimal}{digits}*)?$"
     }
     #regex=null
-    #processValue=null
+    #processedValue=null
     #engRegex=null
     #writtenInLocale=false
     #previousCompositionVal=""
@@ -66,18 +73,16 @@ class NumericInputWidget {
                     .replace("{decimal}",this.#escape(this.#options.decimal)),
                 engStr = matchStr.replace(/{digits}/g,"[0-9]")
                     .replace("{decimal}","\\.")
-            this.#processValue = !(this.#getDigits() === "[0123456789]" && this.#options.decimal === ".")
+            this.#processedValue = !(this.#getDigits() === "[0123456789]" && this.#options.decimal === ".")
             this.#regex = new RegExp(localeStr, "g");
             this.#engRegex = new RegExp(engStr, "g");
         }
         // change the input type to text for patterns
-        if (this.#options.editFormat || this.#options.displayFormat) {
-            this.#widget.setAttribute("type", "text");
-        }
+        this.#widget.setAttribute("type", "text");
         this.#attachEventHandlers(widget);
     }
 
-    #attachEventHandlers  (widget, model) {
+    #attachEventHandlers(widget, model) {
         widget.addEventListener('keydown', (e)=> {
             this.#handleKeyDown(e);
         });
@@ -97,7 +102,7 @@ class NumericInputWidget {
         this.#attachCompositionEventHandlers(widget);
     }
 
-    #attachCompositionEventHandlers (widget) {
+    #attachCompositionEventHandlers(widget) {
         let isComposing = false; // IME Composing going on
         let hasCompositionJustEnded = false; // Used to swallow keyup event related to compositionend
         // IME specific handling, to handle japanese languages max limit
@@ -146,7 +151,7 @@ class NumericInputWidget {
                 });
     }
 
-    #getDigits  () {
+    #getDigits() {
         let zeroCode = this.#options.zero.charCodeAt(0),
             digits = "";
         for(let i = 0;i < 10;i++) {
@@ -155,15 +160,15 @@ class NumericInputWidget {
         return "["+digits+"]"
     }
 
-    #escape  (str) {
+    #escape(str) {
         return str.replace(".", "\\.")
     }
 
 
-    getValue  (value) {
+    getValue(value) {
         // we support full width, half width and locale specific numbers
         value = this.#toLatinForm(value);
-        if(value.length > 0 && this.#processValue && !value.match(this.#engRegex)) {
+        if(value.length > 0 && this.#processedValue && !value.match(this.#engRegex)) {
             this.#writtenInLocale = true;
             value = this.#convertValueFromLocale(value);
         } else {
@@ -175,7 +180,7 @@ class NumericInputWidget {
         return value;
     }
 
-    #compositionUpdateCallback    (event) {
+    #compositionUpdateCallback(event) {
         let that = this;
         let flag = false;
         let leadDigits = that.#options.leadDigits;
@@ -230,7 +235,7 @@ class NumericInputWidget {
         return this;
     }
 
-    getHTMLSupportedAttr (domElement, attr){
+    getHTMLSupportedAttr(domElement, attr){
         try{
             return domElement[attr];
         }
@@ -239,7 +244,7 @@ class NumericInputWidget {
         }
     }
 
-    #handleKeyInput   (event, character, code){
+    #handleKeyInput(event, character, code){
         if(event.ctrlKey && !(['paste', 'cut'].includes(event.type))) {
             return true;
         }
@@ -284,7 +289,7 @@ class NumericInputWidget {
         this.#options.pos = selectionStart;
     }
 
-    #handleKeyDown   (event){
+    #handleKeyDown(event){
         if (event) {
             let code = event.charCode || event.which || event.keyCode || 0;
             if(code === 8 || code === 46) // backspace and del
@@ -296,20 +301,20 @@ class NumericInputWidget {
         }
     }
 
-    #isValidChar   (character) {
+    #isValidChar(character) {
         character = this.#toLatinForm(character);
         let lastSingleDigitChar = String.fromCharCode(this.#options.zero.charCodeAt(0) + 9);
         // we only full width, half width and also locale specific if customer has overlayed the i18n file
         return (character >= "0" && character <= "9") || (character>=this.#options.zero && character<=lastSingleDigitChar) || character===this.#options.decimal || character===this.#options.minus;
     }
 
-    isNonPrintableKey (key) {
+    isNonPrintableKey(key) {
         return (key   // In IE, event.key returns words instead of actual characters for some keys.
             && !['MozPrintableKey','Divide','Multiply','Subtract','Add','Enter','Decimal','Spacebar','Del'].includes(key)
             && key.length !== 1 )
     }
 
-    #handleKeyPress   (event){
+    #handleKeyPress(event){
         if (event) {
             let code = event.charCode || event.which || event.keyCode || 0,
                 character = String.fromCharCode(code);
@@ -327,7 +332,7 @@ class NumericInputWidget {
         }
     }
 
-    #handlePaste   (event){
+    #handlePaste(event){
         if (event) {
             // get the contents
             let pastedChar = undefined;
@@ -354,13 +359,13 @@ class NumericInputWidget {
         }
     }
 
-    #handleCut   (event) {
+    #handleCut(event) {
         if (event) {
             this.#handleKeyInput(event, "", 0);
         }
     }
-    // CQ-107886 : added handling for negative values, as for '-', '-3' was getting returned
-    #convertValueToLocale  (val) {
+
+    #convertValueToLocale(val) {
         let zeroCode = this.#options.zero.charCodeAt(0);
         return  val.map(function(c) {
             if(c === ".") {
@@ -373,7 +378,7 @@ class NumericInputWidget {
         },this).join("");
     }
 
-    #convertValueFromLocale  (val) {
+    #convertValueFromLocale(val) {
         val = this.#toLatinForm(val);
         let zeroCode = this.#options.zero.charCodeAt(0);
         return  val.map(function(c) {
@@ -395,7 +400,7 @@ class NumericInputWidget {
         return (((this.#model.value === null) && (this.#widget.value === "")) || (this.#model.value === this.#widget.value));
     }
 
-    setValue   (value) {
+    setValue(value) {
         // if the value is same, don't do anything
         if(!this.#isValueSame()){
             if(value && this.#writtenInLocale) {
