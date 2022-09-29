@@ -9,11 +9,15 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
-      "tooltipVisible": false,
-      "leadDigits": 2,
-      "fracDigits" : 4
+    "afs:layout" : {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   },
   "maximum": 2000000,
   "minimum": 10000,

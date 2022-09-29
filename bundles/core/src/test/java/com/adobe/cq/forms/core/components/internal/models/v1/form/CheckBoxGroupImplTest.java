@@ -30,6 +30,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
@@ -68,7 +70,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testFieldType() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertEquals(Base.FieldType.CHECKBOX_GROUP.getValue(), checkboxGroup.getFieldType());
+        assertEquals(FieldType.CHECKBOX_GROUP.getValue(), checkboxGroup.getFieldType());
     }
 
     @Test
@@ -199,8 +201,8 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetConstraintMessages() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        Map<Base.ConstraintType, String> constraintsMessages = checkboxGroup.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = checkboxGroup.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), checkboxGroupMock.getConstraintMessages());
@@ -217,7 +219,7 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         Map<String, Object> properties = checkboxGroup.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
@@ -246,7 +248,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetEnum() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertArrayEquals(new Integer[] { 0, 1, 2 }, checkboxGroup.getEnums());
+        assertArrayEquals(new Long[] { 0L, 1L, 2L }, checkboxGroup.getEnums());
     }
 
     @Test

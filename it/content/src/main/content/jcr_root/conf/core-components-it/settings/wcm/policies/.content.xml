@@ -4,6 +4,18 @@
     jcr:primaryType="cq:Page">
     <core-components-it jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
+            <parsys jcr:primaryType="nt:unstructured">
+                <policy_1657606299306
+                        jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="parsys-policy"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        components="[group:Core Components Examples,group:Core Components Examples - Form]">
+                    <jcr:content
+                            jcr:primaryType="nt:unstructured"/>
+                </policy_1657606299306>
+            </parsys>
             <form jcr:primaryType="nt:unstructured">
                 <container jcr:primaryType="nt:unstructured">
                     <policy_1657606299305
@@ -12,8 +24,9 @@
                       jcr:primaryType="nt:unstructured"
                       jcr:title="formcontainer-policy"
                       sling:resourceType="wcm/core/components/policy/policy"
-                      components="[/apps/forms-components-examples/components/form/textinput,/apps/forms-components-examples/components/form/datepicker,/apps/forms-components-examples/components/form/panelcontainer]">
-                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                      components="[group:Core Components Examples,group:Core Adaptive Form]">
+                      <jcr:content
+                         jcr:primaryType="nt:unstructured"/>
                     </policy_1657606299305>
                 </container>
             </form>

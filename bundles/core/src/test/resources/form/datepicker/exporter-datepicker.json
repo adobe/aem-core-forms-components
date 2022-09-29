@@ -9,8 +9,11 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "label": {
@@ -36,5 +39,8 @@
     "value" : "false()",
     "label" : "{value : 'some label'}",
     "enabled" : "true()"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
   }
 }

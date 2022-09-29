@@ -14,7 +14,8 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-<sly data-sly-use.renderer="${'textinput.js'}"
+<sly data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
+     data-sly-use.renderer="${'textinput.js' @text=text}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
@@ -22,39 +23,43 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.text="com.adobe.cq.forms.core.components.models.form.TextInput"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
      id="${component.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.longDescriptionId="${'{0}-{1}' @ format=[component.id, 'longDescription']}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, label=text.label.value, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
-    <textarea data-sly-test.useTextarea="${text.multiLine}"
-              aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
-              aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
-              class="cmp-adaptiveform-textinput__widget"
-              name="${text.name}"
-              readonly="${text.readOnly}"
-              required="${text.required}"
-              placeholder="${text.placeHolder}"
-              data-cmp-required-message="${text.constraintMessages.required}"
-              aria-describedby="${component.id}-errorMessage">${text.default}</textarea>
-    <input data-sly-test="${!useTextarea}"
-           class="cmp-adaptiveform-textinput__widget"
-           aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
-           aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
-           type="text"
-           name="${text.name}"
-           value="${text.default}"
-           readonly="${text.readOnly}"
-           required="${text.required}"
-           placeholder="${text.placeHolder}"
-           data-cmp-required-message="${text.constraintMessages.required}"
-           aria-describedby="${component.id}-errorMessage"/>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
-    </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+  <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+  <textarea data-sly-test.useTextarea="${text.multiLine}"
+            title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
+            aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
+            aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
+            aria-describedby="${component.id}-errorMessage"
+            class="cmp-adaptiveform-textinput__widget"
+            name="${text.name}"
+            readonly="${text.readOnly}"
+            required="${text.required}"
+            placeholder="${text.placeHolder}"
+            minlength="${text.minLength}"
+            maxlength="${text.maxLength}">
+    </textarea>
+  <input data-sly-test="${!useTextarea}"
+         title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
+         class="cmp-adaptiveform-textinput__widget"
+         aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
+         aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
+         aria-describedby="${component.id}-errorMessage"
+         type="text"
+         name="${text.name}"
+         value="${text.default}"
+         readonly="${text.readOnly}"
+         required="${text.required}"
+         placeholder="${text.placeHolder}"
+         minlength="${text.minLength}"
+         maxlength="${text.maxLength}"/>
+  <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+  <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
+  </div>
+  <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+  <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
 </div>

@@ -69,7 +69,7 @@ public class TextInputImplTest {
     @Test
     void testFieldType() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
-        assertEquals(Base.FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
+        assertEquals(FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
     }
 
     @Test
@@ -105,6 +105,14 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getDataRef()).thenCallRealMethod();
         assertEquals(null, textInputMock.getDataRef());
+    }
+
+    @Test
+    void testDorProperties() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
+        assertEquals(true, textInput.getDorProperties().get("dorExclusion"));
+        assertEquals("4", textInput.getDorProperties().get("dorColspan"));
+
     }
 
     @Test
@@ -260,8 +268,8 @@ public class TextInputImplTest {
     @Test
     void testGetConstraintMessages() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
-        Map<Base.ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
-        assertEquals(constraintsMessages.get(Base.ConstraintType.TYPE), "incorrect type");
+        Map<ConstraintType, String> constraintsMessages = textInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), textInputMock.getConstraintMessages());
@@ -290,7 +298,7 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_1, TextInput.class, context);
         Map<String, Object> properties = textInput.getProperties();
         assertFalse(properties.isEmpty());
-        // get custom properties of "af:layout"
+        // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }

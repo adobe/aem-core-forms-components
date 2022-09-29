@@ -9,10 +9,13 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor":{
+      "dorExclusion":false
     }
-  },
+},
   "default" : "abc",
   "label": {
     "visible": true,
@@ -26,5 +29,8 @@
   },
   "type": "string",
   "format" : "email",
-  ":type": "core/fd/components/form/textinput/v1/textinput"
+  ":type": "core/fd/components/form/textinput/v1/textinput",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
 }

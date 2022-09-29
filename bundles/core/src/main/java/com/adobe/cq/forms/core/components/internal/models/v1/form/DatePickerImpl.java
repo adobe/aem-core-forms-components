@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.DatePicker;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
