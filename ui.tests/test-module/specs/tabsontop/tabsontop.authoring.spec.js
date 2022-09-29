@@ -101,17 +101,12 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(tabsPath);
     });
 
-    it('drop element in tabs on top', function () {
-        dropTabsInContainer();
-        dropTextInputInTabComponent();
-        cy.get(`[data-path="${tabsPath}"] [data-path="${tabsPath}/textinput"]`).should('be.visible');
-        cy.deleteComponentByPath(tabsPath);
-    });
 
-    it('switch tabs using dialog select panel button in toolbar', function(){
+    it('add multiple tabs and switch tabs using select panel button in toolbar', function(){
       dropTabsInContainer();
       //Add 2 children in tabs on top component
       dropTextInputInTabComponent();
+      cy.get(`[data-path="${tabsPath}"] [data-path="${tabsPath}/textinput"]`).should('be.visible');
       dropDatePickerInTabComponent();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
       cy.invokeEditableAction("[data-action='PANEL_SELECT']");
