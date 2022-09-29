@@ -13,20 +13,16 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!-- <div data-sly-use.title="com.adobe.cq.wcm.core.components.models.Title"
-     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
-     data-sly-test.text="${title.text}"
-     data-cmp-data-layer="${title.data.json}"
-     id="${title.id}"
-     class="cmp-title">
-    <h1 class="cmp-title__text" data-sly-element="${title.type}"><a
-            data-sly-unwrap="${!title.link.valid || title.linkDisabled}"
-            class="cmp-title__link"
-            data-sly-attribute="${title.link.htmlAttributes}"
-            data-cmp-clickable="${title.data ? true : false}">${text}</a></h1>
-</div>
-<sly data-sly-call="${template.placeholder @ isEmpty=!text, classAppend='cmp-title'}"></sly> -->
 
-<div data-sly-resource="${'text' @ resourceType='wcm/foundation/components/text'}"></div>
-<div data-sly-resource="${'image' @ resourceType='wcm/foundation/components/image'}"></div>
-<!-- <div> header this is</div> -->
+<!-- <div data-sly-resource="${'text' @ resourceType='wcm/foundation/components/text'}"></div> -->
+<!-- <div data-sly-resource="${'image' @ resourceType='wcm/foundation/components/image'}"></div> -->
+
+
+
+
+<div class="cmp-adaptiveform-pageheader">
+  <sly data-sly-list.child="${resource.listChildren}">
+       <div  data-sly-resource="${child.path}"></div>
+   </sly>
+ 
+ </div>
