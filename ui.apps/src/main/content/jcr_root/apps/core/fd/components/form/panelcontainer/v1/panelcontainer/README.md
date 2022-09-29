@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Panel Container (v1)
+Adaptive Form Panel Container (v1)
 ====
-Panel Container component written in HTL.
+Adaptive Form Panel Container component written in HTL.
 
 ## Features
 
@@ -47,24 +47,46 @@ It is also possible to define the allowed components for the Panel Container.
 The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
 
 #### Panel Container Properties
-1. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
+1. `./jcr:title` - defines the label to use for this panel
+2. `./name` - defines the name of the panel, which will be submitted with the form data
+3. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
+4. `./bindref` - defines the data binding, and how data will be sent
+5. `./visible` - defines initial state of panel visibility
+6. `./enabled` - defines initial state of panel if its enabled or not
+7. `./minItems` - defines minimum number of panel to be repeated
+8. `./maxItems` - defines maximum number of panel to be repeated
+9. `./tooltip` - defines tooltip on panel title
+10. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
-#### Common Properties
+#### Style Properties
 1. `./backgroundImageReference` - defines the Panel Container background image.
 2. `./backgroundColor` - defines the Panel Container background color.
-3. `./id` - defines the component HTML ID attribute.
+3. `./cq:styleIds` - defines the selector (as provided in design dialog)
 
 #### Accessibility
-1. `./accessibilityLabel` - defines an accessibility label for the Panel Container.
-2. `./roleAttribute` - defines a role attribute for the Panel Container.
+1. `./assistPriority` - defines where to pick accessibility information for the Panel Container. This can be one of 'Description', 'Title', 'Name', 'Custom' or 'None'
+2. `./custom` - defines custom accessibility information for the Panel Container, if assistPriority is custom.
+3. `./roleAttribute` - defines a role attribute for the Panel Container.
+
+## Client Libraries
+The component provides a `core.forms.components.panelcontainer.v1.runtime` client library category that contains a JavaScript
+component. It should be added to a relevant site client library using the `embed` property.
+
+It also provides a `core.forms.components.panelcontainer.v1.editor` editor client library category that includes
+JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description
 ```
 BLOCK cmp-container
+  ELEMENT cmp-container__label
+  ELEMENT cmp-container__questionmark
+  ELEMENT cmp-container__shortdescription
+  ELEMENT cmp-container__longdescription
 ```
 ## JavaScript Data Attribute Bindings
-
-Apply a `data-cmp-is="adaptiveFormPanel"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the panel-container component in the form view:  
+ 1. `data-cmp-is="adaptiveFormPanel"`
+ 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 ### Enabling Panel Container Editing Functionality
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:

@@ -18,10 +18,12 @@ package com.adobe.cq.forms.core.components.internal.form;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
-
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = Resource.class,
@@ -36,12 +38,38 @@ public class FormStructureParserImpl implements FormStructureParser {
         return getFormContainerPath(resource);
     }
 
+    @Override
+    public String getClientLibRefFromFormContainer() {
+        return getPropertyFromFormContainer(resource, FormContainer.PN_CLIENT_LIB_REF);
+    }
+
+    private String getPropertyFromFormContainer(@Nullable Resource resource, @NotNull String propertyName) {
+        if (resource == null) {
+            return null;
+        }
+
+        if (ComponentUtils.isAFContainer(resource)) {
+            FormContainer formContainer = resource.adaptTo(FormContainer.class);
+            if (formContainer != null) {
+                return formContainer.getClientLibRef();
+            }
+        }
+
+        for (Resource child : resource.getChildren()) {
+            String clientLibRef = getPropertyFromFormContainer(child, propertyName);
+            if (clientLibRef != null) {
+                return clientLibRef;
+            }
+        }
+        return null;
+    }
+
     private String getFormContainerPath(Resource resource) {
         if (resource == null) {
             return null;
         }
 
-        if (resource.isResourceType(RT_FD_FORM_CONTAINER_V2)) {
+        if (ComponentUtils.isAFContainer(resource)) {
             return resource.getPath();
         }
 

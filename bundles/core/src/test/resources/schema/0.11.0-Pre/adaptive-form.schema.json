@@ -533,7 +533,6 @@
             "type": "object",
             "propertyNames": {
               "enum": [
-                ":type",
                 "value",
                 "description",
                 "visible",
@@ -551,6 +550,7 @@
           "anyOf": [
             {
               "enum": [
+                ":type",
                 "name",
                 "fieldType",
                 "label",
@@ -663,14 +663,67 @@
         }
       }
     },
-    "StaticField": {
-      "title": "Static Field represents the Field that do not capture value from the user but can be",
+    "Image": {
+      "title": "Image",
       "if": {
         "type": "object",
         "properties": {
           "fieldType": {
             "enum": [
-              "plain-text",
+              "image"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "image"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "value",
+                "visible",
+                "altText"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            "name",
+            "value",
+            "fieldType",
+            "dataRef",
+            "visible",
+            "rules",
+            "events",
+            "properties",
+            "altText",
+            ":type",
+            "id"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in StaticField"
+          }
+        }
+      }
+    },
+    "Button": {
+      "title": "Button",
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
               "button"
             ]
           }
@@ -684,7 +737,6 @@
         "properties": {
           "fieldType": {
             "enum": [
-              "plain-text",
               "button"
             ]
           },
@@ -705,20 +757,73 @@
           "enum": [
             "name",
             "label",
-            "default",
             "description",
             "value",
             "fieldType",
             "dataRef",
             "visible",
-            "placeholder",
-            "screenReaderText",
             "rules",
             "events",
-            "properties"
+            "properties",
+            ":type",
+            "id"
           ],
           "errorMessage": {
-            "enum": "${0} property is not allowed in StaticField"
+            "enum": "${0} property is not allowed in Button"
+          }
+        }
+      }
+    },
+    "PlainText": {
+      "title": "Plain Text",
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "plain-text"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "plain-text"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "value",
+                "description",
+                "visible"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            "name",
+            "value",
+            "fieldType",
+            "dataRef",
+            "richText",
+            "visible",
+            "rules",
+            "events",
+            "properties",
+            "id",
+            ":type"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in Plain Text"
           }
         }
       }
@@ -929,7 +1034,13 @@
               "$ref": "#/$defs/Panel"
             },
             {
-              "$ref": "#/$defs/StaticField"
+              "$ref": "#/$defs/Image"
+            },
+            {
+              "$ref": "#/$defs/Button"
+            },
+            {
+              "$ref": "#/$defs/PlainText"
             },
             {
               "$ref": "#/$defs/CustomElement"

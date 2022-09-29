@@ -9,8 +9,11 @@
   "description" : "dummy",
   "tooltip": "test-short-description",
   "properties": {
-    "af:layout" : {
+    "afs:layout" : {
       "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion":false
     }
   },
   "enforceEnum":false,
@@ -30,5 +33,8 @@
   "type": "number[]",
   "minItems" : 1,
   "maxItems" : 2,
-  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+  ":type": "core/fd/components/form/dropdown/v1/dropdown",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
 }
