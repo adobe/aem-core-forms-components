@@ -31,6 +31,20 @@ use(function () {
     return _str.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
+  var ariaLabel = getAriaLabel(this.text);
+
+  function getAriaLabel(text) {
+    function getUseAriaLabels(text) {
+      return (!text.label.visible || (text.screenReaderText != null && text.screenReaderText != "$label.$value"))
+    }
+    var ariaLabel = null;
+    if (getUseAriaLabels(text) && text.screenReaderText != "$description") {
+      ariaLabel = text.htmlScreenReaderText;
+    }
+    return ariaLabel;
+  }
+
+
   return {
     labelPath: labelPath,
     shortDescriptionPath: shortDescriptionPath,
@@ -38,6 +52,7 @@ use(function () {
     questionMarkPath: questionMarkPath,
     errorMessagePath: errorMessagePath,
     clientlibs: clientlibsArr,
-    tooltipContent: tooltipContent
+    tooltipContent: tooltipContent,
+    ariaLabel: ariaLabel
   }
 });

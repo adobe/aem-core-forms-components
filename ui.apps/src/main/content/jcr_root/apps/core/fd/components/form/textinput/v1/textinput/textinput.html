@@ -32,7 +32,7 @@
   <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
   <textarea data-sly-test.useTextarea="${text.multiLine}"
             title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
-            aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
+            aria-label="${renderer.ariaLabel}"
             aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
             aria-describedby="${component.id}-errorMessage"
             class="cmp-adaptiveform-textinput__widget"
@@ -46,7 +46,7 @@
   <input data-sly-test="${!useTextarea}"
          title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
          class="cmp-adaptiveform-textinput__widget"
-         aria-label="${text.htmlScreenReaderText && text.screenReaderText != '$description' ? text.htmlScreenReaderText : text.label.value}"
+         aria-label="${renderer.ariaLabel}"
          aria-labelledby="${text.screenReaderText == '$description' ? longDescriptionId : ''}"
          aria-describedby="${component.id}-errorMessage"
          type="text"
