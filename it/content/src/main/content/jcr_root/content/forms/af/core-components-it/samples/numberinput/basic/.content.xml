@@ -27,6 +27,13 @@
                     name="numberinput2"
                     jcr:title="number Input 2"
                     sling:resourceType="forms-components-examples/components/form/numberinput"/>
+            <numberinput3
+                    fieldType="number-input"
+                    jcr:primaryType="nt:unstructured"
+                    name="numberinput3"
+                    displayFormat="$123"
+                    jcr:title="Number Input With Pattern"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
