@@ -26,7 +26,6 @@
                     maxItems="4"
                     minItems="0"
                     name="tabsontop1662449848339"
-                    roleAttribute="toolbar"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
                     visible="{Boolean}true">
                 <datepicker1

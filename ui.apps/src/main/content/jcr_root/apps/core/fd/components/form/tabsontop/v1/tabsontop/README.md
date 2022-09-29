@@ -51,6 +51,10 @@ BLOCK cmp-tabs
         MOD cmp-tabs__tab--active
     ELEMENT cmp-tabs__title
     ELEMENT cmp-tabs__icon
+    ELEMENT cmp-tabs__label
+    ELEMENT cmp-tabs__shortdescription
+    ELEMENT cmp-tabs__longdescription
+    LEMENT cmp-tabs__questionmark
 ```
 ## JavaScript Data Attribute Bindings
 

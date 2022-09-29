@@ -14,16 +14,18 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
- use(function () {
-
+use(function () {
+    // todo: sanity
     var labelPath = 'core/fd/components/commons/v1/fieldTemplates/label.html';
     var shortDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/shortDescription.html";
     var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
-    var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html";
+    var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html"
+    var errorMessagePath = "core/fd/components/commons/v1/fieldTemplates/errorMessage.html";
     return {
-      labelPath: labelPath,
-      shortDescriptionPath: shortDescriptionPath,
-      longDescriptionPath: longDescriptionPath,
-      questionMarkPath: questionMarkPath
+        labelPath: labelPath,
+        shortDescriptionPath: shortDescriptionPath,
+        longDescriptionPath: longDescriptionPath,
+        questionMarkPath: questionMarkPath,
+        errorMessagePath: errorMessagePath,
     }
-  });
+});
