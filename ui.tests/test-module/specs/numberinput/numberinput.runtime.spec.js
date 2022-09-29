@@ -56,6 +56,7 @@ describe("Form with Number Input", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+            checkHTML(id, field.getModel().getState())
         });
     })
 
