@@ -152,15 +152,14 @@
                                 isDialogRendered = true;
                                 $container.append($subDialogContent);
                                 $subDialogContent.trigger('foundation-contentloaded');
-                                callback(isDialogRendered);
+                                callback(isDialogRendered, dialogPath);
                             }
                         });
                     }
                 }
-                callback(isDialogRendered);
+                callback(isDialogRendered, dialogPath);
             };
         }
-
     }
 
 })(jQuery, jQuery(document), Coral);

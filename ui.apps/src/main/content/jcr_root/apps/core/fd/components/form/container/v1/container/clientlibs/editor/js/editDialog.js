@@ -71,8 +71,37 @@
             }).remove();
             // render the sub dialog
             var renderSubDialog = Utils.renderSubDialog(containerSubmitActionSettings[0]);
-            var showHideWrapper = function(show){if (show){containerSubmitActionSettingsWrapper.show()} else{containerSubmitActionSettingsWrapper.hide()}};
+            var showHideWrapper = function(show, dialogPath){
+                if (show){containerSubmitActionSettingsWrapper.show()} else{containerSubmitActionSettingsWrapper.hide()}
+                if (dialogPath === 'fd/af/components/guidesubmittype/email') {
+                    function showHideEmailTemplate() {
+                        var externalEmailTemplateCheckbox = document.querySelector('.emailTemplateSwitch')
+                        var emailTemplate = document.querySelector('.emailTemplate');
+                        var externalTemplatePath = document.querySelector('.externalTemplatePath');
+                        if (emailTemplate && externalTemplatePath) {
+                            var labelId = emailTemplate['labelledBy'];
+                            var externalTemplatePathLabelId = externalTemplatePath['labelledBy'];
+                            if (externalEmailTemplateCheckbox['checked']) {
+                                document.getElementById(labelId).style.display = 'none';
+                                document.querySelector('.emailTemplate').hide();
+                                externalTemplatePath.style.display = 'block';
+                                document.getElementById(externalTemplatePathLabelId).style.display = 'block';
+                            } else {
+                                document.getElementById(labelId).style.display = 'block';
+                                document.querySelector('.emailTemplate').show();
+                                externalTemplatePath.style.display = 'none';
+                                document.getElementById(externalTemplatePathLabelId).style.display = 'none';
+                            }
+                        }
+                    }
+                    if (document.querySelector('.emailTemplateSwitch')) {
+                        document.querySelector('.emailTemplateSwitch').on('change', showHideEmailTemplate);
+                        showHideEmailTemplate();
+                    }
+                }
+            };
             renderSubDialog(containerSubmitAction[0].value, showHideWrapper);
+
             containerSubmitAction[0].on("change", function(){
                 renderSubDialog(containerSubmitAction[0].value, showHideWrapper);
             });
