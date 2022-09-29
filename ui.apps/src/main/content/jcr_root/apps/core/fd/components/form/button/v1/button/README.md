@@ -33,8 +33,8 @@ The following properties are written to JCR for this button component and are ex
 3. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
 ## Client Libraries
-The component provides a `core.forms.components.button.v1` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.button.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
 ```

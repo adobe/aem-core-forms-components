@@ -27,11 +27,13 @@ var formsConstants = {
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
                 // "pageheader": "/apps/forms-components-examples/components/form/pageheader"
-                "pageheader":"/libs/core/fd/components/form/pageheader/v1/pageheader" // somehow libs path is working for pageheader component giving apps path gives component not found
+                "pageheader":"/libs/core/fd/components/form/pageheader/v1/pageheader", 
+                // somehow libs path is working for pageheader component giving apps path gives component not found
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
+                "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
                 "formimage": "/apps/forms-components-examples/components/form/image",
                 "formradiobutton": "/apps/forms-components-examples/components/form/radiobutton",

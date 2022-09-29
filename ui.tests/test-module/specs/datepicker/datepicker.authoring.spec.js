@@ -20,8 +20,8 @@
 describe('Page - Authoring', function () {
 
     const dropDatePickerInContainer = function () {
-        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+        const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
         cy.get('body').click(0, 0);

@@ -15,10 +15,7 @@
  */
 
 
-const commons = require('../../libs/commons/commons'),
-    sitesSelectors = require('../../libs/commons/sitesSelectors'),
-    sitesConstants = require('../../libs/commons/sitesConstants'),
-    guideSelectors = require('../../libs/commons/guideSelectors'),
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
@@ -28,8 +25,8 @@ describe('Page - Authoring', function () {
   // we can use these values to log in
 
   const dropTextInputInContainer = function() {
-    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
     cy.get('body').click( 0,0);
