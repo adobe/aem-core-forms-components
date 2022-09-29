@@ -41,7 +41,9 @@ public enum ConstraintType {
     MAX_ITEMS("maxItems"),
     UNIQUE_ITEMS("uniqueItems"),
     ENFORCE_ENUM("enforceEnum"),
-    VALIDATION_EXPRESSION("validationExpression");
+    VALIDATION_EXPRESSION("validationExpression"),
+    MAXFILE_SIZE("maxFileSize"),
+    ACCEPT("accept");
 
     private String value;
 

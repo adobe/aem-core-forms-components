@@ -4,20 +4,23 @@
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
             jcr:primaryType="cq:PageContent"
+            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
         <parsys1
                 jcr:primaryType="nt:unstructured"
+                editable="{Boolean}true"
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         <guideContainer
                 jcr:primaryType="nt:unstructured"
-                fd:version="2.0"
                 editable="{Boolean}true"
-                sling:resourceType="forms-components-examples/components/form/container"
-                name="guide1">
+                fieldType="form"
+                fd:version="2.1"
+                sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
         <parsys2
                 jcr:primaryType="nt:unstructured"
+                editable="{Boolean}true"
                 sling:resourceType="wcm/foundation/components/responsivegrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">

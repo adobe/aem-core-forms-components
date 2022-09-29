@@ -16,7 +16,7 @@
       "dorExclusion":false
     }
   },
-  "enforceEnum":false,
+  "enforceEnum":true,
   "enum" : [0, 1, 2],
   "enumNames" : ["m", "f", "o"],
   "label": {

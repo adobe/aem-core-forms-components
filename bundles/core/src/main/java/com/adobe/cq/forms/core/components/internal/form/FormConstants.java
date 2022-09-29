@@ -58,6 +58,9 @@ public final class FormConstants {
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 
+    /** The resource type for radio button v1 */
+    public static final String RT_FD_FORM_RADIO_BUTTON_V1 = RT_FD_FORM_PREFIX + "radiobutton/v1/radiobutton";
+
     /** The resource type for panel v1 */
     public static final String RT_FD_FORM_PANEL_V1 = RT_FD_FORM_PREFIX + "panel/v1/panel";
 
@@ -68,6 +71,9 @@ public final class FormConstants {
 
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
+
+    /** The resource type for accordion v1 */
+    public final static String RT_FD_FORM_ACCORDION_V1 = RT_FD_FORM_PREFIX + "accordion/v1/accordion";
 
     /** The resource type for image v1 */
     public static final String RT_FD_FORM_IMAGE_V1 = RT_FD_FORM_PREFIX + "image/v1/image";

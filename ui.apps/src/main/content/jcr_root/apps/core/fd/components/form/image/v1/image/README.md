@@ -45,12 +45,12 @@ BLOCK cmp-image
 ```
 
 ## Client Libraries
-The component provides a `core.forms.components.image.v1.runtime` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.image.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the checkbox-group component in the form view:  
+The following attributes must be added for the initialization of the image component in the form view:  
  1. `data-cmp-is="adaptiveFormImage"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
  

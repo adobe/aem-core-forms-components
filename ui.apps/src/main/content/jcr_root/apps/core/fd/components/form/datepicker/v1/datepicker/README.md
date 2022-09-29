@@ -42,9 +42,8 @@ The following properties are written to JCR for this Form Date component and are
 12. `./maximumDate` - define the maximum date input allowed for the field
 
 ## Client Libraries
-The component provides a `core.forms.components.datepicker.v1` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
-
+The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
 ```
@@ -59,7 +58,7 @@ BLOCK cmp-adaptiveform-datepicker
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the checkbox-group component in the form view:  
+The following attributes must be added for the initialization of the date-picker component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
  
