@@ -326,7 +326,6 @@
                                         <argument>mocha-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
                                         <argument>configFile=cypress.json</argument>
-                                        <argument>--spec=./specs/tabsontop/tabsontop.authoring.spec.js</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
