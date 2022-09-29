@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <filter root="/content/forms/af/core-components-it" mode="merge"/>
-    <filter root="/content/dam/formsanddocuments/core-components-it" mode="merge"/>
+    <filter root="/content/forms/af/core-components-it" mode="update"/>
+    <filter root="/content/dam/formsanddocuments/core-components-it" mode="update"/>
     <filter root="/conf/core-components-it" mode="update"/>
 </workspaceFilter>
