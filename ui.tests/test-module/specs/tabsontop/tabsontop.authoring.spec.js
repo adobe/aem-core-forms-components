@@ -38,7 +38,7 @@ describe.only('Page - Authoring', function () {
 
   const dropTabsInContainer = function() {
     const responsiveGridDropZoneSelector = getDropZoneSelector("/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*");
-    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Tabs On Top component", afConstants.components.forms.resourceType.tabsontop);
+    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Horizontal Tabs", afConstants.components.forms.resourceType.tabsontop);
   }
 
   const dropTextInputInTabComponent = function() {
@@ -52,7 +52,7 @@ describe.only('Page - Authoring', function () {
   const dropTabsInSites = function() {
     const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
-    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Tabs On Top component", afConstants.components.forms.resourceType.tabsontop);
+    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Horizontal Tabs", afConstants.components.forms.resourceType.tabsontop);
   }
 
   const testPanelBehaviour = function(tabsEditPathSelector, tabsContainerDrop, isSites) {
@@ -115,9 +115,11 @@ describe.only('Page - Authoring', function () {
       dropDatePickerInTabComponent();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
       cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+      cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+      const datePickerPath = tabsPath+"/datepicker";
+      cy.get(`[data-id="${datePickerPath}`).click();
       cy.get('body').click( 0,0);
       cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-      const datePickerPath = tabsPath+"/datepicker";
       //Click datepicker from panel select list
       cy.get(`[data-id="${datePickerPath}`).click();
       cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');

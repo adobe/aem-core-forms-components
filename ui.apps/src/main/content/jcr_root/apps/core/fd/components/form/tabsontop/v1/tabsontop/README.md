@@ -56,6 +56,10 @@ BLOCK cmp-tabs
     ELEMENT cmp-tabs__longdescription
     ELEMENT cmp-tabs__questionmark
 ```
+## Client Libraries
+The component provides a `core.forms.components.tabs.v1.runtime` client library category that contains a JavaScript
+component. It should be added to a relevant site client library using the `embed` property.
+
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormTabs"` attribute to the wrapper block to enable initialization of the JavaScript component.
