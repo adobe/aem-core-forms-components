@@ -118,6 +118,7 @@ describe.only('Page - Authoring', function () {
       const datePickerPath = tabsPath+"/datepicker";
       //Click datepicker from panel select list
       cy.get(`[data-id="${datePickerPath}`).click();
+      cy.get('body').click( 0,0);
       cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
       cy.deleteComponentByPath(tabsPath);
     });
