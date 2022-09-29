@@ -26,16 +26,16 @@
                     jcr:primaryType="nt:unstructured"
                     name="textinput2"
                     jcr:title="Text Input 2"
-                    visible="true"
-                    enabled="false"
+                    visible="{Boolean}true"
+                    enabled="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/textinput"/>
             <textinput3
                     fieldType="text-input"
                     jcr:primaryType="nt:unstructured"
                     name="textinput3"
                     jcr:title="Text Input 3"
-                    visible="false"
-                    enabled="true"
+                    visible="{Boolean}false"
+                    enabled="{Boolean}true"
                     sling:resourceType="forms-components-examples/components/form/textinput"/>
         </guideContainer>
     </jcr:content>
