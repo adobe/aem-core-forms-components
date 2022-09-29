@@ -115,10 +115,11 @@ describe.only('Page - Authoring', function () {
       dropDatePickerInTabComponent();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
       cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+      //Waiting for event binding in panel selector, otherwise click happens before event binding which causes an issue.
+      cy.wait(500);
       const datePickerPath = tabsPath+"/datepicker";
       //Click datepicker from panel select list
       cy.get(`[data-id="${datePickerPath}`).click();
-      cy.get('body').click( 0,0);
       cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
       cy.deleteComponentByPath(tabsPath);
     });
