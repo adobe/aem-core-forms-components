@@ -54,7 +54,7 @@ BLOCK cmp-tabs
     ELEMENT cmp-tabs__label
     ELEMENT cmp-tabs__shortdescription
     ELEMENT cmp-tabs__longdescription
-    LEMENT cmp-tabs__questionmark
+    ELEMENT cmp-tabs__questionmark
 ```
 ## JavaScript Data Attribute Bindings
 
