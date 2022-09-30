@@ -25,9 +25,10 @@ const commons = require('../libs/commons/commons'),
 
 describe('Page - Authoring', function () {
     // we can use these values to log in
+
 const dropPageHeaderInContainer = function() {
-    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+    const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/parsys1/*", 
+        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
     // console.log(responsiveGridDropZoneSelector, "Adaptive Form Page Header component", afConstants.components.forms.resourceType.pageheader);
@@ -35,7 +36,7 @@ const dropPageHeaderInContainer = function() {
     }
 
 const dropPageHeaderInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
@@ -43,39 +44,41 @@ const dropPageHeaderInSites = function() {
     }
 
 
-context('Drag drop the pageheader', function() {
-    const pagePath = "/content/forms/af/core-components-it/blank",
-        pageheaderEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/pageheader",
-        pageheaderEditPathSelector = "[data-path='" + pageheaderEditPath + "']",
-        pageheaderDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop();
-    beforeEach(function () {
-        // this is done since cypress session results in 403 sometimes
-        cy.openAuthoring(pagePath);
-    });
+// context('Drag drop the pageheader', function() {
+//     const pagePath = "/content/forms/af/core-components-it/blank",
+//         pageheaderEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/pageheader",
+//         pageheaderEditPathSelector = "[data-path='" + pageheaderEditPath + "']",
+//         pageheaderDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop();
+//     beforeEach(function () {
+//         // this is done since cypress session results in 403 sometimes
+//         cy.openAuthoring(pagePath);
+//     });
 
-    it('insert PageHeader in form container', function () {
-        dropPageHeaderInContainer();
-        cy.deleteComponentByPath(pageheaderDrop);
-    });
-     // no edit dialogue for text editor, no test for that
-    })
+//     it('insert PageHeader in form container', function () {
+//         dropPageHeaderInContainer();
+//         cy.deleteComponentByPath(pageheaderDrop);
+//     });
+//      // no edit dialogue for text editor, no test for that
+//     })
 
 context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/pageheader",
-        pageheaderEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/pageheader",
-        pageheaderEditPathSelector = "[data-path='" + pageheaderEditPath + "']",
+        //pageheaderEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/pageheader",
+        //pageheaderDrop = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/pageheader";
+        //pageheaderEditPathSelector = "[data-path*='" + pageheaderEditPath + "']",
+        // /content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/pageheader_*
         pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.pageheader.split("/").pop();
+        pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtext.split("/").pop();
 
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
         cy.openAuthoring(pagePath);
     });
 
-    // removing the testing for site editor for now
-    // it('insert aem forms Page Header', function () {
-    //     dropPageHeaderInSites();
-    //     cy.deleteComponentByPath(pageheaderDrop);
-    // });
+    it('insert aem forms Page Header', function () {
+        dropPageHeaderInSites();
+        cy.deleteComponentByPath(pageheaderDrop);
+    });
 
     // it('open edit dialog of aem forms PageHeader', function() {
     //     testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);

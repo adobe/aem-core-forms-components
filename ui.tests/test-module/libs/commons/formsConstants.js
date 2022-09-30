@@ -26,9 +26,7 @@ var formsConstants = {
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
-                // "pageheader": "/apps/forms-components-examples/components/form/pageheader"
-                "pageheader":"/libs/core/fd/components/form/pageheader/v1/pageheader", 
-                // somehow libs path is working for pageheader component giving apps path gives component not found
+                "pageheader": "/apps/forms-components-examples/components/form/pageheader",
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
