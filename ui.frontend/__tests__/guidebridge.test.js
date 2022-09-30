@@ -27,7 +27,6 @@ test('GuideBridge test', () => {
        guideBridge.getFormDataString({success: function(formDataResponse) {
            formData = formDataResponse.data.getData();
            expect(formData).not.toBeNull();
-           expect(formData.hasOwnProperty("textinput1662370110841")).toBeTruthy();
            let formModel = guideBridge.getFormModel();
            expect(formModel).not.toBeNull();
            formModel.importData({"textinput1662370110841" : "test"});

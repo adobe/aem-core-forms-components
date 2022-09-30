@@ -28,6 +28,10 @@ export default class GuideBridge {
         let customEvent = document.createEvent("CustomEvent");
         customEvent.initCustomEvent(Constants.GUIDE_BRIDGE_INITIALIZE_START, true, true, {"guideBridge": this});
         window.dispatchEvent(customEvent);
+        if (window !== window.parent) {
+            window.parent.document.getElementById(window.name);
+            window.parent.dispatchEvent(customEvent);
+        }
         let self = this;
         function onFormContainerInitialised(e) {
             let formContainer = e.detail;
@@ -60,7 +64,7 @@ export default class GuideBridge {
         if (!formModel) {
             throw new Error("formModel is not defined");
         }
-        let formData = new AfFormData({"data": formModel.exportData()});
+        let formData = new AfFormData({"data": JSON.stringify(formModel.exportData())});
         let resultObject = new Response({"data": formData});
         if (options && typeof options.success === 'function') {
             options.success(resultObject);
