@@ -30,7 +30,7 @@ describe("Form Runtime with Date Picker", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-        const value = state.value
+        const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -64,7 +64,7 @@ describe("Form Runtime with Date Picker", () => {
             model.visible = false
             return checkHTML(model.id, model.getState())
         }).then(() => {
-            model.enable = false
+            model.enabled = false
             return checkHTML(model.id, model.getState())
         })
     });

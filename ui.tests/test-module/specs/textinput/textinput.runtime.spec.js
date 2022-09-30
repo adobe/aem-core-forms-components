@@ -68,7 +68,8 @@ describe("Form Runtime with Text Input", () => {
             model.visible = false
             return checkHTML(model.id, model.getState())
         }).then(() => {
-            model.enable = false
+            model.enabled = false
+            cy.wait(5000);
             return checkHTML(model.id, model.getState())
         })
     });
