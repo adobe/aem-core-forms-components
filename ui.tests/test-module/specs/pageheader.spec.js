@@ -31,12 +31,11 @@ const dropPageHeaderInContainer = function() {
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
-    // console.log(responsiveGridDropZoneSelector, "Adaptive Form Page Header component", afConstants.components.forms.resourceType.pageheader);
     cy.get('body').click(0,0);
     }
 
 const dropPageHeaderInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/*",
+    const dataPath =  "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
@@ -46,9 +45,9 @@ const dropPageHeaderInSites = function() {
 
 context('Drag drop the pageheader', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
-        pageheaderEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/pageheader",
-        pageheaderEditPathSelector = "[data-path='" + pageheaderEditPath + "']",
-        pageheaderDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop();
+    pageheaderDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop(),
+    imageDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/image',
+    textDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text';
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
         cy.openAuthoring(pagePath);
@@ -58,6 +57,17 @@ context('Drag drop the pageheader', function() {
         dropPageHeaderInContainer();
         cy.deleteComponentByPath(pageheaderDrop);
     });
+
+    it('deleting image from the pageheader', function () {
+        dropPageHeaderInContainer();
+        cy.deleteComponentByPath(imageDrop);
+    });
+
+    it('deleting text from the pageheader', function () {
+        dropPageHeaderInContainer();
+        cy.deleteComponentByPath(textDrop);
+    });
+    
      // no edit dialogue for text editor, no test for that
     })
 
@@ -66,8 +76,7 @@ context('Open Sites Editor', function () {
         //pageheaderEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/pageheader",
         //pageheaderDrop = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/pageheader";
         //pageheaderEditPathSelector = "[data-path*='" + pageheaderEditPath + "']",
-        // /content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/pageheader_*
-        pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.pageheader.split("/").pop();
+        pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX +'/container/'+ afConstants.components.forms.resourceType.pageheader.split("/").pop();
 
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
@@ -78,10 +87,6 @@ context('Open Sites Editor', function () {
         dropPageHeaderInSites();
         cy.deleteComponentByPath(pageheaderDrop);
     });
-
-    // it('open edit dialog of aem forms PageHeader', function() {
-    //     testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
-    // });
     
       })
 
