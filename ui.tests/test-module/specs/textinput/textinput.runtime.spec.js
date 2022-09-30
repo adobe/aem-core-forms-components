@@ -7,7 +7,7 @@
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
+ * Unless requircontent/forms/af/core-components-it/samples/textinput/basic.htmled by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with Text Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
+    const pagePath = ""
     const bemBlock = 'cmp-adaptiveform-textinput'
     const IS = "adaptiveFormTextInput"
     const selectors = {
