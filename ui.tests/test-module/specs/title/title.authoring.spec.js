@@ -35,14 +35,25 @@ describe('Page - Authoring', function () {
         cy.get('body').click( 0,0);
     }
 
+    const testTitleEditDialog = function(titleEditPathSelector, titleDrop, isSites) {
+        if (isSites) {
+            dropTitleInSites();
+        } else {
+            dropTitleInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(titleDrop);
+    }
+
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
             titleEditPathSelector = "[data-path='" + titleEditPath + "']",
-            titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop(),
-            titleBlockBemSelector = '.cmp-adaptiveform-title',
-            editDialogConfigurationSelector = "[data-action='CONFIGURE']";
+            titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop();
+
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
@@ -54,10 +65,7 @@ describe('Page - Authoring', function () {
         });
 
         it ('check edit dialog availability of Title', function(){
-            dropTitleInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
-            cy.get(editDialogConfigurationSelector).should('be.visible');
-            cy.deleteComponentByPath(titleDrop);
+            testTitleEditDialog(titleEditPathSelector,titleDrop);
         });
 
     });
@@ -79,11 +87,8 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(titleDrop);
         });
 
-        it('open edit dialog of aem forms Title', function() {
-            dropTitleInSites();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
-            cy.get(editDialogConfigurationSelector).should('be.visible');
-            cy.deleteComponentByPath(titleDrop);
+        it ('check edit dialog availability of Title', function(){
+           testTitleEditDialog(titleEditPathSelector,titleDrop, true);
         });
 
     });
