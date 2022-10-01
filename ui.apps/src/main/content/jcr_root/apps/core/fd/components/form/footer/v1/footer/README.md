@@ -32,9 +32,6 @@ BLOCK cmp-adaptiveform-footer
     ELEMENT cmp-adaptiveform-footer__text
 ```
 
-### Edit Dialog Properties
-The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
-
 ## Information
 * **Vendor**: Adobe
 * **Version**: v1

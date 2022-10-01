@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Dropdown Component (v1)
+Adaptive Form Drop-down List (v1)
 ====
-Adaptive Form Dropdown field component written in HTL.
+Adaptive Form Drop-down List field component written in HTL.
 
 ## Features
 
@@ -44,8 +44,8 @@ The following properties are written to JCR for this Form Dropdown component and
 11. `./enumNames` - an array[] of strings that defines the display value of the enum
 
 ## Client Libraries
-The component provides a `core.forms.components.dropdown.v1` client library category that contains a JavaScript
-component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.dropdown.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property.
 
 It also provides a `core.forms.components.dropdown.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
@@ -63,4 +63,13 @@ BLOCK cmp-adaptiveform-dropdown
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormDropDown"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the dropdown-list component in the form view:  
+ 1. `data-cmp-is="adaptiveFormDatePicker"`
+ 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+ 
+ 
+## Information
+* **Vendor**: Adobe
+* **Version**: v1
+* **Compatibility**: Cloud
+* **Status**: production-ready
