@@ -53,28 +53,11 @@
                                     <number jcr:primaryType="nt:unstructured" text="Number" value="number[]"/>
                                 </items>
                             </type>
-                            <enum
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                    fieldDescription="Enter Enum Values"
-                                    fieldLabel="Enum">
-                                <field
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        name="./enum"
-                                        required="{Boolean}false"/>
-                            </enum>
-                            <enumNames
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
-                                    fieldDescription="Enter values to be displayed."
-                                    fieldLabel="Enum Names">
-                                <field
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        name="./enumNames"
-                                        required="{Boolean}false"/>
-                            </enumNames>
+                            <enums jcr:primaryType="nt:unstructured"
+                                   sling:resourceType="granite/ui/components/coral/foundation/include"
+                                   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/enums"
+                                   sling:orderBefore="bindref"
+                                   sling:hideResource="{Boolean}false"/>
                             <alignment
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"

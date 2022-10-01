@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:ClientLibraryFolder"
+    allowProxy="{Boolean}true"
+    categories="[core.forms.components.tabs.v1.runtime]"
+    dependencies="[core.wcm.components.commons.site.container,core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.wcm.components.tabs.v1]"/>

@@ -52,8 +52,8 @@
          */
         static manipulateNameAndValue(components) {
             return function(newNames, newValues) {
-                var elemArray = components instanceof Array ? components : [components];
-                elemArray.forEach(function(elem) {
+                let elemArray = components instanceof Array ? components : [components];
+                elemArray.forEach(function(elem, index) {
                     if (typeof newNames[index] !== 'undefined' && newNames[index] != null && elem) {
                         elem.name = newNames[index];
                     }
@@ -72,7 +72,7 @@
          * <img onerror="script" /> (same for audio and video)
          */
         static encodeScriptableTags (str) {
-            var retStr = str;
+            let retStr = str;
             if (typeof str === 'string' || str instanceof String) {
                 retStr = str.replace(/<(\/?)(script[^<>]*)>/gi, '&lt;$1$2&gt;')
                     .replace(/<(\/?)(img[^<>]*)>/gi, '&lt;$1$2&gt;')

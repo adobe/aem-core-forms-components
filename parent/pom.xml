@@ -91,6 +91,7 @@
         <core.wcm.components.version>2.21.0</core.wcm.components.version>
         <core.wcm.components.library.version>2.21.0</core.wcm.components.library.version>
 
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
 
