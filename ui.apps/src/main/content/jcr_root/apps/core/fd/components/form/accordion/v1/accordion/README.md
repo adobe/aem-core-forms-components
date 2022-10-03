@@ -43,8 +43,8 @@ The following properties are written to JCR for this Accordion component and are
 10. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
 ## Client Libraries
-The component provides a `core.forms.components.accordian.v1` client library category that contains a recommended base
-CSS styling and JavaScript component. It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.accordion.v1.runtime` client library category that contains the Javascript runtime for the component. 
+It should be added to a relevant site client library using the `embed` property. 
 
 It also provides a `core.forms.components.accordian.v1.editor` editor client library category that includes JavaScript
 handling for dialog interaction. It is already included by its edit and policy dialogs.
@@ -67,7 +67,9 @@ BLOCK cmp-accordion
 ```
 
 ## JavaScript Data Attribute Bindings
-Apply a `data-cmp-is="accordion"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the accordion component in the form view:
+1. `data-cmp-is="accordion"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 The following attributes can be added to the same element to provide options:
 
