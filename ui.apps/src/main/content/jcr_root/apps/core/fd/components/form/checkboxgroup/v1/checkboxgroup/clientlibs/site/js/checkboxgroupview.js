@@ -108,12 +108,12 @@
             }, this)
         }
 
-        _updateEnable(enable) {
-            this.toggle(enable, FormView.Constants.ARIA_DISABLED, true);
-            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enable);
+        _updateEnabled(enabled) {
+            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget
             widgets.forEach(widget => {
-                if (enable === false) {
+                if (enabled === false) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 } else {
