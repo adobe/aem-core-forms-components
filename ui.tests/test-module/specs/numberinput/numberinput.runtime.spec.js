@@ -78,9 +78,11 @@ describe("Form with Number Input", () => {
         const input = 23
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             let model = field.getModel();
-            cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-                expect(Number(model.getState().value)).to.equal(input)
-            })
+            if (model.visible || model.enabled) {
+                cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                    expect(Number(model.getState().value)).to.equal(input)
+                })
+            }
         });
     });
 
@@ -88,15 +90,18 @@ describe("Form with Number Input", () => {
         const input = "$23"
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             let model = field.getModel();
-            cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-                expect(Number(model.getState().value)).to.equal(23)
-            })
+            if (model.visible || model.enabled) {
+                cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                    expect(Number(model.getState().value)).to.equal(23)
+                })
+            }
         });
     });
 
     it(" copy-paste html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[2]
         const model = formContainer._model.getElement(id)
+        model.enabled = true
         let input = "$23" // in case of invalid input, copy paste does not work
         cy.get(`#${id}`).find("input").clear().paste({pasteType: 'text/plain', pastePayload: `${input}`}).blur().then(x => {
             expect(model.getState().value).to.equal("")
