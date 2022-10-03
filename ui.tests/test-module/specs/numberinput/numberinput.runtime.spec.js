@@ -78,7 +78,7 @@ describe("Form with Number Input", () => {
         const input = 23
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             let model = field.getModel();
-            if (model.visible || model.enabled) {
+            if (model.visible && model.enabled) {
                 cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
                     expect(Number(model.getState().value)).to.equal(input)
                 })
@@ -90,7 +90,7 @@ describe("Form with Number Input", () => {
         const input = "$23"
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             let model = field.getModel();
-            if (model.visible || model.enabled) {
+            if (model.visible && model.enabled) {
                 cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
                     expect(Number(model.getState().value)).to.equal(23)
                 })
