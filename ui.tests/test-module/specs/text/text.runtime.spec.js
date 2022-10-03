@@ -76,16 +76,18 @@
     });
 
     it('test the rules editor', () => {
-    
+
         cy.get('.cmp-adaptiveform-textinput__widget')
           .type('Hide me');
         cy.get('.cmp-adaptiveform-textinput')
           .click({ multiple: true });
+        cy.get('.cmp-adaptiveform-text__widget').should('not.be.visible');
 
         cy.get('.cmp-adaptiveform-textinput__widget').clear()
-           .type('Show me');
+            .type('Show me');
         cy.get('.cmp-adaptiveform-textinput')
-           .click({ multiple: true });
+            .click({ multiple: true });
+        cy.get('.cmp-adaptiveform-text__widget').should('be.visible');
 
     })
 
