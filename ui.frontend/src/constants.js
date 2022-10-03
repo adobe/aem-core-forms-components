@@ -132,6 +132,11 @@ export const Constants = {
     ARIA_CHECKED : "aria-checked",
 
     /**
+     * aria attribute to mark component selected
+     */
+    ARIA_SELECTED : "aria-selected",
+
+    /**
      * Event to trigger when GuideBridge Initialisation Begins
      */
     GUIDE_BRIDGE_INITIALIZE_START: "bridgeInitializeStart",
@@ -146,6 +151,8 @@ export const Constants = {
          * attribute to mark the dragged component checked.
          */
         CHECKED : "checked"
-    }
+    },
+
+    TABINDEX : "tabindex"
 }
 

@@ -63,3 +63,5 @@ BLOCK cmp-adaptiveform-textinput
 The following attributes must be added for the initialization of the text-input component in the form view:  
  1. `data-cmp-is="adaptiveFormTextInput"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+ 3. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+ 4. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
