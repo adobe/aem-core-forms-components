@@ -29,6 +29,7 @@ test('GuideBridge test', () => {
            expect(formData).not.toBeNull();
            let formModel = guideBridge.getFormModel();
            expect(formModel).not.toBeNull();
+           expect(JSON.parse(formData).hasOwnProperty("textinput1662370110841")).toBeTruthy();
            formModel.importData({"textinput1662370110841" : "test"});
            expect(guideBridge.validate()).toBeTruthy();
            formModel.importData({"textinput1662370110841" : "test123"});
@@ -48,6 +49,7 @@ test('GuideBridge test', () => {
    });
    var formContainer = new FormContainer({
        _formJson: formJson,
+       _prefillData: {data: {"textinput1662370110841" : "initialData"}},
        _path: "/a/b/c"
    });
    const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });

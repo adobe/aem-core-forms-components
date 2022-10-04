@@ -16,13 +16,10 @@
 import {createFormInstance} from "@aemforms/af-core/lib";
 export default class FormContainer {
     constructor(params) {
-        this._model = createFormInstance(params._formJson);
+        this._model = createFormInstance({...params._formJson, data: params._prefillData.data});
         this._path = params._path;
         this._fields = {};
         this._deferredParents = {};
-        if (params._prefillData) {
-            this._model.importData(params._prefillData.data);
-        }
     }
     /**
      * returns the form field view

@@ -172,9 +172,9 @@ export default class Utils {
                 const params = new Proxy(new URLSearchParams(window.location.search), {
                     get: (searchParams, prop) => searchParams.get(prop),
                 });
-                let _prefillData;
+                let _prefillData = {};
                 if (params.dataRef) {
-                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef);
+                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef) || {};
                 }
                 const _formDefinition = await HTTPAPILayer.getFormDefinition(_form.id);
                 const _formJson = _formDefinition.afModelDefinition;
