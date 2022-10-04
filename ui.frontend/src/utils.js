@@ -99,7 +99,7 @@ export default class Utils {
      */
     static setupField(fieldCreator, fieldSelector, fieldClass) {
         const onInit = (e) => {
-            console.log("FormContainerInitialised Received", e.detail);
+            console.debug("FormContainerInitialised Received", e.detail);
             let formContainer =  e.detail;
             let fieldElements = document.querySelectorAll(fieldSelector);
             for (let i = 0; i < fieldElements.length; i++) {
