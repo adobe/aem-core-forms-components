@@ -99,7 +99,7 @@ export default class FormFieldBase extends FormField {
             this._updateValue(state.value);
         }
         this._updateVisible(state.visible)
-        this._updateEnable(state.visible)
+        this._updateEnabled(state.enabled)
         this._initializeHelpContent(state);
     }
 
@@ -149,14 +149,14 @@ export default class FormFieldBase extends FormField {
 
     /**
      * udpates the html state based on enable state of the field
-     * @param enable
+     * @param enabled
      * @private
      */
-    _updateEnable(enable) {
+    _updateEnabled(enabled) {
         if (this.widget) {
-            this.toggle(enable, Constants.ARIA_DISABLED, true);
-            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
-            if (enable === false) {
+            this.toggle(enabled, Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+            if (enabled === false) {
                 this.widget.setAttribute("disabled", true);
                 this.widget.setAttribute(Constants.ARIA_DISABLED, true);
             } else {

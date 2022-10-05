@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.100-SNAPSHOT</version>
+        <version>1.0.37-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <!-- ====================================================================== -->
@@ -272,16 +272,20 @@
                                 <configuration>
                                     <tasks>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Adaptive Form" />
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Adaptive Form" />
+                                        <!--
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Content" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/textinput/v1/textinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v1/datepicker/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        -->
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/portallister/v1/portallister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/searchlister/v1/searchlister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v1/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v2/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/tabsontop/v1/tabsontop/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </tasks>
                                 </configuration>
                                 <goals>

@@ -26,6 +26,8 @@
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
+     data-cmp-visible="${text.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${text.enabled ? 'true' : 'false'}"
      id="${component.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
@@ -34,12 +36,12 @@
               aria-label="${text.label.visible && text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
+              disabled="${!text.enabled}"
               readonly="${text.readOnly}"
               required="${text.required}"
               placeholder="${text.placeHolder}"
               minlength="${text.minLength}"
-              maxlength="${text.maxLength}">
-    </textarea>
+              maxlength="${text.maxLength}"></textarea>
     <input data-sly-test="${!useTextarea}"
            title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
            class="cmp-adaptiveform-textinput__widget"
@@ -47,6 +49,7 @@
            type="text"
            name="${text.name}"
            value="${text.default}"
+           disabled="${!text.enabled}"
            readonly="${text.readOnly}"
            required="${text.required}"
            placeholder="${text.placeHolder}"
