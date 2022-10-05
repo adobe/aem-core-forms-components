@@ -32,15 +32,17 @@
     <div data-sly-call="${label.label @componentId=component.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </br>
+    <label data-sly-test="${file.buttonText}" for="${component.id}_widget" class="btn">${file.buttonText}</label>
     <input class="cmp-adaptiveform-fileinput__widget"
            data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
+           style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
            name="${file.name}"
-           id="fileInput"
            disabled="${!file.enabled}"
            accept="${file.accept}"
+           id="${component.id}_widget"
            type="file"
-           multi="${file.type}"
     />
+    <ul class="cmp-adaptiveform-fileinput__filelist"></ul>
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>

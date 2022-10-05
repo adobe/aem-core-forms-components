@@ -64,6 +64,10 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
+    ELEMENT cmp-adaptiveform-fileinput__filelist
+    ELEMENT cmp-adaptiveform-fileinput__fileitem
+    ELEMENT cmp-adaptiveform-fileinput__filename
+    ELEMENT cmp-adaptiveform-fileinput__filedelete
 ```
 
 ## JavaScript Data Attribute Bindings
