@@ -58,6 +58,7 @@
             </activation>
             <modules>
                 <module>it/content</module>
+                <module>it/config</module>
                 <module>ui.tests</module>
             </modules>
         </profile>
