@@ -271,4 +271,14 @@ public interface FormContainer extends Container {
     default String getDataUrl() {
         return null;
     }
+
+    /**
+     * Returns the language in which the form was authored
+     *
+     * @return the language of the form
+     * @since com.adobe.cq.forms.core.components.models.form 4.0.0
+     */
+    default String getLang() {
+        return "en-US";
+    }
 }

@@ -36,16 +36,6 @@ public interface FormMetaData {
     }
 
     /**
-     * Returns the locale of the form
-     *
-     * @return the locale of the form
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    default String getLocale() {
-        return "en-us";
-    }
-
-    /**
      * Returns the version of the rule grammar
      *
      * @return the version of the rule grammar

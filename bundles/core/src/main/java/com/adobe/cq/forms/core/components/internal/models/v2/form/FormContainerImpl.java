@@ -147,6 +147,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @Override
+    public String getLang() {
+        // todo: uncomment once forms sdk is released
+        // if (request != null) {
+        // return GuideUtils.getAcceptLang(request);
+        // } else {
+        return FormContainer.super.getLang();
+        // }
+    }
+
+    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         if (getSchemaType() != null) {
