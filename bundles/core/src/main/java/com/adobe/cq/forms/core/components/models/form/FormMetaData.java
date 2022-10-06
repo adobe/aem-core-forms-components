@@ -54,20 +54,4 @@ public interface FormMetaData {
     default String getGrammar() {
         return "json-formula-1.0.0";
     }
-
-    /**
-     * Returns the submit action
-     *
-     * @return the submit action
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    String getAction();
-
-    /**
-     * Returns the data url to fetch form data
-     *
-     * @return the data url to fetch form data
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
-     */
-    String getDataUrl();
 }

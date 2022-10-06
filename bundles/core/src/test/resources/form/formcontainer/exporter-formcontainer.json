@@ -2,8 +2,6 @@
   ":type": "core/fd/components/form/container/v1/container",
   "fieldType" : "form",
   "metadata": {
-    "dataUrl": "/c/d",
-    "action": "/a/b",
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0",
     "locale": "en-us"

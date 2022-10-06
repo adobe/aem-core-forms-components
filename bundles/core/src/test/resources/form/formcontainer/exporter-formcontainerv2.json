@@ -1,4 +1,6 @@
 {
+  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtby9qY3I6Y29udGVudC9mb3JtY29udGFpbmVydjI=",
+  "dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtby9qY3I6Y29udGVudC9mb3JtY29udGFpbmVydjI=",
   "items": [
     {
       "id":"textinput-9a52c5fa93",
@@ -34,11 +36,10 @@
     "fd:dor": {
       "dorType":"generate",
       "dorTemplateRef":"xyz"
-    }
+    },
+    "fd:schemaType": "BASIC"
   },
   "metadata": {
-    "action": "/a/b",
-    "dataUrl": "/c/d",
     "locale": "en-us",
     "grammar": "json-formula-1.0.0",
     "version": "1.0.0"

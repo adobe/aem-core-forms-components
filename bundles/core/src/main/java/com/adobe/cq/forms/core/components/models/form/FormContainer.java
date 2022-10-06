@@ -23,10 +23,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
-import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -36,6 +34,20 @@ import com.fasterxml.jackson.annotation.JsonView;
 @ConsumerType
 // todo: have to add rule events here
 public interface FormContainer extends Container {
+
+    /**
+     * Name of the adobe global API root for HTTP API
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 4.0.0
+     */
+    String ADOBE_GLOBAL_API_ROOT = "/adobe";
+
+    /**
+     * Name of the forms runtime API root for HTTP API
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 4.0.0
+     */
+    String FORMS_RUNTIME_API_GLOBAL_ROOT = "/forms/af";
 
     /**
      * Name of the resource property that defines the document path containing the json
@@ -78,7 +90,7 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
-    @JsonView(Views.Author.class)
+    @JsonIgnore
     default String getSchemaRef() {
         return null;
     }
@@ -90,7 +102,7 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
-    @JsonView(Views.Author.class)
+    @JsonIgnore
     default GuideSchemaType getSchemaType() {
         return null;
     }
@@ -238,5 +250,25 @@ public interface FormContainer extends Container {
     @JsonProperty("data")
     default String getFormData() {
         return "";
+    }
+
+    /**
+     * Returns the submit action
+     *
+     * @return the submit action
+     * @since com.adobe.cq.forms.core.components.models.form 4.0.0
+     */
+    default String getAction() {
+        return null;
+    }
+
+    /**
+     * Returns the data url to fetch form data
+     *
+     * @return the data url to fetch form data
+     * @since com.adobe.cq.forms.core.components.models.form 4.0.0
+     */
+    default String getDataUrl() {
+        return null;
     }
 }
