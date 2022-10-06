@@ -35,7 +35,8 @@ var formsConstants = {
                 "formbutton": "/apps/forms-components-examples/components/form/button",
                 "formimage": "/apps/forms-components-examples/components/form/image",
                 "formradiobutton": "/apps/forms-components-examples/components/form/radiobutton",
-                "formfileinput": "/apps/forms-components-examples/components/form/fileinput"
+                "formfileinput": "/apps/forms-components-examples/components/form/fileinput",
+                "termsandcondition": "/apps/forms-components-examples/components/form/termsandcondition",
             }
         }
     },
