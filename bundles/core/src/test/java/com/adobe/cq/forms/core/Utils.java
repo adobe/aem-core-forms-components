@@ -68,6 +68,22 @@ public class Utils {
         return IOUtils.toInputStream(writer.toString());
     }
 
+    public static InputStream getCompleteJson(Object model) {
+        Writer writer = new StringWriter();
+        ObjectMapper mapper = new ObjectMapper();
+        PageModuleProvider pageModuleProvider = new PageModuleProvider();
+        mapper.registerModule(pageModuleProvider.getModule());
+        DefaultMethodSkippingModuleProvider defaultMethodSkippingModuleProvider = new DefaultMethodSkippingModuleProvider();
+        mapper.registerModule(defaultMethodSkippingModuleProvider.getModule());
+        try {
+            mapper.writer().writeValue(writer, model);
+        } catch (IOException e) {
+            fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
+                e.getMessage()));
+        }
+        return IOUtils.toInputStream(writer.toString());
+    }
+
     /**
      * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
      * this method will test the JSON export of the model and compare it to the JSON object provided by the
@@ -101,7 +117,8 @@ public class Utils {
      * @param model reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {
-        InputStream jsonStream = getJson(model);
+        // we check complete json in schema validation, to validate complete model json
+        InputStream jsonStream = getCompleteJson(model);
         // create instance of the ObjectMapper class
         ObjectMapper objectMapper = new ObjectMapper();
         // create an instance of the JsonSchemaFactory using version flag
