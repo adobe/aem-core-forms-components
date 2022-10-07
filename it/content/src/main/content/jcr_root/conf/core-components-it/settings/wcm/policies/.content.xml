@@ -27,7 +27,8 @@
                       components="[group:Core Components Examples,group:Core Adaptive Form]">
                       <jcr:content
                          jcr:primaryType="nt:unstructured"/>
-                    </policy_1657606299305>
+                    
+                      </policy_1657606299305>
                 </container>
             </form>
         </components>
