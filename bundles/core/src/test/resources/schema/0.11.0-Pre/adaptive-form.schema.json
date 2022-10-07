@@ -1108,8 +1108,11 @@
         },
         "action": {
           "title": "URL indicating the endpoint where the data would be submitted when submit event is triggered",
-          "type": "string",
-          "format": "uri"
+          "type": "string"
+        },
+        "dataUrl": {
+          "title": "URL indicating the endpoint where the data would be submitted when submit event is triggered",
+          "type": "string"
         },
         "metadata": {
           "type": "object",
@@ -1161,7 +1164,8 @@
           "events",
           "properties",
           "fieldType",
-          ":type"
+          ":type",
+          "dataUrl"
         ],
         "errorMessage": {
           "enum": "${0} property is not allowed in Form"
