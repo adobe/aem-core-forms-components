@@ -178,6 +178,8 @@ describe('Page - Authoring', function () {
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/wizard",
             wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/wizard",
+            wizardBlockBemSelector = '.cmp-adaptiveform-wizard',
+            editDialogConfigurationSelector = "[data-action='CONFIGURE']",
             wizardEditPathSelector = "[data-path='" + wizardEditPath + "']";
 
         beforeEach(function () {
@@ -192,7 +194,20 @@ describe('Page - Authoring', function () {
 
         // todo: intermittent failure
         it('open edit dialog of aem forms Wizard', function() {
-            testWizardBehaviour(wizardEditPathSelector, wizardEditPath, true);
+            dropWizardInSites();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+            cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
+            cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
+            cy.get("[name='./name']").should("exist");
+            cy.get("[name='./jcr:title']").should("exist");
+            cy.get("[name='./layout']").should("exist");
+            cy.get("[name='./dataRef']").should("exist");
+            cy.get("[name='./visible']").should("exist");
+            cy.get("[name='./enabled']").should("exist");
+            cy.get('.cq-dialog-cancel').click({force:true});
+            cy.deleteComponentByPath(wizardEditPath) ;
+
         });
 
     });
