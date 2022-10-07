@@ -25,7 +25,6 @@
     box-sizing: border-box;
     border-bottom: 1px solid transparent;
     padding: .5rem 1rem;
-    cursor: pointer;
 }
 
 .cmp-adaptiveform-wizard__tab--active {
