@@ -173,11 +173,10 @@ export default class Utils {
                     get: (searchParams, prop) => searchParams.get(prop),
                 });
                 let _prefillData = {};
-                if (params.dataRef) {
+                if (params.dataRef && _form) {
                     _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef) || {};
                 }
-                const _formDefinition = await HTTPAPILayer.getFormDefinition(_form.id);
-                const _formJson = _formDefinition.afModelDefinition;
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
                 console.debug("fetched model json", _formJson);
                 const formContainer = createFormContainer({
                     _formJson,
