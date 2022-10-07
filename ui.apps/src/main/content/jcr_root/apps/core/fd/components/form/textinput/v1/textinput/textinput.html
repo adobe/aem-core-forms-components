@@ -32,7 +32,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
-              title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
+              title="${renderer.tooltipContent}"
               aria-label="${text.label.visible && text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
@@ -43,7 +43,7 @@
               minlength="${text.minLength}"
               maxlength="${text.maxLength}"></textarea>
     <input data-sly-test="${!useTextarea}"
-           title="${text.tooltipVisible ? '' : renderer.tooltipContent}"
+           title="${renderer.tooltipContent}"
            class="cmp-adaptiveform-textinput__widget"
            aria-label="${text.label.visible && text.label.value}"
            type="text"

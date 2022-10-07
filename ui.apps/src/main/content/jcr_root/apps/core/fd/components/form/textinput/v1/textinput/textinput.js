@@ -23,12 +23,14 @@ use(function () {
   var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html"
   var errorMessagePath = "core/fd/components/commons/v1/fieldTemplates/errorMessage.html";
 
-
   var tooltipContent = removeRichTextHtmlTags(this.text.tooltip);
 
   function removeRichTextHtmlTags(str) {
-    var _str = String(str);
-    return _str.replace(/<\/?[^>]+(>|$)/g, "");
+    if(str !== null) {
+        var _str = String(str);
+        return _str.replace(/<\/?[^>]+(>|$)/g, "");
+    }
+    return '';
   }
 
   return {
