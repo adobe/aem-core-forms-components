@@ -70,6 +70,10 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
+        _updateValue(value) {
+            this.widgetObject.setValue(value);
+        }
+
         setModel(model) {
             super.setModel(model);
             this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)

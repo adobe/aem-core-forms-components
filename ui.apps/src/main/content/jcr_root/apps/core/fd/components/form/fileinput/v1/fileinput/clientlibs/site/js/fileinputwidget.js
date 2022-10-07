@@ -21,6 +21,7 @@
 class FileInputWidget {
     #fileItemSelector='.cmp-adaptiveform-fileinput__fileitem'
     #widget=null
+    #fileArr=[]
     #fileList=null
     #model=null // passed by reference
     #isFileUpdate=false // handle safari state
@@ -46,7 +47,9 @@ class FileInputWidget {
         this.#model = model;
         this.#fileList = fileList;
         // initialize options for backward compatibility
-        this.#options = Object.assign({}, this.#model._jsonModel);
+        this.#options = Object.assign({}, {
+            "contextPath" : ""
+        }, this.#model._jsonModel);
         this.#attachEventHandlers(widget);
         // initialize the regex initially
         this.#regexMimeTypeList  = this.#options.accept.map(function (value, i) {
@@ -156,8 +159,8 @@ class FileInputWidget {
 
             if(fileUrl)  {
                 //prepend context path if not already appended
-                if (!(fileUrl.lastIndexOf(this.#options._getUrl, 0) === 0)) {
-                    fileUrl =  this.#options._getUrl + fileUrl;
+                if (!(fileUrl.lastIndexOf(this.#options.contextPath, 0) === 0)) {
+                    fileUrl =  this.#options.contextPath + fileUrl;
                 }
                 FileInputWidget.previewFile.apply(this, [null, {"fileUrl" : fileUrl}]);
             } else {
@@ -185,7 +188,15 @@ class FileInputWidget {
             objectUrl = elem.previousSibling.dataset.objectUrl;
         if (index !== -1) {
             this.#values.splice(index, 1);
-            this.#deleteFilesFromInputDom(this.#widget, [index]);
+            this.#fileArr.splice(index, 1);
+            // set the model with the new value
+            this.#model.value = this.#fileArr;
+            // value and fileArr contains items of both URL and file types, hence while removing from DOM
+            // get the correct index as per this.#widget.files
+            let domIndex = Array.from(this.#widget.files).findIndex(function(file) {
+               return file.name === text;
+            });
+            this.#deleteFilesFromInputDom([domIndex]);
             if (url != null) {
                 // remove the data so that others don't use this url
                 delete elem.previousSibling.dataset.key;
@@ -223,7 +234,7 @@ class FileInputWidget {
         });
         fileItem.appendChild(fileNameDom);
         if(fileUrl != null){
-            fileNameDom.setAttribute("data-key", fileUrl);
+            fileNameDom.dataset.key = fileUrl;
         }
         let fileClose = document.createElement('span');
         fileClose.setAttribute('tabindex', '0');
@@ -323,20 +334,20 @@ class FileInputWidget {
         }
     }
 
-    #updateFilesInDom(fileDom, files) {
+    #updateFilesInDom(files) {
         // in safari, a change event is trigged if files property is changed dynamically
         // hence adding this check to clear existing state only for safari browsers
         this.#isFileUpdate = true;
-        fileDom.files = this.#getFileListItem(files);
+        this.#widget.files = this.#getFileListItem(files);
         this.#isFileUpdate = false;
     }
 
     /*
      * This function deletes files at specified indexes from input dom elt
      */
-    #deleteFilesFromInputDom(fileDomElt, deletedIndexes) {
+    #deleteFilesFromInputDom(deletedIndexes) {
         let remainingFiles = [];
-        Array.from(fileDomElt.files).forEach(function(file,idx){
+        Array.from(this.#widget.files).forEach(function(file,idx){
             if(!deletedIndexes.includes(idx)){
                 remainingFiles.push(file);
             }
@@ -344,13 +355,54 @@ class FileInputWidget {
         try {
             // in safari, a change event is trigged if files property is changed dynamically
             // hence adding this check to clear existing state only for safari browsers
-            this.#updateFilesInDom(fileDomElt, remainingFiles);
+            this.#updateFilesInDom(remainingFiles);
         } catch(err){
             console.error("Deleting files is not supported in your browser");
         }
     }
 
-
+    setValue(value) {
+        let isValueSame = false;
+        // change to array since we store array internally
+        value = Array.isArray(value) ? value : [value];
+        // check if current values and new values are same
+        if (this.#fileArr != null && value != null) {
+            isValueSame = JSON.stringify(FormView.extractFileInfo(this.#fileArr)) === JSON.stringify(value);
+        }
+        // if new values, update the DOM
+        if (!isValueSame) {
+            let oldUrls = {};
+            // Cache the url before deletion
+            this.#fileList.querySelectorAll(".cmp-adaptiveform-fileinput__filename").forEach(function (elem) {
+                let url = elem.dataset.key;
+                if (typeof url !== "undefined") {
+                    let fileName = url.substring(url.lastIndexOf("/") + 1);
+                    oldUrls[fileName] = url;
+                }
+            });
+            // empty the file list
+            while (this.#fileList.lastElementChild) {
+                this.#fileList.removeChild(this.#fileList.lastElementChild);
+            }
+            // set the new value
+            if (value != null) {
+                let self = this;
+                // Update the value array with the file
+                this.#values = value.map(function (file, index) {
+                    // Check if file Name is a path, if yes get the last part after "/"
+                    let fileName = typeof file === "string" ? file : file.name,
+                        fileUrl = typeof file === "string" ? file : file.data,
+                        fileUploadUrl = fileUrl;
+                    if (oldUrls[fileName]) {
+                        fileUploadUrl = oldUrls[fileName];
+                    }
+                    self.#showFileList(fileName, null, fileUploadUrl);
+                    return fileName;
+                });
+                this.#fileArr = [...value];
+            }
+        }
+    }
 
     #handleChange(evnt) {
         if (!this.#isFileUpdate) {
@@ -396,6 +448,7 @@ class FileInputWidget {
                     if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
                         this.#showFileList(currFileName);
                         this.#values.push(currFileName);
+                        this.#fileArr.push(file);
                     } else {
                         invalidFilesIndexes.push(fileIndex);
                     }
@@ -404,9 +457,12 @@ class FileInputWidget {
                 }, this);
 
                 if (invalidFilesIndexes.length > 0 && this.#widget !== null) {
-                    this.#deleteFilesFromInputDom(this.#widget, invalidFilesIndexes);
+                    this.#deleteFilesFromInputDom(invalidFilesIndexes);
                 }
             }
+
+            // set the new model value
+            this.#model.value = this.#fileArr;
 
             if (isInvalidSize) {
                 this.#showInvalidMessage(inValidSizefileNames.substring(0, inValidSizefileNames.lastIndexOf(',')), this.#invalidFeature.SIZE);

@@ -56,6 +56,15 @@ BLOCK cmp-adaptiveform-fileinput
   cursor: pointer;
 }
 
+.cmp-adaptiveform-fileinput__widgetlabel {
+  display: inline-block;
+  line-height: 2.2em;
+  padding: 0 0.62em;
+  border: 1px solid;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
 .cmp-adaptiveform-fileinput__filedelete {
   float: right;
   font-size: 21px;
@@ -63,4 +72,5 @@ BLOCK cmp-adaptiveform-fileinput
   line-height: 1;
   text-shadow: 0 1px 0 #fff;
   opacity: .2;
+  cursor: pointer;
 }

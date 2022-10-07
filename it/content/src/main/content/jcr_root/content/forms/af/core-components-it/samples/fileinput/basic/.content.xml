@@ -16,11 +16,21 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container">
             <fileinput
+                    fieldType="file-input"
+                    jcr:primaryType="nt:unstructured"
+                    buttonText="Attach Files"
+                    name="fileinput1"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                    type="file[]"
+                    jcr:title="File Input - 1"
+                    sling:resourceType="forms-components-examples/components/form/fileinput"/>
+            <fileinput1
                 fieldType="file-input"
                 jcr:primaryType="nt:unstructured"
-                name="fileinput1"
-                accept="[audio/*, video/*, image/*, text/*, application/pdf]"
-                jcr:title="File Input 1"
+                name="fileinput2"
+                accept="[application/pdf]"
+                type="file"
+                jcr:title="File Input - 2"
                 sling:resourceType="forms-components-examples/components/form/fileinput"/>
         </guideContainer>
     </jcr:content>

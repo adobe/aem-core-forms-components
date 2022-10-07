@@ -54,9 +54,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     private static String FD_SCHEMA_TYPE = "fd:schemaType";
     private static String FD_SCHEMA_REF = "fd:schemaRef";
 
-    private static String FD_SCHEMA_TYPE = "fd:schemaType";
-    private static String FD_SCHEMA_REF = "fd:schemaRef";
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String thankyouMessage;
@@ -137,15 +134,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         } else {
             return null;
         }
-    }
-
-    
-    @Override
-    public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> properties = super.getProperties();
-        properties.put(FD_SCHEMA_TYPE, getSchemaType());
-        properties.put(FD_SCHEMA_REF, getSchemaRef());
-        return properties;
     }
 
     @Override
