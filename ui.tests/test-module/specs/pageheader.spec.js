@@ -27,7 +27,7 @@ const dropPageHeaderInContainer = function() {
     const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/parsys1/*", 
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Header", afConstants.components.forms.resourceType.pageheader);
     cy.get('body').click(0,0);
     }
 
@@ -35,7 +35,7 @@ const dropPageHeaderInSites = function() {
     const dataPath =  "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Page Header", afConstants.components.forms.resourceType.pageheader);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Header", afConstants.components.forms.resourceType.pageheader);
     cy.get('body').click(0,0);
     }
 
