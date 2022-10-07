@@ -1,5 +1,5 @@
 <!--
-Copyright 2021 Adobe
+Copyright 2022 Adobe
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,27 +15,30 @@ limitations under the License.
 -->
 Header (v1)
 ====
-Header Component is basically a container containing text and image components which are incorporated from sites core components.
+Header Component is basically a container composed of WCM text and image components.
 
 ## Features
 
+Individual features in WCM text and image component will come automatically.
 
-Individual features in sites' text and image component will come automatically.
 ### Use Object
 
 No sling model for this component
 
-
-
 ### Edit Dialog Properties
 
-No such separate edit dialogue for this component, edit dialogues will be present for the sub-components i.e. text and image properties similar to
-that of sites' text and image components
+No such separate edit dialogue for this component, edit dialogues will be present for the sub-components i.e. WCM text and image properties.
+
+## BEM Description
+```
+BLOCK cmp-adaptiveform-pageheader
+ 
+```
 
 ## Information
 * **Vendor**: Adobe
 * **Version**: v1
-* **Compatibility**: AEM 6.6
+* **Compatibility**: Cloud
 * **Status**: production-ready
 
 
