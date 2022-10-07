@@ -18,5 +18,5 @@
     cq:icon="text"
     jcr:description="Section Heading"
     jcr:primaryType="cq:Component"
-    jcr:title="Page Header"
+    jcr:title="Header"
     componentGroup=".core-adaptiveform"/>

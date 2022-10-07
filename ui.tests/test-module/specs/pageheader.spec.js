@@ -19,9 +19,6 @@ const commons = require('../libs/commons/commons'),
         sitesConstants = require('../libs/commons/sitesConstants'),
         guideSelectors = require('../libs/commons/guideSelectors'),
         afConstants = require('../libs/commons/formsConstants');
-        // const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        // responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-        // console.log(responsiveGridDropZoneSelector, "Adaptive Form Page Header component", afConstants.components.forms.resourceType.pageheader);
 
 describe('Page - Authoring', function () {
     // we can use these values to log in
@@ -73,9 +70,6 @@ context('Drag drop the pageheader', function() {
 
 context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/pageheader",
-        //pageheaderEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/pageheader",
-        //pageheaderDrop = "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/pageheader";
-        //pageheaderEditPathSelector = "[data-path*='" + pageheaderEditPath + "']",
         pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX +'/container/'+ afConstants.components.forms.resourceType.pageheader.split("/").pop();
 
     beforeEach(function () {

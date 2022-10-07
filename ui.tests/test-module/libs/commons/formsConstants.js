@@ -27,6 +27,7 @@ var formsConstants = {
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
                 "pageheader": "/apps/forms-components-examples/components/form/pageheader",
+                "accordion": "/apps/forms-components-examples/components/form/accordion",
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",

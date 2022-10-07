@@ -15,7 +15,7 @@ limitations under the License.
 -->
 Header (v1)
 ====
-Header Component basically a container containing text and image components which are incorporated from sites core components.
+Header Component is basically a container containing text and image components which are incorporated from sites core components.
 
 ## Features
 
