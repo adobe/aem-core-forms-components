@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 import {Constants} from "./constants";
+import HTTPAPILayer from "./HTTPAPILayer";
 
 
 export default class Utils {
@@ -90,23 +91,6 @@ export default class Utils {
         });
     }
 
-    static getJson(url) {
-        return new Promise(resolve => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.responseType = 'json';
-            xhr.onload = function () {
-                let status = xhr.status;
-                if (status === 200) {
-                    resolve(xhr.response);
-                } else {
-                    resolve(null);
-                }
-            };
-            xhr.send();
-        });
-    }
-
     /**
      * execute a callback after the Form Container is initialized
      * @param fieldCreator a function to return an instance of FormField
@@ -115,7 +99,7 @@ export default class Utils {
      */
     static setupField(fieldCreator, fieldSelector, fieldClass) {
         const onInit = (e) => {
-            console.log("FormContainerInitialised Received", e.detail);
+            console.debug("FormContainerInitialised Received", e.detail);
             let formContainer =  e.detail;
             let fieldElements = document.querySelectorAll(fieldSelector);
             for (let i = 0; i < fieldElements.length; i++) {
@@ -183,10 +167,20 @@ export default class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await Utils.getJson(_path + ".model.json");
-                console.log("model json from server ", _formJson);
+                const _form = await HTTPAPILayer.getForm(_path);
+                console.debug('fetched form',  _form);
+                const params = new Proxy(new URLSearchParams(window.location.search), {
+                    get: (searchParams, prop) => searchParams.get(prop),
+                });
+                let _prefillData = {};
+                if (params.dataRef && _form) {
+                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef) || {};
+                }
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
+                console.debug("fetched model json", _formJson);
                 const formContainer = createFormContainer({
                     _formJson,
+                    _prefillData,
                     _path
                 });
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });

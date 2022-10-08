@@ -23,18 +23,33 @@ test('GuideBridge test', () => {
    expect(window.guideBridge).not.toBeNull();
    guideBridge.connect(function() {
        expect(guideBridge.isConnected()).toBeTruthy();
-       let formData = guideBridge.getData();
-       expect(formData).not.toBeNull();
-       expect(formData.hasOwnProperty("textinput1662370110841")).toBeTruthy();
-       let formModel = guideBridge.getFormModel();
-       expect(formModel).not.toBeNull();
-       formModel.importData({"textinput1662370110841" : "test"});
-       expect(guideBridge.validate()).toBeTruthy();
-       formModel.importData({"textinput1662370110841" : "test123"});
-       expect(guideBridge.validate()).toBeFalsy();
+       let formData;
+       guideBridge.getFormDataString({success: function(formDataResponse) {
+           formData = formDataResponse.data.getData();
+           expect(formData).not.toBeNull();
+           let formModel = guideBridge.getFormModel();
+           expect(formModel).not.toBeNull();
+           expect(JSON.parse(formData).hasOwnProperty("textinput1662370110841")).toBeTruthy();
+           formModel.importData({"textinput1662370110841" : "test"});
+           expect(guideBridge.validate()).toBeTruthy();
+           formModel.importData({"textinput1662370110841" : "test123"});
+           expect(guideBridge.validate()).toBeFalsy();
+           formModel.importData({"textinput1662370110841" : "test"});
+
+           guideBridge.getFormDataObject({
+               success : function(result) {
+                   expect(result.data.toHTMLFormData()).toBeInstanceOf(FormData);
+               },
+               error : function (error) {
+                   expect(error).toBeFalsy();
+               }
+           });
+       }});
+
    });
    var formContainer = new FormContainer({
        _formJson: formJson,
+       _prefillData: {data: {"textinput1662370110841" : "initialData"}},
        _path: "/a/b/c"
    });
    const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
