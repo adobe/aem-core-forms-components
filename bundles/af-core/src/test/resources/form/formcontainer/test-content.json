@@ -1,0 +1,40 @@
+{
+  "formcontainer": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/container/v1/container",
+    "thankyouPage": "/a/b/c",
+    "thankyouMessage": "message",
+    "action": "/a/b",
+    "dataUrl": "/c/d"
+  },
+  "formcontainerv2": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/container/v2/container",
+    "thankyouPage": "/a/b/c",
+    "thankyouMessage": "message",
+    "fieldType" : "form",
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "fieldType" : "text-input",
+      "fd:translationIds" : "{\"jcr:title\":\"guideContainer##textinput##jcr:title##5598\",\"placeholder\":\"guideContainer##textinput##description##5648\"}",
+      "visible" : false
+    },
+    "action": "/a/b",
+    "dataUrl": "/c/d"
+  },
+  "formcontainerWithDocumentPath": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/container/v1/container",
+    "fieldType" : "form",
+    "thankyouPage": "/a/b/c",
+    "thankyouMessage": "message",
+    "formModelDocumentPath" : "/content/dam/sample.json",
+    "action": "/a/b",
+    "dataUrl": "/c/d"
+  }
+}

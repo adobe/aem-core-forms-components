@@ -1,0 +1,49 @@
+{
+  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtby9qY3I6Y29udGVudC9mb3JtY29udGFpbmVydjI=",
+  "dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtby9qY3I6Y29udGVudC9mb3JtY29udGFpbmVydjI=",
+  "items": [
+    {
+      "id":"textinput-9a52c5fa93",
+      "description": "dummy",
+      "required": false,
+      "name": "abc",
+      "visible": false,
+      "enabled": true,
+      "readOnly": false,
+      "fieldType": "text-input",
+      "label": {
+        "visible": true,
+        "richText": false,
+        "value": "def"
+      },
+      "properties":{
+        "fd:dor":{
+          "dorExclusion":false
+        }
+      },
+      "type": "string",
+      ":type": "core/fd/components/form/textinput/v1/textinput",
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      }
+    }
+  ],
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
+  "fieldType" : "form",
+  "properties": {
+    "fd:dor": {
+      "dorType":"generate",
+      "dorTemplateRef":"xyz"
+    },
+    "fd:schemaType": "BASIC"
+  },
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "lang" : "en-US",
+  "adaptiveform":"0.11.0-Pre",
+  ":type": "core/fd/components/form/container/v2/container"
+}

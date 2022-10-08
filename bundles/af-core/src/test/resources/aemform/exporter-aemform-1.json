@@ -1,0 +1,17 @@
+{
+    "id": "aemform-5bca45b54a",
+    "thankyouPage": "/a/b/c.html",
+    "thankyouConfig": "page",
+    "submitType": "inline",
+    "height": "100px",
+    "thankyouMessage": "",
+    "formType": "NO_FORM_SELECTED",
+    "useIframe": "true",
+    "themeName": "abc-clientlib",
+    "cssClientlib": "abc.def",
+    "themePath": "/content/dam/formsanddocuments-themes/abc/jcr:content",
+    "formEditPagePath": "/content/forms/af/abc",
+    "enableFocusOnFirstField":true,
+    "locale" : "",
+    ":type": "core/fd/components/aemform/v1/aemform"
+}
