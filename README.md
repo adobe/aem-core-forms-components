@@ -36,6 +36,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
 -   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
 -   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
+-   [File Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/fileinput/v1/fileinput)
 -   [Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
 -   [Panel](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
 -   [Accordion](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
@@ -44,7 +45,6 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Image](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
 -   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 -   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
--   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 
 ## System Requirements
 
@@ -52,7 +52,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ | 
-| 1.0.36                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
+| 1.0.38                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
