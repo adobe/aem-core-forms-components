@@ -21,3 +21,4 @@ flags:
   unittests:
     paths:
       - bundles/core/
+      - bundles/af-core/

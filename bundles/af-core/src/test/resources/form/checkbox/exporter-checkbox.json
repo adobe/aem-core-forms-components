@@ -1,0 +1,38 @@
+{
+  "id": "checkbox-42948c9a6c",
+  "required": false,
+  "name": "abc",
+  "visible": false,
+  "enabled": true,
+  "readOnly": false,
+  "fieldType": "checkbox",
+  "description" : "dummy",
+  "tooltip": "test-short-description",
+  "properties": {
+    "afs:layout" : {
+      "tooltipVisible": false,
+      "orientation" : "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion":false
+    }
+  },
+  "enforceEnum":true,
+  "enum" : [true, false],
+  "enumNames" : ["yes", "no"],
+  "label": {
+    "visible": true,
+    "value": "def",
+    "richText": false
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
+  "type": "boolean",
+  ":type": "core/fd/components/form/checkbox/v1/checkbox"
+}
