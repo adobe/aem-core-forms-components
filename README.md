@@ -36,7 +36,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
 -   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
 -   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
--   [File Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/fileinput/v1/fileinput)
+-   [File Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
 -   [Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
 -   [Panel](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
 -   [Accordion](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
