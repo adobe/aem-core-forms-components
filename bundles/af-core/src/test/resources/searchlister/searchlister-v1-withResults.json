@@ -1,0 +1,21 @@
+{
+    "id": "searchlister-fb0b07e803",
+    "title": "Sample Title",
+    "layout": "Custom",
+    "elements": {
+        "pagination": {
+            "loadAction": "/?searchText=Search+Text&limit=10&description=Desc&orderby=title&sort=asc&title=Sample+Title&tags=full%2Fpath%2Fto%2Ftag&offset=1",
+            "nextOffset": 1
+        },
+        "data": [
+            {
+                "title": "Sample Form",
+                "description": "Sample description for Sample Form",
+                "tooltip": "Click to open",
+                "formLink": "/content/dam/formsanddocuments/sample-form/jcr:content?wcmmode=disabled",
+                "thumbnailLink": null
+            }
+        ]
+    },
+    ":type": "core/fd/components/formsportal/searchlister/v1/searchlister"
+}

@@ -52,7 +52,9 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \

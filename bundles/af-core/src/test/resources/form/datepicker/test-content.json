@@ -1,0 +1,58 @@
+{
+  "datepicker" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "fieldType": "date-input",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "minimumDate": "Fri Feb 04 2022 05:30:00 GMT+0530",
+    "exclusiveMinimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
+    "exclusiveMaximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
+    "maximumDate": "Wed Feb 09 2022 05:30:00 GMT+0530",
+    "default": "Mon Feb 07 2022 05:30:00 GMT+0530",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured",
+      "visible" : "true()",
+      "value" : "false()",
+      "label" : "{value : 'some label'}",
+      "enabled" : "true()"
+    }
+  },
+  "datepicker-message" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "fieldType": "date-input",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "minimumDate": "Fri Feb 04 2022 05:30:00 GMT+0530",
+    "minimumMessage" : "Date should be greater than 4th Feb 2022",
+    "exclusiveMinimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
+    "exclusiveMaximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
+    "maximumDate": "Wed Feb 09 2022 05:30:00 GMT+0530",
+    "maximumMessage" : "Date should be less than 9th Feb 2022",
+    "default": "Mon Feb 07 2022 05:30:00 GMT+0530",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured",
+      "visible" : "true()",
+      "value" : "false()",
+      "label" : "{value : 'some label'}",
+      "enabled" : "true()"
+    }
+  }
+}
