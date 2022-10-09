@@ -1,0 +1,53 @@
+{
+  "id":"panel-95130a1dba",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "type":"array",
+  "fieldType":"panel",
+  "name":"abc",
+  "visible":true,
+  "enabled":true,
+  "minItems":1,
+  "maxItems":10,
+  "items":[
+    {
+      "id":"textinput-9670d145f5",
+      "description":"dummy",
+      "type":"string",
+      "fieldType":"text-input",
+      "required":false,
+      "name":"abc",
+      "visible":false,
+      "enabled":true,
+      "readOnly":false,
+      "label":{
+        "richText":false,
+        "visible":true,
+        "value":"def"
+      },
+      "properties":{
+        "fd:dor":{
+          "dorExclusion":false
+        }
+      },
+      ":type":"core/fd/components/form/textinput/v1/textinput",
+      "events" : {
+        "custom:setProperty" : ["$event.payload"]
+      }
+    }
+  ],
+  "label":{
+    "richText":false,
+    "visible":true,
+    "value":"dependent names"
+  },
+  "properties":{
+    "afs:layout":{
+      "tooltipVisible":false
+    }
+  },
+  ":type":"core/fd/components/form/panel/v1/panel",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
+}

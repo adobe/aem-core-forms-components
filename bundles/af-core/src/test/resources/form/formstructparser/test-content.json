@@ -1,0 +1,61 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "sling:resourceType": "myTest/components/page",
+    "jcr:title": "Test",
+    "jcr:description": "Test",
+    "jcr:primaryType": "cq:PageContent",
+    "cq:template": "/conf/myTest/settings/wcm/templates/content-page",
+    "formcontainerv2": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/container/v2/container",
+      "fieldType" : "form",
+      "thankyouPage": "/a/b/c",
+      "thankyouMessage": "message",
+      "clientLibRef" : "abc",
+      "datepicker": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "visible": false
+      },
+      "container1": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "wcm/foundation/components/responsivegrid",
+        "clientLibRef" : "abc",
+        "datepicker1": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+          "name": "abc",
+          "jcr:title": "def",
+          "hideTitle": false,
+          "description": "dummy",
+          "visible": false
+        },
+        "container2": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "wcm/foundation/components/responsivegrid",
+          "text": {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": "myTest/components/text",
+            "text": "abc"
+          }
+        }
+      },
+      "action": "/a/b",
+      "dataUrl": "/c/d"
+    },
+    "container3": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "wcm/foundation/components/responsivegrid",
+      "text1": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "myTest/components/text",
+        "text": "test"
+      }
+    }
+  }
+}
