@@ -13,60 +13,47 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Accordion (v1)
+Adaptive Form Wizard (v1)
 ====
 Adaptive Form Accordion component written in HTL.
 
 ## Features
 
-* Allows addition of accordion items of varying resource type.
-* Allowed components can be configured through policy configuration.
-* Toggle accordion panels from accordion header controls.
+* Allows addition of wizard items of varying resource type.
 * Ability to force a single panel to be displayed.
 * First Item is expanded by default.
 
 ### Use Object
-The Accordion component uses the `com.adobe.cq.forms.core.components.models.form.Accordion` Sling model as its Use-object.
+The Wizard component uses the `com.adobe.cq.forms.core.components.models.form.Wizard` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Accordion component and are expected to be available as `Resource` properties:
 
-1. `./description` - defines a help message that can be rendered in the field as a hint for the user
-2. `./id` - defines the component HTML ID attribute.
+1. `./title` - defines the title shown on the wizard
+2. `./name` - defines the component name.
 
 ## Client Libraries
-The component provides a `core.forms.components.accordian.v1` client library category that contains a recommended base
+The component provides a `core.forms.components.wizard.v1` client library category that contains a recommended base
 CSS styling and JavaScript component. It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.accordian.v1.editor` editor client library category that includes JavaScript
+It also provides a `core.forms.components.wizard.v1.editor` editor client library category that includes JavaScript
 handling for dialog interaction. It is already included by its edit and policy dialogs.
 
 ## BEM Description
 ```
-BLOCK cmp-accordion
-    ELEMENT cmp-accordion__item
-    ELEMENT cmp-accordion__header
-    ELEMENT cmp-accordion__button
-        MOD cmp-accordion__button--expanded
-    ELEMENT cmp-accordion__title
-    ELEMENT cmp-accordion__icon
-    ELEMENT cmp-accordion__panel
-        MOD cmp-accordion__panel--expanded
-        MOD cmp-accordion__panel--hidden
+BLOCK cmp-adaptiveform-wizard
+    ELEMENT cmp-adaptiveform-wizard__tab
+    ELEMENT cmp-adaptiveform-wizard__wizardpanel
+    ELEMENT cmp-adaptiveform-wizard__previousNav
+    ELEMENT cmp-adaptiveform-wizard__nextNav
+    
 ```
 
 ## JavaScript Data Attribute Bindings
-Apply a `data-cmp-is="adaptiveFormAccordion"` attribute to the wrapper block to enable initialization of the JavaScript component.
+Apply a `data-cmp-is="adaptiveFormWizard"` attribute to the wrapper block to enable initialization of the JavaScript component.
 
-The following attributes can be added to the same element to provide options:
 
-```
-data-cmp-hook-accordion="item"
-data-cmp-hook-accordion="button"
-data-cmp-hook-accordion="panel"
-```
-
-### Enabling Accordion Editing Functionality
+### Enabling Wizard Editing Functionality
 The following properties and child nodes are required in the proxy component to enable full editing functionality for the Accordion:
 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Accordion as a container component

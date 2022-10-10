@@ -94,7 +94,6 @@ describe('Page - Authoring', function () {
             dropWizardInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
@@ -107,7 +106,7 @@ describe('Page - Authoring', function () {
             dropWizardInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
+            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get("[name='./name']").should("exist");
             cy.get("[name='./jcr:title']").should("exist");
@@ -119,33 +118,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
-        it('verify Items tab in edit dialog of Wizard', function(){
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.wait(1000);
-            cy.get("[name='./name']").clear().type("wizard");
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
-            cy.get('.cmp-childreneditor').should("exist");
-            cy.get("[data-cmp-hook-childreneditor='add']").should("exist");
-            cy.get("[data-cmp-hook-childreneditor='add']").click({force:true});
-            cy.get(insertComponentDialog_searchField).type("Adaptive Form Number Input").type('{enter}');
-            cy.get('.InsertComponentDialog-components [value="'+afConstants.components.forms.resourceType.formnumberinput+'"]').should('be.visible');
-            cy.get('.InsertComponentDialog-components [value="'+afConstants.components.forms.resourceType.formnumberinput+'"]').click({force:true});
-            cy.get('.cmp-childreneditor__item').should('have.length', 1);
-            cy.get('.cmp-childreneditor__item-title').should('be.visible').type("no input");
-            cy.get('.cq-dialog-submit').click({force:true});
-            cy.get(wizardEditPathSelector).should("exist");
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.wait(1000);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
-            cy.get('.cmp-childreneditor').should("exist");
-            cy.get("[data-cmp-hook-childreneditor='add']").should("exist");
-            cy.get('.cmp-childreneditor__item').should('have.length', 1);
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
-        });
+
 
         it('verify adding componenets in wizard',function(){
             dropWizardInContainer();
@@ -197,7 +170,7 @@ describe('Page - Authoring', function () {
             dropWizardInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Items').click({force:true});
+            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get("[name='./name']").should("exist");
             cy.get("[name='./jcr:title']").should("exist");

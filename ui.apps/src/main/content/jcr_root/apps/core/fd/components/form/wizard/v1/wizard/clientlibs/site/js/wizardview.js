@@ -144,26 +144,11 @@
 
 
         /**
-         * Binds Tabs event handling
+         * Binds navigation buttons event handling
          *
          * @private
          */
         #bindEvents() {
-            // var tabs = this._elements["tab"];
-            // if (tabs) {
-            //     for (var i = 0; i < tabs.length; i++) {
-            //         var _self = this;
-            //         (function(index){
-            //             tabs[index].addEventListener("click", function(event) {
-            //                 _self.#navigateAndFocusTab(index);
-            //             });
-            //         }(i));
-            //
-            //         tabs[i].addEventListener("keydown", function(event) {
-            //             _self.#onKeyDown(event);
-            //         });
-            //     };
-            // }
             var _self = this;
             this.getNextButtonDiv().addEventListener("click", function (event){
                 _self.#navigateToNextTab();

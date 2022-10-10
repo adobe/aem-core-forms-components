@@ -55,9 +55,9 @@
 
         <div
             data-sly-repeat.child="${resource.listChildren}"
-            role="wizardpanel"
+            role="tabpanel"
             class="cmp-adaptiveform-wizard__wizardpanel"
-            aria-labelledby="${child.name}_guide-item-nav"
+            aria-labelledby="${child.name}_wizard-item-nav"
             data-cmp-hook-adaptiveFormWizard="wizardpanel">
             <sly data-sly-resource="${child.name}">
             </sly>

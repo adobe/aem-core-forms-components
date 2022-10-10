@@ -16,4 +16,4 @@
 
 #base=js
 
-panelcontainer.js
+wizardeditorhook.js
