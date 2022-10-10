@@ -18,6 +18,7 @@ import {createFormInstance, FileObject, extractFileInfo, Click, Change, Submit, 
 import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
 import {Constants} from "./constants";
 import GuideBridge from "./GuideBridge";
+import HTTPAPILayer from "./HTTPAPILayer";
 
 window.af = {
     formsRuntime: {
@@ -37,4 +38,4 @@ const Actions = {
     Click, Change, Submit, Blur, AddItem, RemoveItem
 }
 
-export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, FileObject, extractFileInfo};
+export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileObject, extractFileInfo};
