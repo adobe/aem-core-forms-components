@@ -138,12 +138,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public String getAction() {
-        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(resource.getPath());
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
+            .getPath());
     }
 
     @Override
     public String getDataUrl() {
-        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(resource.getPath());
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(getCurrentPage().getPath());
     }
 
     @Override

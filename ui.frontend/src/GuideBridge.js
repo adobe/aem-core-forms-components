@@ -64,7 +64,12 @@ export default class GuideBridge {
         if (!formModel) {
             throw new Error("formModel is not defined");
         }
-        let formData = new AfFormData({"data": JSON.stringify(formModel.exportData())});
+        let attachmentAsObj = formModel.getState().attachments;
+        let attachmentAsArray = Object.keys(attachmentAsObj).flatMap((key) => attachmentAsObj[key]);
+        let formData = new AfFormData({
+            "data": JSON.stringify(formModel.exportData()),
+            "attachments": attachmentAsArray
+        });
         let resultObject = new Response({"data": formData});
         if (options && typeof options.success === 'function') {
             options.success(resultObject);

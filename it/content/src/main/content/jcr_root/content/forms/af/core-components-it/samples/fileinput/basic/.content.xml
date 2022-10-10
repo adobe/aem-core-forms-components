@@ -22,6 +22,7 @@
                     name="fileinput1"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     type="file[]"
+                    multiSelection="true"
                     jcr:title="File Input - 1"
                     sling:resourceType="forms-components-examples/components/form/fileinput"/>
             <fileinput1

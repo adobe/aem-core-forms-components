@@ -92,6 +92,26 @@ describe("Form with File Input", () => {
                 })
             }
         });
+        cy.window().then(function(win) {
+            win.guideBridge.getFormDataObject({
+                "success" : function (resultObj) {
+                    let afFormData = resultObj.data;
+                    expect(afFormData).to.exist // "af form data object not present in guideBridge#getFormDataObject API");
+                    expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
+                    expect(afFormData.contentType).to.equal("application/json");
+                    assert.equal(afFormData.attachments.length, 2, "incorrect attachments returned from guideBridge#getFormDataObject API");
+                    afFormData.attachments.forEach(function(attachment) {
+                        expect(attachment.dataRef).to.contain('fileinput');
+                    });
+                    // explicitly calling this to ensure there are no errors during this API invocation
+                    let htmlFormData = afFormData.toHTMLFormData();
+                    // Display the key/value pairs
+                    for (let pair of htmlFormData.entries()) {
+                        console.log(pair[0]+ ', ' + pair[1]);
+                    }
+                }
+            });
+        });
     });
 
 })
