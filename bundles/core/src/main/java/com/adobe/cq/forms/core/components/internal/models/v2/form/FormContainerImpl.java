@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -150,11 +151,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Override
     public String getLang() {
         // todo: uncomment once forms sdk is released
-        // if (request != null) {
-        // return GuideUtils.getAcceptLang(request);
-        // } else {
-        return FormContainer.super.getLang();
-        // }
+        if (request != null) {
+            return GuideUtils.getAcceptLang(request);
+        } else {
+            return FormContainer.super.getLang();
+        }
     }
 
     @Override
