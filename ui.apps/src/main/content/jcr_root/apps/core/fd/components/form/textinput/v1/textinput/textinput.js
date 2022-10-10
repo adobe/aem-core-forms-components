@@ -26,7 +26,7 @@ use(function () {
   var tooltipContent = removeRichTextHtmlTags(this.text.tooltip);
 
   function removeRichTextHtmlTags(str) {
-    if(str !== null) {
+    if(str) {
         var _str = String(str);
         return _str.replace(/<\/?[^>]+(>|$)/g, "");
     }
