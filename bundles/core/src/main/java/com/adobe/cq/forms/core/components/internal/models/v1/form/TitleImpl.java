@@ -30,53 +30,34 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.Heading;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Title;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.wcm.core.components.commons.link.Link;
-import com.adobe.cq.wcm.core.components.commons.link.LinkManager;
-import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.i18n.I18n;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Title.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TITLE_V1, TitleImpl.RESOURCE_TYPE })
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+    adapters = { Title.class, ComponentExporter.class },
+    resourceType = FormConstants.RT_FD_FORM_TITLE_V1)
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+
 public class TitleImpl extends AbstractComponentImpl implements Title {
 
-    protected static final String RESOURCE_TYPE = "core/wcm/components/title/v3/title";
-
     public TitleImpl() {
-        // empty
+
     }
-
-    private boolean linkDisabled = false;
-
-    @Self
-    private SlingHttpServletRequest request;
 
     /**
      * The current resource.
      */
     @SlingObject
     private Resource resource;
-
-    @ScriptVariable
-    private PageManager pageManager;
-
-    @ScriptVariable
-    private Page currentPage;
 
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
@@ -90,10 +71,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = JcrConstants.JCR_TITLE)
     @Nullable
     private String title;
-
-    @Self
-    private LinkManager linkManager;
-    protected Link link;
 
     private Heading heading;
 
@@ -109,10 +86,7 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     @PostConstruct
     private void initModel() {
         if (request != null && i18n == null) {
-            i18n = null; // GuideUtils.getI18n(request, resource);
-        }
-        if (StringUtils.isBlank(title)) {
-            title = StringUtils.defaultIfEmpty(currentPage.getPageTitle(), currentPage.getTitle());
+            i18n = null;
         }
 
         if (heading == null) {
@@ -120,12 +94,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
             if (heading == null && currentStyle != null) {
                 heading = Heading.getHeading(currentStyle.get(PN_DESIGN_DEFAULT_TYPE, String.class));
             }
-        }
-
-        link = linkManager.get(resource).build();
-
-        if (currentStyle != null) {
-            linkDisabled = currentStyle.get(Title.PN_TITLE_LINK_DISABLED, linkDisabled);
         }
     }
 
@@ -154,23 +122,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
         return null;
     }
 
-    @Override
-    @JsonIgnore
-    @Deprecated
-    public String getLinkURL() {
-        return link.getURL();
-    }
-
-    @Override
-    public Link getLink() {
-        return link.isValid() ? link : null;
-    }
-
-    @Override
-    public boolean isLinkDisabled() {
-        return linkDisabled;
-    }
-
     @NotNull
     @Override
     public String getExportedType() {
@@ -182,7 +133,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     protected ComponentData getComponentData() {
         return DataLayerBuilder.extending(super.getComponentData()).asComponent()
             .withTitle(this::getText)
-            .withLinkUrl(() -> link.getMappedURL())
             .build();
     }
 

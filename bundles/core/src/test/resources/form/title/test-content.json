@@ -1,0 +1,27 @@
+{
+    "title" : {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Title",
+        "id": "abc",
+        "sling:resourceType": "core/fd/components/form/title/v1/title"
+    },
+    "title-type" : {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Title_custom",
+        "id": "title_xyz",
+        "type": "h3",
+        "sling:resourceType": "core/fd/components/form/title/v1/title"
+    },
+    "title-wrongtype" : {
+        "jcr:primaryType"   : "nt:unstructured",
+        "id": "title-1f9c6e70b8",
+        "type"              : "section",
+        "sling:resourceType": "core/fd/components/form/title/v1/title"
+    },
+    "title-noprops" : {
+        "jcr:primaryType"   : "nt:unstructured",
+        "type": "h2",
+        "id": "title-826fc94cbc",
+        "sling:resourceType": "core/fd/components/form/title/v1/title"
+    }
+}
