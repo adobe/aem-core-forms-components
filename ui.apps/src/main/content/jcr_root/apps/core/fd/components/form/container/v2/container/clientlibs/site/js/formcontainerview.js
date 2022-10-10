@@ -28,9 +28,9 @@
 
     async function onDocumentReady() {
         const formContainer = FormView.Utils.setupFormContainer(({
-            _formJson, _path
+            _formJson, _prefillData, _path
         }) => {
-            return new FormContainerV2({_formJson, _path});
+            return new FormContainerV2({_formJson, _prefillData, _path});
         }, selectors.self, IS)
     }
 

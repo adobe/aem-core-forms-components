@@ -26,6 +26,7 @@ var formsConstants = {
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
+                "pageheader": "/apps/forms-components-examples/components/form/pageheader",
                 "accordion": "/apps/forms-components-examples/components/form/accordion",
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
@@ -43,6 +44,7 @@ var formsConstants = {
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
     FORM_EDITOR_FORM_CONTAINER_SUFFIX : "/jcr:content/guideContainer",
+    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/parsys1",
     RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
     EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
     events : {

@@ -26,6 +26,16 @@
                     jcr:primaryType="nt:unstructured"
                     name="dateinput2"
                     jcr:title="Date Input 2"
+                    visible="{Boolean}true"
+                    enabled="{Boolean}false"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"/>
+            <dateinput3
+                    fieldType="date-input"
+                    jcr:primaryType="nt:unstructured"
+                    name="dateinput3"
+                    jcr:title="Date Input 3"
+                    visible="{Boolean}false"
+                    enabled="{Boolean}true"
                     sling:resourceType="forms-components-examples/components/form/datepicker"/>
         </guideContainer>
     </jcr:content>
