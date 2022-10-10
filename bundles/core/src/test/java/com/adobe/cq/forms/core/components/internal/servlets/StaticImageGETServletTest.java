@@ -15,15 +15,19 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.servlets;
 
+import com.adobe.cq.forms.core.components.internal.models.v1.form.StaticImageImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 
+import org.apache.sling.api.request.RequestPathInfo;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
@@ -169,12 +173,31 @@ public class StaticImageGETServletTest {
         Assertions.assertNull(tempImage);
     }
 
+    @Test
+    void testJsonExtension() throws ServletException, IOException {
+        MockSlingHttpServletResponse response = context.response();
+        RequestPathInfo mockRequestPathInfo = Mockito.mock(RequestPathInfo.class);
+        Mockito.when(mockRequestPathInfo.getExtension()).thenReturn("json");
+        Mockito.when(request.getRequestPathInfo()).thenReturn(mockRequestPathInfo);
+        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        Mockito.when(request.adaptTo(StaticImage.class)).thenReturn(staticImage);
+        staticImageGETServlet.doGet(request, response);
+        Assertions.assertEquals("application/json", response.getContentType());
+        Assertions.assertEquals("{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}", response.getOutputAsString());
+    }
+
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, AbstractImageServlet.ImageContext.class,
             (Function<ResourceResolver, AbstractImageServlet.ImageContext>) input -> imageContext);
     }
 
     private StaticImage getAEMFormUnderTest(String resourcePath) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        return request.adaptTo(StaticImage.class);
+    }
+
+    private StaticImage getStaticImageUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(StaticImage.class);
