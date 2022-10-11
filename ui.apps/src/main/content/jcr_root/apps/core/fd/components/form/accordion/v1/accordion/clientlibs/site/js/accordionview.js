@@ -21,7 +21,10 @@
         static IS = "accordion";
         static bemBlock = 'cmp-accordion'
         static selectors  = {
-            self: `.${Accordion.bemBlock}`
+            self: `.${Accordion.bemBlock}`,
+            description: `.${Accordion.bemBlock}__longdescription`,
+            qm: `.${Accordion.bemBlock}__questionmark`,
+            tooltipDiv: `.${Accordion.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -37,7 +40,7 @@
         }
 
         getDescription() {
-            return null;
+          return this.element.querySelector(Accordion.selectors.description);
         }
 
         getLabel() {
@@ -49,11 +52,11 @@
         }
 
         getTooltipDiv() {
-            return null;
+          return this.element.querySelector(Accordion.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return null;
+            return this.element.querySelector(Accordion.selectors.qm);
         }
 
         setFocus() {
