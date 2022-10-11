@@ -7,6 +7,6 @@
         cq:templateType="/conf/core-components-it/settings/wcm/template-types/af-page-v2"
         jcr:description="AF Blank Template for Core component examples"
         jcr:primaryType="cq:PageContent"
-        jcr:title="AF Blank (Core Components)"
+        jcr:title="AF Blank"
         status="enabled"/>
 </jcr:root>
