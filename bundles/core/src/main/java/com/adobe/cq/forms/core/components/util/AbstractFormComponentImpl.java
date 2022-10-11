@@ -79,7 +79,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
         if (request != null && i18n == null) {
-            i18n = null; // GuideUtils.getI18n(request, resource);
+            i18n = GuideUtils.getI18n(request, resource);
         }
     }
 

@@ -18,16 +18,19 @@ package com.adobe.cq.forms.core.components.internal.models.v2.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -49,6 +52,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     private static String DOR_TYPE = "dorType";
     private static String DOR_TEMPLATE_REF = "dorTemplateRef";
+    private static String FD_SCHEMA_TYPE = "fd:schemaType";
+    private static String FD_SCHEMA_REF = "fd:schemaRef";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -107,7 +112,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public FormMetaData getMetaData() {
-        return new FormMetaDataImpl(resource);
+        return new FormMetaDataImpl();
     }
 
     @Override
@@ -130,6 +135,39 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String getAction() {
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
+            .getPath());
+    }
+
+    @Override
+    public String getDataUrl() {
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+    }
+
+    @Override
+    public String getLang() {
+        // todo: uncomment once forms sdk is released
+        if (request != null) {
+            return GuideUtils.getAcceptLang(request);
+        } else {
+            return FormContainer.super.getLang();
+        }
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (getSchemaType() != null) {
+            properties.put(FD_SCHEMA_TYPE, getSchemaType());
+        }
+        if (StringUtils.isNotBlank(getSchemaRef())) {
+            properties.put(FD_SCHEMA_REF, getSchemaRef());
+        }
+        return properties;
     }
 
     @Override

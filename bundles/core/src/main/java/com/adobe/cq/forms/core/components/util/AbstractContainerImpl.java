@@ -73,6 +73,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
             if (!child.getName().startsWith("fd:")) {
                 T model = null;
                 if (request != null) {
+                    // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                     model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
                 } else {
                     model = child.adaptTo(modelClass);

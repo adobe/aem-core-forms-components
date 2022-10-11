@@ -14,3 +14,6 @@
 # limitations under the License.
 ###############################################################################
 
+#base=js
+fileinputwidget.js
+fileinputview.js

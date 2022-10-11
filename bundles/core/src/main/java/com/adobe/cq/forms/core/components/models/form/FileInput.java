@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @ConsumerType
 public interface FileInput extends Field, FileConstraint, ContainerConstraint {
+    String DEFAULT_BUTTON_TEXT = "Attach";
 
     /**
      * Returns {@code true} if multiple files can be selected, {@code false} otherwise
@@ -33,5 +34,17 @@ public interface FileInput extends Field, FileConstraint, ContainerConstraint {
      * @return {@code true} if multiple files can be selected, {@code false} otherwise
      */
     @JsonIgnore
-    Boolean isMultiple();
+    default Boolean isMultiple() {
+        return false;
+    }
+
+    /**
+     * Returns the text to be displayed on the file input button
+     *
+     * @return text to be displayed on the file input buttone
+     */
+    @JsonIgnore
+    default String getButtonText() {
+        return DEFAULT_BUTTON_TEXT;
+    }
 }

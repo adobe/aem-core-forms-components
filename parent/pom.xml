@@ -1116,9 +1116,15 @@
 
             <!-- Temporarily added, system path needs to be removed later -->
             <dependency>
+                <!--
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
                 <version>2022.08.04.00-220800</version>
+                -->
+                <!-- temporary forms SDK -->
+                <groupId>com.adobe.aemfd</groupId>
+                <artifactId>aem-forms-sdk-api</artifactId>
+                <version>1.0.0-52cdda2</version>
                 <!--<version>2022.08.29</version>
                 <scope>system</scope>
                 <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath> -->
@@ -1127,7 +1133,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-sdk-api</artifactId>
-                <version>2022.2.6276.20220205T222203Z-220100</version>
+                <version>2022.9.8722.20220912T101352Z-220800</version>
             </dependency>
 
 

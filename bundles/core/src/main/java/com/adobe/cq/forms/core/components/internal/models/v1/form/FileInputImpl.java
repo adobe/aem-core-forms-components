@@ -16,7 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -50,6 +52,10 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "accept")
     protected String[] accept;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = FileInput.DEFAULT_BUTTON_TEXT)
+    protected String buttonText;
+
     @Override
     public Integer getMinItems() {
         return minItems;
@@ -80,7 +86,14 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     }
 
     @Override
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    @Override
     public List<String> getAccept() {
-        return Arrays.asList(accept);
+        return Optional.ofNullable(accept)
+            .map(Arrays::asList)
+            .orElse(Collections.emptyList());
     }
 }

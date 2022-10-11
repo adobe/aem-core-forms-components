@@ -97,7 +97,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
 
     @Override
     public FormMetaData getMetaData() {
-        return new FormMetaDataImpl(resource);
+        return new FormMetaDataImpl();
     }
 
     @Override

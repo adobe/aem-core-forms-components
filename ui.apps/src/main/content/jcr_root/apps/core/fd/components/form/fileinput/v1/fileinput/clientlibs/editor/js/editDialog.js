@@ -15,7 +15,7 @@
  ******************************************************************************/
 (function($) {
     "use strict";
-    var EDIT_DIALOG = ".cmp-adaptiveform-fileinput__editdialog",
+    let EDIT_DIALOG = ".cmp-adaptiveform-fileinput__editdialog",
         FILEINPUT_MULTISELECTION = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__multiselection",
         FILEINPUT_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__type",
         FILEINPUT_MINITEMS = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFiles",
@@ -29,15 +29,14 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleMultiSelection(dialog) {
-        var component = dialog.find(FILEINPUT_MULTISELECTION)[0];
-        var fileinputType=dialog.find(FILEINPUT_TYPE)[0];
-        var fileinputMinItems=dialog.find(FILEINPUT_MINITEMS);
-        var fileinputMaxItems=dialog.find(FILEINPUT_MAXITEMS);
-        var listOfElements = [fileinputMinItems,fileinputMaxItems];
-        var isNotChecked = function() {return isChecked()};
-        var isChecked = function() {return component.checked};
-        var hideAndShowElements = function() {
-
+        let component = dialog.find(FILEINPUT_MULTISELECTION)[0];
+        let fileinputType=dialog.find(FILEINPUT_TYPE)[0];
+        let fileinputMinItems=dialog.find(FILEINPUT_MINITEMS);
+        let fileinputMaxItems=dialog.find(FILEINPUT_MAXITEMS);
+        let listOfElements = [fileinputMinItems,fileinputMaxItems];
+        let isNotChecked = function() {return isChecked()};
+        let isChecked = function() {return component.checked};
+        let hideAndShowElements = function() {
              // hide minItems elements
             Utils.checkAndDisplay(listOfElements)(isNotChecked);
         };
