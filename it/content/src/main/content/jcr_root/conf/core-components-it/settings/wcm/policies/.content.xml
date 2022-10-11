@@ -36,8 +36,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Form Core Components Examples Test - Page"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        appResourcesClientlib="cmp-examples.site"
-                        clientlibs="[cmp-examples.base,forms-examples.base]"
+                        clientlibs="[forms-it.base]"
                         clientlibsAsync="true">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </default>
