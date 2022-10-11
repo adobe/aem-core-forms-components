@@ -16,7 +16,7 @@
   <div data-sly-use.tabs="com.adobe.cq.wcm.core.components.models.Tabs"
   data-sly-use.panel="com.adobe.cq.forms.core.components.models.form.Panel"
   data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-  data-sly-use.renderer="${'tabs.js'}"
+  data-sly-use.renderer="${'tabs.js' @component=tabs}"
   data-sly-use.label="${renderer.labelPath}"
   data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
   data-sly-use.longDescription="${renderer.longDescriptionPath}"
@@ -35,6 +35,7 @@
 
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
+     title="${tabs.tooltipVisible ? '' : renderer.tooltipContent}"
      role="tablist"
      class="cmp-tabs__tablist"
      aria-label="${tabs.accessibilityLabel}"

@@ -17,7 +17,7 @@
      data-sly-use.wcmaccordion="com.adobe.cq.wcm.core.components.models.Accordion"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-panelcontainer="${wcmmode.edit && 'accordion'}"
-     data-sly-use.renderer="${'accordion.js'}"
+     data-sly-use.renderer="${'accordion.js' @component=accordion}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
@@ -35,7 +35,8 @@
          data-cmp-data-layer="${item.data.json}"
          id="${item.id}"
          data-cmp-expanded="${itemList.first}">
-        <h3 class="cmp-accordion__header">
+        <h3 class="cmp-accordion__header"
+            title="${accordion.tooltipVisible ? '' : renderer.tooltipContent}">
             <button id="${item.id}-button"
                     class="cmp-accordion__button${itemList.first ? ' cmp-accordion__button--expanded' : ''}"
                     aria-controls="${item.id}-panel"

@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2021 Adobe
+ ~ Copyright 2022 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -14,16 +14,6 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-use(function () {
-
-  var labelPath = 'core/fd/components/commons/v1/fieldTemplates/label.html';
-  var shortDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/shortDescription.html";
-  var longDescriptionPath = "core/fd/components/commons/v1/fieldTemplates/longDescription.html";
-  var questionMarkPath = "core/fd/components/commons/v1/fieldTemplates/questionMark.html";
-  return {
-    labelPath: labelPath,
-    shortDescriptionPath: shortDescriptionPath,
-    longDescriptionPath: longDescriptionPath,
-    questionMarkPath: questionMarkPath
-  }
+use(["../../../base/v1/base/base.js"], function (Base) {
+  return Base.getComponentTemplate(this.component);
 });

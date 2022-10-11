@@ -16,7 +16,7 @@
 
 <sly data-sly-use.container="com.adobe.cq.wcm.core.components.models.LayoutContainer"
      data-sly-use.panel="com.adobe.cq.forms.core.components.models.form.Panel"
-     data-sly-use.renderer="${'panelcontainer.js'}"
+     data-sly-use.renderer="${'panelcontainer.js' @component=panel}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
