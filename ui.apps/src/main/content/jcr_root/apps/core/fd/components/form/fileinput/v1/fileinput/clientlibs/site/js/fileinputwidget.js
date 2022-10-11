@@ -367,7 +367,7 @@ class FileInputWidget {
         value = Array.isArray(value) ? value : [value];
         // check if current values and new values are same
         if (this.#fileArr != null && value != null) {
-            isValueSame = JSON.stringify(FormView.extractFileInfo(this.#fileArr)) === JSON.stringify(value);
+            isValueSame = JSON.stringify(FormView.FileAttachmentUtils.extractFileInfo(this.#fileArr)) === JSON.stringify(value);
         }
         // if new values, update the DOM
         if (!isValueSame) {

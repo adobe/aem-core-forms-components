@@ -38,4 +38,8 @@ const Actions = {
     Click, Change, Submit, Blur, AddItem, RemoveItem
 }
 
-export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileObject, extractFileInfo};
+const FileAttachmentUtils = {
+    FileObject, extractFileInfo
+}
+
+export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils};
