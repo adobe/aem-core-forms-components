@@ -20,11 +20,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.function.Function;
 
+import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 
 import org.apache.sling.api.request.RequestPathInfo;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
@@ -49,6 +51,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
 public class StaticImageGETServletTest {
@@ -183,6 +186,21 @@ public class StaticImageGETServletTest {
         Assertions.assertEquals(
             "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}",
             response.getOutputAsString());
+    }
+
+    @Test
+    void testNonJsonExtension() throws ServletException, IOException {
+        MockSlingHttpServletResponse response = context.response();
+        RequestPathInfo mockRequestPathInfo = Mockito.mock(RequestPathInfo.class);
+        Mockito.when(mockRequestPathInfo.getExtension()).thenReturn(null);
+        Node node = context.request().adaptTo(Node.class);
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.adaptTo(Node.class)).thenReturn(node);
+        Mockito.when(request.getResource()).thenReturn(resource);
+        StaticImageGETServlet spy = Mockito.spy(new StaticImageGETServlet());
+        spy.doGet(request, response);
+        // Assert
+        Mockito.verify(spy, times(1)).doGet(Mockito.any(), Mockito.any());
     }
 
     private void registerFormMetadataAdapter() {
