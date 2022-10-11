@@ -13,7 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<sly data-sly-use.renderer="${'datepicker.js'}"
+<sly data-sly-use.datePicker="com.adobe.cq.forms.core.components.models.form.DatePicker"
+     data-sly-use.renderer="${'datepicker.js' @component=datePicker}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
@@ -21,7 +22,6 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.datePicker="com.adobe.cq.forms.core.components.models.form.DatePicker"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-datepicker"
      data-cmp-is="adaptiveFormDatePicker"
@@ -37,6 +37,7 @@
             disabled="${!datePicker.enabled}"
             readonly="${datePicker.readOnly}"
             required="${datePicker.required}"
+            title="${datePicker.tooltipVisible ? '' : renderer.tooltipContent}"
             placeholder="${datePicker.placeHolder}"
             min="${datePicker.minimumDate}"
             max="${datePicker.maximumDate}"/>
