@@ -15,7 +15,7 @@ limitations under the License.
 -->
 Adaptive Form Wizard (v1)
 ====
-Adaptive Form Accordion component written in HTL.
+Adaptive Form Wizard component written in HTL.
 
 ## Features
 
@@ -27,17 +27,19 @@ Adaptive Form Accordion component written in HTL.
 The Wizard component uses the `com.adobe.cq.forms.core.components.models.form.Wizard` Sling model as its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Accordion component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Wizard component and are expected to be available as `Resource` properties:
 
 1. `./title` - defines the title shown on the wizard
 2. `./name` - defines the component name.
 
 ## Client Libraries
-The component provides a `core.forms.components.wizard.v1` client library category that contains a recommended base
+The component provides a `core.forms.components.wizard.v1.runtime` client library category that contains a recommended base
 CSS styling and JavaScript component. It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.wizard.v1.editor` editor client library category that includes JavaScript
-handling for dialog interaction. It is already included by its edit and policy dialogs.
+It also provides a `core.wcm.components.wizard.v1.editor.hook` editor hook library  that includes JavaScript
+handling for registering wizard in panelContainer registry. It is required for navigation among different components in wizard in the authoring page. 
+It is already included by its edit and policy dialogs.
+
 
 ## BEM Description
 ```
@@ -54,9 +56,9 @@ Apply a `data-cmp-is="adaptiveFormWizard"` attribute to the wrapper block to ena
 
 
 ### Enabling Wizard Editing Functionality
-The following properties and child nodes are required in the proxy component to enable full editing functionality for the Accordion:
+The following properties and child nodes are required in the proxy component to enable full editing functionality for the Wizard:
 
-1. `./cq:isContainer` - set to `{Boolean}true`, marks the Accordion as a container component
+1. `./cq:isContainer` - set to `{Boolean}true`, marks the Wizard as a container component
 2. `./cq:editConfig` - `afterchilddelete`, `afterchildinsert` and `afterchildmove` listeners should be provided via
 the edit configuration of the proxy. `_cq_editConfig.xml` contains the recommended actions and can be copied to the proxy component.
 
