@@ -15,12 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.servlets;
 
-import com.adobe.cq.forms.core.components.internal.models.v1.form.StaticImageImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 import javax.jcr.Property;
@@ -183,7 +180,9 @@ public class StaticImageGETServletTest {
         Mockito.when(request.adaptTo(StaticImage.class)).thenReturn(staticImage);
         staticImageGETServlet.doGet(request, response);
         Assertions.assertEquals("application/json", response.getContentType());
-        Assertions.assertEquals("{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}", response.getOutputAsString());
+        Assertions.assertEquals(
+            "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}",
+            response.getOutputAsString());
     }
 
     private void registerFormMetadataAdapter() {
@@ -202,5 +201,4 @@ public class StaticImageGETServletTest {
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(StaticImage.class);
     }
-
 }
