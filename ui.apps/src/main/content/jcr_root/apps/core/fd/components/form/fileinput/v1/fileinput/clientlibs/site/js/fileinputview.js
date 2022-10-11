@@ -71,12 +71,17 @@
         }
 
         _updateValue(value) {
+            if (this.widgetObject == null) {
+                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+            }
             this.widgetObject.setValue(value);
         }
 
         setModel(model) {
             super.setModel(model);
-            this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+            if (this.widgetObject == null) {
+                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+            }
         }
     }
 
