@@ -193,6 +193,7 @@ public class StaticImageGETServletTest {
         MockSlingHttpServletResponse response = context.response();
         RequestPathInfo mockRequestPathInfo = Mockito.mock(RequestPathInfo.class);
         Mockito.when(mockRequestPathInfo.getExtension()).thenReturn(null);
+        Mockito.when(request.getRequestPathInfo()).thenReturn(mockRequestPathInfo);
         Node node = context.request().adaptTo(Node.class);
         Resource resource = Mockito.mock(Resource.class);
         Mockito.when(resource.adaptTo(Node.class)).thenReturn(node);
