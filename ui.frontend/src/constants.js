@@ -153,6 +153,11 @@ export const Constants = {
         CHECKED : "checked"
     },
 
-    TABINDEX : "tabindex"
+    TABINDEX : "tabindex",
+
+    /**
+     * Prefix path for all AF HTTP APIs
+     */
+    API_PATH_PREFIX : "/adobe/forms/af"
 }
 
