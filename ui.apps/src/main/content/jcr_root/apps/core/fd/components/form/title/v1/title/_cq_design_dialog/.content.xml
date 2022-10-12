@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2021 Adobe
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
           xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
           xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
@@ -45,100 +45,93 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/text"
                                         text="Allowed Types / Sizes for Authors"/>
-                                    <field
-                                        cq:showOnCreate="{Boolean}true"
-                                        granite:class="core-title-sizes-allowed"
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
-                                        fieldDescription="The HTML element to use for the download title. If no type is configured, the default (H3) will be used.">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <h1
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H1"
-                                                value="h1"/>
-                                            <h2
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H2"
-                                                value="h2"/>
-                                            <h3
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H3"
-                                                value="h3"/>
-                                            <h4
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H4"
-                                                value="h4"/>
-                                            <h5
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H5"
-                                                value="h5"/>
-                                            <h6
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                checked="true"
-                                                name="./allowedTypes"
-                                                text="H6"
-                                                value="h6"/>
-                                        </items>
-                                    </field>
-                                    <type
-                                        granite:class="core-title-size-default"
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                        fieldLabel="Default Type / Size"
-                                        name="./type">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <h1
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H1"
-                                                value="h1"/>
-                                            <h2
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H2"
-                                                value="h2"/>
-                                            <h3
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H3"
-                                                value="h3"/>
-                                            <h4
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H4"
-                                                value="h4"/>
-                                            <h5
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H5"
-                                                value="h5"/>
-                                            <h6
-                                                jcr:primaryType="nt:unstructured"
-                                                text="H6"
-                                                value="h6"/>
-                                        </items>
-                                    </type>
+<!--                                    <field-->
+<!--                                        cq:showOnCreate="{Boolean}true"-->
+<!--                                        granite:class="core-title-sizes-allowed"-->
+<!--                                        jcr:primaryType="nt:unstructured"-->
+<!--                                        sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"-->
+<!--                                        fieldDescription="The HTML element to use for the download title. If no type is configured, the default (H3) will be used.">-->
+<!--                                        <items jcr:primaryType="nt:unstructured">-->
+<!--                                            <h1-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H1"-->
+<!--                                                value="h1"/>-->
+<!--                                            <h2-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H2"-->
+<!--                                                value="h2"/>-->
+<!--                                            <h3-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H3"-->
+<!--                                                value="h3"/>-->
+<!--                                            <h4-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H4"-->
+<!--                                                value="h4"/>-->
+<!--                                            <h5-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H5"-->
+<!--                                                value="h5"/>-->
+<!--                                            <h6-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
+<!--                                                checked="true"-->
+<!--                                                name="./allowedTypes"-->
+<!--                                                text="H6"-->
+<!--                                                value="h6"/>-->
+<!--                                        </items>-->
+<!--                                    </field>-->
+<!--                                    <type-->
+<!--                                        granite:class="core-title-size-default"-->
+<!--                                        jcr:primaryType="nt:unstructured"-->
+<!--                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"-->
+<!--                                        fieldLabel="Default Type / Size"-->
+<!--                                        name="./type">-->
+<!--                                        <items jcr:primaryType="nt:unstructured">-->
+<!--                                            <h1-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H1"-->
+<!--                                                value="h1"/>-->
+<!--                                            <h2-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H2"-->
+<!--                                                value="h2"/>-->
+<!--                                            <h3-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H3"-->
+<!--                                                value="h3"/>-->
+<!--                                            <h4-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H4"-->
+<!--                                                value="h4"/>-->
+<!--                                            <h5-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H5"-->
+<!--                                                value="h5"/>-->
+<!--                                            <h6-->
+<!--                                                jcr:primaryType="nt:unstructured"-->
+<!--                                                text="H6"-->
+<!--                                                value="h6"/>-->
+<!--                                        </items>-->
+<!--                                    </type>-->
                                     <disableLink
                                         jcr:primaryType="nt:unstructured"
-                                        sling:hideResource="{Boolean}true"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                        fieldDescription="Check to disable support for links."
-                                        name="./linkDisabled"
-                                        text="Disable Link"
-                                        checked="{Boolean}false"
-                                        uncheckedValue="false"
-                                        value="true"/>
+                                        sling:hideResource="{Boolean}true"/>
                                 </items>
                             </column>
                         </items>

@@ -31,8 +31,8 @@ public enum Heading {
         this.element = element;
     }
 
-    public static com.adobe.cq.forms.core.components.internal.Heading getHeading(String value) {
-        for (com.adobe.cq.forms.core.components.internal.Heading heading : values()) {
+    public static Heading getHeading(String value) {
+        for (Heading heading : values()) {
             if (StringUtils.equalsIgnoreCase(heading.element, value)) {
                 return heading;
             }

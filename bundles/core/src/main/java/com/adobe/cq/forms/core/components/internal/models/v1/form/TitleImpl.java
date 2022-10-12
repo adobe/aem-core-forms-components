@@ -49,10 +49,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class TitleImpl extends AbstractComponentImpl implements Title {
 
-    public TitleImpl() {
-
-    }
-
     /**
      * The current resource.
      */
@@ -77,18 +73,10 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     /**
      * Translation of the title property
      */
-    private I18n i18n;
-
-    public TitleImpl(I18n i18n) {
-        this.i18n = i18n;
-    }
+    private I18n i18n = new I18n(request);
 
     @PostConstruct
     private void initModel() {
-        if (request != null && i18n == null) {
-            i18n = null;
-        }
-
         if (heading == null) {
             heading = Heading.getHeading(type);
             if (heading == null && currentStyle != null) {
@@ -120,12 +108,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
             return heading.getElement();
         }
         return null;
-    }
-
-    @NotNull
-    @Override
-    public String getExportedType() {
-        return resource.getResourceType();
     }
 
     @Override
