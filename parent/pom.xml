@@ -763,7 +763,7 @@
                             <exclude>**/test/resources/mockito-extensions/*</exclude>
                             <!-- Ignore auto generated webpack file -->
                             <exclude>**/dist/main.js</exclude>
-                            <exclude>**/apps/core/fd/af-clientlibs/core-forms-components-runtime-base/js/main.js</exclude>
+                            <exclude>**/apps/core/fd/clientlibs/core-forms-components-runtime-base/js/main.js</exclude>
                         </excludes>
                     </configuration>
                     <executions>
@@ -1119,9 +1119,15 @@
 
             <!-- Temporarily added, system path needs to be removed later -->
             <dependency>
+                <!--
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
                 <version>2022.08.04.00-220800</version>
+                -->
+                <!-- temporary forms SDK -->
+                <groupId>com.adobe.aemfd</groupId>
+                <artifactId>aem-forms-sdk-api</artifactId>
+                <version>1.0.0-52cdda2</version>
                 <!--<version>2022.08.29</version>
                 <scope>system</scope>
                 <systemPath>${main.basedir}/aem-forms-sdk-api-2022.08.29.00.jar</systemPath> -->

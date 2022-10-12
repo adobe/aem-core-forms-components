@@ -84,9 +84,7 @@ jobs:
           paths:
             - configuration.json
             - bundles/core/target
-            - bundles/af-core/target
             - ui.apps/target/*.zip
-            - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
             - it/content/target/*.zip

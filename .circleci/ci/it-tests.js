@@ -49,12 +49,11 @@ try {
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
+            --install-file ${config.modules['core-forms-components-it-tests-apps', 'core-forms-components-it-tests-content'].path}/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar \
             --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \

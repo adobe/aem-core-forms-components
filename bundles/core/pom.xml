@@ -455,8 +455,15 @@
 
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
+        <!--
         <dependency>
             <groupId>com.adobe.aem</groupId>
+            <artifactId>aem-forms-sdk-api</artifactId>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
@@ -576,6 +583,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.0.72</version>
             <scope>test</scope>
         </dependency>
 

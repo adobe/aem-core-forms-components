@@ -29,22 +29,21 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 ### Adaptive Form
 
 
--   [Form Container](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
--   [Text Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
--   [Number Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
--   [Date Picker](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
--   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
--   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
--   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
--   [File Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
--   [Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
--   [Panel](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
--   [Accordion](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
--   [Horizontal Tabs](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop)
--   [Text](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
--   [Image](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
--   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
--   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
+-   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
+-   [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
+-   [Number Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
+-   [Date Picker](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
+-   [Dropdown List](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
+-   [Checkbox Group](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
+-   [Radio Button Group](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
+-   [Button](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
+-   [Panel](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
+-   [Accordion](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
+-   [Horizontal Tabs](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop)
+-   [Text](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
+-   [Image](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
+-   [Header](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
+-   [Footer](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 
 ## System Requirements
 

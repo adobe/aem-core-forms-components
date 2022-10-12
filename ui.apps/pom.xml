@@ -89,6 +89,7 @@
                         </filter>
                     </filters>
                     <packageType>application</packageType>
+                    <group>${vault.package.group}</group>
                     <dependencies>
                         <dependency>
                             <group>day/cq60/product</group>
