@@ -33,7 +33,7 @@
         static bemBlock = "cmp-tabs";
 
         static selectors = {
-            self: "[data-" + Tabs.NS + '-is="' + Tabs.IS + '"]',
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             active: {
                 tab: "cmp-tabs__tab--active",
                 tabpanel: "cmp-tabs__tabpanel--active"
@@ -111,7 +111,7 @@
         }
 
         getDescription() {
-            return this.element.querySelector(Tabs.selectors.description);
+          return this.element.querySelector(Tabs.selectors.description);
         }
 
         getLabel() {
@@ -123,7 +123,7 @@
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(Tabs.selectors.tooltipDiv);
+          return this.element.querySelector(Tabs.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
