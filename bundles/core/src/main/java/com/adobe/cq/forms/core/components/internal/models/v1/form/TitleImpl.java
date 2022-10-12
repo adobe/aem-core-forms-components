@@ -77,6 +77,10 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
 
     @PostConstruct
     private void initModel() {
+        if (StringUtils.isBlank(title)) {
+            title = StringUtils.defaultIfEmpty(getCurrentPage().getPageTitle(), getCurrentPage().getTitle());
+        }
+
         if (heading == null) {
             heading = Heading.getHeading(type);
             if (heading == null && currentStyle != null) {
@@ -108,14 +112,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
             return heading.getElement();
         }
         return null;
-    }
-
-    @Override
-    @NotNull
-    protected ComponentData getComponentData() {
-        return DataLayerBuilder.extending(super.getComponentData()).asComponent()
-            .withTitle(this::getText)
-            .build();
     }
 
 }
