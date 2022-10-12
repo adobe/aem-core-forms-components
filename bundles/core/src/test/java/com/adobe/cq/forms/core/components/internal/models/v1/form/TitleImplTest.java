@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
@@ -35,11 +36,13 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Title;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.internal.DataLayerConfig;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.lenient;
 
 @ExtendWith(AemContextExtension.class)
 public class TitleImplTest {
@@ -84,15 +87,14 @@ public class TitleImplTest {
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_TYPE));
         Title titleMock = Mockito.mock(Title.class);
         Mockito.when(titleMock.getType()).thenCallRealMethod();
+        Mockito.when(titleMock.getText()).thenCallRealMethod();
         assertEquals(null, titleMock.getType());
         assertEquals(null, titleMock.getText());
     }
 
     @Test
     protected void testGetTitleResourcePageStyleType() {
-        Title title = Utils.getComponentUnderTest(PATH_TITLE_NOPROPS, Title.class, context);
-        Resource resource = context.currentResource(PATH_TITLE_NOPROPS);
-        context.contentPolicyMapping(resource.getResourceType(), Title.PN_DESIGN_DEFAULT_TYPE, "h2");
+        Title title = getTitleUnderTest(PATH_TITLE_NOPROPS, Title.PN_DESIGN_DEFAULT_TYPE, "h2");
         assertEquals("h2", title.getType());
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_NOPROPS));
     }
@@ -131,5 +133,20 @@ public class TitleImplTest {
         request.setParameterMap(paramMap);
         Title title = request.adaptTo(Title.class);
         assertEquals("Title", title.getText());
+    }
+
+    protected Title getTitleUnderTest(String resourcePath, Object... properties) {
+        ConfigurationBuilder builder = Mockito.mock(ConfigurationBuilder.class);
+        DataLayerConfig dataLayerConfig = Mockito.mock(DataLayerConfig.class);
+        lenient().when(dataLayerConfig.enabled()).thenReturn(true);
+        lenient().when(dataLayerConfig.skipClientlibInclude()).thenReturn(false);
+        lenient().when(builder.as(DataLayerConfig.class)).thenReturn(dataLayerConfig);
+        context.registerAdapter(Resource.class, ConfigurationBuilder.class, builder);
+        Resource resource = context.currentResource(resourcePath);
+        if (resource != null && properties != null) {
+            context.contentPolicyMapping(resource.getResourceType(), properties);
+        }
+        return context.request().adaptTo(Title.class);
+
     }
 }
