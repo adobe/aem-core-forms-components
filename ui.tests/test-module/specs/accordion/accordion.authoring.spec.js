@@ -28,7 +28,7 @@ describe('Page - Authoring', function () {
     const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion component", afConstants.components.forms.resourceType.accordion);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion", afConstants.components.forms.resourceType.accordion);
     cy.get('body').click( 0,0);
   }
 
@@ -36,7 +36,7 @@ describe('Page - Authoring', function () {
     const dataPath = "/content/core-components-examples/library/adaptive-form/accordion/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion component", afConstants.components.forms.resourceType.accordion);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion", afConstants.components.forms.resourceType.accordion);
     cy.get('body').click( 0,0);
   }
 

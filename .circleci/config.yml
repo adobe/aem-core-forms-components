@@ -88,6 +88,7 @@ jobs:
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
             - it/content/target/*.zip
+            - it/config/target/*.zip
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:

@@ -30,7 +30,7 @@ describe("Form Runtime with Date Picker", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-        const value = state.value
+        const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -52,6 +52,7 @@ describe("Form Runtime with Date Picker", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+            checkHTML(id, field.getModel().getState())
         });
     })
 
@@ -63,7 +64,7 @@ describe("Form Runtime with Date Picker", () => {
             model.visible = false
             return checkHTML(model.id, model.getState())
         }).then(() => {
-            model.enable = false
+            model.enabled = false
             return checkHTML(model.id, model.getState())
         })
     });

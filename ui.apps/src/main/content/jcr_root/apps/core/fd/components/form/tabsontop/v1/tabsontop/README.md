@@ -62,7 +62,9 @@ component. It should be added to a relevant site client library using the `embed
 
 ## JavaScript Data Attribute Bindings
 
-Apply a `data-cmp-is="adaptiveFormTabs"` attribute to the wrapper block to enable initialization of the JavaScript component.
+The following attributes must be added for the initialization of the horizontal-tabs component in the form view:
+1. `data-cmp-is="adaptiveFormTabs"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 ### Enabling Editing Functionality
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:
