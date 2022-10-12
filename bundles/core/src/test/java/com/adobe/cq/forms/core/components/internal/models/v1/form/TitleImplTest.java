@@ -37,7 +37,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Title;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.internal.DataLayerConfig;
-import com.day.cq.wcm.api.WCMMode;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -78,7 +77,6 @@ public class TitleImplTest {
         Title title = Utils.getComponentUnderTest(PATH_TITLE, Title.class, context);
         assertNull(title.getType());
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE));
-
     }
 
     @Test
@@ -102,13 +100,6 @@ public class TitleImplTest {
     }
 
     @Test
-    protected void testGetTitleResourcePageStyleTypeHea() {
-        Title title = getTitleUnderTest(PATH_TITLE_NOPROPS, Title.PN_DESIGN_DEFAULT_TYPE, "h2");
-        assertEquals("h2", title.getType());
-        Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_NOPROPS));
-    }
-
-    @Test
     protected void testGetTitleFromCurrentPageWithWrongElementInfo() {
         Title title = Utils.getComponentUnderTest(PATH_TITLE_WRONGTYPE, Title.class, context);
         assertNull(title.getType());
@@ -119,13 +110,6 @@ public class TitleImplTest {
     void testJSONExport() throws Exception {
         Title title = Utils.getComponentUnderTest(PATH_TITLE, Title.class, context);
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE));
-    }
-
-    @Test
-    void testTitleWithWcmEditMode() throws Exception {
-        context.request().setAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME, WCMMode.EDIT);
-        Title title = Utils.getComponentUnderTest(PATH_TITLE, Title.class, context);
-        assertEquals("Title", title.getText());
     }
 
     @Test
