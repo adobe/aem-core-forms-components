@@ -15,12 +15,22 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.i18n.ResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.MockResourceBundle;
+import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.aemds.guide.service.GuideLocalizationService;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Title;
@@ -72,6 +82,10 @@ public class TitleImplTest {
         assertEquals("Title_custom", title.getText());
         assertEquals("h3", title.getType());
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_TYPE));
+        Title titleMock = Mockito.mock(Title.class);
+        Mockito.when(titleMock.getType()).thenCallRealMethod();
+        assertEquals(null, titleMock.getType());
+        assertEquals(null, titleMock.getText());
     }
 
     @Test
@@ -96,4 +110,26 @@ public class TitleImplTest {
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE));
     }
 
+    @Test
+    void testTitleWithLocale() throws Exception {
+        context.currentResource(PATH_TITLE);
+        // added this since AF API expects this to be present
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class, Mockito.mock(
+            GuideLocalizationService.class));
+        Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+            "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+        resourceBundle.putAll(new HashMap<String, String>() {
+            {
+                put("guideContainer##textinput##description##5648", "dummy 1");
+            }
+        });
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
+        request.setParameterMap(paramMap);
+        Title title = request.adaptTo(Title.class);
+        assertEquals("Title", title.getText());
+    }
 }
