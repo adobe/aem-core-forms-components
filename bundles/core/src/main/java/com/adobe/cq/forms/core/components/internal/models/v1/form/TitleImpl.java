@@ -23,9 +23,9 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.*;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.Heading;
@@ -33,8 +33,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Title;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
-import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
@@ -77,8 +75,8 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
 
     @PostConstruct
     private void initModel() {
-        if (StringUtils.isBlank(title)) {
-            title = StringUtils.defaultIfEmpty(getCurrentPage().getPageTitle(), getCurrentPage().getTitle());
+        if (request != null && i18n == null) {
+            i18n = GuideUtils.getI18n(request, resource);
         }
 
         if (heading == null) {
