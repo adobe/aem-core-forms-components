@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -138,22 +139,23 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public String getAction() {
-        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(resource.getPath());
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
+            .getPath());
     }
 
     @Override
     public String getDataUrl() {
-        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(resource.getPath());
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(getCurrentPage().getPath());
     }
 
     @Override
     public String getLang() {
         // todo: uncomment once forms sdk is released
-        // if (request != null) {
-        // return GuideUtils.getAcceptLang(request);
-        // } else {
-        return FormContainer.super.getLang();
-        // }
+        if (request != null) {
+            return GuideUtils.getAcceptLang(request);
+        } else {
+            return FormContainer.super.getLang();
+        }
     }
 
     @Override

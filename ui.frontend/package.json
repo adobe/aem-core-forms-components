@@ -32,6 +32,6 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
-    "@aemforms/af-core": "^0.18.0"
+    "@aemforms/af-core": "^0.22.10"
   }
 }

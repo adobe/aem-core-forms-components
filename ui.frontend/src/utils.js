@@ -169,12 +169,11 @@ export default class Utils {
             } else {
                 const _form = await HTTPAPILayer.getForm(_path);
                 console.debug('fetched form',  _form);
-                const params = new Proxy(new URLSearchParams(window.location.search), {
-                    get: (searchParams, prop) => searchParams.get(prop),
-                });
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
-                if (params.dataRef && _form) {
-                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params.dataRef) || {};
+                if (_form) {
+                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params) || {};
                 }
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path);
                 console.debug("fetched model json", _formJson);
