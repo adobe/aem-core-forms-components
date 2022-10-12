@@ -123,7 +123,7 @@ describe('Page - Authoring', function () {
 
 
 
-        it.only('verify editFormat Value Getting saved correctly',function(){
+        it('verify editFormat Value Getting saved correctly',function(){
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
