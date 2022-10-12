@@ -49,8 +49,8 @@ export default class HTTPAPILayer {
         return await this.#getJson(Constants.API_PATH_PREFIX + "/listforms");
     }
 
-    static async getPrefillData(formId, dataRef) {
-        return await this.#getJson(Constants.API_PATH_PREFIX + "/data/" + formId + "?dataRef=" + dataRef);
+    static async getPrefillData(formId, params) {
+        return await this.#getJson(Constants.API_PATH_PREFIX + "/data/" + formId + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"));
     }
 
     static #getJson(url) {

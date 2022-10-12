@@ -31,8 +31,8 @@
                     sling:resourceType="forms-components-examples/components/form/text"
                     value="Custom Text">
                 <fd:rules
-                jcr:primaryType="nt:unstructured"
-                visible="!(textinput1 == 'Hide me') || textinput1 == 'Show me'"/>
+                        jcr:primaryType="nt:unstructured"
+                        visible="!(textinput1 == 'Hide me') || textinput1 == 'Show me'"/>
             </text>
         </guideContainer>
     </jcr:content>

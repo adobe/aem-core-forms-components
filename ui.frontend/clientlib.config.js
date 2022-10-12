@@ -19,7 +19,7 @@ const path = require('path');
 const CLIENTLIB_DIR = path.join(
     __dirname,
     '..',
-    'ui.af.apps',
+    'ui.apps',
     'src',
     'main',
     'content',
@@ -27,7 +27,7 @@ const CLIENTLIB_DIR = path.join(
     'apps',
     'core',
     'fd',
-    'af-clientlibs'
+    'clientlibs'
 );
 
 const libsBaseConfig = {
