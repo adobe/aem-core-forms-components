@@ -15,11 +15,21 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -27,6 +37,11 @@ import com.adobe.cq.forms.core.components.models.form.Title;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.i18n.ResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.MockResourceBundle;
+import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
+import com.adobe.aemds.guide.service.GuideLocalizationService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -72,6 +87,10 @@ public class TitleImplTest {
         assertEquals("Title_custom", title.getText());
         assertEquals("h3", title.getType());
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_TYPE));
+        Title titleMock = Mockito.mock(Title.class);
+        Mockito.when(titleMock.getType()).thenCallRealMethod();
+        assertEquals("", titleMock.getType());
+        assertEquals("", titleMock.getText());
     }
 
     @Test
@@ -94,6 +113,36 @@ public class TitleImplTest {
     void testJSONExport() throws Exception {
         Title title = Utils.getComponentUnderTest(PATH_TITLE, Title.class, context);
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE));
+    }
+
+    @Test
+    void testTitleWithLocale() throws Exception {
+//        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+//        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+//                "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+//        resourceBundle.putAll(new HashMap<String, String>() {
+//            {
+//                put("guideContainer##textinput##description##5648", "dummy 1");
+//            }
+//        });
+        context.currentResource(PATH_TITLE);
+        // added this since AF API expects this to be present
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class, Mockito.mock(GuideLocalizationService.class));
+        Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+                "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+        resourceBundle.putAll(new HashMap<String, String>() {
+            {
+                put("guideContainer##textinput##description##5648", "dummy 1");
+            }
+        });
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
+        request.setParameterMap(paramMap);
+        Title title = request.adaptTo(Title.class);
+        assertEquals("Title", title.getText());
     }
 
 }
