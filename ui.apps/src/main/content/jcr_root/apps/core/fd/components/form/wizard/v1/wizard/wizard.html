@@ -52,7 +52,12 @@
             </ol>
         </div>
 
-
+        <div
+                class="cmp-adaptiveform-wizard__previousNav"
+                tabindex = 0
+                role="navigation"
+                aria-label="Previous Button">
+        </div>
 
         <div
             data-sly-repeat.child="${resource.listChildren}"
@@ -64,21 +69,13 @@
             </sly>
         </div>
 
-
-
-        <div
-             class="cmp-adaptiveform-wizard__previousNav"
-             tabindex = 0
-             role="navigation"
-             aria-label="Previous Button">
-        </div>
-
         <div
                 class="cmp-adaptiveform-wizard__nextNav"
                 tabindex = 0
                 role="navigation"
                 aria-label="Next Button">
         </div>
+
         <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}">
         </sly>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
