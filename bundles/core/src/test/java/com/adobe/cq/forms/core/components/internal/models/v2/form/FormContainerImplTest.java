@@ -183,6 +183,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
 }
