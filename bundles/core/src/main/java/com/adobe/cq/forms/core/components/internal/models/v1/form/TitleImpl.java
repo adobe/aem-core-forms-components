@@ -71,7 +71,7 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     /**
      * Translation of the title property
      */
-    private I18n i18n = new I18n(request);
+    protected I18n i18n = null;
 
     @PostConstruct
     private void initModel() {
