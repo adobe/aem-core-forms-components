@@ -28,20 +28,22 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Adaptive Form
 
-
 -   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
 -   [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
 -   [Number Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
 -   [Date Picker](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
+-   [File Attachment](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
 -   [Dropdown List](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
 -   [Checkbox Group](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
 -   [Radio Button Group](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
 -   [Button](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
 -   [Panel](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
 -   [Accordion](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
+-   [Wizard](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/wizard/v1/wizard)
 -   [Horizontal Tabs](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop)
 -   [Text](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
 -   [Image](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
+-   [Title](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v1/title)
 -   [Header](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 -   [Footer](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 
@@ -51,7 +53,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ | 
-| 1.0.38                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
+| 1.0.42                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
