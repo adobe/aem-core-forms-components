@@ -34,7 +34,7 @@ import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Title;
+import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.internal.DataLayerConfig;
 import com.day.cq.wcm.api.WCMMode;
@@ -140,7 +140,7 @@ public class TitleImplTest {
             "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
         resourceBundle.putAll(new HashMap<String, String>() {
             {
-                put("guideContainer##textinput##description##5648", "dummy 1");
+                put("guideContainer##title##text##5648", "Title");
             }
         });
         MockSlingHttpServletRequest request = context.request();

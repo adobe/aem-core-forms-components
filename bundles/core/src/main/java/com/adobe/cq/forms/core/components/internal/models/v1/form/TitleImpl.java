@@ -31,7 +31,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.Heading;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Title;
+import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
