@@ -71,8 +71,14 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
         // if (isMultiple()) {
         // return Type.ARRAY;
         // } else {
-        return super.getType(); // we don't return array but rather type stored in JCR, for example, file[]
         // }
+        // file upload does not work for type string in core component, hence default it to file
+        Type superType = super.getType();
+        if (Type.STRING.equals(superType)) {
+            return Type.FILE;
+        } else {
+            return superType; // we don't return array but rather type stored in JCR, for example, file[]
+        }
     }
 
     @Override
