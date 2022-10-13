@@ -77,7 +77,7 @@
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/form/container">
                                 <title
-                                        jcr:title="title"
+                                        jcr:title="Title"
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="forms-components-examples/components/form/title"/>
                         </container>
@@ -111,7 +111,7 @@
                 <text_1337508375
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core-components-examples/components/text"
-                        text="&lt;p>The title text can be provided rather than the default of taking the title from the current page.&lt;/p>"
+                        text="&lt;p>The title text can be provided rather than the default of taking the title.&lt;/p>"
                         textIsRich="true"/>
                 <demo_1448137506
                         jcr:primaryType="nt:unstructured"
@@ -122,7 +122,7 @@
                         <title
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Lorem Ipsum"
-                                sling:resourceType="core-components-examples/components/title"/>
+                                sling:resourceType="forms-components-examples/components/form/title"/>
                     </component>
                     <info
                             jcr:primaryType="nt:unstructured"
