@@ -82,4 +82,6 @@ public final class FormConstants {
     /** The resource type for image v1 */
     public static final String RT_FD_FORM_IMAGE_V1 = RT_FD_FORM_PREFIX + "image/v1/image";
 
+    /** The resource type for title v1 */
+    public static final String RT_FD_FORM_TITLE_V1 = RT_FD_FORM_PREFIX + "title/v1/title";
 }
