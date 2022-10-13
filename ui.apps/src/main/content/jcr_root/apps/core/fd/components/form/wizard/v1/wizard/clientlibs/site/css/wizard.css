@@ -25,6 +25,7 @@
     box-sizing: border-box;
     border-bottom: 1px solid transparent;
     padding: .5rem 1rem;
+    flex: 1;
 }
 
 .cmp-adaptiveform-wizard__tab--active {
@@ -48,11 +49,8 @@
 .cmp-adaptiveform-wizard__nextNav{
     height:2.5rem;
     cursor:pointer;
-    margin-top:4.25rem;
-    float:right;
     width:2.5rem;
     margin-right:1rem;
-    position:absolute;
     border-left-width:2px;
     border-bottom-width:2px;
     border-top-width:2px;
@@ -64,7 +62,6 @@
     border-top-left-radius:1.5rem;
     border-top-right-radius:1.5rem;
     background:url(../resources/Chevron-Right.svg) center center / 1rem 1rem no-repeat;
-    right:2%;
     cursor : pointer;
 }
 
@@ -82,9 +79,6 @@
 .cmp-adaptiveform-wizard__previousNav{
     cursor:pointer;
     height:2.5rem;
-    margin-top:4.25rem;
-    float:right;
-    right:10%;
     width:2.5rem;
     border-left-width:2px;
     border-bottom-width:2px;
@@ -96,7 +90,6 @@
     border-bottom-left-radius:1.5rem;
     border-top-left-radius:1.5rem;
     border-top-right-radius:1.5rem;
-    position:absolute;
     margin-right:0.5rem;
     background:url(../resources/Chevron-Left.svg) center center / 1rem 1rem no-repeat;
     cursor : pointer;
