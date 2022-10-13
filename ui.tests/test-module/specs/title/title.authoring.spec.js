@@ -48,28 +48,28 @@ describe('Page - Authoring', function () {
     }
 
 
-    // context('Open Forms Editor', function () {
-    //     const pagePath = "/content/forms/af/core-components-it/blank",
-    //         titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
-    //         titleEditPathSelector = "[data-path='" + titleEditPath + "']",
-    //         titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop();
-    //
-    //     beforeEach(function () {
-    //         // this is done since cypress session results in 403 sometimes
-    //         cy.openAuthoring(pagePath);
-    //     });
-    //
-    //     it('insert Title in form container', function () {
-    //         dropTitleInContainer();
-    //         cy.deleteComponentByPath(titleDrop);
-    //     });
-    //
-    //     it ('check edit dialog availability of Title', function(){
-    //         testTitleEditDialog(titleEditPathSelector,titleDrop
-    //         );
-    //     });
-    //
-    // });
+    context('Open Forms Editor', function () {
+        const pagePath = "/content/forms/af/core-components-it/blank",
+            titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
+            titleEditPathSelector = "[data-path='" + titleEditPath + "']",
+            titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop();
+
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
+
+        it('insert Title in form container', function () {
+            dropTitleInContainer();
+            cy.deleteComponentByPath(titleDrop);
+        });
+
+        it ('check edit dialog availability of Title', function(){
+            testTitleEditDialog(titleEditPathSelector,titleDrop
+            );
+        });
+
+    });
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/title",
