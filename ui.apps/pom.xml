@@ -98,7 +98,7 @@
                         <dependency>
                             <group>adobe/cq60</group>
                             <name>core.wcm.components.content</name>
-                            <version>${core.wcm.components.version}</version>
+                            <version>[2.20.8, )</version>
                         </dependency>
                     </dependencies>
                 </configuration>
