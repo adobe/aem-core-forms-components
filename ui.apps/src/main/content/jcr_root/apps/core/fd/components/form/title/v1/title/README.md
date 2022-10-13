@@ -25,7 +25,7 @@ Title component written in HTL, allowing to define a section heading.
 * Styles
 
 ### Use Object
-The Title component uses the `com.adobe.cq.forms.core.components.models.form.Title` Sling model as its Use-object.
+The Title component uses the `com.adobe.cq.wcm.core.components.models.Title` Sling model as its Use-object.
 
 ### Component Policy Configuration Properties
 The following configuration properties are used:
