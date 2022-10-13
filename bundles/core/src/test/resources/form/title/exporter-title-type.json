@@ -1,0 +1,6 @@
+{
+  "id": "title_xyz",
+  "type": "h3",
+  "text": "Title_custom",
+  ":type": "core/fd/components/form/title/v1/title"
+}
