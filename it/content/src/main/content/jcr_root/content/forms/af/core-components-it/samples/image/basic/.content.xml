@@ -23,17 +23,22 @@
                     name="textinput1"
                     jcr:title="Text Input 1"
                     sling:resourceType="forms-components-examples/components/form/textinput"/>
-            <text
-                    fieldType="text"
+            <image
+                    jcr:created="{Date}2022-10-13T14:31:23.772+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2022-10-13T14:31:23.772+05:30"
+                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    name="text1"
-                    jcr:title="Text 1"
-                    sling:resourceType="forms-components-examples/components/form/text"
-                    value="Custom Text">
+                    jcr:title="Image"
+                    sling:resourceType="forms-components-examples/components/form/image"
+                    fieldType="image"
+                    name="image1665651689720">
                 <fd:rules
-                jcr:primaryType="nt:unstructured"
-                visible="!(textinput1 == 'Hide me') || textinput1 == 'Show me'"/>
-            </text>
+                        jcr:primaryType="nt:unstructured"
+                        visible="!(textinput1 == 'Hide me') || textinput1 == 'Show me'"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </image>
+
         </guideContainer>
     </jcr:content>
 </jcr:root>
