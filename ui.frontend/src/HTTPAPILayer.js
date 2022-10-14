@@ -38,7 +38,7 @@ export default class HTTPAPILayer {
             return _form;
         } else if (formsList._links && formsList._links.next) {
             const _nextList = await this.#getJson(formsList._links.next);
-            await this.#findForm(formPath, _nextList);
+            return await this.#findForm(formPath, _nextList);
         } else {
             //TODO: throw errors once API is available on Circle CI set up
             console.debug("Form at " + formPath +  " Not Found");
