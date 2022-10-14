@@ -2,20 +2,20 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
-            cq:policy="core-components-it/components/page/default"
+            cq:policy="forms-components-examples/components/page/default"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="wcm/core/components/policies/mappings">
         <parsys1
-                cq:policy="core-components-it/components/parsys/policy_1657606299306"
+                cq:policy="wcm/foundation/components/responsivegrid/default"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/core/components/policies/mapping"/>
         <guideContainer
-                cq:policy="core-components-it/components/form/container/policy_1657606299305"
+                cq:policy="forms-components-examples/components/form/container/default"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/core/components/policies/mapping">
         </guideContainer>
         <parsys2
-                cq:policy="core-components-it/components/parsys/policy_1657606299306"
+                cq:policy="wcm/foundation/components/responsivegrid/default"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/core/components/policies/mapping"/>
     </jcr:content>

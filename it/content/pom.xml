@@ -78,6 +78,7 @@
                 <configuration>
                     <group>${vault.package.group}</group>
                     <packageType>content</packageType>
+                    <accessControlHandling>merge</accessControlHandling>
                     <validatorsSettings>
                         <jackrabbit-nodetypes>
                             <isDisabled>true</isDisabled>
