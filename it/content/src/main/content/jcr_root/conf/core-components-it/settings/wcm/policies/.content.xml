@@ -2,33 +2,49 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
-    <core-components-it jcr:primaryType="nt:unstructured">
+    <wcm jcr:primaryType="nt:unstructured">
+        <foundation jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <responsivegrid jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="parsys-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:Core Components Examples,group:Core Components Examples - Form]">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </responsivegrid>
+            </components>
+        </foundation>
+    </wcm>
+    <forms-components-examples jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
-            <parsys jcr:primaryType="nt:unstructured">
-                <policy_1657606299306
+            <page jcr:primaryType="nt:unstructured">
+                <default
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Core Components Examples - Page Policy"
+                    sling:resourceType="wcm/core/components/policy/policy"
+                    ampMode="pairedAmp"
+                    appResourcesClientlib="cmp-examples.site"
+                    clientlibs="[cmp-examples.base,forms-examples.base]">
+                    <jcr:content jcr:primaryType="nt:unstructured"/>
+                </default>
+            </page>
+            <form jcr:primaryType="nt:unstructured">
+                <container jcr:primaryType="nt:unstructured">
+                    <default
                         jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="parsys-policy"
+                        jcr:title="formcontainer-policy"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:Core Components Examples,group:Core Components Examples - Form]">
-                    <jcr:content
+                        components="[group:Core Components Examples,group:Core Adaptive Form]">
+                        <jcr:content
                             jcr:primaryType="nt:unstructured"/>
-                </policy_1657606299306>
-            </parsys>
-            <form jcr:primaryType="nt:unstructured">
-                <container jcr:primaryType="nt:unstructured">
-                    <policy_1657606299305
-                      jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
-                      jcr:lastModifiedBy="admin"
-                      jcr:primaryType="nt:unstructured"
-                      jcr:title="formcontainer-policy"
-                      sling:resourceType="wcm/core/components/policy/policy"
-                      components="[group:Core Components Examples,group:Core Adaptive Form]">
-                      <jcr:content
-                         jcr:primaryType="nt:unstructured"/>
-                    
-                      </policy_1657606299305>
+                    </default>
                 </container>
             </form>
             <page jcr:primaryType="nt:unstructured">
@@ -42,5 +58,5 @@
                 </default>
             </page>
         </components>
-    </core-components-it>
+    </forms-components-examples>
 </jcr:root>
