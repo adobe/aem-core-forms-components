@@ -210,10 +210,13 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         return enabled;
     }
 
+    /**
+     * Returns the text contained in the short description rich text string.
+     */
     public String getTooltipText() {
         String tooltip = getTooltip();
         if (StringUtils.isNotEmpty(tooltip)) {
-            tooltip = tooltip.replaceAll("<\\/?[^>]+(>|$)", "");
+            tooltip = tooltip.replaceAll("<\\/?[^>]+(>|$)|&nbsp;", "");
             return tooltip;
         }
         return "";

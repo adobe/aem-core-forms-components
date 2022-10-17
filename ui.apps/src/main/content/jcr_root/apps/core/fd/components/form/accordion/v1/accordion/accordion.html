@@ -45,6 +45,7 @@
         <h3 class="cmp-accordion__header">
             <button id="${item.id}-button"
                     class="cmp-accordion__button${itemList.first ? ' cmp-accordion__button--expanded' : ''}"
+                    title="${accordion.tooltipVisible ? '' : accordion.tooltipText}"
                     aria-controls="${item.id}-panel"
                     type="button"
                     data-cmp-hook-accordion="button">
