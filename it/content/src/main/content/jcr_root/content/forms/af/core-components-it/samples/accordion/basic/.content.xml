@@ -23,14 +23,14 @@
                 fieldType="panel">
                 <item_1
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="item_1"
+                    jcr:title="Item 1"
                     sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
                     fieldType="panel"
                     layout="responsiveGrid"
                     name="item_1"/>
                 <item_2
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="item_2"
+                    jcr:title="Item 2"
                     sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
                     fieldType="panel"
                     layout="responsiveGrid"

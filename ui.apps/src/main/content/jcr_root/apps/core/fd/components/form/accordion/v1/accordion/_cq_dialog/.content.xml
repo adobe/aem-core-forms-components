@@ -64,6 +64,10 @@
                                 granite:hide="{Boolean}true"/>
                         </items>
                     </accessibility>
+                    <dor
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/dor"/>
                     <properties
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
