@@ -213,6 +213,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     /**
      * Returns the text contained in the short description rich text string.
      */
+    @JsonIgnore
     public String getTooltipText() {
         String tooltip = getTooltip();
         if (StringUtils.isNotEmpty(tooltip)) {
