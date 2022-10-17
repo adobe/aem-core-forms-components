@@ -14,5 +14,5 @@
 # limitations under the License.
 ###############################################################################
 
-#base=js
-panelcontainerview.js
+#base=css
+panelcontainerview.css
