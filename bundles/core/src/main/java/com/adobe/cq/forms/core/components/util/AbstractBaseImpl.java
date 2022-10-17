@@ -210,6 +210,15 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         return enabled;
     }
 
+    public String getTooltipText() {
+        String tooltip = getTooltip();
+        if (StringUtils.isNotEmpty(tooltip)) {
+            tooltip = tooltip.replaceAll("<\\/?[^>]+(>|$)", "");
+            return tooltip;
+        }
+        return "";
+    }
+
     protected String getConstraintMessage(ConstraintType type) {
         String propName = type.getMessageProperty();
         ValueMap properties = resource.getValueMap();
