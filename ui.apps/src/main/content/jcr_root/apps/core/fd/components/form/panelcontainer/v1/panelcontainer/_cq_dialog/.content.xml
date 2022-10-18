@@ -143,19 +143,22 @@
                     <background
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Background"
-                            granite:hide="${!cqDesign.backgroundColorEnabled || !cqDesign.backgroundColorSwatchesOnly || !cqDesign.backgroundImageEnabled}"
+                            granite:hide="${!cqDesign.backgroundColorEnabled &amp;&amp; !cqDesign.backgroundImageEnabled}"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <backgroundColor
                                     jcr:primaryType="nt:unstructured"
+                                    granite:hide="${!cqDesign.backgroundColorEnabled || cqDesign.backgroundColorSwatchesOnly}"
                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                     path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundColor"/>
                             <backgroundColorSwatchesOnly
                                     jcr:primaryType="nt:unstructured"
+                                    granite:hide="${!cqDesign.backgroundColorEnabled || !cqDesign.backgroundColorSwatchesOnly}"
                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                     path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundColorSwatchesOnly"/>
                             <backgroundImageAsset
                                     jcr:primaryType="nt:unstructured"
+                                    granite:hide="${!cqDesign.backgroundImageEnabled}"
                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                     path="core/wcm/components/container/v1/container/cq:dialog/content/items/tabs/items/properties/items/columns/items/column/items/backgroundImageAsset"/>
                         </items>
