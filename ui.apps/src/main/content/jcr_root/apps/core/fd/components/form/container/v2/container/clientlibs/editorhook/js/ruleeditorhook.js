@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function() {
+(function ($) {
 
     "use strict";
     window.CQ = window.CQ || {};
@@ -30,16 +30,21 @@
         }
         let ruleEditorFrame = document.createElement('iframe');
         ruleEditorFrame.setAttribute('id','af-rule-editor');
-        let ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath="+ editable.path + "&fieldId="+ getFieldId(editable);
-        ruleEditorFrame.setAttribute('src', ruleEditorUri);
-        ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
-        ruleEditorFrame.style.display = "block";
-        ruleEditorFrame.style.width = "100%";
-        ruleEditorFrame.style.height = "100%";
-        ruleEditorFrame.style.top = "0";
-        ruleEditorFrame.style.left = "0";
-        ruleEditorFrame.style.position = "fixed";
-        document.body.appendChild(ruleEditorFrame);
+        let formContainerPath = getFormContainerPath(editable);
+        if (!formContainerPath) {
+            showAlert();
+        } else {
+            let ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
+            ruleEditorFrame.setAttribute('src', ruleEditorUri);
+            ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
+            ruleEditorFrame.style.display = "block";
+            ruleEditorFrame.style.width = "100%";
+            ruleEditorFrame.style.height = "100%";
+            ruleEditorFrame.style.top = "0";
+            ruleEditorFrame.style.left = "0";
+            ruleEditorFrame.style.position = "fixed";
+            document.body.appendChild(ruleEditorFrame);
+        }
     }
 
     function getFormContainerPath(editable) {
@@ -50,4 +55,9 @@
         return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id');
     }
 
-})();
+    function showAlert() {
+        var ui = $(window).adaptTo('foundation-ui');
+        ui.alert(Granite.I18n.get('Information'), Granite.I18n.get('Please initialise the component to open the rule editor'), 'notice');
+    }
+
+})(jQuery);
