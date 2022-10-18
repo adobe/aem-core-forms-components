@@ -12,7 +12,7 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="parsys-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
-                            components="[group:Core Components Examples,group:Core Components Examples - Form]">
+                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Core Components Examples - Form]">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
@@ -41,7 +41,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="formcontainer-policy"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:Core Components Examples,group:Core Adaptive Form]">
+                        components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
                         <jcr:content
                             jcr:primaryType="nt:unstructured"/>
                     </default>
