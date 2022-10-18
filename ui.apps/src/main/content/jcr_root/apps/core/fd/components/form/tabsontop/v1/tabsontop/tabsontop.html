@@ -43,6 +43,7 @@
      <li role="tab"
          id="${tab.id}-tab"
          class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
+         title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          aria-controls="${tab.id}-tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
          data-cmp-hook-adaptiveFormTabs="tab">${tab.title}</li>

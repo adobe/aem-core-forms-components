@@ -34,7 +34,9 @@
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
         <div class="cmp-adaptiveform-radiobutton__option ${radioButton.orientation}">
-            <label class="cmp-adaptiveform-radiobutton__option__label" aria-label="${radioButton.enumNames[itemList.index]}">
+            <label class="cmp-adaptiveform-radiobutton__option__label"
+                   title="${radioButton.tooltipVisible ? '' : radioButton.tooltipText}"
+                   aria-label="${radioButton.enumNames[itemList.index]}">
                 <input type="radio"
                        name="${radioButton.name}"
                        class="cmp-adaptiveform-radiobutton__option__widget"

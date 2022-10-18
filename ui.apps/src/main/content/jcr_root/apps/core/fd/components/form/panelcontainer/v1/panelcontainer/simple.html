@@ -21,6 +21,7 @@
          data-cmp-is="adaptiveFormPanel"
          data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
          class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
+         title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          aria-labelby="${panel.id}-label"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
