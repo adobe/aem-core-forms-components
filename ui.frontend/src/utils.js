@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 import {Constants} from "./constants";
+import {enableCSRF} from "./csrfRequest";
 import HTTPAPILayer from "./HTTPAPILayer";
 
 
@@ -160,6 +161,7 @@ export default class Utils {
      * @param formContainerSelector
      */
     static async setupFormContainer(createFormContainer, formContainerSelector, formContainerClass) {
+        enableCSRF();
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);

@@ -46,6 +46,7 @@ module.exports = {
       ...libsBaseConfig,
       name: 'core-forms-components-runtime-base',
       categories: ['core.forms.components.runtime.base'],
+      dependencies: ['core.forms.components.csrf'],
       assets: {
         js: ['dist/main.js'],
         resources: ['dist/main.js.map']
