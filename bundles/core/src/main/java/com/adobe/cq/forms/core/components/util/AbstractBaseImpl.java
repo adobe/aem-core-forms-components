@@ -210,6 +210,19 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         return enabled;
     }
 
+    /**
+     * Returns the text contained in the short description rich text string.
+     */
+    @JsonIgnore
+    public String getTooltipText() {
+        String tooltip = getTooltip();
+        if (StringUtils.isNotEmpty(tooltip)) {
+            tooltip = tooltip.replaceAll("<\\/?[^>]+(>|$)|&nbsp;", "");
+            return tooltip;
+        }
+        return "";
+    }
+
     protected String getConstraintMessage(ConstraintType type) {
         String propName = type.getMessageProperty();
         ValueMap properties = resource.getValueMap();

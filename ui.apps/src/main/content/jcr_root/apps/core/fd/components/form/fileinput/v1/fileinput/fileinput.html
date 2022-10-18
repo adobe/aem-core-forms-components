@@ -36,6 +36,7 @@
     <input class="cmp-adaptiveform-fileinput__widget"
            data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
            style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
+           title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
            name="${file.name}"
            disabled="${!file.enabled}"
            accept="${file.accept}"

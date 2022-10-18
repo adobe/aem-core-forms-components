@@ -34,6 +34,7 @@
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
             aria-label="${dropdown.label.visible && dropdown.label.value}"
+            title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
             disabled="${!dropdown.enabled}"
             readonly="${dropdown.readOnly}"
