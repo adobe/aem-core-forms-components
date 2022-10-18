@@ -15,6 +15,88 @@
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_212634895490169>
             </page>
+            <form jcr:primaryType="nt:unstructured">
+                <container jcr:primaryType="nt:unstructured">
+                    <policy_212634895490171
+                            jcr:primaryType="nt:unstructured"
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:title="formcontainer-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">>
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </policy_212634895490171>
+                </container>
+            </form>
         </components>
     </core-components-examples>
+    <wcm jcr:primaryType="nt:unstructured">
+        <foundation jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <responsivegrid jcr:primaryType="nt:unstructured">
+                    <policy_76194888503838
+                            cq:styleDefaultClasses="cmp-examples-structure"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Core Components Examples - Root"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:.core-wcm,group:.core-wcm-form,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                        <cq:authoring jcr:primaryType="nt:unstructured">
+                            <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                <mapping_1544531934044
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="image/*"
+                                        droptarget="image"
+                                        resourceType="core-components-examples/components/image"/>
+                            </assetToComponentMapping>
+                        </cq:authoring>
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"
+                                mergeList="{Boolean}true"/>
+                    </policy_76194888503838>
+                    <policy_1545309074617
+                            cq:styleDefaultClasses="cmp-examples-structure__main"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Core Components Examples - Structure"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                        <cq:authoring jcr:primaryType="nt:unstructured">
+                            <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                <mapping_1544531934044
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="image/*"
+                                        droptarget="image"
+                                        resourceType="core-components-examples/components/image"/>
+                            </assetToComponentMapping>
+                        </cq:authoring>
+                        <cq:styleGroups jcr:primaryType="nt:unstructured">
+                            <item0
+                                    cq:styleGroupLabel="Area"
+                                    jcr:primaryType="nt:unstructured">
+                                <cq:styles jcr:primaryType="nt:unstructured">
+                                    <item0
+                                            cq:styleClasses="cmp-examples-structure__header"
+                                            cq:styleId="1545309104202"
+                                            cq:styleLabel="Header"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    <item1
+                                            cq:styleClasses="cmp-examples-structure__main"
+                                            cq:styleId="1545309110033"
+                                            cq:styleLabel="Main"
+                                            jcr:primaryType="nt:unstructured"/>
+                                    <item3
+                                            cq:styleClasses="cmp-examples-structure__footer"
+                                            cq:styleId="1551382932159"
+                                            cq:styleLabel="Footer"
+                                            jcr:primaryType="nt:unstructured"/>
+                                </cq:styles>
+                            </item0>
+                        </cq:styleGroups>
+                    </policy_1545309074617>
+                </responsivegrid>
+            </components>
+        </foundation>
+    </wcm>
 </jcr:root>

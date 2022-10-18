@@ -2,6 +2,10 @@
 <workspaceFilter version="1.0">
     <!-- All update modes should additionally be excluded here https://github.com/adobe/aem-core-wcm-components/blob/master/examples/ui.content/src/content/META-INF/vault/filter.xml -->
     <filter root="/conf/core-components-examples/settings/wcm/policies/core-components-examples/components/page/policy_212634895490169" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/policies/core-components-examples/components/form/container/policy_212634895490171" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/policies/wcm/foundation/components/responsivegrid/policy_76194888503838" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/policies/wcm/foundation/components/responsivegrid/policy_1545309074617" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/policies/jcr:content/root/responsivegrid/core-components-examples/components/form/container" mode="update"/>
     <filter root="/content/core-components-examples/library/forms-and-communications-portal" mode="update"/>
     <filter root="/content/core-components-examples/library/adaptive-form" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/structure/jcr:content/root/sidebar/accordion"  mode="update"/>
