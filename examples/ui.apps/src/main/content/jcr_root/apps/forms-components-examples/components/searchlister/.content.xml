@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Search and Lister"
     sling:resourceSuperType="core/fd/components/formsportal/searchlister/v1/searchlister"
-    componentGroup="Core Components Examples"/>
+    componentGroup="Core Components Examples - Forms And Communications Portal"/>

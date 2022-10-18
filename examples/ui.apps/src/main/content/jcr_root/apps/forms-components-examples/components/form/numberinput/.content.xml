@@ -4,4 +4,4 @@
           jcr:primaryType="cq:Component"
           jcr:title="Adaptive Form Number Input"
           sling:resourceSuperType="core/fd/components/form/numberinput/v1/numberinput"
-          componentGroup="Core Components Examples"/>
+          componentGroup="Core Components Examples - Adaptive Form"/>

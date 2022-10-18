@@ -4,4 +4,4 @@
   jcr:title="Adaptive Form Button"
   jcr:description="Add an interactive button for invoking an action such as Save, Reset, Submit, or navigate a form."
   sling:resourceSuperType="core/fd/components/form/button/v1/button"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>
