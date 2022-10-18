@@ -33,7 +33,9 @@
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
 
- <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
+<div class="cmp-tabs__tablist-container">
+  <button class="cmp-tabs__left-header-arrow" type="button"></button>
+  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
      role="tablist"
      class="cmp-tabs__tablist"
@@ -47,7 +49,9 @@
          aria-controls="${tab.id}-tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
          data-cmp-hook-adaptiveFormTabs="tab">${tab.title}</li>
- </ol>
+  </ol>
+  <button class="cmp-tabs__right-header-arrow" type="button"></button>
+</div>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"
       id="${item.id}-tabpanel"

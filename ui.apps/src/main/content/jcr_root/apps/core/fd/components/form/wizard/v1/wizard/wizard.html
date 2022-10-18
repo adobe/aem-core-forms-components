@@ -37,6 +37,7 @@
 
         <div
             class="cmp-adaptiveform-wizard__tabs-container">
+            <button class="cmp-adaptiveform-wizard__left-header-arrow" type="button"></button>
             <ol id="${wizard.id}_guide-item-nav-container"
                 class="cmp-adaptiveform-wizard__tabList"
                 role="tablist"
@@ -44,13 +45,14 @@
                     <li id="${wizardItem.id}_wizard-item-nav"
                         title="${wizardItem.label.value}"
                         role="tab"
-                        class="cmp-adaptiveform-wizard__tab"
+                        class="cmp-adaptiveform-wizard__tab cmp-adaptiveform-wizard__tab-${wizard.items.size > 3 ? '4' : wizard.items.size}"
                         aria-controls="${wizardItem.id}_guide-item"
                         tabindex="0"
                         data-cmp-hook-adaptiveFormWizard="tab">
                         ${wizardItem.label.value}
                     </li>
             </ol>
+            <button class="cmp-adaptiveform-wizard__right-header-arrow" type="button"></button>
         </div>
 
         <div

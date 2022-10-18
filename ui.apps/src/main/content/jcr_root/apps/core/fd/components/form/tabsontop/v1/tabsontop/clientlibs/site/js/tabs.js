@@ -41,7 +41,10 @@
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
-            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`
+            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
+            tabList: `.${Tabs.bemBlock}__tablist`,
+            leftHeaderArrow: `.${Tabs.bemBlock}__left-header-arrow`,
+            rightHeaderArrow: `.${Tabs.bemBlock}__right-header-arrow`
         };
 
         constructor(params) {
@@ -51,6 +54,7 @@
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.#refreshActive();
             this.#bindEvents();
+            this.#checkTabWidth();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
                  * Editor message handling:
@@ -129,6 +133,36 @@
         getQuestionMarkDiv() {
             return this.element.querySelector(Tabs.selectors.qm);
         }
+        getLeftHeaderArrow() {
+          return this.element.querySelector(Tabs.selectors.leftHeaderArrow);
+        }
+        getRightHeaderArrow() {
+          return this.element.querySelector(Tabs.selectors.rightHeaderArrow);
+        }
+        getTabList() {
+          return this.element.querySelector(Tabs.selectors.tabList);
+        }
+        #checkTabWidth() {
+          const tabContainer = this.getTabList();
+          if(tabContainer.scrollWidth > tabContainer.offsetWidth + 50){
+            this.getRightHeaderArrow().style.visibility = 'visible';
+          }
+        }
+        #leftHeaderArrowHandler() {
+          this.getTabList().scrollLeft -= 200;
+          this.getRightHeaderArrow().style.visibility = 'visible';
+          if(this.getTabList().scrollLeft === 0){
+            this.getLeftHeaderArrow().style.visibility = 'hidden';
+          }
+        }
+        #rightHeaderArrowHandler() {
+          this.getTabList().scrollLeft += 200;
+          this.getLeftHeaderArrow().style.visibility = 'visible';
+          const tabContainer = this.getTabList();
+          if(tabContainer.scrollLeft + tabContainer.offsetWidth >= tabContainer.scrollWidth){
+            this.getRightHeaderArrow().style.visibility = 'hidden';
+          }
+        }
 
         /**
          * Binds Tabs event handling
@@ -138,8 +172,8 @@
         #bindEvents() {
             var tabs = this._elements["tab"];
             if (tabs) {
+                var _self = this;
                 for (var i = 0; i < tabs.length; i++) {
-                    var _self = this;
                     (function(index){
                         tabs[index].addEventListener("click", function(event) {
                             _self.#navigateAndFocusTab(index);
@@ -150,6 +184,13 @@
                         _self.#onKeyDown(event);
                     });
                 };
+
+                this.getLeftHeaderArrow().addEventListener("click", function (){
+                  _self.#leftHeaderArrowHandler();
+                })
+                this.getRightHeaderArrow().addEventListener("click", function (){
+                  _self.#rightHeaderArrowHandler();
+                })
             }
         }
 
