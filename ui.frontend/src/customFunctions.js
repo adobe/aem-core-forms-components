@@ -14,8 +14,35 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {FunctionRuntime, request} from '@aemforms/af-core'
+/**
+ *
+ * @param str {string} json string to convert custom function to object
+ * @return {object} JSON Object after parsing the string as json. In case of
+ * exceptions empty object is returned
+ */
+function toObject(str) {
+    try {
+        return JSON.parse(str);
+    }
+    catch (e) {
+        return {}
+    }
+}
 
-export const enableCSRF = () => {
-    FunctionRuntime.registerFunctions(window.Granite.csrf.request(request))
+/**
+ * prefixes the url with the context path
+ * @param url {string}
+ * @returns {string}
+ */
+function externalize(url) {
+    if (window?.Granite?.HTTP && typeof (window.Granite.HTTP.externalize === "function")) {
+        return window.Granite.HTTP.externalize(url);
+    } else {
+        return url;
+    }
+}
+
+export const customFunctions = {
+    toObject,
+    externalize
 }

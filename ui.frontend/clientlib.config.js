@@ -46,7 +46,7 @@ module.exports = {
       ...libsBaseConfig,
       name: 'core-forms-components-runtime-base',
       categories: ['core.forms.components.runtime.base'],
-      dependencies: ['core.forms.components.csrf'],
+      dependencies: ['granite.csrf.standalone.fetchsupport'],
       assets: {
         js: ['dist/main.js']
       }
