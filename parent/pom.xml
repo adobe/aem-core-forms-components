@@ -95,7 +95,7 @@
 
         <aem.java.version>8</aem.java.version>
 
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
@@ -1104,26 +1104,19 @@
                 Jar can be used as dependencies.
              -->
 
+            <dependency>
+                <groupId>com.adobe.aemfd</groupId>
+                <artifactId>aemfd-client-sdk</artifactId>
+                <version>6.0.772</version>
+            </dependency>
+
             <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
 
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>uber-jar</artifactId>
-                <version>6.4.0</version>
-                <classifier>apis</classifier>
+                <version>6.5.13</version>
                 <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.04.12.02-220401</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-sdk-api</artifactId>
-                <version>2022.2.6276.20220205T222203Z-220100</version>
             </dependency>
 
 

@@ -441,20 +441,15 @@
         <!-- the below order of dependencies is very critical -->
 
         <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-sdk-api</artifactId>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>aemfd-client-sdk</artifactId>
         </dependency>
+
+        <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <classifier>apis</classifier>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-sdk-api</artifactId>
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
