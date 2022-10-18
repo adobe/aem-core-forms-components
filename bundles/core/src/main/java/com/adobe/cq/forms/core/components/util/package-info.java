@@ -18,7 +18,8 @@
  * This package defines utility classes exposed by the Adobe Experience Manager Core Forms Components Bundle.
  * </p>
  */
-@Version("2.0.0")
+
+@Version("2.1.0")
 package com.adobe.cq.forms.core.components.util;
 
 import org.osgi.annotation.versioning.Version;

@@ -34,7 +34,7 @@ describe("Form with Number Input", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-        const value = state.value
+        const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -56,28 +56,64 @@ describe("Form with Number Input", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+            checkHTML(id, field.getModel().getState())
         });
     })
 
     it(" model's changes are reflected in the html ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const model = formContainer._model.getElement(id)
-        model.value = 23
-        checkHTML(model.id, model.getState()).then(() => {
-            model.visible = false
-            return checkHTML(model.id, model.getState())
-        }).then(() => {
-            model.enable = false
-            return checkHTML(model.id, model.getState())
-        })
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            model.value = 24
+            checkHTML(model.id, model.getState()).then(() => {
+                model.visible = false
+                return checkHTML(model.id, model.getState())
+            }).then(() => {
+                model.enabled = false
+                return checkHTML(model.id, model.getState())
+            })
+        });
     });
 
     it(" html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const model = formContainer._model.getElement(id)
         const input = 23
-        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-            expect(Number(model.getState().value)).to.equal(input)
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            if (model.visible && model.enabled) {
+                cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                    expect(Number(model.getState().value)).to.equal(input)
+                })
+            }
+        });
+    });
+
+    it(" non-number html changes are reflected in model ", () => {
+        const input = "$23"
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            let model = field.getModel();
+            if (model.visible && model.enabled) {
+                cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+                    expect(Number(model.getState().value)).to.equal(23)
+                })
+            }
+        });
+    });
+
+    it(" copy-paste html changes are reflected in model ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[2]
+        const model = formContainer._model.getElement(id)
+        model.enabled = true
+        let input = "$23" // in case of invalid input, copy paste does not work
+        cy.get(`#${id}`).find("input").clear().paste({pasteType: 'text/plain', pastePayload: `${input}`}).blur().then(x => {
+            expect(model.getState().value).to.equal("")
+            input = "23" // in case of valid input, paste works
+            cy.get(`#${id}`)
+                .find("input")
+                .clear()
+                .paste({pasteType: 'text/plain', pastePayload: `${input}`}) // dispatch paste event
+                .type(input) // typing explicitly since synthetic paste event does not affect document content
+                .blur().then(x => {
+                expect(Number(model.getState().value)).to.equal(Number(input));
+            })
         })
     });
 

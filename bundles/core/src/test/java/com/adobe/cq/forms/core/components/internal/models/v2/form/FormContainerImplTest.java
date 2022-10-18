@@ -111,13 +111,15 @@ public class FormContainerImplTest {
     @Test
     void testGetAction() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals("/a/b", formContainer.getMetaData().getAction());
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer
+            .getAction());
     }
 
     @Test
     void testGetDataUrl() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals("/c/d", formContainer.getMetaData().getDataUrl());
+        assertEquals("/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer
+            .getDataUrl());
     }
 
     @Test
@@ -181,6 +183,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
 }

@@ -18,6 +18,7 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-panelcontainer="${wcmmode.edit && 'accordion'}"
      data-sly-use.renderer="${'accordion.js'}"
+     data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
@@ -27,8 +28,13 @@
      class="cmp-accordion"
      data-cmp-is="accordion"
      data-cmp-single-expansion="true"
-     data-cmp-data-layer="${accordion.data.json}"
      data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
+    
+     <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+     <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+     <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+     <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
+    
     <div data-sly-test="${wcmaccordion.items.size > 0}"
          data-sly-repeat.item="${wcmaccordion.items}"
          class="cmp-accordion__item"
@@ -39,6 +45,7 @@
         <h3 class="cmp-accordion__header">
             <button id="${item.id}-button"
                     class="cmp-accordion__button${itemList.first ? ' cmp-accordion__button--expanded' : ''}"
+                    title="${accordion.tooltipVisible ? '' : accordion.tooltipText}"
                     aria-controls="${item.id}-panel"
                     type="button"
                     data-cmp-hook-accordion="button">
@@ -56,10 +63,6 @@
     </div>
     <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && wcmaccordion.items.size < 1}"></sly>
-
-    <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
-    <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}" data-sly-unwrap></div>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
         <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.wcm.components.accordion.v1'}"/>
     </sly>

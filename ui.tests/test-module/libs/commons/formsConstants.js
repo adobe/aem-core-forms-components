@@ -26,21 +26,26 @@ var formsConstants = {
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
+                "pageheader": "/apps/forms-components-examples/components/form/pageheader",
                 "accordion": "/apps/forms-components-examples/components/form/accordion",
                 "formtext": "/apps/forms-components-examples/components/form/text",
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
+                "tabsontop": "/apps/forms-components-examples/components/form/tabsontop",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
                 "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
                 "formimage": "/apps/forms-components-examples/components/form/image",
                 "formradiobutton": "/apps/forms-components-examples/components/form/radiobutton",
-                "formfileinput": "/apps/forms-components-examples/components/form/fileinput"
+                "formfileinput": "/apps/forms-components-examples/components/form/fileinput",
+                "wizard": "/apps/forms-components-examples/components/form/wizard",
+                "title": "/apps/forms-components-examples/components/form/title"
             }
         }
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
     FORM_EDITOR_FORM_CONTAINER_SUFFIX : "/jcr:content/guideContainer",
+    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/parsys1",
     RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
     EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
     events : {

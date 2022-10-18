@@ -64,10 +64,14 @@ public final class FormConstants {
     /** The resource type for panel v1 */
     public static final String RT_FD_FORM_PANEL_V1 = RT_FD_FORM_PREFIX + "panel/v1/panel";
 
+    public static final String RT_FD_FORM_WIZARD_V1 = RT_FD_FORM_PREFIX + "wizard/v1/wizard";
+
     /** The resource type for text v1 */
     public static final String RT_FD_FORM_TEXT_DRAW_V1 = RT_FD_FORM_PREFIX + "text/v1/text";
 
     public static final String RT_FD_FORM_PANEL_CONTAINER_V1 = RT_FD_FORM_PREFIX + "panelcontainer/v1/panelcontainer";
+
+    public static final String RT_FD_FORM_TABS_ON_TOP_V1 = RT_FD_FORM_PREFIX + "tabsontop/v1/tabsontop";
 
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
@@ -78,4 +82,6 @@ public final class FormConstants {
     /** The resource type for image v1 */
     public static final String RT_FD_FORM_IMAGE_V1 = RT_FD_FORM_PREFIX + "image/v1/image";
 
+    /** The resource type for title v1 */
+    public static final String RT_FD_FORM_TITLE_V1 = RT_FD_FORM_PREFIX + "title/v1/title";
 }

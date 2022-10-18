@@ -21,6 +21,9 @@
 .cmp-adaptiveform-textinput__widget {
 
 }
+textarea.cmp-adaptiveform-textinput__widget{
+  height: 80px;
+}
 
 .cmp-adaptiveform-textinput__label {
 

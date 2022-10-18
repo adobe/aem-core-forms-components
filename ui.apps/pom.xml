@@ -98,7 +98,7 @@
                         <dependency>
                             <group>adobe/cq60</group>
                             <name>core.wcm.components.content</name>
-                            <version>${core.wcm.components.version}</version>
+                            <version>(2.20.6, )</version>
                         </dependency>
                     </dependencies>
                 </configuration>
@@ -282,6 +282,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v1/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v2/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/tabsontop/v1/tabsontop/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </tasks>
                                 </configuration>
                                 <goals>

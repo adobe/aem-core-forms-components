@@ -46,6 +46,7 @@ import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -79,7 +80,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
         if (request != null && i18n == null) {
-            i18n = null; // GuideUtils.getI18n(request, resource);
+            i18n = GuideUtils.getI18n(request, resource);
         }
     }
 
@@ -258,8 +259,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getDataRef() {
         return dataRef;
     }
-
 }

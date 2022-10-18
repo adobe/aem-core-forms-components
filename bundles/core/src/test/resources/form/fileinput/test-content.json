@@ -13,7 +13,6 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "file",
     "maxFileSize" : "4MB",
     "accept" : ["audio/*", "video/*", "image/*"]
   },

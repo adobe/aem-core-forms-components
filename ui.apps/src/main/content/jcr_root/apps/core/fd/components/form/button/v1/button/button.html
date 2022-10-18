@@ -22,6 +22,8 @@
   value="${button.value}"
   id="${component.id}"
   class="cmp-button"
+  disabled="${!button.enabled}"
+  title="${button.tooltipVisible ? '' : button.tooltipText}"
   data-cmp-visible="${button.visible}"
   data-cmp-enabled="${button.enabled}"
   data-cmp-is="adaptiveFormButton"

@@ -20,10 +20,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.function.Function;
 
+import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 
+import org.apache.sling.api.request.RequestPathInfo;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
@@ -48,6 +51,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
 public class StaticImageGETServletTest {
@@ -169,6 +173,37 @@ public class StaticImageGETServletTest {
         Assertions.assertNull(tempImage);
     }
 
+    @Test
+    void testJsonExtension() throws ServletException, IOException {
+        MockSlingHttpServletResponse response = context.response();
+        RequestPathInfo mockRequestPathInfo = Mockito.mock(RequestPathInfo.class);
+        Mockito.when(mockRequestPathInfo.getExtension()).thenReturn("json");
+        Mockito.when(request.getRequestPathInfo()).thenReturn(mockRequestPathInfo);
+        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        Mockito.when(request.adaptTo(StaticImage.class)).thenReturn(staticImage);
+        staticImageGETServlet.doGet(request, response);
+        Assertions.assertEquals("application/json", response.getContentType());
+        Assertions.assertEquals(
+            "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}",
+            response.getOutputAsString());
+    }
+
+    @Test
+    void testNonJsonExtension() throws ServletException, IOException {
+        MockSlingHttpServletResponse response = context.response();
+        RequestPathInfo mockRequestPathInfo = Mockito.mock(RequestPathInfo.class);
+        Mockito.when(mockRequestPathInfo.getExtension()).thenReturn(null);
+        Mockito.when(request.getRequestPathInfo()).thenReturn(mockRequestPathInfo);
+        Node node = context.request().adaptTo(Node.class);
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.adaptTo(Node.class)).thenReturn(node);
+        Mockito.when(request.getResource()).thenReturn(resource);
+        StaticImageGETServlet spy = Mockito.spy(new StaticImageGETServlet());
+        spy.doGet(request, response);
+        // Assert
+        Mockito.verify(spy, times(1)).doGet(Mockito.any(), Mockito.any());
+    }
+
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, AbstractImageServlet.ImageContext.class,
             (Function<ResourceResolver, AbstractImageServlet.ImageContext>) input -> imageContext);
@@ -180,4 +215,9 @@ public class StaticImageGETServletTest {
         return request.adaptTo(StaticImage.class);
     }
 
+    private StaticImage getStaticImageUnderTest(String resourcePath) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        return request.adaptTo(StaticImage.class);
+    }
 }
