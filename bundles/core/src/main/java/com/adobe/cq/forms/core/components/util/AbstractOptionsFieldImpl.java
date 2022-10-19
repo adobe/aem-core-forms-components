@@ -15,7 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.Arrays;
+
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -61,8 +62,14 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @Override
     public String[] getEnumNames() {
-        // may expose internal representation of mutable object, hence cloning
-        return ArrayUtils.clone(enumNames);
+        if (enumNames != null) {
+            return Arrays.stream(enumNames)
+                .map(p -> {
+                    return this.translate("enumNames", p);
+                })
+                .toArray(String[]::new);
+        }
+        return null;
     }
 
     @Override
