@@ -17,14 +17,37 @@
 (function() {
 
     "use strict";
-    class FormContainerV2 extends FormView.FormContainer {
-
-    }
     const NS = "cmp";
     const IS = "adaptiveFormContainer";
     const selectors = {
         self: "[data-" + NS + '-is="' + IS + '"]'
     };
+
+    class FormContainerV2 extends FormView.FormContainer {
+        // todo: handle localization here
+        static ERROR_MSG = "Encountered an internal error while submitting the form."
+        constructor(params) {
+            super(params);
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                if (action.payload) {
+                    if (action.payload.redirectUrl) {
+                        window.location.href = action.payload.redirectUrl;
+                    } else if (action.payload.thankYouMessage) {
+                        let formContainerElement = document.querySelector(selectors.self);
+                        let thankYouMessage = document.createElement("div");
+                        thankYouMessage.setAttribute("class", "tyMessage");
+                        thankYouMessage.textContent = action.payload.thankYouMessage;
+                        formContainerElement.replaceWith(thankYouMessage);
+                    }
+                }
+            }, "submitSuccess");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                window.alert(FormContainerV2.ERROR_MSG);
+            }, "submitError");
+        }
+    }
 
     async function onDocumentReady() {
         const formContainer = FormView.Utils.setupFormContainer(({
