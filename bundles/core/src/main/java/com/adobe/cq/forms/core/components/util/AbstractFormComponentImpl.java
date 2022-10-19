@@ -44,7 +44,6 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.i18n.I18n;
-import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -237,14 +236,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Nullable
     protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
-        // if author mode return the property value
-        boolean editMode = true;
-        if (request != null) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
-        }
-        if (editMode) {
-            return propertyValue;
-        }
         if (StringUtils.isBlank(propertyValue)) {
             return null;
         }
