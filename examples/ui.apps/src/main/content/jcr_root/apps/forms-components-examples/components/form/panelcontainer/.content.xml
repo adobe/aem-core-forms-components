@@ -4,4 +4,4 @@
   jcr:title="Adaptive Form Panel"
   jcr:description="Add a panel to an Adaptive Form."
   sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>

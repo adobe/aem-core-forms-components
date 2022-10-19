@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Link"
     sling:resourceSuperType="core/fd/components/formsportal/link/v2/link"
-    componentGroup="Core Components Examples"/>
+    componentGroup="Core Components Examples - Forms And Communications Portal"/>

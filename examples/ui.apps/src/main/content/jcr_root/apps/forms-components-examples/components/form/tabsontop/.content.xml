@@ -4,4 +4,4 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Horizontal Tabs"
   sling:resourceSuperType="core/fd/components/form/tabsontop/v1/tabsontop"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>
