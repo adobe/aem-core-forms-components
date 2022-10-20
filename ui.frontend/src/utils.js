@@ -176,6 +176,7 @@ export default class Utils {
                 let _prefillData = {};
                 if (_form) {
                     _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params) || {};
+                    _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path);
                 console.debug("fetched model json", _formJson);
@@ -188,5 +189,23 @@ export default class Utils {
                 document.dispatchEvent(event);
             }
         }
+    }
+
+    /**
+     * for backward compatibility with older data formats of prefill services like FDM
+     * @param prefillJson
+     * @returns {{data}|*}
+     */
+    static stripIfWrapped(prefillJson) {
+        if (prefillJson && prefillJson.hasOwnProperty("data")) {
+            const data = prefillJson.data;
+            if (data && data.hasOwnProperty("afData")) {
+                const afData = data.afData;
+                if (afData && afData.hasOwnProperty("afBoundData")) {
+                    return afData.afBoundData;
+                }
+            }
+        }
+        return prefillJson;
     }
 }

@@ -28,3 +28,26 @@ test('readData test', () => {
     let result = Utils.readData(element, "cmp");
     expect(result.formcontainer).toBe(expected.formcontainer);
 });
+
+test('strip wrapped prefill json test', () => {
+    let prefillJson = {
+        "data": {
+            "afData": {
+                "afBoundData": {
+                    "data": {
+                        "Pet": {
+                            "name": "ex cu_updated",
+                            "id": 100
+                        }
+                    }
+                },
+                "afUnboundData": {
+                    "data": {}
+                }
+            }
+        }
+    }
+    let expected = prefillJson.data.afData.afBoundData;
+    let result = Utils.stripIfWrapped(prefillJson);
+    expect(result).toBe(expected);
+});
