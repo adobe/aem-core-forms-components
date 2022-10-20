@@ -23,6 +23,15 @@
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
+    function changeTypeProperty(component, fileinputType){
+        if (component.checked){
+            fileinputType.attributes.value.value="file[]";
+        }
+        else {
+            fileinputType.attributes.value.value="file";
+        }
+    }
+
     /**
      * Toggles the addition of multi selection, value of type on the checked state of
      * the multiSelection checkbox
@@ -43,15 +52,9 @@
         hideAndShowElements();
         component.on("change", function() {
             hideAndShowElements();
+            changeTypeProperty(component, fileinputType);
         });
-
-        if(component.checked){
-           fileinputType.attributes.value.value="file[]";
-         }
-        else{
-           fileinputType.attributes.value.value="file";
-         }
-
+        changeTypeProperty(component, fileinputType);
     }
     Utils.initializeEditDialog(EDIT_DIALOG)(handleMultiSelection);
 
