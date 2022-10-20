@@ -4,4 +4,4 @@
   jcr:title="Adaptive Form Drop-down List"
   jcr:description="Add a drop-down list to select one of the available options."
   sling:resourceSuperType="core/fd/components/form/dropdown/v1/dropdown"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>

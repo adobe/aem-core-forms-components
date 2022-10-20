@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral) {
+(function($, ns, channel, Coral) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-base__editdialogbasic",
@@ -23,7 +23,8 @@
         BASE_ENABLED = ".cmp-adaptiveform-base__enabled",
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
-        BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext";
+        BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
+        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef";
 
 
     /**
@@ -65,6 +66,33 @@
             baseVisible.disabled = baseEnabled.disabled = baseRequired.checked;
         }
     }
+
+    function showHideDoRBindRefField(dialog) {
+        var dorBindRef = document.querySelectorAll('[name="./dorBindRef"]'),
+            guideContainer = getGuideContainerProperties();
+        if (guideContainer != null && guideContainer != "") {
+            var item = JSON.parse(guideContainer),
+                dorTemplateType = item['fd:formtype'];
+        }
+        if ($(dorBindRef) && $(dorBindRef).parent() && $(dorBindRef).parent().parent()) {
+            checkAndDisplay($(dorBindRef).parent().parent(), "acroform", dorTemplateType);
+        }
+    }
+
+    function getGuideContainerProperties() {
+        var formPath = getFormPath(ns.ContentFrame.getContentPath());
+        var result = $.ajax({
+            type: 'GET',
+            async: false,
+            url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".1.json"),
+            cache: false
+        });
+        return result.responseText;
+    }
+
+    var getFormPath = function(contentPath) {
+            return contentPath.replace(Granite.HTTP.getContextPath(), "");
+        }
 
     function handleAssistPriority(dialog) {
         var baseAssistPriority = dialog.find(BASE_ASSISTPRIORITY)[0];
@@ -110,6 +138,7 @@
         }
         handleAssistPriority(dialog);
         prefillEnumNames(dialog);
+        showHideDoRBindRefField(dialog);
     }
 
     channel.on("foundation-contentloaded", function(e) {
@@ -120,4 +149,4 @@
         }
     });
 
-})(jQuery, jQuery(document), Coral);
+})(jQuery, Granite.author, jQuery(document), Coral);

@@ -109,4 +109,11 @@ public class ButtonImplTest {
         Mockito.when(buttonMock.getTooltip()).thenCallRealMethod();
         assertEquals(null, buttonMock.getTooltip());
     }
+
+    @Test
+    void testGetDoRProperties() {
+        Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
+        assertEquals(true, button.getDorProperties().get("dorExclusion"));
+        assertEquals(null, button.getDorProperties().get("dorColspan"));
+    }
 }

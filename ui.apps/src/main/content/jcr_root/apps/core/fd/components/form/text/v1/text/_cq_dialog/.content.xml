@@ -49,6 +49,9 @@
                             <enabled-typehint
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
+                            <dorBindref
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
                         </items>
                     </basic>
                     <help

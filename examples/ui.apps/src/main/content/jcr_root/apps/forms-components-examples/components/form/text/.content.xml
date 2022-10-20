@@ -5,4 +5,4 @@
           jcr:title="Adaptive Form Text"
           jcr:description="Add this field for adding text"
           sling:resourceSuperType="core/fd/components/form/text/v1/text"
-          componentGroup="Core Components Examples"/>
+          componentGroup="Core Components Examples - Adaptive Form"/>
