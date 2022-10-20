@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral) {
+(function($, ns, channel, Coral) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-base__editdialogbasic",
@@ -69,20 +69,30 @@
 
     function showHideDoRBindRefField(dialog) {
         var dorBindRef = document.querySelectorAll('[name="./dorBindRef"]'),
-            formPath = dialog.find('.foundation-form').data('cq-dialog-pageeditor').replace("/editor.html", "").replace(".html", "");
+            guideContainer = getGuideContainerProperties();
+        if (guideContainer != null && guideContainer != "") {
+            var item = JSON.parse(guideContainer),
+                dorTemplateType = item.guideContainer['fd:formtype'];
+        }
+        if ($(dorBindRef) && $(dorBindRef).parent() && $(dorBindRef).parent().parent()) {
+            checkAndDisplay($(dorBindRef).parent().parent(), "acroform", dorTemplateType);
+        }
+    }
 
+    function getGuideContainerProperties() {
+        var formPath = getFormPath(ns.ContentFrame.getContentPath());
         var result = $.ajax({
             type: 'GET',
             async: false,
             url: Granite.HTTP.externalize((formPath + "/jcr:content") + ".1.json"),
             cache: false
         });
-        if (result.responseText != null && result.responseText != "") {
-            var item = JSON.parse(result.responseText),
-                dorTemplateType = item.guideContainer['fd:formtype'];
-        }
-        checkAndDisplay($(dorBindRef).parent().parent(), "acroform", dorTemplateType);
+        return result.responseText;
     }
+
+    var getFormPath = function(contentPath) {
+            return contentPath.replace(Granite.HTTP.getContextPath(), "");
+        }
 
     function handleAssistPriority(dialog) {
         var baseAssistPriority = dialog.find(BASE_ASSISTPRIORITY)[0];
@@ -139,4 +149,4 @@
         }
     });
 
-})(jQuery, jQuery(document), Coral);
+})(jQuery, Granite.author, jQuery(document), Coral);
