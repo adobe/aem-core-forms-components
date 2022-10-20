@@ -113,6 +113,16 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String dorColspan;
 
+    /**
+     * Returns dorBindRef of the form field
+     *
+     * @return dorBindRef of the field
+     * @since com.adobe.cq.forms.core.components.util 2.1.0
+     */
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
+    @Nullable
+    protected String dorBindRef;
+
     @SlingObject
     private Resource resource;
 
@@ -173,6 +183,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         customDorProperties.put("dorExclusion", dorExclusion);
         if (dorColspan != null) {
             customDorProperties.put("dorColspan", dorColspan);
+        }
+        if (dorBindRef != null) {
+            customDorProperties.put("dorBindRef", dorBindRef);
         }
         return customDorProperties;
     }

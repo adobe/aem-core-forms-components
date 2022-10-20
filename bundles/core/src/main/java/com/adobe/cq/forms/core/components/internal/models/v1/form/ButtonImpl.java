@@ -15,10 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -29,6 +33,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Button;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -62,5 +67,24 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Override
     public String getDefault() {
         return defaultValue;
+    }
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @org.jetbrains.annotations.Nullable
+    protected String dorColspan;
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
+        return customDorProperties;
     }
 }
