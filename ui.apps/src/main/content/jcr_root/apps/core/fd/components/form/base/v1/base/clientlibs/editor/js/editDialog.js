@@ -72,7 +72,7 @@
             guideContainer = getGuideContainerProperties();
         if (guideContainer != null && guideContainer != "") {
             var item = JSON.parse(guideContainer),
-                dorTemplateType = item.guideContainer['fd:formtype'];
+                dorTemplateType = item['fd:formtype'];
         }
         if ($(dorBindRef) && $(dorBindRef).parent() && $(dorBindRef).parent().parent()) {
             checkAndDisplay($(dorBindRef).parent().parent(), "acroform", dorTemplateType);
@@ -84,7 +84,7 @@
         var result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize((formPath + "/jcr:content") + ".1.json"),
+            url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".1.json"),
             cache: false
         });
         return result.responseText;

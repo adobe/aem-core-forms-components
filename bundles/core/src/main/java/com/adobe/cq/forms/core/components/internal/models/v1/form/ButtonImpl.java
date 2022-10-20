@@ -69,11 +69,11 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
         return defaultValue;
     }
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @org.jetbrains.annotations.Nullable
     protected String dorColspan;
 

@@ -121,10 +121,6 @@
                                     fieldDescription="You can specify a Document of Record Bind Reference to link an adaptive form field with a document of record field. When you fill any value in the linked field of an adaptive form, the value is also displayed in the linked field of the corresponding document of a record."
                                     fieldLabel="Document of Record Bind Reference"
                                     name="./dorBindRef"/>
-                                <granite:data
-                                        jcr:primaryType="nt:unstructured"
-                                        node-dor-bindref-validation=""
-                                        bindref-datamodel="fd.channelcore.dataObjectsTree.getDoRDataModel"/>
                             <visible
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
