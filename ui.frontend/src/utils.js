@@ -16,7 +16,8 @@
 
 import {Constants} from "./constants";
 import HTTPAPILayer from "./HTTPAPILayer";
-
+import {customFunctions} from "./customFunctions";
+import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
     /**
@@ -160,6 +161,7 @@ export default class Utils {
      * @param formContainerSelector
      */
     static async setupFormContainer(createFormContainer, formContainerSelector, formContainerClass) {
+        FunctionRuntime.registerFunctions(customFunctions)
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);

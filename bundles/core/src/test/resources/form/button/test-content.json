@@ -2,6 +2,7 @@
   "button" : {
     "id": "button-112233",
     "jcr:primaryType": "nt:unstructured",
+    "dorExclusion": true,
     "sling:resourceType" : "core/fd/components/form/button/v1/button",
     "name" : "test-button",
     "jcr:title" : "test-button",

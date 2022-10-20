@@ -3,4 +3,4 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Title"
   sling:resourceSuperType="core/fd/components/form/title/v1/title"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>

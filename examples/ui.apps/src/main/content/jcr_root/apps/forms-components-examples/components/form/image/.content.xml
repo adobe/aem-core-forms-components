@@ -5,4 +5,4 @@
     jcr:title="Adaptive Form Image"
     jcr:description="Embed an image from assets or from filesystem."
     sling:resourceSuperType="core/fd/components/form/image/v1/image"
-    componentGroup="Core Components Examples"/>
+    componentGroup="Core Components Examples - Adaptive Form"/>

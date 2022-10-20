@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Drafts and submissions"
     sling:resourceSuperType="core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions"
-    componentGroup="Core Components Examples"/>
+    componentGroup="Core Components Examples - Forms And Communications Portal"/>

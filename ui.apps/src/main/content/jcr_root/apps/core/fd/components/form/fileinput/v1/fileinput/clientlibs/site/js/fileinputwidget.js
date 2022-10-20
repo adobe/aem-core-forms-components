@@ -363,8 +363,10 @@ class FileInputWidget {
 
     setValue(value) {
         let isValueSame = false;
-        // change to array since we store array internally
-        value = Array.isArray(value) ? value : [value];
+        if (value != null) {
+            // change to array since we store array internally
+            value = Array.isArray(value) ? value : [value];
+        }
         // check if current values and new values are same
         if (this.#fileArr != null && value != null) {
             isValueSame = JSON.stringify(FormView.FileAttachmentUtils.extractFileInfo(this.#fileArr)) === JSON.stringify(value);

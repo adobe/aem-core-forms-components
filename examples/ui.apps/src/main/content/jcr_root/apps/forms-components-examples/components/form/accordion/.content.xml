@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Accordion"
     sling:resourceSuperType="core/fd/components/form/accordion/v1/accordion"
-    componentGroup="Core Components Examples"/>
+    componentGroup="Core Components Examples - Adaptive Form"/>

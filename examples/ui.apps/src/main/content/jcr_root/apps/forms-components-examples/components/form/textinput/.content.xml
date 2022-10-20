@@ -4,4 +4,4 @@
   jcr:title="Adaptive Form Text Box"
   jcr:description="Add a field to capture text strings."
   sling:resourceSuperType="core/fd/components/form/textinput/v1/textinput"
-  componentGroup="Core Components Examples"/>
+  componentGroup="Core Components Examples - Adaptive Form"/>

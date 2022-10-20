@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -53,6 +54,11 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String dorType;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    @Named("fd:formtype")
+    protected String dorTemplateType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
     @Nullable
