@@ -14,7 +14,8 @@
     },
     "fd:dor": {
       "dorExclusion":true,
-      "dorColspan": "4"
+      "dorColspan": "4",
+      "dorBindRef" : "Text1"
     }
   },
   "default" : "abc",

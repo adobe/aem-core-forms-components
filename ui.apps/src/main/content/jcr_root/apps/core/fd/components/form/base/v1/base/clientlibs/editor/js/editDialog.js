@@ -23,7 +23,8 @@
         BASE_ENABLED = ".cmp-adaptiveform-base__enabled",
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
-        BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext";
+        BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
+        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef";
 
 
     /**
@@ -64,6 +65,23 @@
         if (baseVisible && baseEnabled && baseRequired) {
             baseVisible.disabled = baseEnabled.disabled = baseRequired.checked;
         }
+    }
+
+    function showHideDoRBindRefField(dialog) {
+        var dorBindRef = document.querySelectorAll('[name="./dorBindRef"]'),
+            formPath = dialog.find('.foundation-form').data('cq-dialog-pageeditor').replace("/editor.html", "").replace(".html", "");
+
+        var result = $.ajax({
+            type: 'GET',
+            async: false,
+            url: Granite.HTTP.externalize((formPath + "/jcr:content") + ".1.json"),
+            cache: false
+        });
+        if (result.responseText != null && result.responseText != "") {
+            var item = JSON.parse(result.responseText),
+                dorTemplateType = item.guideContainer['fd:formtype'];
+        }
+        checkAndDisplay($(dorBindRef).parent().parent(), "acroform", dorTemplateType);
     }
 
     function handleAssistPriority(dialog) {
@@ -110,6 +128,7 @@
         }
         handleAssistPriority(dialog);
         prefillEnumNames(dialog);
+        showHideDoRBindRefField(dialog);
     }
 
     channel.on("foundation-contentloaded", function(e) {
