@@ -79,6 +79,10 @@
         }
 
         _updateValue(value) {
+            // value is set to null for clearing the dropdown.
+            if(value === null) {
+                $('option:selected', this.widget).removeAttr('selected');
+            }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
                     if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
