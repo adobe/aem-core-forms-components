@@ -55,8 +55,8 @@ describe('Page - Authoring', function () {
     .should("exist");
     cy.get("[name='./jcr:title']")
     .should("exist");
-    // cy.get("[name='./layout']")
-    // .should("exist");
+    cy.get("[name='./layout']")
+    .should("exist");
     cy.get("[name='./dataRef']")
         .should("exist");
     cy.get("[name='./visible']")
