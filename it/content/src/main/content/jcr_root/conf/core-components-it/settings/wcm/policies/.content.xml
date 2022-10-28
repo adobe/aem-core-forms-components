@@ -56,6 +56,18 @@
                             jcr:primaryType="nt:unstructured"/>
                     </default>
                 </container>
+                <panelcontainer jcr:primaryType="nt:unstructured">
+                    <default
+                        jcr:lastModified="{Date}2022-10-28T07:17:05.798Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="panelcontainer-policy"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        layout="responsiveGrid"
+                        layoutDisabled="true">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </panelcontainer>
             </form>
             <page jcr:primaryType="nt:unstructured">
                 <default
