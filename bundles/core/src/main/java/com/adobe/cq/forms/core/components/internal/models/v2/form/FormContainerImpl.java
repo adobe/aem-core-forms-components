@@ -50,12 +50,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
-    private static String DOR_TYPE = "dorType";
-    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
+    private static final String DOR_TYPE = "dorType";
+    private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
 
-    private static String DOR_TEMPLATE_TYPE = "dorTemplateType";
-    private static String FD_SCHEMA_TYPE = "fd:schemaType";
-    private static String FD_SCHEMA_REF = "fd:schemaRef";
+    private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
+    private static final String FD_SCHEMA_TYPE = "fd:schemaType";
+    private static final String FD_SCHEMA_REF = "fd:schemaRef";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -136,6 +136,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements
             return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public String getId() {
+        if (getCurrentPage() != null) {
+            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+        } else {
+            return super.getId();
         }
     }
 
