@@ -62,12 +62,13 @@
 
         <sly data-sly-repeat.child="${resource.listChildren}">
             <div
-                data-sly-test="${!('fd:' in child.name)}"
-                role="tabpanel"
-                class="cmp-adaptiveform-wizard__wizardpanel"
-                aria-labelledby="${child.name}_wizard-item-nav"
-                data-cmp-hook-adaptiveFormWizard="wizardpanel">
-                <sly data-sly-resource="${child.name}">
+                    data-sly-use.stringStartsWithUtil="${'../../../../commons/v1/sightlyUtils/stringStartsWithUtil.js' @ outerString=child.name,stringToSearch='fd:'}"
+                    data-sly-test="${!(stringStartsWithUtil.startsWith)}"
+                    role="tabpanel"
+                    class="cmp-adaptiveform-wizard__wizardpanel"
+                    aria-labelledby="${child.name}_wizard-item-nav"
+                    data-cmp-hook-adaptiveFormWizard="wizardpanel">
+                <sly data-sly-resource="${child.path}">
                 </sly>
             </div>
         </sly>
