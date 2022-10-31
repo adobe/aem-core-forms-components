@@ -1,0 +1,9 @@
+{
+    "separator": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Separator",
+        "name" : "abc",
+        "id": "abc",
+        "sling:resourceType": "core/fd/components/form/separator/v1/separator"
+    }
+}
