@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.context;
 
+import org.apache.sling.caconfig.ConfigurationResolver;
+import org.apache.sling.caconfig.impl.ConfigurationResolverImpl;
 import org.apache.sling.models.impl.ResourceTypeBasedResourcePicker;
 import org.apache.sling.models.spi.ImplementationPicker;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
@@ -41,6 +43,7 @@ public final class FormsCoreComponentTestContext {
                 context.addModelsForClasses(MockResponsiveGrid.class);
                 context.addModelsForPackage("com.adobe.cq.forms.core.components.models");
                 context.registerService(ImplementationPicker.class, new ResourceTypeBasedResourcePicker());
+                context.registerService(ConfigurationResolver.class, new ConfigurationResolverImpl());
             }).build();
     }
 }
