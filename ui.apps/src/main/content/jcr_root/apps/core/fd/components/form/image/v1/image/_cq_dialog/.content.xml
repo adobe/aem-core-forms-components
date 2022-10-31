@@ -53,6 +53,12 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldLabel="Alternate Text"
                                     name="./altText"/>
+                            <enabled
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
+                            <enabled-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"/>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"
