@@ -50,10 +50,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
-    private static String DOR_TYPE = "dorType";
-    private static String DOR_TEMPLATE_REF = "dorTemplateRef";
-    private static String FD_SCHEMA_TYPE = "fd:schemaType";
-    private static String FD_SCHEMA_REF = "fd:schemaRef";
+    private static final String DOR_TYPE = "dorType";
+    private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
+
+    private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
+    private static final String FD_SCHEMA_TYPE = "fd:schemaType";
+    private static final String FD_SCHEMA_REF = "fd:schemaRef";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -138,6 +140,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @Override
+    public String getId() {
+        if (getCurrentPage() != null) {
+            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+        } else {
+            return super.getId();
+        }
+    }
+
+    @Override
     public String getAction() {
         if (getCurrentPage() != null) {
             return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
@@ -188,6 +199,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         }
         if (dorTemplateRef != null) {
             customDorProperties.put(DOR_TEMPLATE_REF, dorTemplateRef);
+        }
+        if (dorTemplateType != null) {
+            customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
         return customDorProperties;
     }
