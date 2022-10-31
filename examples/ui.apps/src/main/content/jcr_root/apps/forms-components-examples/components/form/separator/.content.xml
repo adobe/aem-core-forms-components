@@ -5,4 +5,4 @@
           jcr:primaryType="cq:Component"
           jcr:title="Adaptive Form Separator"
           sling:resourceSuperType="core/fd/components/form/separator/v1/separator"
-          componentGroup="Core Components Examples"/>
+          componentGroup="Core Components Examples - Adaptive Form"/>
