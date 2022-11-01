@@ -21,6 +21,8 @@
         NUMERICINPUT_LEADDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__leaddigits",
         NUMERICINPUT_FRACDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__fracdigits",
         NUMERICINPUT_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__editFormat",
+        NUMERICINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displaypattern",
+        NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function handleTypeDropdown(dialog) {
@@ -91,5 +93,14 @@
             }
         }
     }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleTypeDropdown,handleDialogSubmit,handleDialogReadyForNumericInput);
+
+    function handleDisplayPatternDropDown(dialog) {
+        Utils.handleDisplayPatternDropDown(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
+    }
+
+    function handleDisplayFormat(dialog){
+        Utils.handleDisplayFormat(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleTypeDropdown,handleDialogSubmit,handleDialogReadyForNumericInput,handleDisplayPatternDropDown,handleDisplayFormat);
 })(jQuery);

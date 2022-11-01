@@ -104,6 +104,34 @@
                             jcr:title="Formats"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+                            <displayPatternGroup
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Display Format"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Display Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <displayPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displaypattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./displayPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                guideDataModel="basic"
+                                                fieldType="date-input"
+                                                type="formatters"/>
+                                    </displayPatternType>
+                                    <displayPictureClause
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displayformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Format"
+                                            name="./displayFormat">
+                                    </displayPictureClause>
+                                </items>
+                            </displayPatternGroup>
                             <dataFormat
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

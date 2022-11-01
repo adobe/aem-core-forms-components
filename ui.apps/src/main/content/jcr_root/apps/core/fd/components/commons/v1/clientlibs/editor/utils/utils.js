@@ -161,6 +161,51 @@
             };
         }
 
+        static handleDisplayPatternDropDown(dialog,displayPatternClass,displayFormatClass) {
+            var displayPatternComponent = dialog.find(displayPatternClass)[0];
+            var displayFormatComponent = dialog.find(displayFormatClass)[0];
+            _manageDisplayPatternDynamicBehaviour();
+            displayPatternComponent.addEventListener("change", _manageDisplayPatternDynamicBehaviour );
+            function _manageDisplayPatternDynamicBehaviour() {
+                var displayPatternSelectedValue = displayPatternComponent.selectedItem.innerHTML;
+                var displayFormatParentDiv=displayFormatComponent.closest("div");
+                switch (displayPatternSelectedValue) {
+                    case "Select"     :
+                    case "No Pattern" :
+                        displayFormatParentDiv.setAttribute("hidden", true);
+                        break;
+                    default           :
+                        displayFormatParentDiv.removeAttribute("hidden");
+                }
+                if(displayPatternSelectedValue!="Custom") {
+                    displayFormatComponent.value = displayPatternComponent.value;
+                }
+            }
+        }
+
+        static handleDisplayFormat(dialog,displayPatternClass,displayFormatClass){
+
+            var displayPatternComponent = dialog.find(displayPatternClass)[0];
+            var displayFormatComponent = dialog.find(displayFormatClass)[0];
+            _manageDisplayFormatChange()
+            displayFormatComponent.addEventListener("change", _manageDisplayFormatChange );
+            function _manageDisplayFormatChange(){
+                var itemFound=false;
+                if(displayFormatComponent.value!=displayPatternComponent.value){
+                    displayPatternComponent.items.getAll().forEach(function (item) {
+                        if (item.value == displayFormatComponent.value) {
+                            item.selected = true;
+                            itemFound = true;
+                        }
+                    });
+                    if(!itemFound){
+                        displayPatternComponent.value="custom";
+                    }
+                }
+
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

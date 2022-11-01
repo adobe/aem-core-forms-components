@@ -59,29 +59,7 @@
                                     defaultValue=""
                                     fieldLabel="Default Value"
                                     name="./default"/>
-                            <leadDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__leaddigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Lead digits">
-                            </leadDigits>
-                            <fracDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__fracdigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Frac digits">
-                            </fracDigits>
-                            <editFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__editFormat"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    granite:hidden="{Boolean}true"
-                                    text="Edit Format"
-                                    name="./editFormat">
-                            </editFormat>
-                        </items>
+                            </items>
                     </basic>
                     <validation
                             jcr:primaryType="nt:unstructured"
@@ -130,9 +108,66 @@
                     </validation>
                     <patterns
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
+                            jcr:title="Formats"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+                            <displayPatternGroup
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Display Format"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Display Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <displayPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-numberinput__displaypattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./displayPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                guideDataModel="basic"
+                                                fieldType="number-input"
+                                                type="formatters"/>
+                                    </displayPatternType>
+                                    <displayPictureClause
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-numberinput__displayformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Format"
+                                            name="./displayFormat">
+                                    </displayPictureClause>
+                                </items>
+                            </displayPatternGroup>
+                            <dataFormat
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="The format in which the value will be exported or submitted"
+                                    fieldLabel="Data Format"
+                                    name="./dataFormat">
+                            </dataFormat>
+                            <leadDigits
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__leaddigits"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Lead digits">
+                            </leadDigits>
+                            <fracDigits
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__fracdigits"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Frac digits">
+                            </fracDigits>
+                            <editFormat
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__editFormat"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    granite:hidden="{Boolean}true"
+                                    text="Edit Format"
+                                    name="./editFormat">
+                            </editFormat>
                         </items>
                     </patterns>
                     <help

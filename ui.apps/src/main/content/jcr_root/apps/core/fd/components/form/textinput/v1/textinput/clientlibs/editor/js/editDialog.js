@@ -25,6 +25,8 @@
         TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
         TEXTINPUT_AUTOCOMPLETE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autocomplete",
         TEXTINPUT_AUTOFILL_FIELD_KEYWORD = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autofillfieldkeyword",
+        TEXTINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displaypattern",
+        TEXTINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displayformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -67,6 +69,14 @@
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText);
+    function handleDisplayPatternDropDown(dialog) {
+        Utils.handleDisplayPatternDropDown(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
+    }
+
+    function handleDisplayFormat(dialog){
+        Utils.handleDisplayFormat(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleDisplayPatternDropDown,handleDisplayFormat);
 
 })(jQuery);
