@@ -78,15 +78,25 @@
             return String(value) === optionValue;
         }
 
+        #clearValue = function() {
+            [...this.widget].forEach((option) => {
+                if(option.selected) {
+                    option.removeAttribute('selected');
+                }
+            });
+            // selecting the dummy emptyValue option
+            this.widget.selectedIndex = 0;
+        }
+
         _updateValue(value) {
-            // value is set to null for clearing the dropdown.
             if(value === null) {
-                $('option:selected', this.widget).removeAttr('selected');
+                this.#clearValue();
+                return;
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
                     if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
-                        option.setAttribute('selected', 'selected')
+                        option.setAttribute('selected', 'selected');
                     } else {
                         option.removeAttribute('selected');
                     }

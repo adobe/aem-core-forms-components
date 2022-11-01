@@ -67,7 +67,7 @@ describe("Form with Dropdown", () => {
     })
 
     it("Single Select: model's changes are reflected in the html", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const [id, fieldView] = Object.entries(formContainer._fields)[2]
         const model = formContainer._model.getElement(id);
         const isMultiSelect = model.isArrayType();
         //check for default value
@@ -86,7 +86,7 @@ describe("Form with Dropdown", () => {
     });
 
     it("Multi Select: model's changes are reflected in the html", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1];
+        const [id, fieldView] = Object.entries(formContainer._fields)[3];
         const model = formContainer._model.getElement(id);
         const isMultiSelect = model.isArrayType();
         // check for default value
@@ -108,7 +108,7 @@ describe("Form with Dropdown", () => {
     });
 
     it("Single Select: html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const [id, fieldView] = Object.entries(formContainer._fields)[2]
         const model = formContainer._model.getElement(id);
         cy.get(`#${id} select`).select("cauliflower").blur().then(x => {
             expect(model.value).to.equal('c');
@@ -116,11 +116,33 @@ describe("Form with Dropdown", () => {
     });
 
     it("Multi Select: html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1]
+        const [id, fieldView] = Object.entries(formContainer._fields)[3]
         const model = formContainer._model.getElement(id);
         cy.get(`#${id} select`).select(["bus","car", "bike"]).blur().then(x => {
             expect(model.value).to.deep.equal([1,2,3]);
         });
+    });
+
+    it("Single Select: Test clear dropdown using rule editor", () => {
+        const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[2];
+        const [idButton, fieldView2] = Object.entries(formContainer._fields)[0];
+        const model = formContainer._model.getElement(idDropdown);
+
+        cy.get(`#${idButton}`).click().then(x => {
+            expect(model.value).to.be.null; // checking model
+        });
+        cy.get(`#${idDropdown} select`).find(":selected").should("have.id", "emptyValue");
+    });
+
+    it("Multi Select: Test clear dropdown using rule editor", () => {
+        const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[3];
+        const [idButton, fieldView2] = Object.entries(formContainer._fields)[1];
+        const model = formContainer._model.getElement(idDropdown);
+
+        cy.get(`#${idButton}`).click().then(x => {
+            expect(model.value).to.be.null; // checking model
+        });
+        cy.get(`#${idDropdown} select`).find(":selected").should("have.id", "emptyValue");
     });
 
 })
