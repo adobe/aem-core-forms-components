@@ -169,17 +169,15 @@ export default class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _form = await HTTPAPILayer.getForm(_path);
-                console.debug('fetched form',  _form);
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
+                console.debug("fetched model json", _formJson);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
-                if (_form) {
-                    _prefillData = await HTTPAPILayer.getPrefillData(_form.id, params) || {};
+                if (_formJson) {
+                    _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
-                console.debug("fetched model json", _formJson);
                 const formContainer = createFormContainer({
                     _formJson,
                     _prefillData,
