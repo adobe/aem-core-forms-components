@@ -44,7 +44,10 @@
             widget: `.${Wizard.bemBlock}__widget`,
             tooltipDiv: `.${Wizard.bemBlock}__shortdescription`,
             previousButton: `.${Wizard.bemBlock}__previousNav`,
-            nextButton: `.${Wizard.bemBlock}__nextNav`
+            nextButton: `.${Wizard.bemBlock}__nextNav`,
+            tabList: `.${Wizard.bemBlock}__tabList`,
+            leftHeaderArrow: `.${Wizard.bemBlock}__left-header-arrow`,
+            rightHeaderArrow: `.${Wizard.bemBlock}__right-header-arrow`
         };
 
         constructor(params) {
@@ -55,6 +58,7 @@
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.#refreshActive();
             this.#bindEvents();
+            this.#checkTabWidth();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
                  * Editor message handling:
@@ -141,6 +145,36 @@
         getNextButtonDiv() {
             return this.element.querySelector(Wizard.selectors.nextButton);
         }
+        getLeftHeaderArrow() {
+          return this.element.querySelector(Wizard.selectors.leftHeaderArrow);
+        }
+        getRightHeaderArrow() {
+          return this.element.querySelector(Wizard.selectors.rightHeaderArrow);
+        }
+        getTabList() {
+          return this.element.querySelector(Wizard.selectors.tabList);
+        }
+        #checkTabWidth() {
+          const tabContainer = this.getTabList();
+          if(tabContainer.scrollWidth > tabContainer.offsetWidth + 50){
+            this.getRightHeaderArrow().style.visibility = 'visible';
+          }
+        }
+        #leftHeaderArrowHandler() {
+          this.getTabList().scrollLeft -= 200;
+          this.getRightHeaderArrow().style.visibility = 'visible';
+          if(this.getTabList().scrollLeft === 0){
+            this.getLeftHeaderArrow().style.visibility = 'hidden';
+          }
+        }
+        #rightHeaderArrowHandler() {
+          this.getTabList().scrollLeft += 200;
+          this.getLeftHeaderArrow().style.visibility = 'visible';
+          const tabContainer = this.getTabList();
+          if(tabContainer.scrollLeft + tabContainer.offsetWidth >= tabContainer.scrollWidth){
+            this.getRightHeaderArrow().style.visibility = 'hidden';
+          }
+        }
 
 
         /**
@@ -155,6 +189,12 @@
             })
             this.getPreviousButtonDiv().addEventListener("click", function (event){
                 _self.#navigateToPreviousTab();
+            })
+            this.getLeftHeaderArrow().addEventListener("click", function (){
+              _self.#leftHeaderArrowHandler();
+            })
+            this.getRightHeaderArrow().addEventListener("click", function (){
+              _self.#rightHeaderArrowHandler();
             })
 
 

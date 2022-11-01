@@ -13,19 +13,18 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+.cmp-adaptiveform-wizard{
 
+}
+.cmp-adaptiveform-wizard__widget{
+  
+}
 .cmp-adaptiveform-wizard__tabList {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
     list-style: none;
 }
 
 .cmp-adaptiveform-wizard__tab {
-    box-sizing: border-box;
-    border-bottom: 1px solid transparent;
-    padding: .5rem 1rem;
-    flex: 1;
+
 }
 
 .cmp-adaptiveform-wizard__tab--active {
@@ -40,56 +39,39 @@
   display: block;
 }
 
-
-.cmp-adaptiveform-wizard__nextNav:hover{
-    background:url(../resources/Chevron-Right-White.svg) center center / 1rem 1rem no-repeat,#666666;
-    border-color:#666666;
-
-}
 .cmp-adaptiveform-wizard__nextNav{
-    height:2.5rem;
-    cursor:pointer;
-    width:2.5rem;
-    margin-right:1rem;
-    border-left-width:2px;
-    border-bottom-width:2px;
-    border-top-width:2px;
-    border-right-width:2px;
-    border-style:solid;
-    border-color:#969696;
-    border-bottom-right-radius:1.5rem;
-    border-bottom-left-radius:1.5rem;
-    border-top-left-radius:1.5rem;
-    border-top-right-radius:1.5rem;
-    background:url(../resources/Chevron-Right.svg) center center / 1rem 1rem no-repeat;
-    cursor : pointer;
-}
-
-.cmp-adaptiveform-wizard__previousNav:hover{
-    background:url(../resources/Chevron-Left-White.svg) center center / 1rem 1rem no-repeat,#969696;
 
 }
+
 .cmp-adaptiveform-wizard__previousNav{
-    cursor:pointer;
-    height:2.5rem;
-    width:2.5rem;
-    border-left-width:2px;
-    border-bottom-width:2px;
-    border-top-width:2px;
-    border-right-width:2px;
-    border-style:solid;
-    border-color:#969696;
-    border-bottom-right-radius:1.5rem;
-    border-bottom-left-radius:1.5rem;
-    border-top-left-radius:1.5rem;
-    border-top-right-radius:1.5rem;
-    margin-right:0.5rem;
-    background:url(../resources/Chevron-Left.svg) center center / 1rem 1rem no-repeat;
-    cursor : pointer;
 }
-.cmp-adaptiveform-wizard{
-  padding-left: 10px;
+
+.cmp-adaptiveform-wizard__tabs-container{
+
 }
-.cmp-adaptiveform-wizard__widget{
-  position: relative;
+.cmp-adaptiveform-wizard__left-header-arrow{
+}
+.cmp-adaptiveform-wizard__right-header-arrow{
+}
+.cmp-adaptiveform-wizard__tab-1{
+
+}
+.cmp-adaptiveform-wizard__tab-2{
+
+}
+.cmp-adaptiveform-wizard__tab-3{
+  
+}
+.cmp-adaptiveform-wizard__tab-4{
+
+}
+.cmp-adaptiveform-wizard__questionmark {
+  display:inline-block;
+  top:8px;
+  right:8px;
+  width:1rem;
+  height:1rem;
+  border-radius: 9px;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE4LjEuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgogIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjQgMjQiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xNS45LDguOWMwLDEuMy0wLjUsMi0xLjMsMi43Yy0wLjgsMC43LTEuNSwxLjQtMS41LDEuOWMwLDAuNCwwLjEsMC43LDAuMywxYzAsMC4xLDAsMC4yLTAuMSwwLjJoLTIKCQljLTAuMSwwLTAuMiwwLTAuMy0wLjFjLTAuNC0wLjQtMC41LTEtMC41LTEuNGMwLTAuOSwwLjUtMS41LDEuNS0yLjRjMC42LTAuNiwxLTEsMS0xLjVjMC0wLjYtMC40LTEtMS42LTFjLTEuMSwwLTEuOSwwLjMtMi42LDAuNwoJCUM4LjksOSw4LjgsOC45LDguOCw4LjhWNi42YzAtMC4xLDAtMC4yLDAuMS0wLjJjMC41LTAuMiwxLjUtMC43LDMuMi0wLjdDMTQuNSw1LjcsMTUuOSw3LjEsMTUuOSw4Ljl6IE0xMC42LDE3LjYKCQljMC0xLDAuNy0xLjYsMS42LTEuNmMxLDAsMS42LDAuNiwxLjYsMS42YzAsMC45LTAuNiwxLjYtMS42LDEuNkMxMS4zLDE5LjIsMTAuNiwxOC42LDEwLjYsMTcuNnoiLz4KPC9nPgo8L3N2Zz4K) center center / cover no-repeat,#969696;
+  cursor : pointer;
 }
