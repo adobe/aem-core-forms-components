@@ -189,6 +189,27 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    _updateLabel(label) {
+        if (this.label) {
+            if (label.hasOwnProperty("value")) {
+                this.label.innerHTML = label.value;
+            }
+            if (label.hasOwnProperty("visible")) {
+                this.toggleAttribute(this.label, label.visible, Constants.ARIA_HIDDEN, true);
+                this.label.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, label.visible);
+            }
+        }
+    }
+
+    _updateDescription(description) {
+        if (this.description) {
+            this.description.querySelector("p").innerHTML = description;
+        } else {
+            //TODO: handle the case when description is not present initially.
+        }
+    }
+
+
     /**
      * Shows or Hides Description Based on click of '?' mark.
      * @private
