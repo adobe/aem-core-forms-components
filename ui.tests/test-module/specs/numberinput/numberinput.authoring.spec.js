@@ -79,7 +79,7 @@ describe('Page - Authoring', function () {
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Patterns').click({force:true});
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
             cy.get('.cq-dialog-cancel').click({force:true});
             cy.deleteComponentByPath(numberInputDrop) ;
         });
