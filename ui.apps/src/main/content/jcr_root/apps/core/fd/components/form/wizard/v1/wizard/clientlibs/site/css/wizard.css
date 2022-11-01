@@ -65,6 +65,13 @@
     cursor : pointer;
 }
 
+@media (max-width : 767px){
+    .cmp-adaptiveform-wizard__nextNav{
+        display:none;
+
+    }
+}
+
 .cmp-adaptiveform-wizard__previousNav:hover{
     background:url(../resources/Chevron-Left-White.svg) center center / 1rem 1rem no-repeat,#969696;
 
@@ -87,9 +94,10 @@
     background:url(../resources/Chevron-Left.svg) center center / 1rem 1rem no-repeat;
     cursor : pointer;
 }
-.cmp-adaptiveform-wizard{
-  padding-left: 10px;
-}
-.cmp-adaptiveform-wizard__widget{
-  position: relative;
+
+@media (max-width : 767px){
+    .cmp-adaptiveform-wizard__previousNav{
+        display:none;
+
+    }
 }
