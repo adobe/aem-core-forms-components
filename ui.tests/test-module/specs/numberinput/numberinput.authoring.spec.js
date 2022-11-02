@@ -53,42 +53,14 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop);
         });
 
-        it ('check edit dialog availability of NumberInput', function(){
-            dropNumberInputInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.get(editDialogConfigurationSelector).should('be.visible');
-            cy.deleteComponentByPath(numberInputDrop);
-        });
-
-        it('open edit dialog of NumberInput', function(){
-            dropNumberInputInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector+'__editdialog').should('be.visible');
-            cy.get('.cq-dialog-cancel').should('be.visible');
-            cy.get('.cq-dialog-submit').should('be.visible');
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(numberInputDrop);
-        });
-
-        it('verify tabs in edit dialog of NumberInput',function (){
-            dropNumberInputInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Validation').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(numberInputDrop) ;
-        });
-
         it('verify Basic tab in edit dialog of NumberInput',function (){
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Validation').click({force:true});
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get("[name='./name']").should("exist");
             cy.get("[name='./jcr:title']").should("exist");
@@ -100,6 +72,8 @@ describe('Page - Authoring', function () {
             cy.get("[name='./exclusiveMinimum']").should("exist");
             cy.get("[name='./maximum']").should("exist");
             cy.get("[name='./exclusiveMaximum']").should("exist");
+            cy.get('.cq-dialog-cancel').should('be.visible');
+            cy.get('.cq-dialog-submit').should('be.visible');
             cy.get('.cq-dialog-cancel').click({force:true});
             cy.deleteComponentByPath(numberInputDrop) ;
         });
@@ -127,6 +101,7 @@ describe('Page - Authoring', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
             cy.wait(1000);
             cy.get(numberInputBlockBemSelector+'__leaddigits').clear();
             cy.get(numberInputBlockBemSelector+'__leaddigits').type(4);
@@ -136,6 +111,7 @@ describe('Page - Authoring', function () {
             cy.wait(1000);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
             cy.get(numberInputBlockBemSelector+'__leaddigits').should('have.value',4);
             cy.get(numberInputBlockBemSelector+'__fracdigits').should('have.value',4);
             cy.wait(1000);
@@ -156,7 +132,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms TextInput', function () {
+        it('insert aem forms NumberInput', function () {
             dropNumberInputInSites();
             cy.deleteComponentByPath(numberInputDrop);
         });
