@@ -202,6 +202,11 @@ export default class FormPanel extends FormFieldBase {
     _updateEnable(enable) {
         this.toggle(enable, Constants.ARIA_DISABLED, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
+        if(enable===false){
+            for (let el of this.element.querySelectorAll("input, select, textarea, button")) {
+                el.disabled = true;
+            }
+        }
     }
 
     /**

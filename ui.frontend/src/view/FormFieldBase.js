@@ -153,13 +153,16 @@ export default class FormFieldBase extends FormField {
      * @private
      */
     _updateEnabled(enabled) {
+        var isParentForm=(this._model.parent.id=="$form");
+        var isParentDisabled= (!isParentForm && this._model.parent._jsonModel.enabled!=undefined && this._model.parent._jsonModel.enabled===false);
         if (this.widget) {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", true);
                 this.widget.setAttribute(Constants.ARIA_DISABLED, true);
-            } else {
+            }
+            else if(!isParentDisabled) {
                 this.widget.removeAttribute("disabled");
                 this.widget.removeAttribute(Constants.ARIA_DISABLED);
             }
