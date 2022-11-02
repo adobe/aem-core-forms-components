@@ -34,7 +34,8 @@
             label: `.${DropDown.bemBlock}__label`,
             description: `.${DropDown.bemBlock}__longdescription`,
             qm: `.${DropDown.bemBlock}__questionmark`,
-            errorDiv: `.${DropDown.bemBlock}__errormessage`
+            errorDiv: `.${DropDown.bemBlock}__errormessage`,
+            tooltipDiv: `.${DropDown.bemBlock}__shortdescription`
         };
 
         constructor(params) {
