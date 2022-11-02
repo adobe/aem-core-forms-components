@@ -161,14 +161,14 @@
             };
         }
 
-        static handleDisplayPatternDropDown(dialog,displayPatternClass,displayFormatClass) {
-            var displayPatternComponent = dialog.find(displayPatternClass)[0];
-            var displayFormatComponent = dialog.find(displayFormatClass)[0];
+        static handlePatternDropDown(dialog, patternClass, formatClass) {
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
             _manageDisplayPatternDynamicBehaviour();
-            displayPatternComponent.addEventListener("change", _manageDisplayPatternDynamicBehaviour );
+            patternComponent.addEventListener("change", _manageDisplayPatternDynamicBehaviour );
             function _manageDisplayPatternDynamicBehaviour() {
-                var displayPatternSelectedValue = displayPatternComponent.selectedItem.innerHTML;
-                var displayFormatParentDiv=displayFormatComponent.closest("div");
+                var displayPatternSelectedValue = patternComponent.selectedItem.innerHTML;
+                var displayFormatParentDiv=formatComponent.closest("div");
                 switch (displayPatternSelectedValue) {
                     case "Select"     :
                     case "No Pattern" :
@@ -178,28 +178,28 @@
                         displayFormatParentDiv.removeAttribute("hidden");
                 }
                 if(displayPatternSelectedValue!="Custom") {
-                    displayFormatComponent.value = displayPatternComponent.value;
+                    formatComponent.value = patternComponent.value;
                 }
             }
         }
 
-        static handleDisplayFormat(dialog,displayPatternClass,displayFormatClass){
+        static handlePatternFormat(dialog, patternClass, formatClass){
 
-            var displayPatternComponent = dialog.find(displayPatternClass)[0];
-            var displayFormatComponent = dialog.find(displayFormatClass)[0];
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
             _manageDisplayFormatChange()
-            displayFormatComponent.addEventListener("change", _manageDisplayFormatChange );
+            formatComponent.addEventListener("change", _manageDisplayFormatChange );
             function _manageDisplayFormatChange(){
                 var itemFound=false;
-                if(displayFormatComponent.value!=displayPatternComponent.value){
-                    displayPatternComponent.items.getAll().forEach(function (item) {
-                        if (item.value == displayFormatComponent.value) {
+                if(formatComponent.value!=patternComponent.value){
+                    patternComponent.items.getAll().forEach(function (item) {
+                        if (item.value == formatComponent.value) {
                             item.selected = true;
                             itemFound = true;
                         }
                     });
                     if(!itemFound){
-                        displayPatternComponent.value="custom";
+                        patternComponent.value="custom";
                     }
                 }
 

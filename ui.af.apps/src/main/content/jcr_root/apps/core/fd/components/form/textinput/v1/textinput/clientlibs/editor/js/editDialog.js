@@ -27,6 +27,10 @@
         TEXTINPUT_AUTOFILL_FIELD_KEYWORD = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autofillfieldkeyword",
         TEXTINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displaypattern",
         TEXTINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displayformat",
+        TEXTINPUT_EDITPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__editpattern",
+        TEXTINPUT_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__editformat",
+        TEXTINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationpattern",
+        TEXTINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -70,13 +74,30 @@
         }
     }
     function handleDisplayPatternDropDown(dialog) {
-        Utils.handleDisplayPatternDropDown(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
+        Utils.handlePatternDropDown(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
     }
 
     function handleDisplayFormat(dialog){
-        Utils.handleDisplayFormat(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
+        Utils.handlePatternFormat(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleDisplayPatternDropDown,handleDisplayFormat);
+    function handleEditPatternDropDown(dialog) {
+        Utils.handlePatternDropDown(dialog,TEXTINPUT_EDITPATTERN,TEXTINPUT_EDITFORMAT);
+    }
+
+    function handleEditFormat(dialog){
+        Utils.handlePatternFormat(dialog,TEXTINPUT_EDITPATTERN,TEXTINPUT_EDITFORMAT);
+    }
+
+    function handleValidationPatternDropDown(dialog) {
+        Utils.handlePatternDropDown(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
+    }
+
+    function handleValidationFormat(dialog){
+        Utils.handlePatternFormat(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleDisplayPatternDropDown,handleDisplayFormat,
+        handleEditPatternDropDown,handleEditFormat,handleValidationPatternDropDown,handleValidationFormat);
 
 })(jQuery);

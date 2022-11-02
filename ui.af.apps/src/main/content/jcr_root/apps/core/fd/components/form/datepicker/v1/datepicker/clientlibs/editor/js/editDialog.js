@@ -19,16 +19,26 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-datepicker__editdialog",
         DATEPICKER_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__displaypattern",
         DATEPICKER_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__displayformat",
+        DATEPICKER_EDITPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__editpattern",
+        DATEPICKER_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__editformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
     function handleDisplayPatternDropDown(dialog) {
-        Utils.handleDisplayPatternDropDown(dialog,DATEPICKER_DISPLAYPATTERN,DATEPICKER_DISPLAYFORMAT);
+        Utils.handlePatternDropDown(dialog,DATEPICKER_DISPLAYPATTERN,DATEPICKER_DISPLAYFORMAT);
     }
 
     function handleDisplayFormat(dialog){
-        Utils.handleDisplayFormat(dialog,DATEPICKER_DISPLAYPATTERN,DATEPICKER_DISPLAYFORMAT);
+        Utils.handlePatternFormat(dialog,DATEPICKER_DISPLAYPATTERN,DATEPICKER_DISPLAYFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat);
+    function handleEditPatternDropDown(dialog) {
+        Utils.handlePatternDropDown(dialog,DATEPICKER_EDITPATTERN,DATEPICKER_EDITFORMAT);
+    }
+
+    function handleEditFormat(dialog){
+        Utils.handlePatternFormat(dialog,DATEPICKER_EDITPATTERN,DATEPICKER_EDITFORMAT);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat);
 })(jQuery);
