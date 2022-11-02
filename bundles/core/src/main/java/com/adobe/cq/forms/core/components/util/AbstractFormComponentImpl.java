@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -46,6 +47,8 @@ import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -73,6 +76,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Resource resource;
 
     protected I18n i18n = null;
+
+    private static final String STATUS_NONE = "none";
+    private static final String STATUS_VALID = "valid";
+    private static final String STATUS_INVALID = "invalid";
 
     @PostConstruct
     protected void initBaseModel() {
@@ -135,6 +142,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
 
+    public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
+
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -153,6 +162,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        if (getRulesProperties().size() > 0) {
+            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, getRulesProperties());
         }
         return customProperties;
     }
@@ -178,6 +190,53 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return rules;
         }
         return Collections.emptyMap();
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getRulesProperties() {
+        Resource ruleNode = resource.getChild("fd:rules");
+        Map<String, Object> customRulesProperties = new LinkedHashMap<>();
+        customRulesProperties.put("status", getRulesStatus(ruleNode));
+        return customRulesProperties;
+    }
+
+    /***
+     * If atleast one rule is invalid then status of rule for component is considered as invalid
+     * @param rulesResource
+     * @return
+     */
+    private String getRulesStatus(Resource rulesResource) {
+        List<String> EVENT_PROPERTIES = Arrays.asList("fd:calc", "fd:visible", "fd:valueCommit", "fd:enabled", "fd:validate");
+
+        if (rulesResource == null) {
+            return STATUS_NONE;
+        }
+
+        ValueMap props = rulesResource.adaptTo(ValueMap.class);
+        if (props == null) {
+            return STATUS_NONE;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String status = STATUS_NONE;
+        try {
+            for (String key : props.keySet()) {
+                if (EVENT_PROPERTIES.contains(key)) {
+                    String[] rulesString = props.get(key, new String[] {});
+                    for (String ruleString : rulesString) {
+                        Map<String, Object> ruleMap = mapper.readValue(ruleString, Map.class);
+                        if (ruleMap.containsKey("isValid") && !(Boolean)ruleMap.get("isValid")) {
+                            return STATUS_INVALID;
+                        }
+                        status = STATUS_VALID;
+                    }
+                }
+            }
+        } catch (JsonProcessingException processingException) {
+            status = STATUS_INVALID;
+        }
+        return status;
     }
 
     /**
