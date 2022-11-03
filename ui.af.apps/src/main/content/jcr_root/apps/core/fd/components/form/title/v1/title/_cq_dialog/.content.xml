@@ -18,7 +18,6 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Title"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.title.v1.editor]"
     helpPath="https://www.adobe.com/go/aem_cmp_title_v3"
     trackingFeature="core-components:adaptiveform-title:v1">
     <content
