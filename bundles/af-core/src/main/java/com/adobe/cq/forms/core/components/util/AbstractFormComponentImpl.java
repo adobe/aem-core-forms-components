@@ -195,7 +195,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @JsonIgnore
     public Map<String, Object> getRulesProperties() {
-        Resource ruleNode = resource.getChild("fd:rules");
+        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
         customRulesProperties.put("status", getRulesStatus(ruleNode));
         return customRulesProperties;
