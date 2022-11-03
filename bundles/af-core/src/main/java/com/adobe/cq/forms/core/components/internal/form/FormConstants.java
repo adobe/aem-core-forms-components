@@ -84,4 +84,10 @@ public final class FormConstants {
 
     /** The resource type for title v1 */
     public static final String RT_FD_FORM_TITLE_V1 = RT_FD_FORM_PREFIX + "title/v1/title";
+
+    /** The resource type for submit button v1 */
+    public static final String RT_FD_FORM_SUBMIT_BUTTON_V1 = RT_FD_FORM_PREFIX + "submitbutton/v1/submitbutton";
+
+    /** The resource type for submit button v1 */
+    public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "resetbutton/v1/resetbutton";
 }
