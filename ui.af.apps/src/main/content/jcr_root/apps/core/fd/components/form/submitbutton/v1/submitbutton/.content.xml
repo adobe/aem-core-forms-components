@@ -3,6 +3,6 @@
     cq:icon="button"
     jcr:description="Submit Button"
     jcr:primaryType="cq:Component"
-    jcr:title="Adaptive Form Button (v1)"
+    jcr:title="Adaptive Form Submit Button (v1)"
     sling:resourceSuperType="core/fd/components/form/button/v1/button"
     componentGroup=".core-adaptiveform"/>
