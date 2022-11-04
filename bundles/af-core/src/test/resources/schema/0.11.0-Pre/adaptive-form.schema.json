@@ -1052,108 +1052,97 @@
     }
   },
   "type": "object",
-  "allOf": [
-    {
+  "properties": {
+    "data": {
+      "type": "object"
+    },
+    "events": {
+      "type": "object",
+      "propertyNames": {
+        "anyOf": [
+          {
+            "enum": [
+              "submit",
+              "reset",
+              "initialize"
+            ]
+          },
+          {
+            "pattern": "custom:[a-zA-Z0-9]+"
+          }
+        ]
+      }
+    },
+    ":type": {
+      "type": "string",
+      "title": "A hint to the rendering engine for rendering custom components."
+    },
+    "action": {
+      "title": "URL indicating the endpoint where the data would be submitted when submit event is triggered",
+      "type": "string"
+    },
+    "adaptiveform": {
+      "const": "0.11.0-Pre"
+    },
+    "description": {
+      "type": "string",
+      "title": "A user friendly description of the form"
+    },
+    "fieldType": {
+      "const": "form"
+    },
+    "id": {
+      "type": "string",
+      "title": "unique identifier for a form element"
+    },
+    "items": {
+      "$ref": "#/$defs/Items"
+    },
+    "lang": {
+      "type": "string",
+      "title": "The language in which the Form was authored.",
+      "description": "The language needs to be defined as per the [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) tag"
+    },
+    "metadata": {
       "type": "object",
       "properties": {
-        "data": {
-          "type": "object"
-        },
-        "events": {
-          "type": "object",
-          "propertyNames": {
-            "anyOf": [
-              {
-                "enum": [
-                  "submit",
-                  "reset",
-                  "initialize"
-                ]
-              },
-              {
-                "pattern": "custom:[a-zA-Z0-9]+"
-              }
-            ]
-          }
-        },
-        ":type": {
-          "type": "string",
-          "title": "A hint to the rendering engine for rendering custom components."
-        },
-        "action": {
-          "title": "URL indicating the endpoint where the data would be submitted when submit event is triggered",
+        "version": {
           "type": "string"
         },
-        "adaptiveform": {
-          "const": "0.11.0-Pre"
+        "grammar": {
+          "const": "json-formula-1.0.0"
         },
-        "description": {
-          "type": "string",
-          "title": "A user friendly description of the form"
-        },
-        "fieldType": {
-          "const": "form"
-        },
-        "id": {
-          "type": "string",
-          "title": "unique identifier for a form element"
-        },
-        "items": {
-          "$ref": "#/$defs/Items"
-        },
-        "lang": {
-          "type": "string",
-          "title": "The language in which the Form was authored.",
-          "description": "The language needs to be defined as per the [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) tag"
-        },
-        "metadata": {
-          "type": "object",
-          "properties": {
-            "version": {
-              "type": "string"
-            },
-            "grammar": {
-              "const": "json-formula-1.0.0"
-            },
-            "formattingLanguage": {
-              "const": "xfa-picture-clause"
-            }
-          },
-          "required": [
-            "version"
-          ]
-        },
-        "properties": {
-          "title": "An object containing custom properties that can be modified via rules as well.",
-          "type": "object"
-        },
-        "rules": {
-          "type": "object",
-          "propertyNames": {
-            "enum": [
-              "properties"
-            ]
-          }
-        },
-        "title": {
-          "type": "string",
-          "maxLength": 140,
-          "title": "A user friendly one line title for the form"
+        "formattingLanguage": {
+          "const": "xfa-picture-clause"
         }
       },
       "required": [
-        "metadata",
-        "items",
-        "adaptiveform",
-        "fieldType"
-      ],
-      "errorMessage": {
-        "required": {
-          "adaptiveform": "Unable to find the adaptiveform spec version this document is compatible to.",
-          "items": "Form doesn't contain items.",
-          "metadata": "The versioning information for the document is missing."
-        }
+        "version"
+      ]
+    },
+    "properties": {
+      "title": "An object containing custom properties that can be modified via rules as well.",
+      "type": "object"
+    },
+    "rules": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "properties"
+        ]
       }
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 140,
+      "title": "A user friendly one line title for the form"
     }
+  },
+  "additionalProperties": false,
+  "required": [
+    "metadata",
+    "items",
+    "adaptiveform",
+    "fieldType"
   ]
 }
