@@ -38,7 +38,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Button.class, ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_BUTTON_V1, FormConstants.RT_FD_FORM_SUBMIT_BUTTON_V1, FormConstants.RT_FD_FORM_RESET_BUTTON_V1 })
+    resourceType = { FormConstants.RT_FD_FORM_BUTTON_V1, FormConstants.RT_FD_FORM_SUBMIT_BUTTON_V1,
+        FormConstants.RT_FD_FORM_RESET_BUTTON_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ButtonImpl extends AbstractBaseImpl implements Button {
 
@@ -74,7 +75,9 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     }
 
     @Override
-    public String getActionType() { return actionType; }
+    public String getActionType() {
+        return actionType;
+    }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
