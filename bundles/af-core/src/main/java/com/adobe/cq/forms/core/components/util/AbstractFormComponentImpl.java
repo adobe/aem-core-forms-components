@@ -44,6 +44,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -124,7 +125,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     public boolean isVisible() {
+        if (getEditMode()) {
+            return true;
+        }
         return visible;
+    }
+
+    @JsonIgnore
+    protected boolean getEditMode() {
+        boolean editMode = false;
+        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+        // we anyways dont need to rely on wcmmode while fetching form definition.
+        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
+            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        }
+        return editMode;
     }
 
     @JsonIgnore
