@@ -98,6 +98,6 @@
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleDisplayPatternDropDown,handleDisplayFormat,
-        handleEditPatternDropDown,handleEditFormat,handleValidationPatternDropDown,handleValidationFormat);
+        handleEditPatternDropDown,handleEditFormat);
 
 })(jQuery);
