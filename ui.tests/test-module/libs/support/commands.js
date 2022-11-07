@@ -392,3 +392,15 @@ Cypress.Commands.add(
         return subject;
     }
 );
+
+
+// cypress command to click ? and toggle description and tooltip
+Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId) => {
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
+    // long description should be shown
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
+    .should('not.exist');
+    // short description should be hidden.
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
+    .should('eq', 'false');
+});

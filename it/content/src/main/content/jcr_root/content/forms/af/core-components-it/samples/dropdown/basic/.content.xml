@@ -54,6 +54,27 @@
                     type="number[]"
                     typeIndex="1"
                     visible="{Boolean}true"/>
+            <dropdown3
+              jcr:created="{Date}2022-09-23T14:53:38.079+05:30"
+              jcr:createdBy="admin"
+              jcr:lastModified="{Date}2022-09-23T14:59:27.334+05:30"
+              jcr:lastModifiedBy="admin"
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Dropdown3"
+              sling:resourceType="forms-components-examples/components/form/dropdown"
+              default="[b]"
+              enabled="{Boolean}true"
+              enum="[a,b,c]"
+              enumNames="[apple,banana,cauliflower]"
+              fieldType="drop-down"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              textIsRich="[true,true]"
+              type="string"
+              typeIndex="0"
+              visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

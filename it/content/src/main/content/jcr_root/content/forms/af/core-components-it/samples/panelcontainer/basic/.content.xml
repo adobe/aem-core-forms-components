@@ -28,6 +28,8 @@
                     name="panelcontainer1662449848339"
                     roleAttribute="toolbar"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
+                    id="tooltip_scenario_test"
+                    tooltipVisible="true"
                     visible="{Boolean}true">
                 <datepicker
                         jcr:primaryType="nt:unstructured"

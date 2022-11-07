@@ -123,4 +123,8 @@ describe("Form with Dropdown", () => {
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
+
 })
