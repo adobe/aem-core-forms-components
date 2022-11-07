@@ -19,7 +19,7 @@
     jcr:title="Edit Link Component"
     extraClientlibs="core.forms.components.formsportal.link.v1.editor"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    trackingFeature="core-components:adaptiveform-link:v2">
+    trackingFeature="core-components:formsportal-link:v2">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">

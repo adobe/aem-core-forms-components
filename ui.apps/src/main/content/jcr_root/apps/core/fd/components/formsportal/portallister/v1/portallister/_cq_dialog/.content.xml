@@ -19,7 +19,7 @@
           jcr:title="Portal Lister"
           extraClientlibs="core.forms.components.commons.v1.clientlibs.authoringvalidators"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          trackingFeature="core-components:adaptiveform-portallister:v1">
+          trackingFeature="core-components:formsportal-lister:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">

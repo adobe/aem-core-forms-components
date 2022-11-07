@@ -19,7 +19,7 @@
           jcr:title="Search and Lister"
           extraClientlibs="[core.forms.components.commons.v1.clientlibs.authoringvalidators,core.forms.components.formsportal.searchlister.v1.editor]"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          trackingFeature="core-components:adaptiveform-searchlister:v1">
+          trackingFeature="core-components:formsportal-searchlister:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
