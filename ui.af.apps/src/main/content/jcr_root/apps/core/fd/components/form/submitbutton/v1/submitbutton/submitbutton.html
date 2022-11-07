@@ -21,12 +21,12 @@
   type="button"
   value="${button.value}"
   id="${component.id}"
-  class="cmp-button"
+  class="cmp-submitbutton"
   disabled="${!button.enabled}"
   title="${button.tooltipVisible ? '' : button.tooltipText}"
   data-cmp-visible="${button.visible}"
   data-cmp-enabled="${button.enabled}"
-  data-cmp-is="adaptiveFormButton"
+  data-cmp-is="adaptiveFormSubmitButton"
   aria-label="${button.label.value}"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
 <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
