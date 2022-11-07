@@ -16,7 +16,7 @@
 describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/submitbutton/basic.html"
-    const bemBlock = 'cmp-submitbutton'
+    const bemBlock = 'cmp-button'
     const IS = "adaptiveFormSubmitButton"
     const selectors = {
         submitbutton : `[data-cmp-is="${IS}"]`

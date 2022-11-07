@@ -16,7 +16,7 @@
 describe("Form with Reset Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/resetbutton/basic.html"
-    const bemBlock = 'cmp-resetbutton'
+    const bemBlock = 'cmp-button'
     const IS = "adaptiveFormResetButton"
     const selectors = {
         resetbutton : `[data-cmp-is="${IS}"]`
