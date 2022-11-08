@@ -16,22 +16,22 @@
 
 package com.adobe.cq.forms.core.components.util;
 
+import java.util.Map;
+
+import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-import org.apache.sling.api.resource.Resource;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-@ExtendWith({AemContextExtension.class, MockitoExtension.class})
+@ExtendWith({ AemContextExtension.class, MockitoExtension.class })
 public class AbstractFormComponentImplTest {
 
     private static final String BASE = "/form/componentswithrule";
@@ -66,8 +66,7 @@ public class AbstractFormComponentImplTest {
     public void testNoneRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_RULE);
         Map<String, Object> rulesProperties = abstractFormComponentImpl.getRulesProperties();
-        assertNotNull(rulesProperties);
-        assertEquals("none", rulesProperties.get("status"));
+        assertTrue(rulesProperties.isEmpty());
     }
 
     private AbstractFormComponentImpl prepareTestClass(String path) {
