@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with Submit Button", () => {
+describe("Form with Reset Button", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/submitbutton/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/reset/basic.html"
     const bemBlock = 'cmp-button'
-    const IS = "adaptiveFormSubmitButton"
+    const IS = "adaptiveFormButton"
     const selectors = {
-        submitbutton : `[data-cmp-is="${IS}"]`
+        reset: `[data-cmp-is="${IS}"]`
     }
 
     let formContainer = null
@@ -39,13 +39,13 @@ describe("Form with Submit Button", () => {
         });
     })
 
-    it("Clicking the button should submit the form", () => {
+    it("Clicking the button should reset the form", () => {
         const [id1, fieldView1] = Object.entries(formContainer._fields)[0] // Textbox
-        const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Submit button
+        const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Reset button
         const input = "Sample Text";
         cy.get(`#${id1}`).find('input').type(input)
         cy.get(`#${id2}`).click().then(x => {
-            cy.get('body').should('have.text', "Thank you for submitting the form.\n")
+            cy.get(`#${id1}`).find('input').should('have.value', '')
         })
     });
 
