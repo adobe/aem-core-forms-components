@@ -78,19 +78,9 @@
             return String(value) === optionValue;
         }
 
-        #clearValue = function() {
-            [...this.widget].forEach((option) => {
-                if(option.selected) {
-                    option.removeAttribute('selected');
-                }
-            });
-            // selecting the dummy emptyValue option
-            this.widget.selectedIndex = 0;
-        }
-
         _updateValue(value) {
             if(value === null) {
-                this.#clearValue();
+                this.widget.selectedIndex = -1;
                 return;
             }
             let isMultiSelect = this._model.isArrayType();

@@ -131,7 +131,7 @@ describe("Form with Dropdown", () => {
         cy.get(`#${idButton}`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
-        cy.get(`#${idDropdown} select`).find(":selected").should("have.id", "emptyValue");
+        cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
 
     it("Multi Select: Test clear dropdown using rule editor", () => {
@@ -142,7 +142,7 @@ describe("Form with Dropdown", () => {
         cy.get(`#${idButton}`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
-        cy.get(`#${idDropdown} select`).find(":selected").should("have.id", "emptyValue");
+        cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
 
 })
