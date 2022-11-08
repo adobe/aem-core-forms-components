@@ -212,12 +212,16 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
-        customRulesProperties.put("status", getRulesStatus(ruleNode));
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put("status", getRulesStatus(ruleNode));
+        }
         return customRulesProperties;
     }
 
     /***
      * If atleast one rule is invalid then status of rule for component is considered as invalid
+     * 
      * @param rulesResource
      * @return
      */
@@ -241,7 +245,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                     String[] rulesString = props.get(key, new String[] {});
                     for (String ruleString : rulesString) {
                         Map<String, Object> ruleMap = mapper.readValue(ruleString, Map.class);
-                        if (ruleMap.containsKey("isValid") && !(Boolean)ruleMap.get("isValid")) {
+                        if (ruleMap.containsKey("isValid") && !(Boolean) ruleMap.get("isValid")) {
                             return STATUS_INVALID;
                         }
                         status = STATUS_VALID;
