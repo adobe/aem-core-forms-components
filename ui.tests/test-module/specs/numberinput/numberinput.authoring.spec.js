@@ -110,8 +110,8 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Validation').click({force:true});
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__leaddigits').parent().children('label').contains('Lead digits');
-            cy.get(numberInputBlockBemSelector+'__fracdigits').parent().children('label').contains('Frac digits');
+            cy.get(numberInputBlockBemSelector+'__leaddigits').parent().children('label').contains('Number of digits before the decimal separator (1234.000)');
+            cy.get(numberInputBlockBemSelector+'__fracdigits').parent().children('label').contains('Number of digits after the decimal separator (1234.000)');
             cy.get(numberInputBlockBemSelector+"__type").children('._coral-Dropdown-trigger').click();
             cy.get("._coral-Menu-itemLabel").contains('Decimal').should('be.visible');
             cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click();
