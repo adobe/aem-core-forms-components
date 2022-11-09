@@ -32,7 +32,8 @@
         };
 
         getQuestionMarkDiv() {
-            return null;
+            var questionMarkDivId = this.getId() + "-questionmark";
+            return document.querySelector("#" + questionMarkDivId);
         }
 
         getLabel() {
@@ -48,7 +49,8 @@
          * @returns {HTMLElement}
          */
         getDescription() {
-            return null;
+            var descriptionId = this.getId() + "-longDescription";
+            return document.querySelector("#" + descriptionId);
         }
 
         getErrorDiv() {
@@ -56,7 +58,8 @@
         }
 
         getTooltipDiv() {
-            return null;
+            var tooltipDivId = this.getId() + "-shortDescription";
+            return document.querySelector("#" + tooltipDivId);
         }
 
         setModel(model) {
