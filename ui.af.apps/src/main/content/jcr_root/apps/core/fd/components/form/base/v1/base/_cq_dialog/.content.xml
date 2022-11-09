@@ -279,7 +279,7 @@
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                               name="./tooltipVisible"
-                              text="Show tooltip below the component"
+                              text="Always show the tooltip"
                               fieldDescription="Select the option to displays the tooltip text below the component and display no tooltip text when a user hovers on the component."
                               value="true"/>
                             <longDescription
