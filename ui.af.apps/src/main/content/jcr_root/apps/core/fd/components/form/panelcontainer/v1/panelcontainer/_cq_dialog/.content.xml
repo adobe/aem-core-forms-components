@@ -19,7 +19,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Panel"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://www.adobe.com/"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_panelcontainer_v1"
     trackingFeature="core-components:adaptiveform-panel:v1"
     extraClientlibs="[core.forms.components.panelcontainer.v1.editor]">
     <content
@@ -102,14 +102,14 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Minimum"
+                                    fieldLabel="Minimum number of times a panel appears on the form"
                                     min="0"
                                     name="./minItems"/>
                             <maxItems
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Maximum"
+                                    fieldLabel="Maximum number of times the field can appear on the form"
                                     min="-1"
                                     name="./maxItems"/>
                         </items>
@@ -134,8 +134,8 @@
                             <roleAttribute
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="HTML ROLE attribute to apply to the component."
-                                    fieldLabel="Role"
+                                    fieldDescription="HTML role attribute to apply to the component."
+                                    fieldLabel="HTML role for screen reader to announce"
                                     name="./roleAttribute"
                                     value=""/>
                         </items>
@@ -213,7 +213,7 @@
                                     <breakBefore
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="Place"
+                                            fieldLabel="Location of the panel in Document of Record"
                                             name="./breakBeforeText"
                                             fieldDescription="Specifies where the panel is to be placed."
                                             type="beforeBreakPaginationType"
@@ -221,7 +221,7 @@
                                     <breakAfter
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="After"
+                                            fieldLabel="Area to fill in the Document of Record after placing the panel"
                                             name="./breakAfterText"
                                             fieldDescription="Specifies which area to fill after the panel is placed."
                                             type="afterBreakPaginationType"
@@ -229,7 +229,7 @@
                                     <overflow
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="Overflow"
+                                            fieldLabel="Area to fill when the panel spans across multiple pages of Document of Record"
                                             fieldDescription="Sets an overflow for a panel that spans pages."
                                             name="./overflowText"
                                             type="overflowPaginationType"
@@ -257,7 +257,7 @@
                                     </column>
                                     <table
                                             jcr:primaryType="nt:unstructured"
-                                            text="Table"
+                                            text="Row"
                                             value="tabular">
                                     </table>
                                 </items>

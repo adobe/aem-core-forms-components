@@ -17,7 +17,7 @@
 
 /// <reference types="cypress" />
 
-// This recipe is to test the AEM Forms Container Component functionality
+// This recipe is to test the Adaptive Forms Container Component functionality
 
 // We are going to test a few things:
 // 1. Open Edit layer
@@ -46,19 +46,19 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms container component', function () {
+        it('insert adaptive forms container component', function () {
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
-            // Add aem forms container component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "AEM Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
+            // Add adaptive forms container component and delete it
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
             // once component is added, to remove the overlay from being active, we click on body
             cy.get('body').click(0,0);
             cy.deleteComponentByPath(aemFormContainerDropPath);
         });
 
-        it('open edit dialog of aem forms container component', function() {
-            // click configure action on aem forms container component
+        it('open edit dialog of adaptive forms container component', function() {
+            // click configure action on adaptive forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
             // check if adaptive form is selected by default

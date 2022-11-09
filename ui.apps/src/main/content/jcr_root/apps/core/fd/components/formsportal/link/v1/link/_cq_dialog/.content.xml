@@ -107,7 +107,7 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="fd/fm/base/components/custompathfield"
                                                         editable="{Boolean}false"
-                                                        fieldLabel="Asset Path"
+                                                        fieldLabel="Path"
                                                         filter="formsportalSupportedForms"
                                                         name="./assetPath"
                                                         predicate="nosystem"

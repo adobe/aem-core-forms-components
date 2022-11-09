@@ -19,6 +19,7 @@
     jcr:title="Adaptive Form Container"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.container.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_container_v2"
     trackingFeature="core-components:adaptiveform-container:v2">
     <content
         jcr:primaryType="nt:unstructured"
