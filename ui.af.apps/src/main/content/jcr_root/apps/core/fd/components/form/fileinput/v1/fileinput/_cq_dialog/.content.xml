@@ -47,20 +47,6 @@
                                     name="./multiSelection"
                                     text="Allow multiple attachments"
                                     value="true"/>
-                            <minimum
-                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFiles"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Minimum number files"
-                                    name="./minItems"/>
-                            <maximum
-                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFiles"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="maximum number files"
-                                    name="./maxItems"/>
                             <buttonText
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="bindref"
@@ -89,6 +75,32 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+                            <minimum
+                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFiles"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Minimum number files"
+                                    name="./minItems"/>
+                            <minFilesMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when less than minimum Files are uploaded"
+                                    fieldLabel="Minimum files error message"
+                                    name="./minItemsMessage"/>
+                            <maximum
+                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFiles"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Maximum number files"
+                                    name="./maxItems"/>
+                            <maxFilesMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                    fieldDescription="Error message shown when more than maximum Files are uploaded"
+                                    fieldLabel="Maximum files error message"
+                                    name="./maxItemsMessage"/>
                             <fileSizeLimit
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
@@ -96,23 +108,11 @@
                                     name="./maxFileSize"
                                     defaultValue="">
                             </fileSizeLimit>
-                            <minFilesMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when less than minimum Files are uploaded"
-                                    fieldLabel="Min files error message"
-                                    name="./minItemsMessage"/>
-                            <maxFilesMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum Files are uploaded"
-                                    fieldLabel="Max files error message"
-                                    name="./maxItemsMessage"/>
                             <maxFileSizeMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when more than maximum File Size files are uploaded"
-                                    fieldLabel="Max file size error message"
+                                    fieldLabel="Maximum file size error message"
                                     name="./maxFileSizeMessage"/>
                             <mimeType
                                     jcr:primaryType="nt:unstructured"
