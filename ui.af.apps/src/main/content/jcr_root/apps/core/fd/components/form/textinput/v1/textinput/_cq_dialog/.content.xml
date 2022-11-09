@@ -265,19 +265,6 @@
                                     sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
                                     title="Validation Pattern">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <validationPatternType
-                                            jcr:primaryType="nt:unstructured"
-                                            granite:class="cmp-adaptiveform-textinput__validationpattern"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            fieldLabel="Type"
-                                            name="./validationPatternType">
-                                        <datasource
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                guideDataModel="basic"
-                                                fieldType="text-input"
-                                                type="formatters"/>
-                                    </validationPatternType>
                                     <validatePictureClause
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-adaptiveform-textinput__validationformat"
