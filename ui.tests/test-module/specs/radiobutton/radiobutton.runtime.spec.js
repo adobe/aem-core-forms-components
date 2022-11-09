@@ -99,7 +99,7 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"There is an error in the field");
         });
     });
 
