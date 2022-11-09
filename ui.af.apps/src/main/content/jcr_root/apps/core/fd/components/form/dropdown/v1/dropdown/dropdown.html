@@ -40,8 +40,9 @@
             readonly="${dropdown.readOnly}"
             required="${dropdown.required}"
             data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}">
-        <option id="emptyValue" role="none" style="display: none;"></option>
-        <option data-sly-test="${dropdown.placeHolder != null}" value="" disabled selected>${dropdown.placeHolder}</option>
+        <div data-sly-test.isPlaceHolderSet="${dropdown.placeHolder != null}" data-sly-unwrap></div>
+        <option data-sly-test="${!isPlaceHolderSet}" id="emptyValue" role="none" style="display: none;"></option>
+        <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
             <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
                 <option value="${dropdown.enums[enumNameList.index].toString}"
