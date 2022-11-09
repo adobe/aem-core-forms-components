@@ -156,6 +156,6 @@ describe( "Form Runtime with Panel Container", () => {
     });
 
     it("should toggle description and tooltip", () => {
-        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test', 'panel short', 'panel long');
     })
 })
