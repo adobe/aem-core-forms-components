@@ -43,7 +43,7 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                             fieldDescription="Path of Form Runtime Document."
-                                            fieldLabel="Form Runtime Document Path"
+                                            fieldLabel="Form runtime document path"
                                             nodeTypes="dam:Asset, nt:file"
                                             name="./formModelDocumentPath"
                                             required="{Boolean}true"
@@ -68,7 +68,7 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
                                             wrapperClass="cmp-adaptiveform-container__thankyouoption"
-                                            fieldLabel="On Submit"
+                                            fieldLabel="On submit"
                                             name="./thankYouOption">
                                         <items jcr:primaryType="nt:unstructured">
                                             <page
@@ -97,7 +97,7 @@
                                             jcr:primaryType="nt:unstructured"
                                             wrapperClass="cmp-adaptiveform-container__thankyoumessage"
                                             sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                            fieldLabel="Message Content"
+                                            fieldLabel="Message content"
                                             value="Thank you for submitting the form."
                                             name="./thankYouMessage"
                                             useFixedInlineToolbar="{Boolean}true">
@@ -169,7 +169,7 @@
                                             granite:class="cmp-adaptiveform-container__submitaction"
                                             emptyText="Select"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            fieldLabel="Submit Action"
+                                            fieldLabel="Submit action"
                                             name="./actionType">
                                         <datasource
                                                 jcr:primaryType="nt:unstructured"

@@ -72,7 +72,7 @@
                                   wrapperClass="cmp-adaptiveform-fileinput__type"
                                   granite:class="cmp-adaptiveform-fileinput__type"
                                   sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                  fieldLabel="Type of the Field"
+                                  fieldLabel="Type of the field"
                                   name="./type"
                                   value="file">
                             </type>
@@ -92,7 +92,7 @@
                             <fileSizeLimit
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    fieldLabel="Maximum File Size (MB)"
+                                    fieldLabel="Maximum file size (MB)"
                                     name="./maxFileSize"
                                     defaultValue="">
                             </fileSizeLimit>
@@ -100,19 +100,19 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when less than minimum Files are uploaded"
-                                    fieldLabel="Min Files Error Message"
+                                    fieldLabel="Min files error message"
                                     name="./minItemsMessage"/>
                             <maxFilesMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when more than maximum Files are uploaded"
-                                    fieldLabel="Max Files Error Message"
+                                    fieldLabel="Max files error message"
                                     name="./maxItemsMessage"/>
                             <maxFileSizeMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when more than maximum File Size files are uploaded"
-                                    fieldLabel="Max File Size Error Message"
+                                    fieldLabel="Max file size error message"
                                     name="./maxFileSizeMessage"/>
                             <mimeType
                                     jcr:primaryType="nt:unstructured"
@@ -128,7 +128,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types"
-                                    fieldLabel="File Type Error Message"
+                                    fieldLabel="File type error message"
                                     name="./acceptMessage"/>
                         </items>
                     </validation>

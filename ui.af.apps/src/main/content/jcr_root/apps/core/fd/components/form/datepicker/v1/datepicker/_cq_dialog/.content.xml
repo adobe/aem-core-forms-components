@@ -69,7 +69,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when the date entered is before the minimum date"
                                     granite:class="cmp-adaptiveform-datepicker__minimummessage"
-                                    fieldLabel="Minimum Error Message"
+                                    fieldLabel="Minimum error message"
                                     name="./minimumMessage"/>
                             <maximum
                                     jcr:primaryType="nt:unstructured"
@@ -84,7 +84,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when the date entered is after the maximum date"
                                     granite:class="cmp-adaptiveform-datepicker__maximummessage"
-                                    fieldLabel="Maximum Error Message"
+                                    fieldLabel="Maximum error message"
                                     name="./maximumMessage"/>
                         </items>
                     </validation>

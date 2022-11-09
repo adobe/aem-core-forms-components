@@ -130,7 +130,7 @@
                               wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
-                              fieldLabel="Autofill Attribute"
+                              fieldLabel="Autofill attribute"
                               forceSelection="{Boolean}true"
                               name="./autocomplete"
                               value="off">
@@ -235,7 +235,7 @@
                                     wrapperClass="cmp-adaptiveform-textinput__maxlength"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Maximum Number of Characters"
+                                    fieldLabel="Maximum Number of characters"
                                     min="0"
                                     name="./maxLength"/>
                             <maxLengthMessage
@@ -243,14 +243,14 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when more than maximum characters are entered"
                                     granite:class="cmp-adaptiveform-base__maxlengthmessage"
-                                    fieldLabel="Max Chars Error Message"
+                                    fieldLabel="Maximum characters error message"
                                     name="./maxLengthMessage"/>
                             <minLength
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__minlength"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Minimum Number of Characters"
+                                    fieldLabel="Minimum number of characters"
                                     min="0"
                                     name="./minLength"/>
                             <minLengthMessage
@@ -258,7 +258,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when less than minimum characters are entered"
                                     granite:class="cmp-adaptiveform-base__minlengthmessage"
-                                    fieldLabel="Min Chars Error Message"
+                                    fieldLabel="Minimum characters error message"
                                     name="./minLengthMessage"/>
                             <validationPatternGroup
                                     jcr:primaryType="nt:unstructured"
@@ -282,7 +282,7 @@
                                     <validatePictureClauseMessage
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                            fieldLabel="Error Message"
+                                            fieldLabel="Error message"
                                             name="./validatePictureClauseMessage"/>
                                 </items>
                             </validationPatternGroup>
