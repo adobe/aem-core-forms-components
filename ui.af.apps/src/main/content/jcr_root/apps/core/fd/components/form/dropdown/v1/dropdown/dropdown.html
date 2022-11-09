@@ -42,10 +42,10 @@
             data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}">
         <option data-sly-test="${dropdown.placeHolder != null}" value="" disabled selected>${dropdown.placeHolder}</option>
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
-            <div data-sly-test.enum="${dropdown.enums[enumNameList.index]}" data-sly-unwrap>
-                <option value="${enum}"
+            <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
+                <option value="${dropdown.enums[enumNameList.index].toString}"
                         class="cmp-adaptiveform-dropdown__option"
-                        data-sly-attribute.selected="${enum in dropdown.default ? 'selected' : ''}">${enumName}</option>
+                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName}</option>
             </div>
         </div>
     </select>
