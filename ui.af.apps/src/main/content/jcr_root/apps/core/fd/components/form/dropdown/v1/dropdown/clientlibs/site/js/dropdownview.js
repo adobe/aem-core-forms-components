@@ -92,7 +92,7 @@
 
         setModel(model) {
             super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
+            this.widget.addEventListener('change', (e) => {
                 if(this._model.isArrayType()) {
                     let valueArray = [];
                     [...this.widget].forEach((option) => {

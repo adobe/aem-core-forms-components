@@ -110,7 +110,7 @@ describe("Form with Dropdown", () => {
     it("Single Select: html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id);
-        cy.get(`#${id} select`).select("cauliflower").blur().then(x => {
+        cy.get(`#${id} select`).select("cauliflower").then(x => {
             expect(model.value).to.equal('c');
         });
     });
@@ -118,7 +118,7 @@ describe("Form with Dropdown", () => {
     it("Multi Select: html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[1]
         const model = formContainer._model.getElement(id);
-        cy.get(`#${id} select`).select(["bus","car", "bike"]).blur().then(x => {
+        cy.get(`#${id} select`).select(["bus","car", "bike"]).then(x => {
             expect(model.value).to.deep.equal([1,2,3]);
         });
     });
