@@ -123,6 +123,10 @@ describe("Form with Dropdown", () => {
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    });
+
     it("Single Select: Test clear dropdown using rule editor", () => {
         const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[2];
         const [idButton, fieldView2] = Object.entries(formContainer._fields)[0];
@@ -144,5 +148,4 @@ describe("Form with Dropdown", () => {
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
-
 })

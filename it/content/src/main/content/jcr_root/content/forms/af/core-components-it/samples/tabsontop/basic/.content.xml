@@ -45,6 +45,22 @@
                         name="datepicker2"
                         type="string"/>
             </tabsontop>
+            <tabsontop2
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Panel"
+              sling:resourceType="forms-components-examples/components/form/tabsontop"
+              assistPriority="name"
+              enabled="{Boolean}true"
+              fieldType="panel"
+              maxItems="4"
+              minItems="0"
+              name="tabsontop3"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              visible="{Boolean}true">
+            </tabsontop2>
         </guideContainer>
     </jcr:content>
 </jcr:root>
