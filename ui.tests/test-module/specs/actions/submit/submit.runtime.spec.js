@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form with Submit Button", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/submit/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
