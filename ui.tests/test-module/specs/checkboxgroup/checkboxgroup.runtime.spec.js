@@ -110,7 +110,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         })
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"There is an error in the field")
         })
     });
 
