@@ -17,7 +17,7 @@ describe( "Form Runtime with Panel Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
-
+    const bemBlock = 'cmp-container';
     let formContainer = null;
 
     beforeEach(() => {
@@ -155,4 +155,7 @@ describe( "Form Runtime with Panel Container", () => {
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test', 'panel short', 'panel long');
+    })
 })

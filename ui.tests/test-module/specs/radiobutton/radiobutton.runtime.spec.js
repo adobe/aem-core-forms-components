@@ -17,7 +17,7 @@ describe("Form with Radio Button Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/radiobutton/basic.html";
     let formContainer = null;
-
+    const bemBlock = 'cmp-adaptiveform-radiobutton';
     /**
      * initialization of form container before every test
      * */
@@ -103,4 +103,7 @@ describe("Form with Radio Button Input", () => {
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 })

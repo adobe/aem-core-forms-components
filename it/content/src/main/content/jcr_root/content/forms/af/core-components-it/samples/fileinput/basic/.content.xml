@@ -33,6 +33,18 @@
                 type="file"
                 jcr:title="File Input - 2"
                 sling:resourceType="forms-components-examples/components/form/fileinput"/>
+            <fileinput2
+              fieldType="file-input"
+              jcr:primaryType="nt:unstructured"
+              name="fileinput3"
+              accept="[application/pdf]"
+              type="file"
+              jcr:title="File Input - 3"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              sling:resourceType="forms-components-examples/components/form/fileinput"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

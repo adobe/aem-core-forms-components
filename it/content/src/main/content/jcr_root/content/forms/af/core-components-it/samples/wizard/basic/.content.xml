@@ -41,6 +41,22 @@
                         jcr:title="Text Input 1"
                         sling:resourceType="forms-components-examples/components/form/textinput"/>
             </wizard>
+            <wizard
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Wizard"
+              sling:resourceType="forms-components-examples/components/form/wizard"
+              assistPriority="name"
+              enabled="{Boolean}true"
+              fieldType="panel"
+              maxItems="4"
+              minItems="0"
+              name="wizard1662449848339"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              visible="{Boolean}true">
+            </wizard>
         </guideContainer>
     </jcr:content>
 </jcr:root>
