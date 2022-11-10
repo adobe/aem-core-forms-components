@@ -213,6 +213,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      */
     @Override
     public boolean isEnabled() {
+        if (getEditMode()) {
+            return true;
+        }
         return enabled;
     }
 
