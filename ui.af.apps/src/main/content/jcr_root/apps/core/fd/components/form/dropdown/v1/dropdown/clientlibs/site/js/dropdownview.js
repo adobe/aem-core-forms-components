@@ -79,10 +79,14 @@
         }
 
         _updateValue(value) {
+            if(value === null) {
+                this.widget.selectedIndex = -1;
+                return;
+            }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
                     if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
-                        option.setAttribute('selected', 'selected')
+                        option.setAttribute('selected', 'selected');
                     } else {
                         option.removeAttribute('selected');
                     }
@@ -92,7 +96,7 @@
 
         setModel(model) {
             super.setModel(model);
-            this.widget.addEventListener('blur', (e) => {
+            this.widget.addEventListener('change', (e) => {
                 if(this._model.isArrayType()) {
                     let valueArray = [];
                     [...this.widget].forEach((option) => {
