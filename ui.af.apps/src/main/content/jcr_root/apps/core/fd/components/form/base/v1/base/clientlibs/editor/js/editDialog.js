@@ -158,8 +158,6 @@
         validateName();
     }
 
-
-
     channel.on("foundation-contentloaded", function(e) {
         if ($(e.target).find(EDIT_DIALOG).length > 0) {
             Coral.commons.ready(e.target, function(component) {
