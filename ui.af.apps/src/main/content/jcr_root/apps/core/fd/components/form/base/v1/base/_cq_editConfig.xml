@@ -20,7 +20,7 @@
             editorType="plaintext">
         <inplaceEditingConfig
                 jcr:primaryType="nt:unstructured"
-                editElementQuery=".guideFieldLabel label"
+                editElementQuery="label:first-of-type"
                 textPropertyName="jcr:title"/>
     </cq:inplaceEditing>
 </jcr:root>
