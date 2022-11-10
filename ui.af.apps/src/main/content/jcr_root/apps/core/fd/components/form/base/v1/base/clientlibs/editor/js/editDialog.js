@@ -122,6 +122,22 @@
         }
     }
 
+    function validateName() {
+        var elementNameRegex = /^[\w\-]+$/;  // word char [A-Za-z0-9_] and '-'
+        // Validator for name field. Please use node-name-validation where we are creating a node with name using this field
+        $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+            selector : "[data-node-name-validation]",
+            validate : function (el) {
+                var name = el.value;
+
+                if (!elementNameRegex.test(name)) {
+                    // TODO: need to shift this validation string to appropriate file
+                    return Granite.I18n.getMessage("Element name should only contain characters, numbers or _-");
+                }
+            }
+        });
+    }
+
     /**
      * Initialise the conditional display of the various elements of the dialog.
      *
@@ -139,7 +155,10 @@
         handleAssistPriority(dialog);
         prefillEnumNames(dialog);
         showHideDoRBindRefField(dialog);
+        validateName();
     }
+
+
 
     channel.on("foundation-contentloaded", function(e) {
         if ($(e.target).find(EDIT_DIALOG).length > 0) {
