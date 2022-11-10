@@ -61,15 +61,13 @@
                 aria-label="Previous Button">
         </div>
 
-        <sly data-sly-repeat.child="${resource.listChildren}">
+        <sly data-sly-repeat="${wizard.exportedItems}">
             <div
-                    data-sly-use.stringStartsWithUtil="${'../../../../commons/v1/sightlyUtils/stringStartsWithUtil.js' @ outerString=child.name,stringToSearch='fd:'}"
-                    data-sly-test="${!(stringStartsWithUtil.startsWith)}"
                     role="tabpanel"
                     class="cmp-adaptiveform-wizard__wizardpanel"
-                    aria-labelledby="${child.name}_wizard-item-nav"
+                    aria-labelledby="${wizard.exportedItems[item].name}_wizard-item-nav"
                     data-cmp-hook-adaptiveFormWizard="wizardpanel">
-                <sly data-sly-resource="${child.path}">
+                <sly data-sly-resource=${item}>
                 </sly>
             </div>
         </sly>
