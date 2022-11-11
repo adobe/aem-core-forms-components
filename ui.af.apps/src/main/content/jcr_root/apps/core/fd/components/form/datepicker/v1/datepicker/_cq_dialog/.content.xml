@@ -61,7 +61,7 @@
                                     sling:orderBefore="guideGlobalLazyField"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
-                                    fieldLabel="Minimum date / Start date"
+                                    fieldLabel="Minimum date"
                                     emptyText="YYYY-MM-DD"
                                     name="./minimumDate"/>
                             <minimumMessage
@@ -76,7 +76,7 @@
                                     sling:orderBefore="guideGlobalLazyField"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
-                                    fieldLabel="Maximum date / End date"
+                                    fieldLabel="Maximum date"
                                     emptyText="YYYY-MM-DD"
                                     name="./maximumDate"/>
                             <maximumMessage

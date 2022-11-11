@@ -106,14 +106,14 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Minimum number of times a panel appears on the form"
+                                    fieldLabel="Minimum number of times the panel appears on the form"
                                     min="0"
                                     name="./minItems"/>
                             <maxItems
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Maximum number of times the field can appear on the form"
+                                    fieldLabel="Maximum number of times the panel can appear on the form"
                                     min="-1"
                                     name="./maxItems"/>
                         </items>
@@ -217,7 +217,7 @@
                                     <breakBefore
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="Location of the panel in Document of Record"
+                                            fieldLabel="Place"
                                             name="./breakBeforeText"
                                             fieldDescription="Specifies where the panel is to be placed."
                                             type="beforeBreakPaginationType"
@@ -225,7 +225,7 @@
                                     <breakAfter
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="Area to fill in the Document of Record after placing the panel"
+                                            fieldLabel="After"
                                             name="./breakAfterText"
                                             fieldDescription="Specifies which area to fill after the panel is placed."
                                             type="afterBreakPaginationType"
@@ -233,12 +233,11 @@
                                     <overflow
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/paginationpicker"
-                                            fieldLabel="Area to fill when the panel spans across multiple pages of Document of Record"
+                                            fieldLabel="Overflow"
                                             fieldDescription="Sets an overflow for a panel that spans pages."
                                             name="./overflowText"
                                             type="overflowPaginationType"
                                             emptyText = "None"/>
-
                                 </items>
                             </dorPagination>
 
@@ -261,7 +260,7 @@
                                     </column>
                                     <table
                                             jcr:primaryType="nt:unstructured"
-                                            text="Row"
+                                            text="Table Row"
                                             value="tabular">
                                     </table>
                                 </items>

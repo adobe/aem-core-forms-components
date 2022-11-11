@@ -44,7 +44,7 @@
                                   sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                   granite:class="cmp-adaptiveform-radiobutton__type"
                                   emptyText="Select"
-                                  fieldLabel="Data type of submit value"
+                                  fieldLabel="Data type of submitted value"
                                   required="{Boolean}true"
                                   name="./type"
                                   value="string">

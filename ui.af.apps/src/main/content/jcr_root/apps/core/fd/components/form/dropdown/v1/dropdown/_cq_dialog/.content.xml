@@ -70,7 +70,7 @@
                                     sling:orderBefore="saveValueType"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     name="./multiSelect"
-                                    text="Multiple selections"
+                                    text="Allows multiple selections"
                                     value="true"/>
                             <multiSelect-typehint
                                     jcr:primaryType="nt:unstructured"
