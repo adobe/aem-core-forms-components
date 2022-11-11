@@ -6,9 +6,9 @@
         cq:lastModifiedBy="admin"
         cq:tags="[]"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-        jcr:description="Display Adaptive Forms Container Component"
+        jcr:description="Display AEM Forms Container Component"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Adaptive Forms Container"
+        jcr:title="AEM Forms Container"
         sling:resourceType="forms-components-examples/components/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -24,7 +24,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;h1>Adaptive Forms Container&lt;sub>v1&lt;/sub>&lt;/h1>"
+                    text="&lt;h1>AEM Forms Container&lt;sub>v1&lt;/sub>&lt;/h1>"
                     textIsRich="true"/>
                 <text
                     cq:styleIds="[1544762734201]"
@@ -34,7 +34,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>The Adaptive Forms Container component is a server side component written in HTL, allowing to display any AEM Forms Asset like Interactive Communication or Adaptive Form"
+                    text="&lt;p>The AEM Forms Container component is a server side component written in HTL, allowing to display any AEM Forms Asset like Interactive Communication or Adaptive Form"
                     textIsRich="true"/>
                 <teaser
                     cq:styleIds="[1550165685463]"

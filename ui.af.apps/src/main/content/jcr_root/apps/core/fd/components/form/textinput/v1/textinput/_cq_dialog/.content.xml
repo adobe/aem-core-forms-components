@@ -40,13 +40,13 @@
                                     wrapperClass="cmp-adaptiveform-textinput__value"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Default text"
+                                    fieldLabel="Default value"
                                     name="./default"/>
                             <richTextValue
                                     jcr:primaryType="nt:unstructured"
                                     wrapperClass="cmp-adaptiveform-textinput__richtextvalue"
                                     sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                    fieldLabel="Default text"
+                                    fieldLabel="Default value"
                                     name="./_richTextValue@Delete"
                                     useFixedInlineToolbar="{Boolean}true">
                                 <rtePlugins jcr:primaryType="nt:unstructured">
