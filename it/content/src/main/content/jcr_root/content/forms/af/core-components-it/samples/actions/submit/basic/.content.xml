@@ -3,13 +3,13 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-11-08T11:23:54.838+05:30"
+            cq:lastModified="{Date}2022-11-11T15:45:33.955+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Basic"
-            sling:configRef="/conf/forms/core-components-it/samples/submit/basic/"
+            sling:configRef="/conf/forms/core-components-it/samples/actions/submit/basic/"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
@@ -18,20 +18,10 @@
                 fieldType="form"
                 thankYouOption="page"
                 themeRef="/libs/fd/af/themes/canvas">
-            <textinput
-                    jcr:created="{Date}2022-11-08T11:23:46.805+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2022-11-08T11:23:46.805+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    fieldType="text-input"
-                    name="textinput1667886826832"/>
             <submit
-                    jcr:created="{Date}2022-11-08T11:23:54.833+05:30"
+                    jcr:created="{Date}2022-11-11T15:45:33.951+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2022-11-08T11:23:54.833+05:30"
+                    jcr:lastModified="{Date}2022-11-11T15:45:33.951+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Submit"
@@ -39,7 +29,7 @@
                     actionType="submit"
                     dorExclusion="true"
                     fieldType="button"
-                    name="submit1667886834854">
+                    name="submit1668161733975">
                 <fd:rules
                         fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
                         jcr:primaryType="nt:unstructured"/>

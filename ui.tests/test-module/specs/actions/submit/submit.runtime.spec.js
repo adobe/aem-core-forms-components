@@ -40,11 +40,8 @@ describe("Form with Submit Button", () => {
     })
 
     it("Clicking the button should submit the form", () => {
-        const [id1, fieldView1] = Object.entries(formContainer._fields)[0] // Textbox
-        const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Submit button
-        const input = "Sample Text";
-        cy.get(`#${id1}`).find('input').type(input)
-        cy.get(`#${id2}`).click().then(x => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        cy.get(`#${id}`).click().then(x => {
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")
         })
     });
