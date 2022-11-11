@@ -49,6 +49,27 @@
                     orientation="horizontal"
                     type="string[]"
                     visible="{Boolean}true"/>
+            <checkboxgroup3
+              jcr:lastModified="{Date}2022-09-10T23:45:20.572+05:30"
+              jcr:lastModifiedBy="admin"
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Check Box Group 3"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+              assistPriority="label"
+              autocomplete="off"
+              enabled="{Boolean}true"
+              enum="[0,1,2,3]"
+              enumNames="[Item 1, Item 2, Item 3, Item 4]"
+              fieldType="checkbox-group"
+              mandatoryMessage="This is a custom required checkboxgroup"
+              required="true"
+              orientation="horizontal"
+              type="string[]"
+              visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
