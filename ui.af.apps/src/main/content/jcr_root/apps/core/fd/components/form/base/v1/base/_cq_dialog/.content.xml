@@ -279,7 +279,7 @@
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                               name="./tooltipVisible"
-                              text="Always show short description"
+                              text="Always show the Always show short description"
                               fieldDescription="Select the option to displays the short description and display no tooltip text when a user hovers on the component."
                               value="true"/>
                             <longDescription
