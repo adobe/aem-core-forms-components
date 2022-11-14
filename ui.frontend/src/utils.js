@@ -206,4 +206,11 @@ export default class Utils {
         }
         return prefillJson;
     }
+
+    /**
+     * detects safari browser
+     */
+    static isSafari() {
+        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    }
 }
