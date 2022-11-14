@@ -20,5 +20,14 @@
                 "jcr:primaryType": "nt:unstructured"
             }
         }
+    },
+    "formattertypedatasource": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "datasource" : {
+            "sling:resourceType": "core/fd/components/form/container/v1/datasource",
+            "type": "formatters",
+            "guideDataModel": "basic",
+            "fieldType": "number-input"
+        }
     }
 }
