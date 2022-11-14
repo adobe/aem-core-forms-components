@@ -126,7 +126,6 @@
                                         <datasource
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                guideDataModel="basic"
                                                 fieldType="number-input"
                                                 type="formatters"/>
                                     </displayPatternType>
