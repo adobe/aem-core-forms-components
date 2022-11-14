@@ -55,10 +55,6 @@ describe('Button - Authoring', function () {
             .should("exist");
         cy.get("coral-checkbox[name='./enabled']")
             .should("exist");
-        cy.get("[name='./tooltip']")
-            .should("exist");
-        cy.get("[name='./description']")
-            .should("exist");
         // cy.get("[name='./icon']")
         //     .should("exist");
 

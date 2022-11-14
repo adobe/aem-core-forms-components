@@ -20,6 +20,10 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/accordion"
+                id="tooltip_scenario_test"
+                description="This is long description"
+                tooltip="This is short description"
+                tooltipVisible="true"
                 fieldType="panel">
                 <item_1
                     jcr:primaryType="nt:unstructured"
