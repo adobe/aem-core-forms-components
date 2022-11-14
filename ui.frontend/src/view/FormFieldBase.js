@@ -177,7 +177,7 @@ export default class FormFieldBase extends FormField {
     _updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
           this.errorDiv.innerHTML = state.errorMessage;
-          if (state.hasOwnProperty("valid") && !state.valid && !state.errorMessage) {
+          if (state.valid === false && !state.errorMessage) {
             this.errorDiv.innerHTML = 'There is an error in the field';
           }
         }
