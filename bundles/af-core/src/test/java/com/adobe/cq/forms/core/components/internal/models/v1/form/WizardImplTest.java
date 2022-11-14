@@ -16,25 +16,24 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.Utils;
-import com.adobe.cq.forms.core.components.models.form.Panel;
-
-import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.msm.api.MSMNameConstants;
-import io.wcm.testing.mock.aem.junit5.AemContext;
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-import org.apache.sling.api.resource.Resource;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.models.form.Panel;
+import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.msm.api.MSMNameConstants;
+import io.wcm.testing.mock.aem.junit5.AemContext;
+import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
 public class WizardImplTest {
@@ -65,9 +64,9 @@ public class WizardImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport
-                        .stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                        .collect(Collectors.toList());
+                    .stream(childResources.spliterator(), false)
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
+                    .collect(Collectors.toList());
             }
         });
         Panel wizard = Utils.getComponentUnderTest(PATH_WIZARD, Panel.class, context);
