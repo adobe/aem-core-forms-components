@@ -207,10 +207,12 @@ export default class Utils {
         return prefillJson;
     }
 
-    /**
-     * detects safari browser
-     */
-    static isSafari() {
-        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    // Checks if the current browser matches with agentName passed
+    static isUserAgent(agentName) {
+        if(navigator.userAgent) {
+            let regex = "^((?!chrome|android).)*" + agentName;
+            const re = new RegExp(regex, 'i');
+            return re.test(navigator.userAgent);
+        }
     }
 }
