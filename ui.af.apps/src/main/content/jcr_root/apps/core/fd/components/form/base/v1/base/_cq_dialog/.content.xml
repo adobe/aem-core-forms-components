@@ -124,7 +124,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     granite:class="cmp-adaptiveform-base__visible"
                                     name="./visible"
-                                    text="Hide on form load"
+                                    text="Hide component"
                                     uncheckedValue="true"
                                     value="false">
                             </visible>
