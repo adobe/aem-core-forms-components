@@ -1,0 +1,10 @@
+{
+  "id": "image-799a5cf8ee",
+  "name": "emptyImage",
+  "visible": true,
+  "fieldType": "image",
+  ":type": "core/fd/components/form/image/v1/image",
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  }
+}
