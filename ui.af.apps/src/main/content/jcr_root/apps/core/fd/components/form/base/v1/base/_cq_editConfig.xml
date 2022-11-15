@@ -13,4 +13,14 @@
                 icon="bidRule"
                 text="Edit Rules"/>
     </cq:actionConfigs>
+    <cq:inplaceEditing
+            jcr:primaryType="cq:InplaceEditingConfig"
+            active="{Boolean}true"
+            configPath="inplaceEditingConfig"
+            editorType="plaintext">
+        <inplaceEditingConfig
+                jcr:primaryType="nt:unstructured"
+                editElementQuery="label:first"
+                textPropertyName="jcr:title"/>
+    </cq:inplaceEditing>
 </jcr:root>
