@@ -18,7 +18,7 @@
     class Accordion extends FormView.FormPanel {
 
         static NS = FormView.Constants.NS;
-        static IS = "accordion";
+        static IS = "adaptiveFormAccordion";
         static bemBlock = 'cmp-accordion'
         static selectors  = {
             self: `.${Accordion.bemBlock}`,
