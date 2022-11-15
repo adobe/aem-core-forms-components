@@ -7,5 +7,5 @@
             jcr:title="Footer"
             text="© YYYY Company name | All rights reserved"
             css="footerText"
-            sling:resourceType="wcm/foundation/components/text"/>
+            sling:resourceType="core/wcm/components/text/v2/text"/>
 </jcr:root>
