@@ -138,7 +138,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     granite:class="cmp-adaptiveform-base__enabled"
                                     name="./enabled"
-                                    text="Disable on form load"
+                                    text="Disable component"
                                     uncheckedValue="true"
                                     value="false">
                             </enabled>
