@@ -63,6 +63,12 @@
                   name="./icon"/>
               </items>
             </basic>
+            <help
+                  jcr:primaryType="nt:unstructured"
+                  jcr:title="Help Content"
+                  sling:resourceType="granite/ui/components/coral/foundation/container"
+                  sling:hideResource="true">
+            </help>
         </items>
       </tabs>
     </items>

@@ -99,7 +99,7 @@ describe("Form with File Input", () => {
                     expect(afFormData).to.exist // "af form data object not present in guideBridge#getFormDataObject API");
                     expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
                     expect(afFormData.contentType).to.equal("application/json");
-                    assert.equal(afFormData.attachments.length, 2, "incorrect attachments returned from guideBridge#getFormDataObject API");
+                    assert.equal(afFormData.attachments.length, 3, "incorrect attachments returned from guideBridge#getFormDataObject API");
                     afFormData.attachments.forEach(function(attachment) {
                         expect(attachment.dataRef).to.contain('fileinput');
                     });
@@ -113,5 +113,9 @@ describe("Form with File Input", () => {
             });
         });
     });
+
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 
 })

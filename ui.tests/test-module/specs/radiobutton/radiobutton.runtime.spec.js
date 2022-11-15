@@ -17,7 +17,7 @@ describe("Form with Radio Button Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/radiobutton/basic.html";
     let formContainer = null;
-
+    const bemBlock = 'cmp-adaptiveform-radiobutton';
     /**
      * initialization of form container before every test
      * */
@@ -99,8 +99,11 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"There is an error in the field");
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 })

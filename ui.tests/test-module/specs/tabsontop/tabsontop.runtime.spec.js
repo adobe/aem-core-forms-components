@@ -17,7 +17,7 @@
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
-
+    const bemBlock = 'cmp-tabs';
     let formContainer = null;
 
     beforeEach(() => {
@@ -113,4 +113,8 @@
         tab1().should('have.attr','aria-selected','true');
         tab2().should('have.attr','aria-selected','false');
     });
+
+   it("should toggle description and tooltip", () => {
+     cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+   })
 });
