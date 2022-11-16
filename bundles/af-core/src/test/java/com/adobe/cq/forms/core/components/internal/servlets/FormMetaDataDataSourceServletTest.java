@@ -176,12 +176,14 @@ public class FormMetaDataDataSourceServletTest {
     }
 
     @Test
-    public void testPictureClausePattern() throws Exception{
-        Class<?> formMetaDataDataSourceServletClass= Class.forName("com.adobe.cq.forms.core.components.internal.servlets.FormMetaDataDataSourceServlet");
-        Object formMetaDataDataSourceServlet= formMetaDataDataSourceServletClass.newInstance();
-        Method  shouldAddPatternMethod=formMetaDataDataSourceServletClass.getDeclaredMethod("shouldAddPattern",String.class,String.class);
+    public void testPictureClausePattern() throws Exception {
+        Class<?> formMetaDataDataSourceServletClass = Class.forName(
+            "com.adobe.cq.forms.core.components.internal.servlets.FormMetaDataDataSourceServlet");
+        Object formMetaDataDataSourceServlet = formMetaDataDataSourceServletClass.newInstance();
+        Method shouldAddPatternMethod = formMetaDataDataSourceServletClass.getDeclaredMethod("shouldAddPattern", String.class,
+            String.class);
         shouldAddPatternMethod.setAccessible(true);
-        assertFalse((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet,"text-input","text{999-99-9999}"));
-        assertTrue((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet,"text-input","999-99-9999"));
+        assertFalse((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet, "text-input", "text{999-99-9999}"));
+        assertTrue((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet, "text-input", "999-99-9999"));
     }
 }
