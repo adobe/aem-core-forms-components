@@ -126,6 +126,7 @@
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-adaptiveform-datepicker__displayformat"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="The format in which the value will be displayed to the user"
                                             fieldLabel="Format"
                                             name="./displayFormat">
                                     </displayPictureClause>

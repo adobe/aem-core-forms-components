@@ -102,23 +102,59 @@ public class FormMetaDataDataSourceServletTest {
     }
 
     @Test
-    public void testDataSourceForFormatters() throws Exception {
+    public void testDataSourceForNumberInputFormatters() throws Exception {
         ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
         componentDescriptions.add(formatters);
 
         Resource mockedResource = Mockito.mock(Resource.class);
         ValueMap mockedValueMap = new MockValueMap(mockedResource);
+        mockedValueMap.put("pattern1", "pat=num{999-99-9999}");
+        mockedValueMap.put("abc", "cat=num{999-99-9999}");
+
         Resource dataSourceResource = Mockito.mock(Resource.class);
         ValueMap dataSourceValueMap = new MockValueMap(dataSourceResource);
-        mockedValueMap.put("pattern1", "pat=text{999-99-9999}");
-        mockedValueMap.put("abc", "cat=text{999-99-9999}");
         dataSourceValueMap.put("fieldType", "number-input");
         dataSourceValueMap.put("type", "formatters");
 
         ResourceResolver mockedResourceResolver = Mockito.mock(ResourceResolver.class);
         MockSlingHttpServletRequest mockSlingHttpServletRequest = Mockito.mock(MockSlingHttpServletRequest.class);
+
         doReturn("formatters").when(expressionResolver).resolve("formatters", null, String.class, mockSlingHttpServletRequest);
         doReturn("number-input").when(expressionResolver).resolve("number-input", null, String.class, mockSlingHttpServletRequest);
+        doReturn(mockedResource).when(mockSlingHttpServletRequest).getResource();
+        doReturn(mockedResourceResolver).when(mockSlingHttpServletRequest).getResourceResolver();
+        when(mockedResource.getChild(Config.DATASOURCE)).thenReturn(dataSourceResource);
+        when(dataSourceResource.getValueMap()).thenReturn(dataSourceValueMap);
+        when(mockedResourceResolver.adaptTo(FormMetaData.class)).thenReturn(formMetaDataMock);
+        when(formMetaDataMock.getFormatters(any())).thenReturn(componentDescriptions.iterator());
+        when(mockedResourceResolver.getResource(any())).thenReturn(mockedResource);
+        when(mockedResource.getValueMap()).thenReturn(mockedValueMap);
+        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
+        // set expression resolver mock
+        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
+        dataSourceServlet.doGet(mockSlingHttpServletRequest, context.response());
+    }
+
+    @Test
+    public void testDataSourceForTextInputFormatters() throws Exception {
+        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
+        componentDescriptions.add(formatters);
+
+        Resource mockedResource = Mockito.mock(Resource.class);
+        ValueMap mockedValueMap = new MockValueMap(mockedResource);
+        mockedValueMap.put("pattern1", "pat=text{999-99-9999}");
+        mockedValueMap.put("abc", "cat=text{999-99-9999}");
+
+        Resource dataSourceResource = Mockito.mock(Resource.class);
+        ValueMap dataSourceValueMap = new MockValueMap(dataSourceResource);
+        dataSourceValueMap.put("fieldType", "text-input");
+        dataSourceValueMap.put("type", "formatters");
+
+        ResourceResolver mockedResourceResolver = Mockito.mock(ResourceResolver.class);
+        MockSlingHttpServletRequest mockSlingHttpServletRequest = Mockito.mock(MockSlingHttpServletRequest.class);
+
+        doReturn("formatters").when(expressionResolver).resolve("formatters", null, String.class, mockSlingHttpServletRequest);
+        doReturn("text-input").when(expressionResolver).resolve("text-input", null, String.class, mockSlingHttpServletRequest);
         doReturn(mockedResource).when(mockSlingHttpServletRequest).getResource();
         doReturn(mockedResourceResolver).when(mockSlingHttpServletRequest).getResourceResolver();
         when(mockedResource.getChild(Config.DATASOURCE)).thenReturn(dataSourceResource);

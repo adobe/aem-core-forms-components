@@ -308,6 +308,7 @@
                                     <displayPictureClause
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-adaptiveform-textinput__displayformat"
+                                            fieldDescription="The format in which the value will be displayed to the user"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldLabel="Format"
                                             name="./displayFormat">

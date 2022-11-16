@@ -147,6 +147,11 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             switch (type) {
                 case FORMATTERS:
                     metaDataList = formMetaData.getFormatters(fieldType);
+                    Map<String, Object> firstEntry = new HashMap<>();
+                    firstEntry.put("text", "Select");
+                    firstEntry.put("value", "");
+                    ValueMap firstEntryVm = new ValueMapDecorator(firstEntry);
+                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, firstEntryVm));
                     while (metaDataList.hasNext()) {
                         FormsManager.ComponentDescription componentDescription = metaDataList.next();
                         Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
@@ -162,19 +167,21 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                                     Map<String, Object> respObj = new HashMap<>();
                                     String value = (String) entry.getValue();
                                     String[] arr = value.split("=", 2);
-                                    respObj.put("text", arr[0]);
-                                    respObj.put("value", arr[1]);
-                                    ValueMap vm = new ValueMapDecorator(respObj);
-                                    resources.add(new ValueMapResource(resourceResolver, path, JcrConstants.NT_UNSTRUCTURED, vm));
+                                    if (this.shouldAddPattern(fieldType, arr[1])) {
+                                        respObj.put("text", arr[0]);
+                                        respObj.put("value", arr[1]);
+                                        ValueMap vm = new ValueMapDecorator(respObj);
+                                        resources.add(new ValueMapResource(resourceResolver, path, JcrConstants.NT_UNSTRUCTURED, vm));
+                                    }
                                 }
                             }
-                            Map<String, Object> customEntry = new HashMap<>();
-                            customEntry.put("text", "Custom");
-                            customEntry.put("value", "custom");
-                            ValueMap vm = new ValueMapDecorator(customEntry);
-                            resources.add(new ValueMapResource(resourceResolver, path, JcrConstants.NT_UNSTRUCTURED, vm));
                         }
                     }
+                    Map<String, Object> customEntry = new HashMap<>();
+                    customEntry.put("text", "Custom");
+                    customEntry.put("value", "custom");
+                    ValueMap customEntryVm = new ValueMapDecorator(customEntry);
+                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, customEntryVm));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
@@ -197,6 +204,15 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             }
         }
         return resources;
+    }
+
+    private Boolean shouldAddPattern(String fieldType, String s) {
+        switch (fieldType) {
+            case "text-input":
+                return !s.startsWith("text{") && s.endsWith("}");
+            default:
+                return true;
+        }
     }
 
     private List<Resource> getResourceListFromComponentDescription(
