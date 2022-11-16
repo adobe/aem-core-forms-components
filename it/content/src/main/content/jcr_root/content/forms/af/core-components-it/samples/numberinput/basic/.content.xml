@@ -38,6 +38,16 @@
                     visible="{Boolean}true"
                     enabled="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/numberinput"/>
+            <numberinput4
+              fieldType="number-input"
+              jcr:primaryType="nt:unstructured"
+              name="numberinput4"
+              jcr:title="Number Input 4"
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              sling:resourceType="forms-components-examples/components/form/numberinput"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

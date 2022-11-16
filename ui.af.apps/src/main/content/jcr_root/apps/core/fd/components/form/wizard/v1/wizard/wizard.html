@@ -28,13 +28,14 @@
         data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
         data-panelcontainer="wizard"
         id="${wizard.id}"
-        class="cmp-adaptiveform-wizard cmp-adaptiveform-wizard__widget"
+        class="cmp-adaptiveform-wizard"
         data-placeholder-text="${'Please drag Wizard components here' @ i18n}">
         <div data-sly-call="${label.label @componentId=wizard.id, labelValue=wizard.label.value, labelVisible=wizard.label.visible, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=wizard.id, shortDescriptionVisible=wizard.tooltipVisible, shortDescription=wizard.tooltip, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${longDescription.longDescription @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
 
+      <div class="cmp-adaptiveform-wizard__widget">
         <div
             class="cmp-adaptiveform-wizard__tabs-container">
             <ol id="${wizard.id}_guide-item-nav-container"
@@ -60,15 +61,16 @@
                 aria-label="Previous Button">
         </div>
 
-        <div
-            data-sly-repeat.child="${resource.listChildren}"
-            role="tabpanel"
-            class="cmp-adaptiveform-wizard__wizardpanel"
-            aria-labelledby="${child.name}_wizard-item-nav"
-            data-cmp-hook-adaptiveFormWizard="wizardpanel">
-            <sly data-sly-resource="${child.name}">
-            </sly>
-        </div>
+        <sly data-sly-repeat="${wizard.exportedItems}">
+            <div
+                    role="tabpanel"
+                    class="cmp-adaptiveform-wizard__wizardpanel"
+                    aria-labelledby="${wizard.exportedItems[item].name}_wizard-item-nav"
+                    data-cmp-hook-adaptiveFormWizard="wizardpanel">
+                <sly data-sly-resource=${item}>
+                </sly>
+            </div>
+        </sly>
 
         <div
                 class="cmp-adaptiveform-wizard__nextNav"
@@ -76,6 +78,7 @@
                 role="navigation"
                 aria-label="Next Button">
         </div>
+      </div>
 
         <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}">
         </sly>
