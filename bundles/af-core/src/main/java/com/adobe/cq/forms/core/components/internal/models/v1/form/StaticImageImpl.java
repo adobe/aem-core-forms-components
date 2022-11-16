@@ -65,8 +65,13 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public String getImageSrc() throws RepositoryException, IOException {
         image = new Image(this.resource);
-        image.setSelector(".img");
-        return image.getSrc();
+        boolean containsData = (image.getData() != null);
+        if (containsData) {
+            image.setSelector(".img");
+            return image.getSrc();
+        } else {
+            return null;
+        }
     }
 
     @Override
