@@ -37,6 +37,7 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -76,10 +77,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     protected String typeJcr; // todo: note this should never be array, we infer array types based on other metadata
     protected Type type;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String validationExpression;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
     @Default(booleanValues = false)
@@ -451,7 +448,15 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @Override
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getValidationExpression() {
-        return validationExpression;
+        Resource fdRules = resource.getChild("fd:rules");
+        if (fdRules != null) {
+            ValueMap map = fdRules.getValueMap();
+            if (map.containsKey("validationExpression")) {
+                return map.get("validationExpression", "");
+            }
+        }
+        return null;
     }
 }
