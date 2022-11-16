@@ -209,7 +209,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private Boolean shouldAddPattern(String fieldType, String s) {
         switch (fieldType) {
             case "text-input":
-                return !s.startsWith("text{") && s.endsWith("}");
+                return !(s.startsWith("text{") && s.endsWith("}"));
             default:
                 return true;
         }

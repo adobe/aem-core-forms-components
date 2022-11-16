@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.servlets;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -172,5 +173,15 @@ public class FormMetaDataDataSourceServletTest {
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, FormMetaData.class,
             (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
+    }
+
+    @Test
+    public void testPictureClausePattern() throws Exception{
+        Class<?> formMetaDataDataSourceServletClass= Class.forName("com.adobe.cq.forms.core.components.internal.servlets.FormMetaDataDataSourceServlet");
+        Object formMetaDataDataSourceServlet= formMetaDataDataSourceServletClass.newInstance();
+        Method  shouldAddPatternMethod=formMetaDataDataSourceServletClass.getDeclaredMethod("shouldAddPattern",String.class,String.class);
+        shouldAddPatternMethod.setAccessible(true);
+        assertFalse((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet,"text-input","text{999-99-9999}"));
+        assertTrue((Boolean) shouldAddPatternMethod.invoke(formMetaDataDataSourceServlet,"text-input","999-99-9999"));
     }
 }
