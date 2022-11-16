@@ -159,6 +159,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @Override
+    @JsonIgnore
     public String getDataUrl() {
         if (getCurrentPage() != null) {
             return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(getCurrentPage()
