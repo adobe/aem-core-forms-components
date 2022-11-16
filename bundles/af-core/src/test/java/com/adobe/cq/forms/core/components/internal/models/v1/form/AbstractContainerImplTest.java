@@ -49,4 +49,11 @@ public class AbstractContainerImplTest {
         assertEquals(null, abstractContainerMock.getDorProperties().get("dorTemplateRef"));
     }
 
+    @Test
+    void testGetValidationExpression() {
+        AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
+        Mockito.when(abstractContainerMock.getDorProperties()).thenCallRealMethod();
+        assertEquals(null, abstractContainerMock.getValidationExpression());
+    }
+
 }
