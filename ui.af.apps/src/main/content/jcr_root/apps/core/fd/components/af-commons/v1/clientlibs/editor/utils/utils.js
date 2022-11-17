@@ -161,6 +161,59 @@
             };
         }
 
+        static handlePatternDropDown(dialog, patternClass, formatClass) {
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
+            _managePatternDynamicBehaviour();
+            patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
+            function _managePatternDynamicBehaviour() {
+                var displayPatternSelectedValue = patternComponent.selectedItem.innerHTML;
+                var patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
+                if(patternComponentOptionsNodeList.length<=2 ){
+                  //there are 2 default options, "Select" and "custom".
+                    // For this dropdown to be visible it should have atleast one other option
+                    var patternComponentParentDiv=patternComponent.closest("div");
+                    patternComponentParentDiv.setAttribute("hidden", true);
+                }else {
+                    var displayFormatParentDiv=formatComponent.closest("div");
+                    switch (displayPatternSelectedValue) {
+                        case "Select"     :
+                        case "No Pattern" :
+                            displayFormatParentDiv.setAttribute("hidden", true);
+                            break;
+                        default           :
+                            displayFormatParentDiv.removeAttribute("hidden");
+                    }
+                }
+                if(displayPatternSelectedValue!="Custom") {
+                    formatComponent.value = patternComponent.value;
+                }
+            }
+        }
+
+        static handlePatternFormat(dialog, patternClass, formatClass){
+
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
+            _manageFormatChange()
+            formatComponent.addEventListener("change", _manageFormatChange );
+            function _manageFormatChange(){
+                var itemFound=false;
+                if(formatComponent.value!=patternComponent.value){
+                    patternComponent.items.getAll().forEach(function (item) {
+                        if (item.value == formatComponent.value) {
+                            item.selected = true;
+                            itemFound = true;
+                        }
+                    });
+                    if(!itemFound){
+                        patternComponent.value="custom";
+                    }
+                }
+
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);
