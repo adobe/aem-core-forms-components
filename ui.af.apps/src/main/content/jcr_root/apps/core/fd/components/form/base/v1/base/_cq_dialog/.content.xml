@@ -451,9 +451,9 @@
                                     value="Boolean"/>
                             <dorColspan
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     disabled="false"
-                                    emptyText=""
+                                    defaultValue=""
                                     fieldDescription="Enter number of columns the field should span in Document of Record. Supported only for Column layout in Document of Record."
                                     fieldLabel="Colspan for Document of Record"
                                     name="./dorColspan"
