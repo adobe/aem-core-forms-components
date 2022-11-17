@@ -97,7 +97,6 @@
         Utils.handlePatternFormat(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleDisplayPatternDropDown,handleDisplayFormat,
-        handleEditPatternDropDown,handleEditFormat);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleValidationPatternDropDown,handleValidationFormat);
 
 })(jQuery);
