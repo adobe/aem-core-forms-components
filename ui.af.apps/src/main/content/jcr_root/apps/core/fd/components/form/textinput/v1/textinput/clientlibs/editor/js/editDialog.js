@@ -23,12 +23,6 @@
         BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
         TEXTINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__value",
         TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
-        TEXTINPUT_AUTOCOMPLETE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autocomplete",
-        TEXTINPUT_AUTOFILL_FIELD_KEYWORD = EDIT_DIALOG + " .cmp-adaptiveform-textinput__autofillfieldkeyword",
-        TEXTINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displaypattern",
-        TEXTINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displayformat",
-        TEXTINPUT_EDITPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__editpattern",
-        TEXTINPUT_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__editformat",
         TEXTINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationpattern",
         TEXTINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
@@ -72,21 +66,6 @@
             var filteredValue =  $('<div>').html(textInputValue[0].value).text();
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
-    }
-    function handleDisplayPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
-    }
-
-    function handleDisplayFormat(dialog){
-        Utils.handlePatternFormat(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
-    }
-
-    function handleEditPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,TEXTINPUT_EDITPATTERN,TEXTINPUT_EDITFORMAT);
-    }
-
-    function handleEditFormat(dialog){
-        Utils.handlePatternFormat(dialog,TEXTINPUT_EDITPATTERN,TEXTINPUT_EDITFORMAT);
     }
 
     function handleValidationPatternDropDown(dialog) {
