@@ -190,7 +190,7 @@ export default class FormPanel extends FormFieldBase {
      */
     _applyState(state) {
         this._updateVisible(state.visible);
-        this._updateEnable(state.enabled);
+        this._updateEnable(this._model.enabled);
         this._initializeHelpContent(state);
     }
 
