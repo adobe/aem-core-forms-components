@@ -39,7 +39,7 @@
             type="number"
             name="${numberinput.name}"
             value="${numberinput.default}"
-            max="${numberinput.maximum}"
+            max="${numberinput.exclusiveMaximum ? 50 : numberinput.maximum}"
             min="${numberinput.minimum}"
             disabled="${!numberinput.enabled}"
             readonly="${numberinput.readOnly}"
