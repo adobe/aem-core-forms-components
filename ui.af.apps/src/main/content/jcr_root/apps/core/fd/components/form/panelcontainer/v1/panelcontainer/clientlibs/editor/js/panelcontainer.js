@@ -40,7 +40,10 @@
             } else if (dialogContent.querySelector("[data-cmp-container-v1-dialog-policy-hook]")) {
                 handlePolicyDialog(dialogContent);
             }
+
+            handleWrapData(dialogContent);
         }
+
     });
 
     /**
@@ -90,6 +93,42 @@
             toggleable.show();
         } else {
             toggleable.hide();
+        }
+    }
+
+    function handleWrapData(containerEditor) {
+        let bindRef = containerEditor.querySelector(".bindRefTextField");
+        let minInputField = containerEditor.querySelector("coral-numberinput[name='./minItems']");
+        let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
+
+        function isRepeatable() {
+            // will there be a case where the user would input max as -1 ?
+            return minInputField.value.length > 0 && parseInt(minInputField.value) > 1 || parseInt(minInputField.value) <= parseInt(maxInputField.value);
+        }
+
+        // checking for repeatablity of panel on dialog initialisation
+        if(isRepeatable()) {
+            makeWrapDataReadOnly(true);
+        }
+
+        bindRef.addEventListener("change", function () {
+            makeWrapDataReadOnly(this.value.length > 0);
+        });
+
+        minInputField.addEventListener("change", function () {
+            makeWrapDataReadOnly(isRepeatable());
+        });
+
+        maxInputField.addEventListener("change", function () {
+            makeWrapDataReadOnly(isRepeatable());
+        });
+
+        function makeWrapDataReadOnly(status) {
+            let checkbox = containerEditor.querySelector(".cmp-adaptiveform-panel__wrapData");
+            if(checkbox) {
+                checkbox.checked = status;
+                checkbox.disabled = status;
+            }
         }
     }
 

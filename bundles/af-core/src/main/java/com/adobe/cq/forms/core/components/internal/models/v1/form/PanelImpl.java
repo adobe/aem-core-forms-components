@@ -19,6 +19,8 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -26,6 +28,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -37,6 +40,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PanelImpl extends AbstractContainerImpl implements Panel {
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "wrapData")
+    @JsonIgnore
+    protected boolean wrapData;
+
     @JsonIgnore
     @Override
     public boolean isRequired() {
@@ -44,11 +51,18 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Type getType() {
-        if (minItems != null && maxItems != null) {
-            return Type.ARRAY;
-        } else {
-            return Type.OBJECT;
+        boolean isRepeatable = minItems != null && maxItems != null; // (minItems > 1) && (minItems <= maxItems) should we check this also here?
+       // we are already doing the check for dataRef and repeatability in dialog so is it required here?
+        if (wrapData || getDataRef() != null || isRepeatable) {
+            if (isRepeatable) {
+                return Type.ARRAY;
+            } else {
+                return Type.OBJECT;
+            }
         }
+        return null;
     }
+
 }
