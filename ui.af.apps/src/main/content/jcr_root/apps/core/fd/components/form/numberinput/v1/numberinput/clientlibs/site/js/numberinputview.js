@@ -90,6 +90,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new NumberInput({element})
+        return new NumberInput({element,formContainer})
     }, NumberInput.selectors.self);
 })();
