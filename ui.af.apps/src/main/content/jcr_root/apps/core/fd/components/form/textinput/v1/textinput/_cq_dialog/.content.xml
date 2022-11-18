@@ -267,32 +267,33 @@
                                 <items jcr:primaryType="nt:unstructured">
                                     <validationPatternType
                                             jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-textinput__validationpattern"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                             fieldLabel="Type"
-                                            name="./validationPatternType">
+                                            name="./validatePictureClauseMessage">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                fieldType="text-input"
+                                                type="formatters"/>
                                     </validationPatternType>
-                                    <validatePictureClause
+                                    <validateFormat
                                             jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-textinput__validationformat"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldDescription="Regular Expression is permitted."
                                             fieldLabel="Pattern"
                                             name="./pattern">
-                                    </validatePictureClause>
+                                    </validateFormat>
                                     <validatePictureClauseMessage
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                             fieldLabel="Error Message"
-                                            name="./validatePictureClauseMessage"/>
+                                            name="./validatePatternMessage"/>
                                 </items>
                             </validationPatternGroup>
                         </items>
                     </validation>
-                    <patterns
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Formats"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured"/>
-                    </patterns>
                     <help
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Help Content"
