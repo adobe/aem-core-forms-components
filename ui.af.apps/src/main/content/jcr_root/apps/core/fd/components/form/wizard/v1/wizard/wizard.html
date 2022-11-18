@@ -61,15 +61,16 @@
                 aria-label="Previous Button">
         </div>
 
-        <div
-            data-sly-repeat.child="${resource.listChildren}"
-            role="tabpanel"
-            class="cmp-adaptiveform-wizard__wizardpanel"
-            aria-labelledby="${child.name}_wizard-item-nav"
-            data-cmp-hook-adaptiveFormWizard="wizardpanel">
-            <sly data-sly-resource="${child.name}">
-            </sly>
-        </div>
+        <sly data-sly-repeat="${wizard.exportedItems}">
+            <div
+                    role="tabpanel"
+                    class="cmp-adaptiveform-wizard__wizardpanel"
+                    aria-labelledby="${wizard.exportedItems[item].name}_wizard-item-nav"
+                    data-cmp-hook-adaptiveFormWizard="wizardpanel">
+                <sly data-sly-resource=${item}>
+                </sly>
+            </div>
+        </sly>
 
         <div
                 class="cmp-adaptiveform-wizard__nextNav"

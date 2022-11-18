@@ -1,0 +1,34 @@
+{
+  "wizard": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "wizard",
+    "jcr:lastModifiedBy": "admin",
+    "jcr:created": "Mon Nov 14 2022 16:09:34 GMT+0530",
+    "name": "wizard1668422374531",
+    "jcr:lastModified": "Mon Nov 14 2022 16:09:34 GMT+0530",
+    "sling:resourceType": "forms-components-examples/components/form/wizard",
+    "fieldType": "panel",
+    "numberinput": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:createdBy": "admin",
+      "jcr:title": "Number Input",
+      "jcr:lastModifiedBy": "admin",
+      "jcr:created": "Mon Nov 14 2022 16:09:39 GMT+0530",
+      "name": "numberinput1668422379604",
+      "jcr:lastModified": "Mon Nov 14 2022 16:09:39 GMT+0530",
+      "sling:resourceType": "forms-components-examples/components/form/numberinput",
+      "fieldType": "number-input"
+    },
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "fd:visible": [
+        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"VISIBLE_EXPRESSION\",\"items\":[{\"nodeName\":\"AFCOMPONENT\",\"value\":{\"id\":\"$form.wizard1668422374531\",\"type\":\"AFCOMPONENT\",\"name\":\"wizard1668422374531\"}},{\"nodeName\":\"When\",\"value\":null},{\"nodeName\":\"CONDITIONORALWAYS\",\"choice\":null},{\"nodeName\":\"Else\",\"value\":null},{\"nodeName\":\"DONOTHING_OR_SHOW\",\"choice\":{\"nodeName\":\"Show\",\"value\":null}}]}}],\"isValid\":true,\"enabled\":true,\"version\":1,\"script\":\"false()\",\"eventName\":\"Visibility\",\"ruleType\":\"\",\"description\":\"\"}"
+      ],
+      "visible": "false()"
+    },
+    "fd:events": {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  }
+}

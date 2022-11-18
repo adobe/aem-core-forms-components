@@ -170,16 +170,16 @@ export default class FormFieldBase extends FormField {
         if (this.errorDiv) {
             this.toggle(valid, Constants.ARIA_INVALID, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
-            if (typeof state.errorMessage !== "string" || state.errorMessage === "") {
-                const errMessage = valid === true ? '' : 'There is an error in the field';
-                this.errorDiv.innerHTML = errMessage;
-            }
+            this._updateErrorMessage(state.errorMessage, state);
         }
     }
 
     _updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = (state.errorMessage)? state.errorMessage : 'There is an error in the field';
+          this.errorDiv.innerHTML = state.errorMessage;
+          if (state.valid === false && !state.errorMessage) {
+            this.errorDiv.innerHTML = 'There is an error in the field';
+          }
         }
     }
 

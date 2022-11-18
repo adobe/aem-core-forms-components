@@ -16,7 +16,10 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -48,6 +51,10 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
 
     private List<? extends ComponentExporter> childrenModels;
 
+    protected Map<String, ? extends ComponentExporter> itemModels;
+
+    protected List<Resource> filteredChildComponents;
+
     @Override
     public Integer getMinItems() {
         return minItems;
@@ -68,24 +75,54 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
 
     protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<T> models = new ArrayList<>();
-
-        for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-            if (!child.getName().startsWith("fd:")) {
-                T model = null;
-                if (request != null) {
-                    // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
-                    model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
-                } else {
-                    model = child.adaptTo(modelClass);
-                    if (model instanceof Base && i18n != null) {
-                        ((Base) model).setI18n(i18n);
-                    }
+        List<Resource> filteredChildrenResources = getFilteredChildrenResources();
+        for (Resource child : filteredChildrenResources) {
+            T model = null;
+            if (request != null) {
+                // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
+                model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+            } else {
+                model = child.adaptTo(modelClass);
+                if (model instanceof Base && i18n != null) {
+                    ((Base) model).setI18n(i18n);
                 }
-                if (model != null) {
-                    models.add(model);
+            }
+            if (model != null) {
+                models.add(model);
+            }
+        }
+        return models;
+    }
+
+    @Override
+    public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
+        if (itemModels == null) {
+            itemModels = getItemModels(request, ComponentExporter.class);
+        }
+        return itemModels;
+    }
+
+    private List<Resource> getFilteredChildrenResources() {
+        if (filteredChildComponents == null) {
+            filteredChildComponents = new LinkedList<>();
+            for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
+                if (!child.getName().startsWith("fd:")) {
+                    filteredChildComponents.add(child);
                 }
             }
         }
+        return filteredChildComponents;
+    }
+
+    protected Map<String, ComponentExporter> getItemModels(@NotNull final SlingHttpServletRequest request,
+        @NotNull final Class<ComponentExporter> modelClass) {
+        Map<String, ComponentExporter> models = new LinkedHashMap<>();
+        getFilteredChildrenResources().forEach(child -> {
+            ComponentExporter model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
+            if (model != null) {
+                models.put(child.getPath(), model);
+            }
+        });
         return models;
     }
 }
