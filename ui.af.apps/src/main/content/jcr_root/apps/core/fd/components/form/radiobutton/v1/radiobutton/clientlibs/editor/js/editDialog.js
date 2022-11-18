@@ -42,6 +42,12 @@
         });
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange);
+    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
+        '.cmp-adaptiveform-radiobutton__type coral-button-label',
+        '.cmp-adaptiveform-radiobutton__value',
+        '.cmp-adaptiveform-base__enum'
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);
 
 })(jQuery);

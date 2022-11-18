@@ -42,6 +42,12 @@
         });
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange);
+    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
+        '.cmp-adaptiveform-checkboxgroup__type coral-button-label',
+        '.cmp-adaptiveform-checkboxgroup__value input',
+        '.cmp-adaptiveform-base__enum'
+        );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);
 
 })(jQuery);

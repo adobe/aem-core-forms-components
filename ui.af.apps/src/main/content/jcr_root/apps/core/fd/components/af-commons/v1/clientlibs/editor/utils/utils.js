@@ -161,6 +161,49 @@
             };
         }
 
+        static registerDialogValueTypeValidators(dataTypeSelector, defaultTypeSelector, enumSelector) {
+            return function registerDialogValidators() {
+                var isBoolean = function(value) {
+                    var isBoolean = false;
+                    if (value) {
+                        var lowerCaseValue = value.toLowerCase();
+                        isBoolean = lowerCaseValue === 'true' || lowerCaseValue === 'false';
+                    }
+                    return isBoolean
+                }
+
+                function registerValidator(selector, validator) {
+                    $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+                        selector: selector,
+                        validate: validator
+                    });
+                }
+
+                var dataTypeValidator = function(el) {
+                    var isValid = true;
+                    var value = el.value;
+                    var dataTypeLabel = document.querySelector(dataTypeSelector);
+                    if (dataTypeLabel) {
+                        var dataType = dataTypeLabel.innerText? dataTypeLabel.innerText.toLowerCase() : "";
+                        switch (dataType) {
+                            case 'number':
+                                isValid = !isNaN(value);
+                                break;
+                            case 'boolean':
+                                isValid = isBoolean(value);
+                                break;
+                        }
+                        if (!isValid) {
+                            return 'Value Type Mismatch';
+                        }
+                    }
+                };
+
+                registerValidator(defaultTypeSelector, dataTypeValidator);
+                registerValidator(enumSelector, dataTypeValidator);
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

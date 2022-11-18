@@ -109,6 +109,39 @@ describe('Page - Authoring', function () {
 
     it ('open edit dialog of CheckboxGroup', function(){
       testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+    });
+
+    it ('check value type validations', function() {
+
+      // For Number Type
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-checkboxgroup__type coral-button-label').invoke('text', 'Number');
+
+      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+
+      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
+
+      // For Boolean
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-checkboxgroup__type coral-button-label').invoke('text', 'Boolean');
+
+      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+
+      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
     })
   })
 /*

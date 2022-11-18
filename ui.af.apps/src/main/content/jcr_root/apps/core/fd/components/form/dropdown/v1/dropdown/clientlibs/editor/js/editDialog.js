@@ -98,43 +98,11 @@
         });
     }
 
-    function registerDialogValidators() {
-        var isBoolean = function(value) {
-            var isBoolean = false;
-            if (value) {
-                var lowerCaseValue = value.toLowerCase();
-                isBoolean = lowerCaseValue === 'true' || lowerCaseValue === 'false';
-            }
-            return isBoolean
-        }
+    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
+        '.cmp-adaptiveform-dropdown__savevaluetype coral-button-label',
+        '.cmp-adaptiveform-dropdown__defaultvalue input',
+        '.cmp-adaptiveform-base__enum'
+    );
 
-        function registerValidator(selector, validator) {
-            $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
-                selector: selector,
-                validate: validator
-            });
-        }
-
-        var dataTypeValidator = function(el) {
-            var isValid = true;
-            var value = el.value;
-            var dataType = document.querySelector('.cmp-adaptiveform-dropdown__savevaluetype coral-button-label').innerText.toLowerCase();
-            switch (dataType) {
-                case 'number':
-                    isValid = !isNaN(value);
-                    break;
-                case 'boolean':
-                    isValid = isBoolean(value);
-                    break;
-            }
-            if (!isValid) {
-                return 'Value Type Mismatch';
-            }
-        };
-
-        registerValidator(".cmp-adaptiveform-dropdown__defaultvalue input", dataTypeValidator);
-        registerValidator(".cmp-adaptiveform-base__enum", dataTypeValidator);
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue, registerDialogValidators);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue, registerDialogValidator);
 })(jQuery);
