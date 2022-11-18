@@ -116,6 +116,7 @@
                             <maximum
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-numberinput__maximum"
                                     defaultValue=""
                                     fieldLabel="Maximum Value"
                                     name="./maximum"/>
@@ -128,6 +129,7 @@
                             <excludeMaximumCheck
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    granite:class="cmp-adaptiveform-numberinput__excludeMaximumCheck"
                                     text="Exclude maximum value"
                                     fieldLabel="Exclude Maximum"
                                     value="true"
@@ -137,6 +139,16 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                     name="./excludeMaximumCheck@TypeHint"
                                     value="Boolean"/>
+                            <exclusiveMaximum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    granite:class="cmp-adaptiveform-numberinput__exclusiveMaximum"
+                                    name="./exclusiveMaximum"/>
+                            <exclusiveMaximum-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./exclusiveMaximum@TypeHint"
+                                    value="String"/>
                         </items>
                     </validation>
                     <patterns
