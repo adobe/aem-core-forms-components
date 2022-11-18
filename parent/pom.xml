@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.100-SNAPSHOT</version>
+    <version>1.0.53-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -1077,16 +1077,19 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>2.13.4</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.13.4</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>2.13.4</version>
+                <scope>provided</scope>
             </dependency>
 
             <!--

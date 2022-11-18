@@ -18,7 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.100-SNAPSHOT</version>
+        <version>1.0.53-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -87,6 +87,11 @@
                         <dependency>
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-apps</name>
+                            <version>${project.version}</version>
+                        </dependency>
+                        <dependency>
+                            <group>${vault.package.group}</group>
+                            <name>core-forms-components-af-apps</name>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>

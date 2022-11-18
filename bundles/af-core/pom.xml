@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.0.100-SNAPSHOT</version>
+        <version>1.0.53-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -468,6 +468,12 @@
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>aem-sdk-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
@@ -476,10 +482,6 @@
 
         <!-- End of AEM and forms sdk versions -->
 
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-sdk-api</artifactId>
-        </dependency>
 
 
         <!-- Testing dependencies -->

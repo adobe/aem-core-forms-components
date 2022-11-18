@@ -77,7 +77,7 @@
         setModel(model) {
             super.setModel(model);
             // only initialize if patterns are set
-            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat) {
+            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari')) {
                 if (this.widgetObject == null) {
                     this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
                 }
@@ -90,6 +90,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new NumberInput({element})
+        return new NumberInput({element,formContainer})
     }, NumberInput.selectors.self);
 })();
