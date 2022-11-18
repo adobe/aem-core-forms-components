@@ -66,5 +66,46 @@
       "fieldType" : "text-input",
       "visible" : false
     }
+  },
+  "bound-panel": {
+    "name" : "abc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/panel/v1/panel",
+    "jcr:title": "dependent names",
+    "description" : "dependent names description",
+    "tooltip" : "dependent names tooltip",
+    "fieldType" : "panel",
+    "dataRef": "$.contact_1501573930059",
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "fieldType" : "text-input",
+      "visible" : false
+    }
+  },
+  "repeating-panel": {
+    "name" : "abc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/panel/v1/panel",
+    "jcr:title": "dependent names",
+    "description" : "dependent names description",
+    "tooltip" : "dependent names tooltip",
+    "fieldType" : "panel",
+    "minItems": 2,
+    "maxItems": 5,
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "fieldType" : "text-input",
+      "visible" : false
+    }
   }
 }

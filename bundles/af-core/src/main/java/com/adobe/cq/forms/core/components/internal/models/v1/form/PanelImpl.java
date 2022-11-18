@@ -53,8 +53,7 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Override
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Type getType() {
-        boolean isRepeatable = minItems != null && maxItems != null; // (minItems > 1) && (minItems <= maxItems) should we check this also here?
-       // we are already doing the check for dataRef and repeatability in dialog so is it required here?
+        boolean isRepeatable = minItems != null && maxItems != null; // (minItems > 1) && (minItems <= maxItems) should we check this also
         if (wrapData || getDataRef() != null || isRepeatable) {
             if (isRepeatable) {
                 return Type.ARRAY;
