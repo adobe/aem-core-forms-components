@@ -16,12 +16,14 @@
 package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,8 +42,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static com.adobe.cq.forms.core.components.internal.servlets.AbstractDataSourceServlet.PN_TEXT;
 import static com.adobe.cq.forms.core.components.internal.servlets.AbstractDataSourceServlet.PN_VALUE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -61,6 +62,9 @@ public class FormMetaDataDataSourceServletTest {
     private FormsManager.ComponentDescription description;
 
     @Mock
+    private FormsManager.ComponentDescription formatters;
+
+    @Mock
     private ExpressionResolver expressionResolver;
 
     @BeforeEach
@@ -69,18 +73,18 @@ public class FormMetaDataDataSourceServletTest {
         registerFormMetadataAdapter();
         // note: transient state can't be mocked like this
         // context.registerService(ExpressionResolver.class, expressionResolver);
-        when(expressionResolver.resolve(any(String.class), any(Locale.class), any(), any(SlingHttpServletRequest.class)))
+    }
+
+    @Test
+    public void testDataSource() throws Exception {
+        context.currentResource("/apps/actiontypedatasource");
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
             .then(returnsFirstArg());
         ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
         componentDescriptions.add(description);
         when(formMetaDataMock.getSubmitActions()).thenReturn(componentDescriptions.iterator());
         when(description.getTitle()).thenReturn("Form Action");
         when(description.getResourceType()).thenReturn("form/action");
-    }
-
-    @Test
-    public void testDataSource() throws Exception {
-        context.currentResource("/apps/actiontypedatasource");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
@@ -94,8 +98,66 @@ public class FormMetaDataDataSourceServletTest {
         assertEquals(1, Lists.newArrayList(resource.getChildren()).size());
     }
 
+    @Test
+    public void testDataSourceForFormattersForNumberInput() throws Exception {
+
+        context.currentResource("/apps/formattertypedatasourcenumberinput");
+        when(formatters.getResourceType()).thenReturn("/apps/formattertypedatasourcenumberinput");
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
+            .then(returnsFirstArg());
+        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
+        componentDescriptions.add(formatters);
+        when(formMetaDataMock.getFormatters(any())).thenReturn(componentDescriptions.iterator());
+        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
+        // set expression resolver mock
+        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
+        dataSourceServlet.doGet(context.request(), context.response());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
+            DataSource.class.getName());
+        assertNotNull(dataSource);
+        int size = 0;
+        Iterator<Resource> iterator = dataSource.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            size += 1;
+        }
+        assertEquals(4, size);
+    }
+
+    @Test
+    public void testDataSourceForFormattersForTextInput() throws Exception {
+
+        context.currentResource("/apps/formattertypedatasourcetextinput");
+        when(formatters.getResourceType()).thenReturn("/apps/formattertypedatasourcetextinput");
+
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
+            .then(returnsFirstArg());
+        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
+        componentDescriptions.add(formatters);
+        when(formMetaDataMock.getFormatters(any())).thenReturn(componentDescriptions.iterator());
+        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
+        // set expression resolver mock
+        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
+        dataSourceServlet.doGet(context.request(), context.response());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
+            DataSource.class.getName());
+        assertNotNull(dataSource);
+        int size = 0;
+        Iterator<Resource> iterator = dataSource.iterator();
+        while (iterator.hasNext()) {
+            size += 1;
+            Resource formatterResource = iterator.next();
+            ValueMap valueMap = formatterResource.getValueMap();
+            for (Map.Entry<String, Object> entry : valueMap.entrySet()) {
+                assertFalse(entry.getValue().toString().startsWith("text{") && entry.getValue().toString().endsWith("}"));
+            }
+        }
+        assertEquals(3, size);
+    }
+
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, FormMetaData.class,
             (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
     }
+
 }
