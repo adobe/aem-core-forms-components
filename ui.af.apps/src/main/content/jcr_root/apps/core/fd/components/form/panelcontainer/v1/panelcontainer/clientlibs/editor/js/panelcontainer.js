@@ -102,13 +102,11 @@
         let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
 
         function isRepeatable() {
-            let isMinValuePresent = minInputField.value.length > 0;
-            let minValue = parseInt(minInputField.value);
-            let maxValue = parseInt(maxInputField.value);
-            return isMinValuePresent && minValue > 1 && (minValue <= maxValue || maxValue === -1);
+            // TODO: to update after repeatability approach gets finalised
+            return minInputField.value.length > 0 && maxInputField.value.length > 0;
         }
 
-        // checking for repeatablity and bindRef of panel on dialog initialisation
+        // checking for repeatability and bindRef of panel on dialog initialisation
         if(isRepeatable() || bindRef.value.length > 0) {
             makeWrapDataReadOnly(true);
         }
