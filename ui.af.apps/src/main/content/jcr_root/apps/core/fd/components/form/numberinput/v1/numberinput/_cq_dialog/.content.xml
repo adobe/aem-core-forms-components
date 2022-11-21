@@ -91,6 +91,7 @@
                             <minimum
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-numberinput__minimum"
                                     defaultValue=""
                                     fieldLabel="Minimum Value"
                                     name="./minimum"/>
@@ -105,14 +106,19 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     granite:class="cmp-adaptiveform-numberinput__excludeMinimumCheck"
                                     text="Exclude minimum value"
-                                    fieldLabel="Exclude Minimum"
                                     value="true"
+                                    fieldLabel="Exclude Minimum Check"
                                     name="./excludeMinimumCheck"/>
                             <excludeMinimumCheck-typehint
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                     name="./excludeMinimumCheck@TypeHint"
                                     value="Boolean"/>
+                            <exclusiveMinimum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    granite:class="cmp-adaptiveform-numberinput__exclusiveMinimum"
+                                    name="./exclusiveMinimum"/>
                             <maximum
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
@@ -131,7 +137,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     granite:class="cmp-adaptiveform-numberinput__excludeMaximumCheck"
                                     text="Exclude maximum value"
-                                    fieldLabel="Exclude Maximum"
+                                    fieldLabel="Exclude Maximum Check"
                                     value="true"
                                     name="./excludeMaximumCheck"/>
                             <excludeMaximumCheck-typehint
@@ -144,11 +150,6 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                     granite:class="cmp-adaptiveform-numberinput__exclusiveMaximum"
                                     name="./exclusiveMaximum"/>
-                            <exclusiveMaximum-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./exclusiveMaximum@TypeHint"
-                                    value="String"/>
                         </items>
                     </validation>
                     <patterns

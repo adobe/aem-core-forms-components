@@ -21,9 +21,12 @@
         NUMERICINPUT_LEADDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__leaddigits",
         NUMERICINPUT_FRACDIGITS = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__fracdigits",
         NUMERICINPUT_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__editFormat",
+        NUMERICINPUT_MAXIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__maximum",
         NUMERICINPUT_EXCLUDEMAXCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMaximumCheck",
         NUMERICINPUT_EXCLUSIVEMAX = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__exclusiveMaximum",
-        NUMERICINPUT_MAXIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__maximum",
+        NUMERICINPUT_MINIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__minimum",
+        NUMERICINPUT_EXCLUDEMINCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMinimumCheck",
+        NUMERICINPUT_EXCLUSIVEMIN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__exclusiveMinimum",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function handleTypeDropdown(dialog) {
@@ -60,6 +63,13 @@
             var leadDigits=leadDigitsElement.value;
             var fracDigits=fracDigitsElement.value;
             var editFormat="";
+            var maximum = dialog.find(NUMERICINPUT_MAXIMUM)[0];
+            var excludeMaxCheck = dialog.find(NUMERICINPUT_EXCLUDEMAXCHECK)[0];
+            var exclusiveMaximum = dialog.find(NUMERICINPUT_EXCLUSIVEMAX)[0];
+            var minimum = dialog.find(NUMERICINPUT_MINIMUM)[0];
+            var excludeMinCheck = dialog.find(NUMERICINPUT_EXCLUDEMINCHECK)[0];
+            var exclusiveMinimum = dialog.find(NUMERICINPUT_EXCLUSIVEMIN)[0];
+
             editFormatElement.value=editFormat;
             if (leadDigits || fracDigits) {
                 for (var i = 0; i < leadDigits; i++) {
@@ -71,16 +81,8 @@
                 }
                 editFormatElement.value="{"+editFormat+"}";
             }
-            var maximum = dialog.find(NUMERICINPUT_MAXIMUM)[0];
-            var excludeMaxCheck = dialog.find(NUMERICINPUT_EXCLUDEMAXCHECK)[0];
-            var exclusiveMaximum = dialog.find(NUMERICINPUT_EXCLUSIVEMAX)[0];
-
-            // console.log(excludeMaxCheck, excludeMaxCheck.value);
-            if(excludeMaxCheck.checked)
-                exclusiveMaximum.value = (parseInt(maximum.value) - 1).toString();
-            else
-                exclusiveMaximum.value = null;
-
+            exclusiveMaximum.value = excludeMaxCheck.checked ? maximum.value : null;
+            exclusiveMinimum.value = excludeMinCheck.checked ? minimum.value : null;
         }
     }
 
