@@ -139,11 +139,11 @@ describe('Page - Authoring', function () {
             cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
             cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
             cy.get('body').click( 0,0);
-            cy.get(numberInputDataPath).should('have.css', 'height', '0px');
+            cy.get('div'+numberInputDataPath).should('have.css', 'height', '0px');
             cy.invokeEditableAction(editDialogNavigationPanelSelector);
             cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
             cy.get('body').click( 0,0);
-            cy.get(textInputDataPath).should('have.css', 'height', '0px');
+            cy.get('div'+textInputDataPath).should('have.css', 'height', '0px');
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
     })

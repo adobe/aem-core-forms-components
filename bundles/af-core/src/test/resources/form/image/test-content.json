@@ -14,7 +14,14 @@
       }
     },
     "excludeFromDor": false,
-    "imageSrc" : "core/fd/components/form/image/v1/image",
+    "fieldType": "image"
+  },
+  "empty-image": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "Image",
+    "name": "emptyImage",
+    "sling:resourceType": "core/fd/components/form/image/v1/image",
     "fieldType": "image"
   }
 }

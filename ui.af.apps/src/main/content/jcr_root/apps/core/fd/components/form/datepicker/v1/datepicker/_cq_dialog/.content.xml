@@ -106,31 +106,61 @@
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <displayPatternGroup
-                                    jcr:primaryType="nt:unstructured">
-                                    <items jcr:primaryType="nt:unstructured">
-                                        <displayPictureClause
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Display Format"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Display Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <displayPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displaypattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./displayPatternType">
+                                        <datasource
                                                 jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Display format"
-                                                fieldDescription="The format in which the date is displayed"
-                                                name="./displayFormat">
-                                        </displayPictureClause>
-                                    </items>
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                fieldType="date-input"
+                                                type="formatters"/>
+                                    </displayPatternType>
+                                    <displayPictureClause
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displayformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="The format in which the value will be displayed to the user"
+                                            fieldLabel="Format"
+                                            name="./displayFormat">
+                                    </displayPictureClause>
+                                </items>
                             </displayPatternGroup>
-                            <dataFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="The format in which the date is to be exported or submitted"
-                                    fieldLabel="Data format"
-                                    name="./dataFormat">
-                            </dataFormat>
-                            <editFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="The format to use while editing/specifying the date"
-                                    fieldLabel="Edit format"
-                                    name="./editFormat">
-                            </editFormat>
+                            <editPatternGroup
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Edit Format"
+                                sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                title="Edit Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <editPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__editpattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./editPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                fieldType="date-input"
+                                                type="formatters"/>
+                                    </editPatternType>
+                                    <editFormat
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__editformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="The format in which the value will be edited by the user"
+                                            fieldLabel="Edit Format"
+                                            name="./editFormat">
+                                    </editFormat>
+                                </items>
+                            </editPatternGroup>
                         </items>
                     </patterns>
                 </items>
