@@ -108,7 +108,7 @@
             }, this)
         }
 
-        _updateEnabled(enabled) {
+        _updateEnabled(enabled,readOnly) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget
@@ -116,7 +116,9 @@
                 if (enabled === false) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
-                } else {
+                } if (readOnly == true) {
+                    widget.setAttribute(FormView.Constants.ARIA_READONLY, true);
+                }else {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }

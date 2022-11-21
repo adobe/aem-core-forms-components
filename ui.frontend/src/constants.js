@@ -117,6 +117,11 @@ export const Constants = {
     ARIA_DISABLED : "aria-disabled",
 
     /**
+     * aria attribute to mark the dragged component readonly.
+     */
+    ARIA_READONLY : "aria-readonly",
+
+    /**
      * aria attribute to mark the dragged component hidden.
      */
     ARIA_HIDDEN : "aria-hidden",

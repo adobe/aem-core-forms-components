@@ -99,7 +99,7 @@ export default class FormFieldBase extends FormField {
             this._updateValue(state.value);
         }
         this._updateVisible(state.visible)
-        this._updateEnabled(state.enabled)
+        this._updateEnabled(state.enabled, state.readOnly)
         this._initializeHelpContent(state);
     }
 
@@ -152,7 +152,7 @@ export default class FormFieldBase extends FormField {
      * @param enabled
      * @private
      */
-    _updateEnabled(enabled) {
+    _updateEnabled(enabled, readOnly) {
         if (this.widget) {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
