@@ -452,70 +452,13 @@
                                     value="Boolean"/>
                             <dorColspan
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     disabled="false"
-                                    emptyText=""
+                                    defaultValue=""
                                     fieldDescription="Enter number of columns the field should span in Document of Record. Supported only for Column layout in Document of Record."
                                     fieldLabel="Colspan for Document of Record"
                                     name="./dorColspan"
                                     renderReadOnly="false">
-                                <options
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
-                                <items jcr:primaryType="nt:unstructured">
-                                    <empty
-                                            jcr:primaryType="nt:unstructured"
-                                            text=""
-                                            value=""/>
-                                    <v1
-                                            jcr:primaryType="nt:unstructured"
-                                            text="1"
-                                            value="1"/>
-                                    <v2
-                                            jcr:primaryType="nt:unstructured"
-                                            text="2"
-                                            value="2"/>
-                                    <v3
-                                            jcr:primaryType="nt:unstructured"
-                                            text="3"
-                                            value="3"/>
-                                    <v4
-                                            jcr:primaryType="nt:unstructured"
-                                            text="4"
-                                            value="4"/>
-                                    <v5
-                                            jcr:primaryType="nt:unstructured"
-                                            text="5"
-                                            value="5"/>
-                                    <v6
-                                            jcr:primaryType="nt:unstructured"
-                                            text="6"
-                                            value="6"/>
-                                    <v7
-                                            jcr:primaryType="nt:unstructured"
-                                            text="7"
-                                            value="7"/>
-                                    <v8
-                                            jcr:primaryType="nt:unstructured"
-                                            text="8"
-                                            value="8"/>
-                                    <v9
-                                            jcr:primaryType="nt:unstructured"
-                                            text="9"
-                                            value="9"/>
-                                    <v10
-                                            jcr:primaryType="nt:unstructured"
-                                            text="10"
-                                            value="10"/>
-                                    <v11
-                                            jcr:primaryType="nt:unstructured"
-                                            text="11"
-                                            value="11"/>
-                                    <v12
-                                            jcr:primaryType="nt:unstructured"
-                                            text="12"
-                                            value="12"/>
-                                </items>
                             </dorColspan>
                         </items>
                         <granite:rendercondition
