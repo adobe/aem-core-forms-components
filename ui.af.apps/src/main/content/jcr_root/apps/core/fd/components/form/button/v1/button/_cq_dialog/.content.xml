@@ -43,14 +43,14 @@
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                   fieldLabel="Value"
-                  fieldDescription="Value of button"
+                  fieldDescription="Value of button."
                   granite:hide="{Boolean}true"
                   name="./value"/>
                 <default
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                   fieldLabel="Default"
-                  fieldDescription="Default value of button"
+                  fieldDescription="Default value of button."
                   granite:hide="{Boolean}true"
                   name="./default"/>
                 <icon

@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Forms Container (v1)
+AEM Forms Container (v1)
 ====
-Adaptive Forms Container component written in HTL.
+AEM Forms Container component written in HTL.
 
 ## Features
 * Acts as a container to use AEM Forms pages (ie) Adaptive Form or Interactive Communication inside an AEM Sites Page
@@ -24,7 +24,7 @@ Adaptive Forms Container component written in HTL.
 * Customizable to enable/disable focus on the form
 
 ### Use Object
-The Adaptive Forms Container component uses the `com.adobe.cq.forms.core.components.models.aemform.AEMForm` Sling model as its Use-object.
+The AEM Forms Container component uses the `com.adobe.cq.forms.core.components.models.aemform.AEMForm` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for the AEM Form component and are expected to be available as `Resource` properties:

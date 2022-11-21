@@ -60,33 +60,7 @@
                                     defaultValue=""
                                     fieldLabel="Default value"
                                     name="./default"/>
-<<<<<<< HEAD
-                            <leadDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__leaddigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Number of digits before the decimal separator (1234.000)">
-                            </leadDigits>
-                            <fracDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__fracdigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Number of digits after the decimal separator (1234.000)">
-                            </fracDigits>
-                            <editFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__editFormat"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    granite:hidden="{Boolean}true"
-                                    text="Edit Format"
-                                    name="./editFormat">
-                            </editFormat>
-                        </items>
-=======
                             </items>
->>>>>>> dev
                     </basic>
                     <validation
                             jcr:primaryType="nt:unstructured"
@@ -140,9 +114,9 @@
                         <items jcr:primaryType="nt:unstructured">
                             <displayPatternGroup
                                     jcr:primaryType="nt:unstructured"
-                                    jcr:title="Display Format"
+                                    jcr:title="Display format"
                                     sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                    title="Display Format">
+                                    title="Display format">
                                 <items jcr:primaryType="nt:unstructured">
                                     <displayPatternType
                                             jcr:primaryType="nt:unstructured"
@@ -159,7 +133,7 @@
                                     <displayPictureClause
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-adaptiveform-numberinput__displayformat"
-                                            fieldDescription="The format in which the value will be displayed to the user"
+                                            fieldDescription="The format in which the value will be displayed to the user."
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldLabel="Format"
                                             name="./displayFormat">
@@ -171,21 +145,21 @@
                                     granite:class="cmp-adaptiveform-numberinput__leaddigits"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Lead digits">
+                                    fieldLabel="Number of digits before the decimal separator (1234.000)">
                             </leadDigits>
                             <fracDigits
                                     jcr:primaryType="nt:unstructured"
                                     granite:class="cmp-adaptiveform-numberinput__fracdigits"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Frac digits">
+                                    fieldLabel="Number of digits after the decimal separator (1234.000)">
                             </fracDigits>
                             <editFormat
                                     jcr:primaryType="nt:unstructured"
                                     granite:class="cmp-adaptiveform-numberinput__editFormat"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     granite:hidden="{Boolean}true"
-                                    text="Edit Format"
+                                    text="Edit format"
                                     name="./editFormat">
                             </editFormat>
                         </items>

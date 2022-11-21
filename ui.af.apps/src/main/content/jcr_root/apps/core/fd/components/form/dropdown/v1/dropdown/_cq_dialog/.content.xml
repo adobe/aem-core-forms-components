@@ -70,7 +70,7 @@
                                     sling:orderBefore="saveValueType"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     name="./multiSelect"
-                                    text="Allows multiple selections"
+                                    text="Allow multiple selection"
                                     value="true"/>
                             <multiSelect-typehint
                                     jcr:primaryType="nt:unstructured"
@@ -82,7 +82,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="Specified default option is preselected on form load"
+                                    fieldDescription="Specified default option is preselected on form load."
                                     fieldLabel="Default option"
                                     name="./default"/>
                             <defaultValueMS
@@ -91,7 +91,7 @@
                                     sling:orderBefore="placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                     typeHint="String[]"
-                                    fieldDescription="Specified default options are preselected on form load"
+                                    fieldDescription="Specified default options are preselected on form load."
                                     fieldLabel="Default options">
                                 <field
                                         jcr:primaryType="nt:unstructured"

@@ -85,7 +85,7 @@
                             <minFilesMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when less than minimum Files are uploaded"
+                                    fieldDescription="Error message shown when less than minimum Files are uploaded."
                                     fieldLabel="Minimum files error message"
                                     name="./minItemsMessage"/>
                             <maximum
@@ -98,7 +98,7 @@
                             <maxFilesMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum Files are uploaded"
+                                    fieldDescription="Error message shown when more than maximum Files are uploaded."
                                     fieldLabel="Maximum files error message"
                                     name="./maxItemsMessage"/>
                             <fileSizeLimit
@@ -111,7 +111,7 @@
                             <maxFileSizeMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum File Size files are uploaded"
+                                    fieldDescription="Error message shown when more than maximum File Size files are uploaded."
                                     fieldLabel="Maximum file size error message"
                                     name="./maxFileSizeMessage"/>
                             <mimeType
@@ -127,7 +127,7 @@
                             <acceptMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types"
+                                    fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types."
                                     fieldLabel="File type error message"
                                     name="./acceptMessage"/>
                         </items>

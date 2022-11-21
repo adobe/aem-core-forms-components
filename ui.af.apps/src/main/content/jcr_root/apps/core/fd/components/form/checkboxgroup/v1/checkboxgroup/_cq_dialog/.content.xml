@@ -85,7 +85,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                    fieldDescription="All the specified default options are preselected on form load"
+                                    fieldDescription="All the specified default options are preselected on form load."
                                     fieldLabel="Default options">
                                 <field
                                         jcr:primaryType="nt:unstructured"
