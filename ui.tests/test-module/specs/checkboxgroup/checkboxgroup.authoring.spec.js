@@ -117,10 +117,10 @@ describe('Page - Authoring', function () {
       dropCheckBoxGroupInContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type coral-button-label').invoke('text', 'Number');
+      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
 
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
       cy.get('.cq-dialog-submit').click();
       cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
@@ -132,10 +132,10 @@ describe('Page - Authoring', function () {
       dropCheckBoxGroupInContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type coral-button-label').invoke('text', 'Boolean');
+      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
 
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
       cy.get('.cq-dialog-submit').click();
       cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');

@@ -213,8 +213,16 @@
             }
         }
 
-        static registerDialogValueTypeValidators(dataTypeSelector, defaultTypeSelector, enumSelector) {
-            return function registerDialogValidators() {
+        /**
+         * Register foundation.validator for DataType Validation of Options fields like Dropdown, Checkbox etc.
+         * @param defaultTypeSelector Selector for default value field
+         * @param enumSelector Selector for enum values field
+         * @param getSelectedDataType Function to return the selected data-type in the dialog.
+         * Should return one of string|number|boolean, validation will pass if any other type is returned.
+         * @returns {(function(*): void)|*} Function that will register data type validator
+         */
+        static registerDialogDataTypeValidators(defaultTypeSelector, enumSelector, getSelectedDataType) {
+            return function (dialog) {
                 var isBoolean = function(value) {
                     var isBoolean = false;
                     if (value) {
@@ -234,9 +242,8 @@
                 var dataTypeValidator = function(el) {
                     var isValid = true;
                     var value = el.value;
-                    var dataTypeLabel = document.querySelector(dataTypeSelector);
-                    if (dataTypeLabel) {
-                        var dataType = dataTypeLabel.innerText? dataTypeLabel.innerText.toLowerCase() : "";
+                    if (value) {
+                        var dataType = getSelectedDataType(dialog);
                         switch (dataType) {
                             case 'number':
                                 isValid = !isNaN(value);
@@ -245,9 +252,9 @@
                                 isValid = isBoolean(value);
                                 break;
                         }
-                        if (!isValid) {
-                            return 'Value Type Mismatch';
-                        }
+                    }
+                    if (!isValid) {
+                        return Granite.I18n.getMessage('Value Type Mismatch');
                     }
                 };
 

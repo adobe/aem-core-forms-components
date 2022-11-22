@@ -19,6 +19,9 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-checkboxgroup__editdialog",
         CHECKBOXGROUP_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkboxgroup__assistprioritycustom",
         CHECKBOXGROUP_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkboxgroup__customtext",
+        CHECKBOXGROUP_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkboxgroup__type",
+        CHECKBOXGROUP_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-checkboxgroup__value",
+        CHECKBOXGROUP_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -42,11 +45,30 @@
         });
     }
 
-    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
-        '.cmp-adaptiveform-checkboxgroup__type coral-button-label',
-        '.cmp-adaptiveform-checkboxgroup__value input',
-        '.cmp-adaptiveform-base__enum'
-        );
+    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
+        CHECKBOXGROUP_DEFAULTVALUE + " input",
+        CHECKBOXGROUP_ENUM,
+        function (dialog) {
+            var selectedValue = '';
+            var checkboxSaveValue = dialog.find(CHECKBOXGROUP_DATATYPE + " coral-select");
+            if (checkboxSaveValue && checkboxSaveValue.length > 0) {
+                selectedValue = checkboxSaveValue[0].selectedItem ? checkboxSaveValue[0].selectedItem.value : '';
+            }
+            var dataType = '';
+            switch (selectedValue) {
+                case 'string[]':
+                    dataType = 'string';
+                    break;
+                case 'number[]':
+                    dataType = 'number';
+                    break;
+                case 'boolean[]':
+                    dataType = 'boolean';
+                    break;
+            }
+            return dataType;
+        }
+    );
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);
 

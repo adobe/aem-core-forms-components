@@ -20,6 +20,7 @@
         DROPDOWN_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvalue",
         DROPDOWN_DEFAULTVALUEMULTISELCET = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvaluemultiselect",
         DROPDOWN_SAVEVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__savevaluetype",
+        DROPDOWN_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
         TYPE = EDIT_DIALOG + " input[name='./type']",
         DEFAULTINPUT = DROPDOWN_DEFAULTVALUE + " input",
         DEFAULTMUTIINPUT = DROPDOWN_DEFAULTVALUEMULTISELCET + " input[type='text']",
@@ -98,10 +99,29 @@
         });
     }
 
-    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
-        '.cmp-adaptiveform-dropdown__savevaluetype coral-button-label',
-        '.cmp-adaptiveform-dropdown__defaultvalue input',
-        '.cmp-adaptiveform-base__enum'
+    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
+        DROPDOWN_DEFAULTVALUE + " input",
+        DROPDOWN_ENUM,
+        function (dialog) {
+            var selectedValue = '';
+            var dropdownSaveValue = dialog.find(DROPDOWN_SAVEVALUE);
+            if (dropdownSaveValue && dropdownSaveValue.length > 0) {
+                selectedValue = dropdownSaveValue[0].selectedItem ? dropdownSaveValue[0].selectedItem.value : '';
+            }
+            var dataType = '';
+            switch (selectedValue) {
+                case '0':
+                    dataType = 'string';
+                    break;
+                case '1':
+                    dataType = 'number';
+                    break;
+                case '2':
+                    dataType = 'boolean';
+                    break;
+            }
+            return dataType;
+        }
     );
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue, registerDialogValidator);

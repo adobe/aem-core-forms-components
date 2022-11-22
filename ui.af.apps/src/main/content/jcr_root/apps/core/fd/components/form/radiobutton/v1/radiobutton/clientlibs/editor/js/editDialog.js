@@ -19,6 +19,9 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-radiobutton__editdialog",
         RADIOBUTTON_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__assistprioritycustom",
         RADIOBUTTON_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__customtext",
+        RADIOBUTTON_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__type",
+        RADIOBUTTON_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-radiobutton__value",
+        RADIOBUTTON_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -42,10 +45,17 @@
         });
     }
 
-    var registerDialogValidator = Utils.registerDialogValueTypeValidators(
-        '.cmp-adaptiveform-radiobutton__type coral-button-label',
-        '.cmp-adaptiveform-radiobutton__value',
-        '.cmp-adaptiveform-base__enum'
+    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
+        RADIOBUTTON_DEFAULTVALUE,
+        RADIOBUTTON_ENUM,
+        function (dialog) {
+            var selectedValue = '';
+            var radiobuttonSaveValue = dialog.find(RADIOBUTTON_TYPE);
+            if (radiobuttonSaveValue && radiobuttonSaveValue.length > 0) {
+                selectedValue = radiobuttonSaveValue[0].selectedItem ? radiobuttonSaveValue[0].selectedItem.value : '';
+            }
+            return selectedValue.toLowerCase();
+        }
     );
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);

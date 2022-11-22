@@ -84,7 +84,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                 typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
             }
         } catch (Exception exception) {
-            logger.error("Error while type casting default value to value type. Exception: {}", exception.getMessage());
+            logger.error("Error while type casting default value to value type. Exception: ", exception);
         }
         return typedDefaultValue;
     }

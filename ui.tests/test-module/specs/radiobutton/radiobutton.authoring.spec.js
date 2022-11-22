@@ -105,7 +105,8 @@ describe('Page - Authoring', function () {
       dropRadioButtonInGuideContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-radiobutton__type coral-button-label').invoke('text', 'Number');
+      cy.get('.cmp-adaptiveform-radiobutton__type').click();
+      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
       cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Number');
       cy.get('.cq-dialog-submit').click();
       cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
@@ -117,7 +118,8 @@ describe('Page - Authoring', function () {
       dropRadioButtonInGuideContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-radiobutton__type coral-button-label').invoke('text', 'Boolean');
+      cy.get('.cmp-adaptiveform-radiobutton__type').click();
+      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
       cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Boolean');
       cy.get('.cq-dialog-submit').click();
       cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
