@@ -40,10 +40,11 @@
             } else if (dialogContent.querySelector("[data-cmp-container-v1-dialog-policy-hook]")) {
                 handlePolicyDialog(dialogContent);
             }
-
-            handleWrapData(dialogContent);
         }
-
+        // For handling the case when tabs,accordion and wizard inherit panel edit-dialog
+        if($dialog[0]) {
+            handleWrapData($dialog[0]);
+        }
     });
 
     /**
@@ -97,7 +98,7 @@
     }
 
     function handleWrapData(containerEditor) {
-        let bindRef = containerEditor.querySelector(".bindRefTextField");
+        let bindRef = containerEditor.querySelector("input[name='./dataRef']");
         let minInputField = containerEditor.querySelector("coral-numberinput[name='./minItems']");
         let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
 
