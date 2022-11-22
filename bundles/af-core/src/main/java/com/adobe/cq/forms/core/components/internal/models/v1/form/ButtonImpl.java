@@ -55,9 +55,9 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Nullable
     private String defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "actionType")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "buttonType")
     @Nullable
-    protected String actionType;
+    protected String buttonType;
 
     @Override
     public String getValue() {
@@ -75,8 +75,8 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     }
 
     @Override
-    public String getActionType() {
-        return actionType;
+    public String getButtonType() {
+        return buttonType;
     }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -96,5 +96,14 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
             customDorProperties.put("dorColspan", dorColspan);
         }
         return customDorProperties;
+    }
+
+    @Override
+    public Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (buttonType != null) {
+            properties.put("fd:buttonType", buttonType);
+        }
+        return properties;
     }
 }
