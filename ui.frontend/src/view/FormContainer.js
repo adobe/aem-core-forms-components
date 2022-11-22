@@ -20,6 +20,7 @@ export default class FormContainer {
         this._path = params._path;
         this._fields = {};
         this._deferredParents = {};
+        this._element = params._element;
     }
     /**
      * returns the form field view
@@ -90,5 +91,9 @@ export default class FormContainer {
 
     getPath() {
         return this._path;
+    }
+
+    getFormElement() {
+        return this._element;
     }
 }
