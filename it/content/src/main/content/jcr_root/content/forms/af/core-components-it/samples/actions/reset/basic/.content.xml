@@ -36,7 +36,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Reset"
                     sling:resourceType="forms-components-examples/components/form/actions/reset"
-                    actionType="reset"
+                    buttonType="reset"
                     dorExclusion="true"
                     fieldType="button"
                     name="reset1667886795725">
