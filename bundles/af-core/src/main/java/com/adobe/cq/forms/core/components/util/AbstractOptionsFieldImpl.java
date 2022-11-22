@@ -21,6 +21,8 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
@@ -29,6 +31,8 @@ import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
  * Abstract class which can be used as base class for options {@link Field} implementations.
  */
 public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl implements OptionsConstraint {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = true)
@@ -74,9 +78,14 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @Override
     public Object[] getDefault() {
-        if (defaultValue != null) {
-            return ComponentUtils.coerce(type, defaultValue);
+        Object[] typedDefaultValue = null;
+        try {
+            if (defaultValue != null) {
+                typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
+            }
+        } catch (Exception exception) {
+            logger.error("Error while type casting default value to value type. Exception: ", exception);
         }
-        return null;
+        return typedDefaultValue;
     }
 }

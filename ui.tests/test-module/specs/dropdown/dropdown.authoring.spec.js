@@ -88,6 +88,35 @@ describe('Page - Authoring', function () {
         it ('open edit dialog of Dropdown', function(){
             testDropDownBehaviour(dropDownEditPathSelector, dropdown);
         })
+
+        it ('check value type validations', function() {
+
+            // For Number Type
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cmp-adaptiveform-dropdown__savevaluetype').children('._coral-Dropdown-trigger').click();
+            cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+            cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Number');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(dropdown);
+
+            // For Boolean
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cmp-adaptiveform-dropdown__savevaluetype').children('._coral-Dropdown-trigger').click();
+            cy.get("coral-selectlist-item-content").contains('Boolean').click({force: true});
+            cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Boolean');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(dropdown);
+        })
     })
 
     context('Open Sites Editor', function () {

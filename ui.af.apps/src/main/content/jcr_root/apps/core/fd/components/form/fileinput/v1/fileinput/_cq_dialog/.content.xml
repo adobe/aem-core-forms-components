@@ -19,6 +19,7 @@
     jcr:title="Adaptive Form File Attachment"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.fileinput.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_fileinput_v1"
     trackingFeature="core-components:adaptiveform-fileinput:v1">
     <content
         granite:class="cmp-adaptiveform-fileinput__editdialog"
@@ -44,50 +45,20 @@
                                     sling:orderBefore="fieldLayout"
                                     granite:class="cmp-adaptiveform-fileinput__multiselection"
                                     name="./multiSelection"
-                                    text="Allow multiple files"
+                                    text="Allow multiple attachments"
                                     value="true"/>
-                            <minimum
-                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFiles"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Minimum number files"
-                                    name="./minItems"/>
-                            <maximum
-                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFiles"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="maximum number files"
-                                    name="./maxItems"/>
                             <buttonText
                                     jcr:primaryType="nt:unstructured"
+                                    sling:orderBefore="bindref"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Upload Button Title"
+                                    fieldLabel="Button title"
                                     name="./buttonText">
                             </buttonText>
-                            <fileSizeLimit
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    fieldLabel="Maximum File Size (MB)"
-                                    name="./maxFileSize"
-                                    defaultValue="">
-                            </fileSizeLimit>
-                            <mimeType
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
-                                    fieldLabel="Supported File Types"
-                                    defaultValue="">
-                                <field
-                                        name="./accept"
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
-                            </mimeType>
                             <type jcr:primaryType="nt:unstructured"
                                   wrapperClass="cmp-adaptiveform-fileinput__type"
                                   granite:class="cmp-adaptiveform-fileinput__type"
                                   sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                  fieldLabel="Type of the Field"
+                                  fieldLabel="Type of the field"
                                   name="./type"
                                   value="file">
                             </type>
@@ -104,29 +75,60 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+                            <minimum
+                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFiles"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Minimum number of files"
+                                    name="./minItems"/>
                             <minFilesMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when less than minimum Files are uploaded"
-                                    fieldLabel="Min Files Error Message"
+                                    fieldDescription="Error message shown when less than minimum Files are uploaded."
+                                    fieldLabel="Minimum files error message"
                                     name="./minItemsMessage"/>
+                            <maximum
+                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFiles"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Maximum number of files"
+                                    name="./maxItems"/>
                             <maxFilesMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum Files are uploaded"
-                                    fieldLabel="Max Files Error Message"
+                                    fieldDescription="Error message shown when more than maximum Files are uploaded."
+                                    fieldLabel="Maximum files error message"
                                     name="./maxItemsMessage"/>
+                            <fileSizeLimit
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    fieldLabel="Maximum file size (MB)"
+                                    name="./maxFileSize"
+                                    defaultValue="">
+                            </fileSizeLimit>
                             <maxFileSizeMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum File Size files are uploaded"
-                                    fieldLabel="Max File Size Error Message"
+                                    fieldDescription="Error message shown when more than maximum File Size files are uploaded."
+                                    fieldLabel="Maximum file size error message"
                                     name="./maxFileSizeMessage"/>
+                            <mimeType
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
+                                    fieldLabel="Allowed file types"
+                                    defaultValue="">
+                                <field
+                                        name="./accept"
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                            </mimeType>
                             <acceptMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types"
-                                    fieldLabel="File Type Error Message"
+                                    fieldDescription="Error message shown when different file type are uploaded which are not included in Supported File Types."
+                                    fieldLabel="File type error message"
                                     name="./acceptMessage"/>
                         </items>
                     </validation>

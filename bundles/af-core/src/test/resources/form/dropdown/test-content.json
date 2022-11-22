@@ -38,5 +38,20 @@
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
     "maxItems" : 2
+  },
+  "dropdown2" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "fieldType": "drop-down",
+    "type" : "string[]",
+    "multiSelect" : true,
+    "default" : ["value1", "value2"],
+    "enum" : ["value1", "value2", "value3"],
+    "enumNames" : ["m", "f", "o"],
+    "minItems" : 1,
+    "maxItems" : 2
   }
 }

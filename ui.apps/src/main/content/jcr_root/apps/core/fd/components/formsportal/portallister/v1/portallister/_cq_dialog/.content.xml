@@ -51,7 +51,7 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                     defaultValue="8"
                     emptyText="8"
-                    fieldDescription="Specify the number of resultant records to display"
+                    fieldDescription="Specify the number of resultant records to display."
                     fieldLabel="Results Displayed"
                     maxLength="{Long}30"
                     name="./limit"/>
