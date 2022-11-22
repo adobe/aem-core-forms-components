@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint.Type;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -36,6 +38,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -46,6 +49,7 @@ public class DropDownImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
     private static final String PATH_MULTISELECT_DROPDOWN = CONTENT_ROOT + "/multiselect-dropdown";
+    private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -272,6 +276,14 @@ public class DropDownImplTest {
     void testGetMultiSelectDefault() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
+    }
+
+    @Test
+    void testGetMultiSelectDefault_InvalidType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN2, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.NUMBER, true);
+        ;
+        assertNull(dropdown.getDefault());
     }
 
     @Test
