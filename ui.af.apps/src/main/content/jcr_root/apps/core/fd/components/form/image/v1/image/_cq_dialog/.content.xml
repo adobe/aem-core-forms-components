@@ -5,7 +5,7 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Image"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          helpPath="https://www.adobe.com/go/aem_cmp_image_v3"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_image_v1"
           extraClientlibs="[core.forms.components.image.v1.editor]"
           trackingFeature="core-components:adaptiveform-image:v1">
     <content
@@ -51,7 +51,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="visible"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Alternate Text"
+                                    fieldLabel="Alternate text"
                                     name="./altText"/>
                             <enabled
                                     jcr:primaryType="nt:unstructured"

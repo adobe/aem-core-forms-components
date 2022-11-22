@@ -19,7 +19,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Container"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://www.adobe.com/go/aem_cmp_container_v1"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_panelcontainer_v1"
     extraClientlibs="[core.wcm.components.container.v1.editor]">
     <content
         jcr:primaryType="nt:unstructured"

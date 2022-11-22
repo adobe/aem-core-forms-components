@@ -38,7 +38,7 @@
             let fracDigitsParentDivElem = (fracDigitsElement).closest("div")[0];
 
             if(selectedValue === 'number'){
-                var leadDigitsLabel = CQ.I18n.getMessage("Lead digits");
+                var leadDigitsLabel = CQ.I18n.getMessage("Number of digits before the decimal separator (1234.000)");
                 leadDigitsElement.siblings("label").text(leadDigitsLabel);
                 fracDigitsParentDivElem.removeAttribute("hidden");
             }else{

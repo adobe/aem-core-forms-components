@@ -58,7 +58,7 @@
                                     <form_ref
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/formpicker"
-                                            fieldLabel="Asset Path"
+                                            fieldLabel="Path"
                                             filter="adaptiveForm"
                                             name="./formRef"
                                             rootPath="/content/dam/formsanddocuments"/>
@@ -66,12 +66,12 @@
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-aemform--editor-thankyouConfig"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
-                                            fieldLabel="Post-submission"
+                                            fieldLabel="On-submission"
                                             name="./thankyouConfig">
                                         <items jcr:primaryType="nt:unstructured">
                                             <message
                                                     jcr:primaryType="nt:unstructured"
-                                                    text="Show Thank You Message"
+                                                    text="Show thank you message"
                                                     value="message">
                                                 <granite:data
                                                         jcr:primaryType="nt:unstructured"
@@ -81,7 +81,7 @@
                                             </message>
                                             <page
                                                     jcr:primaryType="nt:unstructured"
-                                                    text="Show Thank You Page"
+                                                    text="Show thank you page"
                                                     value="page">
                                                 <granite:data
                                                         jcr:primaryType="nt:unstructured"
@@ -191,7 +191,7 @@
                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                             checked="{Boolean}true"
                                             name="./usePageLocale"
-                                            text="Use Page Language"
+                                            text="Use locale of Sites page for Adaptive Form"
                                             value="true"/>
                                     <enableFocusOnFirstField
                                             jcr:primaryType="nt:unstructured"
@@ -200,7 +200,7 @@
                                             granite:class="cmp-aemform--editor-enablefocusonfirstfield"
                                             name="./enableFocusOnFirstField"
                                             checked="{Boolean}true"
-                                            text="Set Focus on Form"
+                                            text="On page load, set focus on first field of the form"
                                             uncheckedValue="false"
                                             value="true"/>
                                     <enableFocusOnFirstField-typehint
@@ -220,7 +220,7 @@
                                     <doc_ref
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/formpicker"
-                                            fieldLabel="Asset Path"
+                                            fieldLabel="Path"
                                             filter="adaptiveDocumentWeb"
                                             name="./docRef"
                                             rootPath="/content/dam/formsanddocuments"/>
@@ -244,9 +244,9 @@
                                     granite:class="cmp-aemform--editor-useiframe"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    fieldDescription="If checked, iframe will not be used to render the form."
+                                    fieldDescription="When selected, iFrame is used to render the form."
                                     name="./useiframe"
-                                    text="Form covers entire width of the page"
+                                    text="Let form use the entire width of the webpage"
                                     checked="{Boolean}true"
                                     uncheckedValue="true"
                                     value="false"/>
