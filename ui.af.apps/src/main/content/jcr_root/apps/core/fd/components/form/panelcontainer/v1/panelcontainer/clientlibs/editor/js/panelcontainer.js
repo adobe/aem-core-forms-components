@@ -98,7 +98,7 @@
     }
 
     function handleWrapData(containerEditor) {
-        let bindRef = containerEditor.querySelector(".bindRefTextField");
+        let bindRef = containerEditor.querySelector("input[name='./dataRef']");
         let minInputField = containerEditor.querySelector("coral-numberinput[name='./minItems']");
         let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
 
