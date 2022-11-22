@@ -40,10 +40,11 @@
             } else if (dialogContent.querySelector("[data-cmp-container-v1-dialog-policy-hook]")) {
                 handlePolicyDialog(dialogContent);
             }
-
-            handleWrapData(dialogContent);
         }
-
+        // For handling the case when tabs,accordion and wizard inherit panel edit-dialog
+        if($dialog[0]) {
+            handleWrapData($dialog[0]);
+        }
     });
 
     /**
