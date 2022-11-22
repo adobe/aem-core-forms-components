@@ -17,9 +17,11 @@ package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -30,10 +32,13 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +49,7 @@ import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ExpressionResolver;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
@@ -140,38 +146,42 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
-                    resources = new ArrayList<>();
-                    /*
-                     * metaDataList = formMetaData.getFormatters(fieldType);
-                     * while (metaDataList.hasNext()) {
-                     * FormsManager.ComponentDescription componentDescription = metaDataList.next();
-                     * Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
-                     * if (formatterResource != null) {
-                     * String path = formatterResource.getPath();
-                     * ValueMap formatterResourceValueMap = formatterResource.getValueMap();
-                     * Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
-                     * while (it.hasNext()) {
-                     * Map.Entry<String, Object> entry = it.next();
-                     * String key = entry.getKey();
-                     * // This condition is sufficient for property guideComponentType to get ignored
-                     * if (key.startsWith("pattern")) {
-                     * Map<String, Object> respObj = new HashMap<>();
-                     * String value = (String) entry.getValue();
-                     * String[] arr = value.split("=", 2);
-                     * respObj.put("text", arr[0]);
-                     * respObj.put("value", arr[1]);
-                     * ValueMap vm = new ValueMapDecorator(respObj);
-                     * resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
-                     * }
-                     * }
-                     * Map<String, Object> customEntry = new HashMap<>();
-                     * customEntry.put("text", "Custom");
-                     * customEntry.put("value", "custom");
-                     * ValueMap vm = new ValueMapDecorator(customEntry);
-                     * resources.add(new ValueMapResource(resourceResolver, path, "nt:unstructured", vm));
-                     * }
-                     * }
-                     */
+                    metaDataList = formMetaData.getFormatters(fieldType);
+                    Map<String, Object> firstEntry = new HashMap<>();
+                    firstEntry.put("text", "Select");
+                    firstEntry.put("value", "");
+                    ValueMap firstEntryVm = new ValueMapDecorator(firstEntry);
+                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, firstEntryVm));
+                    while (metaDataList.hasNext()) {
+                        FormsManager.ComponentDescription componentDescription = metaDataList.next();
+                        Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
+                        if (formatterResource != null) {
+                            String path = formatterResource.getPath();
+                            ValueMap formatterResourceValueMap = formatterResource.getValueMap();
+                            Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
+                            while (it.hasNext()) {
+                                Map.Entry<String, Object> entry = it.next();
+                                String key = entry.getKey();
+                                // This condition is sufficient for property guideComponentType to get ignored
+                                if (key.startsWith("pattern")) {
+                                    Map<String, Object> respObj = new HashMap<>();
+                                    String value = (String) entry.getValue();
+                                    String[] arr = value.split("=", 2);
+                                    if (this.shouldAddPattern(fieldType, arr[1])) {
+                                        respObj.put("text", arr[0]);
+                                        respObj.put("value", arr[1]);
+                                        ValueMap vm = new ValueMapDecorator(respObj);
+                                        resources.add(new ValueMapResource(resourceResolver, path, JcrConstants.NT_UNSTRUCTURED, vm));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Map<String, Object> customEntry = new HashMap<>();
+                    customEntry.put("text", "Custom");
+                    customEntry.put("value", "custom");
+                    ValueMap customEntryVm = new ValueMapDecorator(customEntry);
+                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, customEntryVm));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
@@ -194,6 +204,15 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             }
         }
         return resources;
+    }
+
+    private Boolean shouldAddPattern(String fieldType, String s) {
+        switch (fieldType) {
+            case "text-input":
+                return !(s.startsWith("text{") && s.endsWith("}"));
+            default:
+                return true;
+        }
     }
 
     private List<Resource> getResourceListFromComponentDescription(
