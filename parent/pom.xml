@@ -1134,7 +1134,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-sdk-api</artifactId>
-                <version>2022.9.8722.20220912T101352Z-220800</version>
+                <version>2022.10.9398.20221020T071514Z-220900</version>
             </dependency>
 
 
