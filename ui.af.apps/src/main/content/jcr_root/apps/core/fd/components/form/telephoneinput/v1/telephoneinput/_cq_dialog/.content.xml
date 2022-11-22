@@ -59,7 +59,31 @@
                         <items jcr:primaryType="nt:unstructured">
                             <validationPatternGroup
                                     jcr:primaryType="nt:unstructured"
-                                    sling:hideResource="{Boolean}true">
+                                    jcr:title="Validation Pattern"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Validation Pattern">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <validationPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:hideResource="{Boolean}true">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:hideResource="{Boolean}true"/>
+                                    </validationPatternType>
+                                    <validateFormat
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-textinput__validationformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Regular Expression is permitted."
+                                            fieldLabel="Pattern"
+                                            name="./pattern">
+                                    </validateFormat>
+                                    <validatePictureClauseMessage
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                            fieldLabel="Error Message"
+                                            name="./validatePatternMessage"/>
+                                </items>
                             </validationPatternGroup>
                         </items>
                     </validation>
