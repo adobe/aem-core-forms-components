@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0"
   },
+  "items" : [],
   "lang":"en-US",
   "adaptiveform":"0.11.0-Pre"
 }
