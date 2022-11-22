@@ -75,4 +75,20 @@
             })
     });
 
+    it('test the rules editor', () => {
+
+        cy.get('.cmp-adaptiveform-textinput__widget')
+          .type('Hide me');
+        cy.get('.cmp-adaptiveform-textinput')
+          .click({ multiple: true });
+        cy.get('[data-cmp-is="adaptiveFormText"]').should('not.be.visible');
+
+        cy.get('.cmp-adaptiveform-textinput__widget').clear()
+            .type('Show me');
+        cy.get('.cmp-adaptiveform-textinput')
+            .click({ multiple: true });
+        cy.get('[data-cmp-is="adaptiveFormText"]').should('be.visible');
+
+    })
+
  })
