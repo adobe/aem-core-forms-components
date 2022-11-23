@@ -46,6 +46,7 @@ public class StaticImageImplTest {
     private static final String BASE = "/form/image";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
+    private static final String PATH_EMPTY_IMAGE = CONTENT_ROOT + "/empty-image";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -56,7 +57,7 @@ public class StaticImageImplTest {
 
     @Test
     void testExportedType() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals(FormConstants.RT_FD_FORM_IMAGE_V1, staticImage.getExportedType());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getExportedType()).thenCallRealMethod();
@@ -65,13 +66,13 @@ public class StaticImageImplTest {
 
     @Test
     void testFieldType() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals(FieldType.IMAGE.getValue(), staticImage.getFieldType());
     }
 
     @Test
     void testGetName() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals("abc", staticImage.getName());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getName()).thenCallRealMethod();
@@ -80,7 +81,7 @@ public class StaticImageImplTest {
 
     @Test
     void testGetDataRef() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals(null, staticImage.getDataRef());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getDataRef()).thenCallRealMethod();
@@ -89,7 +90,7 @@ public class StaticImageImplTest {
 
     @Test
     void testGetAltText() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals("abc", staticImage.getAltText());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getAltText()).thenCallRealMethod();
@@ -98,17 +99,28 @@ public class StaticImageImplTest {
 
     @Test
     void testGetWithImageImageSrc() throws RepositoryException, IOException {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         Image img = new Image(this.context.currentResource());
         img.set("test", "/content/image.img.png");
         img.setSrc("/content/image.img.png");
-        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         assertEquals(img.getSrc(), staticImage.getImageSrc());
     }
 
     @Test
+    void testEmptyImageSrc() throws RepositoryException, IOException {
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_EMPTY_IMAGE, StaticImage.class, context);
+        assertNull("image src should be null", staticImage.getImageSrc());
+    }
+
+    @Test
+    void testEmptyImageJSONExport() throws Exception {
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_EMPTY_IMAGE, StaticImage.class, context);
+        Utils.testJSONExport(staticImage, Utils.getTestExporterJSONPath(BASE, PATH_EMPTY_IMAGE));
+    }
+
+    @Test
     void testIsVisible() {
-        StaticImage staticImage = getStaticImageUnderTest(PATH_IMAGE);
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         assertEquals(false, staticImage.isVisible());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.isVisible()).thenCallRealMethod();
@@ -141,12 +153,6 @@ public class StaticImageImplTest {
         StaticImage staticImage = request.adaptTo(StaticImage.class);
         String appliedCssClasses = staticImage.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
-    }
-
-    private StaticImage getStaticImageUnderTest(String resourcePath) {
-        context.currentResource(resourcePath);
-        MockSlingHttpServletRequest request = context.request();
-        return request.adaptTo(StaticImage.class);
     }
 
     @Test

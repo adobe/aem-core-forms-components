@@ -1,0 +1,47 @@
+{
+  "textinput": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "name",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "validationStatus" : "invalid"
+    }
+  },
+  "numberinput": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "numberinput1666760176664",
+    "sling:resourceType": "forms-components-examples/components/form/numberinput",
+    "fieldType": "number-input"
+  },
+  "datepicker": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "datepicker1666939496905",
+    "sling:resourceType": "forms-components-examples/components/form/datepicker",
+    "fieldType": "date-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "validationStatus" : "valid"
+    }
+  },
+  "datepicker2": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "datepicker1666939496905",
+    "sling:resourceType": "forms-components-examples/components/form/datepicker",
+    "fieldType": "date-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "datepicker3": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "datepicker1666939496905",
+    "sling:resourceType": "forms-components-examples/components/form/datepicker",
+    "fieldType": "date-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "validationStatus" : "someInvalidStatus"
+    }
+  }
+}

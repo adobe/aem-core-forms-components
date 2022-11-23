@@ -128,6 +128,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @Override
     public boolean isReadOnly() {
+        if (getEditMode()) {
+            return false;
+        }
         return readOnly;
     }
 

@@ -18,7 +18,8 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Portal Lister"
           extraClientlibs="core.forms.components.commons.v1.clientlibs.authoringvalidators"
-          sling:resourceType="cq/gui/components/authoring/dialog">
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          trackingFeature="core-components:formsportal-lister:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -50,7 +51,7 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                     defaultValue="8"
                     emptyText="8"
-                    fieldDescription="Specify the number of resultant records to display"
+                    fieldDescription="Specify the number of resultant records to display."
                     fieldLabel="Results Displayed"
                     maxLength="{Long}30"
                     name="./limit"/>

@@ -19,6 +19,7 @@
     jcr:title="Adaptive Form Number Input field"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.numberinput.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_numberinput_v1"
     trackingFeature="core-components:adaptiveform-numberinput:v1">
     <content
         granite:class="cmp-adaptiveform-numberinput__editdialog"
@@ -39,17 +40,17 @@
                                     jcr:primaryType="nt:unstructured"
                                     granite:class="cmp-adaptiveform-numberinput__type"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    fieldLabel="Type"
+                                    fieldLabel="Number type"
                                     name="./type">
                                 <items jcr:primaryType="nt:unstructured">
                                     <decimal
                                             jcr:primaryType="nt:unstructured"
-                                            text="Decimal"
+                                            text="Decimal (1234.000)"
                                             selected="true"
                                             value="number"/>
                                     <integer
                                             jcr:primaryType="nt:unstructured"
-                                            text="Integer"
+                                            text="Integer (1234)"
                                             value="integer"/>
                                 </items>
                             </type>
@@ -57,31 +58,9 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Default Value"
+                                    fieldLabel="Default value"
                                     name="./default"/>
-                            <leadDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__leaddigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Lead digits">
-                            </leadDigits>
-                            <fracDigits
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__fracdigits"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Frac digits">
-                            </fracDigits>
-                            <editFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-numberinput__editFormat"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    granite:hidden="{Boolean}true"
-                                    text="Edit Format"
-                                    name="./editFormat">
-                            </editFormat>
-                        </items>
+                            </items>
                     </basic>
                     <validation
                             jcr:primaryType="nt:unstructured"
@@ -91,48 +70,122 @@
                             <minimum
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-numberinput__minimum"
                                     defaultValue=""
-                                    fieldLabel="Minimum Value"
+                                    fieldLabel="Lowest number / Smallest number"
                                     name="./minimum"/>
                             <minimumMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when entered value is less than minimum."
-                                    fieldLabel="Minimum Message"
+                                    fieldLabel="Minimum error message"
                                     name="./minimumMessage"/>
-                            <exclusiveMinimum
+                            <excludeMinimumCheck
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    value="true"
+                                    granite:class="cmp-adaptiveform-numberinput__excludeMinimumCheck"
                                     text="Exclude minimum value"
-                                    fieldLabel="Exclusive Minimum"
+                                    value="true"
+                                    fieldLabel="Exclude Minimum Check"
+                                    name="./excludeMinimumCheck"/>
+                            <excludeMinimumCheck-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./excludeMinimumCheck@TypeHint"
+                                    value="Boolean"/>
+                            <exclusiveMinimum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    granite:class="cmp-adaptiveform-numberinput__exclusiveMinimum"
                                     name="./exclusiveMinimum"/>
                             <maximum
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    granite:class="cmp-adaptiveform-numberinput__maximum"
                                     defaultValue=""
-                                    fieldLabel="Maximum Value"
+                                    fieldLabel="Highest number / Largest number"
                                     name="./maximum"/>
                             <maximumMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when entered value is more than maximum."
-                                    fieldLabel="Maximum Message"
+                                    fieldLabel="Maximum error message"
                                     name="./maximumMessage"/>
-                            <exclusiveMaximum
+                            <excludeMaximumCheck
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    granite:class="cmp-adaptiveform-numberinput__excludeMaximumCheck"
                                     text="Exclude maximum value"
-                                    fieldLabel="Exclusive Maximum"
+                                    fieldLabel="Exclude Maximum Check"
                                     value="true"
+                                    name="./excludeMaximumCheck"/>
+                            <excludeMaximumCheck-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./excludeMaximumCheck@TypeHint"
+                                    value="Boolean"/>
+                            <exclusiveMaximum
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    granite:class="cmp-adaptiveform-numberinput__exclusiveMaximum"
                                     name="./exclusiveMaximum"/>
                         </items>
                     </validation>
                     <patterns
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
+                            jcr:title="Formats"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+                            <displayPatternGroup
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Display format"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Display format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <displayPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-numberinput__displaypattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./displayPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                fieldType="number-input"
+                                                type="formatters"/>
+                                    </displayPatternType>
+                                    <displayPictureClause
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-numberinput__displayformat"
+                                            fieldDescription="The format in which the value will be displayed to the user."
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Format"
+                                            name="./displayFormat">
+                                    </displayPictureClause>
+                                </items>
+                            </displayPatternGroup>
+                            <leadDigits
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__leaddigits"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Number of digits before the decimal separator (1234.000)">
+                            </leadDigits>
+                            <fracDigits
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__fracdigits"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldLabel="Number of digits after the decimal separator (1234.000)">
+                            </fracDigits>
+                            <editFormat
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-numberinput__editFormat"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    granite:hidden="{Boolean}true"
+                                    text="Edit format"
+                                    name="./editFormat">
+                            </editFormat>
                         </items>
                     </patterns>
                     <help

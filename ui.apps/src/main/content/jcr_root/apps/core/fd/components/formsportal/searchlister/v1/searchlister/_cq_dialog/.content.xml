@@ -18,7 +18,8 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Search and Lister"
           extraClientlibs="[core.forms.components.commons.v1.clientlibs.authoringvalidators,core.forms.components.formsportal.searchlister.v1.editor]"
-          sling:resourceType="cq/gui/components/authoring/dialog">
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          trackingFeature="core-components:formsportal-searchlister:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -156,7 +157,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                                     fieldLabel="Number of results per page"
-                                                    fieldDescription="Recommended Number: Multiples of 4"
+                                                    fieldDescription="Recommended Number: Multiples of 4."
                                                     min="1"
                                                     name="./limit"/>
                                         </items>

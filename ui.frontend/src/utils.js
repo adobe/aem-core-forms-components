@@ -206,4 +206,13 @@ export default class Utils {
         }
         return prefillJson;
     }
+
+    // Checks if the current browser matches with agentName passed
+    static isUserAgent(agentName) {
+        if(navigator.userAgent) {
+            let regex = "^((?!chrome|android).)*" + agentName;
+            const re = new RegExp(regex, 'i');
+            return re.test(navigator.userAgent);
+        }
+    }
 }

@@ -18,7 +18,8 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Drafts and Submissions"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          extraClientlibs="core.forms.components.formsportal.draftsandsubmissions.v1.editor">
+          extraClientlibs="core.forms.components.formsportal.draftsandsubmissions.v1.editor"
+          trackingFeature="core-components:formsportal-draftsandsubmissions:v1">
     <content
             jcr:primaryType="nt:unstructured"
             sling:resourceType="granite/ui/components/coral/foundation/container">
