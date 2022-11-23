@@ -4,71 +4,20 @@
   "title": "Constraints applicable to fields",
   "type": "object",
   "properties": {
-    "type": {
-      "title": "Data Type of the value that this field captures. When submitting the value will be coerced into the format specified by the type",
-      "type": "string",
-      "enum": [
-        "string",
-        "file",
-        "number",
-        "array",
-        "object",
-        "string[]",
-        "file[]",
-        "number[]",
-        "boolean[]",
-        "boolean"
-      ]
-    },
-    "required": {
-      "type": "boolean"
-    },
-    "validationExpression": {
-      "type": "string",
-      "format": "json-formula"
-    },
-    "pattern": {
-      "title": "The regular expression against which the value will be compared against",
-      "type": "string",
-      "format": "regex"
-    },
-    "format": {
-      "title": "formats as specified in JSON Schema. The constraint is applicable only for string data types",
-      "type": "string",
-      "enum": [
-        "date",
-        "email",
-        "date-time",
-        "data-url"
-      ]
-    },
-    "maxLength": {
-      "title": "Maximum Length of the data. The constraint is applicable only for string data types",
-      "type": "number"
-    },
-    "minLength": {
-      "title": "Minimum Length of the data. The constraint is applicable only for string data types",
-      "type": "number"
+    "accept": {
+      "title": "The constraint is applicable for fields having type file or with fields having type string and format as data-url / binary. It signifies the list of IANA media types that fields can accept.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "enforceEnum": {
       "title": "Whether a user can enter a value that is not present in the enum array",
       "description": "If set to true, a user will be able to enter any other value that is not in the list of enum. That generally means that enum is used a aid for users to enter the value but is not a validation constraint.",
       "type": "boolean"
     },
-    "minimum": {
-      "title": "minimum value or date (inclusive)",
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date"
-        },
-        {
-          "type": "number"
-        }
-      ]
-    },
-    "maximum": {
-      "title": "maximum value or date (inclusive)",
+    "exclusiveMaximum": {
+      "title": "maximum value or date (exclusive)",
       "oneOf": [
         {
           "type": "string",
@@ -91,8 +40,22 @@
         }
       ]
     },
-    "exclusiveMaximum": {
-      "title": "maximum value or date (exclusive)",
+    "format": {
+      "title": "formats as specified in JSON Schema. The constraint is applicable only for string data types",
+      "type": "string",
+      "enum": [
+        "date",
+        "email",
+        "date-time",
+        "data-url"
+      ]
+    },
+    "maxFileSize": {
+      "title": "The constraint is applicable for fields having type file or with fields having type string and format as data-url / binary. It signifies the maximum file size as per IEC specification",
+      "type": "string"
+    },
+    "maximum": {
+      "title": "maximum value or date (inclusive)",
       "oneOf": [
         {
           "type": "string",
@@ -103,32 +66,70 @@
         }
       ]
     },
-    "step": {
-      "title": "The constraint is applicable for fields having type number. It signifies the value should be a multipleOf some number",
+    "maxItems": {
+      "title": "Minimum number of items in a field/panel capturing array data",
       "type": "number"
+    },
+    "maxLength": {
+      "title": "Maximum Length of the data. The constraint is applicable only for string data types",
+      "type": "number"
+    },
+    "minimum": {
+      "title": "minimum value or date (inclusive)",
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "number"
+        }
+      ]
     },
     "minItems": {
       "title": "Minimum number of items in a field/panel capturing array data",
       "type": "number"
     },
-    "maxItems": {
-      "title": "Minimum number of items in a field/panel capturing array data",
+    "minLength": {
+      "title": "Minimum Length of the data. The constraint is applicable only for string data types",
       "type": "number"
     },
-    "accept": {
-      "title": "The constraint is applicable for fields having type file or with fields having type string and format as data-url / binary. It signifies the list of IANA media types that fields can accept.",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+    "pattern": {
+      "title": "The regular expression against which the value will be compared against",
+      "type": "string",
+      "format": "regex"
     },
-    "maxFileSize": {
-      "title": "The constraint is applicable for fields having type file or with fields having type string and format as data-url / binary. It signifies the maximum file size as per IEC specification",
-      "type": "string"
+    "required": {
+      "type": "boolean",
+      "title": "Indicates whether the value is required or not"
+    },
+    "step": {
+      "title": "The constraint is applicable for fields having type number. It signifies the value should be a multipleOf some number",
+      "type": "number"
+    },
+    "type": {
+      "title": "Data Type of the value that this field captures. When submitting the value will be coerced into the format specified by the type",
+      "type": "string",
+      "enum": [
+        "string",
+        "file",
+        "number",
+        "array",
+        "object",
+        "string[]",
+        "file[]",
+        "number[]",
+        "boolean[]",
+        "boolean"
+      ]
     },
     "uniqueItems": {
       "title": "Array items must be unique",
       "type": "boolean"
+    },
+    "validationExpression": {
+      "type": "string",
+      "format": "json-formula"
     }
   }
 }

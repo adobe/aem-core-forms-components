@@ -17,7 +17,7 @@ describe("Form with Accordion Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/accordion/basic.html";
     const childBemBlock = 'cmp-accordion__item';
-
+    const bemBlock = "cmp-accordion";
     let formContainer = null
 
     beforeEach(() => {
@@ -72,4 +72,7 @@ describe("Form with Accordion Container", () => {
         });
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 })

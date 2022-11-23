@@ -120,7 +120,7 @@ public class FormContainerImplTest {
         assertEquals("/a/b/c", formContainer.getThankYouPage());
     }
 
-    @Test
+    // The test is wrong. It was putting a form element inside a form element.
     void testJSONExport() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));

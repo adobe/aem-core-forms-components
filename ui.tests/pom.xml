@@ -339,6 +339,34 @@
                             </environmentVariables>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.sling</groupId>
+                        <artifactId>maven-sling-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install-core-bundle-to-override-farbundle</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                                <configuration>
+                                    <slingUrl>${quickstart.url}/system/console</slingUrl>
+                                    <bundleFileName>${project.basedir}/../bundles/core/target/core-forms-components-core-${project.version}.jar</bundleFileName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>install-af-core-bundle-to-override-farbundle</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                                <configuration>
+                                    <slingUrl>${quickstart.url}/system/console</slingUrl>
+                                    <bundleFileName>${project.basedir}/../bundles/af-core/target/core-forms-components-af-core-${project.version}.jar</bundleFileName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>

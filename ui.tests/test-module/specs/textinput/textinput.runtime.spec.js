@@ -82,4 +82,8 @@ describe("Form Runtime with Text Input", () => {
         })
     });
 
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
+
 })

@@ -16,7 +16,7 @@
 describe("Form with Wizard Layout Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/wizard/basic.html";
-
+    const bemBlock = 'cmp-adaptiveform-wizard';
 
     let formContainer = null;
 
@@ -101,5 +101,9 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
 
     }) ;
+
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 
 });

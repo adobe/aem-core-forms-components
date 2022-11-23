@@ -44,6 +44,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -73,6 +74,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Resource resource;
 
     protected I18n i18n = null;
+
+    private static final String STATUS_NONE = "none";
+    private static final String STATUS_VALID = "valid";
+    private static final String STATUS_INVALID = "invalid";
+
+    private static final String RULES_STATUS_PROP_NAME = "validationStatus";
 
     @PostConstruct
     protected void initBaseModel() {
@@ -124,7 +131,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     public boolean isVisible() {
+        if (getEditMode()) {
+            return true;
+        }
         return visible;
+    }
+
+    @JsonIgnore
+    protected boolean getEditMode() {
+        boolean editMode = false;
+        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+        // we anyways dont need to rely on wcmmode while fetching form definition.
+        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
+            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        }
+        return editMode;
     }
 
     @JsonIgnore
@@ -134,6 +155,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+
+    public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
     /**
      * Predicate to check if a map entry is non empty
@@ -154,13 +177,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
+        Map<String, Object> rulesProperties = getRulesProperties();
+        if (rulesProperties.size() > 0) {
+            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+        }
         return customProperties;
     }
 
     @Override
     @NotNull
     public Map<String, String> getRules() {
-        String[] VALID_RULES = new String[] { "visible", "value", "enabled", "label", "required" };
+        String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames",
+            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum",
+            "readOnly", "required", "value", "visible" };
 
         Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
             .getKey()));
@@ -178,6 +207,40 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return rules;
         }
         return Collections.emptyMap();
+    }
+
+    @JsonIgnore
+    private Map<String, Object> getRulesProperties() {
+        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
+        Map<String, Object> customRulesProperties = new LinkedHashMap<>();
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+        }
+        return customRulesProperties;
+    }
+
+    /***
+     * If atleast one rule is invalid then status of rule for component is considered as invalid
+     *
+     * @param rulesResource
+     * @return
+     */
+    private String getRulesStatus(Resource rulesResource) {
+        if (rulesResource == null) {
+            return STATUS_NONE;
+        }
+
+        ValueMap props = rulesResource.adaptTo(ValueMap.class);
+        if (props == null) {
+            return STATUS_NONE;
+        }
+
+        String status = props.get("validationStatus", STATUS_NONE);
+        if (!(STATUS_NONE.equals(status) || STATUS_VALID.equals(status) || STATUS_INVALID.equals(status))) {
+            status = STATUS_INVALID;
+        }
+        return status;
     }
 
     /**
