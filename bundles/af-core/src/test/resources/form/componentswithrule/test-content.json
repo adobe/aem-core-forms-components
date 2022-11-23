@@ -6,17 +6,7 @@
     "fieldType": "text-input",
     "fd:rules": {
       "jcr:primaryType": "nt:unstructured",
-      "enabled": "true()",
-      "fd:calc": [
-        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"CALC_EXPRESSION\",\"items\":[{\"nodeName\":\"VALUE_FIELD\",\"value\":{\"id\":\"$form.name\",\"type\":\"STRING\",\"name\":\"name\"}},{\"nodeName\":\"to\",\"value\":null},{\"nodeName\":\"EXPRESSION\",\"choice\":{\"nodeName\":\"STRING_LITERAL\",\"value\":null}},{\"nodeName\":\"When\",\"value\":null},{\"nodeName\":\"CONDITIONORALWAYS\",\"choice\":null}]}}],\"isValid\":false,\"enabled\":true,\"version\":1,\"script\":\"'null'\",\"eventName\":\"Calculate\",\"ruleType\":\"\",\"description\":\"\"}"
-      ],
-      "value": "'fasfasf'",
-      "fd:enabled": [
-        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"ACCESS_EXPRESSION\",\"items\":[{\"nodeName\":\"AFCOMPONENT\",\"value\":{\"id\":\"$form.name\",\"type\":\"AFCOMPONENT|FIELD|TEXT FIELD|STRING\",\"name\":\"name\"}},{\"nodeName\":\"When\",\"value\":null},{\"nodeName\":\"CONDITIONORALWAYS\",\"choice\":null},{\"nodeName\":\"Else\",\"value\":null},{\"nodeName\":\"DONOTHING_OR_DISABLE\",\"choice\":{\"nodeName\":\"Disable\",\"value\":null}}]}}],\"isValid\":true,\"enabled\":true,\"version\":1,\"script\":\"true()\",\"eventName\":\"Enabled\",\"ruleType\":\"\",\"description\":\"\"}"
-      ],
-      "fd:valueCommit": [
-        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"EVENT_SCRIPTS\",\"items\":[{\"nodeName\":\"EVENT_CONDITION\",\"choice\":{\"nodeName\":\"EVENT_AND_COMPARISON\",\"items\":[{\"nodeName\":\"COMPONENT\",\"value\":{\"id\":\"$form.name\",\"type\":\"STRING\",\"name\":\"name\"}},{\"nodeName\":\"EVENT_AND_COMPARISON_OPERATOR\",\"choice\":{\"nodeName\":\"EQUALS_TO\",\"value\":null}},{\"nodeName\":\"PRIMITIVE_EXPRESSION\",\"choice\":{\"nodeName\":\"STRING_LITERAL\",\"value\":\"asfasf\"}}]},\"nested\":false},{\"nodeName\":\"Then\",\"value\":null},{\"nodeName\":\"BLOCK_STATEMENTS\",\"items\":[{\"nodeName\":\"BLOCK_STATEMENT\",\"choice\":{\"nodeName\":\"ENABLE_STATEMENT\",\"items\":[{\"nodeName\":\"AFCOMPONENT\",\"value\":{\"id\":\"$form.numberinput1666760176664\",\"displayName\":\"Number Input\",\"type\":\"FIELD\",\"displayPath\":\"FORM/Number Input/\",\"name\":\"numberinput1666760176664\",\"parent\":\"$form\"}}]}}]}]}}],\"isValid\":true,\"enabled\":true,\"version\":1,\"script\":[\"if($field == 'asfasf', dispatchEvent(numberinput1666760176664, 'custom:setProperty', {enabled : true()}), {})\"],\"eventName\":\"Value Commit\",\"ruleType\":\"\",\"description\":\"\"}"
-      ]
+      "validationStatus" : "invalid"
     }
   },
   "numberinput": {
@@ -32,13 +22,26 @@
     "fieldType": "date-input",
     "fd:rules": {
       "jcr:primaryType": "nt:unstructured",
-      "fd:calc": [
-        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"CALC_EXPRESSION\",\"items\":[{\"nodeName\":\"VALUE_FIELD\",\"value\":{\"id\":\"$form.datepicker1666939496905\",\"type\":\"DATE\",\"name\":\"datepicker1666939496905\"}},{\"nodeName\":\"to\",\"value\":null},{\"nodeName\":\"EXPRESSION\",\"choice\":{\"nodeName\":\"DATE_LITERAL\",\"value\":\"2022-10-29\"}},{\"nodeName\":\"When\",\"value\":null},{\"nodeName\":\"CONDITIONORALWAYS\",\"choice\":null}]}}],\"isValid\":true,\"enabled\":true,\"version\":1,\"script\":\"'2022-10-29'\",\"eventName\":\"Calculate\",\"ruleType\":\"\",\"description\":\"\"}"
-      ],
-      "value": "'2022-10-29'",
-      "fd:valueCommit": [
-        "{\"nodeName\":\"ROOT\",\"items\":[{\"nodeName\":\"STATEMENT\",\"choice\":{\"nodeName\":\"EVENT_SCRIPTS\",\"items\":[{\"nodeName\":\"EVENT_CONDITION\",\"choice\":{\"nodeName\":\"EVENT_AND_COMPARISON\",\"items\":[{\"nodeName\":\"COMPONENT\",\"value\":{\"id\":\"$form.datepicker1666939496905\",\"type\":\"DATE\",\"name\":\"datepicker1666939496905\"}},{\"nodeName\":\"EVENT_AND_COMPARISON_OPERATOR\",\"choice\":{\"nodeName\":\"EQUALS_TO\",\"value\":null}},{\"nodeName\":\"PRIMITIVE_EXPRESSION\",\"choice\":{\"nodeName\":\"DATE_LITERAL\",\"value\":\"2022-11-04\"}}]},\"nested\":false},{\"nodeName\":\"Then\",\"value\":null},{\"nodeName\":\"BLOCK_STATEMENTS\",\"items\":[{\"nodeName\":\"BLOCK_STATEMENT\",\"choice\":{\"nodeName\":\"HIDE_STATEMENT\",\"items\":[{\"nodeName\":\"AFCOMPONENT\",\"value\":{\"id\":\"$form.name\",\"displayName\":\"Text Input\",\"type\":\"AFCOMPONENT\",\"isDuplicate\":true,\"displayPath\":\"FORM/Text Input/\",\"name\":\"name\",\"parent\":\"$form\"}}]}}]}]}}],\"isValid\":true,\"enabled\":true,\"version\":1,\"script\":[\"if($field == '2022-11-04', dispatchEvent(name, 'custom:setProperty', {visible : false()}), {})\"],\"eventName\":\"Value Commit\",\"ruleType\":\"\",\"description\":\"\"}"
-      ]
+      "validationStatus" : "valid"
+    }
+  },
+  "datepicker2": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "datepicker1666939496905",
+    "sling:resourceType": "forms-components-examples/components/form/datepicker",
+    "fieldType": "date-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "datepicker3": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "datepicker1666939496905",
+    "sling:resourceType": "forms-components-examples/components/form/datepicker",
+    "fieldType": "date-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "validationStatus" : "someInvalidStatus"
     }
   }
 }
