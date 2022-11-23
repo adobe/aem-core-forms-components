@@ -28,11 +28,14 @@
         static IS = "adaptiveFormButton";
         static bemBlock = 'cmp-button';
         static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            description: `.${Button.bemBlock}__longdescription`,
+            qm: `.${Button.bemBlock}__questionmark`,
+            tooltipDiv: `.${Button.bemBlock}__shortdescription`
         };
 
         getQuestionMarkDiv() {
-            return null;
+            return this.element.parentNode ? this.element.parentNode.querySelector(Button.selectors.qm) : null;
         }
 
         getLabel() {
@@ -48,7 +51,7 @@
          * @returns {HTMLElement}
          */
         getDescription() {
-            return null;
+            return this.element.parentNode ? this.element.parentNode.querySelector(Button.selectors.description) : null;
         }
 
         getErrorDiv() {
@@ -56,7 +59,7 @@
         }
 
         getTooltipDiv() {
-            return null;
+            return this.element.parentNode ? this.element.parentNode.querySelector(Button.selectors.tooltipDiv) : null;
         }
 
         setModel(model) {
