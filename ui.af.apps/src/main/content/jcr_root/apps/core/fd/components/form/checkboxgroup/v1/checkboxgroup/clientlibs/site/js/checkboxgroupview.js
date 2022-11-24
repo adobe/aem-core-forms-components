@@ -73,12 +73,13 @@
 
         setModel(model) {
             super.setModel(model);
-            let widgets = this.widget
+            let widgets = this.widget;
             widgets.forEach(widget => {
-                let self = widget
+                let self = widget;
+                this._updateModelValue(self);
                 widget.addEventListener('change', (e) => {
-                    this._updateModelValue(self)
-                })
+                    this._updateModelValue(self);
+                });
             })
         }
 
