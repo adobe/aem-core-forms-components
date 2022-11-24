@@ -38,7 +38,7 @@ The following properties are written to JCR for this Radio Button component and 
 4. `./type` - defines the type of values(string, boolean, number) which can be accepted
 5. `./enum` - an array[] of type, defines the available values for selection
 6. `./enumNames` - an array[] of strings, defines the display value of the enum
-7. `./default` - defines the default value of the field
+7. `./default` - defines the default option of the field
 8. `./alignment` - defines how should the options be displayed, horizontally or vertically.
 9. `./description` - defines a help message that can be rendered in the field as a hint for the user
 10. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value

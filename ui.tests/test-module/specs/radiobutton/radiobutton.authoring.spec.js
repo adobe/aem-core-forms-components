@@ -97,6 +97,35 @@ describe('Page - Authoring', function () {
 
     it ('open edit dialog of Radio Button', function(){
       testRadioButtonBehaviour(radioButtonEditPathSelector, radioButtonDrop);
+    });
+
+    it ('check value type validations', function() {
+
+      // For Number Type
+      dropRadioButtonInGuideContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-radiobutton__type').click();
+      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+      cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Number');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(radioButtonDrop);
+
+      // For Boolean
+      dropRadioButtonInGuideContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-radiobutton__type').click();
+      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+      cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Boolean');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(radioButtonDrop);
     })
   })
 });

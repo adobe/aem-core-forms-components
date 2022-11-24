@@ -19,7 +19,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Panel"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    helpPath="https://www.adobe.com/"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_panelcontainer_v1"
     trackingFeature="core-components:adaptiveform-panel:v1"
     extraClientlibs="[core.forms.components.panelcontainer.v1.editor]">
     <content
@@ -51,6 +51,19 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                     path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/hideTitle"/>
+                            <wrapData
+                                    granite:class="cmp-adaptiveform-panel__wrapData"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    name="./wrapData"
+                                    text="Wrap data in object"
+                                    uncheckedValue="false"
+                                    value="true"/>
+                            <wrapData-typehint
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                    name="./wrapData@TypeHint"
+                                    value="Boolean"/>
                             <layout
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
@@ -106,14 +119,14 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Minimum"
+                                    fieldLabel="Minimum number of times the panel appears on the form"
                                     min="0"
                                     name="./minItems"/>
                             <maxItems
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                     defaultValue=""
-                                    fieldLabel="Maximum"
+                                    fieldLabel="Maximum number of times the panel can appear on the form"
                                     min="-1"
                                     name="./maxItems"/>
                         </items>
@@ -138,8 +151,8 @@
                             <roleAttribute
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="HTML ROLE attribute to apply to the component."
-                                    fieldLabel="Role"
+                                    fieldDescription="HTML role attribute to apply to the component."
+                                    fieldLabel="HTML role for screen reader to announce"
                                     name="./roleAttribute"
                                     value=""/>
                         </items>
@@ -238,7 +251,6 @@
                                             name="./overflowText"
                                             type="overflowPaginationType"
                                             emptyText = "None"/>
-
                                 </items>
                             </dorPagination>
 
@@ -261,7 +273,7 @@
                                     </column>
                                     <table
                                             jcr:primaryType="nt:unstructured"
-                                            text="Table"
+                                            text="Table Row"
                                             value="tabular">
                                     </table>
                                 </items>

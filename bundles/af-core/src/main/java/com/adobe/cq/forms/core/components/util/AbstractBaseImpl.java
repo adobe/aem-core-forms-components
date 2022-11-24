@@ -245,18 +245,20 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
             ConstraintMessages msgs = new ConstraintMessagesProvider();
             putConstraintMessage(ConstraintType.TYPE, msgs.getTypeConstraintMessage());
             putConstraintMessage(ConstraintType.REQUIRED, msgs.getRequiredConstraintMessage());
-            if (this.getType().equals(Type.STRING)) {
-                putConstraintMessage(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
-                putConstraintMessage(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
-                putConstraintMessage(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
-                putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
-            }
+            Type type = this.getType();
+            if (type != null) {
+                if (type.equals(Type.STRING)) {
+                    putConstraintMessage(ConstraintType.MIN_LENGTH, msgs.getMinLengthConstraintMessage());
+                    putConstraintMessage(ConstraintType.MAX_LENGTH, msgs.getMaxLengthConstraintMessage());
+                    putConstraintMessage(ConstraintType.PATTERN, msgs.getPatternConstraintMessage());
+                    putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
+                }
 
-            if (this.getType().equals(Type.NUMBER)) {
-                putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
-                putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                if (type.equals(Type.NUMBER)) {
+                    putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
+                    putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
+                }
             }
-
             putConstraintMessage(ConstraintType.MAXFILE_SIZE, msgs.getMaxFileSizeConstraintMessage());
             putConstraintMessage(ConstraintType.ACCEPT, msgs.getAcceptConstraintMessage());
 
