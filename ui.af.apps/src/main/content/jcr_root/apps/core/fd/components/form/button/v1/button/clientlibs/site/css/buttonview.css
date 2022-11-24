@@ -14,23 +14,23 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-button {
+.cmp-adaptiveform-button {
 
 }
 
-.cmp-button__text {
+.cmp-adaptiveform-button__text {
 
 }
 
-.cmp-button__longdescription {
+.cmp-adaptiveform-button__longdescription {
 
 }
 
-.cmp-button__shortdescription {
+.cmp-adaptiveform-button__shortdescription {
 
 }
 
-.cmp-button__questionmark {
+.cmp-adaptiveform-button__questionmark {
   display:inline-block;
   top:8px;
   right:8px;

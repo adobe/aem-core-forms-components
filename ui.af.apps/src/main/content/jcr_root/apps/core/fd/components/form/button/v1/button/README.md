@@ -38,14 +38,13 @@ It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
 ```
-BLOCK cmp-button
-    ELEMENT cmp-button__widget
-    ELEMENT cmp-button__text
-    ELEMENT cmp-button__icon
-    ELEMENT cmp-button__questionmark
-    ELEMENT cmp-button__shortdescription
-    ELEMENT cmp-button__longdescription
-    ELEMENT cmp-button__errormessage
+BLOCK cmp-adaptiveform-button
+    ELEMENT cmp-adaptiveform-button__widget
+    ELEMENT cmp-adaptiveform-button__text
+    ELEMENT cmp-adaptiveform-button__icon
+    ELEMENT cmp-adaptiveform-button__questionmark
+    ELEMENT cmp-adaptiveform-button__shortdescription
+    ELEMENT cmp-adaptiveform-button__longdescription
 ```
 
 ## JavaScript Data Attribute Bindings

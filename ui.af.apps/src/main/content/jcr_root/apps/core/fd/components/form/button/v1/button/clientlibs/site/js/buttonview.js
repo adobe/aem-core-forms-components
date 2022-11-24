@@ -26,7 +26,7 @@
          * @type {string}
          */
         static IS = "adaptiveFormButton";
-        static bemBlock = 'cmp-button';
+        static bemBlock = 'cmp-adaptiveform-button';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${Button.bemBlock}__widget`,

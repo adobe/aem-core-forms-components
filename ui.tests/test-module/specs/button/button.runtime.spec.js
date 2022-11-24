@@ -16,7 +16,7 @@
 describe("Form Runtime with Button Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/button/basic.html"
-    const bemBlock = 'cmp-button'
+    const bemBlock = 'cmp-adaptiveform-button'
     const IS = "adaptiveFormButton"
     const selectors = {
         buttonGroup : `[data-cmp-is="${IS}"]`
