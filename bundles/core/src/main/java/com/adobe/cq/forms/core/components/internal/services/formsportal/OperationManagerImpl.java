@@ -40,12 +40,7 @@ import com.adobe.cq.forms.core.components.models.services.formsportal.OperationM
     service = OperationManager.class,
     immediate = true)
 public class OperationManagerImpl implements OperationManager {
-    @Reference(
-        service = Operation.class,
-        policy = ReferencePolicy.DYNAMIC,
-        cardinality = ReferenceCardinality.MULTIPLE,
-        bind = "bindOperation",
-        unbind = "unbindOperation")
+
     private volatile Map<String, Operation> operations = new ConcurrentHashMap<String, Operation>();
 
     private Map<DraftsAndSubmissions.TypeEnum, List<Operation>> operationLists = new ConcurrentHashMap<>();
@@ -69,6 +64,12 @@ public class OperationManagerImpl implements OperationManager {
         operationLists.put(DraftsAndSubmissions.TypeEnum.SUBMISSION, submitOperations);
     }
 
+    @Reference(
+        service = Operation.class,
+        policy = ReferencePolicy.DYNAMIC,
+        cardinality = ReferenceCardinality.MULTIPLE,
+        bind = "bindOperation",
+        unbind = "unbindOperation")
     protected void bindOperation(final Operation operation, Map<String, Object> config) {
         String operationName = operation.getName();
         operations.put(operationName, operation);
