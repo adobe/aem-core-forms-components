@@ -32,21 +32,7 @@ describe("Form Runtime with Button Input", () => {
 
 
     it("should toggle description and tooltip", () => {
-        const fieldId = 'tooltip_scenario_test'
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible=false')
-        .should('not.exist');
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__shortdescription`)
-        .should('contain.text', 'This is short description');
-        // click on ? mark
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__questionmark`).click();
-        // long description should be shown
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
-        .should('not.exist');
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__longdescription`)
-        .should('contain.text', 'This is long description');
-        // short description should be hidden.
-        cy.get(`#${fieldId}`).parent().find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
-        .should('eq', 'false');
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
 })
