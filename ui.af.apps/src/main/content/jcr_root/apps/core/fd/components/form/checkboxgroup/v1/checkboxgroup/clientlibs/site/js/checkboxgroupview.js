@@ -108,28 +108,17 @@
             }, this)
         }
 
-        _updateEnabled(enabled,readOnly) {
+        _updateEnabled(enabled, readOnly) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
-            let widgets = this.widget
+            let widgets = this.widget;
             widgets.forEach(widget => {
-                if (readOnly === true) {
-                    // in case of prefil, the value would be filled in the form
-                    // but for accesibility it would be marked readonly instead of disabled
-                    // even when enabled is false
+                if (enabled === false) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
-                    widget.setAttribute("aria-readonly", true);
+                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                } else if (readOnly === false){
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
-                } else {
-                    if (enabled === false) {
-                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
-                        widget.setAttribute("aria-readonly", false);
-                    } else {
-                        widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                        widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
-                        widget.setAttribute("aria-readonly", false);
-                    }
                 }
             });
         }
