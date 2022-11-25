@@ -40,8 +40,7 @@ describe("Form with Submit Button", () => {
     })
 
     it("Clicking the button should submit the form", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        cy.get(`#${id}`).click().then(x => {
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")
         })
     });
