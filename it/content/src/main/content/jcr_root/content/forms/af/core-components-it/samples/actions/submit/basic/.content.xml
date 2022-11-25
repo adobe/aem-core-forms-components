@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-11-24T12:25:02.435+05:30"
+            cq:lastModified="{Date}2022-11-25T14:51:30.442+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -13,16 +13,19 @@
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
-                jcr:lastModified="{Date}2022-11-24T12:25:02.424+05:30"
+                jcr:lastModified="{Date}2022-11-25T14:51:30.433+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container"
-                actionType="fd/af/components/guidesubmittype/restendpoint"
+                actionType="fd/dashboard/components/actions/aemworkflowsubmit"
+                dataXMLPath="data"
+                dataXMLType="FOLDER_PAYLOAD"
                 fieldType="form"
                 textIsRich="true"
                 thankYouMessage="Thank you for submitting the form."
                 thankYouOption="page"
-                themeRef="/libs/fd/af/themes/canvas">
+                themeRef="/libs/fd/af/themes/canvas"
+                workflowModel="/var/workflow/models/dam/adddamsize">
             <submit
                     jcr:created="{Date}2022-11-23T12:16:03.945+05:30"
                     jcr:createdBy="admin"
