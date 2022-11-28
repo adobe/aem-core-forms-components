@@ -36,6 +36,13 @@ export default class FormContainer {
         return id ? this._model.getElement(id) : this._model;
     }
 
+    getParentFormElementId(model) {
+        if (model.parent.fieldType) {
+            return model.parent.id;
+        }
+        return this.getParentFormElementId(model.parent);
+    }
+
     addField(fieldView) {
         if (fieldView.getFormContainerPath() === this._path) {
             let fieldId = fieldView.getId();
@@ -43,8 +50,7 @@ export default class FormContainer {
             let model = this.getModel(fieldId);
             fieldView.setModel(model);
 
-            //todo fix parentId for non form elements, right now parent id might be non form element
-            let parentId = model.parent.id;
+            let parentId = this.getParentFormElementId(model);
             if (parentId != '$form') {
                 let parentView = this._fields[parentId];
                 //if parent view has been initialized then add parent relationship, otherwise add it to deferred parent-child relationship
