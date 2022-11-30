@@ -28,7 +28,9 @@ common:
           at: /home/circleci/build
       - run:
           name: UI tests
-          command: node .circleci/ci/it-tests.js
+          command: |
+                TEST=$(circleci tests glob "ui.tests/test-module/specs/*/*.js" | circleci tests split --split-by=timings)
+                node .circleci/ci/it-tests.js $TEST
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -124,6 +126,7 @@ jobs:
       PRERELEASE: 'true'
     resource_class: large
     working_directory: /home/circleci/build
+    parallelism: 4
     <<: *cypress_test_steps
  
   release:
