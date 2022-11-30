@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Edit AEM Forms Container"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="core.forms.components.aemform.v2.editor"
+    trackingFeature="core-components:aemform:v2"
+    helpPath="https://helpx.adobe.com/aem-forms/6-4/embed-adaptive-form-aem-sites.html">
+    <content
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <columns
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+                <items jcr:primaryType="nt:unstructured">
+                    <column
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <adaptiveFormContainer
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        id="adaptiveFormContainer"/>
+                                <items jcr:primaryType="nt:unstructured">
+                                    <form_ref
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/granite/components/formpicker"
+                                            fieldLabel="Asset Path"
+                                            filter="adaptiveForm"
+                                            name="./formRef"
+                                            rootPath="/content/dam/formsanddocuments"/>
+                                    <thankyou_config
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-aemform--editor-thankyouConfig"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                            fieldLabel="Post-submission"
+                                            name="./thankyouConfig">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <message
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Show Thank You Message"
+                                                    value="message">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        hide="thankyoupage_field,submitType"
+                                                        show="thankyoumessage_field"
+                                                        toggle=""/>
+                                            </message>
+                                            <page
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Show Thank You Page"
+                                                    value="page">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        hide="thankyoumessage_field"
+                                                        show="thankyoupage_field,submitType"
+                                                        toggle=""/>
+                                            </page>
+                                        </items>
+                                    </thankyou_config>
+                                    <submit_type
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            fieldLabel="Submit Type"
+                                            fieldDescription="Select to replace the page containing the embedded Adaptive Form with thank you page."
+                                            granite:class="cmp-aemform--editor-submitType"
+                                            name="./submitType"
+                                            text="Redirect to thank you page"
+                                            uncheckedValue="inline"
+                                            value="pageRefresh">
+                                        <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                id="submitType"
+                                                toggle=""/>
+                                    </submit_type>
+                                    <thankyou_message
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                            class="thankyoumessage_field"
+                                            fieldLabel="Thank You Message"
+                                            name="./thankyouMessage"
+                                            useFixedInlineToolbar="{Boolean}true">
+                                        <rtePlugins jcr:primaryType="nt:unstructured">
+                                            <links jcr:primaryType="nt:unstructured">
+                                                <linkDialogConfig
+                                                        jcr:primaryType="nt:unstructured"
+                                                        height="{Long}316">
+                                                    <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
+                                                </linkDialogConfig>
+                                            </links>
+                                            <format
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <lists
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <justify
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <keys
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <paraformat
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <misctools
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                            <fullscreen
+                                                    jcr:primaryType="nt:unstructured"
+                                                    features="*"/>
+                                        </rtePlugins>
+                                        <uiSettings jcr:primaryType="nt:unstructured">
+                                            <cui jcr:primaryType="nt:unstructured">
+                                                <inline
+                                                        jcr:primaryType="nt:unstructured"
+                                                        toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
+                                                    <popovers jcr:primaryType="nt:unstructured">
+                                                        <justify
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                                                ref="justify"/>
+                                                        <lists
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                                                ref="lists"/>
+                                                    </popovers>
+                                                </inline>
+                                                <fullscreen
+                                                        jcr:primaryType="nt:unstructured"
+                                                        toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
+                                                    <popovers jcr:primaryType="nt:unstructured">
+                                                        <styles
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="styles:getStyles:styles-pulldown"
+                                                                ref="styles"/>
+                                                        <paraformat
+                                                                jcr:primaryType="nt:unstructured"
+                                                                items="paraformat:getFormats:paraformat-pulldown"
+                                                                ref="paraformat"/>
+                                                    </popovers>
+                                                </fullscreen>
+                                            </cui>
+                                        </uiSettings>
+                                    </thankyou_message>
+                                    <thankyou_page
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            fieldLabel="Thank you page"
+                                            name="./thankyouPage"
+                                            rootPath="/content">
+                                        <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                id="thankyoupage_field"
+                                                toggle=""/>
+                                    </thankyou_page>
+                                    <usePageLocale
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            checked="{Boolean}true"
+                                            name="./usePageLocale"
+                                            text="Use Page Language"
+                                            value="true"/>
+                                    <enableFocusOnFirstField
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            fieldDescription="Select to keep the focus on the first field of the adaptive form or uncheck to keep the focus on the parent page or application."
+                                            granite:class="cmp-aemform--editor-enablefocusonfirstfield"
+                                            name="./enableFocusOnFirstField"
+                                            checked="{Boolean}true"
+                                            text="Set Focus on Form"
+                                            uncheckedValue="false"
+                                            value="true"/>
+                                    <enableFocusOnFirstField-typehint
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                            name="./enableFocusOnFirstField@TypeHint"
+                                            value="Boolean"/>
+                                </items>
+                            </adaptiveFormContainer>
+                            <themeRef
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    disabled="false"
+                                    emptyOption="false"
+                                    fieldLabel="Theme"
+                                    name="./themeRef"
+                                    renderReadOnly="false">
+                                <datasource
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                        type="theme"/>
+                            </themeRef>
+                            <full_page_width
+                                    granite:id="useIframe"
+                                    granite:class="cmp-aemform--editor-useiframe"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    fieldDescription="If checked, iframe will not be used to render the form."
+                                    name="./useiframe"
+                                    text="Form covers entire width of the page"
+                                    checked="{Boolean}true"
+                                    uncheckedValue="true"
+                                    value="false"/>
+                            <height
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                    defaultValue=""
+                                    fieldDescription="Leave this field empty to resize the container automatically based on content."
+                                    fieldLabel="Height (pixels)"
+                                    min="0"
+                                    name="./height"/>
+                            <cssClientlib
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="CSS client library."
+                                    fieldLabel="CSS Client Library"
+                                    name="./cssClientlib"
+                                    value=""/>
+                        </items>
+                    </column>
+                </items>
+            </columns>
+        </items>
+    </content>
+</jcr:root>
