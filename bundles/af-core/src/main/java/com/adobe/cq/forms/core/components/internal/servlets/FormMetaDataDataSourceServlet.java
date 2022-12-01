@@ -47,9 +47,12 @@ import com.adobe.aemds.guide.model.FormMetaData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ExpressionResolver;
+import com.adobe.granite.ui.components.Value;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
@@ -65,6 +68,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String DATA_MODEL = "guideDataModel";
 
     private static final String FIELD_TYPE = "fieldType";
+    private static final String ALLOWED_FORMATS = "allowedFormats";
     private static final String NN_DIALOG = "cq:dialog";
 
     /**
@@ -131,57 +135,49 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         if (config != null) {
             FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
             String dataModel = getParameter(config, DATA_MODEL, request, "");
-            String fieldType = getParameter(config, FIELD_TYPE, request, "");
             actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request.getResourceResolver(), type, dataModel, fieldType).iterator());
+                request, type, dataModel).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<Resource> getDataSourceResources(ResourceResolver resourceResolver, FormMetaDataType type, String dataModel,
-        String fieldType) {
+    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, FormMetaDataType type, String dataModel) {
+        ResourceResolver resourceResolver = request.getResourceResolver();
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
-                    metaDataList = formMetaData.getFormatters(fieldType);
-                    Map<String, Object> firstEntry = new HashMap<>();
-                    firstEntry.put("text", "Select");
-                    firstEntry.put("value", "");
-                    ValueMap firstEntryVm = new ValueMapDecorator(firstEntry);
-                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, firstEntryVm));
-                    while (metaDataList.hasNext()) {
-                        FormsManager.ComponentDescription componentDescription = metaDataList.next();
-                        Resource formatterResource = resourceResolver.getResource(componentDescription.getResourceType());
-                        if (formatterResource != null) {
-                            String path = formatterResource.getPath();
-                            ValueMap formatterResourceValueMap = formatterResource.getValueMap();
-                            Iterator<Map.Entry<String, Object>> it = formatterResourceValueMap.entrySet().iterator();
-                            while (it.hasNext()) {
-                                Map.Entry<String, Object> entry = it.next();
-                                String key = entry.getKey();
-                                // This condition is sufficient for property guideComponentType to get ignored
-                                if (key.startsWith("pattern")) {
+                    Resource contentResource = resourceResolver.getResource((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE));
+                    ContentPolicyManager policyManager = resourceResolver.adaptTo(ContentPolicyManager.class);
+                    if (contentResource != null && policyManager != null) {
+                        ContentPolicy policy = policyManager.getPolicy(contentResource);
+                        if (policy != null) {
+                            Map<String, Object> firstEntry = new HashMap<>();
+                            firstEntry.put("text", "Select");
+                            firstEntry.put("value", "");
+                            ValueMap firstEntryVm = new ValueMapDecorator(firstEntry);
+                            resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, firstEntryVm));
+                            ValueMap props = policy.getProperties();
+                            if (props != null) {
+                                String[] allowedFormats = (String[]) props.getOrDefault(ALLOWED_FORMATS, new String[0]);
+                                for (String allowedFormat : allowedFormats) {
                                     Map<String, Object> respObj = new HashMap<>();
-                                    String value = (String) entry.getValue();
-                                    String[] arr = value.split("=", 2);
-                                    if (this.shouldAddPattern(fieldType, arr[1])) {
-                                        respObj.put("text", arr[0]);
-                                        respObj.put("value", arr[1]);
-                                        ValueMap vm = new ValueMapDecorator(respObj);
-                                        resources.add(new ValueMapResource(resourceResolver, path, JcrConstants.NT_UNSTRUCTURED, vm));
-                                    }
+                                    String[] arr = allowedFormat.split("=", 2);
+                                    respObj.put("text", arr[0]);
+                                    respObj.put("value", arr[1]);
+                                    ValueMap vm = new ValueMapDecorator(respObj);
+                                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, vm));
                                 }
                             }
+                            Map<String, Object> customEntry = new HashMap<>();
+                            customEntry.put("text", "Custom");
+                            customEntry.put("value", "custom");
+                            ValueMap customEntryVm = new ValueMapDecorator(customEntry);
+                            resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, customEntryVm));
                         }
                     }
-                    Map<String, Object> customEntry = new HashMap<>();
-                    customEntry.put("text", "Custom");
-                    customEntry.put("value", "custom");
-                    ValueMap customEntryVm = new ValueMapDecorator(customEntry);
-                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, customEntryVm));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
