@@ -61,10 +61,6 @@ describe('Page - Authoring', function () {
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            // check if adaptive form is selected by default
-            cy.get("[name='./formType']")
-                .should("be.visible")
-                .should("have.value", "adaptiveForm");
             // check for dynamic operations performed using JS
             cy.get("[name='./thankyouConfig'][value='message']")
                 .should("be.visible")
@@ -82,54 +78,6 @@ describe('Page - Authoring', function () {
             // check if by default iframe is not selected
             cy.get("[name='./useiframe'").should("be.checked");
             cy.get(sitesSelectors.confirmDialog.actions.first).click();
-        });
-
-        after(function() {
-            // clean up the operations performed in the test
-            cy.enableOrDisableTutorials(true);
-        });
-    });
-});
-
-// skipping the test since it is flaky now
-describe.skip('Page - Authoring - Wizard', function () {
-    context('Open Editor - Wizard', function () {
-        beforeEach(function () {
-            const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
-            cy.visit(baseUrl);
-            cy.login(baseUrl);
-            //cy.enableToggles(["FT_CQ-4343036","FT_CQ-4339424"]);
-            cy.openAuthoringWithFeatureToggles(pagePath,["FT_CQ-4343036","FT_CQ-4339424"]);
-        });
-
-        it('open toolbar, select wizard and click on Cancel', function(){
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
-            cy.get("[data-action='createFormViaWizard']").should('be.visible');
-            cy.invokeEditableAction("[data-action='createFormViaWizard']");
-            cy.get(wizardSelectors.wizardCancelButton).click();
-        });
-
-        /*it('open toolbar, select wizard and create a Form', function() {
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
-            cy.get("[data-action='createFormViaWizard']").should('be.visible');
-            cy.invokeEditableAction("[data-action='createFormViaWizard']");
-
-            cy.get(wizardSelectors.basicTemplate).click();
-            cy.get(wizardSelectors.wizardCreateButton).click();
-            cy.get(wizardSelectors.modal.create).should('be.visible');
-            const formName = 'testcreateform_' + new Date().getTime();
-            cy.get(wizardSelectors.modal.title).type(formName);
-            cy.get(wizardSelectors.modal.createButton).click();
-
-            //check if created form is configured
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get("coral-taglist[name='./formRef']")
-                .should("have.value", "/content/dam/formsanddocuments/" + formName);
-        });*/
-
-        afterEach(function() {
-            cy.disableToggles();
         });
 
         after(function() {

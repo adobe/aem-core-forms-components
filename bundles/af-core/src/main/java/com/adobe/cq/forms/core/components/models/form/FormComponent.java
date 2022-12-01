@@ -73,12 +73,6 @@ public interface FormComponent extends Component {
         return Collections.emptyMap();
     }
 
-    @JsonView(Views.Author.class)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, Object> getRulesProperties() {
-        return Collections.emptyMap();
-    }
-
     /**
      * Returns the name of the form field
      *
