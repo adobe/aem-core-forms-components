@@ -39,6 +39,7 @@
         <npm.version>7.5.4</npm.version>
 
         <HEADLESS_BROWSER>false</HEADLESS_BROWSER>
+        <specFiles></specFiles>
 
         <!-- AEMaaCS UI testing convention properties -->
         <AEM_AUTHOR_URL>http://localhost:4502</AEM_AUTHOR_URL>
@@ -302,7 +303,7 @@
                                     <skip>${skipTests}</skip>
                                     <executable>npm</executable>
                                     <arguments>
-                                        <argument>run</argument>
+                                        <argument>run --spec ${specFiles}</argument>
                                         <argument>prereport</argument>
                                     </arguments>
                                 </configuration>
@@ -319,6 +320,7 @@
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>run</argument>
+                                        <argument>run --spec</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
