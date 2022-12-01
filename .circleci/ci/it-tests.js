@@ -15,7 +15,7 @@
 'use strict';
 
 const ci = new (require('./ci.js'))();
-import { argv } from 'node:process';
+const process = require('process');
 
 ci.context();
 
@@ -78,7 +78,7 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
-        let testSuites = argv.join(',');
+        let testSuites = process.argv.join(',');
         ci.dir('ui.tests', () => {
             ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles=${testSuites}`);
     });
