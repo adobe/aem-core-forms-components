@@ -303,7 +303,7 @@
                                     <skip>${skipTests}</skip>
                                     <executable>npm</executable>
                                     <arguments>
-                                        <argument>run --spec ${specFiles}</argument>
+                                        <argument>run</argument>
                                         <argument>prereport</argument>
                                     </arguments>
                                 </configuration>
@@ -319,8 +319,7 @@
                                     <executable>${project.basedir}/../frontend-maven-plugin/node/node</executable>
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
-                                        <argument>run</argument>
-                                        <argument>run --spec</argument>
+                                        <argument>run --spec ${specFiles}</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
