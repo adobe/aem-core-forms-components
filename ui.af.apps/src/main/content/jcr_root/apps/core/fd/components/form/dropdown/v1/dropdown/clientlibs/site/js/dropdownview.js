@@ -97,19 +97,24 @@
 
         setModel(model) {
             super.setModel(model);
+            this.#updateModelValue(this.widget);
             this.widget.addEventListener('change', (e) => {
-                if(this._model.isArrayType()) {
-                    let valueArray = [];
-                    [...this.widget].forEach((option) => {
-                        if(option.selected) {
-                            valueArray.push(option.value);
-                        }
-                    });
-                    this._model.value = valueArray;
-                } else {
-                    this._model.value = e.target.value;
-                }
+                this.#updateModelValue(e.target);
             });
+        }
+
+        #updateModelValue(widget) {
+            if(this._model.isArrayType()) {
+                let valueArray = [];
+                [...this.widget].forEach((option) => {
+                    if(option.selected) {
+                        valueArray.push(option.value);
+                    }
+                });
+                this._model.value = valueArray;
+            } else {
+                this._model.value = widget.value;
+            }
         }
     }
 

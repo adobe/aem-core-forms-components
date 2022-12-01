@@ -62,10 +62,6 @@
         setFocus() {
             this.setActive();
         }
-
-        setModel(model) {
-            super.setModel(model);
-        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

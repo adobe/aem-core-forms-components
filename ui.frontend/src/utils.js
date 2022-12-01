@@ -181,7 +181,8 @@ export default class Utils {
                 const formContainer = createFormContainer({
                     _formJson,
                     _prefillData,
-                    _path
+                    _path,
+                    _element: elements[i]
                 });
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
