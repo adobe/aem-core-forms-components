@@ -319,7 +319,7 @@
                                     <executable>${project.basedir}/../frontend-maven-plugin/node/node</executable>
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
-                                        <argument>run --spec ${specFiles}</argument>
+                                        <argument>run --spec "${specFiles}"</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
