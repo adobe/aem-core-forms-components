@@ -26,57 +26,55 @@
         formContainer = p;
         })
     });
-
     const checkHTML = (id, state) => {
-            const visible = state.visible;
-            const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-            const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-            const value = state.value
-            cy.get(`#${id}`)
-                .should(passVisibleCheck)
-                .invoke('attr', 'data-cmp-visible')
-                .should('eq', visible.toString());
-            cy.get(`#${id}`)
-                .invoke('attr', 'data-cmp-enabled')
-                .should('eq', state.enabled.toString());
-            return cy.get(`#${id}`).within((root) => {
-                cy.get('*').should(passVisibleCheck)
-                cy.get('input')
-                    .should(passDisabledAttributeCheck, 'disabled');
-                cy.get('input').should('have.value', value)
-            })
+        const visible = state.visible;
+        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const value = state.value
+        cy.get(`#${id}`)
+            .should(passVisibleCheck)
+            .invoke('attr', 'data-cmp-visible')
+            .should('eq', visible.toString());
+        cy.get(`#${id}`)
+            .invoke('attr', 'data-cmp-enabled')
+            .should('eq', state.enabled.toString());
+        return cy.get(`#${id}`).within((root) => {
+            cy.get('*').should(passVisibleCheck)
+            cy.get('input')
+                .should(passDisabledAttributeCheck, 'disabled');
+            cy.get('input').should('have.value', value)
+        })
     }
 
     it('text should get initialized properly', () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
-                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-                Object.entries(formContainer._fields).forEach(([id, field]) => {
-                expect(field.getId()).to.equal(id)
-                expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            expect(field.getId()).to.equal(id)
+            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
         });
 
     })
 
     it(" should get model and view initialized properly ", () => {
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-            Object.entries(formContainer._fields).forEach(([id, field]) => {
-                expect(field.getId()).to.equal(id)
-                expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-            });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            expect(field.getId()).to.equal(id)
+            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+        });
     })
 
     it(" html changes are reflected in model ", () => {
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
-            const input = "value"
-            cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-                expect(model.getState().value).to.equal(input)
-            })
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        const input = "value"
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            expect(model.getState().value).to.equal(input)
+        })
     });
 
     it('test the rules editor', () => {
-
         cy.get('.cmp-adaptiveform-textinput__widget')
           .type('Hide me');
         cy.get('.cmp-adaptiveform-textinput')
