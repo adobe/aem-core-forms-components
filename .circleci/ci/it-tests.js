@@ -81,7 +81,7 @@ try {
         let testSuites = process.argv.join(',');
         console.log(testSuites);
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles=${testSuites}`);
+            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles="${testSuites}"`);
     });
     }
 

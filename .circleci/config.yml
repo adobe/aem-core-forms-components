@@ -29,7 +29,7 @@ common:
       - run:
           name: UI tests
           command: |
-                TEST=$(circleci tests glob "ui.tests/test-module/specs/*/*.js" | circleci tests split --split-by=timings)
+                TEST=$(circleci tests glob "ui.tests/test-module/specs/*/*spec.js" | circleci tests split --split-by=timings)
                 node .circleci/ci/it-tests.js $TEST
       - store_test_results:
           path: ui.tests/test-module/target/reports
