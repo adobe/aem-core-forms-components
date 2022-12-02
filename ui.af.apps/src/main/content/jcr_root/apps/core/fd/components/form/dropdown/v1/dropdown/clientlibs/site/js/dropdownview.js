@@ -85,11 +85,11 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (enabled === false) {
-                    if(state.hasOwnProperty("readonly") && state.readOnly === false){
+                    if(state.readOnly === false){
                         widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
                         widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
-                } else if (state.hasOwnProperty("readonly") && state.readOnly === false) {
+                } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
