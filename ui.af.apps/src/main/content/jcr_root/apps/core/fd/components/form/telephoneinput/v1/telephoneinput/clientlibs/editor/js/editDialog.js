@@ -63,7 +63,7 @@
             changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
         } else {
             //Removing html tags from content and setting it to default telephone input field
-            var filteredValue =  $('<div>').html(telephoneInputValue[0].value).telephone();
+            var filteredValue =  $('<div>').html(telephoneInputValue[0].value).text();
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
