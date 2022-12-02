@@ -56,7 +56,7 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     private String defaultValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "buttonType")
-    @Nullable
+    @Default(values = "button")
     protected String buttonType;
 
     @Override
@@ -101,7 +101,7 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Override
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
-        if (buttonType != null) {
+        if (getButtonType() != null) {
             properties.put("fd:buttonType", buttonType);
         }
         return properties;
