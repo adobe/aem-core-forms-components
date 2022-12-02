@@ -33,7 +33,7 @@ describe("Form with Dropdown", () => {
     const checkHTML = (id, state, isMultiSelect) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)

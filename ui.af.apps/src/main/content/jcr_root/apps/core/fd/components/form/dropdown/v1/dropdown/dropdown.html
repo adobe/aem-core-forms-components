@@ -36,7 +36,7 @@
             aria-label="${dropdown.label.visible && dropdown.label.value}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
-            disabled="${!dropdown.enabled}"
+            disabled="${!dropdown.enabled || dropdown.readOnly}"
             required="${dropdown.required}"
             data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
             aria-readonly="${dropdown.readOnly ? 'true' : 'false'}">
@@ -47,8 +47,7 @@
             <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
                 <option value="${dropdown.enums[enumNameList.index].toString}"
                         class="cmp-adaptiveform-dropdown__option"
-                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}"
-                        data-sly-attribute.disabled="${dropdown.readOnly ? 'disabled' : ''}">${enumName}</option>
+                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName}</option>
             </div>
         </div>
     </select>

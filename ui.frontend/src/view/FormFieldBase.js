@@ -98,8 +98,9 @@ export default class FormFieldBase extends FormField {
         if (state.value) {
             this._updateValue(state.value);
         }
-        this._updateVisible(state.visible)
-        this._updateEnabled(state.enabled, state.readOnly)
+        this._updateVisible(state.visible);
+        this._updateEnabled(state.enabled, state);
+        this._updateReadOnly(state.readOnly);
         this._initializeHelpContent(state);
     }
 
@@ -152,7 +153,7 @@ export default class FormFieldBase extends FormField {
      * @param enabled
      * @private
      */
-    _updateEnabled(enabled, readOnly) {
+    _updateEnabled(enabled, state) {
         if (this.widget) {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
@@ -162,6 +163,22 @@ export default class FormFieldBase extends FormField {
             } else {
                 this.widget.removeAttribute("disabled");
                 this.widget.removeAttribute(Constants.ARIA_DISABLED);
+            }
+        }
+    }
+
+    /**
+     * udpates the html state based on enable state of the field
+     * @param readOnly
+     * @private
+     */
+    _updateReadOnly(readOnly) {
+        if (this.widget) {
+            this.toggle(readOnly, "readonly");
+            if (readOnly === true) {
+                this.widget.setAttribute("readonly","readonly");
+            } else {
+                this.widget.removeAttribute("readonly");
             }
         }
     }

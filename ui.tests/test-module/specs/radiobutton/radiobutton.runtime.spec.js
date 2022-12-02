@@ -30,7 +30,7 @@ describe("Form with Radio Button Input", () => {
     const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
