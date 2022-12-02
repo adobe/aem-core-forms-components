@@ -70,7 +70,7 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        _updateValue(value) {
+        updateValue(value) {
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }

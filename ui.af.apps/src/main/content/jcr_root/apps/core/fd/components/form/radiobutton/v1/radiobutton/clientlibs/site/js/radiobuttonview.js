@@ -76,7 +76,7 @@
             });
         }
 
-        _updateEnabled(enabled) {
+        updateEnabled(enabled) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
@@ -91,7 +91,7 @@
             });
         }
 
-        _updateValue(modelValue) {
+        updateValue(modelValue) {
             if(modelValue != null) {
                 this.widget.forEach(widget => {
                     if (widget.value != null && modelValue.toString() == widget.value.toString()) {
