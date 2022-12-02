@@ -79,26 +79,6 @@
         }
     }
 
-    function handleFDMSubmitActionDialog(dialog) {
-        const formId = ns.ContentFrame.getDocument()[0].querySelector('[data-cmp-is="adaptiveFormContainer"]').id
-        function handleSubDialog(event) {
-            const bindRef = $(event.target).closest('.bindRefSelector').find('.bindRefTextField');
-            const options = {
-                formId: formId,
-                onSelect: function(selectedPath) {
-                    bindRef[0].value = selectedPath;
-                    return Promise.resolve();
-                }
-            };
-            ns.afUtils.generateSchemaTreeDialog(options);
-        }
-        $(document).on("fdBindRef-contentLoaded", function (e) {
-            $(document).find('.bindRefSelectorButton').on('click', function(e) {
-                handleSubDialog(e);
-            })
-        });
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction, handleFDMSubmitActionDialog);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction);
 
 })(jQuery, jQuery(document), Coral, Granite.author);
