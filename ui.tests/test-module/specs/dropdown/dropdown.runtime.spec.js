@@ -132,7 +132,7 @@ describe("Form with Dropdown", () => {
         const [idButton, fieldView2] = Object.entries(formContainer._fields)[0];
         const model = formContainer._model.getElement(idDropdown);
 
-        cy.get(`#${idButton}`).click().then(x => {
+        cy.get(`#${idButton} button`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
@@ -143,7 +143,7 @@ describe("Form with Dropdown", () => {
         const [idButton, fieldView2] = Object.entries(formContainer._fields)[1];
         const model = formContainer._model.getElement(idDropdown);
 
-        cy.get(`#${idButton}`).click().then(x => {
+        cy.get(`#${idButton} button`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");

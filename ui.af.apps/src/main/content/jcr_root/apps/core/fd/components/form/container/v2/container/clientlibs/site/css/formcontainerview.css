@@ -17,3 +17,16 @@
 [data-cmp-visible="false"] {
     display: none;
 }
+.cmp-adaptiveform-container--loading {
+    background: rgb(255, 255, 255) url("/etc.clientlibs/core/fd/components/form/container/v2/container/clientlibs/site/resources/busy-state.gif") no-repeat fixed center;
+    position: fixed;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    cursor: wait;
+    z-index: 100000;
+}

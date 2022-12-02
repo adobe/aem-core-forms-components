@@ -79,7 +79,7 @@
             return String(value) === optionValue;
         }
 
-        _updateEnabled(enabled, state) {
+        updateEnabled(enabled, state) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
@@ -96,7 +96,7 @@
             });
         }
 
-        _updateReadOnly(readonly) {
+        updateReadOnly(readonly) {
             this.toggle(readonly, "aria-readonly", true);
             let widgets = this.widget;
             widgets.forEach(widget => {
@@ -110,7 +110,7 @@
             });
         }
 
-        _updateValue(value) {
+        updateValue(value) {
             if(value === null) {
                 this.widget.selectedIndex = -1;
                 return;
@@ -128,19 +128,24 @@
 
         setModel(model) {
             super.setModel(model);
+            this.#updateModelValue(this.widget);
             this.widget.addEventListener('change', (e) => {
-                if(this._model.isArrayType()) {
-                    let valueArray = [];
-                    [...this.widget].forEach((option) => {
-                        if(option.selected) {
-                            valueArray.push(option.value);
-                        }
-                    });
-                    this._model.value = valueArray;
-                } else {
-                    this._model.value = e.target.value;
-                }
+                this.#updateModelValue(e.target);
             });
+        }
+
+        #updateModelValue(widget) {
+            if(this._model.isArrayType()) {
+                let valueArray = [];
+                [...this.widget].forEach((option) => {
+                    if(option.selected) {
+                        valueArray.push(option.value);
+                    }
+                });
+                this._model.value = valueArray;
+            } else {
+                this._model.value = widget.value;
+            }
         }
     }
 

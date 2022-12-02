@@ -159,12 +159,6 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
     cy.openSiteAuthoring(pagePath);
 });
 
-// Cypress command to open authoring page after configuring feature toggles
-Cypress.Commands.add("openAuthoringWithFeatureToggles", (pagePath, toggles) => {
-    cy.enableToggles(toggles);
-    cy.openSiteAuthoring(pagePath);
-});
-
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
@@ -252,16 +246,23 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
 const waitForFormInit = () => {
     const INIT_EVENT = "AF_FormContainerInitialised"
     return cy.document().then(document => {
-        const promise = new Cypress.Promise((resolve, reject) => {
-            const listener1 = e => {
-                console.error(`received ${INIT_EVENT}`)
-                resolve(e.detail)
-            };
-            console.error(`waiting for ${INIT_EVENT}`)
-            document.addEventListener(INIT_EVENT, listener1);
-        })
-        return promise
-    });
+        cy.get('form').then(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    const isReady = () => {
+                        if (!($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                            resolve(e.detail);
+                        }
+                        setTimeout(isReady, 0)
+                    }
+                    isReady();
+                }
+                console.error(`waiting for ${INIT_EVENT}`)
+                document.addEventListener(INIT_EVENT, listener1);
+            })
+            return promise
+        });
+    })
 }
 
 const waitForChildViewAddition = () => {
@@ -323,35 +324,6 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
     // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
 });
-
-// enable toggles
-Cypress.Commands.add("enableToggles", (toggles) => {
-    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
-    cy.visit(baseUrl);
-    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
-    cy.get("span[id='enabledToggles1']").type(toggles[0]);
-
-    let toggleIndex = 1;
-    let textAreaId = 3;
-    while (toggleIndex < toggles.length) {
-        cy.get("input[value='+']").first().click();
-        cy.get("span[id='enabledToggles" + textAreaId++ + "']").type(toggles[toggleIndex++]);
-    }
-
-    cy.get('button').contains( 'Save').click();
-});
-
-// disable toggles
-Cypress.Commands.add("disableToggles", () => {
-    const baseUrl = (Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "") + "/system/console/configMgr";
-    cy.visit(baseUrl);
-    cy.get('table').contains('td', 'Adobe Granite Dynamic Toggle Provider').click();
-    cy.get("textarea[name='enabledToggles']").each(item => {
-        cy.get("input[value='-']").first().click();
-    });
-    cy.get('button').contains( 'Save').click();
-});
-
 
 /**
  * Simulates a paste event.
