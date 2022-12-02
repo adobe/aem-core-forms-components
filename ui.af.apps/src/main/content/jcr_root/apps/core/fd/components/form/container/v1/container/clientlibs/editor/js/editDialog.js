@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral, ns) {
+(function($, channel, Coral) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
@@ -81,4 +81,4 @@
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction);
 
-})(jQuery, jQuery(document), Coral, Granite.author);
+})(jQuery, jQuery(document), Coral);
