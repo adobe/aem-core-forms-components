@@ -1,8 +1,4 @@
-.cmp-adaptiveform-radiobutton__option.HORIZONTAL{
-    display: inline-flex;
-}
-.cmp-adaptiveform-radiobutton__option.VERTICAL{
-    display: flex;
+.cmp-adaptiveform-radiobutton__option{
 }
 .cmp-adaptiveform-radiobutton__questionmark {
  
