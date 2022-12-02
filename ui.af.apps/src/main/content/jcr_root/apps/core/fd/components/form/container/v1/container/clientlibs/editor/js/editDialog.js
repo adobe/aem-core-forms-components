@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral) {
+(function($, channel, Coral, ns) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
@@ -80,12 +80,25 @@
     }
 
     function handleFDMSubmitActionDialog(dialog) {
-        // Temporary Fix. Hide bindRefSelector Button
+        const formId = ns.ContentFrame.getDocument()[0].querySelector('[data-cmp-is="adaptiveFormContainer"]').id
+        function handleSubDialog(event) {
+            const bindRef = $(event.target).closest('.bindRefSelector').find('.bindRefTextField');
+            const options = {
+                formId: formId,
+                onSelect: function(selectedPath) {
+                    bindRef[0].value = selectedPath;
+                    return Promise.resolve();
+                }
+            };
+            ns.afUtils.generateSchemaTreeDialog(options);
+        }
         $(document).on("fdBindRef-contentLoaded", function (e) {
-            $('.bindRefSelectorButton').hide();
+            $(document).find('.bindRefSelectorButton').on('click', function(e) {
+                handleSubDialog(e);
+            })
         });
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction, handleFDMSubmitActionDialog);
 
-})(jQuery, jQuery(document), Coral);
+})(jQuery, jQuery(document), Coral, Granite.author);
