@@ -79,7 +79,7 @@
             return String(value) === optionValue;
         }
 
-        _updateValue(value) {
+        updateValue(value) {
             if(value === null) {
                 this.widget.selectedIndex = -1;
                 return;
