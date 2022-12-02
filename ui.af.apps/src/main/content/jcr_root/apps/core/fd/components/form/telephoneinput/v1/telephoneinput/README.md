@@ -48,11 +48,11 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
-    ELEMENT cmp-adaptiveform-textinput__label
-    ELEMENT cmp-adaptiveform-textinput__widget
-    ELEMENT cmp-adaptiveform-textinput__questionmark
-    ELEMENT cmp-adaptiveform-textinput__shortdescription
-    ELEMENT cmp-adaptiveform-textinput__longdescription
-    ELEMENT cmp-adaptiveform-textinput__errormessage
+BLOCK cmp-adaptiveform-telephoneinput
+    ELEMENT cmp-adaptiveform-telephoneinput__label
+    ELEMENT cmp-adaptiveform-telephoneinput__widget
+    ELEMENT cmp-adaptiveform-telephoneinput__questionmark
+    ELEMENT cmp-adaptiveform-telephoneinput__shortdescription
+    ELEMENT cmp-adaptiveform-telephoneinput__longdescription
+    ELEMENT cmp-adaptiveform-telephoneinput__errormessage
 ```
