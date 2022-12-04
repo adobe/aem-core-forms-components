@@ -13,22 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Telephone Input (v1)
+Adaptive Form Email Input (v1)
 ====
-Adaptive Form Telephone input field component written in HTL.
+Adaptive Form Email input field component written in HTL.
 
 ## Features
 
 * Provides the following type of input:
-  * telephone
+  * email
 * Custom constraint messages for the above types
 * Styles
 
 ### Use Object
-The Form Telephone component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
+The Form Email component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Telephone component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form Email component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
@@ -40,7 +40,7 @@ The following properties are written to JCR for this Form Telephone component an
 8. `./readOnly` - if set to `true`, the filed will be read only
 
 ## Client Libraries
-The component provides a `core.forms.components.textinput.v1.runtime` client library category that contains the Javascript runtime for the component. 
+The component provides a `core.forms.components.textinput.v1.runtime` client library category that contains the Javascript runtime for the component.
 It should be added to a relevant site client library using the `embed` property.
 
 It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
@@ -48,11 +48,11 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-telephoneinput
-    ELEMENT cmp-adaptiveform-telephoneinput__label
-    ELEMENT cmp-adaptiveform-telephoneinput__widget
-    ELEMENT cmp-adaptiveform-telephoneinput__questionmark
-    ELEMENT cmp-adaptiveform-telephoneinput__shortdescription
-    ELEMENT cmp-adaptiveform-telephoneinput__longdescription
-    ELEMENT cmp-adaptiveform-telephoneinput__errormessage
+BLOCK cmp-adaptiveform-emailinput
+    ELEMENT cmp-adaptiveform-emailinput__label
+    ELEMENT cmp-adaptiveform-emailinput__widget
+    ELEMENT cmp-adaptiveform-emailinput__questionmark
+    ELEMENT cmp-adaptiveform-emailinput__shortdescription
+    ELEMENT cmp-adaptiveform-emailinput__longdescription
+    ELEMENT cmp-adaptiveform-emailinput__errormessage
 ```
