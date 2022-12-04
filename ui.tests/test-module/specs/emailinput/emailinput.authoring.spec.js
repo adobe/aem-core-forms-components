@@ -19,76 +19,76 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
- * Testing TelephoneInput with Sites Editor
+ * Testing EmailInput with Sites Editor
  */
 describe('Page - Authoring', function () {
   // we can use these values to log in
 
-  const dropTelephoneInputInContainer = function() {
+  const dropEmailInputInContainer = function() {
     const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Telephone input", afConstants.components.forms.resourceType.formtelephoneinput);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email input", afConstants.components.forms.resourceType.formemailinput);
     cy.get('body').click( 0,0);
   }
 
-  const dropTelephoneInputInSites = function() {
+  const dropEmailInputInSites = function() {
     const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
-    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Telephone Input", afConstants.components.forms.resourceType.formtelephoneinput);
+    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email Input", afConstants.components.forms.resourceType.formemailinput);
     cy.get('body').click( 0,0);
   }
 
-  const testTelephoneInputBehaviour = function(telephoneInputEditPathSelector, telephoneInputDrop, isSites) {
+  const testEmailInputBehaviour = function(emailInputEditPathSelector, emailInputDrop, isSites) {
     if (isSites) {
-      dropTelephoneInputInSites();
+      dropEmailInputInSites();
     } else {
-      dropTelephoneInputInContainer();
+      dropEmailInputInContainer();
     }
-    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + emailInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-    cy.deleteComponentByPath(telephoneInputDrop);
+    cy.deleteComponentByPath(emailInputDrop);
   }
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
-        telephoneInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
-        telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
-        telephoneInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
+        emailInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
+        emailInputEditPathSelector = "[data-path='" + emailInputEditPath + "']",
+        emailInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
     });
 
-    it('insert TelephoneInput in form container', function () {
-      dropTelephoneInputInContainer();
-      cy.deleteComponentByPath(telephoneInputDrop);
+    it('insert EmailInput in form container', function () {
+      dropEmailInputInContainer();
+      cy.deleteComponentByPath(emailInputDrop);
     });
 
-    it ('open edit dialog of TelephoneInput', function(){
-      testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
+    it ('open edit dialog of EmailInput', function(){
+      testEmailInputBehaviour(emailInputEditPathSelector, emailInputDrop);
     })
   })
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-        telephoneInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/telephoneinput",
-        telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
-        telephoneInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
+        emailInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/emailinput",
+        emailInputEditPathSelector = "[data-path='" + emailInputEditPath + "']",
+        emailInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
     });
 
-    it('insert aem forms TelephoneInput', function () {
-      dropTelephoneInputInSites();
-      cy.deleteComponentByPath(telephoneInputDrop);
+    it('insert aem forms EmailInput', function () {
+      dropEmailInputInSites();
+      cy.deleteComponentByPath(emailInputDrop);
     });
 
-    it('open edit dialog of aem forms TelephoneInput', function() {
-      testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
+    it('open edit dialog of aem forms EmailInput', function() {
+      testEmailInputBehaviour(emailInputEditPathSelector, emailInputDrop, true);
     });
 
   });

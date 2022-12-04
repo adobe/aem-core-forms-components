@@ -16,15 +16,15 @@
 (function($) {
     "use strict";
 
-    var EDIT_DIALOG = ".cmp-adaptiveform-telephoneinput__editdialog",
-        TELEPHONEINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__allowrichtext",
-        TELEPHONEINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__maxlength",
-        TELEPHONEINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__minlength",
+    var EDIT_DIALOG = ".cmp-adaptiveform-emailinput__editdialog",
+        EMAILINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__allowrichtext",
+        EMAILINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__maxlength",
+        EMAILINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__minlength",
         BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
-        TELEPHONEINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__value",
-        TELEPHONEINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__richtextvalue",
-        TELEPHONEINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__validationpattern",
-        TELEPHONEINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__validationformat",
+        EMAILINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__value",
+        EMAILINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__richtextvalue",
+        EMAILINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__validationpattern",
+        EMAILINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-emailinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -34,13 +34,13 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleRichText(dialog) {
-        var component = dialog.find(TELEPHONEINPUT_ALLOWRICHTEXT)[0];
-        var telephoneInputMaxLength = dialog.find(TELEPHONEINPUT_MAXLENGTH);
-        var telephoneInputMinLength = dialog.find(TELEPHONEINPUT_MINLENGTH);
+        var component = dialog.find(EMAILINPUT_ALLOWRICHTEXT)[0];
+        var emailInputMaxLength = dialog.find(EMAILINPUT_MAXLENGTH);
+        var emailInputMinLength = dialog.find(EMAILINPUT_MINLENGTH);
         var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
-        var telephoneInputValue = dialog.find(TELEPHONEINPUT_VALUE);
-        var telephoneInputRichTextValue = dialog.find(TELEPHONEINPUT_RICHTEXTVALUE);
-        var listOfElements = [telephoneInputMaxLength, telephoneInputMinLength, basePlaceHolder, telephoneInputValue];
+        var emailInputValue = dialog.find(EMAILINPUT_VALUE);
+        var emailInputRichTextValue = dialog.find(EMAILINPUT_RICHTEXTVALUE);
+        var listOfElements = [emailInputMaxLength, emailInputMinLength, basePlaceHolder, emailInputValue];
 
         var isNotChecked = function() {return !isChecked()};
         var isChecked = function() {return component.checked};
@@ -48,32 +48,32 @@
             // hide other elements
             Utils.checkAndDisplay(listOfElements)(isNotChecked);
             // show rich text
-            Utils.checkAndDisplay(telephoneInputRichTextValue)(isChecked);
+            Utils.checkAndDisplay(emailInputRichTextValue)(isChecked);
         };
         hideAndShowElements();
         component.on("change", function() {
             hideAndShowElements();
         });
-        var changeFormFields = Utils.manipulateNameAndValue([telephoneInputValue[0], telephoneInputRichTextValue[0]]);
+        var changeFormFields = Utils.manipulateNameAndValue([emailInputValue[0], emailInputRichTextValue[0]]);
         if (isChecked()) {
-            var richTextContainer = telephoneInputRichTextValue.parent('.richtext-container');
+            var richTextContainer = emailInputRichTextValue.parent('.richtext-container');
             var richTextEditable = richTextContainer.find(".cq-RichText-editable");
-            var filteredValue = Utils.encodeScriptableTags(telephoneInputValue[0].value);
+            var filteredValue = Utils.encodeScriptableTags(emailInputValue[0].value);
             richTextEditable.empty().append(filteredValue);
             changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
         } else {
-            //Removing html tags from content and setting it to default telephone input field
-            var filteredValue =  $('<div>').html(telephoneInputValue[0].value).text();
+            //Removing html tags from content and setting it to default email input field
+            var filteredValue =  $('<div>').html(emailInputValue[0].value).text();
             changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
         }
     }
 
     function handleValidationPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
+        Utils.handlePatternDropDown(dialog,EMAILINPUT_VALIDATIONPATTERN,EMAILINPUT_VALIDATIONFORMAT);
     }
 
     function handleValidationFormat(dialog){
-        Utils.handlePatternFormat(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
+        Utils.handlePatternFormat(dialog,EMAILINPUT_VALIDATIONPATTERN,EMAILINPUT_VALIDATIONFORMAT);
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleValidationPatternDropDown,handleValidationFormat);

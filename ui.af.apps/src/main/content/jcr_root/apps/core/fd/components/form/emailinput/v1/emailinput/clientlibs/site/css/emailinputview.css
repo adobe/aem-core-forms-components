@@ -14,28 +14,28 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-telephoneinput {
+.cmp-adaptiveform-emailinput {
 
 }
 
-.cmp-adaptiveform-telephoneinput__widget {
+.cmp-adaptiveform-emailinput__widget {
 
 }
-textarea.cmp-adaptiveform-telephoneinput__widget{
+textarea.cmp-adaptiveform-emailinput__widget{
   height: 80px;
 }
 
-.cmp-adaptiveform-telephoneinput__label {
+.cmp-adaptiveform-emailinput__label {
 
 }
 
-.cmp-adaptiveform-telephoneinput__longdescription {
+.cmp-adaptiveform-emailinput__longdescription {
 }
 
-.cmp-adaptiveform-telephoneinput__shortdescription {
+.cmp-adaptiveform-emailinput__shortdescription {
 }
 
-.cmp-adaptiveform-telephoneinput__questionmark {
+.cmp-adaptiveform-emailinput__questionmark {
     display:inline-block;
     top:8px;
     right:8px;

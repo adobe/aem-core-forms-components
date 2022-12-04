@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form Runtime with Telephone Input", () => {
+describe("Form Runtime with Email Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/telephoneinput/basic.html"
-    const bemBlock = 'cmp-adaptiveform-textinput'
-    const IS = "adaptiveFormTextInput"
+    const pagePath = "content/forms/af/core-components-it/samples/emailinput/basic.html"
+    const bemBlock = 'cmp-adaptiveform-emailinput'
+    const IS = "adaptiveFormEmailInput"
     const selectors = {
         textinput : `[data-cmp-is="${IS}"]`
     }

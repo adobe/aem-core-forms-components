@@ -16,12 +16,11 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Adaptive Form Telephone Input field"
+    jcr:title="Adaptive Form Email Input field"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.textinput.v1.editor]"
-    trackingFeature="core-components:adaptiveform-telephoneinput:v1">
+    trackingFeature="core-components:adaptiveform-emailinput:v1">
     <content
-        granite:class="cmp-adaptiveform-telephoneinput__editdialog"
+        granite:class="cmp-adaptiveform-emailinput__editdialog"
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
@@ -72,7 +71,7 @@
                                     </validationPatternType>
                                     <validateFormat
                                             jcr:primaryType="nt:unstructured"
-                                            granite:class="cmp-adaptiveform-telephoneinput__validationformat"
+                                            granite:class="cmp-adaptiveform-emailinput__validationformat"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldDescription="Regular Expression is permitted."
                                             fieldLabel="Pattern"

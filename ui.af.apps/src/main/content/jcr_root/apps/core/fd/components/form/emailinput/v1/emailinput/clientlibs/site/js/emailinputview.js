@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class TelephoneInput extends FormView.FormFieldBase {
+    class EmailInput extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -25,16 +25,16 @@
          * data-{NS}-{IS}-x=""
          * @type {string}
          */
-        static IS = "adaptiveFormTelephoneInput";
-        static bemBlock = 'cmp-adaptiveform-telephoneinput'
+        static IS = "adaptiveFormEmailInput";
+        static bemBlock = 'cmp-adaptiveform-emailinput'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${TelephoneInput.bemBlock}__widget`,
-            label: `.${TelephoneInput.bemBlock}__label`,
-            description: `.${TelephoneInput.bemBlock}__longdescription`,
-            qm: `.${TelephoneInput.bemBlock}__questionmark`,
-            errorDiv: `.${TelephoneInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${TelephoneInput.bemBlock}__shortdescription`
+            widget: `.${EmailInput.bemBlock}__widget`,
+            label: `.${EmailInput.bemBlock}__label`,
+            description: `.${EmailInput.bemBlock}__longdescription`,
+            qm: `.${EmailInput.bemBlock}__questionmark`,
+            errorDiv: `.${EmailInput.bemBlock}__errormessage`,
+            tooltipDiv: `.${EmailInput.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -42,27 +42,27 @@
         }
 
         getWidget() {
-            return this.element.querySelector(TelephoneInput.selectors.widget);
+            return this.element.querySelector(EmailInput.selectors.widget);
         }
 
         getDescription() {
-            return this.element.querySelector(TelephoneInput.selectors.description);
+            return this.element.querySelector(EmailInput.selectors.description);
         }
 
         getLabel() {
-            return this.element.querySelector(TelephoneInput.selectors.label);
+            return this.element.querySelector(EmailInput.selectors.label);
         }
 
         getErrorDiv() {
-            return this.element.querySelector(TelephoneInput.selectors.errorDiv);
+            return this.element.querySelector(EmailInput.selectors.errorDiv);
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(TelephoneInput.selectors.tooltipDiv);
+            return this.element.querySelector(EmailInput.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return this.element.querySelector(TelephoneInput.selectors.qm);
+            return this.element.querySelector(EmailInput.selectors.qm);
         }
 
         setModel(model) {
@@ -79,7 +79,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TelephoneInput({element, formContainer})
-    }, TelephoneInput.selectors.self);
+        return new EmailInput({element, formContainer})
+    }, EmailInput.selectors.self);
 
 })();
