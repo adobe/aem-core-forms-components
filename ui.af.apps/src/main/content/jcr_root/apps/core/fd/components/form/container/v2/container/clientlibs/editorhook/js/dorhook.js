@@ -15,7 +15,9 @@
  ******************************************************************************/
 (function (ns, document) {
     var DOR_DIALOG_PATH = "fd/af/authoring/components/dor/dorPropertiesTabs",
-         PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print";
+        PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
 
       var getFormPath = function (contentPath) {
                 return contentPath.replace(Granite.HTTP.getContextPath(), "");
@@ -89,12 +91,20 @@
             return false;
     }
 
+    function fetchAuthorContentFrameDocument() {
+        var contentFrameDocumentArray = ns.ContentFrame ? ns.ContentFrame.getDocument() : [];
+        if (contentFrameDocumentArray && contentFrameDocumentArray.length > 0) {
+            return contentFrameDocumentArray[0];
+        }
+    };
+
     function getGuideContainerProperties() {
-        var formPath = getFormPath(ns.ContentFrame.getContentPath());
+        var contentFrame = fetchAuthorContentFrameDocument();
         var result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".0.json"),
+            url: Granite.HTTP.externalize(contentFrame.querySelector(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE)
+                .getAttribute(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE) + ".0.json"),
             cache: false
         });
         return result.responseText;

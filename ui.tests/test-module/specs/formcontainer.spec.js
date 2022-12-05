@@ -49,8 +49,7 @@ describe('Page/Form Authoring', function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
                 formContainerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
-                formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
-                formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
+                formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']";
             beforeEach(function () {
                 // this is done since cypress session results in 403 sometimes
                 cy.openAuthoring(pagePath);
@@ -62,8 +61,7 @@ describe('Page/Form Authoring', function () {
             });
         });
 
-        // commenting once we support adaptive form container in sites editor, uncomment this test
-        context.skip("Open Sites Editor", function () {
+        context("Open Sites Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/core-components-examples/library/adaptive-form/container",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
