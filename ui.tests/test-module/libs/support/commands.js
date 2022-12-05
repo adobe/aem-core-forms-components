@@ -246,16 +246,23 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
 const waitForFormInit = () => {
     const INIT_EVENT = "AF_FormContainerInitialised"
     return cy.document().then(document => {
-        const promise = new Cypress.Promise((resolve, reject) => {
-            const listener1 = e => {
-                console.error(`received ${INIT_EVENT}`)
-                resolve(e.detail)
-            };
-            console.error(`waiting for ${INIT_EVENT}`)
-            document.addEventListener(INIT_EVENT, listener1);
-        })
-        return promise
-    });
+        cy.get('form').then(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    const isReady = () => {
+                        if (!($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                            resolve(e.detail);
+                        }
+                        setTimeout(isReady, 0)
+                    }
+                    isReady();
+                }
+                console.error(`waiting for ${INIT_EVENT}`)
+                document.addEventListener(INIT_EVENT, listener1);
+            })
+            return promise
+        });
+    })
 }
 
 const waitForChildViewAddition = () => {
