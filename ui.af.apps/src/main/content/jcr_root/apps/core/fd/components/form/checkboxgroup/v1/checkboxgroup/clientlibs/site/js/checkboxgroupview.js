@@ -76,14 +76,14 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 let self = widget;
-                this._updateModelValue(self);
+                this.#updateModelValue(self);
                 widget.addEventListener('change', (e) => {
-                    this._updateModelValue(self);
+                    this.#updateModelValue(self);
                 });
             })
         }
 
-        _updateModelValue(widget) {
+        #updateModelValue(widget) {
             let value = []
             this.widget.forEach(widget => {
                 if (widget.checked) {
@@ -93,7 +93,7 @@
             this._model.value = value
         }
 
-        _updateValue(modelValue) {
+        updateValue(modelValue) {
             modelValue = [].concat(modelValue);
             let selectedWidgetValues = modelValue.map(String);
             this.widget.forEach(widget => {
@@ -109,7 +109,7 @@
             }, this)
         }
 
-        _updateEnabled(enabled) {
+        updateEnabled(enabled) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget
