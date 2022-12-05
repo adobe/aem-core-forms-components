@@ -144,12 +144,12 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     }
 
     @JsonIgnore
-    public @NotNull Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = super.getCustomProperties();
+    public @NotNull Map<String, Object> getCustomLayoutProperties() {
+        Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
         if (tooltip != null) {
-            customProperties.put("tooltipVisible", tooltipVisible);
+            customLayoutProperties.put("tooltipVisible", tooltipVisible);
         }
-        return customProperties;
+        return customLayoutProperties;
     }
 
     @Override
