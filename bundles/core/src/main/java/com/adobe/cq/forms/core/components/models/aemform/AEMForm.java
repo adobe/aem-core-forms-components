@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.aemform;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -348,7 +349,7 @@ public interface AEMForm extends Component {
     @Nullable
     @JsonIgnore
     default List<HtmlPageItem> getHtmlPageItems() {
-        throw new UnsupportedOperationException();
+        return new ArrayList();
     }
 
 }

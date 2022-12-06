@@ -24,8 +24,12 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
+
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,12 +41,32 @@ public class AEMFormImplTest {
     private static final String GRID = ROOT_PAGE + "/jcr:content/root/responsivegrid";
     private static final String FORM_1 = "/aemformv2-1";
     private static final String PATH_FORM_1 = GRID + FORM_1;
+    private static final String PATH_FORM_2 = "/content/test/en/home/jcr:content/root/container/container_1578756628/aemform";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
+
+    private Map<String, Object> styleAttribute = new HashMap() {
+        {
+            put("as", "style");
+            put("href", "/theme.css");
+            put("rel", "preload stylesheet");
+            put("type", "text/css");
+        }
+    };
+    private Map<String, Object> scriptAttribute = new LinkedHashMap() {
+        {
+            put("src", "/theme.js");
+            put("async", "true");
+            put("type", "text/javascript");
+        }
+    };
 
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+        context.load().json(BASE + "/page.json", "/content/test/en/home");
+        context.load().json(BASE + "/af2.json", "/content/forms/af/test");
+        context.load().json(BASE + "/af2-theme.json", "/conf/forms/test");
     }
 
     @Test
@@ -58,5 +82,31 @@ public class AEMFormImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(AEMForm.class);
+    }
+
+    @Test
+    void testTheme() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        List<HtmlPageItem> htmlPageItems = aemform.getHtmlPageItems();
+        Assertions.assertNotNull(htmlPageItems, "Expected html pages items to be available");
+        assertEquals("Expected 2 page items", 2, htmlPageItems.size());
+        htmlPageItems.forEach((htmlPageItem -> {
+            validatePageItem(htmlPageItem);
+        }));
+    }
+
+    void validatePageItem(HtmlPageItem htmlPageItem) {
+        Assertions.assertNotNull(htmlPageItem, "Expected html Page to be available");
+        Assertions.assertNotNull(htmlPageItem.getElement(), "Expected html pages items to be available");
+        Assertions.assertNotNull(htmlPageItem.getLocation(), "Expected html pages items to be available");
+
+        Map<String, Object> attributes = htmlPageItem.getAttributes();
+        Assertions.assertNotNull(attributes, "Expected html Page attributes to be available");
+        if (htmlPageItem.getElement().getName().equals("script")) {
+            assertEquals("Expected link attribute to match", scriptAttribute.toString(), attributes.toString());
+        } else {
+            assertEquals("Expected style attribute to match", styleAttribute, attributes);
+        }
+
     }
 }
