@@ -344,7 +344,7 @@ public interface AEMForm extends Component {
      * Returns a list of HTML items that should be included in the form
      *
      * @return list of page items
-     * @since com.adobe.cq.forms.core.components.models.aemform 0.0.1
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.2.0
      */
     @Nullable
     @JsonIgnore
