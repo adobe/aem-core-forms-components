@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
+import java.util.*;
+
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +27,8 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
-
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-
-import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
