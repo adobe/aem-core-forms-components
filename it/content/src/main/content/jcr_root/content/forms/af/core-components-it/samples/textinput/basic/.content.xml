@@ -1,51 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-    jcr:primaryType="cq:Page">
+          jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[mobile/groups/responsive]"
-        cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
-        jcr:language="en"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="Adaptive Form V2 (IT)"
-        sling:resourceType="forms-components-examples/components/page">
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:lastModified="{Date}2022-12-05T15:32:45.139+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:version="2.0"
-            fieldType="form"
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="forms-components-examples/components/form/container">
-            <textinput
-                fieldType="text-input"
+                fd:version="2.0"
                 jcr:primaryType="nt:unstructured"
-                name="textinput1"
-                jcr:title="Text Input 1"
-                sling:resourceType="forms-components-examples/components/form/textinput"/>
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form">
+            <textinput
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input 1"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput1">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;adobe&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.text1670225752538&quot;\,&quot;displayName&quot;:&quot;text1670225752538&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/text1670225752538/&quot;\,&quot;name&quot;:&quot;text1670225752538&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1669976471136&quot;\,&quot;displayName&quot;:&quot;Button&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Button/&quot;\,&quot;name&quot;:&quot;button1669976471136&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'adobe'\, dispatchEvent(text1670225752538\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if($field == 'adobe'\, dispatchEvent(button1669976471136\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;abc&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput2&quot;\,&quot;displayName&quot;:&quot;Text Input 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 2/&quot;\,&quot;name&quot;:&quot;textinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'abc'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if($field == 'abc'\, {enabled : false()}\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == 'adobe'\, dispatchEvent(text1670225752538\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 'adobe'\, dispatchEvent(button1669976471136\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 'abc'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == 'abc'\, {enabled : false()}\, {})]"/>
+            </textinput>
             <textinput2
-                    fieldType="text-input"
                     jcr:primaryType="nt:unstructured"
-                    name="textinput2"
                     jcr:title="Text Input 2"
-                    visible="{Boolean}true"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
                     enabled="{Boolean}false"
-                    sling:resourceType="forms-components-examples/components/form/textinput"/>
-            <textinput3
                     fieldType="text-input"
+                    name="textinput2"
+                    visible="{Boolean}true"/>
+            <textinput3
                     jcr:primaryType="nt:unstructured"
-                    name="textinput3"
                     jcr:title="Text Input 3"
-                    visible="{Boolean}false"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
                     enabled="{Boolean}true"
-                    sling:resourceType="forms-components-examples/components/form/textinput"/>
+                    fieldType="text-input"
+                    name="textinput3"
+                    visible="{Boolean}false"/>
             <textinput4
-              fieldType="text-input"
-              jcr:primaryType="nt:unstructured"
-              jcr:title="Text Input With Tooltip, Description, Tooltip always visible"
-              id="tooltip_scenario_test"
-              description="This is long description"
-              tooltip="This is short description"
-              tooltipVisible="true"
-              sling:resourceType="forms-components-examples/components/form/textinput"/>
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input With Tooltip, Description, Tooltip always visible"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    description="This is long description"
+                    fieldType="text-input"
+                    id="tooltip_scenario_test"
+                    name="textinput41670222301100"
+                    tooltip="This is short description"
+                    tooltipVisible="true"/>
+            <text
+                    jcr:created="{Date}2022-12-05T13:05:52.468+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2022-12-05T14:55:04.880+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text"
+                    sling:resourceType="forms-components-examples/components/form/text"
+                    fieldType="plain-text"
+                    name="text1670225752538"
+                    textIsRich="true"
+                    value="&lt;p>Hide me when textInput1 says &amp;quot;adobe&amp;quot;&lt;/p>&#xd;&#xa;"/>
+            <button
+                    jcr:created="{Date}2022-12-02T15:51:11.110+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2022-12-05T13:01:33.648+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="button1669976471136"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}false"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
