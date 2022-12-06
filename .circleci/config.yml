@@ -46,12 +46,10 @@ common:
 executors:
   forms_executor:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-openjdk-azul:11-stretch-node-browsers
-        <<: *docker_auth
+      - image: cimg/openjdk:11.0.16-browsers
   forms_executor_java8:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-openjdk-azul:8-stretch-node-browsers
-        <<: *docker_auth
+      - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
