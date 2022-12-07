@@ -89,11 +89,11 @@
             return false;
     }
 
-    function getGuideContainerProperties(contentFramePath) {
+    function getGuideContainerProperties(editablePath) {
         var result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize( contentFramePath + ".0.json"),
+            url: Granite.HTTP.externalize( editablePath + ".0.json"),
             cache: false
         });
         return result.responseText;
