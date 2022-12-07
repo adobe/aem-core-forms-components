@@ -55,12 +55,12 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
     }
 
     @Override
-    public @NotNull Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = super.getCustomProperties();
+    public @NotNull Map<String, Object> getCustomLayoutProperties() {
+        Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
         if (orientation != null) {
-            customProperties.put("orientation", orientation);
+            customLayoutProperties.put("orientation", orientation);
         }
-        return customProperties;
+        return customLayoutProperties;
     }
 
     @JsonIgnore
