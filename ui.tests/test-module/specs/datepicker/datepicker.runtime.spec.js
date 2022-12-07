@@ -30,6 +30,7 @@ describe("Form Runtime with Date Picker", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -42,6 +43,7 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
+            cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
             cy.get('input').should('have.value', value)
         })
     }

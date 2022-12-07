@@ -86,8 +86,8 @@ describe('Page - Authoring', function () {
     cy.get('.cq-dialog-submit').click();
 
     // verifying alignment change in preview editor
-    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').should('have.length',2);
-    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item.VERTICAL').first().should('have.css', "display", "block");
+    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup__widget.VERTICAL').should('have.length',1);
+    getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
 
     cy.deleteComponentByPath(checkBoxGroupDrop);
   }

@@ -46,17 +46,15 @@ common:
 executors:
   forms_executor:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-openjdk-azul:11-stretch-node-browsers
-        <<: *docker_auth
+      - image: cimg/openjdk:11.0.16-browsers
   forms_executor_java8:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-openjdk-azul:8-stretch-node-browsers
-        <<: *docker_auth
+      - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:8630-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:29112022-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -89,6 +87,7 @@ jobs:
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
+            - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
       - store_test_results:
@@ -120,7 +119,7 @@ jobs:
       AEM: addon
       TYPE: cypress
       BROWSER: chrome
-      PRERELEASE: 'false'
+      PRERELEASE: 'true'
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps

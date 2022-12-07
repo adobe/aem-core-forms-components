@@ -63,14 +63,14 @@
             return this.element.querySelector(NumberInput.selectors.qm);
         }
 
-        _updateValue(value) {
+        updateValue(value) {
             if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat)) {
                 this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
             }
             if (this.widgetObject) {
                 this.widgetObject.setValue(value);
             } else {
-                super._updateValue(value);
+                super.updateValue(value);
             }
         }
 
@@ -82,6 +82,7 @@
                     this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
                 }
             } else {
+                this._model.value = this.widget.value;
                 this.getWidget().addEventListener('blur', (e) => {
                     this._model.value = e.target.value;
                 })
