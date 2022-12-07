@@ -32,23 +32,25 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
-    <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
-        <div class="cmp-adaptiveform-radiobutton__option ${radioButton.orientation}">
-            <label class="cmp-adaptiveform-radiobutton__option__label"
-                   title="${radioButton.tooltipVisible ? '' : radioButton.tooltipText}"
-                   aria-label="${radioButton.enumNames[itemList.index]}">
-                <input type="radio"
-                       name="${radioButton.name}"
-                       class="cmp-adaptiveform-radiobutton__option__widget"
-                       id="${component.id}${'_'}${itemList.index}__widget"
-                       value="${item.toString}"
-                       disabled="${!radioButton.enabled || radioButton.readOnly}"
-                       aria-describedby="${radioButton.labelForId}_desc"
-                       checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
+    <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}">
+      <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
+          <div class="cmp-adaptiveform-radiobutton__option">
+              <label class="cmp-adaptiveform-radiobutton__option__label"
+                    title="${radioButton.tooltipVisible ? '' : radioButton.tooltipText}"
+                    aria-label="${radioButton.enumNames[itemList.index]}">
+                  <input type="radio"
+                        name="${radioButton.name}"
+                        class="cmp-adaptiveform-radiobutton__option__widget"
+                        id="${component.id}${'_'}${itemList.index}__widget"
+                        value="${item.toString}"
+                        disabled="${!radioButton.enabled || radioButton.readOnly}"
+                        aria-describedby="${radioButton.labelForId}_desc"
+                        checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                        aria-readonly="${radioButton.readOnly ? 'true' : 'false'}"/>
-                <span>${radioButton.enumNames[itemList.index]}</span>
-            </label>
-        </div>
+                  <span>${radioButton.enumNames[itemList.index]}</span>
+              </label>
+          </div>
+      </div>
     </div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=radioButton.tooltipVisible, shortDescription=radioButton.tooltip, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>

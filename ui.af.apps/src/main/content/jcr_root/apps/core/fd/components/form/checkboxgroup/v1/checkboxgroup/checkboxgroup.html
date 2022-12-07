@@ -33,9 +33,9 @@
     <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
-    <div class="cmp-adaptiveform-checkboxgroup__widget">
+    <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
-            <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name} ${checkboxgroup.orientation} ">
+            <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
                 <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
                        for="${component.id}${'_'}${itemList.index}__widget">

@@ -61,9 +61,9 @@ describe("Form with Radio Button Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0];
 
         // checking alignment  of radio button in runtime
-        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option").should('have.class', 'VERTICAL');
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.class', 'VERTICAL');
         const [id2, fieldView2] = Object.entries(formContainer._fields)[1];
-        cy.get(`#${id2}`).find(".cmp-adaptiveform-radiobutton__option").should('have.class', 'HORIZONTAL');
+        cy.get(`#${id2}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.class', 'HORIZONTAL');
 
         // check model's change is reflected in HTML
         const model = formContainer._model.getElement(id);
