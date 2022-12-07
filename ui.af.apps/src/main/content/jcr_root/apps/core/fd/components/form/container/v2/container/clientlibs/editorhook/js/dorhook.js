@@ -19,8 +19,6 @@
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
 
-    var contentFrame = fetchAuthorContentFrameDocument();
-
       var getFormPath = function (contentPath) {
                 return contentPath.replace(Granite.HTTP.getContextPath(), "");
             },
@@ -77,8 +75,7 @@
     }
 
     window.CQ.FormsCoreComponents.editorhooks.initPreviewDoR = function() {
-        var url = contentFrame.querySelector(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE)
-            .getAttribute(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE) + ".af.dor.pdf";
+        var url = getFormPath(ns.ContentFrame.getContentPath()) + "/jcr:content/guideContainer.af.dor.pdf";
         window.open(Granite.HTTP.externalize(url), "_blank");
     }
 
@@ -102,6 +99,7 @@
     };
 
     function getGuideContainerProperties() {
+        var contentFrame = fetchAuthorContentFrameDocument();
         var result = $.ajax({
             type: 'GET',
             async: false,
