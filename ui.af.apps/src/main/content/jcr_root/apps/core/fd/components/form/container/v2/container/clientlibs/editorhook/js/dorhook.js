@@ -15,7 +15,11 @@
  ******************************************************************************/
 (function (ns, document) {
     var DOR_DIALOG_PATH = "fd/af/authoring/components/dor/dorPropertiesTabs",
-         PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print";
+         PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
+
+    var contentFrame = fetchAuthorContentFrameDocument();
 
       var getFormPath = function (contentPath) {
                 return contentPath.replace(Granite.HTTP.getContextPath(), "");
@@ -73,7 +77,8 @@
     }
 
     window.CQ.FormsCoreComponents.editorhooks.initPreviewDoR = function() {
-        var url = getFormPath(ns.ContentFrame.getContentPath()) + "/jcr:content/guideContainer.af.dor.pdf";
+        var url = contentFrame.querySelector(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE)
+            .getAttribute(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE) + ".af.dor.pdf";
         window.open(Granite.HTTP.externalize(url), "_blank");
     }
 
@@ -89,12 +94,19 @@
             return false;
     }
 
+    function fetchAuthorContentFrameDocument() {
+        var contentFrameDocumentArray = ns.ContentFrame ? ns.ContentFrame.getDocument() : [];
+        if (contentFrameDocumentArray && contentFrameDocumentArray.length > 0) {
+            return contentFrameDocumentArray[0];
+            }
+    };
+
     function getGuideContainerProperties() {
-        var formPath = getFormPath(ns.ContentFrame.getContentPath());
         var result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".0.json"),
+            url: Granite.HTTP.externalize(contentFrame.querySelector(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE)
+                .getAttribute(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE) + ".0.json"),
             cache: false
         });
         return result.responseText;
