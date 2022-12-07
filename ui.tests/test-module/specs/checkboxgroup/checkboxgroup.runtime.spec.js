@@ -33,7 +33,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -66,9 +66,9 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         const model = formContainer._model.getElement(id)
         const val = Array('1','2')
         model.value = '1'
-        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'VERTICAL')
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'VERTICAL')
         const [id2, fieldView2] = Object.entries(formContainer._fields)[1]
-        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'HORIZONTAL')
+        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'HORIZONTAL')
 
 
         checkHTML(model.id, model.getState()).then(() => {

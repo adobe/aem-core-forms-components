@@ -78,11 +78,21 @@
                             <artifactId>core-forms-components-core</artifactId>
                             <filter>true</filter>
                         </embedded>
+                        <embedded>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>core-forms-components-af-core</artifactId>
+                            <filter>true</filter>
+                        </embedded>
                     </embeddeds>
                     <subPackages>
                         <subPackage>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-apps</artifactId>
+                            <filter>true</filter>
+                        </subPackage>
+                        <subPackage>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>core-forms-components-af-apps</artifactId>
                             <filter>true</filter>
                         </subPackage>
                     </subPackages>
@@ -109,6 +119,19 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>core-forms-components-apps</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>core-forms-components-af-core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>core-forms-components-af-apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
             <scope>provided</scope>

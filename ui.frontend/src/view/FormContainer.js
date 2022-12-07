@@ -16,10 +16,13 @@
 import {createFormInstance} from "@aemforms/af-core/lib";
 export default class FormContainer {
     constructor(params) {
-        this._model = createFormInstance({...params._formJson, data: params._prefillData.data});
+        // bug in af-core, if data is set to empty object, model is not created correctly
+        let prefillData = ((params._prefillData.data && Object.keys(params._prefillData.data).length === 0) ? null: params._prefillData.data);
+        this._model = createFormInstance({...params._formJson, data: prefillData});
         this._path = params._path;
         this._fields = {};
         this._deferredParents = {};
+        this._element = params._element;
     }
     /**
      * returns the form field view
@@ -90,5 +93,9 @@ export default class FormContainer {
 
     getPath() {
         return this._path;
+    }
+
+    getFormElement() {
+        return this._element;
     }
 }

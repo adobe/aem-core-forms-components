@@ -149,9 +149,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
-    public @NotNull Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        return customProperties;
+    public @NotNull Map<String, Object> getCustomLayoutProperties() {
+        Map<String, Object> customLayoutProperties = new LinkedHashMap<>();
+        return customLayoutProperties;
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
@@ -171,8 +171,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (getCustomProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomProperties());
+        if (getCustomLayoutProperties().size() != 0) {
+            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());

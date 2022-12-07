@@ -76,10 +76,14 @@ export default class FormFieldBase extends FormField {
         throw "method not implemented";
     }
 
+    getClass() {
+        return this.constructor.IS;
+    }
+
     setModel(model) {
         super.setModel(model);
         const state = this._model.getState();
-        this._applyState(state);
+        this.applyState(state);
     }
 
     /**
@@ -92,22 +96,25 @@ export default class FormFieldBase extends FormField {
     /**
      * applies full state of the field to the HTML. Generally done just after the model is bound to the field
      * @param state
-     * @private
      */
-    _applyState(state) {
+    applyState(state) {
         if (state.value) {
-            this._updateValue(state.value);
+            this.updateValue(state.value);
         }
-        this._updateVisible(state.visible)
-        this._updateEnabled(state.enabled)
-        this._initializeHelpContent(state);
+        this.updateVisible(state.visible)
+        this.updateEnabled(state.enabled, state)
+        this.updateReadOnly(state.readOnly)
+        this.initializeHelpContent(state);
     }
 
-    _initializeHelpContent(state) {
-        // Initializing Hint ('?') and long description.
-        this._showHideLongDescriptionDiv(false);
+    /**
+     * Initialise Hint ('?') and long description.
+     * @param state
+     */
+    initializeHelpContent(state) {
+        this.#showHideLongDescriptionDiv(false);
         if (this.getDescription()) {
-            this._addHelpIconHandler(state);
+            this.#addHelpIconHandler(state);
         }
     }
 
@@ -116,7 +123,7 @@ export default class FormFieldBase extends FormField {
      * @param show If true then <div> containing tooltip(Short Description) will be shown else hidden
      * @private
      */
-    _showHideTooltipDiv(show) {
+    #showHideTooltipDiv(show) {
         if (this.tooltip) {
             this.toggleAttribute(this.getTooltipDiv(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
@@ -127,32 +134,31 @@ export default class FormFieldBase extends FormField {
      * @param show If true then <div> containing description(Long Description) will be shown
      * @private
      */
-    _showHideLongDescriptionDiv(show) {
+    #showHideLongDescriptionDiv(show) {
         if (this.description) {
             this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
     }
 
-    _isTooltipAlwaysVisible() {
+    #isTooltipAlwaysVisible() {
         return !!this.getLayoutProperties()['tooltipVisible'];
     }
 
     /**
      * updates html based on visible state
      * @param visible
-     * @private
      */
-    _updateVisible(visible) {
+    updateVisible(visible) {
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
     }
 
     /**
-     * udpates the html state based on enable state of the field
+     * updates the html state based on enable state of the field
      * @param enabled
-     * @private
      */
-    _updateEnabled(enabled) {
+
+    updateEnabled(enabled, state) {
         if (this.widget) {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
@@ -166,15 +172,41 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    _updateValid(valid, state) {
-        if (this.errorDiv) {
-            this.toggle(valid, Constants.ARIA_INVALID, true);
-            this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
-            this._updateErrorMessage(state.errorMessage, state);
+    /**
+     * udpates the html state based on enable state of the field
+     * @param readOnly
+     * @private
+     */
+    updateReadOnly(readOnly) {
+        if (this.widget) {
+            this.toggle(readOnly, "readonly");
+            if (readOnly === true) {
+                this.widget.setAttribute("readonly","readonly");
+            } else {
+                this.widget.removeAttribute("readonly");
+            }
         }
     }
 
-    _updateErrorMessage(errorMessage, state) {
+    /**
+     * updates the html state based on valid state of the field
+     * @param valid
+     * @param state
+     */
+    updateValid(valid, state) {
+        if (this.errorDiv) {
+            this.toggle(valid, Constants.ARIA_INVALID, true);
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            this.updateErrorMessage(state.errorMessage, state);
+        }
+    }
+
+    /**
+     * updates the html state based on errorMessage state of the field
+     * @param errorMessage
+     * @param state
+     */
+    updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
           this.errorDiv.innerHTML = state.errorMessage;
           if (state.valid === false && !state.errorMessage) {
@@ -183,13 +215,21 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    _updateValue(value) {
+    /**
+     * updates the html state based on value state of the field
+     * @param value
+     */
+    updateValue(value) {
         if (this.widget) {
             this.widget.value = value;
         }
     }
 
-    _updateLabel(label) {
+    /**
+     * updates the html state based on label state of the field
+     * @param label
+     */
+    updateLabel(label) {
         if (this.label) {
             if (label.hasOwnProperty("value")) {
                 this.label.innerHTML = label.value;
@@ -201,7 +241,11 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    _updateDescription(description) {
+    /**
+     * updates the html state based on description state of the field
+     * @param description
+     */
+    updateDescription(description) {
         if (this.description) {
             this.description.querySelector("p").innerHTML = description;
         } else {
@@ -214,36 +258,32 @@ export default class FormFieldBase extends FormField {
      * Shows or Hides Description Based on click of '?' mark.
      * @private
      */
-    _addHelpIconHandler(state) {
+    #addHelpIconHandler(state) {
         const questionMarkDiv = this.qm,
             descriptionDiv = this.description,
-            tooltipAlwaysVisible = this._isTooltipAlwaysVisible();
+            tooltipAlwaysVisible = this.#isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
             questionMarkDiv.addEventListener('click', (e) => {
                 e.preventDefault();
                 const longDescriptionVisibleAttribute = descriptionDiv.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
                 if (longDescriptionVisibleAttribute === 'false') {
-                    self._showHideLongDescriptionDiv(true);
+                    self.#showHideLongDescriptionDiv(true);
                     if (tooltipAlwaysVisible) {
-                        self._showHideTooltipDiv(false);
+                        self.#showHideTooltipDiv(false);
                     }
                 } else {
-                    self._showHideLongDescriptionDiv(false);
+                    self.#showHideLongDescriptionDiv(false);
                     if (tooltipAlwaysVisible) {
-                        self._showHideTooltipDiv(true);
+                        self.#showHideTooltipDiv(true);
                     }
                 }
             });
         }
     }
 
-    getClass() {
-        return this.constructor.IS;
-    }
-
     subscribe() {
-        const changeHandlerName = (propName) => `_update${propName[0].toUpperCase() + propName.slice(1)}`
+        const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
         this._model.subscribe((action) => {
             let state = action.target.getState();
             const changes = action.payload.changes;

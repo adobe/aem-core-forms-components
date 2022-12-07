@@ -1,0 +1,39 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:createdBy": "admin",
+  "jcr:created": "Thu Sep 15 2022 14:57:08 GMT+0530",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "jcr:createdBy": "admin",
+    "jcr:title": "test",
+    "cq:template": "/conf/core-components-it/settings/wcm/templates/af-blank-v2",
+    "sling:configRef": "/conf/forms/test",
+    "jcr:created": "Thu Sep 15 2022 14:57:08 GMT+0530",
+    "cq:lastModified": "Thu Sep 15 2022 16:48:25 GMT+0530",
+    "cq:deviceGroups": [
+      "/etc/mobile/groups/responsive"
+    ],
+    "guideComponentType": "fd/af/templates",
+    "sling:resourceType": "forms-components-examples/components/page",
+    "cq:lastModifiedBy": "admin",
+    "guideContainer": {
+      "jcr:primaryType": "nt:unstructured",
+      "fd:version": "2.0",
+      "sling:resourceType": "core/fd/components/form/container/v2/container",
+      "dorType": "none",
+      "themeRef": "/conf/global/frontend/deployments/red_theme/red_theme-0.0.2-1662093232-7cb0d8b",
+      "fieldType": "form",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:createdBy": "admin",
+        "jcr:title": "Text Input",
+        "jcr:lastModifiedBy": "admin",
+        "jcr:created": "Thu Sep 15 2022 14:57:14 GMT+0530",
+        "name": "textinput1663234035424",
+        "jcr:lastModified": "Thu Sep 15 2022 14:57:14 GMT+0530",
+        "sling:resourceType": "forms-components-examples/components/form/textinput",
+        "fieldType": "text-input"
+      }
+    }
+  }
+}
