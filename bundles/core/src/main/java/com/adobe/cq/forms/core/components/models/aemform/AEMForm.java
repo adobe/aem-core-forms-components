@@ -15,12 +15,17 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.aemform;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -333,6 +338,18 @@ public interface AEMForm extends Component {
     @Override
     default String getExportedType() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Returns a list of HTML items that should be included in the form
+     *
+     * @return list of page items
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.2.0
+     */
+    @Nullable
+    @JsonIgnore
+    default List<HtmlPageItem> getHtmlPageItems() {
+        return new ArrayList();
     }
 
 }

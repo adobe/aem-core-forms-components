@@ -20,6 +20,7 @@
                     type="button"
                     jcr:primaryType="nt:unstructured"
                     name="button-1"
+                    fieldType="button"
                     jcr:title="button-1"
                     enabled="{Boolean}true"
                     visible="{Boolean}true"
@@ -31,6 +32,7 @@
                     jcr:primaryType="nt:unstructured"
                     name="button-2"
                     jcr:title="button-2"
+                    fieldType="button"
                     enabled="{Boolean}false"
                     visible="{Boolean}true"
                     sling:resourceType="forms-components-examples/components/form/button"/>
@@ -47,6 +49,20 @@
                     enabled="{Boolean}true"
                     visible="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/button"/>
+            <button-4
+              id="tooltip_scenario_test"
+              description="This is long description"
+              tooltip="This is short description"
+              tooltipVisible="true"
+              aria-label="basic-button-4"
+              type="button"
+              jcr:primaryType="nt:unstructured"
+              name="button-4"
+              jcr:title="button-4"
+              fieldType="button"
+              enabled="{Boolean}true"
+              visible="{Boolean}true"
+              sling:resourceType="forms-components-examples/components/form/button"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

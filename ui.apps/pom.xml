@@ -270,6 +270,8 @@
                                 <configuration>
                                     <tasks>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
+
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/portallister/v1/portallister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/searchlister/v1/searchlister/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
