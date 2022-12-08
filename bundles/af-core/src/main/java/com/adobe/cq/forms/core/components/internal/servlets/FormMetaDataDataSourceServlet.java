@@ -37,6 +37,7 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.SyntheticResource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.adobe.aemds.guide.model.FormMetaData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.granite.ui.components.Config;
 import com.adobe.granite.ui.components.ExpressionResolver;
 import com.adobe.granite.ui.components.Value;
@@ -52,7 +54,6 @@ import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.api.policies.ContentPolicy;
-import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(
@@ -68,7 +69,11 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String DATA_MODEL = "guideDataModel";
 
     private static final String FIELD_TYPE = "fieldType";
-    private static final String ALLOWED_FORMATS = "allowedFormats";
+    private static final String ALLOWED_FORMAT = "allowedFormat";
+    private static final String ALLOWED_CUSTOM_FORMAT = "allowedCustomFormats";
+
+    private static final String CUSTOM_FORMAT_KEY = "customFormatKey";
+    private static final String CUSTOM_FORMAT_VALUE = "customFormatValue";
     private static final String NN_DIALOG = "cq:dialog";
 
     /**
@@ -136,48 +141,38 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
             String dataModel = getParameter(config, DATA_MODEL, request, "");
             actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request, type, dataModel).iterator());
+                request, request.getResourceResolver(), type, dataModel).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, FormMetaDataType type, String dataModel) {
-        ResourceResolver resourceResolver = request.getResourceResolver();
+    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
+        String dataModel) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
-                    Resource contentResource = resourceResolver.getResource((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE));
-                    ContentPolicyManager policyManager = resourceResolver.adaptTo(ContentPolicyManager.class);
-                    if (contentResource != null && policyManager != null) {
-                        ContentPolicy policy = policyManager.getPolicy(contentResource);
-                        if (policy != null) {
-                            Map<String, Object> firstEntry = new HashMap<>();
-                            firstEntry.put("text", "Select");
-                            firstEntry.put("value", "");
-                            ValueMap firstEntryVm = new ValueMapDecorator(firstEntry);
-                            resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, firstEntryVm));
-                            ValueMap props = policy.getProperties();
-                            if (props != null) {
-                                String[] allowedFormats = (String[]) props.getOrDefault(ALLOWED_FORMATS, new String[0]);
-                                for (String allowedFormat : allowedFormats) {
-                                    Map<String, Object> respObj = new HashMap<>();
-                                    String[] arr = allowedFormat.split("=", 2);
-                                    respObj.put("text", arr[0]);
-                                    respObj.put("value", arr[1]);
-                                    ValueMap vm = new ValueMapDecorator(respObj);
-                                    resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, vm));
+                    ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
+                        resourceResolver);
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
+                    if (policy != null) {
+                        ValueMap props = policy.getProperties();
+                        if (props != null) {
+                            for (Map.Entry<String, Object> entry : props.entrySet()) {
+                                if (entry.getKey().startsWith(ALLOWED_FORMAT)) {
+                                    String[] arr = entry.getValue().toString().split("=", 2);
+                                    resources.add(getResourceForDropdownDisplay(resourceResolver, arr[0], arr[1]));
                                 }
                             }
-                            Map<String, Object> customEntry = new HashMap<>();
-                            customEntry.put("text", "Custom");
-                            customEntry.put("value", "custom");
-                            ValueMap customEntryVm = new ValueMapDecorator(customEntry);
-                            resources.add(new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, customEntryVm));
+                        }
+                        Map<String, String> allowedCustomFormattersMap = this.getAllowedCustomFormatters(policy, resourceResolver);
+                        for (Map.Entry<String, String> entry : allowedCustomFormattersMap.entrySet()) {
+                            resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
                         }
                     }
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
@@ -202,13 +197,37 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         return resources;
     }
 
-    private Boolean shouldAddPattern(String fieldType, String s) {
-        switch (fieldType) {
-            case "text-input":
-                return !(s.startsWith("text{") && s.endsWith("}"));
-            default:
-                return true;
-        }
+    private Map<String, String> getAllowedCustomFormatters(ContentPolicy policy, ResourceResolver resourceResolver) {
+        Resource policyResource = resourceResolver.resolve(policy.getPath());
+        Map<String, String> allowedCustomFormattersMap = new HashMap<>();
+        List<Resource> allowedcustomFormattersResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false).filter(
+            (childResource) -> childResource.getName().equals(ALLOWED_CUSTOM_FORMAT)).collect(Collectors.toList());
+
+        allowedcustomFormattersResourceList.forEach((allowedcustomFormattersResource) -> {
+            allowedcustomFormattersResource.getChildren().forEach(allowedCustomFormatters -> {
+                String customFormatKey = "";
+                String customFormatValue = "";
+                for (Map.Entry<String, Object> entry : allowedCustomFormatters.getValueMap().entrySet()) {
+                    if (entry.getKey().equals(CUSTOM_FORMAT_KEY)) {
+                        customFormatKey = entry.getValue().toString();
+                    } else if (entry.getKey().equals(CUSTOM_FORMAT_VALUE)) {
+                        customFormatValue = entry.getValue().toString();
+                    }
+                }
+                if (!customFormatKey.isEmpty() && !customFormatValue.isEmpty()) {
+                    allowedCustomFormattersMap.put(customFormatKey, customFormatValue);
+                }
+            });
+        });
+        return allowedCustomFormattersMap;
+    }
+
+    private SyntheticResource getResourceForDropdownDisplay(ResourceResolver resourceResolver, String key, String value) {
+        Map<String, Object> dropdownMap = new HashMap<>();
+        dropdownMap.put("text", key);
+        dropdownMap.put("value", value);
+        ValueMap dropdownEntryVm = new ValueMapDecorator(dropdownMap);
+        return new ValueMapResource(resourceResolver, "", JcrConstants.NT_UNSTRUCTURED, dropdownEntryVm);
     }
 
     private List<Resource> getResourceListFromComponentDescription(

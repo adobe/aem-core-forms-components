@@ -120,7 +120,6 @@
                                         <datasource
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                fieldType="date-input"
                                                 type="formatters"/>
                                     </displayPatternType>
                                     <displayPictureClause
@@ -148,7 +147,6 @@
                                         <datasource
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                fieldType="date-input"
                                                 type="formatters"/>
                                     </editPatternType>
                                     <editFormat

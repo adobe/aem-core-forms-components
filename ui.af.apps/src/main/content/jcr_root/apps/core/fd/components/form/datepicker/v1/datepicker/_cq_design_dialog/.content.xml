@@ -42,7 +42,7 @@
                                     <allowedFormats
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
-                                            fieldDescription="The number input formats that are allowed to be selected by an author."
+                                            fieldDescription="The date picker formats that are allowed to be selected by an author."
                                             fieldLabel="Allowed Formats"
                                             name="./allowedFormats">
                                         <items jcr:primaryType="nt:unstructured">
@@ -51,69 +51,69 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat1"
-                                                    text="No Pattern"
-                                                    value="No Pattern=num{#####################.###############}"/>
+                                                    text="01 April, 2007"
+                                                    value="01 April, 2007=date{MMMM d, y}"/>
                                             <pattern2
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat2"
-                                                    text="$1,234.21"
-                                                    value="$1,234.21=num{¤#,##0.00}"/>
+                                                    text="April 01, 2007"
+                                                    value="April 01, 2007=date{MMMM d, y}"/>
                                             <pattern3
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat3"
-                                                    text="$1234.21"
-                                                    value="$1234.21=num{()¤####0.00}"/>
+                                                    text="Sunday, 01 April, 2007"
+                                                    value="Sunday, 01 April, 2007=date{EEEE, d MMMM, y}"/>
                                             <pattern4
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat4"
-                                                    text="1,234.210"
-                                                    value="1,234.210=num{#,###,##0.000}"/>
+                                                    text="Sunday, April 01, 2007"
+                                                    value="Sunday, April 01, 2007=date{EEEE, MMMM d, y}"/>
                                             <pattern5
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat5"
-                                                    text="123,421%"
-                                                    value="123,421%=num{#,###,##0%}"/>
+                                                    text="1/4/2007"
+                                                    value="1/4/2007=date{M/d/y}"/>
                                             <pattern6
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat6"
-                                                    text="23421%"
-                                                    value="23421%=num{####0%}"/>
+                                                    text="4/1/2007"
+                                                    value="4/1/2007=date{M/d/y}"/>
                                         </items>
                                     </allowedFormats>
                                     <customFormats
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                        fieldDescription="The number input formats that are allowed to be selected by an author."
-                                        fieldLabel="Custom Formats"
-                                        composite="true"
-                                        name="./allowedCustomFormats">
-                                        <field
                                             jcr:primaryType="nt:unstructured"
-                                            sling:resourceType = "granite/ui/components/coral/foundation/container"
-                                            name = "./allowedCustomFormats">
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                            fieldDescription="The date picker formats that are allowed to be selected by an author."
+                                            fieldLabel="Custom Formats"
+                                            composite="true"
+                                            name="./allowedCustomFormats">
+                                        <field
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType = "granite/ui/components/coral/foundation/container"
+                                                name = "./allowedCustomFormats">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <customFormatKey
-                                                    jcr:primaryType="nt:unstructured"
-                                                    fieldDescription="The number input format that will be displayed in formatter dropdown in dialog."
-                                                    fieldLabel="Custom Format Key"
-                                                    sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
-                                                    name = "customFormatKey"/>
+                                                        jcr:primaryType="nt:unstructured"
+                                                        fieldDescription="The date picker format that will be displayed in formatter dropdown in dialog."
+                                                        fieldLabel="Custom Format Key"
+                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                        name = "customFormatKey"/>
                                                 <customFormatExpression
-                                                    jcr:primaryType="nt:unstructured"
-                                                    fieldDescription="The number input format in unicode which will be used in runtime."
-                                                    fieldLabel="Custom Format Expression"
-                                                    sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
-                                                    name = "customFormatValue"/>
+                                                        jcr:primaryType="nt:unstructured"
+                                                        fieldDescription="The date picker format in unicode which will be used in runtime."
+                                                        fieldLabel="Custom Format Expression"
+                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                        name = "customFormatValue"/>
                                             </items>
                                         </field>
                                     </customFormats>
