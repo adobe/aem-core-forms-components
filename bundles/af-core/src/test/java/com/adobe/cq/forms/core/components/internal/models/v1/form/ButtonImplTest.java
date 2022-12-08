@@ -116,4 +116,10 @@ public class ButtonImplTest {
         assertEquals(true, button.getDorProperties().get("dorExclusion"));
         assertEquals(null, button.getDorProperties().get("dorColspan"));
     }
+
+    @Test
+    void testGetProperties() {
+        Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
+        assertEquals("button", button.getProperties().get("fd:buttonType"));
+    }
 }

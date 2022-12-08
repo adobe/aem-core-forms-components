@@ -79,6 +79,33 @@
             return String(value) === optionValue;
         }
 
+        updateEnabled(enabled, state) {
+            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+            let widget = this.widget;
+            if (enabled === false) {
+                if(state.readOnly === false){
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                }
+            } else if (state.readOnly === false) {
+                widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+            }
+        }
+
+        updateReadOnly(readonly) {
+            this.toggle(readonly, "aria-readonly", true);
+            let widget = this.widget;
+            if (readonly === true) {
+                widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                widget.setAttribute("aria-readonly", true);
+            } else {
+                widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                widget.removeAttribute("aria-readonly");
+            }
+        }
+
         updateValue(value) {
             if(value === null) {
                 this.widget.selectedIndex = -1;
