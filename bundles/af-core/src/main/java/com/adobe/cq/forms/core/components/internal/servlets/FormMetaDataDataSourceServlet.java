@@ -30,6 +30,7 @@ import java.util.stream.StreamSupport;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -146,7 +147,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
+    private List<Resource> getDataSourceResources(HttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
         String dataModel) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);

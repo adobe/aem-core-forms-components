@@ -17,13 +17,11 @@ package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.function.Function;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,7 +109,8 @@ public class FormMetaDataDataSourceServletTest {
         context.currentResource("/apps/formattertypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
             .then(returnsFirstArg());
-        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource("/apps/formattertypedatasourcenumberinputPolicy"));
+        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
+            "/apps/formattertypedatasourcenumberinputPolicy"));
         when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
         context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/formattertypedatasourcenumberinput");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
