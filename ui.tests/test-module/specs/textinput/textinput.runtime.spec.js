@@ -86,4 +86,28 @@ describe("Form Runtime with Text Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should make button visible and hide textfield on a certain string input", () => {
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [button, buttonFieldView] = Object.entries(formContainer._fields)[5];
+        const [text, textFieldView] = Object.entries(formContainer._fields)[4];
+        const input = "adobe";
+
+        cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${button}`).should('be.visible')
+            cy.get(`#${text}`).should('not.be.visible')
+        })
+    })
+
+    it("should make enable and disable other textfields on a certain string input", () => {
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [textbox3, textBox3FieldView] = Object.entries(formContainer._fields)[2];
+        const input = "abc";
+
+        cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${textbox2}`).find("input").should('be.enabled')
+            cy.get(`#${textbox3}`).find("input").should('not.be.enabled')
+        })
+    })
+
 })
