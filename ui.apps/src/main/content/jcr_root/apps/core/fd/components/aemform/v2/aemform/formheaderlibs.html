@@ -1,0 +1,4 @@
+<sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
+    <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.css @ categories='core.forms.components.wizard.v1.runtime'}"/>
+    <sly data-sly-test="${!wcmmode.edit}" data-sly-call="${clientlib.css @ categories='core.forms.components.runtime.all'}"/>
+</sly>
