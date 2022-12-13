@@ -121,4 +121,28 @@ describe("Form with Number Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should make visible and hide other fields on a certain number input", () => {
+        const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
+        const [numberInput2, numberInput2FieldView] = Object.entries(formContainer._fields)[1];
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+
+        const input = "93";
+
+        cy.get(`#${numberInput1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput2}`).should('be.visible')
+            cy.get(`#${numberInput3}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable other numberfields on a certain number input", () => {
+        const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+        const [numberInput4, numberInput4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = "123";
+
+        cy.get(`#${numberInput1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput3}`).find("input").should('be.enabled')
+            cy.get(`#${numberInput4}`).find("input").should('not.be.enabled')
+        })
+    })
 })
