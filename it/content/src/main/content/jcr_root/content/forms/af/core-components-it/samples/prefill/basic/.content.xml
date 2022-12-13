@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:deviceGroups="[/etc/mobile/groups/responsive]"
+            cq:lastModified="{Date}2022-12-13T13:56:41.436+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="custom prefill"
+            sling:configRef="/conf/forms/custom-prefill/"
+            sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+                fd:version="2.1"
+                jcr:lastModified="{Date}2022-12-02T19:16:07.334+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                actionType="fd/aftest/customSubmission/logsubmit"
+                fieldType="form"
+                prefillService="Custom Pre-fill Service"
+                textIsRich="true"
+                thankYouMessage="Thank you for submitting the form."
+                thankYouOption="page"
+                themeRef="/libs/fd/af/themes/canvas">
+            <textinput
+                    jcr:lastModified="{Date}2022-12-13T13:52:47.849+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Name"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput1669974136161"/>
+            <datepicker
+                    jcr:lastModified="{Date}2022-12-13T13:54:18.120+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date of Birth"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    fieldType="date-input"
+                    name="datepicker1670919845932"/>
+            <radiobutton
+                    jcr:lastModified="{Date}2022-12-13T13:53:54.372+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Gender"
+                    sling:resourceType="forms-components-examples/components/form/radiobutton"
+                    enabled="{Boolean}true"
+                    enum="[0,1,2]"
+                    enumNames="[Male,Female,Others]"
+                    fieldType="radio-group"
+                    name="radiobutton1670919790244"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    visible="{Boolean}true"/>
+            <dropdown
+                    jcr:lastModified="{Date}2022-12-13T13:56:41.428+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Job Status"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[Not Working,Working]"
+                    fieldType="drop-down"
+                    name="dropdown1670919877944"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}true"/>
+            <button
+                    jcr:lastModified="{Date}2022-12-13T13:53:02.653+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Submit"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="button1669974144050"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1669974144050&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1669974144050&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+            </button>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
