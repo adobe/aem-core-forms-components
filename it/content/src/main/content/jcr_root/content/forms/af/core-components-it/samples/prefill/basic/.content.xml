@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-12-13T13:56:41.436+05:30"
+            cq:lastModified="{Date}2022-12-13T15:44:11.570+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -25,23 +25,33 @@
                 thankYouOption="page"
                 themeRef="/libs/fd/af/themes/canvas">
             <textinput
-                    jcr:lastModified="{Date}2022-12-13T13:52:47.849+05:30"
+                    jcr:lastModified="{Date}2022-12-13T15:42:36.423+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Name"
                     sling:resourceType="forms-components-examples/components/form/textinput"
+                    autocomplete="off"
+                    enabled="{Boolean}true"
                     fieldType="text-input"
-                    name="textinput1669974136161"/>
+                    name="name"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    validatePictureClauseMessage="[,]"
+                    visible="{Boolean}true"/>
             <datepicker
-                    jcr:lastModified="{Date}2022-12-13T13:54:18.120+05:30"
+                    jcr:lastModified="{Date}2022-12-13T15:42:44.398+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Date of Birth"
                     sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
                     fieldType="date-input"
-                    name="datepicker1670919845932"/>
+                    name="dob"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}true"/>
             <radiobutton
-                    jcr:lastModified="{Date}2022-12-13T13:53:54.372+05:30"
+                    jcr:lastModified="{Date}2022-12-13T15:42:52.181+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Gender"
@@ -50,14 +60,14 @@
                     enum="[0,1,2]"
                     enumNames="[Male,Female,Others]"
                     fieldType="radio-group"
-                    name="radiobutton1670919790244"
+                    name="gender"
                     orientation="horizontal"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
                     type="string"
                     visible="{Boolean}true"/>
             <dropdown
-                    jcr:lastModified="{Date}2022-12-13T13:56:41.428+05:30"
+                    jcr:lastModified="{Date}2022-12-13T15:43:02.150+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Job Status"
@@ -66,14 +76,14 @@
                     enum="[0,1]"
                     enumNames="[Not Working,Working]"
                     fieldType="drop-down"
-                    name="dropdown1670919877944"
+                    name="job"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
                     type="string"
                     typeIndex="0"
                     visible="{Boolean}true"/>
             <button
-                    jcr:lastModified="{Date}2022-12-13T13:53:02.653+05:30"
+                    jcr:lastModified="{Date}2022-12-13T15:44:11.564+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Submit"
@@ -81,7 +91,7 @@
                     dorExclusion="true"
                     enabled="{Boolean}true"
                     fieldType="button"
-                    name="button1669974144050"
+                    name="submit"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
                     visible="{Boolean}true">

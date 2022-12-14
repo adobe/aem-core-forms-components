@@ -23,12 +23,45 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 
 describe('Custom Prefill Test', function () {
-    const pagePath = "/content/forms/af/core-components-it/blank";
-    beforeEach(function () {
-        cy.openAuthoring(pagePath);
+    const pagePath = "content/forms/af/core-components-it/samples/prefill/basic.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
     });
 
     it('', function() {
+        // filling the form
+        cy.get("input[name='name']").type("John Doe");
+        cy.get("input[name='dob']").type("1999-10-10");
+        cy.get("input[name='gender']").first().check();
+        cy.get("select[name='job']").select('Working');
+
+        // submitting the form and fetching the prefillID
+        let prefillId, url;
+        cy.get("button").click();
+
+        cy.wait('@afSubmission').then(({response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.undefined;
+            expect(response.body.metadata).to.be.not.undefined;
+            expect(response.body.metadata.prefillId).to.be.not.undefined;
+
+            prefillId = response.body.metadata.prefillId;
+            url = response.url;
+            console.log(url)
+
+            cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`).then(() => {
+                cy.get("input[name='name']").should("be.equal","John Doe");
+            })
+        })
 
     });
 
