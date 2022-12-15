@@ -52,42 +52,42 @@
                                                     checked="true"
                                                     name="./allowedFormat1"
                                                     text="01 April, 2007"
-                                                    value="01 April, 2007=date{MMMM d, y}"/>
+                                                    value="01 April, 2007=d MMMM, y"/>
                                             <pattern2
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat2"
                                                     text="April 01, 2007"
-                                                    value="April 01, 2007=date{MMMM d, y}"/>
+                                                    value="April 01, 2007=MMMM d, y"/>
                                             <pattern3
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat3"
                                                     text="Sunday, 01 April, 2007"
-                                                    value="Sunday, 01 April, 2007=date{EEEE, d MMMM, y}"/>
+                                                    value="Sunday, 01 April, 2007=EEEE, d MMMM, y"/>
                                             <pattern4
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat4"
                                                     text="Sunday, April 01, 2007"
-                                                    value="Sunday, April 01, 2007=date{EEEE, MMMM d, y}"/>
+                                                    value="Sunday, April 01, 2007=EEEE, MMMM d, y"/>
                                             <pattern5
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat5"
                                                     text="1/4/2007"
-                                                    value="1/4/2007=date{M/d/y}"/>
+                                                    value="1/4/2007=d/M/y"/>
                                             <pattern6
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat6"
                                                     text="4/1/2007"
-                                                    value="4/1/2007=date{M/d/y}"/>
+                                                    value="4/1/2007=M/d/y"/>
                                         </items>
                                     </allowedFormats>
                                     <customFormats

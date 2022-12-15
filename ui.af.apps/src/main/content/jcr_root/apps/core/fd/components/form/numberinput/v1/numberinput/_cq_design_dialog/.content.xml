@@ -52,42 +52,42 @@
                                                     checked="true"
                                                     name="./allowedFormat1"
                                                     text="No Pattern"
-                                                    value="No Pattern=num{#####################.###############}"/>
+                                                    value="No Pattern=#####################.###############"/>
                                             <pattern2
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat2"
                                                     text="$1,234.21"
-                                                    value="$1,234.21=num{¤#,##0.00}"/>
+                                                    value="$1,234.21=¤#,##0.00"/>
                                             <pattern3
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat3"
                                                     text="$1234.21"
-                                                    value="$1234.21=num{()¤####0.00}"/>
+                                                    value="$1234.21=()¤####0.00"/>
                                             <pattern4
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat4"
                                                     text="1,234.210"
-                                                    value="1,234.210=num{#,###,##0.000}"/>
+                                                    value="1,234.210=#,###,##0.000"/>
                                             <pattern5
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat5"
                                                     text="123,421%"
-                                                    value="123,421%=num{#,###,##0%}"/>
+                                                    value="123,421%=#,###,##0%"/>
                                             <pattern6
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="true"
                                                     name="./allowedFormat6"
                                                     text="23421%"
-                                                    value="23421%=num{####0%}"/>
+                                                    value="23421%=####0%"/>
                                         </items>
                                     </allowedFormats>
                                     <customFormats
