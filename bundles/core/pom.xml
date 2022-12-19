@@ -440,18 +440,6 @@
 
         <!-- the below order of dependencies is very critical -->
 
-        <dependency>
-            <groupId>com.adobe.aemds.guide</groupId>
-            <artifactId>aemds-guide-core</artifactId>
-            <version>6.0.473-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
 
         <dependency>
             <groupId>com.adobe.aemfd</groupId>
