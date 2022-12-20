@@ -36,14 +36,16 @@
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                <label class="cmp-adaptiveform-checkbox__label" 
+                       for="${component.id}${'_'}${itemList.index}__widget"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
-                       for="${component.id}${'_'}${itemList.index}__widget">
+                       aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                       >
                     <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
                            aria-describedby="${checkboxgroup.labelForId}_desc"
                            name="${checkboxgroup.name}"
                            value="${checkboxgroup.enums[itemList.index].toString}"
-                           checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
+                           aria-checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                            disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                            aria-readonly="${checkboxgroup.readOnly ? 'true' : 'false'}"/>
                     <span>${checkboxgroup.enumNames[itemList.index]}</span>
@@ -57,3 +59,6 @@
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 </div>
+
+
+            
