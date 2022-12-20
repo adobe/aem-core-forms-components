@@ -110,10 +110,10 @@
                 <artifactId>impsort-maven-plugin</artifactId>
             </plugin>
 
-            <plugin>
+            <!-- <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 

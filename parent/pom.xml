@@ -694,7 +694,7 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
                 </plugin>
-                <plugin>
+                <!-- <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>4.0.4</version>
@@ -712,7 +712,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
+                </plugin> -->
                 <plugin>
                     <groupId>org.apache.rat</groupId>
                     <artifactId>apache-rat-plugin</artifactId>

@@ -23,7 +23,7 @@
 
 <div class="cmp-adaptiveform-checkboxgroup"
      data-cmp-is="adaptiveFormCheckBoxGroup"
-     id="${component.id}"
+     
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.checkboxgroup="com.adobe.cq.forms.core.components.models.form.CheckBoxGroup"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
@@ -36,8 +36,7 @@
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
-                       title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
+                <label class="cmp-adaptiveform-checkbox__label" 
                        for="${component.id}${'_'}${itemList.index}__widget">
                     <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
                            aria-describedby="${checkboxgroup.labelForId}_desc"
@@ -57,3 +56,7 @@
     <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 </div>
+
+<!-- id="${component.id}" -->
+<!-- aria-label="${checkboxgroup.enumNames[itemList.index]}" -->
+                       <!-- title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}" -->
