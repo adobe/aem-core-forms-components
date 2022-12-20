@@ -1099,6 +1099,19 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>io.wcm</groupId>
+                <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
+                <version>3.0.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.sling</groupId>
+                <artifactId>org.apache.sling.testing.sling-mock.junit4</artifactId>
+                <version>2.3.4</version>
+                <scope>test</scope>
+            </dependency>
+
             <!--
                 AEM APIs; make sure to not move this bundle upper in the list so that newer APIs available in AEM but not in the Uber
                 Jar can be used as dependencies.
@@ -1107,7 +1120,7 @@
             <dependency>
                 <groupId>com.adobe.aemfd</groupId>
                 <artifactId>aemfd-client-sdk</artifactId>
-                <version>6.0.860</version>
+                <version>6.0.869-SNAPSHOT</version>
             </dependency>
 
             <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
@@ -1115,7 +1128,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>uber-jar</artifactId>
-                <version>6.5.13</version>
+                <version>6.5.15</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -1218,18 +1231,6 @@
                 <groupId>uk.org.lidalia</groupId>
                 <artifactId>slf4j-test</artifactId>
                 <version>1.2.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.wcm</groupId>
-                <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
-                <version>3.0.2</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.sling</groupId>
-                <artifactId>org.apache.sling.testing.sling-mock.junit4</artifactId>
-                <version>2.3.4</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
