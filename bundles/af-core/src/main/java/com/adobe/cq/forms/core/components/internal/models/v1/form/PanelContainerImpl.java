@@ -46,7 +46,7 @@ public class PanelContainerImpl extends PanelImpl {
     private static String DOR_EXCLUDE_DESCRIPTION = "dorExcludeDescription";
     private static String BREAK_BEFORE_TEXT = "breakBeforeText";
     private static String BREAK_AFTER_TEXT = "breakAfterText";
-    private static String OVERFLOW = "overflow";
+    private static String OVERFLOW_TEXT = "overflowText";
     private static String DOR_NUM_COLS = "dorNumCols";
     private static String DOR_LAYOUT_TYPE = "dorLayoutType";
 
@@ -70,7 +70,7 @@ public class PanelContainerImpl extends PanelImpl {
     protected String breakAfterText;
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    protected String overflow;
+    protected String overflowText;
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String dorNumCols;
@@ -94,8 +94,8 @@ public class PanelContainerImpl extends PanelImpl {
         if (breakAfterText != null) {
             customDorProperties.put(BREAK_AFTER_TEXT, breakAfterText);
         }
-        if (overflow != null) {
-            customDorProperties.put(OVERFLOW, overflow);
+        if (overflowText != null) {
+            customDorProperties.put(OVERFLOW_TEXT, overflowText);
         }
         if (dorNumCols != null) {
             customDorProperties.put(DOR_NUM_COLS, dorNumCols);
