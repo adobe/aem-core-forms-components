@@ -124,7 +124,9 @@
 
         setModel(model) {
             super.setModel(model);
-            this.#updateModelValue(this.widget);
+            if (this.widget.value !== '') {
+                this.#updateModelValue(this.widget);
+            }
             this.widget.addEventListener('change', (e) => {
                 this.#updateModelValue(e.target);
             });
