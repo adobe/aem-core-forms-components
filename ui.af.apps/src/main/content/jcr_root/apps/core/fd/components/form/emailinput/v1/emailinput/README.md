@@ -46,6 +46,7 @@ It should be added to a relevant site client library using the `embed` property.
 It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
+
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-emailinput
