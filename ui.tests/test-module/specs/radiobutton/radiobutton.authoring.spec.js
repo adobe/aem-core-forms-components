@@ -74,8 +74,8 @@ describe('Page - Authoring', function () {
     cy.get('.cq-dialog-submit').click();
 
     // verifying alignment change in preview editor
-    getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option.VERTICAL').should('have.length',2);
-    getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option.VERTICAL').first().should('have.css', "display", "flex");
+    getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__widget.VERTICAL').should('have.length',1);
+    getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option').should('have.length',2);
 
     cy.deleteComponentByPath(radioButtonDrop);
   }

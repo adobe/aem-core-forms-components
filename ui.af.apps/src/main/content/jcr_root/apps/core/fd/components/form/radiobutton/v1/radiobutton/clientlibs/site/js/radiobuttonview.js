@@ -76,17 +76,33 @@
             });
         }
 
-        updateEnabled(enabled) {
+        updateEnabled(enabled, state) {
             this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (enabled === false) {
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
-                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
-                } else {
+                    if(state.readOnly === false){
+                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                    }
+                } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                     widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+                }
+            });
+        }
+
+        updateReadOnly(readonly) {
+            this.toggle(readonly, "aria-readonly", true);
+            let widgets = this.widget;
+            widgets.forEach(widget => {
+                if (readonly === true) {
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                    widget.setAttribute("aria-readonly", true);
+                } else {
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                    widget.removeAttribute("aria-readonly");
                 }
             });
         }

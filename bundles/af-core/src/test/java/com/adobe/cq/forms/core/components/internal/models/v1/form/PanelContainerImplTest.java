@@ -124,7 +124,7 @@ public class PanelContainerImplTest {
         assertEquals(false, panel.getDorProperties().get("dorExcludeDescription"));
         assertEquals("Following Previous", panel.getDorProperties().get("breakBeforeText"));
         assertEquals("Continue Filling Parent", panel.getDorProperties().get("breakAfterText"));
-        assertEquals("None", panel.getDorProperties().get("overflow"));
+        assertEquals("None", panel.getDorProperties().get("overflowText"));
         assertEquals("columnar", panel.getDorProperties().get("dorLayoutType"));
         assertEquals("3", panel.getDorProperties().get("dorNumCols"));
     }

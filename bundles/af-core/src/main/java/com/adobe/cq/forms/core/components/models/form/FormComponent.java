@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public interface FormComponent extends Component {
-    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout";
+    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout"; // needs to be renamed to "CUSTOM_LAYOUT_PROPERTY_WRAPPER" later
 
     /**
      * Returns the field type
