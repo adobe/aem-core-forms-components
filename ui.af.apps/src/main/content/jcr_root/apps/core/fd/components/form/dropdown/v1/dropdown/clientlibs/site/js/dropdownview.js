@@ -85,7 +85,7 @@
             let widget = this.widget;
             if (enabled === false) {
                 if(state.readOnly === false){
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                     widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 }
             } else if (state.readOnly === false) {
@@ -98,7 +98,7 @@
             this.toggle(readonly, "aria-readonly", true);
             let widget = this.widget;
             if (readonly === true) {
-                widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                 widget.setAttribute("aria-readonly", true);
             } else {
                 widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
