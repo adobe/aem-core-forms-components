@@ -17,13 +17,11 @@ package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.function.Function;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +32,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.adobe.aemds.guide.model.FormMetaData;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.testing.MockContentPolicy;
 import com.adobe.granite.ui.components.ExpressionResolver;
+import com.adobe.granite.ui.components.Value;
 import com.adobe.granite.ui.components.ds.DataSource;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -59,6 +61,9 @@ public class FormMetaDataDataSourceServletTest {
     private FormMetaData formMetaDataMock;
 
     @Mock
+    private ContentPolicyManager contentPolicyManagerMock;
+
+    @Mock
     private FormsManager.ComponentDescription description;
 
     @Mock
@@ -71,6 +76,7 @@ public class FormMetaDataDataSourceServletTest {
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, APPS_ROOT);
         registerFormMetadataAdapter();
+        registerContentPolicyManager();
         // note: transient state can't be mocked like this
         // context.registerService(ExpressionResolver.class, expressionResolver);
     }
@@ -100,14 +106,13 @@ public class FormMetaDataDataSourceServletTest {
 
     @Test
     public void testDataSourceForFormattersForNumberInput() throws Exception {
-
         context.currentResource("/apps/formattertypedatasourcenumberinput");
-        when(formatters.getResourceType()).thenReturn("/apps/formattertypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
             .then(returnsFirstArg());
-        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
-        componentDescriptions.add(formatters);
-        when(formMetaDataMock.getFormatters(any())).thenReturn(componentDescriptions.iterator());
+        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
+            "/apps/formattertypedatasourcenumberinputPolicy"));
+        when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
+        context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/formattertypedatasourcenumberinput");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
@@ -121,38 +126,7 @@ public class FormMetaDataDataSourceServletTest {
             iterator.next();
             size += 1;
         }
-        assertEquals(4, size);
-    }
-
-    @Test
-    public void testDataSourceForFormattersForTextInput() throws Exception {
-
-        context.currentResource("/apps/formattertypedatasourcetextinput");
-        when(formatters.getResourceType()).thenReturn("/apps/formattertypedatasourcetextinput");
-
-        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-            .then(returnsFirstArg());
-        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
-        componentDescriptions.add(formatters);
-        when(formMetaDataMock.getFormatters(any())).thenReturn(componentDescriptions.iterator());
-        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
-        // set expression resolver mock
-        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
-        dataSourceServlet.doGet(context.request(), context.response());
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-            DataSource.class.getName());
-        assertNotNull(dataSource);
-        int size = 0;
-        Iterator<Resource> iterator = dataSource.iterator();
-        while (iterator.hasNext()) {
-            size += 1;
-            Resource formatterResource = iterator.next();
-            ValueMap valueMap = formatterResource.getValueMap();
-            for (Map.Entry<String, Object> entry : valueMap.entrySet()) {
-                assertFalse(entry.getValue().toString().startsWith("text{") && entry.getValue().toString().endsWith("}"));
-            }
-        }
-        assertEquals(3, size);
+        assertEquals(7, size);
     }
 
     private void registerFormMetadataAdapter() {
@@ -160,4 +134,8 @@ public class FormMetaDataDataSourceServletTest {
             (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
     }
 
+    private void registerContentPolicyManager() {
+        context.registerAdapter(ResourceResolver.class, ContentPolicyManager.class,
+            (Function<ResourceResolver, ContentPolicyManager>) input -> contentPolicyManagerMock);
+    }
 }
