@@ -83,7 +83,7 @@
             widgets.forEach(widget => {
                 if (enabled === false) {
                     if(state.readOnly === false){
-                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                         widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
                 } else if (state.readOnly === false) {
@@ -93,12 +93,12 @@
             });
         }
 
-        updateReadOnly(readonly) {
+        updateReadOnly(readonly, state) {
             this.toggle(readonly, "aria-readonly", true);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (readonly === true) {
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, true);
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                     widget.setAttribute("aria-readonly", true);
                 } else {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
