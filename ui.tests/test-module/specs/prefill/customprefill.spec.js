@@ -24,6 +24,10 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
 
 describe('Custom Prefill Test', function () {
     const pagePath = "content/forms/af/core-components-it/samples/prefill/basic.html";
+    const nameTextBox = "input[name='name']",
+          dobDropdown = "input[name='dob']",
+          genderRadioButton = "input[name='gender']",
+          jobDropdown = "select[name='job']";
     let formContainer = null;
 
     beforeEach(() => {
@@ -37,32 +41,37 @@ describe('Custom Prefill Test', function () {
         }).as('afSubmission')
     });
 
+    const validatePrefill = (prefillId) => {
+        // preview the form by passing the prefillId parameter in the URL
+        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`);
+
+        // validating the prefilled data
+        cy.get(nameTextBox).should("have.value", "John Doe");
+        cy.get(dobDropdown).should("have.value", "1999-10-10");
+        cy.get(genderRadioButton).should("have.value", "0");
+        cy.get(jobDropdown).should("have.value", "1");
+    }
+
     it('', function() {
         // filling the form
-        cy.get("input[name='name']").type("John Doe");
-        cy.get("input[name='dob']").type("1999-10-10");
-        cy.get("input[name='gender']").first().check();
-        cy.get("select[name='job']").select('Working');
+        cy.get(nameTextBox).type("John Doe");
+        cy.get(dobDropdown).type("1999-10-10");
+        cy.get(genderRadioButton).first().check();
+        cy.get(jobDropdown).select('Working');
 
         // submitting the form and fetching the prefillID
-        let prefillId, url;
+        let prefillId;
         cy.get("button").click();
 
         cy.wait('@afSubmission').then(({response}) => {
             expect(response.statusCode).to.equal(200);
-            expect(response.body).to.be.not.undefined;
-            expect(response.body.metadata).to.be.not.undefined;
-            expect(response.body.metadata.prefillId).to.be.not.undefined;
+            expect(response.body).to.be.not.null;
+            expect(response.body.metadata).to.be.not.null;
+            expect(response.body.metadata.prefillId).to.be.not.null;
 
             prefillId = response.body.metadata.prefillId;
-            url = response.url;
-            console.log(url)
-
-            cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`).then(() => {
-                cy.get("input[name='name']").should("be.equal","John Doe");
-            })
+            validatePrefill(prefillId);
         })
-
     });
 
 })
