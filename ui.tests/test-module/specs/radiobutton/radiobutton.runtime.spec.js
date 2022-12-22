@@ -107,17 +107,17 @@ describe("Form with Radio Button Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    // it("should make visible and and hide components on certain select", () => {
+    // it("should make visible and hide components on certain select", () => {
     //     const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
     //     const [radioButton3, radioButton3FieldView] = Object.entries(formContainer._fields)[2];
     //     const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
     //
     //     cy.get(`#${radioButton1}`).find("input").first().check().blur().then(x => {
-    //         cy.get(`#${radioButton3}`).find("input").should('be.visible')
-    //         cy.get(`#${radioButton4}`).find("input").should('not.be.visible')
+    //         cy.get(`#${radioButton3}`).should('be.visible')
+    //         cy.get(`#${radioButton4}`).should('not.be.visible')
     //     })
     // })
-
+    //
     // it("should enable and disable components on certain select", () => {
     //     const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
     //     const [radioButton3, radioButton3FieldView] = Object.entries(formContainer._fields)[2];

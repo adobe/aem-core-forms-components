@@ -89,26 +89,27 @@ describe("Form Runtime with Text Input", () => {
     })
 
     it("should make button visible and hide textfield on a certain string input", () => {
+        console.log(Object.entries(formContainer._fields))
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const [button, buttonFieldView] = Object.entries(formContainer._fields)[5];
-        const [text, textFieldView] = Object.entries(formContainer._fields)[4];
+        const [textbox2, textbox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [textbox3, textbox3FieldView] = Object.entries(formContainer._fields)[2];
         const input = "adobe";
 
         cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
-            cy.get(`#${button}`).should('be.visible')
-            cy.get(`#${text}`).should('not.be.visible')
+            cy.get(`#${textbox3}`).should('be.visible')
+            cy.get(`#${textbox2}`).should('not.be.visible')
         })
     })
 
     it("should make enable and disable other textfields on a certain string input", () => {
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
-        const [textbox3, textBox3FieldView] = Object.entries(formContainer._fields)[2];
-        const input = "abc";
+        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = "aem";
 
         cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
             cy.get(`#${textbox2}`).find("input").should('be.enabled')
-            cy.get(`#${textbox3}`).find("input").should('not.be.enabled')
+            cy.get(`#${textbox4}`).find("input").should('not.be.enabled')
         })
     })
 })

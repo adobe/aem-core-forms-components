@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="dam:Asset">
     <jcr:content
             jcr:lastModified="{Date}2022-12-13T14:05:34.072+05:30"
@@ -16,6 +16,7 @@
                 dorType="none"
                 formmodel="none"
                 hasCustomThumbnail="{Boolean}false"
+                themeRef="/libs/fd/af/themes/canvas"
                 title="Adaptive Form V2 (IT)"/>
     </jcr:content>
 </jcr:root>
