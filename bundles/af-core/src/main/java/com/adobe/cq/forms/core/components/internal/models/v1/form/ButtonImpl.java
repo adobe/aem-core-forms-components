@@ -38,7 +38,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Button.class, ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_BUTTON_V1 })
+    resourceType = { FormConstants.RT_FD_FORM_BUTTON_V1, FormConstants.RT_FD_FORM_SUBMIT_BUTTON_V1,
+        FormConstants.RT_FD_FORM_RESET_BUTTON_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ButtonImpl extends AbstractBaseImpl implements Button {
 
@@ -54,6 +55,10 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Nullable
     private String defaultValue;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "buttonType")
+    @Default(values = "button")
+    protected String buttonType;
+
     @Override
     public String getValue() {
         return value;
@@ -67,6 +72,11 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @Override
     public String getDefault() {
         return defaultValue;
+    }
+
+    @Override
+    public String getButtonType() {
+        return buttonType;
     }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -86,5 +96,14 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
             customDorProperties.put("dorColspan", dorColspan);
         }
         return customDorProperties;
+    }
+
+    @Override
+    public Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (getButtonType() != null) {
+            properties.put("fd:buttonType", buttonType);
+        }
+        return properties;
     }
 }

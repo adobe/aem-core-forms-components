@@ -64,10 +64,7 @@
                             </type>
                             <showComment
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    name="./showComment"
-                                    text="Show upload comments"
-                                    value="true">
+                                    sling:hideResource="{Boolean}true">
                             </showComment>
                         </items>
                     </basic>
