@@ -16,10 +16,10 @@
 describe("Form Runtime with Telephone Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/telephoneinput/basic.html"
-    const bemBlock = 'cmp-adaptiveform-textinput'
-    const IS = "adaptiveFormTextInput"
+    const bemBlock = 'cmp-adaptiveform-telephoneinput'
+    const IS = "adaptiveFormTelephoneInput"
     const selectors = {
-        textinput : `[data-cmp-is="${IS}"]`
+        telephoneinput : `[data-cmp-is="${IS}"]`
     }
 
     let formContainer = null

@@ -6,7 +6,7 @@
             cq:lastModifiedBy="admin"
             cq:tags="[]"
             cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="Text Input"
+            jcr:description="Telephone Input"
             jcr:primaryType="cq:PageContent"
             jcr:title="Telephone Input"
             sling:resourceType="forms-components-examples/components/page">
@@ -16,7 +16,7 @@
             <responsivegrid
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="wcm/foundation/components/responsivegrid">
-                <text_1740702241
+                <telephoneinput_1740702241
                         cq:styleIds="[1644862132301]"
                         jcr:created="{Date}2019-02-15T19:05:53.032+01:00"
                         jcr:createdBy="admin"
@@ -24,9 +24,8 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>Telephone Input&lt;sub>v1&lt;/sub>&lt;/h1>"
-                        textIsRich="true"/>
-                <text
+                        text="&lt;h1>Telephone Input&lt;sub>v1&lt;/sub>&lt;/h1>"/>
+                <telephoneinput
                         cq:styleIds="[1544762734201]"
                         jcr:created="{Date}2018-12-06T19:11:23.947+01:00"
                         jcr:createdBy="admin"
@@ -34,8 +33,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Telephone Input component is a server side component written in HTL, allowing to create Adaptive Form Telephone Input fields"
-                        textIsRich="true"/>
+                        text="&lt;p>The Telephone Input component is a server side component written in HTL, allowing to create Adaptive Form Telephone Input fields"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
                         jcr:created="{Date}2019-02-14T16:41:54.952+01:00"
@@ -49,7 +47,6 @@
                         actionsEnabled="false"
                         descriptionFromPage="false"
                         linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput"
-                        textIsRich="true"
                         titleFromPage="false"/>
                 <title_865328580
                         cq:styleIds="[1544759664489]"
@@ -71,15 +68,14 @@
                         jcr:title="Standard"
                         sling:resourceType="core/wcm/components/title/v2/title"
                         type="h3"/>
-                <text_1337506761
+                <telephoneinput_1337506761
                         jcr:created="{Date}2018-12-06T19:23:41.968+01:00"
                         jcr:createdBy="admin"
                         jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
-                        textIsRich="true"/>
+                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
                         jcr:createdBy="admin"
@@ -93,9 +89,10 @@
                         <container
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="core-components-examples/components/form/container">
-                            <textinput_demo
+                            <telephoneinput_demo
                               jcr:title="telephoneinput"
                               fieldType="text-input"
+                              name="telephoneinput"
                               jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
                               jcr:createdBy="admin"
                               jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
