@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.coreformscomponents.core.service;
+package com.adobe.cq.forms.core.components.it.core.service;
 
 
 import com.adobe.forms.common.service.*;
