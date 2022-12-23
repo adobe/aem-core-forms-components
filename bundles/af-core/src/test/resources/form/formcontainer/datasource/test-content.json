@@ -25,27 +25,29 @@
         "jcr:primaryType"   : "nt:unstructured",
         "datasource" : {
             "sling:resourceType": "/apps/formattertypedatasourcenumberinput",
-            "type": "formatters",
-            "fieldType": "number-input",
-            "guideComponentType": "fd/af/components/formatter/guideTextBox"
-        },
-        "pattern1": "PhoneNumber=num{'('999')' 999-9999}",
-        "pattern2": "PhoneNumbesr=num{'('999')' 999-9999}",
-        "abc": "abc"
+            "type": "formatters"
+        }
     },
 
-    "formattertypedatasourcetextinput": {
+    "formattertypedatasourcenumberinputPolicy": {
         "jcr:primaryType"   : "nt:unstructured",
-        "datasource" : {
-            "sling:resourceType": "/apps/formattertypedatasourcetextinput",
-            "type": "formatters",
-            "fieldType": "text-input",
-            "guideComponentType": "fd/af/components/formatter/guideTextBox"
-        },
-        "pattern1": "PhoneNumber=text{'('999')' 999-9999}",
-        "pattern2": "PhoneNumbesr=text{'('999')' 999-9999}",
+        "allowedFormat1": "PhoneNumber='('999')' 999-9999",
+        "allowedFormat2": "PhoneNumbesr='('999')' 999-9999",
         "abc": "abc",
-        "pattern3": "abc=regexp"
-
+        "allowedFormat3": "abc=regexp",
+        "jcr:content": {
+            "jcr:primaryType"   : "nt:unstructured"
+        },
+        "allowedCustomFormats" : {
+            "jcr:primaryType"   : "nt:unstructured",
+            "item0": {
+                "customFormatKey" : "12",
+                "customFormatValue" : "13"
+            },
+            "item1": {
+                "customFormatKey" : "14",
+                "customFormatValue" : "15"
+            }
+        }
     }
 }

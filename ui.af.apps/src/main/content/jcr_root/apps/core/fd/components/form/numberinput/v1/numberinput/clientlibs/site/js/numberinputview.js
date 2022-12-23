@@ -82,7 +82,9 @@
                     this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
                 }
             } else {
-                this._model.value = this.widget.value;
+                if (this.widget.value !== '') {
+                    this._model.value = this.widget.value;
+                }
                 this.getWidget().addEventListener('blur', (e) => {
                     this._model.value = e.target.value;
                 })
