@@ -81,7 +81,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     });
 
     it(" html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const [id, fieldView] = Object.entries(formContainer._fields)[1]
         const model = formContainer._model.getElement(id)
 
         cy.log(model.getState().value)
@@ -118,4 +118,25 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should make visible and hide components on certain checkbox input", () => {
+        const [checkBox2, checkBox1FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
+        const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${checkBox2}`).find("input").check(["0","3"]).then(x => {
+            cy.get(`#${checkBox3}`).should('be.visible')
+            cy.get(`#${checkBox4}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain checkbox input", () => {
+        const [checkBox1, checkBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [checkBox2, checkBox3FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${checkBox4}`).find("input").check(["2"]).then(x => {
+            cy.get(`#${checkBox1}`).find("input").should('be.enabled')
+            cy.get(`#${checkBox2}`).find("input").should('not.be.enabled')
+        })
+    })
 })
