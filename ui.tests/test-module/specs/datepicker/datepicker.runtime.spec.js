@@ -83,4 +83,28 @@ describe("Form Runtime with Date Picker", () => {
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
+
+    it("should make visible and hide components on certain date input", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker3, datePicker3FieldView] = Object.entries(formContainer._fields)[2];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = '2022-12-23';
+
+        cy.get(`#${datePicker1}`).find("input").type(input).blur().then(x => {
+            cy.get(`#${datePicker3}`).should('be.visible')
+            cy.get(`#${datePicker4}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain date input", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker2, datePicker3FieldView] = Object.entries(formContainer._fields)[1];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = '2023-01-01'
+
+        cy.get(`#${datePicker1}`).find("input").type(input).blur().then(x => {
+            cy.get(`#${datePicker2}`).find("input").should('be.enabled')
+            cy.get(`#${datePicker4}`).find("input").should('not.be.enabled')
+        })
+    })
 })

@@ -1,52 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-    jcr:primaryType="cq:Page">
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[mobile/groups/responsive]"
-        cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
-        jcr:language="en"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="Adaptive Form V2 (IT)"
-        sling:resourceType="forms-components-examples/components/page">
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:lastModified="{Date}2022-12-24T11:06:13.377+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:version="2.0"
-            fieldType="form"
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="forms-components-examples/components/form/container">
-            <dateinput1
-                fieldType="date-input"
+                fd:version="2.0"
                 jcr:primaryType="nt:unstructured"
-                name="dateinput1"
-                jcr:title="Date Input 1"
-                sling:resourceType="forms-components-examples/components/form/datepicker"/>
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form">
+            <dateinput1
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 1"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    fieldType="date-input"
+                    name="dateinput1">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DATE FIELD|DATE&quot;\,&quot;name&quot;:&quot;dateinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DATE_LITERAL&quot;\,&quot;value&quot;:&quot;2022-12-23&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput3&quot;\,&quot;displayName&quot;:&quot;Date Input 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Date Input 3/&quot;\,&quot;name&quot;:&quot;dateinput3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput4&quot;\,&quot;displayName&quot;:&quot;Date Input 4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Date Input 4/&quot;\,&quot;name&quot;:&quot;dateinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == '2022-12-23'\, dispatchEvent(dateinput3\, 'custom:setProperty'\, {visible : true()})\, {})&quot;\,&quot;if($field == '2022-12-23'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput1&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;name&quot;:&quot;dateinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DATE_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput2&quot;\,&quot;displayName&quot;:&quot;Date Input 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Date Input 2/&quot;\,&quot;name&quot;:&quot;dateinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput4&quot;\,&quot;displayName&quot;:&quot;Date Input 4&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Date Input 4/&quot;\,&quot;name&quot;:&quot;dateinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == '2023-01-01'\, dispatchEvent(dateinput2\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if($field == '2023-01-01'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == '2022-12-23'\, dispatchEvent(dateinput3\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '2022-12-23'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '2023-01-01'\, dispatchEvent(dateinput2\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == '2023-01-01'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+            </dateinput1>
             <dateinput2
-                    fieldType="date-input"
                     jcr:primaryType="nt:unstructured"
-                    name="dateinput2"
                     jcr:title="Date Input 2"
-                    visible="{Boolean}true"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
                     enabled="{Boolean}false"
-                    sling:resourceType="forms-components-examples/components/form/datepicker"/>
-            <dateinput3
                     fieldType="date-input"
+                    name="dateinput2"
+                    visible="{Boolean}true"/>
+            <dateinput3
                     jcr:primaryType="nt:unstructured"
-                    name="dateinput3"
                     jcr:title="Date Input 3"
-                    visible="{Boolean}false"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
                     enabled="{Boolean}true"
-                    sling:resourceType="forms-components-examples/components/form/datepicker"/>
+                    fieldType="date-input"
+                    name="dateinput3"
+                    visible="{Boolean}false"/>
             <dateinput4
-              fieldType="date-input"
-              jcr:primaryType="nt:unstructured"
-              name="dateinput4"
-              jcr:title="Date Input 4"
-              id="tooltip_scenario_test"
-              description="This is long description"
-              tooltip="This is short description"
-              tooltipVisible="true"
-              sling:resourceType="forms-components-examples/components/form/datepicker"/>
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 4"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    description="This is long description"
+                    fieldType="date-input"
+                    id="tooltip_scenario_test"
+                    name="dateinput4"
+                    tooltip="This is short description"
+                    tooltipVisible="true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
