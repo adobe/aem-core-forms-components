@@ -97,7 +97,6 @@ describe('Page - Authoring', function () {
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
             cy.get(wizardBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Repeat Settings').click({force:true});
             cy.get('.cq-dialog-cancel').click({force:true});
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
