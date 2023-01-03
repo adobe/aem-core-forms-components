@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-10-31T21:43:15.515+05:30"
+            cq:lastModified="{Date}2023-01-03T09:50:42.947+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -32,7 +32,15 @@
                     textIsRich="[true,true]"
                     type="string"
                     typeIndex="0"
-                    visible="{Boolean}true"/>
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_ss&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN|STRING&quot;\,&quot;name&quot;:&quot;dropdown_ss&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;c&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_5&quot;\,&quot;displayName&quot;:&quot;Dropdown 5&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown 5/&quot;\,&quot;name&quot;:&quot;dropdown_5&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_4&quot;\,&quot;displayName&quot;:&quot;Dropdown 4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown 4/&quot;\,&quot;name&quot;:&quot;dropdown_4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'c'\, dispatchEvent(dropdown_5\, 'custom:setProperty'\, {visible : true()})\, {})&quot;\,&quot;if($field == 'c'\, dispatchEvent(dropdown_4\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_ss&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;dropdown_ss&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;a&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_4&quot;\,&quot;displayName&quot;:&quot;Dropdown 4&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown 4/&quot;\,&quot;name&quot;:&quot;dropdown_4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown31671863615073&quot;\,&quot;displayName&quot;:&quot;Dropdown3&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown3/&quot;\,&quot;name&quot;:&quot;dropdown31671863615073&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'a'\, dispatchEvent(dropdown_4\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if($field == 'a'\, dispatchEvent(dropdown31671863615073\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == 'c'\, dispatchEvent(dropdown_5\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 'c'\, dispatchEvent(dropdown_4\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 'a'\, dispatchEvent(dropdown_4\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == 'a'\, dispatchEvent(dropdown31671863615073\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+            </dropdown>
             <dropdown_1881815253
                     jcr:lastModified="{Date}2022-10-31T21:42:26.780+05:30"
                     jcr:lastModifiedBy="admin"
@@ -53,26 +61,59 @@
                     typeIndex="1"
                     visible="{Boolean}true"/>
             <dropdown3
-              jcr:created="{Date}2022-09-23T14:53:38.079+05:30"
-              jcr:createdBy="admin"
-              jcr:lastModified="{Date}2022-09-23T14:59:27.334+05:30"
-              jcr:lastModifiedBy="admin"
-              jcr:primaryType="nt:unstructured"
-              jcr:title="Dropdown3"
-              sling:resourceType="forms-components-examples/components/form/dropdown"
-              default="[b]"
-              enabled="{Boolean}true"
-              enum="[a,b,c]"
-              enumNames="[apple,banana,cauliflower]"
-              fieldType="drop-down"
-              id="tooltip_scenario_test"
-              description="This is long description"
-              tooltip="This is short description"
-              tooltipVisible="true"
-              textIsRich="[true,true]"
-              type="string"
-              typeIndex="0"
-              visible="{Boolean}true"/>
+                    jcr:lastModified="{Date}2022-09-23T14:59:27.334+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown3"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    default="[b]"
+                    description="This is long description"
+                    enabled="{Boolean}true"
+                    enum="[a,b,c]"
+                    enumNames="[apple,banana,cauliflower]"
+                    fieldType="drop-down"
+                    id="tooltip_scenario_test"
+                    name="dropdown31671863615073"
+                    textIsRich="[true,true]"
+                    tooltip="This is short description"
+                    tooltipVisible="true"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}true"/>
+            <dropdown_218953202
+                    jcr:lastModified="{Date}2023-01-03T09:49:27.217+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown 4"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    default="[1]"
+                    enabled="{Boolean}false"
+                    enum="[0,1,2]"
+                    enumNames="[apple,orange,banana]"
+                    fieldType="drop-down"
+                    name="dropdown_4"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}true"/>
+            <dropdown_414178319
+                    jcr:lastModified="{Date}2023-01-03T09:49:12.845+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown 5"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    default="[2]"
+                    enabled="{Boolean}true"
+                    enum="[0,1,2,3]"
+                    enumNames="[Mother,Father,Brother,Sister]"
+                    fieldType="drop-down"
+                    name="dropdown_5"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}false"/>
             <button
                     jcr:lastModified="{Date}2022-10-31T21:39:31.524+05:30"
                     jcr:lastModifiedBy="admin"

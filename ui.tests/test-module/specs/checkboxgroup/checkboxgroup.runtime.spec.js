@@ -118,7 +118,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    it("should make visible and hide components on certain checkbox input", () => {
+    it("should show and hide components on certain checkbox input", () => {
         const [checkBox2, checkBox1FieldView] = Object.entries(formContainer._fields)[1];
         const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
         const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];

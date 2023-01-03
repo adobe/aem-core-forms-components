@@ -84,7 +84,7 @@ describe("Form Runtime with Date Picker", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    it("should make visible and hide components on certain date input", () => {
+    it("should show and hide components on certain date input", () => {
         const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
         const [datePicker3, datePicker3FieldView] = Object.entries(formContainer._fields)[2];
         const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];

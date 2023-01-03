@@ -148,4 +148,26 @@ describe("Form with Dropdown", () => {
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
+
+    it("should show and hide components on certain dropdown select", () => {
+        const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
+        const [dropdown4, dropdown3FieldView] = Object.entries(formContainer._fields)[5];
+        const [dropdown5, dropdown4FieldView] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${dropdown1} select`).select("cauliflower").then(x => {
+            cy.get(`#${dropdown5} select`).should('be.visible')
+            cy.get(`#${dropdown4} select`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain dropdown select", () => {
+        const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
+        const [dropdown3, dropdown3FieldView] = Object.entries(formContainer._fields)[4];
+        const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];
+
+        cy.get(`#${dropdown1} select`).select("apple").then(x => {
+            cy.get(`#${dropdown4} select`).should('be.enabled')
+            cy.get(`#${dropdown3} select`).should('not.be.enabled')
+        })
+    })
 })

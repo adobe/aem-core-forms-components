@@ -88,7 +88,7 @@ describe("Form Runtime with Text Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    it("should make button visible and hide textfield on a certain string input", () => {
+    it("should show and hide other fields on a certain input", () => {
         console.log(Object.entries(formContainer._fields))
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [textbox2, textbox2FieldView] = Object.entries(formContainer._fields)[1];

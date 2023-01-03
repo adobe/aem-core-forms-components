@@ -121,7 +121,7 @@ describe("Form with Number Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    it("should make visible and hide other fields on a certain number input", () => {
+    it("should show and hide other fields on a certain number input", () => {
         const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
         const [numberInput2, numberInput2FieldView] = Object.entries(formContainer._fields)[1];
         const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
