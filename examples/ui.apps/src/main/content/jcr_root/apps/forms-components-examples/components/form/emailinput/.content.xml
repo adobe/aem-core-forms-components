@@ -3,5 +3,5 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Email Input"
   jcr:description="Add a field to capture Email IDs."
-  sling:resourceSuperType="core/fd/components/form/textinput/v1/textinput"
+  sling:resourceSuperType="core/fd/components/form/emailinput/v1/emailinput"
   componentGroup="Core Components Examples - Adaptive Form"/>
