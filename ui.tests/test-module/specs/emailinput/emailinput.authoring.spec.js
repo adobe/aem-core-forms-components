@@ -41,6 +41,7 @@ describe('Page - Authoring', function () {
   }
 
   const testEmailInputBehaviour = function(emailInputEditPathSelector, emailInputDrop, isSites) {
+    const bemEditDialog = '.cmp-adaptiveform-emailinput__editdialog'
     if (isSites) {
       dropEmailInputInSites();
     } else {
@@ -48,6 +49,7 @@ describe('Page - Authoring', function () {
     }
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + emailInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    cy.get(bemEditDialog).contains('Validation').click({force:true});
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(emailInputDrop);
   }
