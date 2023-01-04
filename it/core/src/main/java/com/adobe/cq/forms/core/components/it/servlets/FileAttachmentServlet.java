@@ -13,10 +13,10 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.it.core.servlets;
+package com.adobe.cq.forms.core.components.it.servlets;
 
 import com.day.cq.commons.jcr.JcrConstants;
-import com.adobe.cq.forms.core.components.it.core.service.DataManager;
+import com.adobe.cq.forms.core.components.it.service.DataManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;

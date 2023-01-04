@@ -14,6 +14,6 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 @Version("1.0")
-package com.adobe.cq.forms.core.components.it.core.service;
+package com.adobe.cq.forms.core.components.it.service;
 
 import org.osgi.annotation.versioning.Version;

@@ -13,14 +13,14 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.it.core.service;
+package com.adobe.cq.forms.core.components.it.service;
 
 
 import com.adobe.aemds.guide.model.FormSubmitInfo;
 import com.adobe.aemds.guide.service.FormSubmitActionService;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.forms.common.service.FileAttachmentWrapper;
-import com.adobe.cq.forms.core.components.it.core.servlets.FileAttachmentServlet;
+import com.adobe.cq.forms.core.components.it.servlets.FileAttachmentServlet;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
