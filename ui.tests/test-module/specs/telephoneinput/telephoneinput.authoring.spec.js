@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropTelephoneInputInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/telephoneinput/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Telephone Input", afConstants.components.forms.resourceType.formtelephoneinput);
@@ -41,6 +41,7 @@ describe('Page - Authoring', function () {
   }
 
   const testTelephoneInputBehaviour = function(telephoneInputEditPathSelector, telephoneInputDrop, isSites) {
+    const bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog'
     if (isSites) {
       dropTelephoneInputInSites();
     } else {
@@ -48,6 +49,7 @@ describe('Page - Authoring', function () {
     }
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    cy.get(bemEditDialog).contains('Validation').click({force:true});
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(telephoneInputDrop);
   }
@@ -73,7 +75,7 @@ describe('Page - Authoring', function () {
   })
 
   context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/telephoneinput",
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
         telephoneInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/telephoneinput",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
         telephoneInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
