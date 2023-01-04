@@ -78,10 +78,6 @@ describe.only('Page - Authoring', function () {
         .should("exist");
     cy.get("[name='./custom']")
         .should("exist");
-    cy.get("[name='./minItems']")
-        .should("exist");
-    cy.get("[name='./maxItems']")
-        .should("exist");
 
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(tabsContainerDrop);

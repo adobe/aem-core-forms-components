@@ -104,7 +104,8 @@
 
         function isRepeatable() {
             // TODO: to update after repeatability approach gets finalised
-            return minInputField.value.length > 0 && maxInputField.value.length > 0;
+            //return minInputField.value.length > 0 && maxInputField.value.length > 0;
+            return false;
         }
 
         // checking for repeatability and bindRef of panel on dialog initialisation
@@ -116,13 +117,13 @@
             makeWrapDataReadOnly(this.value.length > 0);
         });
 
-        minInputField.addEventListener("change", function () {
+        /*minInputField.addEventListener("change", function () {
             makeWrapDataReadOnly(isRepeatable());
         });
 
         maxInputField.addEventListener("change", function () {
             makeWrapDataReadOnly(isRepeatable());
-        });
+        });*/
 
         function makeWrapDataReadOnly(status) {
             let checkbox = containerEditor.querySelector(".cmp-adaptiveform-panel__wrapData");
