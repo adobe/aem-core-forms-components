@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropTelephoneInputInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/telephoneinput/jcr:content/root/responsivegrid/demo/component/container/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Telephone Input", afConstants.components.forms.resourceType.formtelephoneinput);
@@ -75,7 +75,7 @@ describe('Page - Authoring', function () {
   })
 
   context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/telephoneinput",
         telephoneInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/telephoneinput",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
         telephoneInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
