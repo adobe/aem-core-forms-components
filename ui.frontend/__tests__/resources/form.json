@@ -17,6 +17,66 @@
         "value": "Text Input"
       },
       ":type": "forms-components-examples/components/form/textinput"
+    },
+    {
+      "id": "submit-d7406b8582",
+      "fieldType": "button",
+      "name": "submit1673252392877",
+      "visible": true,
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "buttonType": "submit",
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": true
+        },
+        "fd:buttonType": "submit"
+      },
+      "label": {
+        "value": "Submit",
+        "visible": true,
+        "richText": false
+      },
+      "events": {
+        "click": [
+          "submitForm('custom:submitSuccess', 'custom:submitError')"
+        ],
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      ":type": "forms-components-examples/components/form/actions/submit"
+    },
+    {
+      "id": "reset-c7cccb1a5e",
+      "fieldType": "button",
+      "name": "reset1673252803103",
+      "visible": true,
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "buttonType": "reset",
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": true
+        },
+        "fd:buttonType": "reset"
+      },
+      "label": {
+        "value": "Reset",
+        "visible": true,
+        "richText": false
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ],
+        "click": [
+          "dispatchEvent('reset')"
+        ]
+      },
+      ":type": "forms-components-examples/components/form/actions/reset"
     }
   ],
   "metadata": {
