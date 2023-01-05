@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 [data-cmp-visible="false"] {
-    display: none;
+    display: none !important;
 }
 .cmp-adaptiveform-container--loading{
   

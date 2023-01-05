@@ -46,7 +46,7 @@
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
     <iframe class="cmp-aemform__iframecontent"
             src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
-            stye="width:100%;"
+            width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
          data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v2.iframeResizer']}"/>
