@@ -119,7 +119,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     })
 
     it("should show and hide components on certain checkbox input", () => {
-        const [checkBox2, checkBox1FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
         const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
 
@@ -131,7 +131,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
     it("should enable and disable components on certain checkbox input", () => {
         const [checkBox1, checkBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const [checkBox2, checkBox3FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
 
         cy.get(`#${checkBox4}`).find("input").check(["2"]).then(x => {

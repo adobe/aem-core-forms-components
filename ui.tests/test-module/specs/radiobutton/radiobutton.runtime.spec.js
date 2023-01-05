@@ -120,7 +120,7 @@ describe("Form with Radio Button Input", () => {
 
     it("should enable and disable components on certain select", () => {
         const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
-        const [radioButton2, radioButton3FieldView] = Object.entries(formContainer._fields)[1];
+        const [radioButton2, radioButton2FieldView] = Object.entries(formContainer._fields)[1];
         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
 
         cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {

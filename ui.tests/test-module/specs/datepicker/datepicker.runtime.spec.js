@@ -98,7 +98,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("should enable and disable components on certain date input", () => {
         const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
-        const [datePicker2, datePicker3FieldView] = Object.entries(formContainer._fields)[1];
+        const [datePicker2, datePicker2FieldView] = Object.entries(formContainer._fields)[1];
         const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
         const input = '2023-01-01'
 

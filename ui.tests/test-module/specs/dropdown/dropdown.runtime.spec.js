@@ -151,8 +151,8 @@ describe("Form with Dropdown", () => {
 
     it("should show and hide components on certain dropdown select", () => {
         const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
-        const [dropdown4, dropdown3FieldView] = Object.entries(formContainer._fields)[5];
-        const [dropdown5, dropdown4FieldView] = Object.entries(formContainer._fields)[6];
+        const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];
+        const [dropdown5, dropdown5FieldView] = Object.entries(formContainer._fields)[6];
 
         cy.get(`#${dropdown1} select`).select("cauliflower").then(x => {
             cy.get(`#${dropdown5} select`).should('be.visible')

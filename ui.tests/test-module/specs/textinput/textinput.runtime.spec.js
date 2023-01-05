@@ -112,4 +112,21 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox4}`).find("input").should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages", () => {
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+        const incorrectInput = "invalidate";
+        const correctInput = "validate";
+
+
+        cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+        })
+    })
 })
