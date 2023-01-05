@@ -21,7 +21,6 @@
     <title data-sly-test="${form.isAdaptiveForm || form.isMCDocument}"><sly data-sly-use.af="com.adobe.aemds.guide.common.AdaptiveForm" />${af.formTitle @ context='html'}</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="robots" content="noindex, nofollow"/>
-    <sly data-sly-include="formheaderlibs.html"></sly>
     <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v2.iframeContentResizer']}"/>
     <sly data-sly-list="${form.htmlPageItems}"><script data-sly-test="${item.location.name == 'header'}"
@@ -30,6 +29,5 @@
 </head>
 <body>
 <sly data-sly-include="formcontainer.html"></sly>
-<sly data-sly-include="formfooterlibs.html"></sly>
 </body>
 </html>
