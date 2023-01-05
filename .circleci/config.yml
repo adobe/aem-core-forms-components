@@ -156,13 +156,14 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - cypress-chrome-cloudready-with-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
+      # disable till we release release/650 docker to public registry
+      #- cypress-chrome-cloudready-with-addon:
+      #    filters:
+      #      tags:
+      #        only: /.*/
+      #    requires:
+      #      - build-java-11
+      #      - build-java-8
       - release:
           requires:
             - build-java-11

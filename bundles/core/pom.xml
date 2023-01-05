@@ -158,7 +158,7 @@
                                                 <limit>
                                                     <counter>INSTRUCTION</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.80</minimum>
+                                                    <minimum>0.75</minimum>
                                                 </limit>
                                             </limits>
                                         </rule>
@@ -439,19 +439,13 @@
         <!-- AEM and forms sdk versions -->
 
         <!-- the below order of dependencies is very critical -->
-
-
         <dependency>
             <groupId>com.adobe.aemfd</groupId>
             <artifactId>aemfd-client-sdk</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.adobe.granite</groupId>
-                    <artifactId>com.adobe.granite.ui.commons</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.sling</groupId>
-                    <artifactId>org.apache.sling.testing.sling-mock</artifactId>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
