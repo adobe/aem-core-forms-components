@@ -24,6 +24,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,6 +32,8 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
 
@@ -134,6 +137,16 @@ public class ComponentUtils {
         } else {
             return ArrayUtils.clone(objArr);
         }
+    }
+
+    public static ContentPolicy getPolicy(String contentPath, ResourceResolver resourceResolver) {
+        ContentPolicy policy = null;
+        Resource contentResource = resourceResolver.getResource(contentPath);
+        ContentPolicyManager policyManager = resourceResolver.adaptTo(ContentPolicyManager.class);
+        if (contentResource != null && policyManager != null) {
+            policy = policyManager.getPolicy(contentResource);
+        }
+        return policy;
     }
 
 }
