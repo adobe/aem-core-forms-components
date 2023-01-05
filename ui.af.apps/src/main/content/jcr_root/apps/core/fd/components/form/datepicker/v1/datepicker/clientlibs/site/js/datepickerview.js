@@ -65,7 +65,8 @@
                 this._model.value = this.widget.value;
             }
             this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
+                // for date, either the value should be a date or undefined (since empty string is not a valid date value)
+                this._model.value = e.target.value || undefined;
                 this.setInactive();
             });
             this.widget.addEventListener('focus', (e) => {
