@@ -145,4 +145,19 @@ describe("Form with Number Input", () => {
             cy.get(`#${numberInput4}`).find("input").should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages", () => {
+        const [numberInput4, textBox1FieldView] = Object.entries(formContainer._fields)[3];
+        const incorrectInput = "42";
+        const correctInput = "64";
+
+
+        cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"")
+        })
+    })
 })

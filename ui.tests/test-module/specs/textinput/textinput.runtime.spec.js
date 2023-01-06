@@ -101,7 +101,7 @@ describe("Form Runtime with Text Input", () => {
         })
     })
 
-    it("should make enable and disable other textfields on a certain string input", () => {
+    it("should enable and disable other textfields on a certain string input", () => {
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
@@ -115,8 +115,6 @@ describe("Form Runtime with Text Input", () => {
 
     it("should show validation error messages", () => {
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
-        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
         const incorrectInput = "invalidate";
         const correctInput = "validate";
 
