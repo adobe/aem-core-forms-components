@@ -147,7 +147,7 @@ describe("Form with Number Input", () => {
     })
 
     it("should show validation error messages", () => {
-        const [numberInput4, textBox1FieldView] = Object.entries(formContainer._fields)[3];
+        const [numberInput4, numberInput1FieldView] = Object.entries(formContainer._fields)[3];
         const incorrectInput = "42";
         const correctInput = "64";
 

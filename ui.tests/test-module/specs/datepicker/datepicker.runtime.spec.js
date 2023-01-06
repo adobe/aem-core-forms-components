@@ -107,4 +107,19 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker4}`).find("input").should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages", () => {
+        const [datePicker4, datePicker1FieldView] = Object.entries(formContainer._fields)[3];
+        const incorrectInput = "2023-01-02";
+        const correctInput = "2023-01-01";
+
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
+        })
+    })
 })

@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-12-24T11:06:13.377+05:30"
+            cq:lastModified="{Date}2023-01-06T15:59:06.152+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -54,7 +54,14 @@
                     id="tooltip_scenario_test"
                     name="dateinput4"
                     tooltip="This is short description"
-                    tooltipVisible="true"/>
+                    tooltipVisible="true"
+                    validationExpression="$field == '2023-01-01'">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;dateinput4&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dateinput4&quot;\,&quot;displayName&quot;:&quot;Date Input 4&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/Date Input 4/&quot;\,&quot;name&quot;:&quot;dateinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DATE_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == '2023-01-01'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </dateinput4>
         </guideContainer>
     </jcr:content>
 </jcr:root>
