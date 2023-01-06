@@ -52,6 +52,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Radio Button 2"
                     sling:resourceType="forms-components-examples/components/form/radiobutton"
+                    id="tooltip_scenario_test"
                     default="0"
                     description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
                     enabled="{Boolean}true"
