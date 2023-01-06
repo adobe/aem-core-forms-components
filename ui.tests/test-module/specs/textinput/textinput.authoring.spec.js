@@ -71,7 +71,7 @@ describe('Page - Authoring', function () {
     cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']")
       .should("exist")
       .should("be.visible");
-    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").clear().type("textinput");
+    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").focus().clear().type("textinput");
     cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").type("{enter}");
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
     cy.invokeEditableAction("[data-action='COPY']");
