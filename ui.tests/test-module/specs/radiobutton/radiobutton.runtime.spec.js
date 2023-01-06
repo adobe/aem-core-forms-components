@@ -124,8 +124,8 @@ describe("Form with Radio Button Input", () => {
         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
 
         cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
-            cy.get(`#${radioButton4}`).should('be.enabled')
-            cy.get(`#${radioButton2}`).should('not.be.enabled')
+            cy.get(`#${radioButton4}`).find("input").should('be.enabled')
+            cy.get(`#${radioButton2}`).find("input").should('not.be.enabled')
         })
     })
 })
