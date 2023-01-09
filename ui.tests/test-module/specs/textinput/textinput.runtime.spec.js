@@ -132,4 +132,19 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
         })
     })
+
+    it("should set and clear value", () => {
+        // Rule on textBox5: When input of textBox5 is "aemforms", set value of textBox1 to "new value" and clear value of textBox4
+
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+        const [textbox5, textBox5FieldView] = Object.entries(formContainer._fields)[4];
+
+        const input = "aemforms";
+        cy.get(`#${textbox4}`).find("input").clear().type("this must be cleared")
+        cy.get(`#${textbox5}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${textbox4}`).find("input").should('have.value',"")
+            cy.get(`#${textbox1}`).find("input").should('have.value', "new value")
+        })
+    })
 })
