@@ -45,6 +45,8 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Text](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
 -   [Image](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
 -   [Title](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v1/title)
+-   [Submit Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/submit/v1/submit)
+-   [Reset Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/reset/v1/reset)
 -   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 -   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 
@@ -54,7 +56,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 | --------------------- | ------------------- | ---------------------------- | ----- | ------ | 
-| 1.0.42                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
+| 1.0.56                | 2.20.8              | Continual                    | 8, 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
