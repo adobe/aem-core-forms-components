@@ -34,7 +34,7 @@
       class="cmp-adaptiveform-button__widget"
       disabled="${!button.enabled}"
       title="${button.tooltipVisible ? '' :   button.tooltipText}"
-      aria-label="${button.label.value}">
+      aria-label="${button.htmlScreenReaderText}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
     <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text">${button.label.value}</span>
   </button>

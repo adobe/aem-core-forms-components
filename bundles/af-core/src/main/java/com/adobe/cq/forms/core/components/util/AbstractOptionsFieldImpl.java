@@ -46,6 +46,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Nullable
     private String[] enumNames;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "custom")
+    @Nullable
+    private String[] customScreenReaderTextEnums;
+
     @Override
     public boolean isEnforceEnum() {
         return enforceEnum;
@@ -87,5 +91,17 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             logger.error("Error while type casting default value to value type. Exception: ", exception);
         }
         return typedDefaultValue;
+    }
+
+    @Override
+    public String[] getScreenReaderTextEnums() {
+        String[] screenReaderTextEnums = null;
+        if ("caption".equals(assistPriorityJcr)) {
+            screenReaderTextEnums = getEnumNames();
+        }
+        if ("custom".equals(assistPriorityJcr)) {
+            screenReaderTextEnums = customScreenReaderTextEnums;
+        }
+        return screenReaderTextEnums;
     }
 }

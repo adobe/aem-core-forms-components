@@ -33,7 +33,7 @@
     <div data-sly-call="${label.label @componentId=component.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
-            aria-label="${dropdown.label.visible && dropdown.label.value}"
+            aria-label="${dropdown.htmlScreenReaderText}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
             disabled="${!dropdown.enabled || dropdown.readOnly}"

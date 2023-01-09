@@ -177,16 +177,20 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     public String getHtmlScreenReaderText() {
         // this can be used in sightly to compute initial html
-        String screenReaderText = getName();
+        String screenReaderText = "";
         if (AssistPriority.LABEL.equals(assistPriority)) {
-            Label label = getLabel();
-            if (label != null) {
-                screenReaderText = label.getValue();
+            if (getLabel() != null) {
+                screenReaderText = getLabel().getValue();
             }
         } else if (AssistPriority.NAME.equals(assistPriority)) {
             screenReaderText = getName();
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
-            screenReaderText = getDescription();
+            String description = getDescription();
+            if (StringUtils.isNotEmpty(description)) {
+                screenReaderText = description
+                    .replace("<p>", "")
+                    .replace("</p>", "");
+            }
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
             screenReaderText = customAssistPriorityMsg;
         }

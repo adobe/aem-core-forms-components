@@ -36,10 +36,11 @@
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                <label class="cmp-adaptiveform-checkbox__label"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
                        for="${component.id}${'_'}${itemList.index}__widget">
                     <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
+                           aria-label="${checkboxgroup.screenReaderTextEnums[itemList.index]}"
                            aria-describedby="${checkboxgroup.labelForId}_desc"
                            name="${checkboxgroup.name}"
                            value="${checkboxgroup.enums[itemList.index].toString}"

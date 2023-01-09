@@ -32,6 +32,7 @@
      <div data-sly-call="${label.label @componentId=component.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <input type="date"
+            aria-label="${datePicker.htmlScreenReaderText}"
             name="${datePicker.name}"
             class="cmp-adaptiveform-datepicker__widget"
             disabled="${!datePicker.enabled}"

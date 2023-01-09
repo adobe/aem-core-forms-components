@@ -38,6 +38,7 @@
            style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
            title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
            name="${file.name}"
+           aria-label="${file.htmlScreenReaderText}"
            disabled="${!file.enabled}"
            accept="${file.accept}"
            id="${component.id}_widget"

@@ -58,4 +58,6 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     String[] getEnumNames();
+
+    String[] getScreenReaderTextEnums();
 }

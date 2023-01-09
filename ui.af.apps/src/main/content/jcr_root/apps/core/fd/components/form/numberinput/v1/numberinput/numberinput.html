@@ -34,7 +34,7 @@
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
     <input
             class="cmp-adaptiveform-numberinput__widget"
-            aria-label="${numberinput.label.visible && numberinput.label.value}"
+            aria-label="${numberinput.htmlScreenReaderText}"
             title="${numberinput.tooltipVisible ? '' : numberinput.tooltipText}"
             type="number"
             name="${numberinput.name}"
