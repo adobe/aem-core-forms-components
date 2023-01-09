@@ -32,14 +32,15 @@
             super(params);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                if (action.payload) {
-                    if (action.payload.redirectUrl) {
-                        window.location.href = action.payload.redirectUrl;
-                    } else if (action.payload.thankYouMessage) {
+                let body = action.payload?.body;
+                if (body) {
+                    if (body.redirectUrl) {
+                        window.location.href = body.redirectUrl;
+                    } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector(FormContainerV2.selectors.self);
                         let thankYouMessage = document.createElement("div");
                         thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.textContent = action.payload.thankYouMessage;
+                        thankYouMessage.textContent = body.thankYouMessage;
                         formContainerElement.replaceWith(thankYouMessage);
                     }
                 }
