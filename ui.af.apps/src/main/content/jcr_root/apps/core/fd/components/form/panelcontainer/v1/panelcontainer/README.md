@@ -53,10 +53,8 @@ The following properties are written to JCR for this Panel Container component a
 4. `./bindref` - defines the data binding, and how data will be sent
 5. `./visible` - defines initial state of panel visibility
 6. `./enabled` - defines initial state of panel if its enabled or not
-7. `./minItems` - defines minimum number of panel to be repeated
-8. `./maxItems` - defines maximum number of panel to be repeated
-9. `./tooltip` - defines tooltip on panel title
-10. `./description` - defines a help message that can be rendered in the field as a hint for the user
+7. `./tooltip` - defines tooltip on panel title
+8. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
 #### Style Properties
 1. `./backgroundImageReference` - defines the Panel Container background image.

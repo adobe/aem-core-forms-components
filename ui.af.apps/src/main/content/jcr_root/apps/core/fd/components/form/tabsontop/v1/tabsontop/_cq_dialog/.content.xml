@@ -37,10 +37,6 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Items"
                             sling:resourceType="granite/ui/components/coral/foundation/container"/>
-                    <repeat
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/include"
-                            path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/repeat"/>
                     <help
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"

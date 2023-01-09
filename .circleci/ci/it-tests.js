@@ -77,6 +77,16 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        // install req collaterals for tests
+        ci.dir('it/core', () => {
+            ci.sh(`mvn clean install -PautoInstallPackage`);
+        });
+
+        ci.dir('it/apps', () => {
+            ci.sh(`mvn clean install -PautoInstallPackage`);
+        });
+
+        // start running the tests
         ci.dir('ui.tests', () => {
             ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true`);
     });
