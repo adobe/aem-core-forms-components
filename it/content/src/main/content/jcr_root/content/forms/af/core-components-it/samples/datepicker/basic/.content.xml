@@ -19,7 +19,9 @@
                 fieldType="date-input"
                 jcr:primaryType="nt:unstructured"
                 name="dateinput1"
+                id="dateinput1"
                 jcr:title="Date Input 1"
+                assistPriority="label"
                 sling:resourceType="forms-components-examples/components/form/datepicker"/>
             <dateinput2
                     fieldType="date-input"

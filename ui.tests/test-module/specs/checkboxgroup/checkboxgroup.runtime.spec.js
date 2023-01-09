@@ -118,4 +118,11 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it ("should have screen-reader preference set", () => {
+        const fieldId = 'checkbox-group';
+        cy.get(`#${fieldId} .cmp-adaptiveform-checkbox__label`).each((item, index, list) => {
+            expect(item[0].querySelector('input').getAttribute('aria-label')).to.equal(item[0].querySelector('span').innerHTML)
+        })
+    })
+
 })

@@ -16,9 +16,11 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container">
             <textinput
+                id="textinput1"
                 fieldType="text-input"
                 jcr:primaryType="nt:unstructured"
                 name="textinput1"
+                assistPriority="label"
                 jcr:title="Text Input 1"
                 sling:resourceType="forms-components-examples/components/form/textinput"/>
             <textinput2

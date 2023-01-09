@@ -20,6 +20,8 @@
                     jcr:primaryType="nt:unstructured"
                     buttonText="Attach Files"
                     name="fileinput1"
+                    id="fileinput1"
+                    assistPriority="label"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     type="file[]"
                     multiSelection="true"

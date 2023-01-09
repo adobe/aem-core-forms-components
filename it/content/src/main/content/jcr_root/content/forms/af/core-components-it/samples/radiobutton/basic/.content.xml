@@ -31,6 +31,7 @@
                     required="true"
                     mandatoryMessage="This is a required radiobutton"
                     name="radiobutton"
+                    id="radiobutton"
                     orientation="vertical"
                     type="number"
                     visible="{Boolean}true"/>

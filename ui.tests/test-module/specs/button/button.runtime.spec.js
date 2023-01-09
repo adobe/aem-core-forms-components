@@ -35,4 +35,11 @@ describe("Form Runtime with Button Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it ("should have screen-reader preference set", () => {
+        const fieldId = 'button-1234';
+        cy.get(`#${fieldId} span`).invoke('text').then((title) => {
+            cy.get(`#${fieldId} button`).invoke('attr', 'aria-label')
+            .should('eq', title);
+        })
+    })
 })

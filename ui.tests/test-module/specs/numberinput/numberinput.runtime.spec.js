@@ -121,4 +121,13 @@ describe("Form with Number Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it ("should have screen-reader preference set", () => {
+
+        const fieldId = 'numberinput1';
+        cy.get(`#${fieldId}-label`).invoke('text').then((title) => {
+            cy.get(`#${fieldId} input`).invoke('attr', 'aria-label')
+            .should('eq', title);
+        })
+    })
+
 })

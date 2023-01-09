@@ -148,4 +148,13 @@ describe("Form with Dropdown", () => {
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
+
+    it ("should have screen-reader preference set", () => {
+
+        const fieldId = 'dropdown_ss';
+        cy.get(`#${fieldId}-label`).invoke('text').then((title) => {
+            cy.get(`#${fieldId} select`).invoke('attr', 'aria-label')
+            .should('eq', title);
+        })
+    })
 })

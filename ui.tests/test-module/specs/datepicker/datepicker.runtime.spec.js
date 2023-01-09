@@ -83,4 +83,13 @@ describe("Form Runtime with Date Picker", () => {
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
+
+    it ("should have screen-reader preference set", () => {
+
+        const fieldId = 'dateinput1';
+        cy.get(`#${fieldId}-label`).invoke('text').then((title) => {
+            cy.get(`#${fieldId} input`).invoke('attr', 'aria-label')
+            .should('eq', title);
+        })
+    })
 })

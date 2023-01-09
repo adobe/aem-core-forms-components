@@ -24,6 +24,7 @@
                     jcr:title="button-1"
                     enabled="{Boolean}true"
                     visible="{Boolean}true"
+                    assistPriority="label"
                     sling:resourceType="forms-components-examples/components/form/button"/>
             <button-2
                     id="button-1235"

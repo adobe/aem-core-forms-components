@@ -106,4 +106,11 @@ describe("Form with Radio Button Input", () => {
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
+
+    it ("should have screen-reader preference set", () => {
+        const fieldId = 'radiobutton';
+        cy.get(`#${fieldId} .cmp-adaptiveform-radiobutton__option__label`).each((item, index, list) => {
+            expect(item[0].getAttribute('aria-label')).to.equal(item[0].querySelector('span').innerHTML)
+        })
+    })
 })

@@ -19,6 +19,8 @@
                     fieldType="number-input"
                     jcr:primaryType="nt:unstructured"
                     name="numberinput1"
+                    id="numberinput1"
+                    assistPriority="label"
                     jcr:title="Number Input 1"
                     sling:resourceType="forms-components-examples/components/form/numberinput"/>
             <numberinput2
