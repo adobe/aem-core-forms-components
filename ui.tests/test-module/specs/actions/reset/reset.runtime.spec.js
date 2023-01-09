@@ -37,17 +37,18 @@ describe("Form with Reset Button", () => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
         });
-    })
+    });
 
-    // TODO: enable this when reset implementation in rule editor is complete
-    // it("Clicking the button should reset the form", () => {
-    //     const [id1, fieldView1] = Object.entries(formContainer._fields)[0] // Textbox
-    //     const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Reset button
-    //     const input = "Sample Text";
-    //     cy.get(`#${id1}`).find('input').type(input)
-    //     cy.get(`#${id2}`).click().then(x => {
-    //         cy.get(`#${id1}`).find('input').should('have.value', '')
-    //     })
-    // });
 
-})
+    it("Clicking the button should reset the form", () => {
+        const [id1, fieldView1] = Object.entries(formContainer._fields)[0] // Textbox
+        const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Reset button
+        const input = "Sample Text";
+        cy.get(`#${id1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${id2}`).find("button").click().then(x => {
+                cy.get(`#${id1}`).find('input').should('have.value', '')
+            })
+        })
+    });
+
+});
