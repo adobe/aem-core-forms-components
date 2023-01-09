@@ -285,6 +285,12 @@ public class RadioButtonImplTest {
         Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON));
     }
 
+    @Test
+    void getScreenReaderTextEnums() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
+        assertArrayEquals(new String[] { "custom text"}, radioButton.getScreenReaderTextEnums());
+    }
+
     private RadioButton getRadioButtonUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
