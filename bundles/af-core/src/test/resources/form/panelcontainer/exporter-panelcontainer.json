@@ -48,7 +48,7 @@
       "dorExcludeDescription" : false,
       "breakBeforeText": "Following Previous",
       "breakAfterText": "Continue Filling Parent",
-      "overflow": "None",
+      "overflowText": "None",
       "dorNumCols": "3",
       "dorLayoutType": "columnar"
     }

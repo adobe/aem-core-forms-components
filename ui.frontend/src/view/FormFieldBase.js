@@ -102,8 +102,8 @@ export default class FormFieldBase extends FormField {
             this.updateValue(state.value);
         }
         this.updateVisible(state.visible)
-        this.updateEnabled(state.enabled, state)
         this.updateReadOnly(state.readOnly)
+        this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
     }
 
@@ -163,7 +163,7 @@ export default class FormFieldBase extends FormField {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
-                this.widget.setAttribute("disabled", true);
+                this.widget.setAttribute("disabled", "disabled");
                 this.widget.setAttribute(Constants.ARIA_DISABLED, true);
             } else {
                 this.widget.removeAttribute("disabled");
@@ -177,7 +177,7 @@ export default class FormFieldBase extends FormField {
      * @param readOnly
      * @private
      */
-    updateReadOnly(readOnly) {
+    updateReadOnly(readOnly, state) {
         if (this.widget) {
             this.toggle(readOnly, "readonly");
             if (readOnly === true) {
@@ -220,8 +220,10 @@ export default class FormFieldBase extends FormField {
      * @param value
      */
     updateValue(value) {
+        // html sets undefined value as undefined string in input value, hence this check is added
+        let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
-            this.widget.value = value;
+            this.widget.value = widgetValue;
         }
     }
 

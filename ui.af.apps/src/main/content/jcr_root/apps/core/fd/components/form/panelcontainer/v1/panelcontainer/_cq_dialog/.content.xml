@@ -110,27 +110,6 @@
                                     path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/enabled-typehint"/>
                         </items>
                     </basic>
-                    <repeat
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Repeat Settings"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                            <minItems
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Minimum number of times the panel appears on the form"
-                                    min="0"
-                                    name="./minItems"/>
-                            <maxItems
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Maximum number of times the panel can appear on the form"
-                                    min="-1"
-                                    name="./maxItems"/>
-                        </items>
-                    </repeat>
                     <help
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
