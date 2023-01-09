@@ -119,6 +119,8 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     })
 
     it("should show and hide components on certain checkbox input", () => {
+        // Rule on checkbox2: When checkbox2 has Item 1 AND Item 3 selected => Show checkbox3 and Hide checkBox4
+
         const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
         const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
@@ -130,6 +132,8 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     })
 
     it("should enable and disable components on certain checkbox input", () => {
+        // Rule on checkbox4: When checkbox4 has Item 3 selected => Enable checkbox1 and Disable checkBox2
+
         const [checkBox1, checkBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];

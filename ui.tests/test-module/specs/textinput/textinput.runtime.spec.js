@@ -89,7 +89,8 @@ describe("Form Runtime with Text Input", () => {
     })
 
     it("should show and hide other fields on a certain input", () => {
-        console.log(Object.entries(formContainer._fields))
+        // Rule on textBox1: When textBox1 has input "adobe" => Show textBox3 and Hide textBox2
+
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [textbox2, textbox2FieldView] = Object.entries(formContainer._fields)[1];
         const [textbox3, textbox3FieldView] = Object.entries(formContainer._fields)[2];
@@ -102,6 +103,8 @@ describe("Form Runtime with Text Input", () => {
     })
 
     it("should enable and disable other textfields on a certain string input", () => {
+        // Rule on textBox1: When textBox1 has input "aem" => Enable textBox2 and Disable textBox4
+
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
         const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
@@ -114,6 +117,8 @@ describe("Form Runtime with Text Input", () => {
     })
 
     it("should show validation error messages", () => {
+        // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
+
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         const incorrectInput = "invalidate";
         const correctInput = "validate";

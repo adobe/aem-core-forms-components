@@ -150,6 +150,8 @@ describe("Form with Dropdown", () => {
     });
 
     it("should show and hide components on certain dropdown select", () => {
+        // Rule on dropdown1: When dropdown1 has 'cauliflower' selected => Show dropdown5 and Hide dropdown4
+
         const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
         const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];
         const [dropdown5, dropdown5FieldView] = Object.entries(formContainer._fields)[6];
@@ -161,6 +163,8 @@ describe("Form with Dropdown", () => {
     })
 
     it("should enable and disable components on certain dropdown select", () => {
+        // Rule on dropdown1: When dropdown1 has 'apple' selected => Enable dropdown4 and disable dropdown3
+
         const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
         const [dropdown3, dropdown3FieldView] = Object.entries(formContainer._fields)[4];
         const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];

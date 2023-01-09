@@ -108,6 +108,8 @@ describe("Form with Radio Button Input", () => {
     })
 
     it("should show and hide components on certain select", () => {
+        // Rule on radioButton1: When radioButton2 has Item 1 selected => Show radioButton3 and Hide radioButton4
+
         const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
         const [radioButton3, radioButton3FieldView] = Object.entries(formContainer._fields)[2];
         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
@@ -119,6 +121,8 @@ describe("Form with Radio Button Input", () => {
     })
 
     it("should enable and disable components on certain select", () => {
+        // Rule on radioButton1: When radioButton2 has Item 2 selected => Enable radioButton4 and Disable radioButton2
+
         const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
         const [radioButton2, radioButton2FieldView] = Object.entries(formContainer._fields)[1];
         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
