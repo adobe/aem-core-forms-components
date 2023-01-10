@@ -59,6 +59,7 @@
                 </property>
             </activation>
             <modules>
+                <module>it/core</module>
                 <module>it/apps</module>
                 <module>it/content</module>
                 <module>it/config</module>

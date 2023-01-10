@@ -220,8 +220,10 @@ export default class FormFieldBase extends FormField {
      * @param value
      */
     updateValue(value) {
+        // html sets undefined value as undefined string in input value, hence this check is added
+        let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
-            this.widget.value = value;
+            this.widget.value = widgetValue;
         }
     }
 

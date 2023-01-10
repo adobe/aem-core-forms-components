@@ -62,11 +62,40 @@ describe('Page - Authoring', function () {
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(textInputDrop);
   }
+  
+  const testCopyPasteComponent = function(textInputEditPathSelector, textInputEditPathSelectorCopy, textInputDrop) {
+    dropTextInputInContainer();
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    // Check If Dialog Options Are Visible
+    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']")
+      .should("exist")
+      .should("be.visible");
+    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").focus().clear();
+    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").invoke('val', 'textinput');
+    cy.get(".cmp-adaptiveform-base__editdialogbasic input[name='./name']").focus().type("{enter}");
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+    cy.invokeEditableAction("[data-action='COPY']");
+    const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+      responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+    cy.openEditableToolbar(responsiveGridDropZoneSelector);
+    cy.invokeEditableAction("[data-action='PASTE']");
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelectorCopy);
+    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    // Check If Dialog Options Are Visible
+    cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']")
+      .should("exist")
+      .should("have.value", "textinput_copy_1");
+    cy.get("coral-dialog.is-open coral-dialog-footer button[variant='default']").click();
+    cy.deleteComponentByPath(textInputDrop);
+    cy.deleteComponentByPath(textInputDrop+"_copy");
+  }
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
         textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+        textInputEditPathSelectorCopy = "[data-path='" + textInputEditPath + "_copy']",
         textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
@@ -80,6 +109,10 @@ describe('Page - Authoring', function () {
 
     it ('open edit dialog of TextInput', function(){
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
+    })
+
+    it ('pasted component should have unique name', function(){
+      testCopyPasteComponent(textInputEditPathSelector, textInputEditPathSelectorCopy, textInputDrop);
     })
   })
 

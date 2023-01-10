@@ -44,6 +44,15 @@ test('GuideBridge test', () => {
                    expect(error).toBeFalsy();
                }
            });
+           guideBridge.hideSubmitButtons();
+           guideBridge.hideResetButtons();
+           const resultModel = guideBridge.getFormModel();
+           const submitButton = resultModel.getElement("submit-d7406b8582");
+           expect(submitButton).not.toBeNull();
+           expect(submitButton.visible).toBeFalsy();
+           const resetButton = resultModel.getElement("reset-c7cccb1a5e");
+           expect(resetButton).not.toBeNull();
+           expect(resetButton.visible).toBeFalsy();
        }});
 
    });
