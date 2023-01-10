@@ -23,10 +23,23 @@
   },
   "dataRef":"a.b",
   "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type",
+  "constraintMessages": {
+    "accept": "There is an error in the field",
+    "enforceEnum": "There is an error in the field",
+    "format": "There is an error in the field",
+    "maxFileSize": "There is an error in the field",
+    "maximum": "Date should be less than 9th Feb 2022",
+    "maxItems": "There is an error in the field",
+    "maxLength": "There is an error in the field",
     "minimum": "Date should be greater than 4th Feb 2022",
-    "maximum": "Date should be less than 9th Feb 2022"
+    "minItems": "There is an error in the field",
+    "minLength": "There is an error in the field",
+    "pattern": "There is an error in the field",
+    "required": "There is an error in the field",
+    "step": "There is an error in the field",
+    "type": "incorrect type",
+    "uniqueItems": "There is an error in the field",
+    "validationExpression": "There is an error in the field"
   },
   "type": "string",
   "format": "date",

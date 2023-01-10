@@ -1103,6 +1103,14 @@
       "title": "The language in which the Form was authored.",
       "description": "The language needs to be defined as per the [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) tag"
     },
+    "constraintMessages": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "string"
+        }
+      }
+    },
     "metadata": {
       "type": "object",
       "properties": {

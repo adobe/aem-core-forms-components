@@ -22,6 +22,22 @@
       },
       "type": "string",
       ":type": "core/fd/components/form/textinput/v1/textinput",
+      "constraintMessages": {
+        "accept": "There is an error in the field",
+        "enforceEnum": "There is an error in the field",
+        "format": "There is an error in the field",
+        "maxFileSize": "There is an error in the field",
+        "maxItems": "There is an error in the field",
+        "maxLength": "There is an error in the field",
+        "minItems": "There is an error in the field",
+        "minLength": "There is an error in the field",
+        "pattern": "There is an error in the field",
+        "required": "There is an error in the field",
+        "step": "There is an error in the field",
+        "type": "There is an error in the field",
+        "uniqueItems": "There is an error in the field",
+        "validationExpression": "There is an error in the field"
+      },
       "events" : {
         "custom:setProperty" : ["$event.payload"]
       }
@@ -41,6 +57,22 @@
   "metadata": {
     "grammar": "json-formula-1.0.0",
     "version": "1.0.0"
+  },
+  "constraintMessages": {
+    "accept": "There is an error in the field",
+    "enforceEnum": "There is an error in the field",
+    "format": "There is an error in the field",
+    "maxFileSize": "There is an error in the field",
+    "maxItems": "There is an error in the field",
+    "maxLength": "There is an error in the field",
+    "minItems": "There is an error in the field",
+    "minLength": "There is an error in the field",
+    "pattern": "There is an error in the field",
+    "required": "There is an error in the field",
+    "step": "There is an error in the field",
+    "type": "There is an error in the field",
+    "uniqueItems": "There is an error in the field",
+    "validationExpression": "There is an error in the field"
   },
   "id" : "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
   "lang" : "en",

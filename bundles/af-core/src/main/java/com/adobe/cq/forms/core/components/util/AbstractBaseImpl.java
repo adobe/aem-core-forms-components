@@ -47,6 +47,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     private static final String PN_TOOLTIP = "tooltip";
 
+    private static final String DEFAULT_ERROR_MESSAGE = "There is an error in the field";
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String dorTemplateRef;
@@ -347,97 +349,97 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         @Override
         @Nullable
         public String getTypeConstraintMessage() {
-            return translate(PN_TYPE_MESSAGE, properties.get(PN_TYPE_MESSAGE, String.class));
+            return translate(PN_TYPE_MESSAGE, properties.get(PN_TYPE_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getRequiredConstraintMessage() {
-            return translate(PN_REQUIRED_MESSAGE, properties.get(PN_REQUIRED_MESSAGE, String.class));
+            return translate(PN_REQUIRED_MESSAGE, properties.get(PN_REQUIRED_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMinimumConstraintMessage() {
-            return translate(PN_MINIMUM_MESSAGE, properties.get(PN_MINIMUM_MESSAGE, String.class));
+            return translate(PN_MINIMUM_MESSAGE, properties.get(PN_MINIMUM_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMaximumConstraintMessage() {
-            return translate(PN_MAXIMUM_MESSAGE, properties.get(PN_MAXIMUM_MESSAGE, String.class));
+            return translate(PN_MAXIMUM_MESSAGE, properties.get(PN_MAXIMUM_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMinLengthConstraintMessage() {
-            return translate(PN_MINLENGTH_MESSAGE, properties.get(PN_MINLENGTH_MESSAGE, String.class));
+            return translate(PN_MINLENGTH_MESSAGE, properties.get(PN_MINLENGTH_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMaxLengthConstraintMessage() {
-            return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, String.class));
+            return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMaxFileSizeConstraintMessage() {
-            return translate(PN_MAXFILESIZE_MESSAGE, properties.get(PN_MAXFILESIZE_MESSAGE, String.class));
+            return translate(PN_MAXFILESIZE_MESSAGE, properties.get(PN_MAXFILESIZE_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getAcceptConstraintMessage() {
-            return translate(PN_ACCEPT_MESSAGE, properties.get(PN_ACCEPT_MESSAGE, String.class));
+            return translate(PN_ACCEPT_MESSAGE, properties.get(PN_ACCEPT_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getStepConstraintMessage() {
-            return translate(PN_STEP_MESSAGE, properties.get(PN_STEP_MESSAGE, String.class));
+            return translate(PN_STEP_MESSAGE, properties.get(PN_STEP_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getFormatConstraintMessage() {
-            return translate(PN_FORMAT_MESSAGE, properties.get(PN_FORMAT_MESSAGE, String.class));
+            return translate(PN_FORMAT_MESSAGE, properties.get(PN_FORMAT_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getPatternConstraintMessage() {
-            return translate(PN_PATTERN_MESSAGE, properties.get(PN_PATTERN_MESSAGE, String.class));
+            return translate(PN_PATTERN_MESSAGE, properties.get(PN_PATTERN_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMinItemsConstraintMessage() {
-            return translate(PN_MINITEMS_MESSAGE, properties.get(PN_MINITEMS_MESSAGE, String.class));
+            return translate(PN_MINITEMS_MESSAGE, properties.get(PN_MINITEMS_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getMaxItemsConstraintMessage() {
-            return translate(PN_MAXITEMS_MESSAGE, properties.get(PN_MAXITEMS_MESSAGE, String.class));
+            return translate(PN_MAXITEMS_MESSAGE, properties.get(PN_MAXITEMS_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getUniqueItemsConstraintMessage() {
-            return translate(PN_UNIQUEITEMS_MESSAGE, properties.get(PN_UNIQUEITEMS_MESSAGE, String.class));
+            return translate(PN_UNIQUEITEMS_MESSAGE, properties.get(PN_UNIQUEITEMS_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getEnforceEnumConstraintMessage() {
-            return translate(PN_ENFORCEENUM_MESSAGE, properties.get(PN_ENFORCEENUM_MESSAGE, String.class));
+            return translate(PN_ENFORCEENUM_MESSAGE, properties.get(PN_ENFORCEENUM_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
 
         @Override
         @Nullable
         public String getValidationExpressionConstraintMessage() {
-            return translate(PN_VALIDATIONEXPRESSION_MESSAGE, properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class));
+            return translate(PN_VALIDATIONEXPRESSION_MESSAGE, properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, DEFAULT_ERROR_MESSAGE));
         }
     }
 

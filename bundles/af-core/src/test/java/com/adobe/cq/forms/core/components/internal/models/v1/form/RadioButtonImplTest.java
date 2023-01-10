@@ -191,7 +191,7 @@ public class RadioButtonImplTest {
     void testGetConstraintMessages() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
         Map<ConstraintType, String> constraintsMessages = radioButton.getConstraintMessages();
-        assertEquals(constraintsMessages.get(ConstraintType.TYPE), null);
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "There is an error in the field");
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), radioButtonMock.getConstraintMessages());

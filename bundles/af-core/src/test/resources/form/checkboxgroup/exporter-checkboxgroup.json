@@ -28,7 +28,16 @@
   "dataRef":"a.b",
   "screenReaderText": "'Custom screen reader text'",
   "constraintMessages":{
-    "type":"incorrect type"
+    "accept": "There is an error in the field",
+    "enforceEnum": "There is an error in the field",
+    "maxFileSize": "There is an error in the field",
+    "maxItems": "There is an error in the field",
+    "minItems": "There is an error in the field",
+    "required": "There is an error in the field",
+    "step": "There is an error in the field",
+    "type":"incorrect type",
+    "uniqueItems": "There is an error in the field",
+    "validationExpression": "There is an error in the field"
   },
   "default" : [0, 1],
   "type": "number[]",
