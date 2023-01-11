@@ -16,5 +16,6 @@
 
 #base=js
 ruleeditorhook.js
+replacehook.js
 dorhook.js
 copypastehook.js
