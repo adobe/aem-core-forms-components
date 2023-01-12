@@ -12,7 +12,7 @@
             sling:configRef="/conf/forms/core-components-it/samples/numberinput/basic/"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-                fd:version="2.0"
+                fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container"
                 dorType="none"
@@ -38,7 +38,8 @@
                     enabled="{Boolean}true"
                     fieldType="number-input"
                     name="numberinput2"
-                    visible="{Boolean}false"/>
+                    visible="{Boolean}false">
+            </numberinput2>
             <numberinput3
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input With Pattern"
