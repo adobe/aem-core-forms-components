@@ -106,4 +106,30 @@ describe("Form with Radio Button Input", () => {
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
+
+    it("should show and hide components on certain select", () => {
+        // Rule on radioButton1: When radioButton2 has Item 1 selected => Show radioButton3 and Hide radioButton4
+
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const [radioButton3, radioButton3FieldView] = Object.entries(formContainer._fields)[2];
+        const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${radioButton1}`).find("input").first().check().blur().then(x => {
+            cy.get(`#${radioButton3}`).should('be.visible')
+            cy.get(`#${radioButton4}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain select", () => {
+        // Rule on radioButton1: When radioButton2 has Item 2 selected => Enable radioButton4 and Disable radioButton2
+
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const [radioButton2, radioButton2FieldView] = Object.entries(formContainer._fields)[1];
+        const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
+            cy.get(`#${radioButton4}`).find("input").should('be.enabled')
+            cy.get(`#${radioButton2}`).find("input").should('not.be.enabled')
+        })
+    })
 })

@@ -1,53 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
+            cq:lastModified="{Date}2023-01-06T15:44:36.259+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
+            sling:configRef="/conf/forms/core-components-it/samples/numberinput/basic/"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-                fd:version="2.0"
-                fieldType="form"
+                fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="forms-components-examples/components/form/container">
+                sling:resourceType="forms-components-examples/components/form/container"
+                dorType="none"
+                fieldType="form"
+                themeRef="/libs/fd/af/themes/canvas">
             <numberinput
-                    fieldType="number-input"
                     jcr:primaryType="nt:unstructured"
-                    name="numberinput1"
                     jcr:title="Number Input 1"
-                    sling:resourceType="forms-components-examples/components/form/numberinput"/>
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    fieldType="number-input"
+                    name="numberinput1">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;numberinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;93&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput2&quot;\,&quot;displayName&quot;:&quot;number Input 2&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/number Input 2/&quot;\,&quot;name&quot;:&quot;numberinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput3&quot;\,&quot;displayName&quot;:&quot;Number Input With Pattern&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input With Pattern/&quot;\,&quot;name&quot;:&quot;numberinput3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {})&quot;\,&quot;if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|NUMBER FIELD|STRING&quot;\,&quot;name&quot;:&quot;numberinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;123&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput4&quot;\,&quot;displayName&quot;:&quot;Number Input 4&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input 4/&quot;\,&quot;name&quot;:&quot;numberinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput3&quot;\,&quot;displayName&quot;:&quot;Number Input With Pattern&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input With Pattern/&quot;\,&quot;name&quot;:&quot;numberinput3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;\,&quot;if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
+            </numberinput>
             <numberinput2
-                    fieldType="number-input"
                     jcr:primaryType="nt:unstructured"
-                    name="numberinput2"
                     jcr:title="number Input 2"
-                    visible="{Boolean}false"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
                     enabled="{Boolean}true"
-                    sling:resourceType="forms-components-examples/components/form/numberinput"/>
-            <numberinput3
                     fieldType="number-input"
+                    name="numberinput2"
+                    visible="{Boolean}false">
+            </numberinput2>
+            <numberinput3
                     jcr:primaryType="nt:unstructured"
-                    name="numberinput3"
-                    displayFormat="$123"
                     jcr:title="Number Input With Pattern"
-                    visible="{Boolean}true"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    displayFormat="$123"
                     enabled="{Boolean}false"
-                    sling:resourceType="forms-components-examples/components/form/numberinput"/>
+                    fieldType="number-input"
+                    name="numberinput3"
+                    visible="{Boolean}true"/>
             <numberinput4
-              fieldType="number-input"
-              jcr:primaryType="nt:unstructured"
-              name="numberinput4"
-              jcr:title="Number Input 4"
-              id="tooltip_scenario_test"
-              description="This is long description"
-              tooltip="This is short description"
-              tooltipVisible="true"
-              sling:resourceType="forms-components-examples/components/form/numberinput"/>
+                    jcr:lastModified="{Date}2022-12-13T13:57:09.443+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input 4"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    description="This is long description"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    id="tooltip_scenario_test"
+                    name="numberinput4"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    tooltip="This is short description"
+                    tooltipVisible="true"
+                    type="number"
+                    validationExpression="$field == 64"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;numberinput4&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput4&quot;\,&quot;displayName&quot;:&quot;Number Input 4&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input 4/&quot;\,&quot;name&quot;:&quot;numberinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;64&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == 64&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </numberinput4>
         </guideContainer>
     </jcr:content>
 </jcr:root>

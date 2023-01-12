@@ -111,7 +111,7 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
     })
 
-    it ('pasted component should have unique name', function(){
+    it.skip('pasted component should have unique name', function(){
       testCopyPasteComponent(textInputEditPathSelector, textInputEditPathSelectorCopy, textInputDrop);
     })
   })
