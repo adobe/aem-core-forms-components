@@ -17,7 +17,11 @@
     var editConfigListeners = window.guidelib.author.editConfigListeners;
 
     window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
-        // Utils.renderSubDialog(editable);
+
+        var $searchComponent = null;
+        var $clearButton = null;
+        var isContainerComponent = editable.config.isContainer;
+
         var dialog = new Coral.Dialog().set({
             closable : Coral.Dialog.closable.ON,
             header : {
@@ -27,14 +31,11 @@
                 innerHTML : '<coral-search class="ReplaceComponentDialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="ReplaceComponentDialog-list"></coral-selectlist>'
             }
         });
+
+        dialog.classList.add('ReplaceComponentDialog');
+        dialog.content.classList.add('ReplaceComponentDialog-components');
+
         document.body.appendChild(dialog);
-
-        var AuthorUtils = author.AuthorUtils;
-        var parentTablePath = null;
-        var parentTableEditable = null;
-        var $searchComponent = null;
-        var $clearButton = null;
-
         // calling parent since table would point to table tag, but we need the table wrapper
         // get the parent path
         // use the path to get the editable since we use the allowed components defined in panel
@@ -45,24 +46,27 @@
             allowedComponents = author.components.computeAllowedComponents(parent, author.pageDesign),
             selectList;
 
+        var typeHierarchy = author.components.find({resourceType : this.type})[0].componentConfig.cellNames,
+            editableType = editable.getResourceTypeName(),
+            editableSuperType = typeHierarchy[typeHierarchy.length - 2]; // super type is one below guidefield in type hierarchy
+
         var filterComponent = function (allowedComponents) {
             var groups = {},
-                keyword = "",
+                keyword = $searchComponent[0].value,
                 regExp = null;
-            // keyword = $searchComponent[0].value,
+
 
             // rebuild the selectList entries
-            // selectList = {};
             selectList.empty();
-            // if (keyword !== undefined && keyword !== null) {
-            //     keyword = keyword.trim();
-            // } else {
-            //     keyword = "";
-            // }
-            //
-            // if (keyword.length > 0) {
-            //     regExp = new RegExp(".*" + keyword + ".*", "i");
-            // }
+            if (keyword !== undefined && keyword !== null) {
+                keyword = keyword.trim();
+            } else {
+                keyword = "";
+            }
+
+            if (keyword.length > 0) {
+                regExp = new RegExp(".*" + keyword + ".*", "i");
+            }
 
             components.forEach(function (c) {
                 var cfg = c.componentConfig,
@@ -71,12 +75,17 @@
                     componentSuperType = cfg.cellNames[cfg.cellNames.length - 2],  // super type is one below guidefield in type hierarchy
                     performReplace = true;
 
-                // if (keyword.length > 0) {
-                //     var isKeywordFound = regExp.test(Granite.I18n.getVar(cfg.title));
-                // }
+                if (keyword.length > 0) {
+                    var isKeywordFound = regExp.test(Granite.I18n.getVar(cfg.title));
+                }
 
-                if (true) {
-                    performReplace = true;
+                if (!(keyword.length > 0) || isKeywordFound) {
+                    // perform replace as per comments above
+                    if (editableType != componentType && isContainerComponent === c.componentConfig.isContainer) {
+                        performReplace = true;
+                    } else {
+                        performReplace = false;
+                    }
 
                     if (performReplace) {
                         if (allowedComponents.indexOf(c.componentConfig.path) > -1 || allowedComponents.indexOf("group:" + c.getGroup()) > -1) {
@@ -146,18 +155,6 @@
             bindEventToReplaceComponentDialog(allowedComponents, editable);
             dialog.show();
         });
-        // deleteItemsNode(editable)
-        //     .done(function () {
-        //         var component = getComponent(author);
-        //         console.log(author.components.allowedComponents.find(item =>
-        //             item.resourceType = "forms-components-examples/components/form/accordion").getResourceType());
-        //         sendReplaceParagraph({
-        //             resourceType: component.getResourceType(),
-        //             configParams: component.getConfigParams(),
-        //             extraParams: component.getExtraParams(),
-        //             templatePath: component.getTemplatePath()
-        //         }, editable)
-        //     });
     }
 
     /**
@@ -211,10 +208,6 @@
         );
     };
 
-    var getComponent = function (author) {
-        return author.components.allowedComponents.find(item => item.resourceType = "forms-components-examples/components/form/accordion");
-    }
-
     var deleteItemsNode = function (editable) {
         console.log('deleting');
         return (
@@ -222,16 +215,6 @@
                 .deleteItemsNode(editable)
                 .send()
         )
-    }
-    author.persistence.PostRequest.prototype.deleteItemsNode = function (editable) {
-        // create params to delete the items node present inside composite field node
-        console.log('calling prototype for deleting');
-        return (
-            this
-                .setURL(editable.path + "/items")
-                .setParam("_charset_", "utf-8")
-                .setParam(":operation", "delete")
-        );
     }
 
     /**
