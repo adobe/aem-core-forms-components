@@ -128,4 +128,19 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
         })
     })
+
+    it("should set and clear value", () => {
+        // Rule on datePicker5: When input of datePicker5 is '2023-01-12', set value of datePicker4 to '2023-01-01' and clear value of datePicker1
+
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const [datePicker5, datePicker5FieldView] = Object.entries(formContainer._fields)[4];
+
+        const input = "2023-01-12";
+        cy.get(`#${datePicker1}`).find("input").clear().type('2022-05-18')
+        cy.get(`#${datePicker5}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${datePicker1}`).find("input").should('have.value',"")
+            cy.get(`#${datePicker4}`).find("input").should('have.value', "2023-01-01")
+        })
+    })
 })
