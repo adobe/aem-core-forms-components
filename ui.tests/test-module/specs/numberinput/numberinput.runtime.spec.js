@@ -166,4 +166,19 @@ describe("Form with Number Input", () => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"")
         })
     })
+
+    it("should set and clear value", () => {
+        // Rule on numberInput5: When input of numberInput5 is 4502, set value of numberInput4 to 400 and clear value of numberInput1
+
+        const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
+        const [numberInput4, numberInput4FieldView] = Object.entries(formContainer._fields)[3];
+        const [numberInput5, numberInput5FieldView] = Object.entries(formContainer._fields)[4];
+
+        const input = "4502";
+        cy.get(`#${numberInput1}`).find("input").clear().type(495)
+        cy.get(`#${numberInput5}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput1}`).find("input").should('have.value',"")
+            cy.get(`#${numberInput4}`).find("input").should('have.value', 400)
+        })
+    })
 })
