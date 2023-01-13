@@ -143,4 +143,25 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox2}`).find("input").should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages", () => {
+        // Rule on checkBox5: Validate checkBox using Expression: checkBox5 === checkBox3
+
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
+        const [checkBox5, checkBox5FieldView] = Object.entries(formContainer._fields)[4];
+
+        // Making checkBox3 visible
+        cy.get(`#${checkBox2}`).find("input").check(["0","3"])
+
+        cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
+            cy.get(`#${checkBox5}`).find("input").uncheck().check(["1"])
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
+            cy.get(`#${checkBox5}`).find("input").uncheck().check(["0"])
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
+        })
+    })
 })
