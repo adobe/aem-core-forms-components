@@ -20,5 +20,34 @@
                 "jcr:primaryType": "nt:unstructured"
             }
         }
+    },
+    "formattertypedatasourcenumberinput": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "datasource" : {
+            "sling:resourceType": "/apps/formattertypedatasourcenumberinput",
+            "type": "formatters"
+        }
+    },
+
+    "formattertypedatasourcenumberinputPolicy": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "allowedFormat1": "PhoneNumber='('999')' 999-9999",
+        "allowedFormat2": "PhoneNumbesr='('999')' 999-9999",
+        "abc": "abc",
+        "allowedFormat3": "abc=regexp",
+        "jcr:content": {
+            "jcr:primaryType"   : "nt:unstructured"
+        },
+        "allowedCustomFormats" : {
+            "jcr:primaryType"   : "nt:unstructured",
+            "item0": {
+                "customFormatKey" : "12",
+                "customFormatValue" : "13"
+            },
+            "item1": {
+                "customFormatKey" : "14",
+                "customFormatValue" : "15"
+            }
+        }
     }
 }

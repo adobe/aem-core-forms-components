@@ -53,4 +53,11 @@ public interface Button extends Base {
     default String getDefault() {
         return null;
     }
+
+    /**
+     * Returns the type of action of the button
+     */
+    default String getButtonType() {
+        return null;
+    }
 }

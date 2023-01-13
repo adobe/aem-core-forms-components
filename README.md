@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/adobe/aem-core-forms-components/branch/master/graph/badge.svg)](https://codecov.io/gh/adobe/aem-core-forms-components)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.adobe.aem/core-forms-components-all/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.adobe.aem/core-forms-components-all)
 ![GitHub](https://img.shields.io/github/license/adobe/aem-core-forms-components.svg)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dev&repo=285932577&machine=standardLinux32gb&location=WestEurope&devcontainer_path=.devcontainer%2Fdevcontainer.json)
 
 # AEM Forms Core Components
 
@@ -18,7 +19,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Page Authoring Components
 
--   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v1/aemform)
+-   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
 
 ### Forms And Communications Portal
 

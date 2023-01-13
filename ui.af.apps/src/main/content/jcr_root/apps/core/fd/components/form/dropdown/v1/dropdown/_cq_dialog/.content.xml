@@ -19,6 +19,7 @@
     jcr:title="Adaptive Form Dropdown"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.dropdown.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_dropdown_v1"
     trackingFeature="core-components:adaptiveform-dropdown:v1">
     <content
         granite:class="cmp-adaptiveform-dropdown__editdialog"
@@ -40,7 +41,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    fieldLabel="Save Value Type"
+                                    fieldLabel="Save value as"
                                     typeHint="String"
                                     name="./typeIndex">
                                 <items jcr:primaryType="nt:unstructured">
@@ -69,7 +70,7 @@
                                     sling:orderBefore="saveValueType"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                     name="./multiSelect"
-                                    text="Allows multiple selection"
+                                    text="Allow multiple selection"
                                     value="true"/>
                             <multiSelect-typehint
                                     jcr:primaryType="nt:unstructured"
@@ -81,8 +82,8 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="Must be one of the options."
-                                    fieldLabel="Default Value"
+                                    fieldDescription="Specified default option is preselected on form load."
+                                    fieldLabel="Default option"
                                     name="./default"/>
                             <defaultValueMS
                                     wrapperClass="cmp-adaptiveform-dropdown__defaultvaluemultiselect"
@@ -90,8 +91,8 @@
                                     sling:orderBefore="placeholder"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                     typeHint="String[]"
-                                    fieldDescription="Each entry must be one of the options"
-                                    fieldLabel="Default Values">
+                                    fieldDescription="Specified default options are preselected on form load."
+                                    fieldLabel="Default options">
                                 <field
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

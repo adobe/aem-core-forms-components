@@ -161,6 +161,108 @@
             };
         }
 
+        static handlePatternDropDown(dialog, patternClass, formatClass) {
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
+            _managePatternDynamicBehaviour();
+            patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
+            function _managePatternDynamicBehaviour() {
+                var displayPatternSelectedValue = patternComponent.selectedItem.innerHTML;
+                var patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
+                if(patternComponentOptionsNodeList.length<=2 ){
+                  //there are 2 default options, "Select" and "custom".
+                    // For this dropdown to be visible it should have atleast one other option
+                    var patternComponentParentDiv=patternComponent.closest("div");
+                    patternComponentParentDiv.setAttribute("hidden", true);
+                }else {
+                    var displayFormatParentDiv=formatComponent.closest("div");
+                    switch (displayPatternSelectedValue) {
+                        case "Select"     :
+                        case "No Pattern" :
+                            displayFormatParentDiv.setAttribute("hidden", true);
+                            break;
+                        default           :
+                            displayFormatParentDiv.removeAttribute("hidden");
+                    }
+                }
+                if(displayPatternSelectedValue!="Custom") {
+                    formatComponent.value = patternComponent.value;
+                }
+            }
+        }
+
+        static handlePatternFormat(dialog, patternClass, formatClass){
+
+            var patternComponent = dialog.find(patternClass)[0];
+            var formatComponent = dialog.find(formatClass)[0];
+            _manageFormatChange()
+            formatComponent.addEventListener("change", _manageFormatChange );
+            function _manageFormatChange(){
+                var itemFound=false;
+                if(formatComponent.value!=patternComponent.value){
+                    patternComponent.items.getAll().forEach(function (item) {
+                        if (item.value == formatComponent.value) {
+                            item.selected = true;
+                            itemFound = true;
+                        }
+                    });
+                    if(!itemFound){
+                        patternComponent.value="custom";
+                    }
+                }
+            }
+        }
+
+        /**
+         * Register foundation.validator for DataType Validation of Options fields like Dropdown, Checkbox etc.
+         * @param defaultTypeSelector Selector for default value field
+         * @param enumSelector Selector for enum values field
+         * @param getSelectedDataType Function to return the selected data-type in the dialog.
+         * Should return one of string|number|boolean, validation will pass if any other type is returned.
+         * @returns {(function(*): void)|*} Function that will register data type validator
+         */
+        static registerDialogDataTypeValidators(defaultTypeSelector, enumSelector, getSelectedDataType) {
+            return function (dialog) {
+                var isBoolean = function(value) {
+                    var isBoolean = false;
+                    if (value) {
+                        var lowerCaseValue = value.toLowerCase();
+                        isBoolean = lowerCaseValue === 'true' || lowerCaseValue === 'false';
+                    }
+                    return isBoolean
+                }
+
+                function registerValidator(selector, validator) {
+                    $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+                        selector: selector,
+                        validate: validator
+                    });
+                }
+
+                var dataTypeValidator = function(el) {
+                    var isValid = true;
+                    var value = el.value;
+                    if (value) {
+                        var dataType = getSelectedDataType(dialog);
+                        switch (dataType) {
+                            case 'number':
+                                isValid = !isNaN(value);
+                                break;
+                            case 'boolean':
+                                isValid = isBoolean(value);
+                                break;
+                        }
+                    }
+                    if (!isValid) {
+                        return Granite.I18n.getMessage('Value Type Mismatch');
+                    }
+                };
+
+                registerValidator(defaultTypeSelector, dataTypeValidator);
+                registerValidator(enumSelector, dataTypeValidator);
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

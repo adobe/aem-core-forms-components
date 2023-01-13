@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    cq:actions="[EDIT,DELETE,INSERT,COPYMOVE]"
+    jcr:primaryType="cq:EditConfig">
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+            jcr:primaryType="nt:unstructured"
+            condition="CQ.FormsCoreComponents.aemform.v2.actions.formExists"
+            handler="CQ.FormsCoreComponents.aemform.v2.actions.openFormForEditing"
+            icon="alias"
+            text="Edit in a new window"/>
+        <createFormViaWizard
+            jcr:primaryType="nt:unstructured"
+            condition="CQ.FormsCoreComponents.aemform.v2.actions.featureEnabled"
+            handler="CQ.FormsCoreComponents.aemform.v2.actions.openCreateFormWizard"
+            icon="addCircle"
+            text="Create Form"/>
+    </cq:actionConfigs>
+    <cq:listeners
+        jcr:primaryType="cq:EditListenersConfig"
+        afteredit="REFRESH_PARENT"/>
+</jcr:root>

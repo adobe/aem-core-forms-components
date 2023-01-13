@@ -20,51 +20,53 @@ import Utils from "../utils";
 
 export default class FormPanel extends FormFieldBase {
 
+    #deferredInstances;
+
     constructor(params) {
         super(params);
         this.children = [];
-        this._deferredInstances = {};
+        this.#deferredInstances = {};
     }
 
-    updateTemplateIds(html, model, newId) {
+    #updateTemplateIds(html, model, newId) {
         Utils.updateId(html, model.id, newId);
         if (model.type == 'array' || model.type == 'object') {
             const children = model.children;
             for (let i = 0; i < children.length; i++) {
-                this.updateTemplateIds(html, children[i], newId + "_" + i);
+                this.#updateTemplateIds(html, children[i], newId + "_" + i);
             }
         }
     }
 
-    updateCloneIds(html, oldId, newModel) {
+    #updateCloneIds(html, oldId, newModel) {
         Utils.updateId(html, oldId, newModel.id);
         if (newModel.type == 'array' || newModel.type == 'object') {
             const children = newModel.children;
             for (let i = 0; i < children.length; i++) {
-                this.updateCloneIds(html, oldId + "_" + i, children[i]);
+                this.#updateCloneIds(html, oldId + "_" + i, children[i]);
             }
         }
     }
 
-    updateTemplate(childView) {
+    #updateTemplate(childView) {
         this._templateHTML = childView.element.parentElement.cloneNode(true);
-        this.updateTemplateIds(this._templateHTML, childView._model, 'temp_0');
+        this.#updateTemplateIds(this._templateHTML, childView._model, 'temp_0');
     }
 
     setModel(model) {
         super.setModel(model);
         this.repeatable = (this._model.type == 'array');
         if (this.repeatable) {
-            this._registerInstanceHandlers();
+            this.#registerInstanceHandlers();
         }
     }
 
-    handleRepeatableChildAddition(event) {
+    #handleRepeatableChildAddition(event) {
         //childView = event.detail
         //This needs to be handled in tabs, accordion, wizard
     }
 
-    handleRepeatableChildRemoval(event) {
+    #handleRepeatableChildRemoval(event) {
         //childView = event.detail
         //This needs to be handled in tabs, accordion, wizard
     }
@@ -77,21 +79,21 @@ export default class FormPanel extends FormFieldBase {
         };
 
         if (childView.repeatable) {
-            childView.element.addEventListener(Constants.PANEL_CHILD_ADDED, this.handleRepeatableChildAddition);
-            childView.element.addEventListener(Constants.PANEL_CHILD_REMOVED, this.handleRepeatableChildRemoval);
+            childView.element.addEventListener(Constants.PANEL_CHILD_ADDED, this.#handleRepeatableChildAddition);
+            childView.element.addEventListener(Constants.PANEL_CHILD_REMOVED, this.#handleRepeatableChildRemoval);
         }
 
         if (this.repeatable) {
             if (!this._templateHTML) {
-                this.updateTemplate(childView);
+                this.#updateTemplate(childView);
             }
 
-            const instanceId = this._deferredInstances[viewId];
+            const instanceId = this.#deferredInstances[viewId];
             if (instanceId != undefined) {
                 //adding view post mutation observer has added view for repeatable instance
                 this.children.splice(instanceId, 0, childView);
                 //remove entry from deferred instances
-                delete this._deferredInstances[viewId];
+                delete this.#deferredInstances[viewId];
                 dispatchAddEvent();
                 return;
             }
@@ -101,7 +103,7 @@ export default class FormPanel extends FormFieldBase {
         dispatchAddEvent();
     }
 
-    _getInstanceArray(state) {
+    #getInstanceArray(state) {
         let instanceArray = [];
         if (typeof state == 'array') {
             instanceArray = state;
@@ -111,7 +113,7 @@ export default class FormPanel extends FormFieldBase {
         return instanceArray;
     }
 
-    addChildInstance(state) {
+    #addChildInstance(state) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
             return;
@@ -121,10 +123,10 @@ export default class FormPanel extends FormFieldBase {
             let addedModel = this._model._children[instanceId];
             let htmlElement = this._templateHTML.cloneNode(true);
 
-            this.updateCloneIds(htmlElement, 'temp_0', addedModel);
+            this.#updateCloneIds(htmlElement, 'temp_0', addedModel);
 
             //make entry to deferred instance, as whenever a child comes to register under it, it should be placed at correct index
-            this._deferredInstances[addedModel.id] = instanceId;
+            this.#deferredInstances[addedModel.id] = instanceId;
 
             //no child exist in the view
             if (this.children.length == 0) {
@@ -142,9 +144,9 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
-    removeChildInstance(removedModel) {
+    #removeChildInstance(removedModel) {
         if (this.repeatable) {
-            const instanceArray = this._getInstanceArray(removedModel);
+            const instanceArray = this.#getInstanceArray(removedModel);
             for (let i = 0; i < instanceArray.length; i++) {
                 const instanceId = instanceArray[i].index;
                 let childView = this.children[instanceId];
@@ -160,13 +162,13 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
-    _registerInstanceHandlers() {
+    #registerInstanceHandlers() {
         //doesn't support repeatable panel inside repeatable panel
         Utils.registerClickHandler(this.element, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this._addInstance(event)});
         Utils.registerClickHandler(this.element, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this._removeInstance(event)});
     }
 
-    _dispatchModelEvent(event, eventName, payload) {
+    #dispatchModelEvent(event, eventName, payload) {
         const customEvent = new CustomEvent(eventName);
         if (payload) {
             customEvent.payload = payload;
@@ -176,30 +178,29 @@ export default class FormPanel extends FormFieldBase {
     }
 
     _addInstance(event, payload) {
-        this._dispatchModelEvent(event,"addItem", payload);
+        this.#dispatchModelEvent(event,"addItem", payload);
     }
 
     _removeInstance(event, payload) {
-        this._dispatchModelEvent(event,"removeItem", payload);
+        this.#dispatchModelEvent(event,"removeItem", payload);
     }
 
     /**
      * applies full state of the field to the HTML. Generally done just after the model is bound to the field
      * @param state
-     * @private
      */
-    _applyState(state) {
-        this._updateVisible(state.visible);
-        this._updateEnable(this._model.enabled);
-        this._initializeHelpContent(state);
+
+    applyState(state) {
+        this.updateVisible(state.visible);
+        this.updateEnabled(state.enabled);
+        this.initializeHelpContent(state);
     }
 
     /**
      * updates the html state based on enable state of the panel
      * @param enable
-     * @private
      */
-    _updateEnable(enable) {
+    updateEnabled(enable) {
         this.toggle(enable, Constants.ARIA_DISABLED, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
     }
@@ -208,9 +209,8 @@ export default class FormPanel extends FormFieldBase {
      * Updates the html state based on valid state of the panel
      * @param valid
      * @param state
-     * @private
      */
-    _updateValid(valid, state) {
+    updateValid(valid, state) {
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
     }
@@ -220,14 +220,13 @@ export default class FormPanel extends FormFieldBase {
      * @param prevValue will have removed instances, for removeItem otherwise its null
      * @param currentValue will have added instance, for addItem otherwise its null
      * @param state
-     * @private
      */
-    _updateItems(prevValue, currentValue, state) {
+    updateItems(prevValue, currentValue, state) {
         //if previous value exists it means remove item is invoked
         if (prevValue) {
-            this.removeChildInstance(prevValue);
+            this.#removeChildInstance(prevValue);
         } else if (currentValue) {
-            this.addChildInstance(state);
+            this.#addChildInstance(state);
         }
     }
 }

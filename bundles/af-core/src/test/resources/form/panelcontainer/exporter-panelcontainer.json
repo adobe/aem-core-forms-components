@@ -2,7 +2,6 @@
   "id":"panelcontainer-94f9ea9e7d",
   "description":"dependent names description",
   "tooltip":"dependent names tooltip",
-  "type":"object",
   "fieldType":"panel",
   "name":"abc",
   "visible":true,
@@ -49,7 +48,7 @@
       "dorExcludeDescription" : false,
       "breakBeforeText": "Following Previous",
       "breakAfterText": "Continue Filling Parent",
-      "overflow": "None",
+      "overflowText": "None",
       "dorNumCols": "3",
       "dorLayoutType": "columnar"
     }

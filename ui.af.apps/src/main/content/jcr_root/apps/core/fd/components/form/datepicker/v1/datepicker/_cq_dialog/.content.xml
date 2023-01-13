@@ -16,9 +16,10 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="nt:unstructured"
-          jcr:title="Date Picker AF2.0"
+          jcr:title="Adaptive Form Date Picker"
           sling:resourceType="cq/gui/components/authoring/dialog"
           extraClientlibs="[core.forms.components.datepicker.v1.editor]"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_datepicker_v1"
           trackingFeature="core-components:adaptiveform-datepicker:v1">
     <content
             granite:class="cmp-adaptiveform-datepicker__editdialog"
@@ -42,7 +43,7 @@
                                     sling:orderBefore="guideGlobalLazyField"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
-                                    fieldLabel="Default Value"
+                                    fieldLabel="Default date"
                                     emptyText="YYYY-MM-DD"
                                     name="./default"/>
                         </items>
@@ -60,30 +61,30 @@
                                     sling:orderBefore="guideGlobalLazyField"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
-                                    fieldLabel="Minimum Value"
+                                    fieldLabel="Minimum date"
                                     emptyText="YYYY-MM-DD"
                                     name="./minimumDate"/>
                             <minimumMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when the date entered is before the minimum date"
+                                    fieldDescription="Error message shown when the date entered is before the minimum date."
                                     granite:class="cmp-adaptiveform-datepicker__minimummessage"
-                                    fieldLabel="Minimum Error Message"
+                                    fieldLabel="Minimum error message"
                                     name="./minimumMessage"/>
                             <maximum
                                     jcr:primaryType="nt:unstructured"
                                     sling:orderBefore="guideGlobalLazyField"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
-                                    fieldLabel="Maximum Value"
+                                    fieldLabel="Maximum date"
                                     emptyText="YYYY-MM-DD"
                                     name="./maximumDate"/>
                             <maximumMessage
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when the date entered is after the maximum date"
+                                    fieldDescription="Error message shown when the date entered is after the maximum date."
                                     granite:class="cmp-adaptiveform-datepicker__maximummessage"
-                                    fieldLabel="Maximum Error Message"
+                                    fieldLabel="Maximum error message"
                                     name="./maximumMessage"/>
                         </items>
                     </validation>
@@ -104,20 +105,61 @@
                             jcr:title="Formats"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <dataFormat
+                            <displayPatternGroup
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="The format in which the value will be exported or submitted"
-                                    fieldLabel="Data Format"
-                                    name="./dataFormat">
-                            </dataFormat>
-                            <editFormat
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="The format in which the value will be edited by the user"
-                                    fieldLabel="Edit Format"
-                                    name="./editFormat">
-                            </editFormat>
+                                    jcr:title="Display Format"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                    title="Display Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <displayPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displaypattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./displayPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                type="formatters"/>
+                                    </displayPatternType>
+                                    <displayPictureClause
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__displayformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="The format in which the value will be displayed to the user."
+                                            fieldLabel="Format"
+                                            name="./displayFormat">
+                                    </displayPictureClause>
+                                </items>
+                            </displayPatternGroup>
+                            <editPatternGroup
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Edit Format"
+                                sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                title="Edit Format">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <editPatternType
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__editpattern"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            fieldLabel="Type"
+                                            name="./editPatternType">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                type="formatters"/>
+                                    </editPatternType>
+                                    <editFormat
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-datepicker__editformat"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="The format in which the value will be edited by the user."
+                                            fieldLabel="Edit Format"
+                                            name="./editFormat">
+                                    </editFormat>
+                                </items>
+                            </editPatternGroup>
+
                         </items>
                     </patterns>
                 </items>

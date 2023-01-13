@@ -21,6 +21,7 @@
         BASE_ASSISTPRIORITY = ".cmp-adaptiveform-base__assistpriority",
         BASE_VISIBLE = ".cmp-adaptiveform-base__visible",
         BASE_ENABLED = ".cmp-adaptiveform-base__enabled",
+        BASE_ENUM = ".cmp-adaptiveform-base__enum",
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
@@ -138,6 +139,21 @@
         });
     }
 
+    function handleDialogSubmit(dialog){
+        var submitButton=dialog.find(".cq-dialog-submit")[0];
+        submitButton.addEventListener("click",_manageDialogSubmit);
+        function _manageDialogSubmit(){
+            var enums = dialog.find(BASE_ENUM);
+            var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
+
+            for(var i = 0; i < visibleEnumNames.length ; i++) {
+                if(!visibleEnumNames[i].value) {
+                    visibleEnumNames[i].value = enums[i].value;
+                }
+            }
+        }
+    }
+
     /**
      * Initialise the conditional display of the various elements of the dialog.
      *
@@ -156,6 +172,7 @@
         prefillEnumNames(dialog);
         showHideDoRBindRefField(dialog);
         validateName();
+        handleDialogSubmit(dialog);
     }
 
     channel.on("foundation-contentloaded", function(e) {

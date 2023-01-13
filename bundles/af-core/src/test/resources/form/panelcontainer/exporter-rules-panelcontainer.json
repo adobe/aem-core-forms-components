@@ -2,7 +2,6 @@
   "id":"panelcontainer-da2cf7dff5",
   "description":"dependent names description",
   "tooltip":"dependent names tooltip",
-  "type":"object",
   "fieldType":"panel",
   "name":"abc",
   "visible":true,

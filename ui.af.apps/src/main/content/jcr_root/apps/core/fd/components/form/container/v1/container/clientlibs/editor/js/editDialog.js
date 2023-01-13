@@ -79,13 +79,6 @@
         }
     }
 
-    function handleFDMSubmitActionDialog(dialog) {
-        // Temporary Fix. Hide bindRefSelector Button
-        $(document).on("fdBindRef-contentLoaded", function (e) {
-            $('.bindRefSelectorButton').hide();
-        });
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction, handleFDMSubmitActionDialog);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction);
 
 })(jQuery, jQuery(document), Coral);

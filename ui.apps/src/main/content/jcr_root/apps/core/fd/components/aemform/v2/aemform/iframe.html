@@ -1,0 +1,35 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
+         data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
+    <title data-sly-test="${form.isAdaptiveForm || form.isMCDocument}"><sly data-sly-use.af="com.adobe.aemds.guide.common.AdaptiveForm" />${af.formTitle @ context='html'}</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <sly data-sly-include="formheaderlibs.html"></sly>
+    <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
+    <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}" data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v2.iframeContentResizer']}"/>
+    <sly data-sly-list="${form.htmlPageItems}"><script data-sly-test="${item.location.name == 'header'}"
+                                                       data-sly-element="${item.element.name @ context='unsafe'}" data-sly-attribute="${item.attributes}"></script>
+    </sly>
+</head>
+<body>
+<sly data-sly-include="formcontainer.html"></sly>
+<sly data-sly-include="formfooterlibs.html"></sly>
+</body>
+</html>

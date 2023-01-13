@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 public interface FormComponent extends Component {
-    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout";
+    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout"; // needs to be renamed to "CUSTOM_LAYOUT_PROPERTY_WRAPPER" later
 
     /**
      * Returns the field type
@@ -70,12 +70,6 @@ public interface FormComponent extends Component {
     @JsonView(Views.Author.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default Map<String, Object> getDorProperties() {
-        return Collections.emptyMap();
-    }
-
-    @JsonView(Views.Author.class)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, Object> getRulesProperties() {
         return Collections.emptyMap();
     }
 

@@ -41,6 +41,10 @@
                 handlePolicyDialog(dialogContent);
             }
         }
+        // For handling the case when tabs,accordion and wizard inherit panel edit-dialog
+        if($dialog[0]) {
+            handleWrapData($dialog[0]);
+        }
     });
 
     /**
@@ -90,6 +94,43 @@
             toggleable.show();
         } else {
             toggleable.hide();
+        }
+    }
+
+    function handleWrapData(containerEditor) {
+        let bindRef = containerEditor.querySelector("input[name='./dataRef']");
+        let minInputField = containerEditor.querySelector("coral-numberinput[name='./minItems']");
+        let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
+
+        function isRepeatable() {
+            // TODO: to update after repeatability approach gets finalised
+            //return minInputField.value.length > 0 && maxInputField.value.length > 0;
+            return false;
+        }
+
+        // checking for repeatability and bindRef of panel on dialog initialisation
+        if(isRepeatable() || bindRef.value.length > 0) {
+            makeWrapDataReadOnly(true);
+        }
+
+        bindRef.addEventListener("change", function () {
+            makeWrapDataReadOnly(this.value.length > 0);
+        });
+
+        /*minInputField.addEventListener("change", function () {
+            makeWrapDataReadOnly(isRepeatable());
+        });
+
+        maxInputField.addEventListener("change", function () {
+            makeWrapDataReadOnly(isRepeatable());
+        });*/
+
+        function makeWrapDataReadOnly(status) {
+            let checkbox = containerEditor.querySelector(".cmp-adaptiveform-panel__wrapData");
+            if(checkbox) {
+                checkbox.checked = status;
+                checkbox.disabled = status;
+            }
         }
     }
 

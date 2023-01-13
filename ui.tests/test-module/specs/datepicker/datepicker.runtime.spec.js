@@ -30,6 +30,7 @@ describe("Form Runtime with Date Picker", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -42,6 +43,7 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
+            cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
             cy.get('input').should('have.value', value)
         })
     }
@@ -80,5 +82,50 @@ describe("Form Runtime with Date Picker", () => {
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
+
+    it("should show and hide components on certain date input", () => {
+        // Rule on datePicker1: When input of datePicker1 is 2022-12-23 => Show datepicker3 and Hide datePicker4
+
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker3, datePicker3FieldView] = Object.entries(formContainer._fields)[2];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = '2022-12-23';
+
+        cy.get(`#${datePicker1}`).find("input").type(input).blur().then(x => {
+            cy.get(`#${datePicker3}`).should('be.visible')
+            cy.get(`#${datePicker4}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain date input", () => {
+        // Rule on datePicker1: When input of datePicker1 is 2023-01-01 => Enable datepicker2 and Disable datePicker4
+
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker2, datePicker2FieldView] = Object.entries(formContainer._fields)[1];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = '2023-01-01'
+
+        cy.get(`#${datePicker1}`).find("input").type(input).blur().then(x => {
+            cy.get(`#${datePicker2}`).find("input").should('be.enabled')
+            cy.get(`#${datePicker4}`).find("input").should('not.be.enabled')
+        })
+    })
+
+    it("should show validation error messages", () => {
+        // Rule on datePicker4: Validate datePicker4 using Expression: datePicker4 === 2023-01-01
+
+        const [datePicker4, datePicker1FieldView] = Object.entries(formContainer._fields)[3];
+        const incorrectInput = "2023-01-02";
+        const correctInput = "2023-01-01";
+
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
+        })
     })
 })

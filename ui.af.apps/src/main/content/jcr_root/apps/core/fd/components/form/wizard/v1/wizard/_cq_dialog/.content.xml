@@ -21,6 +21,7 @@
     jcr:title="Wizard"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.forms.components.panelcontainer.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_wizard_v1"
     trackingFeature="core-components:adaptiveform-wizard:v1">
     <content
         granite:class="cmp-adaptiveform-wizard__editdialog"
@@ -37,10 +38,6 @@
                         jcr:title="Basic"
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         path="/libs/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
-                    <repeat
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="granite/ui/components/coral/foundation/include"
-                        path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/repeat"/>
                     <help
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"

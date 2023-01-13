@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Adaptive Form Field"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <formats
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Formats"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <allowedFormats
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                            fieldDescription="The number input formats that are allowed to be selected by an author."
+                                            fieldLabel="Allowed Formats"
+                                            name="./allowedFormats">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <pattern1
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat1"
+                                                    text="No Pattern"
+                                                    value="No Pattern=#####################.###############"/>
+                                            <pattern2
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat2"
+                                                    text="$1,234.21"
+                                                    value="$1,234.21=¤#,##0.00"/>
+                                            <pattern3
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat3"
+                                                    text="$1234.21"
+                                                    value="$1234.21=()¤####0.00"/>
+                                            <pattern4
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat4"
+                                                    text="1,234.210"
+                                                    value="1,234.210=#,###,##0.000"/>
+                                            <pattern5
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat5"
+                                                    text="123,421%"
+                                                    value="123,421%=#,###,##0%"/>
+                                            <pattern6
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat6"
+                                                    text="23421%"
+                                                    value="23421%=####0%"/>
+                                        </items>
+                                    </allowedFormats>
+                                    <customFormats
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        fieldDescription="The number input formats that are allowed to be selected by an author."
+                                        fieldLabel="Custom Formats"
+                                        composite="true"
+                                        name="./allowedCustomFormats">
+                                        <field
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType = "granite/ui/components/coral/foundation/container"
+                                            name = "./allowedCustomFormats">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <customFormatKey
+                                                    jcr:primaryType="nt:unstructured"
+                                                    fieldDescription="The number input format that will be displayed in formatter dropdown in dialog."
+                                                    fieldLabel="Custom Format Key"
+                                                    sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                    name = "customFormatKey"/>
+                                                <customFormatExpression
+                                                    jcr:primaryType="nt:unstructured"
+                                                    fieldDescription="The number input format in unicode which will be used in runtime."
+                                                    fieldLabel="Custom Format Expression"
+                                                    sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                    name = "customFormatValue"/>
+                                            </items>
+                                        </field>
+                                    </customFormats>
+                                </items>
+                            </column>
+                        </items>
+                    </formats>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

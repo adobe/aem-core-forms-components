@@ -16,7 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Iterator;
 import java.util.function.Function;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -32,16 +32,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.adobe.aemds.guide.model.FormMetaData;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.testing.MockContentPolicy;
 import com.adobe.granite.ui.components.ExpressionResolver;
+import com.adobe.granite.ui.components.Value;
 import com.adobe.granite.ui.components.ds.DataSource;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static com.adobe.cq.forms.core.components.internal.servlets.AbstractDataSourceServlet.PN_TEXT;
 import static com.adobe.cq.forms.core.components.internal.servlets.AbstractDataSourceServlet.PN_VALUE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -58,7 +61,13 @@ public class FormMetaDataDataSourceServletTest {
     private FormMetaData formMetaDataMock;
 
     @Mock
+    private ContentPolicyManager contentPolicyManagerMock;
+
+    @Mock
     private FormsManager.ComponentDescription description;
+
+    @Mock
+    private FormsManager.ComponentDescription formatters;
 
     @Mock
     private ExpressionResolver expressionResolver;
@@ -67,20 +76,21 @@ public class FormMetaDataDataSourceServletTest {
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, APPS_ROOT);
         registerFormMetadataAdapter();
+        registerContentPolicyManager();
         // note: transient state can't be mocked like this
         // context.registerService(ExpressionResolver.class, expressionResolver);
-        when(expressionResolver.resolve(any(String.class), any(Locale.class), any(), any(SlingHttpServletRequest.class)))
+    }
+
+    @Test
+    public void testDataSource() throws Exception {
+        context.currentResource("/apps/actiontypedatasource");
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
             .then(returnsFirstArg());
         ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
         componentDescriptions.add(description);
         when(formMetaDataMock.getSubmitActions()).thenReturn(componentDescriptions.iterator());
         when(description.getTitle()).thenReturn("Form Action");
         when(description.getResourceType()).thenReturn("form/action");
-    }
-
-    @Test
-    public void testDataSource() throws Exception {
-        context.currentResource("/apps/actiontypedatasource");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
@@ -94,8 +104,38 @@ public class FormMetaDataDataSourceServletTest {
         assertEquals(1, Lists.newArrayList(resource.getChildren()).size());
     }
 
+    @Test
+    public void testDataSourceForFormattersForNumberInput() throws Exception {
+        context.currentResource("/apps/formattertypedatasourcenumberinput");
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
+            .then(returnsFirstArg());
+        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
+            "/apps/formattertypedatasourcenumberinputPolicy"));
+        when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
+        context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/formattertypedatasourcenumberinput");
+        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
+        // set expression resolver mock
+        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
+        dataSourceServlet.doGet(context.request(), context.response());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
+            DataSource.class.getName());
+        assertNotNull(dataSource);
+        int size = 0;
+        Iterator<Resource> iterator = dataSource.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            size += 1;
+        }
+        assertEquals(7, size);
+    }
+
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, FormMetaData.class,
             (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
+    }
+
+    private void registerContentPolicyManager() {
+        context.registerAdapter(ResourceResolver.class, ContentPolicyManager.class,
+            (Function<ResourceResolver, ContentPolicyManager>) input -> contentPolicyManagerMock);
     }
 }

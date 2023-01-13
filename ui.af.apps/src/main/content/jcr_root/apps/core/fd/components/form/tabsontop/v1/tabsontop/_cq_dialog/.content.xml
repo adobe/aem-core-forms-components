@@ -21,7 +21,7 @@
           jcr:title="Tabs on top"
           sling:resourceType="cq/gui/components/authoring/dialog"
           extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.forms.components.panelcontainer.v1.editor]"
-          helpPath="https://www.adobe.com/"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_tabsontop_v1"
           trackingFeature="core-components:adaptiveform-tabsontop:v1">
     <content
             granite:class="cmp-tabs__editor"
@@ -37,10 +37,6 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Items"
                             sling:resourceType="granite/ui/components/coral/foundation/container"/>
-                    <repeat
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="granite/ui/components/coral/foundation/include"
-                            path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/repeat"/>
                     <help
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
