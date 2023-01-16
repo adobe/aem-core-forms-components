@@ -192,6 +192,7 @@ export default class FormPanel extends FormFieldBase {
     applyState(state) {
         this.updateVisible(state.visible);
         this.updateEnabled(state.enabled);
+        this.updateReadOnly(state.readOnly);
         this.initializeHelpContent(state);
     }
 
@@ -200,6 +201,10 @@ export default class FormPanel extends FormFieldBase {
      * @param enable
      */
     updateEnabled(enable) {
+        this.children.forEach((childView)=>{
+           var state=childView._model.getState();
+           childView.applyState(state);
+        })
         this.toggle(enable, Constants.ARIA_DISABLED, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enable);
     }
@@ -212,6 +217,13 @@ export default class FormPanel extends FormFieldBase {
     updateValid(valid, state) {
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+    }
+
+    updateReadOnly(readOnly) {
+        this.children.forEach((childView)=>{
+            var state=childView._model.getState();
+            childView.applyState(state);
+        })
     }
 
     /**

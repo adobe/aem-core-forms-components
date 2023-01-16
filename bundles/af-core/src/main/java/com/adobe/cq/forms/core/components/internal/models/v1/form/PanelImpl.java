@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -44,6 +45,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @JsonIgnore
     protected boolean wrapData;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean readOnly;
+
     @JsonIgnore
     @Override
     public boolean isRequired() {
@@ -62,6 +67,14 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        if (getEditMode()) {
+            return false;
+        }
+        return readOnly;
     }
 
 }

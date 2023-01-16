@@ -878,6 +878,7 @@
                 "label",
                 "name",
                 "properties",
+                "readOnly",
                 "rules",
                 "screenReaderText",
                 "tooltip",

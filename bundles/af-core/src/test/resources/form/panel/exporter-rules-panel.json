@@ -6,6 +6,7 @@
   "name":"abc",
   "visible":true,
   "enabled":true,
+  "readOnly":false,
   "items": [
     {
       "id":"textinput-bec585e910",
