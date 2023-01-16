@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -96,6 +97,17 @@ public class PanelContainerImplTest {
     void testGetName() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         assertEquals("abc", panel.getName());
+    }
+
+    @Test
+    void testGetReadOnly() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        request.setPathInfo("abc");
+        request.setAttribute("WCMMode", "EDIT");
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        assertEquals(false, panel.isReadOnly());
+        request.removeAttribute("WCMMode");
+        assertEquals(false, panel.isReadOnly());
     }
 
     @Test
