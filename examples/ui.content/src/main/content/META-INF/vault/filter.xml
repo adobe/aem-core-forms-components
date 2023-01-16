@@ -10,8 +10,10 @@
     <filter root="/content/core-components-examples/library/adaptive-form" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/structure/jcr:content/root/sidebar/accordion"  mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/structure/jcr:content/root/sidebar/accordion/item_1579021109270"  mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/structure/jcr:content/root/sidebar/accordion/item_1879021109280"  mode="update"/>
     <filter root="/content/core-components-examples/library/core-content/aemform" mode="update"/>
     <filter root="/content/core-components-examples/library/jcr:content/root/responsivegrid/container_40754488/teaser_1837085907" mode="update"/>
     <filter root="/content/dam/core-components-examples/library/forms-components"/>
     <filter root="/content/core-components-examples/library/jcr:content/root/responsivegrid/container_1589240808" mode="update"/>
+    <filter root="/content/core-components-examples/library/jcr:content/root/responsivegrid/container_1789240808" mode="update"/>
 </workspaceFilter>
