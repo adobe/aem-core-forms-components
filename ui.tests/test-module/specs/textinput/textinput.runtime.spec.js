@@ -116,7 +116,7 @@ describe("Form Runtime with Text Input", () => {
         })
     })
 
-    it("should show validation error messages", () => {
+    it("should show validation error messages based on expression rule", () => {
         // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
 
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
@@ -133,7 +133,7 @@ describe("Form Runtime with Text Input", () => {
         })
     })
 
-    it("should set and clear value", () => {
+    it("should set and clear value based on rules", () => {
         // Rule on textBox5: When input of textBox5 is "aemforms", set value of textBox1 to "new value" and clear value of textBox4
 
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];

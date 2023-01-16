@@ -150,7 +150,7 @@ describe("Form with Number Input", () => {
         })
     })
 
-    it("should show validation error messages", () => {
+    it("should show validation error messages based on expression rules", () => {
         // Rule on numberInput4: Validate numberInput4 using Expression: numberInput4 == 64
 
         const [numberInput4, numberInput1FieldView] = Object.entries(formContainer._fields)[3];
@@ -167,7 +167,7 @@ describe("Form with Number Input", () => {
         })
     })
 
-    it("should set and clear value", () => {
+    it("should set and clear value based on rules", () => {
         // Rule on numberInput5: When input of numberInput5 is 4502, set value of numberInput4 to 400 and clear value of numberInput1
 
         const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];

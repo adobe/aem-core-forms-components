@@ -144,7 +144,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         })
     })
 
-    it("should show validation error messages", () => {
+    it("should show validation error messages based on expression rules", () => {
         // Rule on checkBox5: Validate checkBox using Expression: checkBox5 === checkBox3
 
         const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];

@@ -133,11 +133,11 @@ describe("Form with Radio Button Input", () => {
         })
     })
 
-    it("should show validation error messages based on rule", () => {
+    it("should show validation error messages based on expression rule", () => {
         // Rule on radioButton6: Validate radioButton6 using Expression: radioButton6 === radioButton5
 
-        const [radioButton5, radioButton3FieldView] = Object.entries(formContainer._fields)[4];
-        const [radioButton6, radioButton5FieldView] = Object.entries(formContainer._fields)[5];
+        const [radioButton5, radioButton5FieldView] = Object.entries(formContainer._fields)[4];
+        const [radioButton6, radioButton6FieldView] = Object.entries(formContainer._fields)[5];
 
         cy.get(`#${radioButton5}`).find("input").check(["1"]).then(x => {
             cy.get(`#${radioButton6}`).find("input").check(["0"])

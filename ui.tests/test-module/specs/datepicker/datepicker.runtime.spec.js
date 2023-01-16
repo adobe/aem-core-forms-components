@@ -112,7 +112,7 @@ describe("Form Runtime with Date Picker", () => {
         })
     })
 
-    it("should show validation error messages", () => {
+    it("should show validation error messages based on expression rules", () => {
         // Rule on datePicker4: Validate datePicker4 using Expression: datePicker4 === 2023-01-01
 
         const [datePicker4, datePicker1FieldView] = Object.entries(formContainer._fields)[3];
