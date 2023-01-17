@@ -73,8 +73,7 @@
             const form = new FormContainerV2({_formJson, _prefillData, _path, _element});
             const formLanguage = form.getLang();
             if (formLanguage !== undefined) {
-                // todo: add context path
-                const aemLangUrl = `/etc.clientlibs/core/fd/components/form/container/v2/container/clientlibs/site/resources/i18n/${formLanguage}.json`;
+                const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
                 FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
             }
             return form;

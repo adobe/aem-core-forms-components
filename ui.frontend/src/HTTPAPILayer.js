@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 import {Constants} from "./constants";
+import Utils from "./utils";
 
 export default class HTTPAPILayer {
 
@@ -66,9 +67,11 @@ export default class HTTPAPILayer {
     }
 
     static async getJson(url) {
+        // prefix context path in url
+        let urlWithContextPath = `${Utils.getContextPath()}${url}`
         return new Promise(resolve => {
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
+            xhr.open('GET', urlWithContextPath, true);
             xhr.responseType = 'json';
             xhr.onload = function () {
                 let status = xhr.status;
