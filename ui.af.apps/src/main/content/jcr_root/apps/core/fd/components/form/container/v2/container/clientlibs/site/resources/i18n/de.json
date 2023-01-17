@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "Drücken Sie die Eingabetaste, um die Datei zu löschen ",
+  "FileSizeGreater"       :        "Dateien {0} übersteigen die erwartete Größe: {1}MB.",
+  "FileNameInvalid"       :       "Datei(en) {0} hat/haben ungültige Zeichen in ihrem Namen. Es werden nur alphanumerische Zeichen unterstützt",
+  "FileMimeTypeInvalid"   :       "Datei(en) {0} ist/sind nicht unterstützte(r) Dateityp(en)",
+  "InternalFormSubmissionError" :  "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten."
+}

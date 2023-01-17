@@ -39,6 +39,11 @@ export default class FormContainer {
         return id ? this._model.getElement(id) : this._model;
     }
 
+    // todo: fix this once exposed in af-core
+    getLang() {
+        return this._model._jsonModel.lang || "en";
+    }
+
     addField(fieldView) {
         if (fieldView.getFormContainerPath() === this._path) {
             let fieldId = fieldView.getId();

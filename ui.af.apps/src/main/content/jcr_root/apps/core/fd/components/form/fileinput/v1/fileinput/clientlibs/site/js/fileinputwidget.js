@@ -23,6 +23,8 @@ class FileInputWidget {
     #widget=null
     #fileArr=[]
     #fileList=null
+    #lang="en"
+    #languageUtils=null // language utils reference
     #model=null // passed by reference
     #isFileUpdate=false // handle safari state
     #options=null // initialize options
@@ -34,18 +36,15 @@ class FileInputWidget {
         "MIMETYPE":3
     }
     #initialFileValueFileNameMap;
-    #strings={
-        FileCloseAccessText: "Press Enter to delete the file ",
-        FileMimeTypeInvalid: "File(s) {0} are unsupported file types",
-        FileNameInvalid: "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
-        FileSizeGreater: "File(s) {0} are greater than the expected size: {1}."
-    }
 
-    constructor(widget, fileList, model) {
+    constructor(widget, fileList, model, languageUtils) {
         // initialize the widget and model
         this.#widget = widget;
         this.#model = model;
         this.#fileList = fileList;
+        // get the current lang
+        this.#lang = this.#model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
+        this.#languageUtils = languageUtils;
         // initialize options for backward compatibility
         this.#options = Object.assign({}, {
             "contextPath" : ""
@@ -239,7 +238,7 @@ class FileInputWidget {
         let fileClose = document.createElement('span');
         fileClose.setAttribute('tabindex', '0');
         fileClose.setAttribute('class', "cmp-adaptiveform-fileinput__filedelete");
-        fileClose.setAttribute('aria-label', this.#strings.FileCloseAccessText + fileName);
+        fileClose.setAttribute('aria-label', this.#languageUtils.getTranslatedString(this.#lang, "FileCloseAccessText") + fileName);
         fileClose.setAttribute('role', 'button');
         fileClose.textContent = "x";
         fileClose.addEventListener('keypress', function(e) {
@@ -288,33 +287,14 @@ class FileInputWidget {
         }
     }
 
-    #getLocalizedMessage(category, message, snippets){
-        let resolvedMessage = message;
-        if(snippets){
-            //resolve message with snippet
-            resolvedMessage = resolvedMessage.replace(/{(\d+)}/g, function(match, number) {
-                return typeof snippets[number] != 'undefined'
-                    ? snippets[number]
-                    : match
-                    ;
-            });
-        }
-        let text = "";
-        if (category) {
-            text += " [" + category + "]";
-        }
-        text += "  " + resolvedMessage + "\r\n" ;
-        return text;
-    }
-
     #invalidMessage(fileName, invalidFeature){
         // todo: have add localization here
         if(invalidFeature === this.#invalidFeature.SIZE) {
-            alert(this.#getLocalizedMessage("", this.#strings["FileSizeGreater"], [fileName, this.#options.maxFileSize]));
+            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileSizeGreater", [fileName, this.#options.maxFileSize]));
         } else if (invalidFeature === this.#invalidFeature.NAME) {
-            alert(this.#getLocalizedMessage("", this.#strings["FileNameInvalid"], [fileName]));
+            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileNameInvalid", [fileName]));
         } else if (invalidFeature === this.#invalidFeature.MIMETYPE) {
-            alert(this.#getLocalizedMessage("", this.#strings["FileMimeTypeInvalid"], [fileName]));
+            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileMimeTypeInvalid", [fileName]));
         }
     }
 

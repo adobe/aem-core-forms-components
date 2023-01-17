@@ -25,9 +25,6 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
-
-        // todo: handle localization here
-        static ERROR_MSG = "Encountered an internal error while submitting the form."
         constructor(params) {
             super(params);
             this._model.subscribe((action) => {
@@ -47,7 +44,8 @@
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                window.alert(FormContainerV2.ERROR_MSG);
+                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                window.alert(defaultSubmissionError);
             }, "submitError");
         }
     }
@@ -72,7 +70,14 @@
         const formContainer = FormView.Utils.setupFormContainer(({
             _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path, _element});
+            const form = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            const formLanguage = form.getLang();
+            if (formLanguage !== undefined) {
+                // todo: add context path
+                const aemLangUrl = `/etc.clientlibs/core/fd/components/form/container/v2/container/clientlibs/site/resources/i18n/${formLanguage}.json`;
+                FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
+            }
+            return form;
         }, FormContainerV2.selectors.self, FormContainerV2.IS)
     }
 
