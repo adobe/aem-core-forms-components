@@ -398,6 +398,7 @@ class DatePickerWidget {
                 if(DatePickerWidget.#visible) {
                     this.#hide();
                     this.#curInstance.$field.focus();
+                    this.#deactivateField();
                     handled = true;
                 }
                 break;
@@ -826,6 +827,8 @@ class DatePickerWidget {
         }
     }
 
+    #hotKeysCallBack = this.#hotKeys.bind(this);
+
     #activateField(evnt) {
         let self = this;
         this.#curInstance = window.afCache.get(evnt.target,"datetimepicker");
@@ -837,7 +840,7 @@ class DatePickerWidget {
         }
         //enable hot keys only for non touch devices
         if(!this.#touchSupported && !this.#keysEnabled) {
-            this.#dp.addEventListener("keydown", function(evnt){self.#hotKeys(evnt);},false);
+            document.addEventListener("keydown", self.#hotKeysCallBack);
             this.#keysEnabled = true;
         }
     }
@@ -846,7 +849,7 @@ class DatePickerWidget {
         let self = this;
         if(self.#curInstance) {
             if(this.#keysEnabled) {
-                this.#dp.removeEventListener("keydown", self.#hotKeys);
+                document.removeEventListener("keydown", self.#hotKeysCallBack);
                 this.#keysEnabled = false;
             }
             // Issue LC-7049:
@@ -1091,7 +1094,19 @@ class DatePickerWidget {
 
     addEventListener(event, handler, widget) {
         let inst = window.afCache.get(widget, "datetimepicker");
-        inst.$field.addEventListener(event, handler);
+        inst.$field.addEventListener(event, function(e) {
+            switch(e.type) {
+                case 'blur':
+                    if (!DatePickerWidget.#visible) {
+                        handler(e);
+                    }
+                    break;
+                case 'focus':
+                    handler(e);
+                    break;
+
+            }
+        });
     }
 
 }
