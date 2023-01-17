@@ -155,6 +155,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
@@ -177,6 +178,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
+
+        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getJcrPath());
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
             customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);

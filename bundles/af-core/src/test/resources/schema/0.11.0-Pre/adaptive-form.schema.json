@@ -94,7 +94,8 @@
             "step",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in text-input"
@@ -186,7 +187,8 @@
             "step",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in NumberField"
@@ -265,7 +267,8 @@
             "required",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in SwitchField"
@@ -375,7 +378,8 @@
             "step",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in DateField"
@@ -468,7 +472,8 @@
             "uniqueItems",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in SelectionField"
@@ -555,7 +560,8 @@
             "required",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in RadioGroupField"
@@ -639,7 +645,8 @@
             "uniqueItems",
             "type",
             "validationExpression",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in file-input"
@@ -752,7 +759,8 @@
             "rules",
             "visible",
             "value",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in StaticField"
@@ -809,7 +817,8 @@
             "rules",
             "visible",
             "value",
-            "id"
+            "id",
+            "jcrPath"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in Image"
@@ -888,7 +897,8 @@
                 "type",
                 "uniqueItems",
                 "validationExpression",
-                "id"
+                "id",
+                "jcrPath"
               ],
               "errorMessage": {
                 "enum": "${0} property is not allowed in Panel"

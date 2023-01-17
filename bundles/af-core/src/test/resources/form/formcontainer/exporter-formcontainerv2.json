@@ -1,49 +1,55 @@
 {
+  "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "fieldType": "form",
   "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-  "items": [
-    {
-      "id":"textinput-9a52c5fa93",
-      "description": "dummy",
-      "required": false,
-      "name": "abc",
-      "visible": false,
-      "enabled": true,
-      "readOnly": false,
-      "fieldType": "text-input",
-      "label": {
-        "visible": true,
-        "richText": false,
-        "value": "def"
-      },
-      "properties":{
-        "fd:dor":{
-          "dorExclusion":false
-        }
-      },
-      "type": "string",
-      ":type": "core/fd/components/form/textinput/v1/textinput",
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
-      }
-    }
-  ],
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  "fieldType" : "form",
+  "lang": "en",
   "properties": {
     "fd:dor": {
-      "dorType":"generate",
-      "dorTemplateRef":"xyz"
+      "dorType": "generate",
+      "dorTemplateRef": "xyz"
     },
+    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC"
   },
-  "metadata": {
-    "grammar": "json-formula-1.0.0",
-    "version": "1.0.0"
+  "items": [
+    {
+      "id": "textinput-9a52c5fa93",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  ],
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
   },
-  "id" : "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-  "lang" : "en",
-  "adaptiveform":"0.11.0-Pre",
+  "metadata": {
+    "version": "1.0.0",
+    "grammar": "json-formula-1.0.0"
+  },
+  "adaptiveform": "0.11.0-Pre",
   ":type": "core/fd/components/form/container/v2/container"
 }
