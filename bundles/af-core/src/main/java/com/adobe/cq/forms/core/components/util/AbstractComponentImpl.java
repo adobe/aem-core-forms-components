@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
@@ -37,6 +38,8 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 
 // this class is copied from WCM, since for forms adapting via slingRequest is optional
 
@@ -185,6 +188,18 @@ public abstract class AbstractComponentImpl implements Component {
                     .orElse(null)))
             .withType(() -> this.resource.getResourceType())
             .build();
+    }
+
+    /**
+     * Returns getPath of the form field
+     *
+     * @return getPath of the field
+     * @since com.adobe.cq.forms.core.components.util 3.1.0
+     */
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public String getPath() {
+        return resource.getPath();
     }
 
 }
