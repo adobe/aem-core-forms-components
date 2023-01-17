@@ -1,51 +1,56 @@
 {
-  "id":"panel-d29e24f4ca",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
-  "visible":true,
-  "enabled":true,
-  "items":[
+  "id": "panel-d29e24f4ca",
+  "fieldType": "panel",
+  "name": "abc",
+  "visible": true,
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
+  "enabled": true,
+  "items": [
     {
-      "id":"textinput-3a2afcbdfd",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "richText":false,
-        "visible":true,
-        "value":"def"
+      "id": "textinput-3a2afcbdfd",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
       },
-      "properties":{
-        "fd:dor":{
-          "dorExclusion":false
-        }
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/panel/textinput"
       },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "richText":false,
-    "visible":true,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
   },
-  "properties":{
-    "afs:layout":
-    {
-      "tooltipVisible":false
-    }
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
   },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:path": "/content/panel"
   },
-  ":type":"core/fd/components/form/panel/v1/panel"
+  ":type": "core/fd/components/form/panel/v1/panel"
 }

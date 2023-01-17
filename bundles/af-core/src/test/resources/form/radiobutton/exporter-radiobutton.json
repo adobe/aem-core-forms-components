@@ -1,13 +1,13 @@
 {
   "id": "radiobutton-668c32a056",
+  "dataRef": "a.b",
+  "fieldType": "radio-group",
+  "name": "radiobutton_12345",
+  "visible": false,
   "description": "long description",
   "tooltip": "<p>short description</p>",
   "type": "string",
-  "dataRef":"a.b",
-  "fieldType": "radio-group",
   "required": true,
-  "name": "radiobutton_12345",
-  "visible": false,
   "enabled": true,
   "constraintMessages": {
     "required": "This is a required field",
@@ -20,28 +20,31 @@
     "Item 2"
   ],
   "default": "0",
+  "screenReaderText": "'custom text'",
   "label": {
     "richText": false,
     "visible": true,
     "value": "Radio Button"
   },
-  "screenReaderText":"'custom text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
   "properties": {
     "afs:layout": {
       "tooltipVisible": true,
       "orientation": "vertical"
     },
-    "fd:dor":{
+    "fd:dor": {
       "dorExclusion": true,
       "dorColspan": "4"
-    }
+    },
+    "fd:path": "/content/radiobutton"
   },
   "enum": [
     "0",
     "1"
   ],
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
   ":type": "core/fd/components/form/radiobutton/v1/radiobutton"
 }

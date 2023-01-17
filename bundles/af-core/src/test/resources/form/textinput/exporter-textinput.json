@@ -1,37 +1,40 @@
 {
   "id": "textinput-3c50c84973",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "text-input",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "text-input",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
+  "type": "string",
+  "required": false,
+  "enabled": true,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "default": "abc",
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
   "properties": {
-    "afs:layout" : {
+    "afs:layout": {
       "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion":true,
+      "dorExclusion": true,
       "dorColspan": "4",
-      "dorBindRef" : "Text1"
-    }
+      "dorBindRef": "Text1"
+    },
+    "fd:path": "/content/textinput"
   },
-  "default" : "abc",
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
-  "type": "string",
-  ":type": "core/fd/components/form/textinput/v1/textinput",
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  ":type": "core/fd/components/form/textinput/v1/textinput"
 }
