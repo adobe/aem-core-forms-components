@@ -257,7 +257,6 @@ const waitForFormInit = () => {
                     }
                     isReady();
                 }
-                console.error(`waiting for ${INIT_EVENT}`)
                 document.addEventListener(INIT_EVENT, listener1);
             })
             return promise
@@ -266,15 +265,13 @@ const waitForFormInit = () => {
 }
 
 const waitForChildViewAddition = () => {
-    return cy.get('[data-cmp-is="adaptiveFormPanel"]')
+    return cy.get('[data-cmp-is="adaptiveFormContainer"]')
         .then((el) => {
-            const ADD_EVENT = "AF_PanelChildAdded";
+            const ADD_EVENT = "AF_PanelInstanceAdded";
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    console.error(`received ${ADD_EVENT}`);
                     resolve(e.detail.formContainer);
                 };
-                console.error(`waiting for ${ADD_EVENT}`);
                 el[0].addEventListener(ADD_EVENT, listener1);
             })
             return promise;

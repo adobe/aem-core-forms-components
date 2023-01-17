@@ -24,6 +24,15 @@ export default class FormContainer {
         this._deferredParents = {};
         this._element = params._element;
     }
+
+    /**
+     * Adds instance manger view to fields of formContainer
+     * @param instanceManager
+     */
+    addInstanceManager(instanceManager) {
+        this._fields[instanceManager.id] = instanceManager;
+    }
+
     /**
      * returns the form field view
      * @param fieldId
@@ -39,15 +48,26 @@ export default class FormContainer {
         return id ? this._model.getElement(id) : this._model;
     }
 
+    /**
+     * Returns id of form element present in HTML as parent
+     * @param model
+     * @returns parent id
+     */
+    getParentFormElementId(model) {
+        const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
+        if (parentModel.fieldType) {
+            return parentModel.id;
+        }
+        return this.getParentFormElementId(parentModel);
+    }
+
     addField(fieldView) {
         if (fieldView.getFormContainerPath() === this._path) {
             let fieldId = fieldView.getId();
             this._fields[fieldId] = fieldView;
             let model = this.getModel(fieldId);
             fieldView.setModel(model);
-
-            //todo fix parentId for non form elements, right now parent id might be non form element
-            let parentId = model.parent.id;
+            const parentId = this.getParentFormElementId(model);
             if (parentId != '$form') {
                 let parentView = this._fields[parentId];
                 //if parent view has been initialized then add parent relationship, otherwise add it to deferred parent-child relationship
@@ -97,5 +117,9 @@ export default class FormContainer {
 
     getFormElement() {
         return this._element;
+    }
+
+    getAllFields() {
+        return this._fields;
     }
 }

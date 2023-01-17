@@ -56,6 +56,21 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     protected List<Resource> filteredChildComponents;
 
     @Override
+    public Boolean isRepeatable() {
+        return repeatable;
+    }
+
+    @Override
+    public Integer getMinOccur() {
+        return minOccur;
+    }
+
+    @Override
+    public Integer getMaxOccur() {
+        return maxOccur;
+    }
+
+    @Override
     public Integer getMinItems() {
         return minItems;
     }

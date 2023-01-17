@@ -42,6 +42,27 @@ public class AbstractContainerImplTest {
     }
 
     @Test
+    void testGetMinOccur() {
+        AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
+        Mockito.when(abstractContainerMock.getMinOccur()).thenCallRealMethod();
+        assertEquals(null, abstractContainerMock.getMinOccur());
+    }
+
+    @Test
+    void testGetMaxOccur() {
+        AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
+        Mockito.when(abstractContainerMock.getMaxOccur()).thenCallRealMethod();
+        assertEquals(null, abstractContainerMock.getMaxOccur());
+    }
+
+    @Test
+    void testIsRepeatable() {
+        AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
+        Mockito.when(abstractContainerMock.isRepeatable()).thenCallRealMethod();
+        assertEquals(null, abstractContainerMock.isRepeatable());
+    }
+
+    @Test
     void testGetDorProperties() {
         AbstractContainerImpl abstractContainerMock = Mockito.mock(AbstractContainerImpl.class);
         Mockito.when(abstractContainerMock.getDorProperties()).thenCallRealMethod();

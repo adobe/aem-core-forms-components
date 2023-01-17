@@ -2,13 +2,13 @@
   "id":"panel-95130a1dba",
   "description":"dependent names description",
   "tooltip":"dependent names tooltip",
-  "type":"array",
   "fieldType":"panel",
   "name":"abc",
   "visible":true,
   "enabled":true,
-  "minItems":1,
-  "maxItems":10,
+  "repeatable": true,
+  "minOccur":1,
+  "maxOccur":10,
   "items":[
     {
       "id":"textinput-9670d145f5",

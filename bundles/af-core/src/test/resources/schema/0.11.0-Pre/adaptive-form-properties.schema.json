@@ -50,6 +50,8 @@
           "pattern",
           "minItems",
           "maxItems",
+          "minOccur",
+          "maxOccur",
           "maxFileSize",
           "accept",
           "uniqueItems",
