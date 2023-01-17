@@ -101,6 +101,8 @@
                               jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
                               jcr:lastModifiedBy="admin"
                               jcr:primaryType="nt:unstructured"
+                              enum="[1, 2]"
+                              enumNames="[Item1, Item2]"
                               sling:resourceType="forms-components-examples/components/form/dropdown"/>
                         </container>
                     </component>
