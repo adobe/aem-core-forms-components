@@ -128,4 +128,26 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
         })
     })
+
+    it("Formatters test on Custom DatePicker widget", () => {
+
+        const [datePicker5, datePicker5FieldView] = Object.entries(formContainer._fields)[4];
+        const incorrectInput = "01-01-2023";
+        const correctInput = "2023-01-01";
+
+        cy.get(`#${datePicker5}`).find("input").should('have.attr',"type", "text");
+        cy.get(`#${datePicker5}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${datePicker5}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
+            cy.get(`#${datePicker5}`).find("input").should("have.value", "January 1, 2023")
+            const model = formContainer._model.getElement(datePicker5)
+            expect(model.getState().value).to.equal(correctInput)
+        })
+        cy.get(`#${datePicker5}`).find("input").focus().then(x => {
+            cy.get(`#${datePicker5}`).find("input").should("have.value", "Sunday, January 1, 2023")
+        })
+    })
 })

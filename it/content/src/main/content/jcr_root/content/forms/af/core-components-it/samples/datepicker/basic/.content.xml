@@ -62,6 +62,15 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </dateinput4>
+            <dateinput5
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 5 (Formatter Support)"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    name="dateinput5"
+                    displayFormat="MMMM d, y"
+                    editFormat="EEEE, MMMM d, y"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
