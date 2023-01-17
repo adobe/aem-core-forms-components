@@ -49,7 +49,7 @@ public class CustomAFPrefillService implements DataProvider {
      */
     @Override
     public String getServiceDescription() {
-        return "Custom Pre-fill Service";
+        return "Core Custom Pre-fill Service";
     }
 
     /* (non-Javadoc)
@@ -57,7 +57,7 @@ public class CustomAFPrefillService implements DataProvider {
      */
     @Override
     public String getServiceName() {
-        return "Custom Pre-fill Service";
+        return "Core Custom Pre-fill Service";
     }
 
     /* (non-Javadoc)
