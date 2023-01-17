@@ -15,7 +15,8 @@
     },
     "fd:dor": {
       "dorExclusion":false
-    }
+    },
+    "fd:path":"/content/checkbox"
   },
   "enforceEnum":true,
   "enum" : [true, false],

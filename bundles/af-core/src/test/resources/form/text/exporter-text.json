@@ -7,6 +7,9 @@
   "visible": true,
   "richText": true,
   ":type": "core/fd/components/form/text/v1/text",
+  "properties": {
+    "fd:path":"/content/text"
+  },
   "events": {
     "custom:setProperty": [
       "$event.payload"
