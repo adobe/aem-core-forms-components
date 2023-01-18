@@ -21,6 +21,8 @@ describe("Form with File Input", () => {
     const selectors = {
         numberinput : `[data-cmp-is="${IS}"]`
     }
+    const fileInput1 = "input[name='fileinput1']";
+    const submitBtn = "submit1673953138924";
 
     let formContainer = null
 
@@ -28,6 +30,10 @@ describe("Form with File Input", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
     });
 
     const checkHTML = (id, state) => {
@@ -52,13 +58,32 @@ describe("Form with File Input", () => {
         })
     }
 
+    const validatePrefillFormAndPreviewFile = (prefillId, fileName) => {
+        // preview the form by passing the prefillId parameter in the URL
+        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`, {
+            onBeforeLoad : (win) => {
+                cy.stub(win, 'open'); // creating a stub to check file preview
+            }
+        });
+
+        // validating the file attachment in the prefilled data
+        cy.get(fileInput1).then(() => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").should('have.text', fileName)
+        });
+
+        // check if file preview works
+        cy.get('.cmp-adaptiveform-fileinput__filename').eq(0).click();
+        cy.window().its('open').should('be.called');
+    }
+
     it(" should get model and view initialized properly ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-            checkHTML(id, field.getModel().getState())
+            if(id.startsWith("fileinput"))
+                checkHTML(id, field.getModel().getState())
         });
     })
 
@@ -71,13 +96,15 @@ describe("Form with File Input", () => {
                 "mediaType" : "application/octet-stream",
                 "data" : "http://xyz.com/def.pdf"
             }
-            checkHTML(model.id, model.getState()).then(() => {
-                model.visible = false
-                return checkHTML(model.id, model.getState())
-            }).then(() => {
-                model.enabled = false
-                return checkHTML(model.id, model.getState())
-            })
+            if(id.startsWith("fileinput")) {
+                checkHTML(model.id, model.getState()).then(() => {
+                    model.visible = false
+                    return checkHTML(model.id, model.getState())
+                }).then(() => {
+                    model.enabled = false
+                    return checkHTML(model.id, model.getState())
+                })
+            }
         });
     });
 
@@ -116,6 +143,25 @@ describe("Form with File Input", () => {
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
+
+    it("attach a file, submit the form, view the prefill of submitted form and check File Preview In File Attachment", () => {
+        const fileName = "empty.pdf";
+
+        cy.get(fileInput1).attachFile(fileName);
+        cy.get(".cmp-adaptiveform-button__widget").click();
+
+        cy.wait('@afSubmission').then(({ response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+            expect(response.body.metadata).to.be.not.null;
+            expect(response.body.metadata.prefillId).to.be.not.null;
+            expect(response.body.thankYouMessage).to.be.not.null;
+            expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
+
+            const prefillId = response.body.metadata.prefillId;
+            validatePrefillFormAndPreviewFile(prefillId, fileName);
+        })
     })
 
 })
