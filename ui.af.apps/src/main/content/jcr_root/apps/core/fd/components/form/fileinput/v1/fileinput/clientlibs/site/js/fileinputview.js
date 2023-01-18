@@ -72,7 +72,7 @@
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model, FormView.LanguageUtils)
+                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }
             this.widgetObject.setValue(value);
         }
@@ -80,7 +80,7 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model, FormView.LanguageUtils)
+                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }
         }
     }

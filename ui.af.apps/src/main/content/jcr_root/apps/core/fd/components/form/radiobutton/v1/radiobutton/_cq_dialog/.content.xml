@@ -43,10 +43,10 @@
                                   sling:orderBefore="visible"
                                   sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                   granite:class="cmp-adaptiveform-radiobutton__type"
-                                  emptyText="Select"
                                   fieldLabel="Data type of submitted value"
                                   required="{Boolean}true"
                                   name="./type"
+                                  key="String"
                                   value="string">
                                 <items jcr:primaryType="nt:unstructured">
                                     <string jcr:primaryType="nt:unstructured" text="String" value="string"/>

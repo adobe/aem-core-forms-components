@@ -24,7 +24,6 @@ class FileInputWidget {
     #fileArr=[]
     #fileList=null
     #lang="en"
-    #languageUtils=null // language utils reference
     #model=null // passed by reference
     #isFileUpdate=false // handle safari state
     #options=null // initialize options
@@ -44,7 +43,6 @@ class FileInputWidget {
         this.#fileList = fileList;
         // get the current lang
         this.#lang = this.#model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
-        this.#languageUtils = languageUtils;
         // initialize options for backward compatibility
         this.#options = Object.assign({}, {
             "contextPath" : ""
@@ -238,7 +236,7 @@ class FileInputWidget {
         let fileClose = document.createElement('span');
         fileClose.setAttribute('tabindex', '0');
         fileClose.setAttribute('class', "cmp-adaptiveform-fileinput__filedelete");
-        fileClose.setAttribute('aria-label', this.#languageUtils.getTranslatedString(this.#lang, "FileCloseAccessText") + fileName);
+        fileClose.setAttribute('aria-label', FormView.LanguageUtils.getTranslatedString(this.#lang, "FileCloseAccessText") + fileName);
         fileClose.setAttribute('role', 'button');
         fileClose.textContent = "x";
         fileClose.addEventListener('keypress', function(e) {
@@ -290,11 +288,11 @@ class FileInputWidget {
     #invalidMessage(fileName, invalidFeature){
         // todo: have add localization here
         if(invalidFeature === this.#invalidFeature.SIZE) {
-            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileSizeGreater", [fileName, this.#options.maxFileSize]));
+            alert(FormView.LanguageUtils.getTranslatedString(this.#lang, "FileSizeGreater", [fileName, this.#options.maxFileSize]));
         } else if (invalidFeature === this.#invalidFeature.NAME) {
-            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileNameInvalid", [fileName]));
+            alert(FormView.LanguageUtils.getTranslatedString(this.#lang, "FileNameInvalid", [fileName]));
         } else if (invalidFeature === this.#invalidFeature.MIMETYPE) {
-            alert(this.#languageUtils.getTranslatedString(this.#lang, "FileMimeTypeInvalid", [fileName]));
+            alert(FormView.LanguageUtils.getTranslatedString(this.#lang, "FileMimeTypeInvalid", [fileName]));
         }
     }
 

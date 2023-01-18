@@ -70,13 +70,7 @@
         const formContainer = FormView.Utils.setupFormContainer(({
             _formJson, _prefillData, _path, _element
         }) => {
-            const form = new FormContainerV2({_formJson, _prefillData, _path, _element});
-            const formLanguage = form.getLang();
-            if (formLanguage !== undefined) {
-                const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
-                FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
-            }
-            return form;
+            return new FormContainerV2({_formJson, _prefillData, _path, _element});
         }, FormContainerV2.selectors.self, FormContainerV2.IS)
     }
 
