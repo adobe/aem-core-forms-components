@@ -1,0 +1,27 @@
+.cmp-adaptiveform-radiobutton {
+  .containerMixin();
+  .descriptionMixin();
+  .validInvalidMixin();
+  &__widget {
+    .itemWidgetMixin();
+    &.HORIZONTAL {
+      height: @field-height;
+    }
+    &.VERTICAL {
+      flex-direction: column;
+    }
+  }
+  &__option {
+    &.HORIZONTAL {
+      margin-right: 1.5rem;
+      color: @gray;
+      display: inline-flex;
+      height: 44px;
+    }
+    &.VERTICAL {
+      margin-bottom: 1.5rem;
+      color: @gray;
+      display: flex;
+    }
+  }
+}
