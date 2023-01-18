@@ -36,7 +36,7 @@ class FileInputWidget {
     }
     #initialFileValueFileNameMap;
 
-    constructor(widget, fileList, model, languageUtils) {
+    constructor(widget, fileList, model) {
         // initialize the widget and model
         this.#widget = widget;
         this.#model = model;
