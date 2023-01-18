@@ -12,10 +12,6 @@
                 order="after CONFIGURE"
                 icon="bidRule"
                 text="Edit Rules"/>
-        <replace
-                jcr:primaryType="nt:unstructured"
-                handler="CQ.FormsCoreComponents.editorhooks.replace"
-                text="Replace"/>
     </cq:actionConfigs>
     <cq:inplaceEditing
             jcr:primaryType="cq:InplaceEditingConfig"

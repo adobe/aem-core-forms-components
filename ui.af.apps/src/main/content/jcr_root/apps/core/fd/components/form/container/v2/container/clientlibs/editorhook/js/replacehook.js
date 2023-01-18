@@ -15,6 +15,23 @@
  ******************************************************************************/
 (function (window, author, Coral, channel) {
     var editConfigListeners = window.guidelib.author.editConfigListeners;
+    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT_ONE: 'select_one', LIST: 'list', DATE: 'date'}
+    const typeMap = {
+        'button': fieldTypes.TEXT,
+        'checkboxgroup': fieldTypes.LIST,
+        'datepicker': fieldTypes.DATE,
+        'dropdown': fieldTypes.SELECT_ONE,
+        'emailinput': fieldTypes.TEXT,
+        'numberinput': fieldTypes.TEXT,
+        'radiobutton': fieldTypes.SELECT_ONE,
+        'reset': fieldTypes.TEXT,
+        'submit': fieldTypes.TEXT,
+        'telephoneinput': fieldTypes.TEXT,
+        'text': fieldTypes.TEXT,
+        'textinput': fieldTypes.TEXT,
+        'title': fieldTypes.TEXT
+    }
+    const nonReplaceable = ['fileinput', 'image'];
 
     window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
 
@@ -23,12 +40,12 @@
         var isContainerComponent = editable.config.isContainer;
 
         var dialog = new Coral.Dialog().set({
-            closable : Coral.Dialog.closable.ON,
-            header : {
-                innerHTML : Granite.I18n.get('Replace Component')
+            closable: Coral.Dialog.closable.ON,
+            header: {
+                innerHTML: Granite.I18n.get('Replace Component')
             },
-            content : {
-                innerHTML : '<coral-search class="ReplaceComponentDialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="ReplaceComponentDialog-list"></coral-selectlist>'
+            content: {
+                innerHTML: '<coral-search class="ReplaceComponentDialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="ReplaceComponentDialog-list"></coral-selectlist>'
             }
         });
 
@@ -36,19 +53,15 @@
         dialog.content.classList.add('ReplaceComponentDialog-components');
 
         document.body.appendChild(dialog);
-        // calling parent since table would point to table tag, but we need the table wrapper
-        // get the parent path
-        // use the path to get the editable since we use the allowed components defined in panel
-        // parentTableEditable = author.editables.getParent(editConfigListeners._getEditable(parentTablePath));
 
         var components = author.components.allowedComponents,
             parent = author.editables.getParent(editable),
             allowedComponents = author.components.computeAllowedComponents(parent, author.pageDesign),
             selectList;
 
-        var typeHierarchy = author.components.find({resourceType : this.type})[0].componentConfig.cellNames,
-            editableType = editable.getResourceTypeName(),
-            editableSuperType = typeHierarchy[typeHierarchy.length - 2]; // super type is one below guidefield in type hierarchy
+        var typeHierarchy = author.components.find({resourceType: this.type})[0].componentConfig.cellNames,
+            editableType = editable.getResourceTypeName()
+        editableSuperType = typeHierarchy[typeHierarchy.length - 2]; // super type is one below guidefield in type hierarchy
 
         var filterComponent = function (allowedComponents) {
             var groups = {},
@@ -56,7 +69,6 @@
                 regExp = null;
 
 
-            // rebuild the selectList entries
             selectList.empty();
             if (keyword !== undefined && keyword !== null) {
                 keyword = keyword.trim();
@@ -68,11 +80,12 @@
                 regExp = new RegExp(".*" + keyword + ".*", "i");
             }
 
+            // adding components that can be replaced by current component
             components.forEach(function (c) {
                 var cfg = c.componentConfig,
                     g,
                     componentType = cfg.cellNames[0],
-                    componentSuperType = cfg.cellNames[cfg.cellNames.length - 2],  // super type is one below guidefield in type hierarchy
+                    componentSuperType = cfg.cellNames[cfg.cellNames.length - 2],
                     performReplace = true;
 
                 if (keyword.length > 0) {
@@ -80,8 +93,13 @@
                 }
 
                 if (!(keyword.length > 0) || isKeywordFound) {
-                    // perform replace as per comments above
-                    if (editableType != componentType && isContainerComponent === c.componentConfig.isContainer) {
+                    // if ((isContainerComponent === c.componentConfig.isContainer && editableType != componentType) ||
+                    //     (!nonReplaceable.includes(componentType) &&
+                    //         typeMap[editableType] === typeMap[componentType])) {
+
+                    if (isContainerComponent === c.componentConfig.isContainer && editableType != componentType &&
+                        !nonReplaceable.includes(componentType) &&
+                        componentSuperType === editableSuperType) {
                         performReplace = true;
                     } else {
                         performReplace = false;
@@ -98,8 +116,7 @@
 
                             var item = document.createElement('coral-selectlist-item');
                             item.value = cfg.path;
-                            item.classList.add('js-ReplaceComponentDialog-component');
-                            item.classList.add('ReplaceComponentDialog-component');
+                            item.classList.add('_coral-Menu-item'); //add item css here
                             item.innerHTML = Granite.I18n.getVar(cfg.title);
 
                             groups[g].items.add(item);
@@ -136,9 +153,10 @@
                         historyConfig = author.history.Manager,
                         historyStep = author.history.util.Utils.beginStep(),
                         historyAction = new author.history.actions.fd.Replace(editable.path, editable.path, editable.type, {
-                            "editable" : editable,
-                            "newComponent" : component[0].getResourceType(),
-                            "oldComponent" : editable.type});
+                            "editable": editable,
+                            "newComponent": component[0].getResourceType(),
+                            "oldComponent": editable.type
+                        });
                     historyStep.addAction(historyAction);
                     historyStep.commit();
                 }
@@ -173,13 +191,12 @@
             deleteItemsNode(editable)
                 .done(function () {
                     sendReplaceParagraph({
-                        resourceType : component.getResourceType(),
-                        configParams : component.getConfigParams(),
-                        extraParams : component.getExtraParams(),
-                        templatePath : component.getTemplatePath()
+                        resourceType: component.getResourceType(),
+                        configParams: component.getConfigParams(),
+                        extraParams: component.getExtraParams(),
+                        templatePath: component.getTemplatePath()
                     }, editable)
                         .done(function () {
-                            // refresh the parent panel
                             editConfigListeners.REFRESH_PARENT_PANEL.apply(editable);
                             // refresh editable
                             editable.refresh().done(function () {
@@ -191,17 +208,12 @@
                                     author.DialogFrame.openDialog(new author.edit.Dialog(editable));
                                 }
                             });
-                            // update the form object hierarchy
-                            // update the form object hierarchy by checking if initialized
-                            // if (guidelib.touchlib.editLayer.editLayerFormObjects.isInitialized()) {
-                            //     guidelib.touchlib.editLayer.editLayerFormObjects.refreshFormObjectsTree(editable.path);
-                            // }
                             channel.trigger("cq-persistence-after-replace", args);
                         })
                         .fail(function () {
                             author.ui.helpers.notify({
-                                content : Granite.I18n.get("Paragraph replace operation failed."),
-                                type : author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                                content: Granite.I18n.get("Paragraph replace operation failed."),
+                                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
                             });
                         });
                 })
@@ -209,7 +221,7 @@
     };
 
     var deleteItemsNode = function (editable) {
-        console.log('deleting');
+        // send delete request
         return (
             new author.persistence.PostRequest()
                 .deleteItemsNode(editable)

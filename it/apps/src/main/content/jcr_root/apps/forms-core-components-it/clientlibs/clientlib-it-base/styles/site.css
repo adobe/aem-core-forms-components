@@ -1896,3 +1896,7 @@ pre.prettyprint .fun{color:#d7373f}
 .cmp-progressbar .cmp-progressbar__label--remaining{float:right;color:#2e6ca3;padding-right:.3125rem}
 .cmp-progressbar .cmp-progressbar__label--remaining:after{content:'%'}
 .cmp-progressbar .cmp-progressbar__bar{display:block;height:100%;font-size:0;background-color:#2e6ca3}
+
+
+.ReplaceComponentDialog-components {padding: 0;}
+.ReplaceComponentDialog-component {width: 100%;text-align: left;border-right: 0;border-left: 0;border-bottom: 0;color: #323232;}
