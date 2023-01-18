@@ -38,12 +38,15 @@
         window.addEventListener("aemform-onscript-load", onScriptLoad);
     }());
 </script>
+<sly data-sly-list="${form.htmlPageItems}"><script data-sly-test="${item.location.name == 'header'}"
+                                                   data-sly-element="${item.element.name @ context='unsafe'}" data-sly-attribute="${item.attributes}"></script>
+</sly>
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
         <iframe class="cmp-aemform__iframecontent"
             src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
-            stye="width:100%;"
+            width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
          data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v2.iframeResizer']}"/>

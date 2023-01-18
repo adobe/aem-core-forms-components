@@ -67,6 +67,9 @@
 
         setModel(model) {
             super.setModel(model);
+            if (this.widget.value !== '') {
+                this._model.value = this.widget.value;
+            }
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
                 this.setInactive();

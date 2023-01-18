@@ -15,12 +15,18 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.context;
 
+import org.apache.sling.caconfig.ConfigurationResolver;
+import org.apache.sling.caconfig.impl.ConfigurationResolverImpl;
 import org.apache.sling.models.impl.ResourceTypeBasedResourcePicker;
 import org.apache.sling.models.spi.ImplementationPicker;
+import org.apache.sling.testing.mock.caconfig.MockContextAwareConfig;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 
+import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
 import com.adobe.cq.wcm.core.components.testing.MockResponsiveGrid;
 import io.wcm.testing.mock.aem.junit5.AemContextBuilder;
+
+import static org.apache.sling.testing.mock.caconfig.ContextPlugins.CACONFIG;
 
 /**
  * Provides a context for unit tests.
@@ -36,11 +42,13 @@ public final class FormsCoreComponentTestContext {
     }
 
     public static io.wcm.testing.mock.aem.junit5.AemContext newAemContext() {
-        return new AemContextBuilder().resourceResolverType(
+        return new AemContextBuilder().plugin(CACONFIG).resourceResolverType(
             ResourceResolverType.JCR_MOCK).<io.wcm.testing.mock.aem.junit5.AemContext>afterSetUp(context -> {
                 context.addModelsForClasses(MockResponsiveGrid.class);
                 context.addModelsForPackage("com.adobe.cq.forms.core.components.models");
                 context.registerService(ImplementationPicker.class, new ResourceTypeBasedResourcePicker());
+                context.registerService(ConfigurationResolver.class, new ConfigurationResolverImpl());
+                MockContextAwareConfig.registerAnnotationClasses(context, HtmlPageItemsConfig.class);
             }).build();
     }
 }

@@ -56,6 +56,40 @@
                             jcr:primaryType="nt:unstructured"/>
                     </default>
                 </container>
+                <numberinput jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="numberinput-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedFormat1="No Pattern=#####################.###############"
+                            allowedFormat2="$1,234.21=¤#,##0.00"
+                            allowedFormat3="$1234.21=()¤####0.00"
+                            allowedFormat4="1,234.210=#,###,##0.000"
+                            allowedFormat5="123,421%=#,###,##0%"
+                            allowedFormat6="23421%=####0%">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </numberinput>
+                <datepicker jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="datepicker-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedFormat1="01 April, 2007=d MMMM, y"
+                            allowedFormat2="April 01, 2007=MMMM d, y"
+                            allowedFormat3="Sunday, 01 April, 2007=EEEE, d MMMM, y"
+                            allowedFormat4="Sunday, April 01, 2007=EEEE, MMMM d, y"
+                            allowedFormat5="1/4/2007=d/M/y"
+                            allowedFormat6="4/1/2007=M/d/y">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </datepicker>
             </form>
             <page jcr:primaryType="nt:unstructured">
                 <default

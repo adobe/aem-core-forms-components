@@ -33,7 +33,7 @@ describe("Form with Dropdown", () => {
     const checkHTML = (id, state, isMultiSelect) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -148,4 +148,30 @@ describe("Form with Dropdown", () => {
         });
         cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
+
+    it("should show and hide components on certain dropdown select", () => {
+        // Rule on dropdown1: When dropdown1 has 'cauliflower' selected => Show dropdown5 and Hide dropdown4
+
+        const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
+        const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];
+        const [dropdown5, dropdown5FieldView] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${dropdown1} select`).select("cauliflower").then(x => {
+            cy.get(`#${dropdown5} select`).should('be.visible')
+            cy.get(`#${dropdown4} select`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain dropdown select", () => {
+        // Rule on dropdown1: When dropdown1 has 'apple' selected => Enable dropdown4 and disable dropdown3
+
+        const [dropdown1, dropdown1FieldView] = Object.entries(formContainer._fields)[2];
+        const [dropdown3, dropdown3FieldView] = Object.entries(formContainer._fields)[4];
+        const [dropdown4, dropdown4FieldView] = Object.entries(formContainer._fields)[5];
+
+        cy.get(`#${dropdown1} select`).select("apple").then(x => {
+            cy.get(`#${dropdown4} select`).should('be.enabled')
+            cy.get(`#${dropdown3} select`).should('not.be.enabled')
+        })
+    })
 })

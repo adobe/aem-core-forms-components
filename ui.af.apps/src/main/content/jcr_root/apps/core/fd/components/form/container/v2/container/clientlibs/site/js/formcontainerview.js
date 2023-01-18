@@ -17,27 +17,30 @@
 (function() {
 
     "use strict";
-    const NS = "cmp";
-    const IS = "adaptiveFormContainer";
-    const selectors = {
-        self: "[data-" + NS + '-is="' + IS + '"]'
-    };
-
     class FormContainerV2 extends FormView.FormContainer {
+        static NS = FormView.Constants.NS;
+        static IS = "adaptiveFormContainer";
+        static bemBlock = 'cmp-adaptiveform-container';
+        static selectors  = {
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+        };
+        static loadingClass = `${FormContainerV2.bemBlock}--loading`;
+
         // todo: handle localization here
         static ERROR_MSG = "Encountered an internal error while submitting the form."
         constructor(params) {
             super(params);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                if (action.payload) {
-                    if (action.payload.redirectUrl) {
-                        window.location.href = action.payload.redirectUrl;
-                    } else if (action.payload.thankYouMessage) {
-                        let formContainerElement = document.querySelector(selectors.self);
+                let body = action.payload?.body;
+                if (body) {
+                    if (body.redirectUrl) {
+                        window.location.href = body.redirectUrl;
+                    } else if (body.thankYouMessage) {
+                        let formContainerElement = document.querySelector(FormContainerV2.selectors.self);
                         let thankYouMessage = document.createElement("div");
                         thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.textContent = action.payload.thankYouMessage;
+                        thankYouMessage.textContent = body.thankYouMessage;
                         formContainerElement.replaceWith(thankYouMessage);
                     }
                 }
@@ -50,12 +53,30 @@
     }
 
     async function onDocumentReady() {
+        const startTime = new Date().getTime();
+        let elements = document.querySelectorAll(FormContainerV2.selectors.self);
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].classList.add(FormContainerV2.loadingClass);
+            console.debug("Form loading started", elements[i].id);
+        }
+        function onInit(e) {
+            let formContainer =  e.detail;
+            let formEl = formContainer.getFormElement();
+            setTimeout(() => {
+                formEl.classList.remove(FormContainerV2.loadingClass);
+                const timeTaken = new Date().getTime() - startTime;
+                console.debug("Form loading complete", formEl.id, timeTaken);
+                }, 10);
+        }
+        document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
         const formContainer = FormView.Utils.setupFormContainer(({
-            _formJson, _prefillData, _path
+            _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path});
-        }, selectors.self, IS)
+            return new FormContainerV2({_formJson, _prefillData, _path, _element});
+        }, FormContainerV2.selectors.self, FormContainerV2.IS)
     }
+
+
 
     if (document.readyState !== "loading") {
         onDocumentReady();

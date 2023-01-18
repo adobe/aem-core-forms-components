@@ -37,6 +37,12 @@ public final class FormConstants {
     /** The resource type for text input v1 */
     public static final String RT_FD_FORM_TEXT_V1 = RT_FD_FORM_PREFIX + "textinput/v1/textinput";
 
+    /** The resource type for telephone input v1 */
+    public static final String RT_FD_FORM_TELEPHONE_V1 = RT_FD_FORM_PREFIX + "telephoneinput/v1/telephoneinput";
+
+    /** The resource type for email input v1 */
+    public static final String RT_FD_FORM_EMAIL_V1 = RT_FD_FORM_PREFIX + "emailinput/v1/emailinput";
+
     /** The resource type for button v1 */
     public static final String RT_FD_FORM_BUTTON_V1 = RT_FD_FORM_PREFIX + "button/v1/button";
 
@@ -84,4 +90,10 @@ public final class FormConstants {
 
     /** The resource type for title v1 */
     public static final String RT_FD_FORM_TITLE_V1 = RT_FD_FORM_PREFIX + "title/v1/title";
+
+    /** The resource type for submit button v1 */
+    public static final String RT_FD_FORM_SUBMIT_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/submit/v1/submit";
+
+    /** The resource type for submit button v1 */
+    public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 }

@@ -121,4 +121,49 @@ describe("Form with Number Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should show and hide other fields on a certain number input", () => {
+        // Rule on numberInput1: When numberInput1 has input 93 => Show numberInput2 and Hide numberInput3
+
+        const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
+        const [numberInput2, numberInput2FieldView] = Object.entries(formContainer._fields)[1];
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+
+        const input = "93";
+
+        cy.get(`#${numberInput1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput2}`).should('be.visible')
+            cy.get(`#${numberInput3}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable other numberfields on a certain number input", () => {
+        // Rule on numberInput1: When numberInput1 has input 123 => Enable numberInput3 and Disable numberInput4
+
+        const [numberInput1, numberInput1FieldView] = Object.entries(formContainer._fields)[0];
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+        const [numberInput4, numberInput4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = "123";
+
+        cy.get(`#${numberInput1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput3}`).find("input").should('be.enabled')
+            cy.get(`#${numberInput4}`).find("input").should('not.be.enabled')
+        })
+    })
+
+    it("should show validation error messages", () => {
+        // Rule on numberInput4: Validate numberInput4 using Expression: numberInput4 == 64
+
+        const [numberInput4, numberInput1FieldView] = Object.entries(formContainer._fields)[3];
+        const incorrectInput = "42";
+        const correctInput = "64";
+
+
+        cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"")
+        })
+    })
 })

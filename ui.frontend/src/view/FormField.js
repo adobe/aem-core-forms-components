@@ -124,4 +124,8 @@ export default class FormField {
     subscribe() {
         throw "the field does not subscribe to the model"
     }
+
+    initializeHelpContent(state) {
+        throw "method not implemented";
+    }
 }

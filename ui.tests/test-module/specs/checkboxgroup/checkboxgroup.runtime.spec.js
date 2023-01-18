@@ -33,7 +33,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -66,9 +66,9 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         const model = formContainer._model.getElement(id)
         const val = Array('1','2')
         model.value = '1'
-        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'VERTICAL')
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'VERTICAL')
         const [id2, fieldView2] = Object.entries(formContainer._fields)[1]
-        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup-item").should('have.class', 'HORIZONTAL')
+        cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'HORIZONTAL')
 
 
         checkHTML(model.id, model.getState()).then(() => {
@@ -81,7 +81,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
     });
 
     it(" html changes are reflected in model ", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const [id, fieldView] = Object.entries(formContainer._fields)[1]
         const model = formContainer._model.getElement(id)
 
         cy.log(model.getState().value)
@@ -118,4 +118,29 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should show and hide components on certain checkbox input", () => {
+        // Rule on checkbox2: When checkbox2 has Item 1 AND Item 3 selected => Show checkbox3 and Hide checkBox4
+
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
+        const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${checkBox2}`).find("input").check(["0","3"]).then(x => {
+            cy.get(`#${checkBox3}`).should('be.visible')
+            cy.get(`#${checkBox4}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable components on certain checkbox input", () => {
+        // Rule on checkbox4: When checkbox4 has Item 3 selected => Enable checkbox1 and Disable checkBox2
+
+        const [checkBox1, checkBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${checkBox4}`).find("input").check(["2"]).then(x => {
+            cy.get(`#${checkBox1}`).find("input").should('be.enabled')
+            cy.get(`#${checkBox2}`).find("input").should('not.be.enabled')
+        })
+    })
 })
