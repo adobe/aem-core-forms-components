@@ -14,8 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../constants";
-import Utils from "../utils";
+import {Constants} from "../constants.js";
+import Utils from "../utils.js";
 
 export default class FormField {
 

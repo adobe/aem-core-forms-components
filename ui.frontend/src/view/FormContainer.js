@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import {createFormInstance} from "@aemforms/af-core/lib";
+import {createFormInstance} from "@aemforms/af-core";
 export default class FormContainer {
     constructor(params) {
         // bug in af-core, if data is set to empty object, model is not created correctly

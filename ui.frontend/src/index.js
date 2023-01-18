@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "./utils";
+import Utils from "./utils.js";
 import {createFormInstance, FileObject, extractFileInfo, Click, Change, Submit, Blur, AddItem, RemoveItem} from "@aemforms/af-core";
-import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
-import {Constants} from "./constants";
-import GuideBridge from "./GuideBridge";
-import HTTPAPILayer from "./HTTPAPILayer";
+import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view/index.js";
+import {Constants} from "./constants.js";
+import GuideBridge from "./GuideBridge.js";
+import HTTPAPILayer from "./HTTPAPILayer.js";
 import {formatDate, parseDate} from "@aemforms/af-formatters";
 
 window.af = {

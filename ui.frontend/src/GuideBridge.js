@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "./constants";
-import Response from "./Response";
-import AfFormData from "./FormData";
+import {Constants} from "./constants.js";
+import Response from "./Response.js";
+import AfFormData from "./FormData.js";
 
 export default class GuideBridge {
 
