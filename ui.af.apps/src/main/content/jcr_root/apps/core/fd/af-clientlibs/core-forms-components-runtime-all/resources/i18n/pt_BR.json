@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "Pressione Enter para excluir o arquivo ",
+  "FileSizeGreater"       :        "Fos arquivos {0} são maiores do que o tamanho esperado: {1}MB.",
+  "FileNameInvalid"       :       "O(s) arquivo(s) {0} tem caracteres inválidos em seu nome. Somente caracteres alfanuméricos são suportados",
+  "FileMimeTypeInvalid"   :       "O(s) arquivo(s) {0} não é(são) suportado(s)",
+  "InternalFormSubmissionError" :  "Encontrou um erro interno ao enviar o formulário."
+}

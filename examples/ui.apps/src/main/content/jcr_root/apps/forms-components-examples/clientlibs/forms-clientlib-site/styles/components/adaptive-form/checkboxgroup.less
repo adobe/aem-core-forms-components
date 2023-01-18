@@ -1,0 +1,24 @@
+.cmp-adaptiveform-checkboxgroup {
+  .containerMixin();
+  .descriptionMixin();
+  .validInvalidMixin();
+  &__widget {
+    .itemWidgetMixin();
+  }
+  &__widget.HORIZONTAL {
+    height: @field-height;
+  }
+  &__widget.VERTICAL {
+    flex-direction: column;
+  }
+  &-item {
+    color: @gray;
+  }
+  &-item.HORIZONTAL {
+    margin-right: 1.5rem;
+    height: 44px;
+  }
+  &-item.VERTICAL {
+    margin-bottom: 1.5rem;
+  }
+}

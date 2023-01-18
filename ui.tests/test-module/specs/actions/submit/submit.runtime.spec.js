@@ -37,11 +37,16 @@ describe("Form with Submit Button", () => {
                 })
     })
 
-    it("Clicking the button should submit the form", () => {
-        cy.previewForm(pagePath);
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-            cy.get('body').should('have.text', "Thank you for submitting the form.\n")
-        })
+    it("Form submit should show validation errors", () => {
+            cy.previewForm(pagePath);
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                Object.entries(formContainer._fields).forEach(([id, field]) => {
+                    // if non submit field, check that all have error message in them
+                    if (id.indexOf('submit') === -1) {
+                        cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "There is an error in the field")
+                    }
+                });
+            });
     });
 
 
