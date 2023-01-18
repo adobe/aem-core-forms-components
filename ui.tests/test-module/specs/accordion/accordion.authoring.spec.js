@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropAccordionInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/accordion/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/accordion/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion", afConstants.components.forms.resourceType.accordion);
@@ -109,7 +109,7 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/accordion",
-        accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/accordion",
+        accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/accordion",
         accordionEditPathSelector = "[data-path='" + accordionEditPath + "']";
 
     beforeEach(function () {

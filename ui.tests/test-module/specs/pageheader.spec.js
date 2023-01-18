@@ -32,7 +32,7 @@ const dropPageHeaderInContainer = function() {
     }
 
 const dropPageHeaderInSites = function() {
-    const dataPath =  "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath =  "/content/core-components-examples/library/adaptive-form/pageheader/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Header", afConstants.components.forms.resourceType.pageheader);
@@ -70,7 +70,7 @@ context('Drag drop the pageheader', function() {
 
 context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/pageheader",
-        pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX +'/container/'+ afConstants.components.forms.resourceType.pageheader.split("/").pop();
+        pageheaderDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX +'/guideContainer/'+ afConstants.components.forms.resourceType.pageheader.split("/").pop();
 
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
