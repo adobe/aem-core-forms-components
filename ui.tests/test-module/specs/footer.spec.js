@@ -35,7 +35,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropFooterInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/footer/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/footer/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Footer", afConstants.components.forms.resourceType.footer);

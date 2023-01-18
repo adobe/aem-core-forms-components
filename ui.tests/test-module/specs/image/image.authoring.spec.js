@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropImageInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/image/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/image/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
@@ -82,9 +82,9 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const pagePath = "/content/core-components-examples/library/adaptive-form/image",
-       imageEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/image",
+       imageEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/image",
        imageEditPathSelector = "[data-path='" + imageEditPath + "']",
-       imageDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formimage.split("/").pop();
+       imageDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formimage.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
