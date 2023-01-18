@@ -86,7 +86,7 @@
                     g,
                     componentType = cfg.cellNames[0],
                     componentSuperType = cfg.cellNames[cfg.cellNames.length - 2],
-                    performReplace = true;
+                    performReplace = false;
 
                 if (keyword.length > 0) {
                     var isKeywordFound = regExp.test(Granite.I18n.getVar(cfg.title));
@@ -97,12 +97,10 @@
                     //     (!nonReplaceable.includes(componentType) &&
                     //         typeMap[editableType] === typeMap[componentType])) {
 
-                    if (isContainerComponent === c.componentConfig.isContainer && editableType != componentType &&
-                        !nonReplaceable.includes(componentType) &&
-                        componentSuperType === editableSuperType) {
+                    if ((!nonReplaceable.includes(componentType) && editableType != componentType)
+                        && ((isContainerComponent && c.componentConfig.isContainer)
+                            || (!isContainerComponent && componentSuperType === editableSuperType))) {
                         performReplace = true;
-                    } else {
-                        performReplace = false;
                     }
 
                     if (performReplace) {
