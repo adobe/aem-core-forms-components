@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "Enter 키를 눌러 파일 삭제",
+  "FileSizeGreater"       :        "파일 {0}이(가) 예상 크기 {1}MB를 초과합니다.",
+  "FileNameInvalid"       :       "파일 {0}의 이름에 잘못된 문자가 포함되어 있습니다. 영숫자만 지원됩니다.",
+  "FileMimeTypeInvalid"   :       "파일 {0}은(는) 지원되지 않는 파일 유형입니다.",
+  "InternalFormSubmissionError" :  "양식을 제출하는 중 내부 오류가 발생했습니다."
+}
