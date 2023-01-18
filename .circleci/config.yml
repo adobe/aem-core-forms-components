@@ -31,7 +31,7 @@ common:
           command: |
                 cd ui.tests/test-module
                 shopt -s globstar
-                SPEC_PATH="./specs/**/*.spec.js"
+                SPEC_PATH="./specs/*/*.spec.js"
                 TEST=$(circleci tests glob SPEC_PATH | circleci tests split --split-by=timings)
                 node ../../.circleci/ci/it-tests.js
       - store_test_results:
