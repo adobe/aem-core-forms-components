@@ -318,7 +318,10 @@
                                     <skip>${skipTests}</skip>
                                     <executable>${project.basedir}/../frontend-maven-plugin/node/node</executable>
                                     <arguments>
-                                        <argument>test:ci --spec "${specFiles}"</argument>
+                                        <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
+                                        <argument>run</argument>
+                                        <argument>--spec</argument>
+                                        <argument>"${specFiles}"</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
