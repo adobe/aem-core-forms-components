@@ -29,7 +29,19 @@ export default class HTTPAPILayer {
     }
 
     static async getFormDefinition(formContainerPath) {
-        return await this.#getJson(formContainerPath + ".model.json");
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        let lang = null;
+        if ('afAcceptLang' in params) {
+            lang = `${params['afAcceptLang']}`
+        } else {
+            // check for selector in the URL
+            const parts = window.location.pathname.split('.');
+            if (parts?.length >= 3) {
+                lang = `${parts[parts.length - 2]}`;
+            }
+        }
+        return await this.#getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
     }
 
     static async #findForm(formPath, formsList) {
