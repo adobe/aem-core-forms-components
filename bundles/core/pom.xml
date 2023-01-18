@@ -464,7 +464,7 @@
         -->
 
         <dependency>
-            <groupId>com.adobe.aemfd</groupId>
+            <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
