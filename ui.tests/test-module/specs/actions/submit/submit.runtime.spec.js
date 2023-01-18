@@ -27,20 +27,29 @@ describe("Form with Submit Button", () => {
 
     it("should get model and view initialized properly ", () => {
         cy.previewForm(pagePath).then(p => {
-                formContainer = p;
-                expect(formContainer, "formcontainer is initialized").to.not.be.null;
-                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-                Object.entries(formContainer._fields).forEach(([id, field]) => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+            Object.entries(formContainer._fields).forEach(([id, field]) => {
                 expect(field.getId()).to.equal(id)
                 expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-                    });
-                })
+            });
+        })
     })
 
     it("Clicking the button should submit the form", () => {
         cy.previewForm(pagePath);
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-            cy.get('body').should('have.text', "Thank you for submitting the form.\n")
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
+
+        cy.get(`.cmp-adaptiveform-button__widget`).click()
+        cy.wait('@afSubmission').then(({ response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+            expect(response.body.thankYouMessage).to.be.not.null;
+            expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
         })
     });
 
