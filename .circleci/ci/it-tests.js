@@ -87,10 +87,10 @@ try {
             ci.sh(`mvn clean install -PautoInstallPackage`);
         });
 
-        let testSuites = process.argv.join(',');
+        let testSuites = process.argv;
         // start running the tests
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles="${testSuites}"`);
+            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles=testSuites`);
     });
     }
 
