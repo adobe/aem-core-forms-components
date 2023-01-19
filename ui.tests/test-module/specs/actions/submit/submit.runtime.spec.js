@@ -36,6 +36,32 @@ describe("Form with Submit Button", () => {
             });
         })
     })
+    // const mep = {
+    //     "textinput": (id) => cy.get(`#${id}`).find("input").type("abc"),
+    //     "numberinput": (id) => cy.get(`#${id}`).find("input").type("453"),
+    //     "checkboxgroup": (id) => cy.get(`#${id}`).find("input").check(["0", "3"]),
+    //     "radiobutton": (id) => cy.get(`#${id}`).find("input").eq(1).click(),
+    // };
+    const fillField = (id) => {
+        const component = id.split('-')[0]; // get the component name from the id
+        switch (component) {
+            case "textinput":
+                cy.get(`#${id}`).find("input").type("abc");
+                break;
+            case "numberinput":
+                cy.get(`#${id}`).find("input").type("159");
+                break;
+            case "checkboxgroup":
+                cy.get(`#${id}`).find("input").check(["0"]);
+                break;
+            case "radiobutton":
+                cy.get(`#${id}`).find("input").eq(0).click();
+                break;
+            case "dropdown":
+                cy.get(`#${id} select`).select(["0"])
+                break;
+        }
+    };
 
     it("Clicking the button should submit the form", () => {
         cy.previewForm(pagePath);
@@ -43,6 +69,10 @@ describe("Form with Submit Button", () => {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
+
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            fillField(id); // mark all the fields with some value
+        });
 
         cy.get(`.cmp-adaptiveform-button__widget`).click()
         cy.wait('@afSubmission').then(({ response}) => {
