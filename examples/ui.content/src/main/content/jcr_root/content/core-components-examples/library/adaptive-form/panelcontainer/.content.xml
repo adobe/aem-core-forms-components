@@ -81,8 +81,6 @@
           text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
           textIsRich="true"/>
         <demo
-          jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
-          jcr:createdBy="admin"
           jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
           jcr:lastModifiedBy="admin"
           jcr:primaryType="nt:unstructured"
@@ -94,14 +92,38 @@
               jcr:primaryType="nt:unstructured"
               sling:resourceType="core-components-examples/components/form/container">
               <panelcontainer_demo
-                jcr:title="Panel"
-                fieldType="panel"
-                jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
-                jcr:createdBy="admin"
                 jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="forms-components-examples/components/form/panelcontainer"/>
+                jcr:title="Panel"
+                sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                fieldType="panel"
+                name="panelcontainer_demo1674110267107">
+                <panelcontainer
+                  jcr:lastModified="{Date}2023-01-19T12:27:18.883+05:30"
+                  jcr:lastModifiedBy="admin"
+                  jcr:primaryType="nt:unstructured"
+                  jcr:title="Item 1"
+                  sling:resourceType="newtest/components/adaptiveForm/panelcontainer"
+                  enabled="{Boolean}true"
+                  fieldType="panel"
+                  name="panelcontainer1674111418480"
+                  textIsRich="[true,true]"
+                  visible="{Boolean}true"
+                  wrapData="{Boolean}false"/>
+                <panelcontainer_829044754
+                  jcr:lastModified="{Date}2023-01-19T12:27:26.042+05:30"
+                  jcr:lastModifiedBy="admin"
+                  jcr:primaryType="nt:unstructured"
+                  jcr:title="Item 2"
+                  sling:resourceType="newtest/components/adaptiveForm/panelcontainer"
+                  enabled="{Boolean}true"
+                  fieldType="panel"
+                  name="panelcontainer_8290447541674111430209"
+                  textIsRich="[true,true]"
+                  visible="{Boolean}true"
+                  wrapData="{Boolean}false"/>
+              </panelcontainer_demo>
             </container>
           </component>
           <info

@@ -448,6 +448,50 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_text>
+                    <teaser_checkboxgroup
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/checkboxgroup.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/checkboxgroup"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_checkboxgroup>
+                    <teaser_radiobutton
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/radiobuttongroup.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/radiobutton"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_radiobutton>
                     <teaser_textinput
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
