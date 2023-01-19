@@ -82,17 +82,6 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
-
-
-        it('verify adding componenets in wizard',function(){
-            dropWizardInContainer();
-            addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
-            addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            cy.get(numberInputDataPath).should("exist");
-            cy.get(textInputDataPath).should("exist");
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
-        });
-
         it('verify Navigation Working between tabs in Authoring', function(){
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
