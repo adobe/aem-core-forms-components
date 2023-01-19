@@ -50,7 +50,7 @@ describe.only('Page - Authoring', function () {
     dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
   }
   const dropTabsInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Horizontal Tabs", afConstants.components.forms.resourceType.tabsontop);
   }
@@ -129,7 +129,7 @@ describe.only('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/panelcontainer",
-        panelContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/tabsontop",
+        panelContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/tabsontop",
         tabsEditPathSelector = "[data-path='" + panelContainerEditPath + "']";
 
     beforeEach(function () {
