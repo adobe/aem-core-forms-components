@@ -1,0 +1,17 @@
+.cmp-adaptiveform-button {
+  margin: @field-margin;
+  position: relative;
+  margin-right: @field-right-margin;
+  .descriptionMixin();
+  &__widget {
+    .buttonWidgetMixin();
+    &:hover {
+      background: @dark-gray;
+      color: @white;
+    }
+    &[data-cmp-enabled]:not([data-cmp-enabled=true]) {
+      background: @gray;
+      color: @very-light-gray;
+    }
+  }
+}

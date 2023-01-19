@@ -28,7 +28,7 @@ describe('Page - Authoring', function () {
     }
 
     const dropDatePickerInSites = function () {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/datepicker/jcr:content/root/responsivegrid/demo/component/container/*",
+        const dataPath = "/content/core-components-examples/library/adaptive-form/datepicker/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
@@ -117,9 +117,9 @@ describe('Page - Authoring', function () {
 
  context('Open Sites Editor', function () {
      const   pagePath = "/content/core-components-examples/library/adaptive-form/datepicker",
-         datePickerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/datepicker",
+         datePickerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/datepicker",
          datePickerEditPathSelector = "[data-path='" + datePickerEditPath + "']",
-         datePickerDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.datepicker.split("/").pop();
+         datePickerDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.datepicker.split("/").pop();
 
      beforeEach(function () {
        // this is done since cypress session results in 403 sometimes
