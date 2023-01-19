@@ -37,8 +37,7 @@ describe('component replace - Authoring', function () {
         containerEditPathSelector = "[data-path='" + containerEditPath + "']",
         containerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop();
 
-    const containerDataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
-        componentDataPath = "/content/core-components-examples/library/adaptive-form/button/jcr:content/root/responsivegrid/demo/component/container/*";
+    const containerDataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*";
 
     const dropComponent = function (componentEditPathSelector, dataPath) {
         const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -57,15 +56,15 @@ describe('component replace - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
-    const testReplaceForFileInput = function (componentEditPathSelector, componentDrop, isSites) {
-        isSites ? dropComponent(componentEditPathSelector, componentDataPath) : dropComponent(componentEditPathSelector, containerDataPath);
+    const testReplaceForFileInput = function (componentEditPathSelector, componentDrop) {
+        dropComponent(componentEditPathSelector, containerDataPath);
 
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.get("[data-action='replace']").should("not.exist");
         cy.deleteComponentByPath(componentDrop);
     }
 
-    const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop, isSites) {
+    const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop) {
         var resetButton = "[value='/apps/forms-components-examples/components/form/actions/reset']",
             submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']",
 
@@ -73,7 +72,7 @@ describe('component replace - Authoring', function () {
             accordion = "[value='/apps/forms-components-examples/components/form/accordion']",
             wizard = "[value='/apps/forms-components-examples/components/form/wizard']";
 
-        isSites ? dropComponent(componentEditPathSelector, componentDataPath) : dropComponent(componentEditPathSelector, containerDataPath);
+        dropComponent(componentEditPathSelector, containerDataPath);
 
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']");
