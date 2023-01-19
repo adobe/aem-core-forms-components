@@ -162,14 +162,14 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_button>
-                    <teaser_submitbutton
+                    <teaser_checkboxgroup
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
                       sling:resourceType="core-components-examples/components/teaser"
                       actionsEnabled="false"
                       descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/submitbutton.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/submitbutton"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/checkboxgroup.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/checkboxgroup"
                       textIsRich="true"
                       titleFromPage="true">
                         <cq:responsive jcr:primaryType="nt:unstructured">
@@ -183,51 +183,7 @@
                               jcr:primaryType="nt:unstructured"
                               width="12"/>
                         </cq:responsive>
-                    </teaser_submitbutton>
-                    <teaser_resetbutton
-                      cq:styleIds="[1547060090076]"
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/teaser"
-                      actionsEnabled="false"
-                      descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/resetbutton.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/resetbutton"
-                      textIsRich="true"
-                      titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                              jcr:primaryType="nt:unstructured"
-                              width="3"/>
-                            <small
-                              jcr:primaryType="nt:unstructured"
-                              width="4"/>
-                            <extrasmall
-                              jcr:primaryType="nt:unstructured"
-                              width="12"/>
-                        </cq:responsive>
-                    </teaser_resetbutton>
-                    <teaser_container
-                      cq:styleIds="[1547060090076]"
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/teaser"
-                      actionsEnabled="false"
-                      descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/formcontainer.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/container"
-                      textIsRich="true"
-                      titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                              jcr:primaryType="nt:unstructured"
-                              width="3"/>
-                            <small
-                              jcr:primaryType="nt:unstructured"
-                              width="4"/>
-                            <extrasmall
-                              jcr:primaryType="nt:unstructured"
-                              width="12"/>
-                        </cq:responsive>
-                    </teaser_container>
+                    </teaser_checkboxgroup>
                     <teaser_datepicker
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
@@ -316,6 +272,72 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_fileinput>
+                    <teaser_footer
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/footer.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/pagefooter"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_footer>
+                    <teaser_container
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/formcontainer.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/container"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_container>
+                    <teaser_pageheader
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/header.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/pageheader"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_pageheader>
                     <teaser_image
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
@@ -360,28 +382,6 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_numberinput>
-                    <teaser_pageheader
-                      cq:styleIds="[1547060090076]"
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/teaser"
-                      actionsEnabled="false"
-                      descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/header.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/pageheader"
-                      textIsRich="true"
-                      titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                              jcr:primaryType="nt:unstructured"
-                              width="3"/>
-                            <small
-                              jcr:primaryType="nt:unstructured"
-                              width="4"/>
-                            <extrasmall
-                              jcr:primaryType="nt:unstructured"
-                              width="12"/>
-                        </cq:responsive>
-                    </teaser_pageheader>
                     <teaser_panelcontainer
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
@@ -404,6 +404,94 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_panelcontainer>
+                    <teaser_radiobutton
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/radiobuttongroup.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/radiobutton"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_radiobutton>
+                    <teaser_resetbutton
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/resetbutton.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/resetbutton"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_resetbutton>
+                    <teaser_submitbutton
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/submitbutton.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/submitbutton"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_submitbutton>
+                    <teaser_tabsontop
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/components/tabs.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/tabsontop"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_tabsontop>
                     <teaser_telephoneinput
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
@@ -448,50 +536,6 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_text>
-                    <teaser_checkboxgroup
-                      cq:styleIds="[1547060090076]"
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/teaser"
-                      actionsEnabled="false"
-                      descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/checkboxgroup.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/checkboxgroup"
-                      textIsRich="true"
-                      titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                              jcr:primaryType="nt:unstructured"
-                              width="3"/>
-                            <small
-                              jcr:primaryType="nt:unstructured"
-                              width="4"/>
-                            <extrasmall
-                              jcr:primaryType="nt:unstructured"
-                              width="12"/>
-                        </cq:responsive>
-                    </teaser_checkboxgroup>
-                    <teaser_radiobutton
-                      cq:styleIds="[1547060090076]"
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/teaser"
-                      actionsEnabled="false"
-                      descriptionFromPage="true"
-                      fileReference="/content/dam/core-components-examples/library/forms-components/radiobuttongroup.svg"
-                      linkURL="/content/core-components-examples/library/adaptive-form/radiobutton"
-                      textIsRich="true"
-                      titleFromPage="true">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                              jcr:primaryType="nt:unstructured"
-                              width="3"/>
-                            <small
-                              jcr:primaryType="nt:unstructured"
-                              width="4"/>
-                            <extrasmall
-                              jcr:primaryType="nt:unstructured"
-                              width="12"/>
-                        </cq:responsive>
-                    </teaser_radiobutton>
                     <teaser_textinput
                       cq:styleIds="[1547060090076]"
                       jcr:primaryType="nt:unstructured"
