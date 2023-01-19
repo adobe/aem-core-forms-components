@@ -84,6 +84,11 @@ The following properties and child nodes are required in the proxy component to 
 2. `./cq:editConfig` - `afterchilddelete`, `afterchildinsert` and `afterchildmove` listeners should be provided via
 the edit configuration of the proxy. `_cq_editConfig.xml` contains the recommended actions and can be copied to the proxy component.
 
+## Replaceable by:
+* Horizontal tabs
+* Panel
+* Wizard Layout
+
 ## Information
 * **Vendor**: Adobe
 * **Version**: v1
