@@ -70,10 +70,8 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public boolean isReadOnly() {
-        if (getEditMode()) {
-            return false;
-        }
         return readOnly;
     }
 
