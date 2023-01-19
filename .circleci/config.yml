@@ -129,7 +129,7 @@ jobs:
       PRERELEASE: 'true'
     resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 6
+    parallelism: 8
     <<: *cypress_test_steps
  
   release:
