@@ -165,7 +165,7 @@ describe( "Form Runtime with Panel Container", () => {
         disabledPanelElem.should('have.attr',"data-cmp-enabled","false");
         disabledPanelElem.should('have.length',1);
         disabledPanelElem.should('have.class','cmp-container');
-        disabledPanelElem.find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
+        cy.get("#disabled_panel_test").find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
 
     });
 
@@ -174,30 +174,26 @@ describe( "Form Runtime with Panel Container", () => {
         readOnlyPanelElem.should('have.length',1);
         readOnlyPanelElem.should('have.attr','data-cmp-is','adaptiveFormPanel');
         readOnlyPanelElem.should('have.class','cmp-container');
-        readOnlyPanelElem.find(".cmp-adaptiveform-numberinput__widget").should('have.attr',"readonly");
+        cy.get("#readOnly_panel_test").find(".cmp-adaptiveform-numberinput__widget").should('have.attr',"readonly");
     });
 
     it("enable panel's child when panel and child is disabled  ", () => {
-        const disabledChild=cy.get("#disabled_numberinput_with_rule_1");
-        disabledChild.should('have.attr','data-cmp-enabled',"false");
+        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
         const textinputDivToEnableNumberinput1=cy.get("#textinput_to_enable_numberinput_1");
         textinputDivToEnableNumberinput1.find(".cmp-adaptiveform-textinput__widget").type("a").blur();
-        const enabledChildViaRule=cy.get("#disabled_numberinput_with_rule_1");
-        enabledChildViaRule.should('have.attr','data-cmp-enabled',"true");
+        cy.wait(3000);
+        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"true");
     });
 
     it("enable panel and check that child behaved properly",()=>{
-        const childDisabledByItsOwnJsonModel=cy.get("#disabled_numberinput_with_rule_1");
-        const childDisabledByParentPanel=cy.get("#disabled_textinput_with_rule_1");
-        childDisabledByItsOwnJsonModel.should('have.attr','data-cmp-enabled',"false");
-        childDisabledByParentPanel.should('have.attr','data-cmp-enabled',"false");
-        const textinputDivToEnablePanel1=cy.get("#textinput_to_enable_numberinput_1");
-        textinputDivToEnablePanel1.within(()=>{
+        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
+        cy.get("#disabled_textinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
+        cy.get("#textinput_to_enable_numberinput_1").within(()=>{
             const textInput=cy.get(".cmp-adaptiveform-textinput__widget");
             textInput.type("b");
             textInput.blur();
         })
-
+        cy.wait(3000);
         cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
         cy.get("#disabled_textinput_with_rule_1").should('have.attr','data-cmp-enabled',"true");
     });
@@ -205,12 +201,12 @@ describe( "Form Runtime with Panel Container", () => {
     it("make readonly panel not readonly and check that child behaved properly",()=>{
         cy.get("#readonly_numberinput_with_rule_1").find('.cmp-adaptiveform-numberinput__widget').should('have.attr','readonly');
         cy.get("#readonly_textinput_with_rule_1").find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
-        const textinputDivToEnablePanel1=cy.get("#textinput_to_enable_numberinput_1");
-        textinputDivToEnablePanel1.within(()=>{
+        cy.get("#textinput_to_enable_numberinput_1").within(()=>{
             const textInput=cy.get(".cmp-adaptiveform-textinput__widget");
             textInput.type("c");
             textInput.blur();
         })
+        cy.wait(3000);
         cy.get("#readonly_numberinput_with_rule_1").find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr','readonly');
         cy.get("#readonly_textinput_with_rule_1").find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
     });
