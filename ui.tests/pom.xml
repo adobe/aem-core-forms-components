@@ -39,7 +39,7 @@
         <npm.version>7.5.4</npm.version>
 
         <HEADLESS_BROWSER>false</HEADLESS_BROWSER>
-        <specFiles></specFiles>
+        <specFiles>${specFiles}</specFiles>
 
         <!-- AEMaaCS UI testing convention properties -->
         <AEM_AUTHOR_URL>http://localhost:4502</AEM_AUTHOR_URL>
