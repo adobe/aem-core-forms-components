@@ -130,6 +130,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
     public boolean isVisible() {
         if (getEditMode()) {
             return true;

@@ -37,6 +37,7 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -212,6 +213,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
     public boolean isEnabled() {
         return enabled;
     }
