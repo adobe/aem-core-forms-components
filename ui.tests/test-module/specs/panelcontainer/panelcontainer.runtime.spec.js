@@ -166,7 +166,7 @@ describe( "Form Runtime with Panel Container", () => {
         disabledPanelElem.should('have.length',1);
         disabledPanelElem.should('have.class','cmp-container');
         cy.wait(3000);
-        cy.get("#disabled_panel_test").find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should('exist');
+        cy.get("#disabled_panel_test").find('[data-cmp-is="adaptiveFormNumberInput"][data-cmp-enabled="false"]').should('exist');
 
     });
 
@@ -176,7 +176,7 @@ describe( "Form Runtime with Panel Container", () => {
         readOnlyPanelElem.should('have.attr','data-cmp-is','adaptiveFormPanel');
         readOnlyPanelElem.should('have.class','cmp-container');
         cy.wait(3000);
-        cy.get("#readOnly_panel_test").find(".cmp-adaptiveform-numberinput__widget").should('have.attr',"readonly");
+        cy.get('#readOnly_panel_test').find('.cmp-adaptiveform-numberinput__widget').should('have.attr','readonly');
     });
 
     it("enable panel's child when panel and child is disabled  ", () => {
@@ -192,7 +192,7 @@ describe( "Form Runtime with Panel Container", () => {
         cy.get('#textinput_to_enable_numberinput_1').find('.cmp-adaptiveform-textinput__widget').type("b").blur();
         cy.wait(3000);
         cy.get('#disabled_numberinput_with_rule_1').should('have.attr','data-cmp-enabled','false');
-        cy.get('#disabled_textinput_with_rule_1').should('have.attr','data-cmp-enabled','true');
+        cy.get('#disabled_textinput_with_rule_1').invoke('attr', 'data-cmp-enabled').should('eq', 'true');
     });
 
     it("make readonly panel not readonly and check that child behaved properly",()=>{
