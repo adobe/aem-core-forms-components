@@ -160,13 +160,13 @@ describe( "Form Runtime with Panel Container", () => {
     })
 
     it("disabled panel's children are also disabled ", () => {
-        const disabledPanelElem=cy.get("#disabled_panel_test");
+        const disabledPanelElem=cy.get('#disabled_panel_test');
 
-        disabledPanelElem.should('have.attr',"data-cmp-enabled","false");
+        disabledPanelElem.should('have.attr','data-cmp-enabled','false');
         disabledPanelElem.should('have.length',1);
         disabledPanelElem.should('have.class','cmp-container');
         cy.wait(3000);
-        cy.get("#disabled_panel_test").find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
+        cy.get("#disabled_panel_test").find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should('exist');
 
     });
 
@@ -180,27 +180,27 @@ describe( "Form Runtime with Panel Container", () => {
     });
 
     it("enable panel's child when panel and child is disabled  ", () => {
-        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
-        cy.get("#textinput_to_enable_numberinput_1").find(".cmp-adaptiveform-textinput__widget").type("a").blur();
+        cy.get('#disabled_numberinput_with_rule_1').should('have.attr','data-cmp-enabled','false');
+        cy.get('#textinput_to_enable_numberinput_1').find('.cmp-adaptiveform-textinput__widget').type("a").blur();
         cy.wait(3000);
-        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"true");
+        cy.get('#disabled_numberinput_with_rule_1').should('have.attr','data-cmp-enabled','true');
     });
 
     it("enable panel and check that child behaved properly",()=>{
-        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
-        cy.get("#disabled_textinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
-        cy.get("#textinput_to_enable_numberinput_1").find(".cmp-adaptiveform-textinput__widget").type("b").blur();
+        cy.get('#disabled_numberinput_with_rule_1').should('have.attr','data-cmp-enabled','false');
+        cy.get('#disabled_textinput_with_rule_1').should('have.attr','data-cmp-enabled','false');
+        cy.get('#textinput_to_enable_numberinput_1').find('.cmp-adaptiveform-textinput__widget').type("b").blur();
         cy.wait(3000);
-        cy.get("#disabled_numberinput_with_rule_1").should('have.attr','data-cmp-enabled',"false");
-        cy.get("#disabled_textinput_with_rule_1").should('have.attr','data-cmp-enabled',"true");
+        cy.get('#disabled_numberinput_with_rule_1').should('have.attr','data-cmp-enabled','false');
+        cy.get('#disabled_textinput_with_rule_1').should('have.attr','data-cmp-enabled','true');
     });
 
     it("make readonly panel not readonly and check that child behaved properly",()=>{
-        cy.get("#readonly_numberinput_with_rule_1").find('.cmp-adaptiveform-numberinput__widget').should('have.attr','readonly');
-        cy.get("#readonly_textinput_with_rule_1").find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
-        cy.get("#textinput_to_enable_numberinput_1").find(".cmp-adaptiveform-textinput__widget").type("c").blur();
+        cy.get('#readonly_numberinput_with_rule_1').find('.cmp-adaptiveform-numberinput__widget').should('have.attr','readonly');
+        cy.get('#readonly_textinput_with_rule_1').find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
+        cy.get('#textinput_to_enable_numberinput_1').find(".cmp-adaptiveform-textinput__widget").type("c").blur();
         cy.wait(3000);
-        cy.get("#readonly_numberinput_with_rule_1").find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr','readonly');
-        cy.get("#readonly_textinput_with_rule_1").find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
+        cy.get('#readonly_numberinput_with_rule_1').find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr','readonly');
+        cy.get('#readonly_textinput_with_rule_1').find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
     });
 })
