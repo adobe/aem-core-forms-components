@@ -67,11 +67,23 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String thankYouOption;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String clientLibRef;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String title;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String redirect;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String prefillService;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -81,6 +93,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     public String getThankYouMessage() {
         return thankyouMessage;
+    }
+
+    @Override
+    @Nullable
+    public String getThankYouOption() {
+        return thankYouOption;
     }
 
     @Override
@@ -148,14 +166,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         }
     }
 
+    @JsonIgnore
+    @Nullable
+    public String getRedirectUrl() {
+        return GuideUtils.getRedirectUrl(redirect, getPath());
+    }
+
+    @JsonIgnore
+    @Nullable
+    public String getPrefillService() {
+        return prefillService;
+    }
+
     @Override
     public String getAction() {
-        if (getCurrentPage() != null) {
-            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
-                .getPath());
-        } else {
-            return null;
-        }
+        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getPath());
     }
 
     @Override

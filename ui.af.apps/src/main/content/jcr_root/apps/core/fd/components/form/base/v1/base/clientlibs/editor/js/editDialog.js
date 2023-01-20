@@ -25,7 +25,9 @@
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
-        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef";
+        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
 
 
     /**
@@ -80,12 +82,22 @@
         }
     }
 
+    function fetchAuthorContentFrameDocument() {
+        var contentFrameDocumentArray = ns.ContentFrame ? ns.ContentFrame.getDocument() : [];
+        if (contentFrameDocumentArray && contentFrameDocumentArray.length > 0) {
+            return contentFrameDocumentArray[0];
+        }
+    };
+
     function getGuideContainerProperties() {
-        var formPath = getFormPath(ns.ContentFrame.getContentPath());
+        //var formPath = getFormPath(ns.ContentFrame.getContentPath());
+        var contentFrame = fetchAuthorContentFrameDocument();
         var result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".1.json"),
+            //url: Granite.HTTP.externalize((formPath + "/jcr:content/guideContainer") + ".1.json"),
+            url: Granite.HTTP.externalize(contentFrame.querySelector(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE)
+                .getAttribute(V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE) + ".1.json"),
             cache: false
         });
         return result.responseText;
