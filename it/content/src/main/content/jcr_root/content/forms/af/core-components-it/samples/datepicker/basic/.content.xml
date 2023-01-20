@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-12T12:58:32.998+05:30"
+            cq:lastModified="{Date}2023-01-20T15:28:03.296+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -62,15 +62,24 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </dateinput4>
-            <datepicker
-                    jcr:lastModified="{Date}2023-01-12T12:56:58.937+05:30"
+            <dateinput5
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 5 (Formatter Support)"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    displayFormat="MMMM d, y"
+                    editFormat="EEEE, MMMM d, y"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    name="dateinput5"/>
+            <dateinput6
+                    jcr:lastModified="{Date}2023-01-20T15:28:03.284+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="Date Input 5"
+                    jcr:title="Date Input 6"
                     sling:resourceType="forms-components-examples/components/form/datepicker"
                     enabled="{Boolean}true"
                     fieldType="date-input"
-                    name="datepicker1673508413874"
+                    name="dateinput6"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
                     visible="{Boolean}true">
@@ -81,16 +90,7 @@
                 <fd:events
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == '2023-01-12'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {value : '2023-01-01'})\, {}),if($field == '2023-01-12'\, dispatchEvent(dateinput1\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
-            </datepicker>
-            <dateinput5
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Date Input 5 (Formatter Support)"
-                    sling:resourceType="forms-components-examples/components/form/datepicker"
-                    enabled="{Boolean}true"
-                    fieldType="date-input"
-                    name="dateinput5"
-                    displayFormat="MMMM d, y"
-                    editFormat="EEEE, MMMM d, y"/>
+            </dateinput6>
         </guideContainer>
     </jcr:content>
 </jcr:root>
