@@ -148,17 +148,17 @@ describe("Form with Radio Button Input", () => {
         })
     })
 
-//     it("should set and clear value", () => {
-//         // Rule on radioButton4: When input has Item1 selected, set value of radioButton2 to "value 300" and clear value of radioButton1
-//
-//         const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
-//         const [radioButton2, radioButton5FieldView] = Object.entries(formContainer._fields)[1];
-//         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
-//
-//         cy.get(`#${radioButton1}`).find("input").check("1")
-//         cy.get(`#${radioButton4}`).find("input").check("0").blur().then(x => {
-//             cy.get(`#${radioButton2}`).find("input").should('be.checked').and('have.value', "value 300")
-//             cy.get(`#${radioButton1}`).find("input").should('not.be.checked')
-//         })
-//     })
+    it("should set and clear value based on rules", () => {
+        // Rule on radioButton4: When input has Item1 selected, set value of radioButton6 to "Item 2" and clear value of radioButton1
+
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const [radioButton6, radioButton6FieldView] = Object.entries(formContainer._fields)[5];
+        const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${radioButton1}`).find("input").check("1")
+        cy.get(`#${radioButton4}`).find("input").check("0").blur().then(x => {
+            cy.get(`#${radioButton6}`).find("input").should('be.checked')
+            cy.get(`#${radioButton1}`).find("input").should('not.be.checked')
+        })
+    })
 })
