@@ -53,7 +53,6 @@
                     maxItems="4"
                     minItems="0"
                     name="panelcontainer2"
-                    id="disabled_panel_test"
                     roleAttribute="toolbar"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
                     tooltipVisible="true"
@@ -64,7 +63,6 @@
                         sling:resourceType="forms-components-examples/components/form/numberinput"
                         fieldType="number-input"
                         name="numberinput1"
-                        id="disabled_numberinput_test"
                         type="string"/>
             </panelcontainer2>
             <panelcontainer3
@@ -79,7 +77,6 @@
                     maxItems="4"
                     minItems="0"
                     name="panelcontainer3"
-                    id="readOnly_panel_test"
                     roleAttribute="toolbar"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
                     tooltipVisible="true"
@@ -90,7 +87,6 @@
                         sling:resourceType="forms-components-examples/components/form/numberinput"
                         fieldType="number-input"
                         name="numberInput2"
-                        id="readOnly_numberinput_test"
                         type="string"/>
             </panelcontainer3>
             <textinput1
@@ -98,7 +94,6 @@
                     jcr:createdBy="admin"
                     jcr:title="Text Input 1"
                     jcr:lastModifiedBy="admin"
-                    id="textinput_to_enable_numberinput_1"
                     jcr:created="Fri Jan 13 2023 11:23:56 GMT+0530"
                     name="textinput1"
                     jcr:lastModified="Fri Jan 13 2023 11:23:56 GMT+0530"
@@ -126,7 +121,6 @@
                     jcr:created="Fri Jan 13 2023 11:11:45 GMT+0530"
                     name="panelcontainer4"
                     visible="true"
-                    id="disabled_panel_with_rule_1"
                     jcr:lastModified="Tue Jan 17 2023 22:11:25 GMT+0530"
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     fieldType="panel"
@@ -141,7 +135,6 @@
                             jcr:created="Wed Jan 11 2023 14:26:53 GMT+0530"
                             name="numberinput3"
                             type="number"
-                            id="disabled_numberinput_with_rule_1"
                             visible="true"
                             jcr:lastModified="Tue Jan 17 2023 22:11:32 GMT+0530"
                             sling:resourceType="forms-components-examples/components/form/numberinput"
@@ -156,7 +149,6 @@
                             jcr:lastModifiedBy="admin"
                             readOnly="false"
                             autocomplete="off"
-                            id="disabled_textinput_with_rule_1"
                             jcr:created="Mon Jan 16 2023 14:28:36 GMT+0530"
                             name="textinput2"
                             visible="true"
@@ -176,7 +168,6 @@
                     jcr:created="Fri Jan 13 2023 11:11:45 GMT+0530"
                     name="panelcontainer5"
                     visible="true"
-                    id="readonly_panel_with_rule_1"
                     jcr:lastModified="Tue Jan 17 2023 22:11:25 GMT+0530"
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     fieldType="panel"
@@ -191,7 +182,6 @@
                         jcr:created="Wed Jan 11 2023 14:26:53 GMT+0530"
                         name="numberinput4"
                         type="number"
-                        id="readonly_numberinput_with_rule_1"
                         visible="true"
                         jcr:lastModified="Tue Jan 17 2023 22:11:32 GMT+0530"
                         sling:resourceType="forms-components-examples/components/form/numberinput"
@@ -206,7 +196,6 @@
                         jcr:lastModifiedBy="admin"
                         readOnly="false"
                         autocomplete="off"
-                        id="readonly_textinput_with_rule_1"
                         jcr:created="Mon Jan 16 2023 14:28:36 GMT+0530"
                         name="textinput2"
                         visible="true"
