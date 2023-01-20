@@ -159,13 +159,13 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms Wizard', function () {
+        it('insert aem forms Wizard', { retries: 3 }, function () {
             dropWizardInSites();
             cy.deleteComponentByPath(wizardEditPath);
         });
 
-        // todo: intermittent failure
-        it('open edit dialog of aem forms Wizard', function() {
+        // adding retry, sometimes site editor does not load
+        it('open edit dialog of aem forms Wizard', { retries: 3 }, function() {
             dropWizardInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
