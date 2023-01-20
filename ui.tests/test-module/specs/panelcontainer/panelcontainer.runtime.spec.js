@@ -166,6 +166,7 @@ describe( "Form Runtime with Panel Container", () => {
         cy.get(`#${disabledPanelElemId}`).should('have.class','cmp-container');
         cy.get(`#${disabledPanelElemId}`).find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
 
+
     });
 
     it("readOnly panel's children are also readOnly ", () => {
@@ -180,29 +181,35 @@ describe( "Form Runtime with Panel Container", () => {
         const textInputOfFormElemId=formContainer._model.items[3].id;
         const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
         cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
-        cy.get(`#${textInputOfFormElemId} input`).focus().type('a').blur();
-        cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"true");
+        cy.get(`#${textInputOfFormElemId} input`).type('a').blur().then(()=>{
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"true");
+        });
     });
 
     it("enable panel and check that child behaved properly",()=>{
         const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
         const textInputOfPanelId=formContainer._model.items[4].items[1].id;
         const textInputOfFormElemId=formContainer._model.items[3].id;
-        cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
-        cy.get(`#${textInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
-        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget").type("b").blur();
-        cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
-        cy.get(`#${textInputOfPanelId}`).should('have.attr','data-cmp-enabled',"true");
+        cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("b").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+            cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'true');
+        });
     });
 
     it("make readonly panel not readonly and check that child behaved properly",()=>{
         const numberInputOfPanelId=formContainer._model.items[5].items[0].id;
         const textInputOfPanelId=formContainer._model.items[5].items[1].id;
         const textInputOfFormElemId=formContainer._model.items[3].id;
-        cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('have.attr','readonly');
-        cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
-        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget").type("c").blur();
-        cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr','readonly');
-        cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr','readonly');
+        cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("c").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr', 'readonly');
+            cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        })
+
     });
 })

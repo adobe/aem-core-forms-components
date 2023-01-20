@@ -31,7 +31,7 @@ describe('Page - Authoring', function () {
 
     const addComponentInWizard = function (componentString, componentType) {
         const dataPath="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*",
-         wizardDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+            wizardDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(wizardDropZoneSelector, componentString, componentType);
         cy.get('body').click( 0,0);
@@ -68,17 +68,19 @@ describe('Page - Authoring', function () {
 
         it('verify Basic tab in edit dialog of Wizard',function (){
             dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get("[name='./name']").should("exist");
-            cy.get("[name='./jcr:title']").should("exist");
-            cy.get("[name='./layout']").should("exist");
-            cy.get("[name='./dataRef']").should("exist");
-            cy.get("[name='./visible']").should("exist");
-            cy.get("[name='./enabled']").should("exist");
-            cy.get('.cq-dialog-cancel').click({force:true});
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+                cy.invokeEditableAction(editDialogConfigurationSelector).then(()=>{
+                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
+                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
+                    cy.get("[name='./name']").should("exist");
+                    cy.get("[name='./jcr:title']").should("exist");
+                    cy.get("[name='./layout']").should("exist");
+                    cy.get("[name='./dataRef']").should("exist");
+                    cy.get("[name='./visible']").should("exist");
+                    cy.get("[name='./enabled']").should("exist");
+                    cy.get('.cq-dialog-cancel').click({force:true});
+                });
+            });
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
@@ -86,17 +88,30 @@ describe('Page - Authoring', function () {
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogNavigationPanelSelector);
-            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-            cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
-            cy.get('body').click( 0,0);
-            cy.get('div'+numberInputDataPath).should('not.be.visible');
-            cy.invokeEditableAction(editDialogNavigationPanelSelector);
-            cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
-            cy.get('body').click( 0,0);
-            cy.get('div'+textInputDataPath).should('not.be.visible');
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+                cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first()
+                        .should('be.visible').click({force:true}).then(()=>{
+                        cy.get('body').click( 0,0).then(()=>{
+                            cy.get('div'+numberInputDataPath).should('not.be.visible');
+                            cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
+                                cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td")
+                                    .first().should('be.visible').click({force:true}).then(()=>{
+                                    cy.get('body').click( 0,0).then(()=>{
+                                        cy.get('div'+textInputDataPath).should('not.be.visible').then(()=>{
+                                            cy.deleteComponentByPath(wizardLayoutDrop) ;
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+
+
+
         });
     })
 

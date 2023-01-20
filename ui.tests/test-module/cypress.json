@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:4502",
-  "integrationFolder": "specs/panelcontainer",
+  "integrationFolder": "specs",
   "fixturesFolder": "libs/fixtures",
   "supportFile": "libs/support/index.js",
   "pluginsFile": "libs/plugins/index.js",
