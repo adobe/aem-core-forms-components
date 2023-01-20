@@ -17,6 +17,7 @@
     "cypress": "^7.7.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-iframe": "1.0.1",
+    "cypress-log-to-output": "1.1.2",
     "cypress-pipe": "2.0.0",
     "cypress-plugin-snapshots": "1.4.4",
     "cypress-recurse": "^1.27.0",
