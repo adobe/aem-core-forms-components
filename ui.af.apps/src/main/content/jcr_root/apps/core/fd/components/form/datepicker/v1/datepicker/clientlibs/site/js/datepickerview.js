@@ -59,18 +59,57 @@
             return this.element.querySelector(DatePicker.selectors.tooltipDiv);
         }
 
+        updateValue(value) {
+            if (this.widgetObject) {
+                if (this.isActive()) {
+                    this.widgetObject.setValue(value);
+                } else {
+                    this.widgetObject.setDisplayValue(value);
+                }
+            } else {
+                super.updateValue(value);
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
-            if (this.widget.value !== '') {
-                this._model.value = this.widget.value;
+            if (!this.#noFormats()) {
+                if (this.widgetObject == null) {
+                    this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
+                }
+                if (this.widgetObject.getValue() !== '') {
+                    this._model.value = this.widgetObject.getValue();
+                }
+                this.widgetObject.addEventListener('blur', (e) => {
+                    this._model.value = this.widgetObject.getValue();
+
+                    //setDisplayValue is required for cases where value remains same while focussing in and out.
+                    this.widgetObject.setDisplayValue(this._model.value);
+
+                    this.setInactive();
+                }, this.getWidget());
+                this.widgetObject.addEventListener('focus', (e) => {
+                    this.widgetObject.setValue(e.target.value);
+                    this.setActive();
+                }, this.getWidget());
+            } else {
+                if (this.widget.value !== '') {
+                    this._model.value = this.widget.value;
+                }
+                this.widget.addEventListener('blur', (e) => {
+                    this._model.value = e.target.value;
+                    this.setInactive();
+                });
+                this.widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
             }
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-                this.setInactive();
-            });
-            this.widget.addEventListener('focus', (e) => {
-                this.setActive();
-            });
+
+        }
+
+        #noFormats() {
+            return (this._model.editFormat == null || this._model.editFormat === 'short') &&
+                (this._model.displayFormat == null || this._model.displayFormat === 'short');
         }
     }
 

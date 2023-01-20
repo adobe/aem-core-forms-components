@@ -84,13 +84,15 @@
         }
 
         #updateModelValue(widget) {
-            let value = []
+            let value = [];
             this.widget.forEach(widget => {
                 if (widget.checked) {
                     value.push(widget.value)
                 }
-            }, this)
-            this._model.value = value
+            }, this);
+            if (value.length !== 0 || this._model.value != null) {
+                this._model.value = value;
+            }
         }
 
         updateValue(modelValue) {

@@ -82,6 +82,15 @@
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == '2023-01-12'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {value : '2023-01-01'})\, {}),if($field == '2023-01-12'\, dispatchEvent(dateinput1\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
             </datepicker>
+            <dateinput5
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 5 (Formatter Support)"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    name="dateinput5"
+                    displayFormat="MMMM d, y"
+                    editFormat="EEEE, MMMM d, y"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

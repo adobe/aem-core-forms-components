@@ -14,11 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 import Utils from "./utils";
+import LanguageUtils from "./LanguageUtils";
 import {createFormInstance, FileObject, extractFileInfo, Click, Change, Submit, Blur, AddItem, RemoveItem} from "@aemforms/af-core";
 import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
 import {Constants} from "./constants";
 import GuideBridge from "./GuideBridge";
 import HTTPAPILayer from "./HTTPAPILayer";
+import {formatDate, parseDate} from "@aemforms/af-formatters";
 
 window.af = {
     formsRuntime: {
@@ -38,8 +40,13 @@ const Actions = {
     Click, Change, Submit, Blur, AddItem, RemoveItem
 }
 
-const FileAttachmentUtils = {
-    FileObject, extractFileInfo
+const Formatters = {
+    formatDate, parseDate
 }
 
-export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils};
+const FileAttachmentUtils = {
+    FileObject, extractFileInfo
+};
+
+
+export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils};

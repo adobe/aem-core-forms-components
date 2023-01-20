@@ -25,9 +25,6 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
-
-        // todo: handle localization here
-        static ERROR_MSG = "Encountered an internal error while submitting the form."
         constructor(params) {
             super(params);
             this._model.subscribe((action) => {
@@ -47,7 +44,8 @@
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                window.alert(FormContainerV2.ERROR_MSG);
+                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                window.alert(defaultSubmissionError);
             }, "submitError");
         }
     }

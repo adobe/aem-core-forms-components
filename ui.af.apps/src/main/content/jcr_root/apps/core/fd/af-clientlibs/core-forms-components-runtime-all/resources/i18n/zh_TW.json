@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "按 Enter 以刪除檔案",
+  "FileSizeGreater"       :        "檔案 {0} 的大小比預期大: {1}MB。",
+  "FileNameInvalid"       :       "{0} 檔案名稱中包含無效字元。僅支援字母數字字元",
+  "FileMimeTypeInvalid"   :       "{0} 檔案的檔案類型不受支援",
+  "InternalFormSubmissionError" :  "提交表單時發生內部錯誤。"
+}

@@ -36,7 +36,7 @@ describe('Page - Authoring', function () {
     }
 
     const insertDropDownInSites = function() {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/dropdown/jcr:content/root/responsivegrid/demo/component/container/*",
+        const dataPath = "/content/core-components-examples/library/adaptive-form/dropdown/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Drop-down List", afConstants.components.forms.resourceType.formdropdown);
@@ -121,9 +121,9 @@ describe('Page - Authoring', function () {
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/dropdown",
-            dropDownEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/dropdown",
+            dropDownEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/dropdown",
             dropDownEditPathSelector = "[data-path='" + dropDownEditPath + "']",
-            dropdown = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formdropdown.split("/").pop();
+            dropdown = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formdropdown.split("/").pop();
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes

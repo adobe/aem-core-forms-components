@@ -38,7 +38,7 @@ describe('Page - Authoring', function () {
     }
 
     const dropWizardInSites = function() {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/container/*",
+        const dataPath = "/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Wizard Layout", afConstants.components.forms.resourceType.wizard);
@@ -149,7 +149,7 @@ describe('Page - Authoring', function () {
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/wizard",
-            wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/wizard",
+            wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/wizard",
             wizardBlockBemSelector = '.cmp-adaptiveform-wizard',
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
             wizardEditPathSelector = "[data-path='" + wizardEditPath + "']";

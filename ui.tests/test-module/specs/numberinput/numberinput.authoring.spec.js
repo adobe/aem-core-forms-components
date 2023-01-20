@@ -28,7 +28,7 @@ describe('Page - Authoring', function () {
     }
 
     const dropNumberInputInSites = function() {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/numberinput/jcr:content/root/responsivegrid/demo/component/container/*",
+        const dataPath = "/content/core-components-examples/library/adaptive-form/numberinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
@@ -122,10 +122,10 @@ describe('Page - Authoring', function () {
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/numberinput",
-            numberInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/numberinput",
+            numberInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/numberinput",
             numberInputEditPathSelector = "[data-path='" + numberInputEditPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
-            numberInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formnumberinput.split("/").pop();
+            numberInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formnumberinput.split("/").pop();
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
