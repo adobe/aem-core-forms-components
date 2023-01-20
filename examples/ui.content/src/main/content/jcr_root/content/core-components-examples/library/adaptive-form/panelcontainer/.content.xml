@@ -91,6 +91,9 @@
                                   jcr:title="Panel"
                                   sling:resourceType="forms-components-examples/components/form/panelcontainer"
                                   fieldType="panel"
+                                  description="&lt;p>This is a long description.&lt;/p>"
+                                  tooltip="&lt;p>This is a short description.&lt;/p>"
+                                  tooltipVisible="true"
                                   name="panelcontainer_demo1674110267107">
                                     <text
                                       jcr:lastModified="{Date}2023-01-19T15:08:54.790+05:30"
