@@ -89,15 +89,16 @@
                   sling:resourceType="forms-components-examples/components/demo">
                     <component
                       jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/demo/component">
+                      sling:resourceType="forms-components-examples/components/demo/component">
                             <guideContainer
                               fd:version="2.1"
                               fieldType="form"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="forms-components-examples/components/form/container">
                                 <container
+                                  fieldType="demo-component"
                                   jcr:primaryType="nt:unstructured"
-                                  sling:resourceType="core-components-examples/components/demo/component">
+                                  sling:resourceType="forms-components-examples/components/demo/component">
                                     <resetbutton_demo
                                       jcr:title="Reset"
                                       fieldType="button"
