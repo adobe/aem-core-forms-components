@@ -51,7 +51,6 @@
     <!-- ====================================================================== -->
     <properties>
         <bnd.version>5.0.0</bnd.version>
-        <aem.forms.sdk.api>2020.08.26.04</aem.forms.sdk.api>
     </properties>
 
     <!-- ====================================================================== -->
@@ -169,10 +168,8 @@ Import-Package: javax.annotation;version=0.0.0,*
         </dependency>
         <!-- AEM Forms SDK APi -->
         <dependency>
-            <groupId>com.adobe.aem</groupId>
+            <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
-            <version>${aem.forms.sdk.api}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
