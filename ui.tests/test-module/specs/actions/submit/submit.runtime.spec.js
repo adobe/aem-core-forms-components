@@ -50,7 +50,7 @@ describe("Form with Submit Button", () => {
     });
 
 
-    it.skip("Custom Submit Action Test", () => {
+    it("Custom Submit Action Test", () => {
         cy.previewForm(customSubmitPagePath);
         cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")

@@ -30,7 +30,9 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -180,7 +182,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public String getAction() {
-        return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getPath());
+        if (getCurrentPage() != null) {
+            if (GuideWCMUtils.isForms(getCurrentPage().getPath()) && GuideConstants.RT_PAGE.equals(this.resource.getResourceType())) {
+                return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
+                    .getPath());
+            } else {
+                return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getPath());
+            }
+        } else {
+            return null;
+        }
     }
 
     @Override
