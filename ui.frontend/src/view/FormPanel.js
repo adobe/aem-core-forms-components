@@ -17,7 +17,6 @@
 import {Constants} from "../constants.js";
 import FormFieldBase from "./FormFieldBase.js";
 import InstanceManager from "./InstanceManager.js";
-import Utils from "../utils.js";
 
 export default class FormPanel extends FormFieldBase {
     constructor(params) {

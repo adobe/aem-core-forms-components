@@ -14,8 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-import Utils from "../utils";
-import {Constants} from "../constants";
+import Utils from "../utils.js";
+import {Constants} from "../constants.js";
 
 export default class InstanceManager {
 
