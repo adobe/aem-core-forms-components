@@ -127,7 +127,7 @@ export default class Utils {
                 this.removeFieldReferences(childViewList[index]);
             }
         }
-        delete fieldView.formContainer._fields[fieldView.id];
+        delete fieldView.formContainer.getAllFields()[fieldView.id];
     }
 
     /**
