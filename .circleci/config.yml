@@ -33,10 +33,9 @@ common:
                 shopt -s globstar
                 SPEC_PATH="specs/**/*.spec.js"
                 TEST=$(circleci tests glob ${SPEC_PATH} | circleci tests split --split-by=timings)
-                cd ../../
-                node .circleci/ci/it-tests.js $TEST
+                node ../../.circleci/ci/it-tests.js $TEST
       - store_test_results:
-          path: ui.tests/test-module/target/reports
+          path: test-results
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
