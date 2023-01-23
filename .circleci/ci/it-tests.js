@@ -136,4 +136,6 @@ try {
     });
     // test-results folder will store the test-timing data for parallelising test-suites
     ci.sh('mkdir test-results');
+    ci.sh('cp ./ui.tests/test-module/target/reports/*.xml ./test-results');
+    
 }
