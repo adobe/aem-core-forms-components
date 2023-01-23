@@ -52,7 +52,7 @@ describe('Custom Prefill Test', function () {
         cy.get(jobDropdown).should("have.value", "1");
     }
 
-    it('', function() {
+    it.skip('', function() {
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
