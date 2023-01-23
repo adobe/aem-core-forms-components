@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 import Utils from "./utils";
+import LanguageUtils from "./LanguageUtils";
 import {createFormInstance, FileObject, extractFileInfo, Click, Change, Submit, Blur, AddItem, RemoveItem} from "@aemforms/af-core";
 import {FormField, FormContainer, FormFieldBase, FormPanel} from "./view";
 import {Constants} from "./constants";
@@ -45,6 +46,7 @@ const Formatters = {
 
 const FileAttachmentUtils = {
     FileObject, extractFileInfo
-}
+};
 
-export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters};
+
+export {createFormInstance, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils};

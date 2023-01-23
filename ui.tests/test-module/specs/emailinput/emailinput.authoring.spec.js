@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropEmailInputInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email Input", afConstants.components.forms.resourceType.formemailinput);
@@ -76,9 +76,9 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/emailinput",
-        emailInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/emailinput",
+        emailInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/emailinput",
         emailInputEditPathSelector = "[data-path='" + emailInputEditPath + "']",
-        emailInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
+        emailInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes

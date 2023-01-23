@@ -20,6 +20,7 @@
       action="${container.metadata.action}"
       id="${container.id}"
       data-cmp-is="adaptiveFormContainer"
+      data-cmp-context-path="${request.contextPath}"
       data-cmp-path="${resource.path}"
       class="cmp-adaptiveform-container ${grid.cssClass} cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}">
     <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"

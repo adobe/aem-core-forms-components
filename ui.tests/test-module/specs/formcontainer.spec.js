@@ -65,7 +65,7 @@ describe('Page/Form Authoring', function () {
         // commenting once we support adaptive form container in sites editor, uncomment this test
         context.skip("Open Sites Editor", function () {
             // we can use these values to log in
-            const pagePath = "/content/core-components-examples/library/adaptive-form/container",
+            const pagePath = "/content/core-components-examples/library/adaptive-form/guideContainer",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
                 formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
                 formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop(),
