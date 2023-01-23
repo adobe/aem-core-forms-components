@@ -164,4 +164,19 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
         })
     })
+
+    it("should set and clear value based on rules", () => {
+        // Rule on checkBox3: When input has Item2 selected, set value of checkBox5 to Item 1 and clear value of checkBox2
+
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
+        const [checkBox5, checkBox5FieldView] = Object.entries(formContainer._fields)[4];
+
+        // Make checkbox3 visible
+        cy.get(`#${checkBox2}`).find("input").check(["0", "3"])
+        cy.get(`#${checkBox3}`).find("input").check("1").blur().then(x => {
+            cy.get(`#${checkBox5}`).find("input").should('be.checked')
+            cy.get(`#${checkBox2}`).find("input").should('not.be.checked')
+        })
+    })
 })
