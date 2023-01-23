@@ -20,6 +20,7 @@ import {customFunctions} from "./customFunctions";
 import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
+    static #contextPath = "";
     /**
      * Returns the data attributes of the specific element.
      * Ignores "data-cmp-is-*" and "data-cmp-hook-*" attributes.
@@ -143,6 +144,24 @@ export default class Utils {
     }
 
     /**
+     * API to set the context path. All external HTTP API calls would by default prefix with this context path
+     * @param contextPath   context path of the system
+     */
+    static setContextPath(contextPath) {
+        if (this.#contextPath == null || this.#contextPath.length === 0) {
+            this.#contextPath = contextPath;
+        }
+    }
+
+    /**
+     * API to get the context path
+     * @returns {*}
+     */
+    static getContextPath() {
+        return this.#contextPath;
+    }
+
+    /**
      * Registers handler on elements on hook
      * @param parentElement
      * @param hook
@@ -166,6 +185,9 @@ export default class Utils {
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
             const _path = dataset["path"];
+            if ('contextPath' in dataset) {
+                this.setContextPath(dataset['contextPath']);
+            }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
