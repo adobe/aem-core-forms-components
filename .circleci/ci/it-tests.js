@@ -133,7 +133,7 @@ try {
     ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
     ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
     ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
+    });
     // test-results folder will store the test-timing data for parallelising test-suites
     ci.sh('mkdir test-results');
-});
 }
