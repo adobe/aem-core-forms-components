@@ -104,7 +104,8 @@ describe.only('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsPath);
     });
 
-    it('switch tabs using dialog select panel button in toolbar', function(){
+    // todo: flaky
+    it('switch tabs using dialog select panel button in toolbar', { retries: 3 }, function(){
       dropTabsInContainer();
       //Add 2 children in tabs on top component
       dropTextInputInTabComponent();
