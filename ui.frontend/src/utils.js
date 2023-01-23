@@ -197,7 +197,7 @@ export default class Utils {
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
                 if (_formJson) {
-                    _prefillData = await HTTPAPILayer.getPrefillData(btoa(_path), params) || {};
+                    _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
                 const formContainer = createFormContainer({

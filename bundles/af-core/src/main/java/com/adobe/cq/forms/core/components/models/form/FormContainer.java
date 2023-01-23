@@ -247,8 +247,8 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
-    default String getThankYouOption() {
-        return "";
+    default ThankYouOption getThankYouOption() {
+        return null;
     };
 
     /**
@@ -298,6 +298,7 @@ public interface FormContainer extends Container {
      * @return the redirect url of the form
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
+    @JsonIgnore
     default String getRedirectUrl() {
         return null;
     }
@@ -308,6 +309,7 @@ public interface FormContainer extends Container {
      * @return the prefill service
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
+    @JsonIgnore
     default String getPrefillService() {
         return null;
     }

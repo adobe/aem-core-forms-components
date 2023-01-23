@@ -111,8 +111,7 @@ public class FormContainerImplTest {
     @Test
     void testGetAction() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtby9qY3I6Y29udGVudC9mb3JtY29udGFpbmVydjI=",
-            formContainer.getAction());
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getAction());
     }
 
     @Test
