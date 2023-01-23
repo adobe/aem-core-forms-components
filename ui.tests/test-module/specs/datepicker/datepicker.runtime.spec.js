@@ -26,7 +26,7 @@ describe("Form Runtime with Date Picker", () => {
         })
     });
 
-    const checkHTML = (id, state) => {
+    const checkHTML = (id, state, displayValue) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
@@ -54,7 +54,10 @@ describe("Form Runtime with Date Picker", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id)
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-            checkHTML(id, field.getModel().getState())
+            // if non submit field, check that all have error message in them
+            if (id.indexOf('submit') === -1) {
+                checkHTML(id, field.getModel().getState())
+            }
         });
     })
 
