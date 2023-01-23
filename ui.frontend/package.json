@@ -23,7 +23,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@aemforms/af-core": "file:///Users/varundua/codebase/af2-web-runtime/packages/forms-next-core",
-    "@aemforms/af-formatters": "file:///Users/varundua/codebase/af2-web-runtime/packages/forms-next-formatters"
+    "@aemforms/af-core": "^0.22.25",
+    "@aemforms/af-formatters": "^0.22.25"
   }
 }
