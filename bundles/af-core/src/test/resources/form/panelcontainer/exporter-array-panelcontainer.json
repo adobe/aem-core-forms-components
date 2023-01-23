@@ -2,58 +2,64 @@
   "id":"panelcontainer-c551a729ed",
   "description":"dependent names description",
   "tooltip":"dependent names tooltip",
-  "type":"array",
   "fieldType":"panel",
   "name":"abc",
   "visible":true,
   "enabled":true,
   "readOnly": false,
-  "minItems":1,
-  "maxItems":10,
+  "repeatable": true,
+  "minOccur":1,
+  "maxOccur":10,
   "items":[
     {
-      "id":"textinput-fae1400d3e",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "visible":true,
-        "richText":false,
-        "value":"def"
+      "id": "textinput-fae1400d3e",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
       },
-      "properties":{
-        "fd:dor":{
-          "dorExclusion":false
-        }
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/array-panelcontainer/textinput"
       },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "visible":true,
-    "richText":false,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
   },
-  "properties":{
-    "afs:layout":{
-      "tooltipVisible":false
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion" : false,
-      "dorExcludeTitle" : false,
-      "dorExcludeDescription" : false
-    }
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/array-panelcontainer"
   },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
+  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

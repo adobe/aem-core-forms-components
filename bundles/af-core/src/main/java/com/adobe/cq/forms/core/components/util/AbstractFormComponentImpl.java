@@ -157,6 +157,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
@@ -179,6 +180,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
+        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
             customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
@@ -318,5 +320,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getDataRef() {
         return dataRef;
+    }
+
+    /**
+     * Returns getPath of the form field
+     *
+     * @return getPath of the field
+     * @since com.adobe.cq.forms.core.components.util 3.1.0
+     */
+    @Override
+    @JsonIgnore
+    public String getPath() {
+        if (resource != null) {
+            return resource.getPath();
+        } else {
+            return "";
+        }
     }
 }

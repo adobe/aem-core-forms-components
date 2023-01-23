@@ -101,6 +101,15 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     /** Adding in base since it can also be used for fields and panels **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Boolean repeatable;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Integer minOccur;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Integer maxOccur;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected Integer minItems;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

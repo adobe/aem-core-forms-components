@@ -9,49 +9,55 @@
   "readOnly":false,
   "items": [
     {
-      "id":"textinput-bec585e910",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "visible":true,
-        "richText":false,
-        "value":"def"
+      "id": "textinput-bec585e910",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
       },
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
       "properties": {
-        "fd:dor":{
-          "dorExclusion":false
-        }
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/rules-panel/textinput"
       },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "visible":true,
-    "richText":false,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
   },
-  "events":{
-    "custom:setProperty" : ["$event.payload"],
-    "change":[
+  "events": {
+    "change": [
       "some expression 2"
+    ],
+    "custom:setProperty": [
+      "$event.payload"
     ]
   },
-  "properties":{
-    "afs:layout":{
-      "tooltipVisible":false
-    }
-  },
   "rules": {
-    "visible":"some expression"
+    "visible": "some expression"
   },
-  ":type":"core/fd/components/form/panel/v1/panel"
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:path": "/content/rules-panel"
+  },
+  ":type": "core/fd/components/form/panel/v1/panel"
 }

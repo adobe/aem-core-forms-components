@@ -9,53 +9,59 @@
   "readOnly": false,
   "items":[
     {
-      "id":"textinput-6c994d85b4",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "visible":true,
-        "richText":false,
-        "value":"def"
+      "id": "textinput-6c994d85b4",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
       "properties": {
-        "fd:dor":{
-          "dorExclusion":false
-        }
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/panelcontainer/textinput"
       },
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
-      },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "visible":true,
-    "richText":false,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
   },
   "properties": {
     "afs:layout": {
-      "tooltipVisible":false
+      "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion" : true,
-      "dorExcludeTitle" : false,
-      "dorExcludeDescription" : false,
+      "dorExclusion": true,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false,
       "breakBeforeText": "Following Previous",
       "breakAfterText": "Continue Filling Parent",
       "overflowText": "None",
       "dorNumCols": "3",
       "dorLayoutType": "columnar"
-    }
+    },
+    "fd:path": "/content/panelcontainer"
   },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
+  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

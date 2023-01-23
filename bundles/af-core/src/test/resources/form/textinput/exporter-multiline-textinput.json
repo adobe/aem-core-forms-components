@@ -1,25 +1,28 @@
 {
   "id": "textinput-7346ac5dd9",
-  "required": false,
+  "fieldType": "multiline-input",
   "name": "abc",
   "visible": false,
+  "description": "dummy",
+  "type": "string",
+  "required": false,
   "enabled": true,
   "readOnly": false,
-  "fieldType": "multiline-input",
-  "description" : "dummy",
   "label": {
+    "richText": false,
     "visible": true,
-    "value": "def",
-    "richText": false
+    "value": "def"
   },
-  "properties":{
-      "fd:dor": {
-        "dorExclusion":false
-      }
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
   },
-  "type": "string",
-  ":type": "core/fd/components/form/textinput/v1/textinput",
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/multiline-textinput"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput"
 }

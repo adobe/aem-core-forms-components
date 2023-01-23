@@ -55,8 +55,8 @@
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel());
         });
 
-        const tabId = formContainer._model.items[0].id;
-        const datepickerId = formContainer._model.items[0].items[0].id;
+        const tabId = formContainer._model.items[0].items[0].id;
+        const datepickerId = formContainer._model.items[0].items[0].items[0].id;
         const tabView = formContainer._fields[tabId];
         const datepickerView = formContainer._fields[datepickerId];
         expect(tabView, "tab view is created").to.not.be.null;
@@ -66,9 +66,9 @@
     })
 
     it(" model's changes are reflected in the html ", () => {
-        const tabId = formContainer._model.items[0].id;
+        const tabId = formContainer._model.items[0].items[0].id;
         const model = formContainer._model.getElement(tabId);
-        const tabView = formContainer._fields[tabId];
+        const tabView = formContainer.getAllFields()[tabId];
         const count = 2;
         checkHTML(model.id, model.getState(), tabView, count).then(() => {
             model.visible = false;

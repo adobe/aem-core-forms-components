@@ -74,6 +74,18 @@ public interface FormComponent extends Component {
     }
 
     /**
+     * Returns getPath of the form field
+     *
+     * @return getPath of the field
+     * @since com.adobe.cq.forms.core.components.util 3.1.0
+     */
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    default String getPath() {
+        return null;
+    }
+
+    /**
      * Returns the name of the form field
      *
      * @return name of the form field

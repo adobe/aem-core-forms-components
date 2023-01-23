@@ -41,37 +41,41 @@ describe( "Form Runtime with Panel Container", () => {
             .invoke('attr', 'data-cmp-enabled')
             .should('eq', state.enabled.toString());
         expect(state.items.length, "model has children equal to count").to.equal(count);
-        if (count == 0) {
-            return cy.get(`.${childBemBlock}`).should('not.exist').then(checkView);
-        } else {
-            return cy.get(`.${childBemBlock}`).should('have.length', count).then(checkView);
-        }
+        return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    const checkAddRemoveInstance = (panelId, panelModel, panelView, count, isAdd) => {
-        const EVENT_NAME = isAdd ? "AF_PanelChildAdded" : "AF_PanelChildRemoved";
+    const checkInstanceHTML = (instanceManager, count) => {
+        expect(instanceManager.children.length, "instance manager has children equal to count").to.equal(count);
+        expect(instanceManager.getModel().items.length, "model has items equal to count").to.equal(count);
+        const checkChild = (childView) => {
+            checkHTML(childView.getId(), childView.getModel().getState(), childView, 1);
+        }
+        instanceManager.children.forEach(checkChild);
+        return cy.get('[data-cmp-is="adaptiveFormContainer"]');
+    };
+
+    const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
+        const EVENT_NAME = isAdd ? "AF_PanelInstanceAdded" : "AF_PanelInstanceRemoved";
         let innerResolution = undefined;
         const innerPromise = new Cypress.Promise((resolve, reject) => {innerResolution = resolve;});
 
         let resolution = undefined;
-        cy.get(`#${panelId}`).then(panelElement => {
+        cy.get('[data-cmp-is="adaptiveFormContainer"]').then(formElement => {
             const listener1 = e => {
-                console.error(`received ${EVENT_NAME}`);
-                panelElement[0].removeEventListener(EVENT_NAME, listener1);
+                formElement[0].removeEventListener(EVENT_NAME, listener1);
                 resolution(e.detail);
             };
-            console.error(`waiting for ${EVENT_NAME}`)
-            panelElement[0].addEventListener(EVENT_NAME, listener1);
+            formElement[0].addEventListener(EVENT_NAME, listener1);
         })
         .then(() => {
             const promise = new Cypress.Promise((resolve, reject) => {resolution = resolve;});
             if (isAdd == true) {
-                panelView._addInstance();
+                instanceManager.addInstance();
             } else {
-                panelView._removeInstance();
+                instanceManager.removeInstance();
             }
             promise.then(() => {
-                const e = checkHTML(panelId, panelModel.getState(), panelView, count);
+                const e = checkInstanceHTML(instanceManager, count);
                 innerResolution(e);
             });
         });
@@ -81,15 +85,16 @@ describe( "Form Runtime with Panel Container", () => {
 
     it(" should get model and view initialized properly and parent child relationship is set ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        Object.entries(formContainer._fields).forEach(([id, field]) => {
+        const fields = formContainer.getAllFields();
+        Object.entries(fields).forEach(([id, field]) => {
             expect(field.getId()).to.equal(id);
             expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel());
         });
 
-        const panelId = formContainer._model.items[0].id;
-        const datepickerId = formContainer._model.items[0].items[0].id;
-        const panelView = formContainer._fields[panelId];
-        const datepickerView = formContainer._fields[datepickerId];
+        const panelId = formContainer._model.items[0].items[0].id;
+        const datepickerId = formContainer._model.items[0].items[0].items[0].id;
+        const panelView = fields[panelId];
+        const datepickerView = fields[datepickerId];
         expect(panelView, "panel view is created").to.not.be.null;
         expect(datepickerView, "panel child view is created").to.not.be.null;
         expect(panelView.children.length, "panel has one child").to.equal(1);
@@ -98,9 +103,9 @@ describe( "Form Runtime with Panel Container", () => {
     })
 
     it(" model's changes are reflected in the html ", () => {
-        const panelId = formContainer._model.items[0].id;
+        const panelId = formContainer._model.items[0].items[0].id;
         const model = formContainer._model.getElement(panelId);
-        const panelView = formContainer._fields[panelId];
+        const panelView = formContainer.getAllFields()[panelId];
         const count = 1;
         checkHTML(model.id, model.getState(), panelView, count).then(() => {
             model.visible = false;
@@ -112,39 +117,39 @@ describe( "Form Runtime with Panel Container", () => {
     });
 
     it(" add instance and remove instance of model is reflected in html ", () => {
-        const panelId = formContainer._model.items[0].id;
+        const panelId = formContainer._model.items[0].items[0].id;
         const panelModel = formContainer._model.getElement(panelId);
-        const panelView = formContainer._fields[panelId];
+        const panelView = formContainer.getAllFields()[panelId];
+        const instanceManager = panelView.getInstanceManager();
 
         panelModel.visible = true;
         panelModel.enable = true;
 
 
-        checkHTML(panelId, panelModel.getState(), panelView, 1)
+        checkInstanceHTML(instanceManager, 1)
         .then(() => {
-            checkAddRemoveInstance(panelId, panelModel, panelView, 2, true)
+            checkAddRemoveInstance(instanceManager, 2, true)
             .then(() => {
-                checkAddRemoveInstance(panelId, panelModel, panelView, 3, true)
+                checkAddRemoveInstance(instanceManager, 3, true)
                 .then(() => {
-                    checkAddRemoveInstance(panelId, panelModel, panelView, 4, true)
+                    checkAddRemoveInstance(instanceManager, 4, true)
                     .then(() => {
                         //max is 4
-                        panelView._addInstance();
-                        checkHTML(panelId, panelModel.getState(), panelView, 4);
-                        checkAddRemoveInstance(panelId, panelModel, panelView, 3)
+                        instanceManager.addInstance();
+                        checkInstanceHTML(instanceManager, 4);
+                        checkAddRemoveInstance(instanceManager, 3)
                         .then(() => {
-                            checkAddRemoveInstance(panelId, panelModel, panelView, 2)
+                            checkAddRemoveInstance(instanceManager, 2)
                             .then(() => {
-                                checkAddRemoveInstance(panelId, panelModel, panelView, 1)
+                                checkAddRemoveInstance(instanceManager, 1)
                                 .then(() => {
-                                    checkAddRemoveInstance(panelId, panelModel, panelView, 0)
+                                    checkAddRemoveInstance(instanceManager, 0)
                                     .then(() => {
                                         //can't go below zero
-                                        //todo uncomment code below, once model remove on zero is fixed
-                                        //panelView._removeInstance();
-                                        //checkHTML(panelId, panelModel.getState(), panelView, 0);
+                                        instanceManager.removeInstance();
+                                        checkInstanceHTML(instanceManager, 0);
                                         //ability to add instance from zero
-                                        checkAddRemoveInstance(panelId, panelModel, panelView, 1, true);
+                                        checkAddRemoveInstance(instanceManager, 1, true);
                                     });
                                 });
                             });

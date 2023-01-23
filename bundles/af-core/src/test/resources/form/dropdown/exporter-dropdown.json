@@ -1,37 +1,48 @@
 {
   "id": "dropdown-6fb0d7f4c0",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "drop-down",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "drop-down",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
+  "type": "number",
+  "required": false,
+  "enabled": true,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "m",
+    "f",
+    "o"
+  ],
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
   "properties": {
-    "afs:layout" : {
+    "afs:layout": {
       "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion":false
-    }
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dropdown"
   },
-  "enforceEnum":true,
-  "enum" : [0, 1, 2],
-  "enumNames" : ["m", "f", "o"],
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  "type": "number",
+  "enum": [
+    0,
+    1,
+    2
+  ],
   ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }

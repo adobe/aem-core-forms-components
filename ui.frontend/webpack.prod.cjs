@@ -13,8 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import FormContainer from "./FormContainer.js";
-import FormField from "./FormField.js";
-import FormFieldBase from "./FormFieldBase.js";
-import FormPanel from "./FormPanel.js";
-export {FormField, FormContainer, FormFieldBase, FormPanel}
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.cjs');
+const path = require('path');
+
+module.exports = () => {
+    return merge(common, {
+        mode: 'production',
+    });
+};

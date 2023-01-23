@@ -9,54 +9,60 @@
   "readOnly": false,
   "items":[
     {
-      "id":"textinput-2d7a7460fa",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "richText":false,
-        "visible":true,
-        "value":"def"
+      "id": "textinput-2d7a7460fa",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
       "properties": {
-        "fd:dor":{
-          "dorExclusion":false
-        }
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/rules-panelcontainer/textinput"
       },
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
-      },
-      ":type":"core/fd/components/form/textinput/v1/textinput"
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "richText":false,
-    "visible":true,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
   },
-  "events":{
-    "custom:setProperty" : ["$event.payload"],
-    "change":[
+  "events": {
+    "change": [
       "some expression 2"
+    ],
+    "custom:setProperty": [
+      "$event.payload"
     ]
   },
-  "properties":{
-    "afs:layout":{
-      "tooltipVisible":false
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion" : false,
-      "dorExcludeTitle" : false,
-      "dorExcludeDescription" : false
-    }
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/rules-panelcontainer"
   },
-  "rules":{
-    "visible":"some expression"
+  "rules": {
+    "visible": "some expression"
   },
-  ":type":"core/fd/components/form/panelcontainer/v1/panelcontainer"
+  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

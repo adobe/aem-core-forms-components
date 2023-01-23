@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="sling:Folder"
-    jcr:description="Custom AF Submit"
+    jcr:description="Core Custom AF Submit"
     guideDataModel="xfa,xsd,basic"
-    submitService="Custom AF Submit"
+    submitService="Core Custom AF Submit"
     guideComponentType="fd/af/components/guidesubmittype"/>

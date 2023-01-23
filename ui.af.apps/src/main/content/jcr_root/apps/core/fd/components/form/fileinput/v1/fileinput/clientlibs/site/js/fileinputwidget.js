@@ -370,8 +370,9 @@ class FileInputWidget {
                 // Update the value array with the file
                 this.#values = value.map(function (file, index) {
                     // Check if file Name is a path, if yes get the last part after "/"
-                    let fileName = typeof file === "string" ? file : file.name,
-                        fileUrl = typeof file === "string" ? file : file.data,
+                    let isFileObject= window.File ? file.data instanceof window.File : false,
+                        fileName = typeof file === "string" ? file : file.name,
+                        fileUrl = typeof file === "string" ? file : (isFileObject ? "" : file.data),
                         fileUploadUrl = fileUrl;
                     if (oldUrls[fileName]) {
                         fileUploadUrl = oldUrls[fileName];
