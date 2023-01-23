@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * A interface which specifies the different form container constraints
  *
@@ -31,6 +33,7 @@ public interface ContainerConstraint {
      * @return the minimum items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     default Integer getMinItems() {
         return null;
@@ -42,8 +45,39 @@ public interface ContainerConstraint {
      * @return the maximum items
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     default Integer getMaxItems() {
+        return null;
+    }
+
+    /**
+     * Returns the minimum occurrence of the container (ie array data type)
+     *
+     * @return the minimum occurrence
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    default Integer getMinOccur() {
+        return null;
+    }
+
+    /**
+     * Returns the maximum occurrence of the container (ie array data type)
+     *
+     * @return the maximum occurrence
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    default Integer getMaxOccur() {
+        return null;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    default Boolean isRepeatable() {
         return null;
     }
 

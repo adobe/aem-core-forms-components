@@ -36,6 +36,13 @@ export default class FormField {
         if (this.parentView.addChild) {
             this.parentView.addChild(this);
         }
+        if (this.getInstanceManager() && !(this.getInstanceManager().getRepeatableParentView())) {
+            this.getInstanceManager().setRepeatableParentView(parentView);
+        }
+    }
+
+    setInstanceManager(instanceManager) {
+        this.instanceManager = instanceManager;
     }
 
     setActive() {
@@ -127,5 +134,9 @@ export default class FormField {
 
     initializeHelpContent(state) {
         throw "method not implemented";
+    }
+
+    getInstanceManager() {
+        return this.instanceManager;
     }
 }
