@@ -1,38 +1,41 @@
 {
   "id": "numberinput-4b399a633a",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "number-input",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "number-input",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
+  "type": "number",
+  "required": false,
+  "enabled": true,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "maximum": 2000000,
+  "minimum": 10000,
+  "exclusiveMinimum": 10002,
+  "exclusiveMaximum": 2000002,
+  "screenReaderText": "'Custom screen reader text'",
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
   "properties": {
-    "afs:layout" : {
+    "afs:layout": {
       "tooltipVisible": false
     },
     "fd:dor": {
-      "dorExclusion":false
-    }
+      "dorExclusion": false
+    },
+    "fd:path": "/content/numberinput"
   },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  "maximum": 2000000,
-  "minimum": 10000,
-  "exclusiveMaximum": 2000002,
-  "exclusiveMinimum": 10002,
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
-  "type": "number",
   ":type": "core/fd/components/form/numberinput/v1/numberinput"
 }

@@ -184,7 +184,7 @@ public class StaticImageGETServletTest {
         staticImageGETServlet.doGet(request, response);
         Assertions.assertEquals("application/json", response.getContentType());
         Assertions.assertEquals(
-            "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}",
+            "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\"properties\":{\"fd:path\":\"/content/image\"},\":type\":\"core/fd/components/form/image/v1/image\"}",
             response.getOutputAsString());
     }
 
