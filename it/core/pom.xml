@@ -51,6 +51,7 @@
     <!-- ====================================================================== -->
     <properties>
         <bnd.version>5.0.0</bnd.version>
+        <baseline.skip>true</baseline.skip>
     </properties>
 
     <!-- ====================================================================== -->
@@ -120,22 +121,6 @@
 Import-Package: javax.annotation;version=0.0.0,*
                                 ]]></bnd>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-baseline-maven-plugin</artifactId>
-                <version>${bnd.version}</version>
-                <configuration>
-                    <failOnMissing>false</failOnMissing>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>baseline</id>
-                        <goals>
-                            <goal>baseline</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
