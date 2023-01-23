@@ -170,6 +170,7 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
+            <version>1.0.0-52cdda2</version>
         </dependency>
     </dependencies>
 
