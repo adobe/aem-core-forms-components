@@ -36,12 +36,7 @@ describe("Form with Submit Button", () => {
             });
         })
     })
-    // const mep = {
-    //     "textinput": (id) => cy.get(`#${id}`).find("input").type("abc"),
-    //     "numberinput": (id) => cy.get(`#${id}`).find("input").type("453"),
-    //     "checkboxgroup": (id) => cy.get(`#${id}`).find("input").check(["0", "3"]),
-    //     "radiobutton": (id) => cy.get(`#${id}`).find("input").eq(1).click(),
-    // };
+
     const fillField = (id) => {
         const component = id.split('-')[0]; // get the component name from the id
         switch (component) {
