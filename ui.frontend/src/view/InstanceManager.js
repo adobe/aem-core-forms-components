@@ -28,6 +28,44 @@ export default class InstanceManager {
         this.subscribe();
     }
 
+    /**
+     * Syncs Instance View HTML with Instance Model
+     * @param instanceView
+     * @param instanceModel
+     * @param beforeElement
+     * @returns addedHtmlElement, if HTML is added, otherwise null
+     */
+    #syncViewModel(instanceView, instanceModel, beforeElement) {
+        //todo can be optimized if the instance model has shifted to a new index - complex
+        let addedHtmlElement = null;
+        if (instanceView == null) {
+            addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
+        } else if (instanceModel == null) {
+            this.#removeChildInstance(instanceView.getModel());
+        } else if (instanceView.getId() != instanceModel.id) {
+            addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
+            this.#removeChildInstance(instanceView.getModel());
+        }
+        return addedHtmlElement;
+    }
+
+    /**
+     * Syncs instanceManager model items with HTML
+     */
+    #syncInstancesHTML() {
+        const views = this.children;
+        const models = this._model.items;
+        const viewInstancesLength = views.length;
+        const modelInstancesLength = models.length;
+        const maxLength = viewInstancesLength > modelInstancesLength ? viewInstancesLength : modelInstancesLength;
+        let addedHtmlElement = null;
+        for (let index = 0; index < maxLength; index++) {
+            const instanceView = (index < viewInstancesLength) ? views[index] : null;
+            const instanceModel = (index < modelInstancesLength) ? models[index]: null;
+            addedHtmlElement = this.#syncViewModel(instanceView, instanceModel, addedHtmlElement);
+        }
+    }
+
     #updateTemplateIds(html, model, newId) {
         Utils.updateId(html, model.id, newId);
         if ((model.type == 'array' || model.type == 'object') && model.items) {
@@ -70,12 +108,12 @@ export default class InstanceManager {
         this.getModel().dispatch(customEvent);
     }
 
-    #addChildInstance(addedModel) {
+    #addChildInstance(addedModel, beforeElement) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
             return;
         }
-        this.handleAddition(addedModel);
+        return this.handleAddition(addedModel, beforeElement);
     }
 
     #removeChildInstance(removedModel) {
@@ -105,8 +143,10 @@ export default class InstanceManager {
     /**
      * Inserts HTML for added instance
      * @param addedInstanceModel
+     * @param beforeElement
+     * @returns added htmlElement
      */
-    handleAddition(addedInstanceModel) {
+    handleAddition(addedInstanceModel, beforeElement) {
         const instanceIndex = addedInstanceModel.index;
         let htmlElement = this._templateHTML.cloneNode(true);
         this.updateCloneIds(htmlElement, 'temp_0', addedInstanceModel);
@@ -120,9 +160,10 @@ export default class InstanceManager {
             let afterElement = this.children[0].element.parentElement;
             this.parentElement.insertBefore(htmlElement, afterElement);
         } else {
-            let beforeElement = this.children[instanceIndex - 1].element.parentElement;
-            beforeElement.after(htmlElement);
+            let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
+            beforeViewElement.after(htmlElement);
         }
+        return htmlElement;
     }
 
     /**
@@ -201,6 +242,9 @@ export default class InstanceManager {
     setRepeatableParentView(parentView) {
         //adding repeatable parent view
         this.repeatableParentView = parentView;
+        //setting parent view ensures view is now fully functional,
+        // so proceed with syncing instanceManager model items with HTML
+        this.#syncInstancesHTML();
     }
 
     getRepeatableParentView() {

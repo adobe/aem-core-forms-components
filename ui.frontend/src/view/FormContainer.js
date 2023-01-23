@@ -60,10 +60,7 @@ export default class FormContainer {
      */
     getParentFormElementId(model) {
         const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
-        if (parentModel.fieldType) {
-            return parentModel.id;
-        }
-        return this.getParentFormElementId(parentModel);
+        return parentModel.id;
     }
 
     addField(fieldView) {
@@ -84,6 +81,8 @@ export default class FormContainer {
                     }
                     this._deferredParents[parentId].push(fieldView);
                 }
+            } else {
+                fieldView.setParent(this);
             }
 
             // check if field id is in deferred relationship, if it is add parent child relationships
