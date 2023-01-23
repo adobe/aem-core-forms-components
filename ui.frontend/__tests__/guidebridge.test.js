@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../src";
-import FormContainer from "../src/view/FormContainer";
-import * as formJson from './resources/form.json';
+import {Constants} from "../src/index.js";
+import FormContainer from "../src/view/FormContainer.js";
+import formJson from './resources/form.json';
 
 
 test('GuideBridge test', () => {

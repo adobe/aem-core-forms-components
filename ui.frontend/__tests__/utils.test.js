@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import Utils from "../src/utils";
+import Utils from "../src/utils.js";
 
 test('readData test', () => {
     let element = {
