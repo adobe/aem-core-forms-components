@@ -1105,13 +1105,18 @@
                 Jar can be used as dependencies.
              -->
 
+            <dependency>
+                <groupId>com.adobe.aemfd</groupId>
+                <artifactId>aemfd-client-sdk</artifactId>
+                <version>6.0.882</version>
+            </dependency>
+
             <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
 
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>uber-jar</artifactId>
-                <version>6.4.0</version>
-                <classifier>apis</classifier>
+                <version>6.5.15</version>
                 <scope>provided</scope>
             </dependency>
 
