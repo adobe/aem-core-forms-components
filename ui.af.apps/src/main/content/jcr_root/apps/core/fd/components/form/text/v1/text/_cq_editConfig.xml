@@ -13,7 +13,7 @@
         <inplaceEditingConfig
                 jcr:primaryType="cq:Widget"
                 hideLabel="{Boolean}true"
-                textPropertyName="./value">
+                textPropertyName="./_value">
             <rtePlugins jcr:primaryType="nt:unstructured">
                 <footnoteplugin
                         jcr:primaryType="nt:unstructured"

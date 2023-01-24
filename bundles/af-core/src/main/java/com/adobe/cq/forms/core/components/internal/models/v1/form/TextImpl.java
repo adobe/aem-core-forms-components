@@ -37,13 +37,19 @@ import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractFormComponentImpl implements Text {
 
+    private static final String PN_VALUE = "_value";
+
+    @ValueMapValue(name = PN_VALUE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = "")
+    protected String value;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     private boolean textIsRich;
 
     @Override
     public String getValue() {
-        return value;
+        return translate(PN_VALUE, value);
     }
 
     @Override

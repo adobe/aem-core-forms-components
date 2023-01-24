@@ -38,6 +38,14 @@
                             <placeholder
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
+                            <value
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:hideResource="{Boolean}true"
+                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                    disabled="{Boolean}false"
+                                    fieldLabel="Default Value"
+                                    name="./_value"
+                                    useFixedInlineToolbar="{Boolean}true"/>
                             <title
                                     jcr:primaryType="nt:unstructured"
                                     sling:hideResource="{Boolean}true"/>
