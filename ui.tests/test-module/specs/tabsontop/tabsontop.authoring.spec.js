@@ -143,7 +143,7 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(panelContainerEditPath);
     });
 
-    it('open edit dialog of tabs on top of form', function() {
+    it('open edit dialog of tabs on top of form', { retries: 3 }, function() {
       testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
     });
 

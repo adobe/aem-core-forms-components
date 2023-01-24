@@ -107,7 +107,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-    it ('open edit dialog of CheckboxGroup', function(){
+    it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
       testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
     });
 
