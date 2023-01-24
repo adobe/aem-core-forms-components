@@ -20,10 +20,9 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum}, {@code minLength},
- * {@code maxLength}
- * , {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems}, {@code uniqueItems}, {@code enforceEnum},
- * {@code validationExpression}
+ * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum},
+ * {@code minLength}, {@code maxLength}, {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems},
+ * {@code minOccur}, {@code maxOccur}, {@code uniqueItems}, {@code enforceEnum}, {@code validationExpression}
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
@@ -39,6 +38,8 @@ public enum ConstraintType {
     PATTERN("pattern"),
     MIN_ITEMS("minItems"),
     MAX_ITEMS("maxItems"),
+    MIN_OCCUR("minOccur"),
+    MAX_OCCUR("maxOccur"),
     UNIQUE_ITEMS("uniqueItems"),
     ENFORCE_ENUM("enforceEnum"),
     VALIDATION_EXPRESSION("validationExpression"),

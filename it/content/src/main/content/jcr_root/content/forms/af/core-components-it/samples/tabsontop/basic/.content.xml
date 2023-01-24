@@ -11,7 +11,7 @@
         jcr:title="Adaptive Form V2 (IT)"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:version="2.0"
+            fd:version="2.1"
             fieldType="form"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container">
@@ -23,8 +23,9 @@
                     description="&lt;p>panel long&lt;/p>&#xd;&#xa;"
                     enabled="{Boolean}true"
                     fieldType="panel"
-                    maxItems="4"
-                    minItems="0"
+                    repeatable="{Boolean}true"
+                    maxOccur="4"
+                    minOccur="0"
                     name="tabsontop1662449848339"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
                     visible="{Boolean}true">
@@ -52,8 +53,9 @@
               assistPriority="name"
               enabled="{Boolean}true"
               fieldType="panel"
-              maxItems="4"
-              minItems="0"
+              repeatable="{Boolean}true"
+              maxOccur="4"
+              minOccur="0"
               name="tabsontop3"
               id="tooltip_scenario_test"
               description="This is long description"

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
-const path = require('path');
 
-module.exports = () => {
-    return merge(common, {
-        mode: 'production',
-    });
-};
+(function() {
+    "use strict";
+    async function onDocumentReady() {
+        function onInit(e) {
+            const formContainer =  e.detail;
+            const formLanguage = formContainer.getLang();
+            const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
+            FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
+        }
+        document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
+    }
+
+    if (document.readyState !== "loading") {
+        onDocumentReady();
+    } else {
+        document.addEventListener("DOMContentLoaded", onDocumentReady);
+    }
+
+})();

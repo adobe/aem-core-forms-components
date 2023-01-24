@@ -18,10 +18,7 @@ package com.adobe.cq.forms.core.components.it.service;
 
 
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -77,6 +74,11 @@ public class DataManager {
         return value;
     }
 
+    public Map <String, String> getCustomContext(String id) {
+        Map<String, String> customContext = new HashMap<>();
+        customContext.put(UNIQUE_ID, id);
+        return customContext;
+    }
     public Object put(String key, Object value) {
         return cache.put(key, value);
     }

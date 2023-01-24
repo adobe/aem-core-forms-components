@@ -15,7 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
-@ConsumerType
+@ProviderType
 public interface Field extends Base, BaseConstraint {
 
     /**

@@ -1,12 +1,17 @@
 {
   "id": "image-7cfd7f1fe4",
-  "name": "abc",
-  "visible": false,
   "fieldType": "image",
+  "name": "abc",
+  "value": "/content/image.img.png",
+  "visible": false,
   "altText": "abc",
-  "value":"/content/image.img.png",
-  ":type": "core/fd/components/form/image/v1/image",
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/image"
+  },
+  ":type": "core/fd/components/form/image/v1/image"
 }

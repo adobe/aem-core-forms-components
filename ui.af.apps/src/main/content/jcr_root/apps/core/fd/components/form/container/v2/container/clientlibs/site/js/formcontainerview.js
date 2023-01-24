@@ -25,11 +25,9 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
-
-        // todo: handle localization here
-        static ERROR_MSG = "Encountered an internal error while submitting the form."
         constructor(params) {
             super(params);
+            let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 let body = action.payload?.body;
@@ -37,17 +35,18 @@
                     if (body.redirectUrl) {
                         window.location.href = body.redirectUrl;
                     } else if (body.thankYouMessage) {
-                        let formContainerElement = document.querySelector(FormContainerV2.selectors.self);
+                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
                         thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.textContent = body.thankYouMessage;
+                        thankYouMessage.innerHTML = body.thankYouMessage;
                         formContainerElement.replaceWith(thankYouMessage);
                     }
                 }
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                window.alert(FormContainerV2.ERROR_MSG);
+                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                window.alert(defaultSubmissionError);
             }, "submitError");
         }
     }

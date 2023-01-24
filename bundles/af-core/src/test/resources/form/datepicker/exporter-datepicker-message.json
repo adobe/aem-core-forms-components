@@ -1,48 +1,51 @@
 {
   "id": "datepicker-fffa242824",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "date-input",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "date-input",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
-  "properties": {
-    "afs:layout" : {
-      "tooltipVisible": false
-    },
-    "fd:dor": {
-      "dorExclusion":false
-    }
-  },
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type",
+  "type": "string",
+  "required": false,
+  "enabled": true,
+  "constraintMessages": {
+    "type": "incorrect type",
     "minimum": "Date should be greater than 4th Feb 2022",
     "maximum": "Date should be less than 9th Feb 2022"
   },
-  "type": "string",
+  "readOnly": false,
+  "default": "2022-02-07",
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datepicker-message"
+  },
   "format": "date",
   "minimum": "2022-02-04",
+  "maximum": "2022-02-09",
   "exclusiveMinimum": "2022-02-05",
   "exclusiveMaximum": "2022-02-08",
-  "maximum": "2022-02-09",
-  "default" : "2022-02-07",
-  ":type": "core/fd/components/form/datepicker/v1/datepicker",
-  "rules" : {
-    "visible" : "true()",
-    "value" : "false()",
-    "label" : "{value : 'some label'}",
-    "enabled" : "true()"
-  },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
 }

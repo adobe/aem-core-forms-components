@@ -39,4 +39,18 @@ public class ContainerConstraintTest {
         Mockito.when(containerConstraintMock.getMaxItems()).thenCallRealMethod();
         assertEquals(null, containerConstraintMock.getMaxItems());
     }
+
+    @Test
+    void testGetMinOccur() {
+        ContainerConstraint containerConstraintMock = Mockito.mock(ContainerConstraint.class);
+        Mockito.when(containerConstraintMock.getMinOccur()).thenCallRealMethod();
+        assertEquals(null, containerConstraintMock.getMinOccur());
+    }
+
+    @Test
+    void testGetMaxOccur() {
+        ContainerConstraint containerConstraintMock = Mockito.mock(ContainerConstraint.class);
+        Mockito.when(containerConstraintMock.getMaxOccur()).thenCallRealMethod();
+        assertEquals(null, containerConstraintMock.getMaxOccur());
+    }
 }
