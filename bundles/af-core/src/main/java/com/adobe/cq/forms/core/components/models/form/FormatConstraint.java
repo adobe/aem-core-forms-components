@@ -17,9 +17,11 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+@ProviderType
 public interface FormatConstraint {
 
     public enum Format {

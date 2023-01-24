@@ -17,12 +17,15 @@ package com.adobe.cq.forms.core.components.internal.servlets;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.function.Function;
 
 import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
+import javax.json.Json;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 
 import org.apache.sling.api.request.RequestPathInfo;
@@ -40,6 +43,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
@@ -183,9 +187,16 @@ public class StaticImageGETServletTest {
         Mockito.when(request.adaptTo(StaticImage.class)).thenReturn(staticImage);
         staticImageGETServlet.doGet(request, response);
         Assertions.assertEquals("application/json", response.getContentType());
-        Assertions.assertEquals(
-            "{\"id\":\"image-7cfd7f1fe4\",\"fieldType\":\"image\",\"name\":\"abc\",\"value\":\"/content/image.img.png\",\"visible\":false,\"altText\":\"abc\",\"events\":{\"custom:setProperty\":[\"$event.payload\"]},\":type\":\"core/fd/components/form/image/v1/image\"}",
-            response.getOutputAsString());
+        InputStream responseStream = new ByteArrayInputStream(response.getOutput());
+        JsonReader outputReader = Json.createReader(responseStream);
+        String expectedJsonResource = Utils.getTestExporterJSONPath(BASE, PATH_IMAGE);
+        InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
+        if (is != null) {
+            JsonReader expectedReader = Json.createReader(is);
+            Assertions.assertEquals(expectedReader.read(), outputReader.read());
+        } else {
+            Assertions.fail("Unable to find test file " + expectedJsonResource + ".");
+        }
     }
 
     @Test

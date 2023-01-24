@@ -453,6 +453,7 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
+
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
         <!--
@@ -463,7 +464,7 @@
         -->
 
         <dependency>
-            <groupId>com.adobe.aemfd</groupId>
+            <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
@@ -473,12 +474,12 @@
             <classifier>apis</classifier>
         </dependency>
 
+        <!-- End of AEM and forms sdk versions -->
+
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-sdk-api</artifactId>
         </dependency>
-
-        <!-- End of AEM and forms sdk versions -->
 
 
         <!-- Testing dependencies -->

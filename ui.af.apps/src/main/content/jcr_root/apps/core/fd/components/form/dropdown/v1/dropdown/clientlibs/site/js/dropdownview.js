@@ -107,7 +107,7 @@
         }
 
         updateValue(value) {
-            if(value === null) {
+            if(value == null) { // if undefined or null, reset the widget
                 this.widget.selectedIndex = -1;
                 return;
             }
@@ -140,7 +140,9 @@
                         valueArray.push(option.value);
                     }
                 });
-                this._model.value = valueArray;
+                if (valueArray.length !== 0 || this._model.value != null) {
+                    this._model.value = valueArray;
+                }
             } else {
                 this._model.value = widget.value;
             }

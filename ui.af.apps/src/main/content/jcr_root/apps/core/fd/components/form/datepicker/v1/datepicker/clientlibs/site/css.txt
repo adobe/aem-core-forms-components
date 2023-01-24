@@ -16,3 +16,4 @@
 
 #base=css
 datepickerview.css
+datepickerwidget.css
