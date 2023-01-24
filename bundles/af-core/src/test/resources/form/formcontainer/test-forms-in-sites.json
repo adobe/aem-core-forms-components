@@ -1,0 +1,33 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "root": {
+      "jcr:primaryType": "nt:unstructured",
+      "sitecontainer": {
+        "jcr:primaryType": "nt:unstructured",
+        "formcontainer": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "core/fd/components/form/container/v2/container",
+          "thankYouMessage": "Thank you for submitting.",
+          "thankYouOption": "message",
+          "redirect": "/content/wknd",
+          "prefillService": "FDM",
+          "fieldType": "form",
+          "schemaType": "jsonschema",
+          "prefillService" : "dummy",
+          "textinput": {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+            "name": "abc",
+            "jcr:title": "def",
+            "hideTitle": false,
+            "description": "dummy",
+            "fieldType": "text-input",
+            "visible": false
+          }
+        }
+      }
+    }
+  }
+}
