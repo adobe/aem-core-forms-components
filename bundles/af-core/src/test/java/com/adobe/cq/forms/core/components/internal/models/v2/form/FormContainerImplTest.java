@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -41,6 +40,7 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
@@ -131,7 +131,8 @@ public class FormContainerImplTest {
     @Test
     void testGetActionForSitePage() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
-        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=", formContainer.getAction());
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=",
+            formContainer.getAction());
     }
 
     @Test
