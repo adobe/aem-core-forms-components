@@ -15,14 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Defines the form metadata
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
-@ConsumerType
+@ProviderType
 public interface FormMetaData {
 
     /**
