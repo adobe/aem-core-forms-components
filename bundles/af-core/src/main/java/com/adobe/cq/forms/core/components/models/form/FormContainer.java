@@ -238,7 +238,9 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
-    String getThankYouPage();
+    default String getThankYouPage() {
+        return null;
+    }
 
     /**
      * Returns the form thank you option

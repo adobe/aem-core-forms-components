@@ -65,10 +65,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String thankyouPage;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
     private String thankYouOption;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -129,12 +125,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @Override
-    @Nullable
-    public String getThankYouPage() {
-        return thankyouPage;
-    }
-
-    @Override
     public FormMetaData getMetaData() {
         return new FormMetaDataImpl();
     }
@@ -155,11 +145,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
         if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-            } else {
-                return ComponentUtils.getEncodedPath(getPath());
-            }
+            return getId();
         } else {
             return null;
         }
@@ -193,12 +179,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Override
     public String getAction() {
         if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
-                    .getPath());
-            } else {
-                return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getPath());
-            }
+            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
         } else {
             return null;
         }
