@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -59,6 +60,9 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
+    protected static final String SITES_PATH = "/content/exampleSite";
+    protected static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH + "/jcr:content/root/sitecontainer/formcontainer";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -68,6 +72,8 @@ public class FormContainerImplTest {
                                                                                   // resource up to find page
         context.load().json(BASE + "/test-lib-form-container.json", LIB_FORM_CONTAINER); // required since v2 container resource type should
                                                                                          // be v1 for localization to work
+        context.load().json(BASE + "/test-forms-in-sites.json", "/content/exampleSite");
+
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -106,12 +112,26 @@ public class FormContainerImplTest {
     void testGetId() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getId());
+        assertEquals("L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getId());
+    }
+
+    @Test
+    void testGetIdForSitePage() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
+        assertNotNull(formContainer.getId());
+        assertEquals("L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=", formContainer.getId());
     }
 
     @Test
     void testGetAction() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getAction());
+    }
+
+    @Test
+    void testGetActionForSitePage() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=", formContainer.getAction());
     }
 
     @Test
@@ -162,6 +182,34 @@ public class FormContainerImplTest {
     void testJSONExport() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+    }
+
+    @Test
+    void testGetThankYouMessage() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getThankYouMessage());
+        assertEquals("Thank you for submitting.", formContainer.getThankYouMessage());
+    }
+
+    @Test
+    void testGetThankYouOption() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getThankYouOption());
+        assertEquals(ThankYouOption.MESSAGE, formContainer.getThankYouOption());
+    }
+
+    @Test
+    void testGetRedirectUrl() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getRedirectUrl());
+        assertEquals("/content/wknd.html", formContainer.getRedirectUrl());
+    }
+
+    @Test
+    void testGetPrefillService() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getPrefillService());
+        assertEquals("FDM", formContainer.getPrefillService());
     }
 
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
