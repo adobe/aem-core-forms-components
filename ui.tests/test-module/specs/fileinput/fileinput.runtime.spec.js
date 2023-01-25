@@ -105,20 +105,22 @@ describe("Form with File Input - Basic Tests", () => {
 
     it(" html changes are reflected in model ", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
-            let model = field.getModel();
-            let fileName = 'empty.pdf';
-            if (model.visible && model.enabled) {
-                cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
-                    let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
-                    expect(expectedFileName).to.equal(fileName)
-                })
+            if(id.startsWith("fileinput")) {
+                let model = field.getModel();
+                let fileName = 'empty.pdf';
+                if (model.visible && model.enabled) {
+                    cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
+                        let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
+                        expect(expectedFileName).to.equal(fileName)
+                    })
+                }
             }
         });
         getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
     it("should toggle description and tooltip", () => {
-        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+        cy.toggleDescriptionTooltip(bemBlock, 'fileinput_tooltip_scenario_test');
     })
 })
 
@@ -189,7 +191,7 @@ describe("Form with File Input - Prefill & Submit tests", () => {
         submitTest();
     })
 
-    it(`prefill of submitted form`, () => {
+    it(`view prefill of submitted form, make changes to attachments and submit`, () => {
         cy.get("@prefillId").then(id => {
             cy.previewForm(pagePath, {
                 params: [`prefillId=${id}`],

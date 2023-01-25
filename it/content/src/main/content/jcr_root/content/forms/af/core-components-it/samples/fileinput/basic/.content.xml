@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-18T15:02:11.001+05:30"
+            cq:lastModified="{Date}2023-01-25T17:24:29.344+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -24,17 +24,23 @@
                 textIsRich="true"
                 thankYouMessage="Thank you for submitting the form."
                 thankYouOption="page">
-            <fileinput
+            <fileinput1
+                    jcr:lastModified="{Date}2023-01-24T16:47:36.882+05:30"
+                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 1"
                     sling:resourceType="forms-components-examples/components/form/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     buttonText="Attach Files"
+                    enabled="{Boolean}true"
                     fieldType="file-input"
                     multiSelection="true"
                     name="fileinput1"
-                    type="file[]"/>
-            <fileinput1
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="file[]"
+                    visible="{Boolean}true"/>
+            <fileinput2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 2"
                     sling:resourceType="forms-components-examples/components/form/fileinput"
@@ -42,14 +48,14 @@
                     fieldType="file-input"
                     name="fileinput2"
                     type="file"/>
-            <fileinput2
+            <fileinput3
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 3"
                     sling:resourceType="forms-components-examples/components/form/fileinput"
                     accept="[application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
-                    id="tooltip_scenario_test"
+                    id="fileinput_tooltip_scenario_test"
                     name="fileinput3"
                     tooltip="This is short description"
                     tooltipVisible="true"
