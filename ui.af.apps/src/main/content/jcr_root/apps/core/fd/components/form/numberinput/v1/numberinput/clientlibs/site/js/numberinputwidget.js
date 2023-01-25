@@ -23,7 +23,6 @@
 class NumericInputWidget {
     #widget=null
     #model=null // passed by reference
-    #view=null
     #options=null
     #defaultOptions={
         value : null,
@@ -54,11 +53,10 @@ class NumericInputWidget {
         );
     }
 
-    constructor(widget, model, view) {
+    constructor(widget, model) {
         // initialize the widget and model
         this.#widget = widget;
         this.#model = model;
-        this.#view = view;
         // initialize options for backward compatibility
         this.#options = Object.assign({}, this.#defaultOptions, this.#model._jsonModel);
         let matchStr =  this.#matchArray[this.#options.dataType];
@@ -95,9 +93,6 @@ class NumericInputWidget {
         });
         widget.addEventListener('focus', (e)=> {
             this.#widget.value = this.#model.value;
-            if(this.#view.element) {
-                this.#view.setActive(this.#view.element, true)
-            }
         });
         widget.addEventListener('paste', (e)=> {
             this.#handlePaste(e);
@@ -108,9 +103,7 @@ class NumericInputWidget {
         widget.addEventListener('blur', (e) => {
             this.#model.value = this.getValue(e.target.value);
             this.#widget.value = this.#model.displayValue;
-            if(this.#view.element)
-                this.#view.setActive(this.#view.element, false);
-            })
+        });
         // IME specific handling, to handle japanese languages max limit
         this.#attachCompositionEventHandlers(widget);
     }

@@ -130,6 +130,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(numberInputDrop);
         });
 
         it('insert aem forms NumberInput', function () {
@@ -137,7 +139,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop);
         });
 
-        it('open edit dialog of aem forms NumberInput', function() {
+        it('open edit dialog of aem forms NumberInput', { retries: 3 }, function() {
             dropNumberInputInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
@@ -154,6 +156,10 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-cancel').should('be.visible');
             cy.get('.cq-dialog-submit').should('be.visible');
             cy.get('.cq-dialog-cancel').click({force:true});
+            cy.deleteComponentByPath(numberInputDrop);
+        });
+
+        afterEach(function() {
             cy.deleteComponentByPath(numberInputDrop);
         });
 

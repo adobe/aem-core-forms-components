@@ -284,6 +284,16 @@ Cypress.Commands.add("previewForm", (formPath) => {
     return cy.openPage(pagePath).then(waitForFormInit)
 })
 
+Cypress.Commands.add("cleanTest", (editPath) => {
+    // clean the test before the next run, if any
+    cy.get("body").then($body => {
+        const selector12 =  "[data-path='" + editPath + "']";
+        if ($body.find(selector12).length > 0) {
+            cy.deleteComponentByPath(editPath);
+        }
+    });
+})
+
 Cypress.Commands.add("previewFormWithPanel", (formPath) => {
     const pagePath = `${formPath}?wcmmode=disabled`
     return cy.openPage(pagePath).then(waitForChildViewAddition)
@@ -301,9 +311,9 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     // open editable toolbar
     cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
     // click the delete action
-    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click();
+    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
     // check if delete dialog is seen and click on yes
-    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click();
+    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
     // wait for event to complete to signify deletion is complete
     cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
