@@ -3,4 +3,5 @@
           xmlns:cq="http://www.day.com/jcr/cq/1.0"
           jcr:primaryType="nt:unstructured"
           jcr:title="Telephone Input"
+          pattern="^[+][0-9]{0,14}$"
           fieldType="text-input"/>
