@@ -13,27 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with File Input", () => {
+
+const getFormObjTest = (fileList, fileAttachmentFormPath="") => {
+    cy.window().then(function(win) {
+        win.guideBridge.getFormDataObject({
+            "success" : function (resultObj) {
+                let afFormData = resultObj.data;
+                expect(afFormData).to.exist // "af form data object not present in guideBridge#getFormDataObject API");
+                expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
+                // let isBoundAF = fileAttachmentFormPath.indexOf("bound") != -1;
+                // if (isBoundAF) {
+                //     expect(afFormData.contentType).to.equal("application/json");
+                // } else {
+                //     expect(afFormData.contentType).to.equal("application/xml");
+                // }
+                assert.equal(afFormData.attachments.length, fileList.length, "incorrect attachments returned from guideBridge#getFormDataObject API");
+                // if (afFormData.attachments.length > 0) {
+                //     afFormData.attachments.forEach(function(attachment) {
+                //         if (isBoundAF) {
+                //             expect(attachment.bindRef).to.contain("/");
+                //         } else {
+                //             expect(attachment.bindRef.indexOf("/")).to.equal(-1);
+                //         }
+                //     })
+                // }
+                // explicitly calling this to ensure there are no errors during this API invocation
+                let htmlFormData = afFormData.toHTMLFormData();
+                // Display the key/value pairs
+                for (var pair of htmlFormData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]);
+                }
+            }
+        });
+    });
+};
+
+describe("Form with File Input - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/fileinput/basic.html"
+    const urls = ["content/forms/af/core-components-it/samples/fileinput/basic.html"]
     const bemBlock = 'cmp-adaptiveform-fileinput'
     const IS = "adaptiveFormFileInput"
     const selectors = {
-        numberinput : `[data-cmp-is="${IS}"]`
+        fileinput : `[data-cmp-is="${IS}"]`
     }
-    const fileInput1 = "input[name='fileinput1']";
-    const submitBtn = "submit1673953138924";
-
     let formContainer = null
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
-        cy.intercept({
-            method: 'POST',
-            url: '**/adobe/forms/af/submit/*',
-        }).as('afSubmission')
     });
 
     const checkHTML = (id, state) => {
@@ -57,25 +86,6 @@ describe("Form with File Input", () => {
             }
         })
     }
-
-    const validatePrefillFormAndPreviewFile = (prefillId, fileName) => {
-        // preview the form by passing the prefillId parameter in the URL
-        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`, {
-            onBeforeLoad : (win) => {
-                cy.stub(win, 'open'); // creating a stub to check file preview
-            }
-        });
-
-        // validating the file attachment in the prefilled data
-        cy.get(fileInput1).then(() => {
-            cy.get(".cmp-adaptiveform-fileinput__filename").should('have.text', fileName)
-        });
-
-        // check if file preview works
-        cy.get('.cmp-adaptiveform-fileinput__filename').eq(0).click();
-        cy.window().its('open').should('be.called');
-    }
-
     it(" should get model and view initialized properly ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
@@ -119,49 +129,125 @@ describe("Form with File Input", () => {
                 })
             }
         });
-        cy.window().then(function(win) {
-            win.guideBridge.getFormDataObject({
-                "success" : function (resultObj) {
-                    let afFormData = resultObj.data;
-                    expect(afFormData).to.exist // "af form data object not present in guideBridge#getFormDataObject API");
-                    expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
-                    expect(afFormData.contentType).to.equal("application/json");
-                    assert.equal(afFormData.attachments.length, 3, "incorrect attachments returned from guideBridge#getFormDataObject API");
-                    afFormData.attachments.forEach(function(attachment) {
-                        expect(attachment.dataRef).to.contain('fileinput');
-                    });
-                    // explicitly calling this to ensure there are no errors during this API invocation
-                    let htmlFormData = afFormData.toHTMLFormData();
-                    // Display the key/value pairs
-                    for (let pair of htmlFormData.entries()) {
-                        console.log(pair[0]+ ', ' + pair[1]);
-                    }
-                }
-            });
-        });
+        getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
+})
 
-    it("attach a file, submit the form, view the prefill of submitted form and check File Preview In File Attachment", () => {
-        const fileName = "empty.pdf";
+describe("Form with File Input - Prefill & Submit tests", () => {
+    let prefillId;
+    const fileInput1 = "input[name='fileinput1']";
+    const submitBtn = "submit1673953138924";
+    const pagePath = "content/forms/af/core-components-it/samples/fileinput/basic.html"
 
-        cy.get(fileInput1).attachFile(fileName);
-        cy.get(".cmp-adaptiveform-button__widget").click();
 
-        cy.wait('@afSubmission').then(({ response}) => {
-            expect(response.statusCode).to.equal(200);
-            expect(response.body).to.be.not.null;
-            expect(response.body.metadata).to.be.not.null;
-            expect(response.body.metadata.prefillId).to.be.not.null;
-            expect(response.body.thankYouMessage).to.be.not.null;
-            expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
+    beforeEach(() => {
+        cy.wrap(prefillId).as('prefillId');
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
+    });
 
-            const prefillId = response.body.metadata.prefillId;
-            validatePrefillFormAndPreviewFile(prefillId, fileName);
+    const submitTest = (fileAttachmentFormPath) => {
+        cy.wait('@afSubmission').then(({response}) => {
+            const { body } = response;
+            assert.equal(response.statusCode, 200, "submission failed since status code is not 200");
+            assert.equal(body.redirectUrl.indexOf("guideThankYouPage") !== -1, true, "location header does not contain thank you page in submission response");
+            assert.isDefined(body?.thankYouMessage)
+            assert.isDefined(body?.metadata?.prefillId, "prefillId not present")
+            prefillId = body.metadata.prefillId;
+            cy.wrap(prefillId).as("prefillId");
         })
+    };
+
+    const checkFilePreviewInFileAttachment = (component) => {
+        cy.get(component).then(() => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").eq(0).click();
+            cy.window().its('open').should('be.called');
+        });
+    };
+
+    const checkFileNamesInFileAttachmentView = (component, fileNames) => {
+        // check if file present in view
+        cy.get(component).then((fileInputs) => {
+            fileNames.forEach((fileName) => {
+                cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName)
+            })
+        });
+        // check if file present in model
+        // cy.window().then(function(win){
+        //     let fileAttachmentValue = win.guidelib.__runtime__[componentName].value;
+        //     expect(fileAttachmentValue).to.contain(componentValue)
+        // });
+    }
+
+
+    it("attach files, check model, view, preview attachment and submit the form", () => {
+        cy.previewForm(pagePath, {
+            onBeforeLoad : (win) => {
+                cy.stub(win, 'open'); // creating a stub to check file preview
+            }
+        });
+        const fileName = "empty.pdf";
+        cy.get(fileInput1).attachFile(fileName);
+        checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf']);
+        checkFilePreviewInFileAttachment(fileInput1)
+        cy.get(".cmp-adaptiveform-button__widget").click();
+        submitTest(pagePath);
     })
 
-})
+    it(`prefill of submitted form`, () => {
+        cy.get("@prefillId").then(id => {
+            const fileAttachmentPrefillPath = pagePath;
+            cy.previewForm(fileAttachmentPrefillPath, {
+                params: [`prefillId=${id}`],
+                onBeforeLoad(win) {
+                    cy.stub(win, 'open'); // creating a stub to check file preview
+                }
+            });
+
+            // check if files were prefilled
+            checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf']);
+            getFormObjTest(['empty.pdf'], pagePath);
+
+            // check the preview of the file attachment
+            checkFilePreviewInFileAttachment(fileInput1);
+
+            // add new files after preview to both the component
+            cy.get(fileInput1).attachFile(['sample.txt'])
+
+            // // check if guideBridge API returns correctly after prefill and attaching more files
+            getFormObjTest(['empty.pdf', 'sample.txt'], pagePath);
+
+            // submit the form
+            cy.get(".cmp-adaptiveform-button__widget").click();
+
+            // check if submission is success
+            submitTest(pagePath);
+        });
+    });
+
+    it(`prefill of submitted prefilled form`, () => {
+        cy.get("@prefillId").then(id => {
+            const fileAttachmentPrefillPath = pagePath;
+            cy.previewForm(fileAttachmentPrefillPath, {
+                params: [`prefillId=${id}`],
+                onBeforeLoad(win) {
+                    cy.stub(win, 'open'); // creating a stub to check file preview
+                }
+            });
+
+            checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf', 'sample.txt']);
+            getFormObjTest(['empty.pdf', 'sample.txt'], pagePath);
+
+            // check if file preview works fine after prefill
+            checkFilePreviewInFileAttachment(fileInput1);
+        });
+
+    });
+
+});

@@ -161,11 +161,11 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 });
 
 // Cypress command to open authoring page
-Cypress.Commands.add("openPage", (pagePath) => {
+Cypress.Commands.add("openPage", (pagePath, options={}) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
     cy.visit(baseUrl);
     cy.login(baseUrl);
-    cy.visit(pagePath);
+    cy.visit(pagePath, options);
 });
 
 // cypress command to select layer in authoring
@@ -279,9 +279,13 @@ const waitForChildViewAddition = () => {
         });
 }
 
-Cypress.Commands.add("previewForm", (formPath) => {
-    const pagePath = `${formPath}?wcmmode=disabled`
-    return cy.openPage(pagePath).then(waitForFormInit)
+Cypress.Commands.add("previewForm", (formPath, options={}) => {
+    let pagePath = `${formPath}?wcmmode=disabled`;
+    if(options?.params) {
+        options.params.forEach((param) => pagePath +=`&${param}`)
+        delete options.params
+    }
+    return cy.openPage(pagePath, options).then(waitForFormInit)
 })
 
 Cypress.Commands.add("previewFormWithPanel", (formPath) => {
