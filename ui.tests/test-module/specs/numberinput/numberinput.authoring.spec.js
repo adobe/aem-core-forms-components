@@ -158,10 +158,6 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-cancel').click({force:true});
             cy.deleteComponentByPath(numberInputDrop);
         });
-
-        afterEach(function() {
-            cy.deleteComponentByPath(numberInputDrop);
-        });
-
+        
     });
 })
