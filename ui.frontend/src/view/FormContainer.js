@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import {createFormInstance} from "@aemforms/af-core/lib";
+import {createFormInstance} from "@aemforms/af-core";
 export default class FormContainer {
     constructor(params) {
         // bug in af-core, if data is set to empty object, model is not created correctly
@@ -24,6 +24,15 @@ export default class FormContainer {
         this._deferredParents = {};
         this._element = params._element;
     }
+
+    /**
+     * Adds instance manger view to fields of formContainer
+     * @param instanceManager
+     */
+    addInstanceManager(instanceManager) {
+        this._fields[instanceManager.id] = instanceManager;
+    }
+
     /**
      * returns the form field view
      * @param fieldId
@@ -44,15 +53,23 @@ export default class FormContainer {
         return this._model._jsonModel.lang || "en";
     }
 
+    /**
+     * Returns id of form element present in HTML as parent
+     * @param model
+     * @returns parent id
+     */
+    getParentFormElementId(model) {
+        const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
+        return parentModel.id;
+    }
+
     addField(fieldView) {
         if (fieldView.getFormContainerPath() === this._path) {
             let fieldId = fieldView.getId();
             this._fields[fieldId] = fieldView;
             let model = this.getModel(fieldId);
             fieldView.setModel(model);
-
-            //todo fix parentId for non form elements, right now parent id might be non form element
-            let parentId = model.parent.id;
+            const parentId = this.getParentFormElementId(model);
             if (parentId != '$form') {
                 let parentView = this._fields[parentId];
                 //if parent view has been initialized then add parent relationship, otherwise add it to deferred parent-child relationship
@@ -64,6 +81,8 @@ export default class FormContainer {
                     }
                     this._deferredParents[parentId].push(fieldView);
                 }
+            } else {
+                fieldView.setParent(this);
             }
 
             // check if field id is in deferred relationship, if it is add parent child relationships
@@ -102,5 +121,9 @@ export default class FormContainer {
 
     getFormElement() {
         return this._element;
+    }
+
+    getAllFields() {
+        return this._fields;
     }
 }

@@ -1,41 +1,44 @@
 {
   "id": "fileinput-4573ac70ac",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "file-input",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "file-input",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
-  "properties": {
-    "afs:layout" : {
-      "tooltipVisible": false
-    },
-    "fd:dor": {
-      "dorExclusion":false
-    }
-  },
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
   "type": "file[]",
-  "maxFileSize": "4GB",
-  "maxItems": 2,
+  "required": false,
+  "enabled": true,
   "minItems": 1,
+  "maxItems": 2,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "maxFileSize": "4GB",
   "accept": [
     "text/*",
     "application/pdf"
   ],
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
+  "screenReaderText": "'Custom screen reader text'",
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/multiselect-fileinput"
   },
   ":type": "core/fd/components/form/fileinput/v1/fileinput"
 }

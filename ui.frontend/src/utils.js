@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "./constants";
-import HTTPAPILayer from "./HTTPAPILayer";
-import {customFunctions} from "./customFunctions";
+import {Constants} from "./constants.js";
+import HTTPAPILayer from "./HTTPAPILayer.js";
+import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
@@ -127,7 +127,7 @@ export default class Utils {
                 this.removeFieldReferences(childViewList[index]);
             }
         }
-        delete fieldView.formContainer._fields[fieldView.id];
+        delete fieldView.formContainer.getAllFields()[fieldView.id];
     }
 
     /**

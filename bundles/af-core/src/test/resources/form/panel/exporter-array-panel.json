@@ -2,52 +2,58 @@
   "id":"panel-95130a1dba",
   "description":"dependent names description",
   "tooltip":"dependent names tooltip",
-  "type":"array",
   "fieldType":"panel",
   "name":"abc",
   "visible":true,
   "enabled":true,
-  "minItems":1,
-  "maxItems":10,
+  "repeatable": true,
+  "minOccur":1,
+  "maxOccur":10,
   "items":[
     {
-      "id":"textinput-9670d145f5",
-      "description":"dummy",
-      "type":"string",
-      "fieldType":"text-input",
-      "required":false,
-      "name":"abc",
-      "visible":false,
-      "enabled":true,
-      "readOnly":false,
-      "label":{
-        "richText":false,
-        "visible":true,
-        "value":"def"
+      "id": "textinput-9670d145f5",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": false,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "richText": false,
+        "visible": true,
+        "value": "def"
       },
-      "properties":{
-        "fd:dor":{
-          "dorExclusion":false
-        }
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
       },
-      ":type":"core/fd/components/form/textinput/v1/textinput",
-      "events" : {
-        "custom:setProperty" : ["$event.payload"]
-      }
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/array-panel/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
-  "label":{
-    "richText":false,
-    "visible":true,
-    "value":"dependent names"
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "dependent names"
   },
-  "properties":{
-    "afs:layout":{
-      "tooltipVisible":false
-    }
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
   },
-  ":type":"core/fd/components/form/panel/v1/panel",
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:path": "/content/array-panel"
+  },
+  ":type": "core/fd/components/form/panel/v1/panel"
 }

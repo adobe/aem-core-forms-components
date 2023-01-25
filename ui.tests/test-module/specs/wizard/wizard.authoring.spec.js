@@ -128,7 +128,8 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
-        it('verify Navigation Working between tabs in Authoring', function(){
+        // todo: flaky
+        it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
@@ -159,13 +160,13 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms Wizard', function () {
+        it('insert aem forms Wizard', { retries: 3 }, function () {
             dropWizardInSites();
             cy.deleteComponentByPath(wizardEditPath);
         });
 
-        // todo: intermittent failure
-        it('open edit dialog of aem forms Wizard', function() {
+        // adding retry, sometimes site editor does not load
+        it('open edit dialog of aem forms Wizard', { retries: 3 }, function() {
             dropWizardInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);

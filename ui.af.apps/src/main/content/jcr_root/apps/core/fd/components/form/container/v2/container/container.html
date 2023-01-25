@@ -28,7 +28,7 @@
          data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
-    <input data-sly-test="${container.thankyouPage}" type="hidden" name=":redirect" value="${container.thankyouPage @ extension='html'}"/>
+    <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl @ extension='html'}"/>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"

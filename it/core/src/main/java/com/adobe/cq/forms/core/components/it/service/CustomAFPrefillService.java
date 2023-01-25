@@ -30,6 +30,7 @@ import java.lang.reflect.Type;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -38,9 +39,8 @@ import java.util.Map;
         immediate = true
 )
 public class CustomAFPrefillService implements DataProvider {
-
     @Reference
-    DataManager dataManager;
+    private DataManager dataManager;
 
     private Logger logger = LoggerFactory.getLogger(CustomAFPrefillService.class);
 
@@ -49,7 +49,7 @@ public class CustomAFPrefillService implements DataProvider {
      */
     @Override
     public String getServiceDescription() {
-        return "Custom Pre-fill Service";
+        return "Core Custom Pre-fill Service";
     }
 
     /* (non-Javadoc)
@@ -57,7 +57,7 @@ public class CustomAFPrefillService implements DataProvider {
      */
     @Override
     public String getServiceName() {
-        return "Custom Pre-fill Service";
+        return "Core Custom Pre-fill Service";
     }
 
     /* (non-Javadoc)
@@ -72,24 +72,20 @@ public class CustomAFPrefillService implements DataProvider {
         ContentType contentType = dataOptions.getContentType();
         Map<String, Object> extras = dataOptions.getExtras();
         String data = null;
-        String fileAttachmentMapAsString = null;
-        Map<String, String> fileAttachmentMap = null;
+        List<FileAttachmentWrapper> fileAttachmentWrappers = null;
         PrefillData prefillData = null;
+        Map<String, String> customContext = null;
         if(extras != null && extras.containsKey(DataManager.UNIQUE_ID) && dataManager != null) {
             String dataKey = extras.get(DataManager.UNIQUE_ID).toString();
             if(dataManager.get(dataKey) != null) {
                 data = (String) dataManager.get(dataKey);
-                fileAttachmentMapAsString = (String) dataManager.get(DataManager.getFileAttachmentMapKey(dataKey));
+                fileAttachmentWrappers = (List<FileAttachmentWrapper>) dataManager.get(DataManager.getFileAttachmentMapKey(dataKey));
             }
+            customContext = dataManager.getCustomContext(dataKey);
         }
         if(StringUtils.isNotBlank(data)) {
             dataInputStream = getDataInputStream(data);
-            if(fileAttachmentMapAsString != null) {
-                Type mapType = new TypeToken<Map<String, String>>() {
-                }.getType();
-                fileAttachmentMap = new Gson().fromJson(fileAttachmentMapAsString, mapType);
-            }
-            prefillData = new PrefillData(dataInputStream, contentType, fileAttachmentMap, null);
+            prefillData = new PrefillData(dataInputStream, contentType, fileAttachmentWrappers, customContext);
         }
         return prefillData;
     }

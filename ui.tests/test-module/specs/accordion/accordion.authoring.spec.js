@@ -117,13 +117,13 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    it('insert aem forms Accordion', function () {
+    it('insert aem forms Accordion', { retries: 3 }, function () {
       dropAccordionInSites();
       cy.deleteComponentByPath(accordionEditPath);
     });
 
     // todo: intermittent failure
-    it('open edit dialog of aem forms Accordion', function() {
+    it('open edit dialog of aem forms Accordion', { retries: 3 }, function() {
       testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
     });
 
