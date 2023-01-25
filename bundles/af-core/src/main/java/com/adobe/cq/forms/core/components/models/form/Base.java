@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
-@ConsumerType
+@ProviderType
 public interface Base extends FormComponent {
     public final String DATE_FORMATTER = "yyyy-MM-dd";
 

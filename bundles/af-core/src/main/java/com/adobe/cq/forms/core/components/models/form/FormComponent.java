@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osgi.annotation.versioning.ProviderType;
 
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
+@ProviderType
 public interface FormComponent extends Component {
     public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout"; // needs to be renamed to "CUSTOM_LAYOUT_PROPERTY_WRAPPER" later
 
@@ -71,6 +73,18 @@ public interface FormComponent extends Component {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default Map<String, Object> getDorProperties() {
         return Collections.emptyMap();
+    }
+
+    /**
+     * Returns getPath of the form field
+     *
+     * @return getPath of the field
+     * @since com.adobe.cq.forms.core.components.util 3.1.0
+     */
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    default String getPath() {
+        return null;
     }
 
     /**

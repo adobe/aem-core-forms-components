@@ -27,6 +27,7 @@
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
             super(params);
+            let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 let body = action.payload?.body;
@@ -34,10 +35,10 @@
                     if (body.redirectUrl) {
                         window.location.href = body.redirectUrl;
                     } else if (body.thankYouMessage) {
-                        let formContainerElement = document.querySelector(FormContainerV2.selectors.self);
+                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
                         thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.textContent = body.thankYouMessage;
+                        thankYouMessage.innerHTML = body.thankYouMessage;
                         formContainerElement.replaceWith(thankYouMessage);
                     }
                 }

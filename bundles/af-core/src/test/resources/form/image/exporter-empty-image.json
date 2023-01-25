@@ -1,10 +1,15 @@
 {
   "id": "image-799a5cf8ee",
+  "fieldType": "image",
   "name": "emptyImage",
   "visible": true,
-  "fieldType": "image",
-  ":type": "core/fd/components/form/image/v1/image",
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  }
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/empty-image"
+  },
+  ":type": "core/fd/components/form/image/v1/image"
 }

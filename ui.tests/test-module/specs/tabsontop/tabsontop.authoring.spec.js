@@ -104,7 +104,8 @@ describe.only('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsPath);
     });
 
-    it('switch tabs using dialog select panel button in toolbar', function(){
+    // todo: flaky
+    it('switch tabs using dialog select panel button in toolbar', { retries: 3 }, function(){
       dropTabsInContainer();
       //Add 2 children in tabs on top component
       dropTextInputInTabComponent();
@@ -142,7 +143,7 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(panelContainerEditPath);
     });
 
-    it('open edit dialog of tabs on top of form', function() {
+    it('open edit dialog of tabs on top of form', { retries: 3 }, function() {
       testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
     });
 

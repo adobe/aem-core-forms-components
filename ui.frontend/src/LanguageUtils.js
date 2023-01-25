@@ -14,8 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "./constants";
-import HTTPAPILayer from "./HTTPAPILayer";
+import {Constants} from "./constants.js";
+import HTTPAPILayer from "./HTTPAPILayer.js";
 
 export default class LanguageUtils {
     static #langData = {};

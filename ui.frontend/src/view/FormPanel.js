@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../constants";
-import FormFieldBase from "./FormFieldBase";
-import InstanceManager from "./InstanceManager";
+import {Constants} from "../constants.js";
+import FormFieldBase from "./FormFieldBase.js";
+import InstanceManager from "./InstanceManager.js";
 
 export default class FormPanel extends FormFieldBase {
     constructor(params) {
