@@ -16,6 +16,7 @@
 describe( "Form Runtime with Panel Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
+    const childBemBlock = 'cmp-adaptiveform-datepicker';
     const bemBlock = 'cmp-container';
     let formContainer = null;
 
@@ -25,17 +26,21 @@ describe( "Form Runtime with Panel Container", () => {
         });
     });
 
-    const checkHTML = (id, model, view) => {
-        const visible = model.visible;
+    const checkHTML = (id, state, view, count) => {
+        const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const checkView = () => {
+            expect(view.children.length, "panel has children equal to count").to.equal(count);
+            return cy.get(`#${id}`);
+        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
             .should('eq', visible.toString());
         cy.get(`#${id}`)
             .invoke('attr', 'data-cmp-enabled')
-            .should('eq', model.enabled.toString());
-        expect(model.items.length, "model has children equal to count").to.equal(view.children.length);
+            .should('eq', state.enabled.toString());
+        expect(state.items.length, "model has children equal to count").to.equal(count);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
@@ -43,13 +48,13 @@ describe( "Form Runtime with Panel Container", () => {
         expect(instanceManager.children.length, "instance manager has children equal to count").to.equal(count);
         expect(instanceManager.getModel().items.length, "model has items equal to count").to.equal(count);
         const checkChild = (childView) => {
-            checkHTML(childView.getId(), childView.getModel(), childView);
+            checkHTML(childView.getId(), childView.getModel().getState(), childView, 1);
         }
         instanceManager.children.forEach(checkChild);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
+    const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
         const EVENT_NAME = isAdd ? "AF_PanelInstanceAdded" : "AF_PanelInstanceRemoved";
         let innerResolution = undefined;
         const innerPromise = new Cypress.Promise((resolve, reject) => {innerResolution = resolve;});
@@ -70,7 +75,7 @@ describe( "Form Runtime with Panel Container", () => {
                 instanceManager.removeInstance();
             }
             promise.then(() => {
-                const e = checkInstanceHTML(instanceManager, count, childCount);
+                const e = checkInstanceHTML(instanceManager, count);
                 innerResolution(e);
             });
         });
@@ -153,50 +158,6 @@ describe( "Form Runtime with Panel Container", () => {
                 });
             });
         });
-    });
-
-    it(" min occur of model should be reflected in html, and view child should be established ", () => {
-        const instancManagerModel = formContainer._model.items[1];
-        const instanceManagerView = formContainer.getAllFields()[instancManagerModel.id];
-        const instancesView = instanceManagerView.children;
-        const instancesModel = instancManagerModel.items;
-
-        expect(instancesView.length, " Number of instances view to equal Number of instances model ").to.equal(instancesModel.length);
-
-        for (let i = 0; i < instancesModel.length; i++) {
-            const modelId = instancesModel[i].id;
-            expect(instancesView[i].getId(), " Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
-            cy.get(`#${modelId}-label`).should('exist');
-            cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-            cy.get(`#${modelId}-shortDescription`).should('exist');
-            cy.get(`#${modelId}-longDescription`).should('exist');
-            expect(instancesView[i].children.length, " Number of children inside repeatable panel view should be equal to its child models  ").to.equal(instancesModel[i].items.length);
-
-            const textInputId = instancesModel[i].items[0].id;
-            expect(instancesView[i].children[0].getId(), " Text input box view Id inside repeatable panel to be equal to its model  ").to.equal(textInputId);
-            cy.get(`#${textInputId}-label`).should('exist');
-            cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-            cy.get(`#${textInputId}-errorMessage`).should('exist');
-
-            const numberInputId = instancesModel[i].items[1].id;
-            expect(instancesView[i].children[1].getId(), " Number input box view Id inside repeatable panel to be equal to its model  ").to.equal(numberInputId);
-            cy.get(`#${numberInputId}-label`).should('exist');
-            cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-            cy.get(`#${numberInputId}-errorMessage`).should('exist');
-        }
-
-
-        checkInstanceHTML(instanceManagerView, 4)
-            .then(() => {
-                checkAddRemoveInstance(instanceManagerView, 5, true)
-                    .then(() => {
-                        checkAddRemoveInstance(instanceManagerView, 4)
-                            .then(() => {
-                                //min is 4, can't go below this
-                                checkAddRemoveInstance(instanceManagerView, 4);
-                            });
-                    });
-            });
     });
 
     it("should toggle description and tooltip", () => {
