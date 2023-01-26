@@ -3,8 +3,6 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[mobile/groups/responsive]"
-        cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
-        cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
@@ -29,9 +27,9 @@
                     name="panelcontainer1662449848339"
                     roleAttribute="toolbar"
                     tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
-                    id="tooltip_scenario_test"
                     tooltipVisible="true"
-                    visible="{Boolean}true">
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}true">
                 <datepicker
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Date Input"
@@ -41,6 +39,41 @@
                         name="datepicker1662462777790"
                         type="string"/>
             </panelcontainer>
+            <panelcontainer1
+                    jcr:lastModified="{Date}2023-01-25T11:10:51.415+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    description="&lt;p>my long description&lt;/p>&#xd;&#xa;"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    maxOccur="-1"
+                    minOccur="4"
+                    name="panelcontainer1674624317616"
+                    repeatable="{Boolean}true"
+                    textIsRich="[true,true]"
+                    tooltip="&lt;p>my short description&lt;/p>&#xd;&#xa;"
+                    tooltipVisible="true"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}true">
+                <textinput
+                        jcr:lastModified="{Date}2023-01-25T11:02:56.221+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1674624776287"/>
+                <numberinput
+                        jcr:lastModified="{Date}2023-01-25T11:03:03.661+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1674624783704"/>
+            </panelcontainer1>
         </guideContainer>
     </jcr:content>
 </jcr:root>
