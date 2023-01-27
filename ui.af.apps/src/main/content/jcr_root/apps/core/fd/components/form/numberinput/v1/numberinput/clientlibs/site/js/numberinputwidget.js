@@ -91,6 +91,9 @@ class NumericInputWidget {
         widget.addEventListener('keypress', (e)=> {
             this.#handleKeyPress(e);
         });
+        widget.addEventListener('focus', (e)=> {
+            this.#widget.value = this.#model.value;
+        });
         widget.addEventListener('paste', (e)=> {
             this.#handlePaste(e);
         });
@@ -99,7 +102,8 @@ class NumericInputWidget {
         });
         widget.addEventListener('blur', (e) => {
             this.#model.value = this.getValue(e.target.value);
-        })
+            this.#widget.value = this.#model.displayValue;
+        });
         // IME specific handling, to handle japanese languages max limit
         this.#attachCompositionEventHandlers(widget);
     }
@@ -408,7 +412,7 @@ class NumericInputWidget {
             if(value && this.#writtenInLocale) {
                 this.#widget.value = this.#convertValueToLocale(value);
             } else {
-                this.#widget.value=  this.#model.value;
+                this.#widget.value=  this.#model.displayValue;
             }
         }
     }
