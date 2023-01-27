@@ -80,7 +80,6 @@
                               sling:resourceType="forms-components-examples/components/form/container">
                                 <container
                                   jcr:primaryType="nt:unstructured"
-                                  fieldType="demo-component"
                                   sling:resourceType="forms-components-examples/components/demo/component">
                                     <title
                                       jcr:title="Lorem Ipsum"
