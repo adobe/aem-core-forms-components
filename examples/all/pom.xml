@@ -71,7 +71,7 @@
                     <embeddeds>
                         <embedded>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>core-forms-components-demo</artifactId>
+                            <artifactId>core-forms-components-examples-core</artifactId>
                             <filter>true</filter>
                         </embedded>
                     </embeddeds>
@@ -184,7 +184,7 @@
         <!-- Forms Components -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>core-forms-components-demo</artifactId>
+            <artifactId>core-forms-components-examples-core</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

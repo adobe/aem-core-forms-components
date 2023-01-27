@@ -35,8 +35,6 @@ import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class },
@@ -60,10 +58,7 @@ public class DemoComponentImpl extends AbstractComponentImpl implements Containe
 
   private List<? extends ComponentExporter> childrenModels;
 
-  private static final Logger logger = LoggerFactory.getLogger(DemoComponentImpl.class);
-
   public @NotNull List<ListItem> getItems() {
-    logger.error("Getting Items ... ");
     if (childrenModels == null) {
       childrenModels = getChildrenModels(request, ComponentExporter.class);
     }

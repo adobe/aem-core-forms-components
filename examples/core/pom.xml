@@ -22,7 +22,7 @@
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>core-forms-components-demo</artifactId>
+    <artifactId>core-forms-components-examples-core</artifactId>
     <packaging>bundle</packaging>
 
 
