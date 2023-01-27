@@ -50,7 +50,7 @@
     <!-- P R O P E R T I E S                                                    -->
     <!-- ====================================================================== -->
     <properties>
-        <bnd.version>5.0.0</bnd.version>
+        <bnd.version>5.1.2</bnd.version>
         <aem.forms.sdk.api>2020.08.26.04</aem.forms.sdk.api>
     </properties>
 
