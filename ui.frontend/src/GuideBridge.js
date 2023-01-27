@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "./constants";
-import Response from "./Response";
-import AfFormData from "./FormData";
+import {Constants} from "./constants.js";
+import Response from "./Response.js";
+import AfFormData from "./FormData.js";
 
 export default class GuideBridge {
 
@@ -197,15 +197,49 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * @summary Hides all the submit buttons present in the Adaptive Form
+     *
+     */
     hideSubmitButtons() {
-        //TODO: implement it later. NO-OP for now.
+        if (this.isConnected()) {
+            this.#hideButtons('submit');
+        } else {
+            throw new Error("GuideBridge is not connected");
+        }
+    }
+
+    /**
+     * @summary Hides all the reset buttons present in the Adaptive Form
+     *
+     */
+    hideResetButtons() {
+        if (this.isConnected()) {
+            this.#hideButtons('reset');
+        } else {
+            throw new Error("GuideBridge is not connected");
+        }
+    }
+
+    #hideButtons(buttonType) {
+        let formModel = this.getFormModel();
+        formModel.visit((field) => {
+            if (field.properties["fd:buttonType"] === buttonType) {
+                field.visible = false;
+                field.subscribe((action) => {
+                    let state = action.target.getState();
+                    const changes = action.payload.changes;
+                    changes.forEach(change => {
+                        if (change.propertyName === 'visible' && change.currentValue) {
+                            field.visible = false;
+                        }
+                    })
+                });
+            }
+        })
     }
 
     hideSaveButtons() {
-        //TODO: implement it later. NO-OP for now.
-    }
-
-    hideResetButtons() {
         //TODO: implement it later. NO-OP for now.
     }
 

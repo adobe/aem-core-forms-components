@@ -67,7 +67,11 @@
       ]
     },
     "maxItems": {
-      "title": "Minimum number of items in a field/panel capturing array data",
+      "title": "Maximum number of items in a field/panel capturing array data",
+      "type": "number"
+    },
+    "maxOccur": {
+      "title": "Maximum number of occurrence of repeating panel - capturing array data",
       "type": "number"
     },
     "maxLength": {
@@ -88,6 +92,10 @@
     },
     "minItems": {
       "title": "Minimum number of items in a field/panel capturing array data",
+      "type": "number"
+    },
+    "minOccur": {
+      "title": "Minimum number of occurrence of repeating panel - capturing array data",
       "type": "number"
     },
     "minLength": {

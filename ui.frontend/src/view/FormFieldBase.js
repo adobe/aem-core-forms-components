@@ -14,8 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../constants";
-import FormField from './FormField';
+import {Constants} from "../constants.js";
+import FormField from './FormField.js';
 
 export default class FormFieldBase extends FormField {
 
@@ -220,8 +220,10 @@ export default class FormFieldBase extends FormField {
      * @param value
      */
     updateValue(value) {
+        // html sets undefined value as undefined string in input value, hence this check is added
+        let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
-            this.widget.value = value;
+            this.widget.value = widgetValue;
         }
     }
 
@@ -290,12 +292,7 @@ export default class FormFieldBase extends FormField {
             changes.forEach(change => {
                 const fn = changeHandlerName(change.propertyName);
                 if (typeof this[fn] === "function") {
-                    //items applicable for repeatable panel
-                    if ("items" === change.propertyName) {
-                        this[fn](change.prevValue, change.currentValue, state);
-                    } else {
-                        this[fn](change.currentValue, state);
-                    }
+                    this[fn](change.currentValue, state);
                 } else {
                     console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                 }

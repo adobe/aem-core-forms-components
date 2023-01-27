@@ -16,33 +16,45 @@
 describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
+    const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
         submit : `[data-cmp-is="${IS}"]`
     }
 
-    let formContainer = null
-
-    beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
-            formContainer = p;
-        })
-    });
+    let formContainer = null;
 
     it("should get model and view initialized properly ", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-        Object.entries(formContainer._fields).forEach(([id, field]) => {
-            expect(field.getId()).to.equal(id)
-            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-        });
+        cy.previewForm(pagePath).then(p => {
+                formContainer = p;
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+                Object.entries(formContainer._fields).forEach(([id, field]) => {
+                expect(field.getId()).to.equal(id)
+                expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+                    });
+                })
     })
 
-    it("Clicking the button should submit the form", () => {
+    it("Form submit should show validation errors", () => {
+            cy.previewForm(pagePath);
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                Object.entries(formContainer._fields).forEach(([id, field]) => {
+                    // if non submit field, check that all have error message in them
+                    if (id.indexOf('submit') === -1) {
+                        cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "There is an error in the field")
+                    }
+                });
+            });
+    });
+
+
+    it("Custom Submit Action Test", () => {
+        cy.previewForm(customSubmitPagePath);
         cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")
-        })
-    });
+        });
+    })
 
 })

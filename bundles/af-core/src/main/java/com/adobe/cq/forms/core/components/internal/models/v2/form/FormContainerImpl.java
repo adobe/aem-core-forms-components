@@ -31,12 +31,14 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -59,11 +61,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String thankyouMessage;
+    private String thankYouMessage;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String thankyouPage;
+    private String thankYouOption;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -79,12 +81,28 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String redirect;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String prefillService;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String data;
 
     @Override
     @Nullable
+    @JsonIgnore
     public String getThankYouMessage() {
-        return thankyouMessage;
+        return thankYouMessage;
+    }
+
+    @Override
+    @Nullable
+    @JsonIgnore
+    public ThankYouOption getThankYouOption() {
+        return ThankYouOption.fromString(thankYouOption);
     }
 
     @Override
@@ -117,12 +135,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @Override
-    @Nullable
-    public String getThankYouPage() {
-        return thankyouPage;
-    }
-
-    @Override
     public FormMetaData getMetaData() {
         return new FormMetaDataImpl();
     }
@@ -143,7 +155,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
         if (getCurrentPage() != null) {
-            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+            return getId();
         } else {
             return null;
         }
@@ -152,17 +164,32 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Override
     public String getId() {
         if (getCurrentPage() != null) {
-            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
+                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+            } else {
+                return ComponentUtils.getEncodedPath(getPath());
+            }
         } else {
             return super.getId();
         }
     }
 
+    @JsonIgnore
+    @Nullable
+    public String getRedirectUrl() {
+        return GuideUtils.getRedirectUrl(redirect, getPath());
+    }
+
+    @JsonIgnore
+    @Nullable
+    public String getPrefillService() {
+        return prefillService;
+    }
+
     @Override
     public String getAction() {
         if (getCurrentPage() != null) {
-            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + ComponentUtils.getEncodedPath(getCurrentPage()
-                .getPath());
+            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
         } else {
             return null;
         }

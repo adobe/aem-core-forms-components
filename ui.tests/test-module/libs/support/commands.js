@@ -41,6 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
+import { recurse } from 'cypress-recurse'
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -257,7 +258,6 @@ const waitForFormInit = () => {
                     }
                     isReady();
                 }
-                console.error(`waiting for ${INIT_EVENT}`)
                 document.addEventListener(INIT_EVENT, listener1);
             })
             return promise
@@ -266,15 +266,13 @@ const waitForFormInit = () => {
 }
 
 const waitForChildViewAddition = () => {
-    return cy.get('[data-cmp-is="adaptiveFormPanel"]')
+    return cy.get('[data-cmp-is="adaptiveFormContainer"]')
         .then((el) => {
-            const ADD_EVENT = "AF_PanelChildAdded";
+            const ADD_EVENT = "AF_PanelInstanceAdded";
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    console.error(`received ${ADD_EVENT}`);
                     resolve(e.detail.formContainer);
                 };
-                console.error(`waiting for ${ADD_EVENT}`);
                 el[0].addEventListener(ADD_EVENT, listener1);
             })
             return promise;
@@ -319,7 +317,14 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
         insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
     cy.openEditableToolbar(selector);
     cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
-    cy.get(insertComponentDialog_searchField).type(componentString).type('{enter}');
+    recurse(
+        // the commands to repeat, and they yield the input element
+        () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+        // the predicate takes the output of the above commands
+        // and returns a boolean. If it returns true, the recursion stops
+        ($input) => $input.val() === componentString,
+    )
+    cy.get(insertComponentDialog_searchField).type('{enter}');
     cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
     // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here

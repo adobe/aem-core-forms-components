@@ -54,9 +54,11 @@ describe("Form Runtime with Text Input", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
         Object.entries(formContainer._fields).forEach(([id, field]) => {
-            expect(field.getId()).to.equal(id)
-            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-            checkHTML(id, field.getModel().getState())
+            if(field.options.visible === "true") {
+                expect(field.getId()).to.equal(id)
+                expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+                checkHTML(id, field.getModel().getState())
+            }
         });
     })
 
@@ -86,4 +88,48 @@ describe("Form Runtime with Text Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("should show and hide other fields on a certain input", () => {
+        // Rule on textBox1: When textBox1 has input "adobe" => Show textBox3 and Hide textBox2
+
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox2, textbox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [textbox3, textbox3FieldView] = Object.entries(formContainer._fields)[2];
+        const input = "adobe";
+
+        cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${textbox3}`).should('be.visible')
+            cy.get(`#${textbox2}`).should('not.be.visible')
+        })
+    })
+
+    it("should enable and disable other textfields on a certain string input", () => {
+        // Rule on textBox1: When textBox1 has input "aem" => Enable textBox2 and Disable textBox4
+
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
+        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+        const input = "aem";
+
+        cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${textbox2}`).find("input").should('be.enabled')
+            cy.get(`#${textbox4}`).find("input").should('not.be.enabled')
+        })
+    })
+
+    it("should show validation error messages", () => {
+        // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
+
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const incorrectInput = "invalidate";
+        const correctInput = "validate";
+
+
+        cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"There is an error in the field")
+        })
+
+        cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+        })
+    })
 })

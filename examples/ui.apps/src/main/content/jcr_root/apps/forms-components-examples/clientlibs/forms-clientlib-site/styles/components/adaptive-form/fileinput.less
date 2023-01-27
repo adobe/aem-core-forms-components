@@ -1,0 +1,55 @@
+.cmp-adaptiveform-fileinput {
+  .fileContainerMixin();
+  .descriptionMixin();
+  .validInvalidMixin();
+  &__widget {
+    margin-top: 5px;
+    margin-right: @field-right-margin;
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+    &::before {
+      content: 'Attach';
+      display: inline-block;
+      outline: none;
+      border: 2px solid @dark-gray;
+      background: @white;
+      color: @dark-gray;
+      border-radius: 1.5rem;
+      font-size: @font-md;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  }
+  &__widgetlabel {
+    border-radius: 1.5rem;
+    border: 2px solid;
+    padding: 0.625rem 1rem;
+    font-size: @font-sm;
+    display: inline-block;
+    cursor: pointer;
+  }
+  &__filelist {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+  &__fileitem {
+    display: block;
+    padding: 10px;
+    border-top: 1px solid @light-gray;
+  }
+  &__filename {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &__filedelete {
+    float: right;
+    font-size: @font-lg;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 1px 0 @white;
+    opacity: .2;
+    cursor: pointer;
+  }
+}

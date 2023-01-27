@@ -14,7 +14,8 @@
     "properties": {
       "fd:dor": {
         "dorExclusion":true
-      }
+      },
+      "fd:path":"/content/button"
     }
   }
 }

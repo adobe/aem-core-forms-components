@@ -1,0 +1,149 @@
+// ====== font size======
+@dark-gray: #666;
+@gray: #888;
+@light-gray: #969696;
+@very-light-gray: #e6e6e6;
+@white: #fff;
+@error: #eb3c36;
+@light-error: rgba(235, 60, 54, 0.05);
+@success: #23b482;
+@silver: #ccc;
+@panel-bg-color: #efefef;
+@wizard-bg-color: #fafafa;
+
+// ====== font size======
+@font-xlg: 1.5rem;
+@font-lg: 1.25rem;
+@font-md: 1rem;
+@font-sm: .875rem;
+@font-xsm: .75rem;
+
+// ====== space ======
+@field-margin: .25rem 0;
+@label-top-margin: 10px;
+@field-height: 40px;
+@field-padding-left: 10px;
+@error-top-margin: 10px;
+@field-right-margin: 20px;
+@radio-checkbox-gap: 20px;
+@textarea-height: 80px;
+
+
+// ================common class================
+.containerMixin() {
+  color: @dark-gray;
+  font-size: @font-md;
+  margin: @field-margin;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.panelContainer() {
+  color: @dark-gray;
+  font-size: @font-md;
+  margin: @field-margin;
+  position: relative;
+  margin-right: @field-right-margin;
+}
+.fileContainerMixin() {
+  color: @dark-gray;
+  font-size: @font-md;
+  margin: @field-margin;
+  position: relative;
+}
+.widgetMixin() {
+  margin-top: @label-top-margin;
+  height: @field-height;
+  border-radius: 0.25rem;
+  border: 1px solid @dark-gray;
+  font-size: @font-md;
+  color: @dark-gray;
+  padding-left: @field-padding-left;
+  margin-right: @field-right-margin;
+}
+.itemWidgetMixin() {
+  font-size: @font-md;
+  color: @dark-gray;
+  display: flex;
+  gap: @radio-checkbox-gap;
+  margin-top: @label-top-margin;
+  margin-right: @field-right-margin;
+}
+.buttonWidgetMixin() {
+  border: 2px solid @dark-gray;
+  background: @white;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: @dark-gray;
+  font-size: @font-md;
+}
+.longdescriptionMixin() {
+  color: @light-gray;
+  background-color: @very-light-gray;
+  font-size: @font-sm;
+  padding: 0.125rem 0.5rem;
+  margin-top: @error-top-margin;
+  margin-right: @field-right-margin;
+}
+.shortdescriptionMixin() {
+  font-size: @font-sm;
+  margin-top: @error-top-margin;
+}
+.questionmarkMixin() {
+  position: absolute;
+  display: inline-block;
+  top: 8px;
+  right: 28px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9px;
+  background: url(./resources/question.svg) center center / cover no-repeat, #969696;
+  cursor: pointer;
+}
+.errorMixin() {
+  color: @error;
+  font-size: @font-sm;
+  margin-top: @error-top-margin;
+}
+.invalidMixin() {
+  background: @light-error;
+  border: 0 solid @error;
+  border-left-width: 4px;
+  padding-left: 5px;
+}
+.validMixin() {
+  border: 0 solid @success;
+  border-left-width: 4px;
+  padding-left: 5px;
+}
+.descriptionMixin() {
+  &__longdescription {
+    .longdescriptionMixin();
+  }
+  &__shortdescription {
+    .shortdescriptionMixin();
+  }
+  &__questionmark {
+    .questionmarkMixin();
+  }
+}
+.validInvalidMixin() {
+  &__errormessage {
+    .errorMixin();
+  }
+  &[data-cmp-valid=false] {
+    .invalidMixin()
+  }
+  &[data-cmp-valid=true] {
+    .validMixin()
+  }
+}
+.inputMixin() {
+  .containerMixin();
+  .descriptionMixin();
+  .validInvalidMixin();
+  &__widget {
+    .widgetMixin();
+  }
+}

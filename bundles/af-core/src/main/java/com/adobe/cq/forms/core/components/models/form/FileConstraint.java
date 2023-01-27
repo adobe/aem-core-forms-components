@@ -19,14 +19,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Interface for constraints applicable to file attachments
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
-@ConsumerType
+@ProviderType
 public interface FileConstraint {
 
     String DEFAULT_MAX_FILE_SIZE = "2MB";

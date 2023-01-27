@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../src";
-import FormContainer from "../src/view/FormContainer";
-import * as formJson from './resources/form.json';
+import {Constants} from "../src/index.js";
+import FormContainer from "../src/view/FormContainer.js";
+import formJson from './resources/form.json';
 
 
 test('GuideBridge test', () => {
@@ -44,6 +44,15 @@ test('GuideBridge test', () => {
                    expect(error).toBeFalsy();
                }
            });
+           guideBridge.hideSubmitButtons();
+           guideBridge.hideResetButtons();
+           const resultModel = guideBridge.getFormModel();
+           const submitButton = resultModel.getElement("submit-d7406b8582");
+           expect(submitButton).not.toBeNull();
+           expect(submitButton.visible).toBeFalsy();
+           const resetButton = resultModel.getElement("reset-c7cccb1a5e");
+           expect(resetButton).not.toBeNull();
+           expect(resetButton.visible).toBeFalsy();
        }});
 
    });

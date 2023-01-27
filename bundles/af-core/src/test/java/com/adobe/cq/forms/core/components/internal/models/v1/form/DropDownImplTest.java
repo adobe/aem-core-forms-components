@@ -282,7 +282,6 @@ public class DropDownImplTest {
     void testGetMultiSelectDefault_InvalidType() throws IllegalAccessException {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN2, DropDown.class, context);
         FieldUtils.writeField(dropdown, "type", Type.NUMBER, true);
-        ;
         assertNull(dropdown.getDefault());
     }
 
