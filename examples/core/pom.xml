@@ -50,8 +50,6 @@
     <!-- P R O P E R T I E S                                                    -->
     <!-- ====================================================================== -->
     <properties>
-        <bnd.version>5.1.2</bnd.version>
-        <aem.forms.sdk.api>2020.08.26.04</aem.forms.sdk.api>
     </properties>
 
     <!-- ====================================================================== -->
@@ -107,40 +105,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-maven-plugin</artifactId>
-                <version>${bnd.version}</version>
-                <executions>
-                    <execution>
-                        <id>bnd-process</id>
-                        <goals>
-                            <goal>bnd-process</goal>
-                        </goals>
-                        <configuration>
-                            <bnd><![CDATA[
-Import-Package: javax.annotation;version=0.0.0,*
-                                ]]></bnd>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-baseline-maven-plugin</artifactId>
-                <version>${bnd.version}</version>
-                <configuration>
-                    <failOnMissing>false</failOnMissing>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>baseline</id>
-                        <goals>
-                            <goal>baseline</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
@@ -180,7 +144,6 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
-            <version>${aem.forms.sdk.api}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

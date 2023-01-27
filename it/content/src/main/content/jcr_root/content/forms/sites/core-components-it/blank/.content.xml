@@ -2,7 +2,7 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2023-01-27T15:52:15.094+05:30"
+        cq:lastModified="{Date}2023-01-27T17:16:31.469+05:30"
         cq:lastModifiedBy="admin"
         cq:tags="[]"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
@@ -23,44 +23,37 @@
                     jcr:title="Form Container"
                     sling:resourceType="forms-components-examples/components/form/container"
                     fieldType="form">
-                    <textinput
-                        jcr:lastModified="{Date}2023-01-27T15:50:28.296+05:30"
+                    <container
+                        jcr:lastModified="{Date}2023-01-27T17:14:04.006+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1674814828384"/>
-                    <datepicker
-                        jcr:lastModified="{Date}2023-01-27T15:51:16.778+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Date Input"
-                        sling:resourceType="forms-components-examples/components/form/datepicker"
-                        fieldType="date-input"
-                        name="datepicker1674814877111"/>
-                    <radiobutton
-                        jcr:lastModified="{Date}2023-01-27T15:51:22.227+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Radio Button"
-                        sling:resourceType="forms-components-examples/components/form/radiobutton"
-                        enum="[0,1]"
-                        enumNames="[Item 1,Item 2]"
-                        fieldType="radio-group"
-                        name="radiobutton1674814882440"
-                        orientation="horizontal"/>
-                    <checkboxgroup
-                        jcr:lastModified="{Date}2023-01-27T15:51:26.667+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Check Box Group"
-                        sling:resourceType="forms-components-examples/components/form/checkboxgroup"
-                        enum="[0,1]"
-                        enumNames="[Item 1, Item 2]"
-                        fieldType="checkbox-group"
-                        name="checkboxgroup1674814886842"
-                        type="number[]"/>
+                        sling:resourceType="core-components-examples/components/container">
+                        <textinput
+                            jcr:lastModified="{Date}2023-01-27T17:16:31.451+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Text Input"
+                            sling:resourceType="forms-components-examples/components/form/textinput"
+                            autocomplete="off"
+                            description="&lt;p>This is long description.&lt;/p>&#xd;&#xa;"
+                            enabled="{Boolean}true"
+                            fieldType="text-input"
+                            name="textinput1674819936828"
+                            readOnly="{Boolean}false"
+                            textIsRich="[true,true,true]"
+                            tooltip="&lt;p>This is short description.&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            validatePictureClauseMessage="[,]"
+                            visible="{Boolean}true"/>
+                        <datepicker
+                            jcr:lastModified="{Date}2023-01-27T17:16:00.603+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Date Input"
+                            sling:resourceType="forms-components-examples/components/form/datepicker"
+                            fieldType="date-input"
+                            name="datepicker1674819960687"/>
+                    </container>
                 </container>
             </responsivegrid>
         </root>
