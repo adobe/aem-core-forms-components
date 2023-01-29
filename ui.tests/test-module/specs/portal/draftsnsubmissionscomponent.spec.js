@@ -43,9 +43,11 @@ describe('Drafts And Submissions - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(componentDropPath);
         });
 
-        it('insert drafts and submission component', function () {
+        it('insert drafts and submission component', { retries: 3 }, function () {
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
@@ -56,7 +58,7 @@ describe('Drafts And Submissions - Authoring', function () {
             cy.deleteComponentByPath(componentDropPath);
         });
 
-        it('verify edit dialog properties', function () {
+        it('verify edit dialog properties', { retries: 3 }, function () {
             const x = "";
             // click configure action on search and lister component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);

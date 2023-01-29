@@ -32,13 +32,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-
 @Component(
         service=FormSubmitActionService.class,
         immediate = true
-        )
+)
 public class CustomAFSubmitService implements FormSubmitActionService {
-    private static final String serviceName = "Custom AF Submit";
+    private static final String serviceName = "Core Custom AF Submit";
     private static Logger logger = LoggerFactory.getLogger(CustomAFSubmitService.class);
 
     @Reference
@@ -57,11 +56,7 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             String guideContainerPath = formSubmitInfo.getFormContainerPath();
             String data = formSubmitInfo.getData();
             String uniqueID = UUID.randomUUID().toString();
-            JSONObject fileAttachmentMapJsonObject = null;
-            // String key = getDataKey("firstName", formSubmitInfo);
-            // walk through the file attachment list
-            if(StringUtils.isNotBlank(formSubmitInfo.getFileAttachmentMap())) {
-                fileAttachmentMapJsonObject = new org.json.JSONObject(formSubmitInfo.getFileAttachmentMap());
+            if(formSubmitInfo.getFileAttachments() != null && formSubmitInfo.getFileAttachments().size() > 0) {
                 for (int i = 0; i < formSubmitInfo.getFileAttachments().size(); i++) {
                     FileAttachmentWrapper fileAttachment = formSubmitInfo.getFileAttachments().get(i);
                     String fileName = fileAttachment.getFileName();
@@ -72,16 +67,16 @@ public class CustomAFSubmitService implements FormSubmitActionService {
                         if (dataManager != null) {
                             String originalFileName = StringUtils.substringAfterLast(fileAttachment.getFileName(), "/");
                             String fileUrl = formSubmitInfo.getFormContainerPath() + "." + FileAttachmentServlet.SELECTOR + "/" + fileAttachmentUuid + "/" + originalFileName;
-                            fileAttachmentMapJsonObject = updateMapWithFileUrl(fileAttachmentMapJsonObject, fileAttachment.getFileName(), fileUrl);
-                            dataManager.put(fileAttachmentUuid, fileAttachment);
+                            fileAttachment.setUri(fileUrl);
+                            dataManager.put(fileAttachmentUuid, fileAttachment); // used by file attachment servlet
                         }
                     }
                 }
             }
             if(dataManager != null) {
                 dataManager.put(uniqueID, data);
-                if(fileAttachmentMapJsonObject != null) {
-                    dataManager.put(DataManager.getFileAttachmentMapKey(uniqueID), fileAttachmentMapJsonObject.toString());
+                if (formSubmitInfo.getFileAttachments() != null && formSubmitInfo.getFileAttachments().size() > 0) {
+                    dataManager.put(DataManager.getFileAttachmentMapKey(uniqueID), formSubmitInfo.getFileAttachments());
                 }
             }
             logger.info("AF Submission successful using custom submit service for: {}", guideContainerPath);
@@ -92,26 +87,7 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             logger.error("Error while using the AF Submit service", ex);
 
         }
-
         return result;
-    }
-
-    private JSONObject updateMapWithFileUrl(JSONObject fileAttachmentJsonObject, String fileName, String fileUrl) throws Exception {
-        Iterator iterator = fileAttachmentJsonObject.keys();
-        while(iterator.hasNext()) {
-            String fileSom = (String)iterator.next();
-            String[] fileNames = ((String)fileAttachmentJsonObject.get(fileSom)).split("\\\n");
-            for (int i = 0; i < fileNames.length; i++) {
-                String fName = fileNames[i];
-                if(StringUtils.contains(fName, fileName)) {
-                    fileNames[i] = fileUrl;
-                    break;
-                }
-            }
-            fileAttachmentJsonObject.put(fileSom, StringUtils.join(fileNames, '\n'));
-
-        }
-        return fileAttachmentJsonObject;
     }
 
 }

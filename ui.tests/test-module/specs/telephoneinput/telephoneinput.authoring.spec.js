@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropTelephoneInputInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/telephoneinput/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/telephoneinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Telephone Input", afConstants.components.forms.resourceType.formtelephoneinput);
@@ -76,13 +76,15 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/telephoneinput",
-        telephoneInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/telephoneinput",
+        telephoneInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/telephoneinput",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
-        telephoneInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
+        telephoneInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(telephoneInputDrop);
     });
 
     it('insert aem forms TelephoneInput', function () {
@@ -90,7 +92,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it('open edit dialog of aem forms TelephoneInput', function() {
+    it('open edit dialog of aem forms TelephoneInput', { retries: 3 }, function() {
       testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
     });
 

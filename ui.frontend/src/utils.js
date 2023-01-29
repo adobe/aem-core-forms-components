@@ -14,12 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "./constants";
-import HTTPAPILayer from "./HTTPAPILayer";
-import {customFunctions} from "./customFunctions";
+import {Constants} from "./constants.js";
+import HTTPAPILayer from "./HTTPAPILayer.js";
+import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
+    static #contextPath = "";
     /**
      * Returns the data attributes of the specific element.
      * Ignores "data-cmp-is-*" and "data-cmp-hook-*" attributes.
@@ -126,7 +127,7 @@ export default class Utils {
                 this.removeFieldReferences(childViewList[index]);
             }
         }
-        delete fieldView.formContainer._fields[fieldView.id];
+        delete fieldView.formContainer.getAllFields()[fieldView.id];
     }
 
     /**
@@ -140,6 +141,24 @@ export default class Utils {
         if (elementWithId) {
             elementWithId.id = newId;
         }
+    }
+
+    /**
+     * API to set the context path. All external HTTP API calls would by default prefix with this context path
+     * @param contextPath   context path of the system
+     */
+    static setContextPath(contextPath) {
+        if (this.#contextPath == null || this.#contextPath.length === 0) {
+            this.#contextPath = contextPath;
+        }
+    }
+
+    /**
+     * API to get the context path
+     * @returns {*}
+     */
+    static getContextPath() {
+        return this.#contextPath;
     }
 
     /**
@@ -166,6 +185,9 @@ export default class Utils {
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
             const _path = dataset["path"];
+            if ('contextPath' in dataset) {
+                this.setContextPath(dataset['contextPath']);
+            }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {

@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import FormContainer from "./FormContainer";
-import FormField from "./FormField";
-import FormFieldBase from "./FormFieldBase";
-import FormPanel from "./FormPanel";
+import FormContainer from "./FormContainer.js";
+import FormField from "./FormField.js";
+import FormFieldBase from "./FormFieldBase.js";
+import FormPanel from "./FormPanel.js";
 export {FormField, FormContainer, FormFieldBase, FormPanel}

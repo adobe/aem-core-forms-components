@@ -41,6 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
+import { recurse } from 'cypress-recurse'
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -160,11 +161,11 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 });
 
 // Cypress command to open authoring page
-Cypress.Commands.add("openPage", (pagePath) => {
+Cypress.Commands.add("openPage", (pagePath, options={}) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
     cy.visit(baseUrl);
     cy.login(baseUrl);
-    cy.visit(pagePath);
+    cy.visit(pagePath, options);
 });
 
 // cypress command to select layer in authoring
@@ -257,7 +258,6 @@ const waitForFormInit = () => {
                     }
                     isReady();
                 }
-                console.error(`waiting for ${INIT_EVENT}`)
                 document.addEventListener(INIT_EVENT, listener1);
             })
             return promise
@@ -266,24 +266,36 @@ const waitForFormInit = () => {
 }
 
 const waitForChildViewAddition = () => {
-    return cy.get('[data-cmp-is="adaptiveFormPanel"]')
+    return cy.get('[data-cmp-is="adaptiveFormContainer"]')
         .then((el) => {
-            const ADD_EVENT = "AF_PanelChildAdded";
+            const ADD_EVENT = "AF_PanelInstanceAdded";
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    console.error(`received ${ADD_EVENT}`);
                     resolve(e.detail.formContainer);
                 };
-                console.error(`waiting for ${ADD_EVENT}`);
                 el[0].addEventListener(ADD_EVENT, listener1);
             })
             return promise;
         });
 }
 
-Cypress.Commands.add("previewForm", (formPath) => {
-    const pagePath = `${formPath}?wcmmode=disabled`
-    return cy.openPage(pagePath).then(waitForFormInit)
+Cypress.Commands.add("previewForm", (formPath, options={}) => {
+    let pagePath = `${formPath}?wcmmode=disabled`;
+    if(options?.params) {
+        options.params.forEach((param) => pagePath +=`&${param}`)
+        delete options.params
+    }
+    return cy.openPage(pagePath, options).then(waitForFormInit)
+})
+
+Cypress.Commands.add("cleanTest", (editPath) => {
+    // clean the test before the next run, if any
+    cy.get("body").then($body => {
+        const selector12 =  "[data-path='" + editPath + "']";
+        if ($body.find(selector12).length > 0) {
+            cy.deleteComponentByPath(editPath);
+        }
+    });
 })
 
 Cypress.Commands.add("previewFormWithPanel", (formPath) => {
@@ -303,9 +315,9 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     // open editable toolbar
     cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
     // click the delete action
-    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click();
+    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
     // check if delete dialog is seen and click on yes
-    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click();
+    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
     // wait for event to complete to signify deletion is complete
     cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
@@ -319,7 +331,14 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
         insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
     cy.openEditableToolbar(selector);
     cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
-    cy.get(insertComponentDialog_searchField).type(componentString).type('{enter}');
+    recurse(
+        // the commands to repeat, and they yield the input element
+        () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+        // the predicate takes the output of the above commands
+        // and returns a boolean. If it returns true, the recursion stops
+        ($input) => $input.val() === componentString,
+    )
+    cy.get(insertComponentDialog_searchField).type('{enter}');
     cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
     // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here

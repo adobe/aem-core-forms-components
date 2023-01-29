@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
+  "FileSizeGreater"       :       "FLes fichiers {0} font plus que la taille attendue : {1} Mo.",
+  "FileNameInvalid"       :       "Le nom du ou des fichiers {0} comportent des caractères non valides. Seuls les caractères alphanumériques sont pris en charge",
+  "FileMimeTypeInvalid"   :       "Le ou les fichiers {0} sont des types de fichiers non pris en charge",
+  "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
+}

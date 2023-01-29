@@ -45,7 +45,7 @@ import java.io.OutputStream;
 @Component(service=Servlet.class,
         property={
                 "sling.servlet.methods=" + HttpConstants.METHOD_GET,
-                "sling.servlet.resourceTypes="+ "fd/af/components/guideContainer",
+                "sling.servlet.resourceTypes="+ "core/fd/components/form/container/v2/container",
                 "sling.servlet.selectors=" + FileAttachmentServlet.SELECTOR
         })
 @ServiceDescription("Adaptive Form File Attachment Retrieve Servlet")

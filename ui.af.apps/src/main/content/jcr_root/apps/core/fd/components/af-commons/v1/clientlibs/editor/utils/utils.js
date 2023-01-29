@@ -151,7 +151,7 @@
                             if ($subDialogContent.length > 0) {
                                 isDialogRendered = true;
                                 $container.append($subDialogContent);
-                                $subDialogContent.trigger('foundation-contentloaded');
+                                $subDialogContent.trigger('foundation-contentloaded', [componentPath]);
                                 callback(isDialogRendered);
                             }
                         });

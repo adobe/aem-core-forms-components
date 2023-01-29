@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropTextInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/text/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/text/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text", afConstants.components.forms.resourceType.formtext);
@@ -86,9 +86,9 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/text",
-        textEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/text",
+        textEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/text",
         textEditPathSelector = "[data-path='" + textEditPath + "']",
-        textDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtext.split("/").pop();
+        textDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtext.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes

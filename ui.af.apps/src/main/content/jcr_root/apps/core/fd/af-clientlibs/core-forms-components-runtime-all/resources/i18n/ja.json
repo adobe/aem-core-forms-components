@@ -1,0 +1,7 @@
+{
+  "FileCloseAccessText"   :       "ファイルを削除するには Enter を押します ",
+  "FileSizeGreater"       :        "ファイル「{0}」は予期されたサイズを超えています :{1} MB。",
+  "FileNameInvalid"       :       "{0} ファイルの名前に無効な文字が含まれています。サポートされるのは英数字のみになります",
+  "FileMimeTypeInvalid"   :       "{0} ファイルの形式はサポートされていません",
+  "InternalFormSubmissionError" :  "フォームを送信中に内部エラーが発生しました。"
+}

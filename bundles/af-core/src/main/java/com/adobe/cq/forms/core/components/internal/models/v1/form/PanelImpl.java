@@ -53,15 +53,9 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Override
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Type getType() {
-        boolean isRepeatable = minItems != null && maxItems != null;
-        if (wrapData || getDataRef() != null || isRepeatable) {
-            if (isRepeatable) {
-                return Type.ARRAY;
-            } else {
-                return Type.OBJECT;
-            }
+        if (wrapData || getDataRef() != null) {
+            return Type.OBJECT;
         }
         return null;
     }
-
 }

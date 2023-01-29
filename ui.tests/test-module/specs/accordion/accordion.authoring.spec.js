@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropAccordionInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/accordion/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/accordion/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Accordion", afConstants.components.forms.resourceType.accordion);
@@ -109,21 +109,24 @@ describe('Page - Authoring', function () {
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/accordion",
-        accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/accordion",
+        accordionEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/accordion",
         accordionEditPathSelector = "[data-path='" + accordionEditPath + "']";
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+        // conditionally clean the test, when there are retries
+        cy.cleanTest(accordionEditPath);
+
     });
 
-    it('insert aem forms Accordion', function () {
+    it('insert aem forms Accordion', { retries: 3 }, function () {
       dropAccordionInSites();
       cy.deleteComponentByPath(accordionEditPath);
     });
 
     // todo: intermittent failure
-    it('open edit dialog of aem forms Accordion', function() {
+    it('open edit dialog of aem forms Accordion', { retries: 3 }, function() {
       testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
     });
 

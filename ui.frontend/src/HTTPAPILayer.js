@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import {Constants} from "./constants";
+import {Constants} from "./constants.js";
+import Utils from "./utils.js";
 
 export default class HTTPAPILayer {
 
@@ -41,7 +42,7 @@ export default class HTTPAPILayer {
                 lang = `${parts[parts.length - 2]}`;
             }
         }
-        return await this.#getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
+        return await this.getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
     }
 
     static async #findForm(formPath, formsList) {
@@ -49,7 +50,7 @@ export default class HTTPAPILayer {
         if (_form) {
             return _form;
         } else if (formsList._links && formsList._links.next) {
-            const _nextList = await this.#getJson(formsList._links.next);
+            const _nextList = await this.getJson(formsList._links.next);
             return await this.#findForm(formPath, _nextList);
         } else {
             //TODO: throw errors once API is available on Circle CI set up
@@ -58,17 +59,19 @@ export default class HTTPAPILayer {
     }
 
     static async #getFormsList() {
-        return await this.#getJson(Constants.API_PATH_PREFIX + "/listforms");
+        return await this.getJson(Constants.API_PATH_PREFIX + "/listforms");
     }
 
     static async getPrefillData(formId, params) {
-        return await this.#getJson(Constants.API_PATH_PREFIX + "/data/" + formId + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"));
+        return await this.getJson(Constants.API_PATH_PREFIX + "/data/" + formId + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"));
     }
 
-    static #getJson(url) {
+    static async getJson(url) {
+        // prefix context path in url
+        let urlWithContextPath = `${Utils.getContextPath()}${url}`
         return new Promise(resolve => {
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
+            xhr.open('GET', urlWithContextPath, true);
             xhr.responseType = 'json';
             xhr.onload = function () {
                 let status = xhr.status;

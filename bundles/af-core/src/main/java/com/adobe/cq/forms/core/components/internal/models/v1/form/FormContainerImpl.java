@@ -70,10 +70,6 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String thankyouPage;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
     private String title;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -116,12 +112,6 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Nullable
     public String getThankYouMessage() {
         return thankyouMessage;
-    }
-
-    @Override
-    @Nullable
-    public String getThankYouPage() {
-        return thankyouPage;
     }
 
     @Override

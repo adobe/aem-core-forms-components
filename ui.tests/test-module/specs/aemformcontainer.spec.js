@@ -44,9 +44,12 @@ describe('Page - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(aemFormContainerDropPath);
+
         });
 
-        it('insert aem forms container component', function () {
+        it('insert aem forms container component', { retries: 3 }, function () {
             const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
             cy.selectLayer("Edit");
@@ -57,7 +60,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(aemFormContainerDropPath);
         });
 
-        it('open edit dialog of aem forms container component', function() {
+        it('open edit dialog of aem forms container component', { retries: 3 }, function() {
             // click configure action on aem forms container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail

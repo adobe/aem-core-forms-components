@@ -33,7 +33,7 @@ describe('Page - Authoring', function () {
   }
 
   const dropTextInputInSites = function() {
-    const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/container/*",
+    const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form CheckBox Group", afConstants.components.forms.resourceType.formtextinput);
@@ -100,6 +100,8 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(checkBoxGroupDrop);
     });
 
     it('insert CheckBoxGroup in form container', function () {
@@ -107,7 +109,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-    it ('open edit dialog of CheckboxGroup', function(){
+    it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
       testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
     });
 
@@ -147,9 +149,9 @@ describe('Page - Authoring', function () {
 /*
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/textinput",
+        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
         textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
