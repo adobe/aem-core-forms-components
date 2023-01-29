@@ -43,6 +43,7 @@
             ruleEditorFrame.style.top = "0";
             ruleEditorFrame.style.left = "0";
             ruleEditorFrame.style.position = "fixed";
+            ruleEditorFrame.style.zIndex = "1000";
             document.body.appendChild(ruleEditorFrame);
         }
     }
