@@ -18,6 +18,6 @@
   "trashAssetsBeforeRuns" : true,
   "reporterEnabled": "spec, mocha-junit-reporter",
   "mochaJunitReporterReporterOptions": {
-    "mochaFile": "target/reports/TEST-[hash].xml"
+    "mochaFile": "../../test-results/TEST-[hash].xml"
   }
 }
