@@ -34,7 +34,7 @@ describe("Form with Number Input", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-        const value = state.value == null ? '' : state.value;
+        const value = state.displayValue == null ? '' : state.displayValue;
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -152,11 +152,9 @@ describe("Form with Number Input", () => {
 
     it("should show validation error messages based on expression rules", () => {
         // Rule on numberInput4: Validate numberInput4 using Expression: numberInput4 == 64
-
-        const [numberInput4, numberInput1FieldView] = Object.entries(formContainer._fields)[3];
+        const [numberInput4, numberInput4FieldView] = Object.entries(formContainer._fields)[3];
         const incorrectInput = "42";
         const correctInput = "64";
-
 
         cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"There is an error in the field")
@@ -179,6 +177,17 @@ describe("Form with Number Input", () => {
         cy.get(`#${numberInput5}`).find("input").clear().type(input).blur().then(x => {
             cy.get(`#${numberInput1}`).find("input").should('have.value',"")
             cy.get(`#${numberInput4}`).find("input").should('have.value', 400)
+        })
+    })
+
+    it("display pattern on numeric input should update the display value", () => {
+        const [numberInput6, numberInput6FieldView] = Object.entries(formContainer._fields)[5];
+        const input = "12212";
+        let model = numberInput6FieldView.getModel();
+
+        cy.get(`#${numberInput6}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(input));
+            cy.get(`#${numberInput6}`).find('input').should('have.value', model.getState().displayValue);
         })
     })
 })

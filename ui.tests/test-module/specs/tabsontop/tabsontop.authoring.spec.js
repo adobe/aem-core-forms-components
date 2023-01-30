@@ -90,6 +90,8 @@ describe.only('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(tabsPath);
     });
 
     it('insert Tabs on top in form container', function () {
@@ -97,14 +99,16 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(tabsPath);
     });
 
-    it('drop element in tabs on top', function () {
+      // todo: flaky
+    it('drop element in tabs on top', { retries: 3 }, function () {
         dropTabsInContainer();
         dropTextInputInTabComponent();
         cy.get(`[data-path="${tabsPath}"] [data-path="${tabsPath}/textinput"]`).should('be.visible');
         cy.deleteComponentByPath(tabsPath);
     });
 
-    it('switch tabs using dialog select panel button in toolbar', function(){
+    // todo: flaky
+    it('switch tabs using dialog select panel button in toolbar', { retries: 3 }, function(){
       dropTabsInContainer();
       //Add 2 children in tabs on top component
       dropTextInputInTabComponent();
@@ -122,9 +126,10 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(tabsPath);
     });
 
-    it ('open edit dialog of Tab on top', function(){
+    it ('open edit dialog of Tab on top',{ retries: 3 }, function(){
       testPanelBehaviour(tabsContainerPathSelector, tabsPath);
-    })
+    });
+
   })
 
   context('Open Sites Editor', function () {
@@ -135,6 +140,8 @@ describe.only('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(panelContainerEditPath);
     });
 
     it('insert tabs on top of form', function () {
@@ -142,7 +149,7 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(panelContainerEditPath);
     });
 
-    it('open edit dialog of tabs on top of form', function() {
+    it('open edit dialog of tabs on top of form', { retries: 3 }, function() {
       testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
     });
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:description="Demos a Forms component. Container that displays the component, its properties, HTML code and JSON output."
+    jcr:primaryType="cq:Component"
+    jcr:title="Demo Component"
+    sling:resourceSuperType="core-components-examples/components/demo/component"
+    componentGroup="Core Components Examples"/>

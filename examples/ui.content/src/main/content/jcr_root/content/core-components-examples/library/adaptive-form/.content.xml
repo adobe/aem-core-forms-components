@@ -14,5 +14,26 @@
         sling:resourceType="foundation/components/redirect"
         hideInNav="true"
         redirectTarget="/content/core-components-examples/library"/>
+    <accordion/>
+    <button/>
+    <checkboxgroup/>
+    <datepicker/>
+    <dropdown/>
+    <emailinput/>
+    <fileinput/>
+    <pagefooter/>
     <container/>
+    <pageheader/>
+    <image/>
+    <numberinput/>
+    <panelcontainer/>
+    <radiobutton/>
+    <resetbutton/>
+    <submitbutton/>
+    <tabsontop/>
+    <telephoneinput/>
+    <text/>
+    <textinput/>
+    <title/>
+    <wizard/>
 </jcr:root>

@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-12T12:21:05.205+05:30"
+            cq:lastModified="{Date}2023-01-30T15:58:14.444+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -18,7 +18,7 @@
                 dorType="none"
                 fieldType="form"
                 themeRef="/libs/fd/af/themes/canvas">
-            <numberinput
+            <numberinput1
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input 1"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
@@ -30,7 +30,7 @@
                 <fd:events
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
-            </numberinput>
+            </numberinput1>
             <numberinput2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="number Input 2"
@@ -38,11 +38,10 @@
                     enabled="{Boolean}true"
                     fieldType="number-input"
                     name="numberinput2"
-                    visible="{Boolean}false">
-            </numberinput2>
+                    visible="{Boolean}false"/>
             <numberinput3
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="Number Input With Pattern"
+                    jcr:title="Number Input 3"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
                     displayFormat="$123"
                     enabled="{Boolean}false"
@@ -73,15 +72,15 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </numberinput4>
-            <numberinput_812061415
-                    jcr:lastModified="{Date}2023-01-12T12:19:57.951+05:30"
+            <numberinput5
+                    jcr:lastModified="{Date}2023-01-30T15:58:14.432+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input 5"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
                     enabled="{Boolean}true"
                     fieldType="number-input"
-                    name="numberinput_8120614151673506189885"
+                    name="numberinput5"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
                     type="number"
@@ -93,7 +92,22 @@
                 <fd:events
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == 4502\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {value : 400})\, {}),if($field == 4502\, dispatchEvent(numberinput1\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
-            </numberinput_812061415>
+            </numberinput5>
+            <numberinput6
+                    jcr:lastModified="{Date}2023-01-30T15:58:08.713+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input With Display Pattern"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    displayFormat="#,###,##0.000"
+                    displayPatternType="#,###,##0.000"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    name="numberinput6"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

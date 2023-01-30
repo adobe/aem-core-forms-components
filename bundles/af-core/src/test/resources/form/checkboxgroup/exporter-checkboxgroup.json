@@ -1,44 +1,65 @@
 {
   "id": "checkboxgroup-93e681dfb9",
-  "required": false,
+  "dataRef": "a.b",
+  "fieldType": "checkbox-group",
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
-  "fieldType": "checkbox-group",
-  "description" : "dummy",
+  "description": "dummy",
   "tooltip": "test-short-description",
+  "type": "number[]",
+  "required": false,
+  "enabled": true,
+  "minItems": 1,
+  "maxItems": 2,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "m",
+    "f",
+    "o"
+  ],
+  "default": [
+    0,
+    1
+  ],
+  "label": {
+    "richText": false,
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:event": [
+      "e2"
+    ],
+    "change": [
+      "e1",
+      "e2"
+    ],
+    "custom:setProperty": [
+      "$event.payload"
+    ],
+    "click": [
+      "e1"
+    ]
+  },
   "properties": {
-    "afs:layout" : {
+    "afs:layout": {
       "tooltipVisible": false,
       "orientation": "horizontal"
     },
     "fd:dor": {
-      "dorExclusion":false
-    }
+      "dorExclusion": false
+    },
+    "fd:path": "/content/checkboxgroup"
   },
-  "enforceEnum":true,
-  "enum" : [0, 1, 2],
-  "enumNames" : ["m", "f", "o"],
-  "label": {
-    "visible": true,
-    "value": "def",
-    "richText": false
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
-  "default" : [0, 1],
-  "type": "number[]",
-  "minItems" : 1,
-  "maxItems" : 2,
-  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
-  "events" : {
-    "change" : ["e1", "e2"],
-    "click": ["e1"],
-    "custom:event" : ["e2"],
-    "custom:setProperty" : ["$event.payload"]
-  }
+  "enum": [
+    0,
+    1,
+    2
+  ],
+  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup"
 }

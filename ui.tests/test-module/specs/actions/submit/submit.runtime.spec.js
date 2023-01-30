@@ -27,15 +27,57 @@ describe("Form with Submit Button", () => {
 
     it("should get model and view initialized properly ", () => {
         cy.previewForm(pagePath).then(p => {
-                formContainer = p;
-                expect(formContainer, "formcontainer is initialized").to.not.be.null;
-                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-                Object.entries(formContainer._fields).forEach(([id, field]) => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+            Object.entries(formContainer._fields).forEach(([id, field]) => {
                 expect(field.getId()).to.equal(id)
                 expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-                    });
-                })
+            });
+        })
     })
+
+    const fillField = (id) => {
+        const component = id.split('-')[0]; // get the component name from the id
+        switch (component) {
+            case "textinput":
+                cy.get(`#${id}`).find("input").type("abc");
+                break;
+            case "numberinput":
+                cy.get(`#${id}`).find("input").type("159");
+                break;
+            case "checkboxgroup":
+                cy.get(`#${id}`).find("input").check(["0"]);
+                break;
+            case "radiobutton":
+                cy.get(`#${id}`).find("input").eq(0).click();
+                break;
+            case "dropdown":
+                cy.get(`#${id} select`).select(["0"])
+                break;
+        }
+    };
+
+    it("Clicking the button should submit the form", () => {
+        cy.previewForm(pagePath);
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
+
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            fillField(id); // mark all the fields with some value
+        });
+
+        cy.get(`.cmp-adaptiveform-button__widget`).click()
+        cy.wait('@afSubmission').then(({ response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+            expect(response.body.thankYouMessage).to.be.not.null;
+            expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
+        })
+    });
+
 
     it("Form submit should show validation errors", () => {
             cy.previewForm(pagePath);
