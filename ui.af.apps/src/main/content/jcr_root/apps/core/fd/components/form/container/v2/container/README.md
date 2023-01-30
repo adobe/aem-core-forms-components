@@ -39,7 +39,7 @@ properties:
 
 1. `./action` - defines the action that will be performed by the form
 2. `./thankyouMessage` - defines the thank you message to shown after submission
-3. `./thankyouPage` - if left empty the form will be rendered after submission, otherwise the user will be redirected to the page stored by this
+3. `./redirect` - if left empty the form will be rendered after submission, otherwise the user will be redirected to the page stored by this
 property
 
 ## Client Libraries

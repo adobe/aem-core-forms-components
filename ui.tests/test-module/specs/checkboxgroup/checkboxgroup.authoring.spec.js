@@ -100,6 +100,8 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(checkBoxGroupDrop);
     });
 
     it('insert CheckBoxGroup in form container', function () {
@@ -107,7 +109,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-    it ('open edit dialog of CheckboxGroup', function(){
+    it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
       testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
     });
 

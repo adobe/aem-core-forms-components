@@ -108,18 +108,6 @@ public class FormContainerImplTest {
         assertNotNull(formContainer.getId());
     }
 
-    @Test
-    void testGetThankYouMessage() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertEquals("message", formContainer.getThankYouMessage());
-    }
-
-    @Test
-    void testGetThankYouPage() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertEquals("/a/b/c", formContainer.getThankYouPage());
-    }
-
     // The test is wrong. It was putting a form element inside a form element.
     void testJSONExport() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
