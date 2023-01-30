@@ -163,6 +163,18 @@ describe( "Form Runtime with Panel Container", () => {
 
         expect(instancesView.length, " Number of instances view to equal Number of instances model ").to.equal(instancesModel.length);
 
+        checkInstanceHTML(instanceManagerView, 4)
+            .then(() => {
+                checkAddRemoveInstance(instanceManagerView, 5, true)
+                    .then(() => {
+                        checkAddRemoveInstance(instanceManagerView, 4)
+                            .then(() => {
+                                //min is 4, can't go below this
+                                checkAddRemoveInstance(instanceManagerView, 4);
+                            });
+                    });
+            });
+
         for (let i = 0; i < instancesModel.length; i++) {
             const modelId = instancesModel[i].id;
             expect(instancesView[i].getId(), " Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
@@ -184,19 +196,6 @@ describe( "Form Runtime with Panel Container", () => {
             cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
             cy.get(`#${numberInputId}-errorMessage`).should('exist');
         }
-
-
-        checkInstanceHTML(instanceManagerView, 4)
-            .then(() => {
-                checkAddRemoveInstance(instanceManagerView, 5, true)
-                    .then(() => {
-                        checkAddRemoveInstance(instanceManagerView, 4)
-                            .then(() => {
-                                //min is 4, can't go below this
-                                checkAddRemoveInstance(instanceManagerView, 4);
-                            });
-                    });
-            });
     });
 
     it("should toggle description and tooltip", () => {
