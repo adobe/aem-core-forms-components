@@ -40,7 +40,7 @@ public interface AEMForm extends Component {
      * Defines the form type
      */
     enum FormType {
-        NO_FORM_SELECTED, MOBILE_FORM, ADAPTIVE_FORM, MC_DOCUMENT, MOBILE_FORMSET
+        NO_FORM_SELECTED, MOBILE_FORM, ADAPTIVE_FORM, MC_DOCUMENT, MOBILE_FORMSET, ADAPTIVE_FORM_V2
     }
 
     /**
@@ -350,6 +350,17 @@ public interface AEMForm extends Component {
     @JsonIgnore
     default List<HtmlPageItem> getHtmlPageItems() {
         return new ArrayList();
+    }
+
+    /**
+     * Indicates if the form configured is v2 adaptive form or not
+     *
+     * @return true if the form is v2 adaptive form; false otherwise
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.3.0;
+     */
+    @JsonIgnore
+    default boolean isAdaptiveFormV2() {
+        throw new UnsupportedOperationException();
     }
 
 }

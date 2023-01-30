@@ -23,6 +23,8 @@ export default class GuideBridge {
     #guideContainerMap = {};
     #guideBridgeConnectHandlers = [];
     #formContainerPath = "";
+    #userConfig = {};
+
 
     constructor() {
         let customEvent = document.createEvent("CustomEvent");
@@ -245,6 +247,10 @@ export default class GuideBridge {
 
     hideSummaryPanel() {
         //TODO: implement it later. NO-OP for now.
+    }
+
+    registerConfig(key, config) {
+        this.#userConfig[key] = config;
     }
 
 }
