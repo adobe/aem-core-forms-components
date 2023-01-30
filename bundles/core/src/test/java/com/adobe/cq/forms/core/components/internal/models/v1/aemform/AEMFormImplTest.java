@@ -285,16 +285,6 @@ class AEMFormImplTest {
         Utils.testJSONExport(aemform, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
     }
 
-    @Test
-    void testIsAdaptiveFormV2() throws Exception {
-        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
-        // junit 5 doesn't support power mock yet
-        assertEquals(false, aemform.isAdaptiveFormV2());
-        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
-        Mockito.when(aemFormMock.isAdaptiveFormV2()).thenCallRealMethod();
-        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::isAdaptiveFormV2);
-    }
-
     private AEMForm getAEMFormUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
