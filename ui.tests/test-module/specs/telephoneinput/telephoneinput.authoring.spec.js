@@ -83,6 +83,8 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      // conditionally clean the test, when there are retries
+      cy.cleanTest(telephoneInputDrop);
     });
 
     it('insert aem forms TelephoneInput', function () {
@@ -90,7 +92,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it('open edit dialog of aem forms TelephoneInput', function() {
+    it('open edit dialog of aem forms TelephoneInput', { retries: 3 }, function() {
       testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
     });
 
