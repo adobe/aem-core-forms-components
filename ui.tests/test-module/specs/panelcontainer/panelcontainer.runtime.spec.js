@@ -35,18 +35,35 @@ describe( "Form Runtime with Panel Container", () => {
         cy.get(`#${id}`)
             .invoke('attr', 'data-cmp-enabled')
             .should('eq', model.enabled.toString());
-        expect(model.items.length, "model has children equal to count").to.equal(view.children.length);
+        expect(model.items.length, " model and view children should have equal count ").to.equal(view.children.length);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
     const checkInstanceHTML = (instanceManager, count) => {
-        expect(instanceManager.children.length, "instance manager has children equal to count").to.equal(count);
-        expect(instanceManager.getModel().items.length, "model has items equal to count").to.equal(count);
+        expect(instanceManager.children.length, " instance manager view has children equal to count ").to.equal(count);
+        expect(instanceManager.getModel().items.length, " instance manager model has items equal to count ").to.equal(count);
         const checkChild = (childView) => {
             checkHTML(childView.getId(), childView.getModel(), childView);
         }
         instanceManager.children.forEach(checkChild);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
+    };
+
+    const checkInstance = (instancesModel, index) => {
+        const modelId = instancesModel[index].id;
+        const textInputId = instancesModel[index].items[0].id;
+        const numberInputId = instancesModel[index].items[1].id;
+        cy.get(`#${modelId}`).should('exist');
+        cy.get(`#${modelId}-label`).should('exist');
+        cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
+        cy.get(`#${modelId}-shortDescription`).should('exist');
+        cy.get(`#${modelId}-longDescription`).should('exist');
+        cy.get(`#${textInputId}-label`).should('exist');
+        cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
+        cy.get(`#${textInputId}-errorMessage`).should('exist');
+        cy.get(`#${numberInputId}-label`).should('exist');
+        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
+        return cy.get(`#${numberInputId}-errorMessage`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
@@ -157,45 +174,43 @@ describe( "Form Runtime with Panel Container", () => {
 
     it(" min occur of model should be reflected in html, and view child should be established ", () => {
         const instancManagerModel = formContainer._model.items[1];
-        const instanceManagerView = formContainer.getAllFields()[instancManagerModel.id];
-        const instancesView = instanceManagerView.children;
         const instancesModel = instancManagerModel.items;
+        const allFields = formContainer.getAllFields();
+        const instanceManagerView = allFields[instancManagerModel.id];
+        const instancesView = instanceManagerView.children;
 
-        expect(instancesView.length, " Number of instances view to equal Number of instances model ").to.equal(instancesModel.length);
-
-        checkInstanceHTML(instanceManagerView, 4)
-            .then(() => {
-                checkAddRemoveInstance(instanceManagerView, 5, true)
-                    .then(() => {
-                        checkAddRemoveInstance(instanceManagerView, 4)
+        checkInstance(instancesModel, 0).then(() => {
+            // check for all four instances in HTML as per min occur
+            checkInstance(instancesModel, 1).then(() => {
+                checkInstance(instancesModel, 2).then(() => {
+                    checkInstance(instancesModel, 3).then(() => {
+                        for (let i = 0; i < instancesModel.length; i++) {
+                            const modelId = instancesModel[i].id;
+                            const textInputId = instancesModel[i].items[0].id;
+                            const numberInputId = instancesModel[i].items[1].id;
+                            expect(instancesView[i].getId(), " Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
+                            expect(allFields[textInputId].getId(), " Text input box view with corresponding model Id exists  ").to.equal(textInputId);
+                            expect(instancesView[i].children[0].getId(), " Text input box view Id inside repeatable panel to be equal to its model  ").to.equal(textInputId);
+                            expect(allFields[numberInputId].getId(), " Number input box view with corresponding model Id exists  ").to.equal(numberInputId);
+                            expect(instancesView[i].children[1].getId(), " Number input box view Id inside repeatable panel to be equal to its model  ").to.equal(numberInputId);
+                            expect(instancesView[i].children.length, " Number of children inside repeatable panel view should be equal to its child models  ").to.equal(instancesModel[i].items.length);
+                        }
+                        expect(instancesView.length, " Number of instances view to equal Number of instances model ").to.equal(instancesModel.length);
+                        checkInstanceHTML(instanceManagerView, 4)
                             .then(() => {
-                                //min is 4, can't go below this
-                                checkAddRemoveInstance(instanceManagerView, 4);
+                                checkAddRemoveInstance(instanceManagerView, 5, true)
+                                    .then(() => {
+                                        checkAddRemoveInstance(instanceManagerView, 4)
+                                            .then(() => {
+                                                //min is 4, can't go below this
+                                                checkAddRemoveInstance(instanceManagerView, 4);
+                                            });
+                                    });
                             });
                     });
+                });
             });
-
-        for (let i = 0; i < instancesModel.length; i++) {
-            const modelId = instancesModel[i].id;
-            expect(instancesView[i].getId(), " Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
-            cy.get(`#${modelId}-label`).should('exist');
-            cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-            cy.get(`#${modelId}-shortDescription`).should('exist');
-            cy.get(`#${modelId}-longDescription`).should('exist');
-            expect(instancesView[i].children.length, " Number of children inside repeatable panel view should be equal to its child models  ").to.equal(instancesModel[i].items.length);
-
-            const textInputId = instancesModel[i].items[0].id;
-            expect(instancesView[i].children[0].getId(), " Text input box view Id inside repeatable panel to be equal to its model  ").to.equal(textInputId);
-            cy.get(`#${textInputId}-label`).should('exist');
-            cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-            cy.get(`#${textInputId}-errorMessage`).should('exist');
-
-            const numberInputId = instancesModel[i].items[1].id;
-            expect(instancesView[i].children[1].getId(), " Number input box view Id inside repeatable panel to be equal to its model  ").to.equal(numberInputId);
-            cy.get(`#${numberInputId}-label`).should('exist');
-            cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-            cy.get(`#${numberInputId}-errorMessage`).should('exist');
-        }
+        });
     });
 
     it("should toggle description and tooltip", () => {
