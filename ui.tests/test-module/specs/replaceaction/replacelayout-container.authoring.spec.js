@@ -14,7 +14,6 @@
  *  limitations under the License.
  */
 
-
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
@@ -35,7 +34,7 @@ describe('component replace - Authoring', function () {
 
     const containerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/panelcontainer",
         containerEditPathSelector = "[data-path='" + containerEditPath + "']",
-        containerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop();
+        containerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/panelcontainer";
 
     const containerDataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*";
 
@@ -96,8 +95,6 @@ describe('component replace - Authoring', function () {
             cy.get(accordion)
                 .click();
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
-
         // Checking some dynamic behaviours
         cy.deleteComponentByPath(componentDrop);
     }
@@ -120,21 +117,4 @@ describe('component replace - Authoring', function () {
             testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
         })
     })
-
-    // context('Open Sites Editor', function () {
-    //   const   pagePath = "/content/core-components-examples/library/adaptive-form/button",
-    //       buttonEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/container/button",
-    //       buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
-    //       buttonDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/container/' + afConstants.components.forms.resourceType.formbutton.split("/").pop();
-    //
-    //   beforeEach(function () {
-    //     // this is done since cypress session results in 403 sometimes
-    //     cy.openAuthoring(pagePath);
-    //   });
-    //
-    //   it('open replace dialog of aem forms Button', function() {
-    //     testButtonReplaceBehaviour(buttonEditPathSelector, buttonDrop, true);
-    //   });
-    //
-    // });
 });

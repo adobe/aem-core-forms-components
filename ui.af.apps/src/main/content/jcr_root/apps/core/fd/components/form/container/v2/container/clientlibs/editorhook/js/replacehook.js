@@ -175,23 +175,36 @@
         channel.trigger("cq-persistence-before-replace", args);
 
         return (
-                    sendReplaceParagraph({
-                        resourceType: component.getResourceType(),
-                        configParams: component.getConfigParams(),
-                        extraParams: component.getExtraParams(),
-                        templatePath: component.getTemplatePath()
-                    }, editable)
-                        .done(function () {
-                            window.guidelib.author.editConfigListeners._refreshEditable(editable);
-                            channel.trigger("cq-persistence-after-replace", args);
-                        })
-                        .fail(function () {
-                            author.ui.helpers.notify({
-                                content: Granite.I18n.get("Paragraph replace operation failed."),
-                                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
-                            });
-                        })
+            sendReplaceParagraph({
+                resourceType: component.getResourceType(),
+                configParams: component.getConfigParams(),
+                extraParams: component.getExtraParams(),
+                templatePath: component.getTemplatePath()
+            }, editable)
+                .done(function () {
+                    window.CQ.FormsCoreComponents.editorhooks._refreshEditable(editable, component);
+                    channel.trigger("cq-persistence-after-replace", args);
+                })
+                .fail(function () {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("Paragraph replace operation failed."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                    });
+                })
         );
+    };
+
+    window.CQ.FormsCoreComponents.editorhooks._refreshEditable = function (editable, component) {
+        editable.refresh().done(function () {
+            var callbackInvoked = false;
+            var addedComponentPath = component.path;
+            if (addedComponentPath) {
+                guideTouchLib.editLayer.Interactions.onOverlayClick({
+                    editable : Granite.author.editables.find(addedComponentPath)[0]
+                });
+                guidelib.author.editConfigListeners.addedComponentPath = undefined;
+            }
+        });
     };
 
     /**
