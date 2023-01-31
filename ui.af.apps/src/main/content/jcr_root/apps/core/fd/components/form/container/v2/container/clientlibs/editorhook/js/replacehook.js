@@ -14,7 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 (function (window, author, Coral, channel) {
-    var editConfigListeners = window.guidelib.author.editConfigListeners;
     const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT_ONE: 'select_one', LIST: 'list', DATE: 'date'}
     const typeMap = {
         'button': fieldTypes.TEXT,
@@ -147,16 +146,6 @@
                 var component = author.components.find(event.detail.selection.value);
                 if (component.length > 0) {
                     author.persistence.replaceParagraph(component[0], editable);
-                    var historyEnabled = author.history.Manager.isEnabled(),
-                        historyConfig = author.history.Manager,
-                        historyStep = author.history.util.Utils.beginStep(),
-                        historyAction = new author.history.actions.fd.Replace(editable.path, editable.path, editable.type, {
-                            "editable": editable,
-                            "newComponent": component[0].getResourceType(),
-                            "oldComponent": editable.type
-                        });
-                    historyStep.addAction(historyAction);
-                    historyStep.commit();
                 }
                 dialog.hide();
             });
@@ -186,8 +175,6 @@
         channel.trigger("cq-persistence-before-replace", args);
 
         return (
-            deleteItemsNode(editable)
-                .done(function () {
                     sendReplaceParagraph({
                         resourceType: component.getResourceType(),
                         configParams: component.getConfigParams(),
@@ -195,17 +182,7 @@
                         templatePath: component.getTemplatePath()
                     }, editable)
                         .done(function () {
-                            editConfigListeners.REFRESH_PARENT_PANEL.apply(editable);
-                            // refresh editable
-                            editable.refresh().done(function () {
-                                // check if properties panel is open
-                                if (author.DialogFrame.currentDialog && author.DialogFrame.currentDialog.editable.path == editable.path) {
-                                    // clear dialog
-                                    author.DialogFrame.clearDialog();
-                                    // open dialog
-                                    author.DialogFrame.openDialog(new author.edit.Dialog(editable));
-                                }
-                            });
+                            window.guidelib.author.editConfigListeners._refreshEditable(editable);
                             channel.trigger("cq-persistence-after-replace", args);
                         })
                         .fail(function () {
@@ -213,19 +190,9 @@
                                 content: Granite.I18n.get("Paragraph replace operation failed."),
                                 type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
                             });
-                        });
-                })
+                        })
         );
     };
-
-    var deleteItemsNode = function (editable) {
-        // send delete request
-        return (
-            new author.persistence.PostRequest()
-                .deleteItemsNode(editable)
-                .send()
-        )
-    }
 
     /**
      * Send a request to replace an existing component
@@ -241,6 +208,41 @@
             new author.persistence.PostRequest()
                 .prepareReplaceParagraph(config, editable)
                 .send()
+        );
+    };
+
+    author.persistence.PostRequest.prototype.prepareReplaceParagraph = function (config, editable) {
+        // apply component properties over editable
+        if (config.templatePath) {
+            var comTemplatePath = Granite.HTTP.externalize(config.templatePath),
+                comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
+            editableJson = CQ.shared.HTTP.eval(editable.path + ".infinity.json"); // get editable json
+            comGuideNodeClass = comData.guideNodeClass; // guideNodeClass has to be written in editable so preserve it
+
+            // delete those properties of component which are already present in editable
+            for (p in comData) {
+                if (editableJson.hasOwnProperty(p)) {
+                    delete comData[p];
+                }
+            }
+
+            // restore guideNodeClass and sling:resourceType of component so that gets written in editable
+            comData["guideNodeClass"] = comGuideNodeClass;
+            comData["sling:resourceType"] = config.resourceType;
+            this.setParam(":content", JSON.stringify(comData));    // write component properties
+        }
+
+        // overwrite editable properties with component properties so that data is not lost while replace operation
+        return (
+            this
+                .setURL(editable.path)
+                .setParam("_charset_", "utf-8")
+                .setParams(config.configParams)
+                .setParams(config.extraParams)
+                .setParam(":operation", "import")
+                .setParam(":contentType", "json")
+                .setParam(":replace", true)
+                .setParam(":replaceProperties", true)
         );
     };
 
