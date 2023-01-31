@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:policy="forms-components-examples/components/page/default"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/core/components/policies/mappings">
+        <parsys1
+                cq:policy="wcm/foundation/components/responsivegrid/page-header"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/core/components/policies/mapping"/>
+        <guideContainer
+                cq:policy="forms-components-examples/components/form/container/default"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/core/components/policies/mapping">
+            <forms-components-examples
+                    jcr:primaryType="nt:unstructured">
+                <components
+                        jcr:primaryType="nt:unstructured">
+                    <form
+                            jcr:primaryType="nt:unstructured">
+                        <numberinput
+                            cq:policy="forms-components-examples/components/form/numberinput/default"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="wcm/core/components/policies/mapping">
+                        </numberinput>
+                        <datepicker
+                                cq:policy="forms-components-examples/components/form/datepicker/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </datepicker>
+                    </form>
+                </components>
+            </forms-components-examples>
+
+        </guideContainer>
+        <parsys2
+                cq:policy="wcm/foundation/components/responsivegrid/page-footer"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/core/components/policies/mapping"/>
+    </jcr:content>
+</jcr:root>

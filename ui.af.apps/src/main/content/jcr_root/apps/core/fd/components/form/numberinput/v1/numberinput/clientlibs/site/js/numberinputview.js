@@ -63,9 +63,18 @@
             return this.element.querySelector(NumberInput.selectors.qm);
         }
 
+        initializeWidget() {
+            this.widgetObject = new NumericInputWidget(this.getWidget(), this._model);
+            this.getWidget().addEventListener('blur', (e) => {
+                if(this.element) {
+                    this.setActive(this.element, false);
+                }
+            });
+        }
+
         updateValue(value) {
-            if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat)) {
-                this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
+            if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari'))) {
+                this.initializeWidget();
             }
             if (this.widgetObject) {
                 this.widgetObject.setValue(value);
@@ -79,7 +88,7 @@
             // only initialize if patterns are set
             if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari')) {
                 if (this.widgetObject == null) {
-                    this.widgetObject = new NumericInputWidget(this.getWidget(), this._model)
+                    this.initializeWidget();
                 }
             } else {
                 if (this.widget.value !== '') {
@@ -87,8 +96,16 @@
                 }
                 this.getWidget().addEventListener('blur', (e) => {
                     this._model.value = e.target.value;
-                })
+                    if(this.element) {
+                        this.setActive(this.element, false);
+                    }
+                });
             }
+            this.getWidget().addEventListener('focus', (e) => {
+                if (this.element) {
+                    this.setActive(this.element, true);
+                }
+            });
         }
     }
 

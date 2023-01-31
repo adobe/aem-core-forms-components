@@ -115,6 +115,9 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+        // conditionally clean the test, when there are retries
+        cy.cleanTest(accordionEditPath);
+
     });
 
     it('insert aem forms Accordion', { retries: 3 }, function () {

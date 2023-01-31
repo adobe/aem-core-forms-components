@@ -32,7 +32,30 @@ describe("Form Runtime with Button Input", () => {
 
 
     it("should toggle description and tooltip", () => {
-        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
-    })
+        const [id, fieldView] = Object.entries(formContainer._fields)[3]
+        cy.toggleDescriptionTooltip(bemBlock, id);
+    });
+
+
+    it("should open a new window on click of button", () => {
+        cy.window().then((win) => {
+            // click
+            cy.stub(win, 'open');
+            const [id, fieldView] = Object.entries(formContainer._fields)[4]
+            // click the button with navigate
+            cy.get(`#${id}`).find("button").click().then(x => {
+                // check if window open is called
+                cy.window().its('open').should('have.been.calledWithMatch', (arg1) => {
+                    // do whatever comparisons you want on the arg1, and return `true` if
+                    //  it matches
+                    if (arg1 === "https://www.google.com") {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            });
+        });
+    });
 
 })

@@ -34,6 +34,7 @@ describe('Page - Authoring', function () {
             wizardDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(wizardDropZoneSelector, componentString, componentType);
+
         cy.get('body').click( 0,0);
     }
 
@@ -64,6 +65,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardLayoutDrop);
         });
 
         it('verify Basic tab in edit dialog of Wizard',function (){
@@ -89,19 +92,22 @@ describe('Page - Authoring', function () {
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
-                cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
-                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-                    cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first()
-                        .should('be.visible').click({force:true}).then(()=>{
-                        cy.get('body').click( 0,0).then(()=>{
-                            cy.get('div'+numberInputDataPath).should('not.be.visible');
-                            cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
-                                cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td")
-                                    .first().should('be.visible').click({force:true}).then(()=>{
-                                    cy.get('body').click( 0,0).then(()=>{
-                                        cy.get('div'+textInputDataPath).should('not.be.visible').then(()=>{
-                                            cy.deleteComponentByPath(wizardLayoutDrop) ;
+                cy.get('div'+textInputDataPath).should('be.visible').then(()=>{
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+                        cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
+                            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                            cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first()
+                                .should('be.visible').click({force:true}).then(()=>{
+                                cy.get('body').click( 0,0).then(()=>{
+                                    cy.get('div'+numberInputDataPath).should('not.be.visible');
+                                    cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
+                                        cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td")
+                                            .first().should('be.visible').click({force:true}).then(()=>{
+                                            cy.get('body').click( 0,0).then(()=>{
+                                                cy.get('div'+textInputDataPath).should('not.be.visible').then(()=>{
+                                                    cy.deleteComponentByPath(wizardLayoutDrop) ;
+                                                })
+                                            })
                                         })
                                     })
                                 })
@@ -109,10 +115,6 @@ describe('Page - Authoring', function () {
                         })
                     })
                 })
-            })
-
-
-
         });
     })
 
@@ -126,6 +128,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardEditPath);
         });
 
         it('insert aem forms Wizard', { retries: 3 }, function () {

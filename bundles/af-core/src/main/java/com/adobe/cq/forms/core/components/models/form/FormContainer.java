@@ -238,7 +238,20 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
-    String getThankYouPage();
+    default String getThankYouPage() {
+        return null;
+    }
+
+    /**
+     * Returns the form thank you option
+     *
+     * @return form thank you option
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default ThankYouOption getThankYouOption() {
+        return null;
+    };
 
     /**
      * Returns the form data
@@ -279,5 +292,27 @@ public interface FormContainer extends Container {
      */
     default String getLang() {
         return "en-US";
+    }
+
+    /**
+     * Returns the redirect url after form submission
+     *
+     * @return the redirect url of the form
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default String getRedirectUrl() {
+        return null;
+    }
+
+    /**
+     * Returns the prefill service for the form
+     *
+     * @return the prefill service
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default String getPrefillService() {
+        return null;
     }
 }
