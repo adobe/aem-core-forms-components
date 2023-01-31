@@ -115,13 +115,12 @@ describe("Form Runtime with Date Picker", () => {
         })
     })
 
-    it("should show validation error messages", () => {
+    it("should show validation error messages based on expression rules", () => {
         // Rule on datePicker4: Validate datePicker4 using Expression: datePicker4 === 2023-01-01
 
         const [datePicker4, datePicker1FieldView] = Object.entries(formContainer._fields)[3];
         const incorrectInput = "2023-01-02";
         const correctInput = "2023-01-01";
-
 
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
@@ -129,6 +128,21 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
+        })
+    })
+
+    it("should set and clear value based on rules", () => {
+        // Rule on datePicker6: When input of datePicker6 is '2023-01-12', set value of datePicker4 to '2023-01-01' and clear value of datePicker1
+
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[3];
+        const [datePicker6, datePicker6FieldView] = Object.entries(formContainer._fields)[5];
+
+        const input = "2023-01-12";
+        cy.get(`#${datePicker1}`).find("input").clear().type('2022-05-18')
+        cy.get(`#${datePicker6}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${datePicker1}`).find("input").should('have.value', "")
+            cy.get(`#${datePicker4}`).find("input").should('have.value', "2023-01-01")
         })
     })
 
@@ -153,4 +167,5 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker5}`).find("input").should("have.value", "Sunday, January 1, 2023")
         })
     })
+
 })

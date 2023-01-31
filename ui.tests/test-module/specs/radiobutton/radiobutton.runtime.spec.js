@@ -132,4 +132,33 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${radioButton2}`).find("input").should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages based on expression rule", () => {
+        // Rule on radioButton6: Validate radioButton6 using Expression: radioButton6 === radioButton5
+
+        const [radioButton5, radioButton5FieldView] = Object.entries(formContainer._fields)[4];
+        const [radioButton6, radioButton6FieldView] = Object.entries(formContainer._fields)[5];
+
+        cy.get(`#${radioButton5}`).find("input").check(["1"]).then(x => {
+            cy.get(`#${radioButton6}`).find("input").check(["0"])
+            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "There is an error in the field")
+
+            cy.get(`#${radioButton6}`).find("input").check(["1"])
+            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "")
+        })
+    })
+
+    it("should set and clear value based on rules", () => {
+        // Rule on radioButton4: When input has Item1 selected, set value of radioButton6 to "Item 2" and clear value of radioButton1
+
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const [radioButton6, radioButton6FieldView] = Object.entries(formContainer._fields)[5];
+        const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
+
+        cy.get(`#${radioButton1}`).find("input").check("1")
+        cy.get(`#${radioButton4}`).find("input").check("0").blur().then(x => {
+            cy.get(`#${radioButton6}`).find("input").should('be.checked')
+            cy.get(`#${radioButton1}`).find("input").should('not.be.checked')
+        })
+    })
 })
