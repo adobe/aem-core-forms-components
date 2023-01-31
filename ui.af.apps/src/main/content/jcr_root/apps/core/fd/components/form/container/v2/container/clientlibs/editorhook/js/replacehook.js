@@ -30,7 +30,12 @@
         'textinput': fieldTypes.TEXT,
         'title': fieldTypes.TEXT
     }
-    const nonReplaceable = ['fileinput', 'image'];
+    const cannotBeReplacedWith = ['fileinput', 'image'];
+    const irreplaceable = ['fileinput'];
+
+    window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function(editable) {
+        return !irreplaceable.includes(editable.getResourceTypeName());
+    }
 
     window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
 
@@ -44,12 +49,11 @@
                 innerHTML: Granite.I18n.get('Replace Component')
             },
             content: {
-                innerHTML: '<coral-search class="ReplaceComponentDialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="ReplaceComponentDialog-list"></coral-selectlist>'
+                innerHTML: '<coral-search class="cmp-replace-dialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="cmp-replace-dialog-list"></coral-selectlist>'
             }
         });
 
-        dialog.classList.add('ReplaceComponentDialog');
-        dialog.content.classList.add('ReplaceComponentDialog-components');
+        dialog.content.classList.add('cmp-replace-dialog-search-components');
 
         document.body.appendChild(dialog);
 
@@ -93,10 +97,10 @@
 
                 if (!(keyword.length > 0) || isKeywordFound) {
                     // if ((isContainerComponent === c.componentConfig.isContainer && editableType != componentType) ||
-                    //     (!nonReplaceable.includes(componentType) &&
+                    //     (!cannotBeReplacedWith.includes(componentType) &&
                     //         typeMap[editableType] === typeMap[componentType])) {
 
-                    if ((!nonReplaceable.includes(componentType) && editableType != componentType)
+                    if ((!cannotBeReplacedWith.includes(componentType) && editableType != componentType)
                         && ((isContainerComponent && c.componentConfig.isContainer)
                             || (!isContainerComponent && componentSuperType === editableSuperType))) {
                         performReplace = true;
@@ -152,8 +156,8 @@
         }
 
         Coral.commons.ready(dialog, function () {
-            selectList = $(dialog).find(".ReplaceComponentDialog-list");
-            $searchComponent = $(dialog).find('.ReplaceComponentDialog-search');
+            selectList = $(dialog).find(".cmp-replace-dialog-list");
+            $searchComponent = $(dialog).find('.cmp-replace-dialog-search');
             $clearButton = $searchComponent.find('button');
 
             filterComponent(allowedComponents);

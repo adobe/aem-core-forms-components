@@ -14,6 +14,7 @@
                 text="Edit Rules"/>
         <replace
                 jcr:primaryType="nt:unstructured"
+                condition="CQ.FormsCoreComponents.editorhooks.isReplaceable"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 text="Replace"/>
     </cq:actionConfigs>
