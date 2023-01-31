@@ -29,6 +29,18 @@ export default class InstanceManager {
     }
 
     /**
+     * Creates the child of added element
+     * @param addedElement
+     */
+    #createChildView(addedElement) {
+        let childElement = addedElement.querySelector(this.child_selector);
+        let fieldCreator = ({element, formContainer}) => {
+            return new this.child_proto.constructor({element, formContainer});
+        };
+        Utils.createFormContainerField(fieldCreator, childElement, this.formContainer);
+    }
+
+    /**
      * Syncs Instance View HTML with Instance Model
      * @param instanceView
      * @param instanceModel
@@ -40,10 +52,12 @@ export default class InstanceManager {
         let addedHtmlElement = null;
         if (instanceView == null) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
+            this.#createChildView(addedHtmlElement);
         } else if (instanceModel == null) {
             this.#removeChildInstance(instanceView.getModel());
         } else if (instanceView.getId() != instanceModel.id) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
+            this.#createChildView(addedHtmlElement);
             this.#removeChildInstance(instanceView.getModel());
         }
         return addedHtmlElement;
@@ -187,6 +201,8 @@ export default class InstanceManager {
         //Add template when first view is added
         if (!(this._templateHTML)) {
             this.updateTemplate(childView);
+            this.child_proto = childView.__proto__;
+            this.child_selector = '[data-cmp-is="' + childView.getClass() +'"]';
         }
         //adding view post mutation observer has added view for repeatable instance
         this.children.splice(childView.getModel().index, 0, childView);
