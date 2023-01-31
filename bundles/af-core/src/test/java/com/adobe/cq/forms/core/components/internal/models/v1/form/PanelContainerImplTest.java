@@ -106,8 +106,9 @@ public class PanelContainerImplTest {
         request.setAttribute("WCMMode", "EDIT");
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         assertEquals(false, panel.isReadOnly());
-        request.removeAttribute("WCMMode");
-        assertEquals(false, panel.isReadOnly());
+        Panel panelMock = Mockito.mock(Panel.class);
+        Mockito.when(panelMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(false, panelMock.isReadOnly());
     }
 
     @Test
