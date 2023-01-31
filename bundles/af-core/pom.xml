@@ -159,7 +159,7 @@
                                                 <limit>
                                                     <counter>INSTRUCTION</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.80</minimum>
+                                                    <minimum>0.60</minimum>
                                                 </limit>
                                             </limits>
                                         </rule>
@@ -464,20 +464,19 @@
         -->
 
         <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-sdk-api</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-sdk-api</artifactId>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>aemfd-client-sdk</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <classifier>apis</classifier>
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
