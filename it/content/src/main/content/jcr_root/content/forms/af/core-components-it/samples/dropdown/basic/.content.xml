@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-03T09:50:42.947+05:30"
+            cq:lastModified="{Date}2023-01-16T12:21:53.828+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -154,6 +154,30 @@
                         jcr:primaryType="nt:unstructured"
                         click="[dispatchEvent(dropdown_ms\, 'custom:setProperty'\, {value : `null`})]"/>
             </button_1501778424>
+            <dropdown_5823761
+                    jcr:lastModified="{Date}2023-01-16T12:21:53.818+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown 6"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    default="[a]"
+                    enabled="{Boolean}true"
+                    enum="[a,b,c]"
+                    enumNames="[asparagus,beans,carrot]"
+                    fieldType="drop-down"
+                    name="dropdown_58237611673851688159"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    validationExpression="$field == dropdown31671863615073"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_58237611673851688159&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;dropdown_58237611673851688159&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown_58237611673851688159&quot;\,&quot;displayName&quot;:&quot;Dropdown 6&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown 6/&quot;\,&quot;name&quot;:&quot;dropdown_58237611673851688159&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown31671863615073&quot;\,&quot;displayName&quot;:&quot;Dropdown3&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Dropdown3/&quot;\,&quot;name&quot;:&quot;dropdown31671863615073&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == dropdown31671863615073&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </dropdown_5823761>
         </guideContainer>
     </jcr:content>
 </jcr:root>
