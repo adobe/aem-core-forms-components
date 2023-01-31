@@ -83,7 +83,6 @@
                           sling:resourceType="forms-components-examples/components/form/container">
                             <container
                               jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
                               sling:resourceType="forms-components-examples/components/demo/component">
                                 <panelcontainer_demo
                                   jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"

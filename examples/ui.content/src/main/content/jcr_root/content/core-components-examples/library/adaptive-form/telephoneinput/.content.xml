@@ -89,7 +89,6 @@
                   sling:resourceType="forms-components-examples/components/demo">
                     <component
                       jcr:primaryType="nt:unstructured"
-                      fieldType="demo-component"
                       sling:resourceType="forms-components-examples/components/demo/component">
                         <guideContainer
                           fd:version="2.1"
@@ -98,7 +97,6 @@
                           sling:resourceType="forms-components-examples/components/form/container">
                             <container
                               jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
                               sling:resourceType="forms-components-examples/components/demo/component">
                                 <telephoneinput_demo
                                   jcr:title="Telephone Input"

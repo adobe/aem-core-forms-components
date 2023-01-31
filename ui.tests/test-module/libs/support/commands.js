@@ -161,11 +161,11 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 });
 
 // Cypress command to open authoring page
-Cypress.Commands.add("openPage", (pagePath) => {
+Cypress.Commands.add("openPage", (pagePath, options={}) => {
     const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
     cy.visit(baseUrl);
     cy.login(baseUrl);
-    cy.visit(pagePath);
+    cy.visit(pagePath, options);
 });
 
 // cypress command to select layer in authoring
@@ -279,9 +279,23 @@ const waitForChildViewAddition = () => {
         });
 }
 
-Cypress.Commands.add("previewForm", (formPath) => {
-    const pagePath = `${formPath}?wcmmode=disabled`
-    return cy.openPage(pagePath).then(waitForFormInit)
+Cypress.Commands.add("previewForm", (formPath, options={}) => {
+    let pagePath = `${formPath}?wcmmode=disabled`;
+    if(options?.params) {
+        options.params.forEach((param) => pagePath +=`&${param}`)
+        delete options.params
+    }
+    return cy.openPage(pagePath, options).then(waitForFormInit)
+})
+
+Cypress.Commands.add("cleanTest", (editPath) => {
+    // clean the test before the next run, if any
+    cy.get("body").then($body => {
+        const selector12 =  "[data-path='" + editPath + "']";
+        if ($body.find(selector12).length > 0) {
+            cy.deleteComponentByPath(editPath);
+        }
+    });
 })
 
 Cypress.Commands.add("previewFormWithPanel", (formPath) => {
@@ -301,9 +315,9 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     // open editable toolbar
     cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
     // click the delete action
-    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click();
+    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
     // check if delete dialog is seen and click on yes
-    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click();
+    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
     // wait for event to complete to signify deletion is complete
     cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done

@@ -43,7 +43,7 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
 
     @Override
     public String getValue() {
-        return value;
+        return translate("value", value);
     }
 
     @Override
