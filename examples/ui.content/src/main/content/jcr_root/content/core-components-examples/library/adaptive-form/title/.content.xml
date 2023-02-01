@@ -53,7 +53,7 @@
                 <text_1337506761
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>Default title without any configuration.The default heading level is &lt;i>H1&lt;/i>, which can be configured at page template level.&lt;/p>"
+                        text="&lt;p>Default title without any configuration.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:primaryType="nt:unstructured"

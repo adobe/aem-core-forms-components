@@ -80,7 +80,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>Simple Number Input with an &quot;up&quot; and &quot;down&quot; arrow for incrementing and decrementing the number&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
