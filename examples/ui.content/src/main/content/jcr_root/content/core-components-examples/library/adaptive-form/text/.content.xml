@@ -89,21 +89,27 @@
                         sling:resourceType="forms-components-examples/components/demo">
                     <component
                             jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/demo/component">
+                            sling:resourceType="forms-components-examples/components/demo/component">
                         <guideContainer
                               fd:version="2.1"
                               fieldType="form"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="forms-components-examples/components/form/container">
-                            <text_demo
-                              jcr:title="Text"
-                              fieldType="text"
-                              jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
-                              jcr:createdBy="admin"
-                              jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
-                              jcr:lastModifiedBy="admin"
+                            <container
                               jcr:primaryType="nt:unstructured"
-                              sling:resourceType="forms-components-examples/components/form/text"/>
+                              sling:resourceType="forms-components-examples/components/demo/component">
+                                <text_demo
+                                  jcr:title="Text"
+                                  fieldType="text"
+                                  textIsRich="true"
+                                  value="&lt;p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque egestas. Varius morbi enim nunc faucibus a pellentesque. Scelerisque eleifend donec pretium vulputate sapien nec sagittis.&lt;/p>&#xd;&#xa;"
+                                  jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
+                                  jcr:createdBy="admin"
+                                  jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                  jcr:lastModifiedBy="admin"
+                                  jcr:primaryType="nt:unstructured"
+                                  sling:resourceType="forms-components-examples/components/form/text"/>
+                            </container>
                         </guideContainer>
                     </component>
                     <info
@@ -113,17 +119,17 @@
                                 cq:panelTitle="Properties"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                         <markup
                                 cq:panelTitle="Markup"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                         <json
                                 cq:panelTitle="JSON"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                     </info>
                 </demo>
             </responsivegrid>

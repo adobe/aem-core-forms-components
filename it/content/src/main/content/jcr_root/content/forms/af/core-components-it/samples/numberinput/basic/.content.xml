@@ -42,9 +42,8 @@
             </numberinput2>
             <numberinput3
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="Number Input With Pattern"
+                    jcr:title="Number Input 3"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
-                    displayFormat="$123"
                     enabled="{Boolean}false"
                     fieldType="number-input"
                     name="numberinput3"
@@ -73,6 +72,15 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </numberinput4>
+            <numberinput5
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input With Display Pattern"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    displayFormat="#,###,##0.000"
+                    displayPatternType="#,###,##0.000"
+                    fieldType="number-input"
+                    name="numberinput5"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

@@ -64,6 +64,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardLayoutDrop);
         });
 
         it('insert Wizard in form container', function () {
@@ -72,14 +74,14 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop);
         });
 
-        it ('check edit dialog availability of Wizard', function(){
+        it ('check edit dialog availability of Wizard', { retries: 3 }, function(){
             dropWizardInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.get(editDialogConfigurationSelector).should('be.visible');
             cy.deleteComponentByPath(wizardLayoutDrop);
         });
 
-        it('open edit dialog of Wizard', function(){
+        it('open edit dialog of Wizard', { retries: 3 }, function(){
             dropWizardInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
@@ -158,6 +160,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardEditPath);
         });
 
         it('insert aem forms Wizard', { retries: 3 }, function () {
