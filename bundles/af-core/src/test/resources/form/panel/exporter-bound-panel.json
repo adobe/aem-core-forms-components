@@ -3,13 +3,9 @@
   "dataRef": "$.contact_1501573930059",
   "fieldType": "panel",
   "name": "abc",
-  "visible": true,
   "description": "dependent names description",
   "tooltip": "dependent names tooltip",
   "type": "object",
-
-  "enabled":true,
-  "readOnly":false,
   "items":[
     {
       "id": "textinput-49ec424aa1",
@@ -19,8 +15,6 @@
       "description": "dummy",
       "type": "string",
       "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
         "richText": false,
         "visible": true,

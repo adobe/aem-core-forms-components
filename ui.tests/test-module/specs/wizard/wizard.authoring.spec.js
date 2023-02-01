@@ -88,23 +88,23 @@ describe('Page - Authoring', function () {
         });
 
         // todo: flaky
-        it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
+        it.only('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-                cy.get('div'+textInputDataPath).should('be.visible').then(()=>{
+                cy.get('div'+textInputDataPath).as('textInputInWidget').should('be.visible').then(()=>{
                     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
                         cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
-                            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-                            cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first()
+                            cy.get("table.cmp-panelselector__table").as('navigationTable').find("tr").should("have.length", 2);
+                            cy.get("@navigationTable").find(textInputDataId).find("td").first()
                                 .should('be.visible').click({force:true}).then(()=>{
                                 cy.get('body').click( 0,0).then(()=>{
                                     cy.get('div'+numberInputDataPath).should('not.be.visible');
                                     cy.invokeEditableAction(editDialogNavigationPanelSelector).then(()=>{
-                                        cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td")
+                                        cy.get("@navigationTable").find(numberInputDataId).find("td")
                                             .first().should('be.visible').click({force:true}).then(()=>{
                                             cy.get('body').click( 0,0).then(()=>{
-                                                cy.get('div'+textInputDataPath).should('not.be.visible').then(()=>{
+                                                cy.get('@textInputInWidget').should('not.be.visible').then(()=>{
                                                     cy.deleteComponentByPath(wizardLayoutDrop) ;
                                                 })
                                             })

@@ -66,9 +66,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue
-    @Default(booleanValues = true)
-    protected boolean visible;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean visible;
 
     @SlingObject
     private Resource resource;
@@ -132,7 +132,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
-    public boolean isVisible() {
+    public Boolean isVisible() {
         if (getEditMode()) {
             return true;
         }

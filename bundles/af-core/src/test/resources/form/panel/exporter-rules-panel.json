@@ -4,20 +4,14 @@
   "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-  "visible":true,
-  "enabled":true,
-  "readOnly":false,
   "items": [
     {
       "id": "textinput-bec585e910",
       "fieldType": "text-input",
       "name": "abc",
-      "visible": false,
       "description": "dummy",
       "type": "string",
       "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
         "richText": false,
         "visible": true,

@@ -10,6 +10,8 @@
     "dorBindRef": "Text1",
     "description" : "dummy",
     "visible" : false,
+    "readOnly": false,
+    "enabled": true,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
@@ -46,6 +48,8 @@
     "jcr:title" : "def",
     "hideTitle" : false,
     "description" : "dummy",
+    "readOnly": false,
+    "enabled": true,
     "visible" : false
   },
   "textinput-format" : {
@@ -63,6 +67,8 @@
     "tooltip": "test-short-description",
     "default" : "abc",
     "fieldType": "text-input",
+    "readOnly": false,
+    "enabled": true,
     "format" : "email"
   }
 }

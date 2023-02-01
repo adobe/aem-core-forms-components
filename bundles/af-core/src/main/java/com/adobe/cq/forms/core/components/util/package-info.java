@@ -19,7 +19,7 @@
  * </p>
  */
 
-@Version("3.2.1")
+@Version("4.0.0")
 package com.adobe.cq.forms.core.components.util;
 
 import org.osgi.annotation.versioning.Version;

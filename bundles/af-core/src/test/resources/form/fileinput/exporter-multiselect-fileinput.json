@@ -8,13 +8,11 @@
   "tooltip": "test-short-description",
   "type": "file[]",
   "required": false,
-  "enabled": true,
   "minItems": 1,
   "maxItems": 2,
   "constraintMessages": {
     "type": "incorrect type"
   },
-  "readOnly": false,
   "maxFileSize": "4GB",
   "accept": [
     "text/*",

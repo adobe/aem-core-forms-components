@@ -95,9 +95,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     protected String customAssistPriorityMsg;
 
-    @ValueMapValue
-    @Default(booleanValues = true)
-    protected boolean enabled;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -224,7 +223,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 

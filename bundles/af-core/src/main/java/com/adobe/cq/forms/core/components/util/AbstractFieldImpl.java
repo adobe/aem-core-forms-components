@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -42,8 +43,8 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     private static final String PN_PLACEHOLDER = "placeholder";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(booleanValues = false)
-    protected boolean readOnly;
+    @Nullable
+    protected Boolean readOnly;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     @Nullable
@@ -127,7 +128,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     private Resource resource;
 
     @Override
-    public boolean isReadOnly() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public Boolean isReadOnly() {
         return readOnly;
     }
 
