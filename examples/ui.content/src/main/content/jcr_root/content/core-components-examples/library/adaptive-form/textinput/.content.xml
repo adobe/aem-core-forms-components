@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Text Input component is a server side component written in HTL, allowing to create Adaptive Form Text Input fields"
+                        text="&lt;p>A text input (text box) component allows a user to enter and edit a single or multiple lines of text, depending on the type attribute of the input element. The text input component can be placed within a form and is usually labeled with a helpful text that easily identifies its purpose.&lt;/p>&lt;p>These text input fields can be used in a variety of ways, such as for collecting information like names, email addresses, phone numbers, and other types of text data. Additionally, the text input component can have additional functionality, styling, and accessibility features that can make it more user-friendly, efficient and accessible.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"

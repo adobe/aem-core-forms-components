@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Tabs on top component is a server side component written in HTL, allowing to create Adaptive Form Tabs on top fields"
+                        text="&lt;p>A tabs-on-top layout in an Adaptive Form is a way to organize and group related fields and sections of a form into separate tabs. Each tab is represented by a tab label, typically located at the top of the form, and contains a specific set of form fields and sections. This layout allows users to easily navigate and access different sections of the form, making it more user-friendly and less overwhelming. It is generally used when the form contains a lot of fields and sections, and it is necessary to divide them into smaller, manageable chunks.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"

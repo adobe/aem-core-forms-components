@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Check Box Group component is a server side component written in HTL, allowing to create Adaptive Form Check Box Group fields"
+                        text="&lt;p>A checkbox group in an Adaptive Form is a set of related checkboxes that allow users to select one or more options from a list. Each checkbox is represented by a Data Value (value used to process items of a checkbox group) and Display value (label for each checkbox item that describes its purpose)&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"

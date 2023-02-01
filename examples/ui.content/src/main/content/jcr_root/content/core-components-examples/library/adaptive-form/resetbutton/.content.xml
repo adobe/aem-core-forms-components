@@ -1,139 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-  jcr:primaryType="cq:Page">
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
     <jcr:content
-      cq:lastModified="{Date}2022-09-01T13:25:39.732+02:00"
-      cq:lastModifiedBy="admin"
-      cq:tags="[]"
-      cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-      jcr:description="Reset Button"
-      jcr:primaryType="cq:PageContent"
-      jcr:title="Reset Button"
-      sling:resourceType="forms-components-examples/components/page">
+        cq:lastModified="{Date}2022-09-01T13:25:39.732+02:00"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+        jcr:description="Reset Button"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Reset Button"
+        sling:resourceType="forms-components-examples/components/page">
         <root
-          jcr:primaryType="nt:unstructured"
-          sling:resourceType="wcm/foundation/components/responsivegrid">
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
             <responsivegrid
-              jcr:primaryType="nt:unstructured"
-              sling:resourceType="wcm/foundation/components/responsivegrid">
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
                 <text_1740702241
-                  cq:styleIds="[1644862132301]"
-                  jcr:created="{Date}2019-02-15T19:05:53.032+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;h1>Reset Button &lt;sub>v1&lt;/sub>&lt;/h1>"
-                  textIsRich="true"/>
+                    cq:styleIds="[1644862132301]"
+                    jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;h1>Reset Button &lt;sub>v1&lt;/sub>&lt;/h1>"
+                    textIsRich="true"/>
                 <text
-                  cq:styleIds="[1544762734201]"
-                  jcr:created="{Date}2018-12-06T19:11:23.947+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The Reset Button component is a server side component written in HTL, allowing to create Reset Button"
-                  textIsRich="true"/>
+                    cq:styleIds="[1544762734201]"
+                    jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>A reset button in an Adaptive Form is a button that allows users to clear or reset all the form fields to their default values. When the reset button is clicked, any data that has been entered into the form fields is deleted, and the fields return to their original state. The reset button is typically used as an alternative to the submit button and provides a way for users to start over if they have entered incorrect or unwanted data into the form.&lt;/p>"
+                    textIsRich="true"/>
                 <teaser
-                  cq:styleIds="[1550165685463]"
-                  jcr:created="{Date}2019-02-14T16:41:54.952+01:00"
-                  jcr:createdBy="admin"
-                  jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
-                  jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  jcr:title="Technical Documentation"
-                  sling:resourceType="core-components-examples/components/teaser"
-                  actionsEnabled="false"
-                  descriptionFromPage="false"
-                  fileReference="/content/dam/core-components-examples/library/github-logo.svg"
-                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/reset/v1/reset"
-                  textIsRich="true"
-                  titleFromPage="false"/>
+                    cq:styleIds="[1550165685463]"
+                    jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                    jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Technical Documentation"
+                    sling:resourceType="core-components-examples/components/teaser"
+                    actionsEnabled="false"
+                    descriptionFromPage="false"
+                    fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                    linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/reset/v1/reset"
+                    textIsRich="true"
+                    titleFromPage="false"/>
                 <title_865328580
-                  cq:styleIds="[1544759664489]"
-                  jcr:created="{Date}2018-12-06T19:22:23.729+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  jcr:title="Examples"
-                  sling:resourceType="core/wcm/components/title/v2/title"
-                  type="h2"/>
+                    cq:styleIds="[1544759664489]"
+                    jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Examples"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h2"/>
                 <title_290384408
-                  cq:styleIds="[1544759676459]"
-                  jcr:created="{Date}2018-12-06T19:22:48.620+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  jcr:title="Standard"
-                  sling:resourceType="core/wcm/components/title/v2/title"
-                  type="h3"/>
+                    cq:styleIds="[1544759676459]"
+                    jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Standard"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h3"/>
                 <text_1337506761
-                  jcr:created="{Date}2018-12-06T19:23:41.968+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
-                  textIsRich="true"/>
+                    jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                    textIsRich="true"/>
                 <demo
-                  jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
-                  jcr:createdBy="admin"
-                  jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
-                  jcr:lastModifiedBy="admin"
-                  jcr:primaryType="nt:unstructured"
-                  sling:resourceType="forms-components-examples/components/demo">
+                    jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="forms-components-examples/components/demo">
                     <component
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="forms-components-examples/components/demo/component">
-                            <guideContainer
-                              fd:version="2.1"
-                              fieldType="form"
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="forms-components-examples/components/form/container">
-                                <container
-                                  jcr:primaryType="nt:unstructured"
-                                  sling:resourceType="forms-components-examples/components/demo/component">
-                                    <resetbutton_demo
-                                      jcr:title="Reset"
-                                      fieldType="button"
-                                      buttonType="reset"
-                                      jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
-                                      jcr:createdBy="admin"
-                                      jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
-                                      jcr:lastModifiedBy="admin"
-                                      jcr:primaryType="nt:unstructured"
-                                      description="&lt;p>This is a long description.&lt;/p>"
-                                      tooltip="&lt;p>This is a short description.&lt;/p>"
-                                      tooltipVisible="true"
-                                      sling:resourceType="forms-components-examples/components/form/actions/reset"/>
-                                </container>
-                            </guideContainer>
-
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="forms-components-examples/components/demo/component">
+                        <guideContainer
+                            fd:version="2.1"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/form/container"
+                            fieldType="form">
+                            <textinput_demo
+                                jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Name"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput_demo1675250528874"/>
+                            <container
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="forms-components-examples/components/demo/component">
+                                <resetbutton_demo
+                                    jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                    jcr:lastModifiedBy="admin"
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Reset"
+                                    sling:resourceType="forms-components-examples/components/form/actions/reset"
+                                    buttonType="reset"
+                                    description="&lt;p>This is a long description.&lt;/p>"
+                                    fieldType="button"
+                                    name="resetbutton_demo1675250528902"
+                                    tooltip="&lt;p>This is a short description.&lt;/p>"
+                                    tooltipVisible="true">
+                                    <fd:rules
+                                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_9021426441667454270189&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_9021426441667454270189&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;RESET_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent('reset')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                        jcr:primaryType="nt:unstructured"/>
+                                    <fd:events
+                                        jcr:primaryType="nt:unstructured"
+                                        click="[dispatchEvent('reset')]"/>
+                                </resetbutton_demo>
+                            </container>
+                        </guideContainer>
                     </component>
                     <info
-                      jcr:primaryType="nt:unstructured"
-                      sling:resourceType="core-components-examples/components/tabs">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core-components-examples/components/tabs">
                         <properties
-                          cq:panelTitle="Properties"
-                          jcr:primaryType="nt:unstructured"
-                          sling:resourceType="core-components-examples/components/demo/properties"
-                          reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="Properties"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/properties"
+                            reference="../../component/guideContainer/container"/>
                         <markup
-                          cq:panelTitle="Markup"
-                          jcr:primaryType="nt:unstructured"
-                          sling:resourceType="core-components-examples/components/demo/markup"
-                          reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="Markup"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/markup"
+                            reference="../../component/guideContainer/container"/>
                         <json
-                          cq:panelTitle="JSON"
-                          jcr:primaryType="nt:unstructured"
-                          sling:resourceType="core-components-examples/components/demo/json"
-                          reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="JSON"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/json"
+                            reference="../../component/guideContainer/container"/>
                     </info>
                 </demo>
             </responsivegrid>

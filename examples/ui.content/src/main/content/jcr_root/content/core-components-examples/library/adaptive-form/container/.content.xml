@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Adaptive Form Container component is a server side component written in HTL, allowing to create Adaptive Form"
+                        text="&lt;p>Forms allow website visitors to interact with the website by providing valuable information, which can increase engagement and user satisfaction. An Adaptive Form Container in Adobe Experience Manager (AEM) Sites enables website owners to easily add forms to their pages. This helps facilitate communication between website visitors and the website owner or organization by providing a streamlined way for visitors to provide feedback, make inquiries, and complete other actions.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"

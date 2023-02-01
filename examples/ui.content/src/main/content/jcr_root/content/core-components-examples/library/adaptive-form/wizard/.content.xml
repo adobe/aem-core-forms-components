@@ -34,7 +34,7 @@
           jcr:lastModifiedBy="admin"
           jcr:primaryType="nt:unstructured"
           sling:resourceType="core/wcm/components/text/v2/text"
-          text="&lt;p>The Wizard Layout component is a server side component written in HTL, allowing to create Adaptive Form Wizard"
+          text="&lt;p>A Wizard layout in an Adaptive Form refers to a form that is divided into multiple steps or pages, with the user moving through the form one step at a time. This layout is called a &quot;wizard&quot; because it guides the user through the form in a step-by-step process.&lt;/p>&lt;p>Each step of the wizard typically contains a group of related form fields and a navigation mechanism, such as &quot;Next&quot; and &quot;Back&quot; buttons, to move between steps. The user can only proceed to the next step once the current step has been completed and all required fields have been filled out.&lt;/p>&lt;p>Wizard layout is useful for forms that have a lot of fields or information that need to be collected, as it breaks the form down into smaller, more manageable chunks. It also helps users to focus on one set of fields at a time, which can make the form-filling process less overwhelming.&lt;/p>&lt;p>However, it can also increase the complexity of the form, as the user has to go through several pages to complete the form. So it is necessary to evaluate the form requirement and user needs before deciding to use a wizard layout.&lt;/p>&lt;p>You can use the Wizard layout Core Component in an Adaptive Form to create Wizard layout.&lt;/p>"
           textIsRich="true"/>
         <teaser
           cq:styleIds="[1550165685463]"

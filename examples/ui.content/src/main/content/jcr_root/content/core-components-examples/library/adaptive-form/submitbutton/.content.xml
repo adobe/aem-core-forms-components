@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Submit Button component is a server side component written in HTL, allowing to create Submit Button"
+                        text="&lt;p>A Submit button in an Adaptive Form is a button that allows users to submit the form data to a server for processing. When the submit button is clicked, the form data is sent to the server, where it can be stored, processed, or used for various purposes such as sending an email or updating a database.&lt;/p>&lt;p>The Submit button is typically the final step in the form-filling process, and is used to initiate the process of sending the form data to the server.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
