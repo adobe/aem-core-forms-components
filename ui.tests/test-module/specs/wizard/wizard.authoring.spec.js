@@ -88,7 +88,7 @@ describe('Page - Authoring', function () {
         });
 
         // todo: flaky
-        it.only('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
+        it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
