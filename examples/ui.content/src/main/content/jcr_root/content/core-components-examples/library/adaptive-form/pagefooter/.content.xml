@@ -48,7 +48,8 @@
           sling:resourceType="core-components-examples/components/teaser"
           actionsEnabled="false"
           descriptionFromPage="false"
-          linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pagefooter/v1/pagefooter"
+          fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+          linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer"
           textIsRich="true"
           titleFromPage="false"/>
         <title_865328580

@@ -6,7 +6,7 @@
         cq:lastModifiedBy="admin"
         cq:tags="[]"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-        jcr:description="Panel Container"
+        jcr:description="Panel"
         jcr:primaryType="cq:PageContent"
         jcr:title="Panel Container"
         sling:resourceType="forms-components-examples/components/page">
@@ -42,6 +42,7 @@
                     sling:resourceType="core-components-examples/components/teaser"
                     actionsEnabled="false"
                     descriptionFromPage="false"
+                    fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                     linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer"
                     textIsRich="true"
                     titleFromPage="false"/>

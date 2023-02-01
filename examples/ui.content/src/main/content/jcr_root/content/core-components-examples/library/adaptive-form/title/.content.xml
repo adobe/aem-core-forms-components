@@ -35,19 +35,7 @@
                         actionsEnabled="false"
                         descriptionFromPage="false"
                         fileReference="/content/dam/core-components-examples/library/github-logo.svg"
-                        linkURL="https://www.adobe.com/go/aem_cmp_tech_title_v3"
-                        textIsRich="true"
-                        titleFromPage="false"/>
-                <teaser_556024830
-                        cq:styleIds="[1550165685463]"
-                        jcr:description="&lt;p>Adobe Help Center&lt;/p>"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Using Core Components"
-                        sling:resourceType="core-components-examples/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="false"
-                        fileReference="/content/dam/core-components-examples/library/adobe-logo.svg"
-                        linkURL="https://www.adobe.com/go/aem_cmp_title_v3"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v1/title"
                         textIsRich="true"
                         titleFromPage="false"/>
                 <title_865328580

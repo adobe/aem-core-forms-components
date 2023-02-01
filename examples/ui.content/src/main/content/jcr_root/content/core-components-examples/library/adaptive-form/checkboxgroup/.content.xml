@@ -48,7 +48,8 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
-                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/dev/ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
                         textIsRich="true"
                         titleFromPage="false"/>
                 <title_865328580
@@ -103,6 +104,7 @@
                                   fieldType="checkbox-group"
                                   enum="[0,1]"
                                   enumNames="[Item 1, Item 2]"
+                                  type="number[]"
                                   jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
                                   jcr:createdBy="admin"
                                   jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
