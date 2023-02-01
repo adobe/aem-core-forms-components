@@ -53,7 +53,9 @@
         }
 
         getErrorDiv() {
-            return this.element.querySelector(Panel.selectors.errorDiv);
+            //error div is not defined
+            //return this.element.querySelector(Panel.selectors.errorDiv);
+            return null;
         }
 
         getTooltipDiv() {
