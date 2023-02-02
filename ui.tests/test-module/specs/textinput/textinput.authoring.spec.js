@@ -155,7 +155,7 @@ describe('Page - Authoring', function () {
           .should("equal", '10');
       getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
       getRuleEditorIframe().find("#create-rule-button").should("be.visible");
-      cy.wait(1000)
+      cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
       getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
       cy.deleteComponentByPath(textInputDrop);
     });
