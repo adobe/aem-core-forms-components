@@ -18,15 +18,17 @@ describe('Verify Start workflow page operation on af editor', function () {
 
     const url = '/aem/forms.html/content/dam/formsanddocuments';
     const invokeAemWorkflowButton = '[data-item-id="fd/dashboard/components/actions/aemworkflowsubmit"]';
+    const productNavigation = 'coral-panel-content[role="presentation"] button[class="_coral-Button _coral-Button--primary _coral-Button--quiet"]';
 
     it('verify Start workflow page operation on af editor', function () {
         cy.openPage(url);
+        cy.get(productNavigation).should('exist').eq(0).click();
         cy.get('#aem-forms-create').click();
         cy.get('[title="Adaptive Form"]').click();
         Cypress.on('uncaught:exception', (err, runnable) => {
             return (!err.message.includes('Handlebars is not defined'))
         })
-        cy.get('[role="tab"]').eq(3).click();
+        cy.get('[role="tab"]').should('exist').eq(3).click();
         cy.get(invokeAemWorkflowButton).click();
         cy.get('[class="properties-panel"]')
             .should("exist");
