@@ -26,14 +26,16 @@
      data-sly-use.dropdown="com.adobe.cq.forms.core.components.models.form.DropDown"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-is="adaptiveFormDropDown"
-     id="${component.id}"
+     id="${component.id}"      
+     data-sly-test.widgetId="${component.id}-dropDown"
      data-cmp-visible="${dropdown.visible ? 'true' : 'false'}"
      data-cmp-enabled="${dropdown.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
-            aria-label="${dropdown.label.visible && dropdown.label.value}"
+            aria-label="${dropdown.label.value}"
+            id="${widgetId}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
             disabled="${!dropdown.enabled || dropdown.readOnly}"

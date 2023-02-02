@@ -38,7 +38,7 @@
          data-sly-repeat="${accordion.exportedItems}"
          class="cmp-accordion__item"
          data-cmp-hook-accordion="item"
-         id="${accordion.exportedItems[item].id}"
+         id="${accordion.exportedItems[item].id}-item"
          data-cmp-expanded="${itemList.first}">
         <h3 class="cmp-accordion__header">
             <button id="${accordion.exportedItems[item].id}-button"
@@ -65,3 +65,4 @@
         <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.wcm.components.accordion.v1'}"/>
     </sly>
 </div>
+
