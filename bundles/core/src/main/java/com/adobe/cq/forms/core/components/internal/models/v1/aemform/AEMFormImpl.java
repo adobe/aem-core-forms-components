@@ -181,7 +181,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         if (usePageLocale != null && StringUtils.equals(usePageLocale, "true")) {
             lang = getPageLocale();
         }
-        if (StringUtils.isBlank(lang) && (isAdaptiveForm() || isMCDocument() || isAdaptiveFormV2())) {
+        if (StringUtils.isBlank(lang) && (isAdaptiveForm() || isMCDocument())) {
             lang = GuideUtils.getLocale(request, request.getResourceResolver().getResource(getFormPagePath()));
         }
         return lang;
@@ -216,9 +216,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         String formPath = getFormPath();
         if (!("".equals(formPath))) {
             ResourceResolver resolver = request.getResourceResolver();
-            if (getFormVersion(resolver, formPath).equals("2.1")) {
-                formType = FormType.ADAPTIVE_FORM_V2;
-            } else if (GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.ADAPTIVE_FORM)) {
+            if (getFormVersion().equals("2.1") || GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.ADAPTIVE_FORM)) {
                 formType = FormType.ADAPTIVE_FORM;
             } else if (GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.MC_DOCUMENT)) {
                 formType = FormType.MC_DOCUMENT;
@@ -265,11 +263,6 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     }
 
     @Override
-    public boolean isAdaptiveFormV2() {
-        return FormType.ADAPTIVE_FORM_V2.equals(getFormType());
-    }
-
-    @Override
     public String getThankyouPage() {
         return GuideUtils.getRedirectUrl(thankyouPage, null);
     }
@@ -286,8 +279,10 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         return height;
     }
 
-    private String getFormVersion(ResourceResolver resourceResolver, String formPath) {
+    public String getFormVersion() {
         String version = "";
+        String formPath = getFormPath();
+        ResourceResolver resourceResolver = request.getResourceResolver();
         if ((!formPath.isEmpty()) && (resourceResolver != null)) {
             formPath = GuideUtils.convertFMAssetPathToFormPagePath(formPath);
             Resource formResource = resourceResolver.getResource(formPath);

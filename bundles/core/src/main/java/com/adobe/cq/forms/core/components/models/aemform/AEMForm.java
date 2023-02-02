@@ -40,7 +40,7 @@ public interface AEMForm extends Component {
      * Defines the form type
      */
     enum FormType {
-        NO_FORM_SELECTED, MOBILE_FORM, ADAPTIVE_FORM, MC_DOCUMENT, MOBILE_FORMSET, ADAPTIVE_FORM_V2
+        NO_FORM_SELECTED, MOBILE_FORM, ADAPTIVE_FORM, MC_DOCUMENT, MOBILE_FORMSET
     }
 
     /**
@@ -359,7 +359,7 @@ public interface AEMForm extends Component {
      * @since com.adobe.cq.forms.core.components.models.aemform 1.3.0;
      */
     @JsonIgnore
-    default boolean isAdaptiveFormV2() {
+    default String getFormVersion() {
         throw new UnsupportedOperationException();
     }
 
