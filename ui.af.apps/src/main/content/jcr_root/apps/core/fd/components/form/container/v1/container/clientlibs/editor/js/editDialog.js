@@ -94,30 +94,22 @@
         }
     }
 
-    function loadSubmitActionSubDialogClientLibs(dialog) {
+    function registerSubmitActionSubDialogClientLibs(dialog) {
         var containerSubmitAction = dialog.find(CONTAINER_SUBMITACTION)[0];
         containerSubmitAction.on("change", function(){
-            loadRestEndPointDialogClientlibs(dialog);
-            loadFDMDialogClientlibs(dialog);
-            loadEmailDialogClientlibs(dialog);
+            registerRestEndPointDialogClientlibs(dialog);
+            registerFDMDialogClientlibs(dialog);
+            registerEmailDialogClientlibs(dialog);
         });
     }
 
     function showDorBindRefSelector (dialog) {
         var enableDORSubmissionCheckBoxElement = dialog.find(FDM_ENABLE_DOR_CHECK_BOX)[0],
-            $dorBindRefSelector = Utils.selectElement("input", './bindRef'),
-            parentBindRefSelector = "span.bindRefSelector";
-        // ensuring the event is triggered only once, since the widget is going into inconsistent state
-        // due to multiple event firing
-        if (!$(enableDORSubmissionCheckBoxElement).data("eventTriggered")) {
-            // trigger the content loaded event for bind ref to initialize itself
-            $(document).trigger("fdBindRef-contentLoaded");
-            $(enableDORSubmissionCheckBoxElement).data("eventTriggered", true);
-        }
+            $dorBindRefSelector = Utils.selectElement("input", './bindRef').parent();
         if (enableDORSubmissionCheckBoxElement != null && enableDORSubmissionCheckBoxElement.checked == true) {
-            $dorBindRefSelector.parent(parentBindRefSelector).parent().show();
+            $dorBindRefSelector.parent().show();
         } else {
-            $dorBindRefSelector.parent(parentBindRefSelector).parent().hide();
+            $dorBindRefSelector.parent().hide();
         }
     }
 
@@ -150,7 +142,7 @@
         }
     }
 
-    function loadRestEndPointDialogClientlibs(dialog) {
+    function registerRestEndPointDialogClientlibs(dialog) {
         var $subDialogContent = dialog.find(SUB_DIALOG_CONTENT);
         var selectedSubmitAction = $(SELECTED_SUBMIT_ACTION).val();
         if(selectedSubmitAction === REST_END_POINT_SUBMIT_ACTION) {
@@ -165,7 +157,7 @@
         }
     }
 
-    function loadFDMDialogClientlibs(dialog) {
+    function registerFDMDialogClientlibs(dialog) {
         var $subDialogContent = dialog.find(SUB_DIALOG_CONTENT);
         var selectedSubmitAction = $(SELECTED_SUBMIT_ACTION).val();
         if(selectedSubmitAction === FDM_SUBMIT_ACTION) {
@@ -180,7 +172,7 @@
         }
     }
 
-    function loadEmailDialogClientlibs(dialog) {
+    function registerEmailDialogClientlibs(dialog) {
         var $subDialogContent = dialog.find(SUB_DIALOG_CONTENT);
         var selectedSubmitAction = $(SELECTED_SUBMIT_ACTION).val();
         if(selectedSubmitAction === EMAIL_SUBMIT_ACTION) {
@@ -196,6 +188,6 @@
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
-        loadSubmitActionSubDialogClientLibs, loadRestEndPointDialogClientlibs, loadFDMDialogClientlibs, loadEmailDialogClientlibs);
+        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs);
 
 })(jQuery, jQuery(document), Coral);
