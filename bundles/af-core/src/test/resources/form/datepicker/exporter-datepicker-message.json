@@ -8,13 +8,11 @@
   "tooltip": "test-short-description",
   "type": "string",
   "required": false,
-  "enabled": true,
   "constraintMessages": {
     "type": "incorrect type",
     "minimum": "Date should be greater than 4th Feb 2022",
     "maximum": "Date should be less than 9th Feb 2022"
   },
-  "readOnly": false,
   "default": "2022-02-07",
   "label": {
     "richText": false,

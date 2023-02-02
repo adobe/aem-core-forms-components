@@ -3,8 +3,6 @@
   "required": false,
   "name": "abc",
   "visible": false,
-  "enabled": true,
-  "readOnly": false,
   "fieldType": "checkbox",
   "description" : "dummy",
   "tooltip": "test-short-description",

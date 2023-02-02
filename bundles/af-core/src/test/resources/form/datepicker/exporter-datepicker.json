@@ -8,11 +8,11 @@
   "tooltip": "test-short-description",
   "type": "string",
   "required": false,
-  "enabled": true,
+  "enabled": false,
   "constraintMessages": {
     "type": "incorrect type"
   },
-  "readOnly": false,
+  "readOnly": true,
   "default": "2022-02-07",
   "label": {
     "richText": false,

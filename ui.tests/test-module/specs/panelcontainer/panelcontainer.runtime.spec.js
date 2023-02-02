@@ -173,7 +173,7 @@ describe( "Form Runtime with Panel Container", () => {
     });
 
     it(" min occur of model should be reflected in html, and view child should be established ", () => {
-        const instancManagerModel = formContainer._model.items[1];
+        const instancManagerModel = formContainer._model.items[6];
         const instancesModel = instancManagerModel.items;
         const allFields = formContainer.getAllFields();
         const instanceManagerView = allFields[instancManagerModel.id];
@@ -217,4 +217,58 @@ describe( "Form Runtime with Panel Container", () => {
         const panelId = formContainer._model.items[0].items[0].id;
         cy.toggleDescriptionTooltip(bemBlock, panelId, 'panel short', 'panel long');
     })
+
+    it("disabled panel's children are also disabled ", () => {
+        const disabledPanelElemId = formContainer._model.items[1].id;
+        cy.get(`#${disabledPanelElemId}`).should('have.attr',"data-cmp-enabled","false");
+        cy.get(`#${disabledPanelElemId}`).should('have.length',1);
+        cy.get(`#${disabledPanelElemId}`).should('have.class','cmp-container');
+        cy.get(`#${disabledPanelElemId}`).find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
+
+
+    });
+
+    it("readOnly panel's children are also readOnly ", () => {
+        const readOnlyPanelElemId = formContainer._model.items[2].id;
+        cy.get(`#${readOnlyPanelElemId}`).should('have.length',1);
+        cy.get(`#${readOnlyPanelElemId}`).should('have.attr','data-cmp-is','adaptiveFormPanel');
+        cy.get(`#${readOnlyPanelElemId}`).should('have.class','cmp-container');
+        cy.get(`#${readOnlyPanelElemId}`).find(".cmp-adaptiveform-numberinput__widget").should('have.attr',"readonly");
+    });
+
+    it("enable panel's child when panel and child is disabled  ", () => {
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
+        cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
+        cy.get(`#${textInputOfFormElemId} input`).type('a').blur().then(()=>{
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"true");
+        });
+    });
+
+    it("enable panel and check that child behaved properly",()=>{
+        const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
+        const textInputOfPanelId=formContainer._model.items[4].items[1].id;
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("b").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+            cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'true');
+        });
+    });
+
+    it("make readonly panel not readonly and check that child behaved properly",()=>{
+        const numberInputOfPanelId=formContainer._model.items[5].items[0].id;
+        const textInputOfPanelId=formContainer._model.items[5].items[1].id;
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("c").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr', 'readonly');
+            cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        })
+
+    });
 })

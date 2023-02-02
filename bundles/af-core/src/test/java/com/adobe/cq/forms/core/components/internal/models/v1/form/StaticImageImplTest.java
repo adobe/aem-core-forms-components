@@ -124,7 +124,7 @@ public class StaticImageImplTest {
         assertEquals(false, staticImage.isVisible());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, staticImageMock.isVisible());
+        assertEquals(null, staticImageMock.isVisible());
     }
 
     @Test
