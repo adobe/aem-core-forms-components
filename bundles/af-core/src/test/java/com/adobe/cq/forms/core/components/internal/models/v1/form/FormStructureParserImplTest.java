@@ -119,6 +119,17 @@ public class FormStructureParserImplTest {
         assertNull(formStructureParser.getClientLibRefFromFormContainer());
     }
 
+    @Test
+    void testGetThemeClientLibRef() {
+        String path = CONTENT_ROOT;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertEquals("def", formStructureParser.getThemeClientLibRefFromFormContainer());
+
+        path = FORM_CONTAINER_PATH + "/container1";
+        formStructureParser = getFormStructureParserUnderTest(path);
+        assertNull(formStructureParser.getThemeClientLibRefFromFormContainer());
+    }
+
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();

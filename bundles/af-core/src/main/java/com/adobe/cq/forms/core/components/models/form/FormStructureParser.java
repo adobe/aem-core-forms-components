@@ -37,4 +37,9 @@ public interface FormStructureParser {
      */
     String getClientLibRefFromFormContainer();
 
+    /**
+     * @returns reference to theme client lib stored in the form container
+     */
+    String getThemeClientLibRefFromFormContainer();
+
 }

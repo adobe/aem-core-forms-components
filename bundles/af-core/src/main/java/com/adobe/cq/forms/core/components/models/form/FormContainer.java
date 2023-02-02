@@ -63,6 +63,8 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
+    String THEME_CLIENT_LIB_REF = "themeClientLibRef";
+
     /**
      * Returns form metadata {@link FormMetaData}
      *
@@ -116,6 +118,12 @@ public interface FormContainer extends Container {
     @Nullable
     @JsonIgnore
     default String getClientLibRef() {
+        return null;
+    }
+
+    @Nullable
+    @JsonIgnore
+    default String getThemeClientLibRef() {
         return null;
     }
 

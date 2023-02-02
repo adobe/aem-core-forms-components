@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.internal.form;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -39,26 +38,31 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
-    public String getClientLibRefFromFormContainer() {
-        return getPropertyFromFormContainer(resource, FormContainer.PN_CLIENT_LIB_REF);
+    public String getThemeClientLibRefFromFormContainer() {
+        FormContainer formContainer = getFormContainer(resource);
+        return formContainer != null ? formContainer.getThemeClientLibRef() : null;
     }
 
-    private String getPropertyFromFormContainer(@Nullable Resource resource, @NotNull String propertyName) {
+    @Override
+    public String getClientLibRefFromFormContainer() {
+        FormContainer formContainer = getFormContainer(resource);
+        return formContainer != null ? formContainer.getClientLibRef() : null;
+    }
+
+    private FormContainer getFormContainer(@Nullable Resource resource) {
         if (resource == null) {
             return null;
         }
 
         if (ComponentUtils.isAFContainer(resource)) {
             FormContainer formContainer = resource.adaptTo(FormContainer.class);
-            if (formContainer != null) {
-                return formContainer.getClientLibRef();
-            }
+            return formContainer;
         }
 
         for (Resource child : resource.getChildren()) {
-            String clientLibRef = getPropertyFromFormContainer(child, propertyName);
-            if (clientLibRef != null) {
-                return clientLibRef;
+            FormContainer formContainer = getFormContainer(child);
+            if (formContainer != null) {
+                return formContainer;
             }
         }
         return null;
