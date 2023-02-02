@@ -140,7 +140,20 @@ describe('Page - Authoring', function () {
         it('open edit dialog of aem forms NumberInput', function() {
             dropNumberInputInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.get(editDialogConfigurationSelector).should('be.visible');
+            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+            cy.get("[name='./name']").should("exist");
+            cy.get("[name='./jcr:title']").should("exist");
+            cy.get("[name='./hideTitle']").should("exist");
+            cy.get("[name='./placeholder']").should("exist");
+            cy.get("[name='./type']").should("exist");
+            cy.get("[name='./default']").should("exist");
+            cy.get("[name='./minimum']").should("exist");
+            cy.get("[name='./exclusiveMinimum']").should("exist");
+            cy.get("[name='./maximum']").should("exist");
+            cy.get("[name='./exclusiveMaximum']").should("exist");
+            cy.get('.cq-dialog-cancel').should('be.visible');
+            cy.get('.cq-dialog-submit').should('be.visible');
+            cy.get('.cq-dialog-cancel').click({force:true});
             cy.deleteComponentByPath(numberInputDrop);
         });
 

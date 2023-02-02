@@ -72,17 +72,22 @@
                         sling:resourceType="forms-components-examples/components/demo">
                     <component
                             jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/demo/component">
-                        <guideContainer
+                            sling:resourceType="forms-components-examples/components/demo/component">
+                            <guideContainer
                               fd:version="2.1"
                               fieldType="form"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="forms-components-examples/components/form/container">
-                                <title
-                                        jcr:title="Title"
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="forms-components-examples/components/form/title"/>
-                        </guideContainer>
+                                <container
+                                  jcr:primaryType="nt:unstructured"
+                                  fieldType="demo-component"
+                                  sling:resourceType="forms-components-examples/components/demo/component">
+                                    <title
+                                      jcr:title="Lorem Ipsum"
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="forms-components-examples/components/form/title"/>
+                                </container>
+                            </guideContainer>
                     </component>
                     <info
                             jcr:primaryType="nt:unstructured"
@@ -91,104 +96,19 @@
                                 cq:panelTitle="Properties"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                         <markup
                                 cq:panelTitle="Markup"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                         <json
                                 cq:panelTitle="JSON"
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component"/>
+                                reference="../../component/guideContainer/container"/>
                     </info>
                 </demo>
-                <title_290381000
-                        cq:styleIds="[1544759676459]"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Title Text"
-                        sling:resourceType="forms-components-examples/components/form/title"
-                        type="h3"/>
-                <text_1337508375
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core-components-examples/components/text"
-                        text="&lt;p>The title text can be provided rather than the default of taking the title.&lt;/p>"
-                        textIsRich="true"/>
-                <demo_1448137506
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core-components-examples/components/demo">
-                    <component
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/demo/component">
-                        <title
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Lorem Ipsum"
-                                sling:resourceType="forms-components-examples/components/form/title"/>
-                    </component>
-                    <info
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/tabs">
-                        <properties
-                                cq:panelTitle="Properties"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component"/>
-                        <markup
-                                cq:panelTitle="Markup"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component"/>
-                        <json
-                                cq:panelTitle="JSON"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component"/>
-                    </info>
-                </demo_1448137506>
-                <title_290386472
-                        cq:styleIds="[1544759676459]"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Heading Type"
-                        sling:resourceType="forms-components-examples/components/form/title"
-                        type="h3"/>
-                <text_1337502846
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core-components-examples/components/text"
-                        text="&lt;p>The heading size can be configured (H1-H6).&lt;/p>"
-                        textIsRich="true"/>
-                <demo_1448137580
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core-components-examples/components/demo">
-                    <component
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/demo/component">
-                        <title_248225561
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Heading 3"
-                                sling:resourceType="forms-components-examples/components/form/title"
-                                type="h3"/>
-                    </component>
-                    <info
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/tabs">
-                        <properties
-                                cq:panelTitle="Properties"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component"/>
-                        <markup
-                                cq:panelTitle="Markup"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component"/>
-                        <json
-                                cq:panelTitle="JSON"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component"/>
-                    </info>
-                </demo_1448137580>
             </responsivegrid>
         </root>
         <image jcr:primaryType="nt:unstructured">
