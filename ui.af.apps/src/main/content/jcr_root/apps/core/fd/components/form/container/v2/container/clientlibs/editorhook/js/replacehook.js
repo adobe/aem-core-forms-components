@@ -14,11 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 (function (window, author, Coral, channel) {
+
     const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT_ONE: 'select_one', LIST: 'list', DATE: 'date'}
     const typeMap = {
         'button': fieldTypes.TEXT,
         'checkboxgroup': fieldTypes.LIST,
-        'datepicker': fieldTypes.DATE,
+        'datepicker': fieldTypes.TEXT,
         'dropdown': fieldTypes.SELECT_ONE,
         'emailinput': fieldTypes.TEXT,
         'numberinput': fieldTypes.TEXT,
@@ -27,13 +28,18 @@
         'submit': fieldTypes.TEXT,
         'telephoneinput': fieldTypes.TEXT,
         'text': fieldTypes.TEXT,
+        'textbox': fieldTypes.TEXT,
         'textinput': fieldTypes.TEXT,
         'title': fieldTypes.TEXT
     }
+
+    const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
+        'placeholder', 'readOnly', 'required', 'tooltip', 'visible'];
+
     const cannotBeReplacedWith = ['fileinput', 'image'];
     const irreplaceable = ['fileinput'];
 
-    window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function(editable) {
+    window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
         return !irreplaceable.includes(editable.getResourceTypeName());
     }
 
@@ -62,9 +68,7 @@
             allowedComponents = author.components.computeAllowedComponents(parent, author.pageDesign),
             selectList;
 
-        var typeHierarchy = author.components.find({resourceType: this.type})[0].componentConfig.cellNames,
-            editableType = editable.getResourceTypeName()
-        editableSuperType = typeHierarchy[typeHierarchy.length - 2]; // super type is one below guidefield in type hierarchy
+        var editableType = editable.getResourceTypeName();
 
         var filterComponent = function (allowedComponents) {
             var groups = {},
@@ -88,7 +92,6 @@
                 var cfg = c.componentConfig,
                     g,
                     componentType = cfg.cellNames[0],
-                    componentSuperType = cfg.cellNames[cfg.cellNames.length - 2],
                     performReplace = false;
 
                 if (keyword.length > 0) {
@@ -96,13 +99,9 @@
                 }
 
                 if (!(keyword.length > 0) || isKeywordFound) {
-                    // if ((isContainerComponent === c.componentConfig.isContainer && editableType != componentType) ||
-                    //     (!cannotBeReplacedWith.includes(componentType) &&
-                    //         typeMap[editableType] === typeMap[componentType])) {
-
                     if ((!cannotBeReplacedWith.includes(componentType) && editableType != componentType)
                         && ((isContainerComponent && c.componentConfig.isContainer)
-                            || (!isContainerComponent && componentSuperType === editableSuperType))) {
+                            || (!isContainerComponent && typeMap[editableType] === typeMap[componentType]))) {
                         performReplace = true;
                     }
 
@@ -149,9 +148,10 @@
                 selectList.off('coral-selectlist:change');
                 var component = author.components.find(event.detail.selection.value);
                 if (component.length > 0) {
-                    author.persistence.replaceParagraph(component[0], editable);
+                    replaceParagraph(component[0], editable);
                 }
                 dialog.hide();
+                dialog.remove();
             });
         }
 
@@ -172,8 +172,7 @@
      * @param {Object} [editable] editable which has to be replaced
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    // delete node
-    author.persistence.replaceParagraph = function (component, editable) {
+    const replaceParagraph = function (component, editable) {
         var args = arguments;
 
         channel.trigger("cq-persistence-before-replace", args);
@@ -186,7 +185,7 @@
                 templatePath: component.getTemplatePath()
             }, editable)
                 .done(function () {
-                    window.CQ.FormsCoreComponents.editorhooks._refreshEditable(editable, component);
+                    editable.refresh();
                     channel.trigger("cq-persistence-after-replace", args);
                 })
                 .fail(function () {
@@ -196,19 +195,6 @@
                     });
                 })
         );
-    };
-
-    window.CQ.FormsCoreComponents.editorhooks._refreshEditable = function (editable, component) {
-        editable.refresh().done(function () {
-            var callbackInvoked = false;
-            var addedComponentPath = component.path;
-            if (addedComponentPath) {
-                guideTouchLib.editLayer.Interactions.onOverlayClick({
-                    editable : Granite.author.editables.find(addedComponentPath)[0]
-                });
-                guidelib.author.editConfigListeners.addedComponentPath = undefined;
-            }
-        });
     };
 
     /**
@@ -233,18 +219,15 @@
         if (config.templatePath) {
             var comTemplatePath = Granite.HTTP.externalize(config.templatePath),
                 comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
-            editableJson = CQ.shared.HTTP.eval(editable.path + ".infinity.json"); // get editable json
-            comGuideNodeClass = comData.guideNodeClass; // guideNodeClass has to be written in editable so preserve it
 
             // delete those properties of component which are already present in editable
             for (p in comData) {
-                if (editableJson.hasOwnProperty(p)) {
+                if (preservedProperties.includes(p)) {
                     delete comData[p];
                 }
             }
 
             // restore guideNodeClass and sling:resourceType of component so that gets written in editable
-            comData["guideNodeClass"] = comGuideNodeClass;
             comData["sling:resourceType"] = config.resourceType;
             this.setParam(":content", JSON.stringify(comData));    // write component properties
         }
@@ -262,5 +245,31 @@
                 .setParam(":replaceProperties", true)
         );
     };
+
+    author.persistence.Request.prototype.send = function () {
+        return $.ajax({
+            type: this.type,
+            dataType: this.dataType && this.dataType.toLowerCase() || "html",
+            url: this.url,
+            data: this.params,
+            async: this.async
+        })
+    }
+
+    // PostRequest
+
+    // const PostRequest = function() {
+    //     Request.call(this, arguments);
+    //     this.type = "POST"
+    // }
+    // Request = function(config) {
+    //     this.params = {};
+    //     this.url = undefined;
+    //     if (!config)
+    //         return;
+    //     this.type = config.type;
+    //     this.async = config.async;
+    //     this.dataType = config.dataType
+    // }
 
 })(window.parent._afAuthorHook ? window.parent._afAuthorHook._getEditorWindow() : window, Granite.author, Coral, jQuery(document));
