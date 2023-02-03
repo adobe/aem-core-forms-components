@@ -49,8 +49,9 @@ public interface FormComponent extends Component {
      * @return {@code true} if form field should be visible, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isVisible() {
-        return true;
+    @Nullable
+    default Boolean isVisible() {
+        return null;
     }
 
     /**

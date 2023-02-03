@@ -135,7 +135,7 @@ public class FileInputImplTest {
         assertEquals(false, fileInput.isVisible());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, fileInputMock.isVisible());
+        assertEquals(null, fileInputMock.isVisible());
     }
 
     @Test
@@ -144,7 +144,7 @@ public class FileInputImplTest {
         assertEquals(true, fileInput.isEnabled());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, fileInputMock.isEnabled());
+        assertEquals(null, fileInputMock.isEnabled());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class FileInputImplTest {
         assertEquals(false, fileInput.isReadOnly());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, fileInputMock.isReadOnly());
+        assertEquals(null, fileInputMock.isReadOnly());
     }
 
     @Test

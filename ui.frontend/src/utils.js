@@ -94,7 +94,21 @@ export default class Utils {
     }
 
     /**
-     * execute a callback after the Form Container is initialized
+     * Creates a field view and add form container
+     * @param fieldCreator
+     * @param fieldElement
+     * @param formContainer
+     */
+    static createFormContainerField(fieldCreator, fieldElement, formContainer) {
+        let field = fieldCreator({
+            "element" : fieldElement,
+            "formContainer" : formContainer
+        });
+        formContainer.addField(field);
+    }
+
+    /**
+     * Execute a callback after the Form Container is initialized
      * @param fieldCreator a function to return an instance of FormField
      * @param fieldSelector {string} a css selector to identify the HTML Element.
      * @param fieldClass data attribute to read the field data from
@@ -105,11 +119,7 @@ export default class Utils {
             let formContainer =  e.detail;
             let fieldElements = document.querySelectorAll(fieldSelector);
             for (let i = 0; i < fieldElements.length; i++) {
-                let field = fieldCreator({
-                    "element" : fieldElements[i],
-                    "formContainer" : formContainer
-                });
-                formContainer.addField(field);
+                Utils.createFormContainerField(fieldCreator, fieldElements[i], formContainer);
             }
             Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
         }

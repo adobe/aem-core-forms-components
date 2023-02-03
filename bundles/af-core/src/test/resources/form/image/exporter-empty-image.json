@@ -2,7 +2,6 @@
   "id": "image-799a5cf8ee",
   "fieldType": "image",
   "name": "emptyImage",
-  "visible": true,
   "events": {
     "custom:setProperty": [
       "$event.payload"

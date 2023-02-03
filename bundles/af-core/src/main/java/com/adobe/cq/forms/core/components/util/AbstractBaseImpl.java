@@ -37,6 +37,7 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -94,9 +95,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     protected String customAssistPriorityMsg;
 
-    @ValueMapValue
-    @Default(booleanValues = true)
-    protected boolean enabled;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected Boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -221,10 +221,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public boolean isEnabled() {
-        if (getEditMode()) {
-            return true;
-        }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public Boolean isEnabled() {
         return enabled;
     }
 

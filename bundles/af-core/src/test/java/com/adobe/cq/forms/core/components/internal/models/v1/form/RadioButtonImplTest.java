@@ -121,7 +121,7 @@ public class RadioButtonImplTest {
         assertEquals(false, radioButton.isVisible());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, radioButtonMock.isVisible());
+        assertEquals(null, radioButtonMock.isVisible());
     }
 
     @Test
@@ -130,16 +130,16 @@ public class RadioButtonImplTest {
         assertEquals(true, radioButton.isEnabled());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, radioButtonMock.isEnabled());
+        assertEquals(null, radioButtonMock.isEnabled());
     }
 
     @Test
     void testIsReadOnly() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(false, radioButton.isReadOnly());
+        assertEquals(null, radioButton.isReadOnly());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, radioButtonMock.isReadOnly());
+        assertEquals(null, radioButtonMock.isReadOnly());
     }
 
     @Test

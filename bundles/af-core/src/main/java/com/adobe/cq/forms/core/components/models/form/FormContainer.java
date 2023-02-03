@@ -137,7 +137,7 @@ public interface FormContainer extends Container {
 
     @JsonIgnore
     @Override
-    default boolean isEnabled() {
+    default Boolean isEnabled() {
         // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
         return true;
     }
@@ -151,7 +151,7 @@ public interface FormContainer extends Container {
 
     @JsonIgnore
     @Override
-    default boolean isVisible() {
+    default Boolean isVisible() {
         // explicitly setting true, since form container does not have visible property, but other containers like panel have visible
         return true;
     }

@@ -100,7 +100,7 @@ public class TextImplTest {
         assertEquals(true, text.isVisible());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, textMock.isVisible());
+        assertEquals(null, textMock.isVisible());
     }
 
     @Test

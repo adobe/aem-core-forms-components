@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import javax.annotation.Nullable;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -44,6 +46,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @JsonIgnore
     protected boolean wrapData;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean readOnly;
+
     @JsonIgnore
     @Override
     public boolean isRequired() {
@@ -58,4 +64,12 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
         }
         return null;
     }
+
+    @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public Boolean isReadOnly() {
+        return readOnly;
+    }
+
 }
