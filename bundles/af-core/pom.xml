@@ -86,9 +86,15 @@
                         <!-- Enable processing of OSGI metatype annotations -->
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
-                            javax.annotation;version=0.0.0,
+<!--                            javax.annotation;version=0.0.0,-->
+                            <!-- https://github.com/jhy/jsoup/issues/1616 -->
+                            javax.annotation;version=!;resolution:=optional,javax.annotation.meta;version=!;resolution:=optional,
                             *
                         </Import-Package>
+                        <Embed-Dependency>
+                            core.wcm.components.core;
+                            jsoup;
+                        </Embed-Dependency>
                     </instructions>
                 </configuration>
                 <dependencies>
@@ -451,6 +457,13 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+            <scope>compile</scope>
         </dependency>
 
 
