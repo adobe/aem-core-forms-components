@@ -353,9 +353,9 @@ public interface AEMForm extends Component {
     }
 
     /**
-     * Indicates if the form configured is v2 adaptive form or not
+     * Provides the form version
      *
-     * @return true if the form is v2 adaptive form; false otherwise
+     * @return form version as set in guidecontainer
      * @since com.adobe.cq.forms.core.components.models.aemform 1.3.0;
      */
     @JsonIgnore

@@ -249,35 +249,6 @@ export default class GuideBridge {
         //TODO: implement it later. NO-OP for now.
     }
 
-    /* @param key {string} configuration name. one of the following
-    * * submitConfig
-    * * renderConfig
-    * @param {GuideBridge~submitConfig|GuideBridge~renderConfig} [config] configuration object for the configuration
-    * @param formPath {string} form resource path to uniquely identify a form in a page
-    * @method
-    * @memberof GuideBridge
-    * #### submitConfig
-    * To modify the default submit behaviour one can provide this configuration. The signature of the config is
-    * defined {@link GuideBridge~submitConfig|below}
-    * ```
-    * guideBridge.registerConfig("submitConfig", {"useAjax" : true});
-    * ```
-    * #### renderConfig
-    * To modify the default render behaviour one can provide this configuration. The signature of the config is
-    * defined {@link GuideBridge~renderConfig|below}
-    * ```
-    * guideBridge.registerConfig("renderConfig", {"enableFocusOnFirstField" : false});
-    * ```
-    * @summary Registers submit/render specific configurations to GuideBridge
-    * @instance
-    */
-    registerConfig(key, config, formPath) {
-        if(this.#userConfig[formPath]===undefined){
-            this.#userConfig[formPath]={};
-        }
-        this.#userConfig[formPath][key] = config;
-    }
-
 }
 
 
