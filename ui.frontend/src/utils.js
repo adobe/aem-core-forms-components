@@ -21,7 +21,6 @@ import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
     static #contextPath = "";
-
     static #fieldCreatorSets = [];
 
     /**
@@ -73,7 +72,7 @@ export default class Utils {
                     nodesArray.forEach(function (addedNode) {
                         if (addedNode.querySelectorAll) {
                             var elementsArray = [].slice.call(addedNode.querySelectorAll(fieldSelector));
-                            Utils.createFormContainerFields(elementsArray, fieldCreator, formContainer);
+                            Utils.#createFormContainerFields(elementsArray, fieldCreator, formContainer);
                         }
                     });
                 }
@@ -95,7 +94,7 @@ export default class Utils {
      * @param fieldCreator
      * @param formContainer
      */
-    static createFormContainerFields(fieldElements, fieldCreator, formContainer) {
+    static #createFormContainerFields(fieldElements, fieldCreator, formContainer) {
         for (let i = 0; i < fieldElements.length; i++) {
             const elementId = fieldElements[i].id;
             //check if field is already created, to avoid creating a new field for same id
@@ -115,9 +114,9 @@ export default class Utils {
      * @param formContainer
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
-        this.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
+        Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
-            Utils.createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
+            Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
     }
 
@@ -132,13 +131,13 @@ export default class Utils {
             console.debug("FormContainerInitialised Received", e.detail);
             let formContainer =  e.detail;
             let fieldElements = document.querySelectorAll(fieldSelector);
-            Utils.createFormContainerFields(fieldElements, fieldCreator, formContainer);
+            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
             Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
         }
-        this.#fieldCreatorSets.push({
-            "fieldCreator" : fieldCreator,
-            "fieldSelector" : fieldSelector,
-            "fieldClass" : fieldClass
+        Utils.#fieldCreatorSets.push({
+            fieldCreator,
+            fieldSelector,
+            fieldClass
         });
         document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
     }
@@ -163,14 +162,14 @@ export default class Utils {
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                this.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index]);
             }
         }
         //remove instanceManger for child repeatable panel
         if (fieldView.getInstanceManager && fieldView.getInstanceManager()) {
-            this.#removeFieldId(formContainer, fieldView.getInstanceManager().id);
+            Utils.#removeFieldId(formContainer, fieldView.getInstanceManager().id);
         }
-        this.#removeFieldId(formContainer, fieldView.id);
+        Utils.#removeFieldId(formContainer, fieldView.id);
     }
 
     /**
@@ -182,10 +181,10 @@ export default class Utils {
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                this.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index]);
             }
         }
-        this.#removeFieldId(formContainer, fieldView.id);
+        Utils.#removeFieldId(formContainer, fieldView.id);
     }
 
     /**
@@ -206,8 +205,8 @@ export default class Utils {
      * @param contextPath   context path of the system
      */
     static setContextPath(contextPath) {
-        if (this.#contextPath == null || this.#contextPath.length === 0) {
-            this.#contextPath = contextPath;
+        if (Utils.#contextPath == null || Utils.#contextPath.length === 0) {
+            Utils.#contextPath = contextPath;
         }
     }
 
@@ -216,7 +215,7 @@ export default class Utils {
      * @returns {*}
      */
     static getContextPath() {
-        return this.#contextPath;
+        return Utils.#contextPath;
     }
 
     /**
@@ -244,7 +243,7 @@ export default class Utils {
             const dataset = Utils.readData(elements[i], formContainerClass);
             const _path = dataset["path"];
             if ('contextPath' in dataset) {
-                this.setContextPath(dataset['contextPath']);
+                Utils.setContextPath(dataset['contextPath']);
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
