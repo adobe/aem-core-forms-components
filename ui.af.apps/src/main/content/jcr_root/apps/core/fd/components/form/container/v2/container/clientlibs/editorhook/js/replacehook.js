@@ -38,7 +38,7 @@
 
     const cannotBeReplacedWith = ['fileinput', 'image'];
 
-    const irreplaceable = ['fileinput'];
+    const irreplaceable = ['fileinput', 'checkboxgroup', 'image'];
 
     const doReplace = window.CQ.FormsCoreComponents.editorhooks.replace;
 

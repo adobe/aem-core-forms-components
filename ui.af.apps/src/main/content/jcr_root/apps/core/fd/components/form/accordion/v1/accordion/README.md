@@ -24,7 +24,7 @@ Adaptive Form Accordion component written in HTL.
 * Toggle accordion panels from accordion header controls.
 * Ability to force a single panel to be displayed.
 * First Item is expanded by default.
-* Allows replacing accordion with other component (as mentioned below).
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Accordion component uses the `com.adobe.cq.forms.core.components.models.form.Accordion` Sling model as its Use-object.

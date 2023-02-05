@@ -27,6 +27,7 @@ Adaptive Form Panel Container component written in HTL.
 * Configurable HTML ID attribute.
 * Allowed components can be configured through policy configuration.
 * Style System support.
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Panel Container component uses the `com.adobe.cq.wcm.core.components.models.LayoutContainer` Sling model as its Use-object.
@@ -90,6 +91,13 @@ The following attributes must be added for the initialization of the panel-conta
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:
 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Panel Container as a container component
+
+## Replace feature:
+We support replace feature that allows replacing accordion component to any of the below components:
+
+* Accordion
+* Horizontal tabs
+* Wizard Layout
 
 ## Information
 * **Vendor**: Adobe
