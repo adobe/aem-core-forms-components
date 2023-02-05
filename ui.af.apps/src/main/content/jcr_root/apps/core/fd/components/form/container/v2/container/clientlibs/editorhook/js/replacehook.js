@@ -37,7 +37,10 @@
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible'];
 
     const cannotBeReplacedWith = ['fileinput', 'image'];
+
     const irreplaceable = ['fileinput'];
+
+    const doReplace = window.CQ.FormsCoreComponents.editorhooks.replace;
 
     window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
         return !irreplaceable.includes(editable.getResourceTypeName());
@@ -148,7 +151,7 @@
                 selectList.off('coral-selectlist:change');
                 var component = author.components.find(event.detail.selection.value);
                 if (component.length > 0) {
-                    replaceParagraph(component[0], editable);
+                    doReplace(component[0], editable, preservedProperties);
                 }
                 dialog.hide();
                 dialog.remove();
@@ -165,111 +168,5 @@
             dialog.show();
         });
     }
-
-    /**
-     * Replace an existing component
-     * @param {Object} component The component that has to be instantiated
-     * @param {Object} [editable] editable which has to be replaced
-     * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
-     */
-    const replaceParagraph = function (component, editable) {
-        var args = arguments;
-
-        channel.trigger("cq-persistence-before-replace", args);
-
-        return (
-            sendReplaceParagraph({
-                resourceType: component.getResourceType(),
-                configParams: component.getConfigParams(),
-                extraParams: component.getExtraParams(),
-                templatePath: component.getTemplatePath()
-            }, editable)
-                .done(function () {
-                    editable.refresh();
-                    channel.trigger("cq-persistence-after-replace", args);
-                })
-                .fail(function () {
-                    author.ui.helpers.notify({
-                        content: Granite.I18n.get("Paragraph replace operation failed."),
-                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
-                    });
-                })
-        );
-    };
-
-    /**
-     * Send a request to replace an existing component
-     * @param {String} config.resourceType The resource type of the new paragraph.
-     * @param {Object} [config.configParams] The config parameters to be set upon the new paragraph's creation.
-     * @param {Object} [config.extraParams] The extra parameters (would override other params) to be set upon the new paragraph's creation.
-     * @param  {String} [config.templatePath] The path to the template definition that should be used.
-     * @param {Object} [editable] editable to replace
-     * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
-     */
-    var sendReplaceParagraph = function (config, editable) {
-        return (
-            new author.persistence.PostRequest()
-                .prepareReplaceParagraph(config, editable)
-                .send()
-        );
-    };
-
-    author.persistence.PostRequest.prototype.prepareReplaceParagraph = function (config, editable) {
-        // apply component properties over editable
-        if (config.templatePath) {
-            var comTemplatePath = Granite.HTTP.externalize(config.templatePath),
-                comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
-
-            // delete those properties of component which are already present in editable
-            for (p in comData) {
-                if (preservedProperties.includes(p)) {
-                    delete comData[p];
-                }
-            }
-
-            // restore guideNodeClass and sling:resourceType of component so that gets written in editable
-            comData["sling:resourceType"] = config.resourceType;
-            this.setParam(":content", JSON.stringify(comData));    // write component properties
-        }
-
-        // overwrite editable properties with component properties so that data is not lost while replace operation
-        return (
-            this
-                .setURL(editable.path)
-                .setParam("_charset_", "utf-8")
-                .setParams(config.configParams)
-                .setParams(config.extraParams)
-                .setParam(":operation", "import")
-                .setParam(":contentType", "json")
-                .setParam(":replace", true)
-                .setParam(":replaceProperties", true)
-        );
-    };
-
-    author.persistence.Request.prototype.send = function () {
-        return $.ajax({
-            type: this.type,
-            dataType: this.dataType && this.dataType.toLowerCase() || "html",
-            url: this.url,
-            data: this.params,
-            async: this.async
-        })
-    }
-
-    // PostRequest
-
-    // const PostRequest = function() {
-    //     Request.call(this, arguments);
-    //     this.type = "POST"
-    // }
-    // Request = function(config) {
-    //     this.params = {};
-    //     this.url = undefined;
-    //     if (!config)
-    //         return;
-    //     this.type = config.type;
-    //     this.async = config.async;
-    //     this.dataType = config.dataType
-    // }
 
 })(window.parent._afAuthorHook ? window.parent._afAuthorHook._getEditorWindow() : window, Granite.author, Coral, jQuery(document));
