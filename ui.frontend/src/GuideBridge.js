@@ -23,8 +23,6 @@ export default class GuideBridge {
     #guideContainerMap = {};
     #guideBridgeConnectHandlers = [];
     #formContainerPath = "";
-    #userConfig = {};
-
 
     constructor() {
         let customEvent = document.createEvent("CustomEvent");
