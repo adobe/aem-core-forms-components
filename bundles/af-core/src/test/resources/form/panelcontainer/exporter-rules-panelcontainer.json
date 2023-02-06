@@ -13,7 +13,6 @@
         "description": "dummy",
         "type": "string",
         "required": false,
-        "readOnly": false,
         "label": {
           "richText": false,
           "visible": true,
