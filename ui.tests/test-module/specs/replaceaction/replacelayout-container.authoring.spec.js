@@ -18,11 +18,9 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
- * Testing Form Component with Sites Editor
+ * Testing Form Component replace behaviour in authoring
  */
 describe('component replace - Authoring', function () {
-    // we can use these values to log in
-
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
         buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
@@ -76,8 +74,8 @@ describe('component replace - Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']");
 
+        // Check If Dialog Options Are Visible
         if (componentEditPathSelector == buttonEditPathSelector) {
-            // Check If Dialog Options Are Visible
             cy.get(resetButton)
                 .should("exist");
             cy.get(submitButton)
@@ -85,7 +83,6 @@ describe('component replace - Authoring', function () {
             cy.get(resetButton)
                 .click();
         } else {
-            // Check If Dialog Options Are Visible
             cy.get(horizontalTabs)
                 .should("exist");
             cy.get(accordion)
@@ -95,7 +92,6 @@ describe('component replace - Authoring', function () {
             cy.get(accordion)
                 .click();
         }
-        // Checking some dynamic behaviours
         cy.deleteComponentByPath(componentDrop);
     }
 

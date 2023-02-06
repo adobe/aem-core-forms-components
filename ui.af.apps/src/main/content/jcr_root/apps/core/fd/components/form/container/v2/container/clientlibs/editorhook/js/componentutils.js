@@ -149,4 +149,4 @@
         return this;
     };
 
-})(window.parent._afAuthorHook ? window.parent._afAuthorHook._getEditorWindow() : window, Granite.author, Coral, jQuery(document));
+})(window, Granite.author, Coral, jQuery(document));

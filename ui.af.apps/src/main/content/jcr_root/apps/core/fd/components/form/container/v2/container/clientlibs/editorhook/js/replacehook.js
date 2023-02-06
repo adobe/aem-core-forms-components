@@ -15,15 +15,15 @@
  ******************************************************************************/
 (function (window, author, Coral, channel) {
 
-    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT_ONE: 'select_one', LIST: 'list', DATE: 'date'}
+    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select_one', LIST: 'list', DATE: 'date'}
     const typeMap = {
         'button': fieldTypes.TEXT,
         'checkboxgroup': fieldTypes.LIST,
         'datepicker': fieldTypes.TEXT,
-        'dropdown': fieldTypes.SELECT_ONE,
+        'dropdown': fieldTypes.SELECT,
         'emailinput': fieldTypes.TEXT,
         'numberinput': fieldTypes.TEXT,
-        'radiobutton': fieldTypes.SELECT_ONE,
+        'radiobutton': fieldTypes.SELECT,
         'reset': fieldTypes.TEXT,
         'submit': fieldTypes.TEXT,
         'telephoneinput': fieldTypes.TEXT,
@@ -34,7 +34,7 @@
     }
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
-        'placeholder', 'readOnly', 'required', 'tooltip', 'visible'];
+        'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
     const cannotBeReplacedWith = ['fileinput', 'image'];
 
@@ -168,4 +168,4 @@
         });
     }
 
-})(window.parent._afAuthorHook ? window.parent._afAuthorHook._getEditorWindow() : window, Granite.author, Coral, jQuery(document));
+})(window, Granite.author, Coral, jQuery(document));
