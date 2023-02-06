@@ -68,7 +68,7 @@
     }
 
     function getFieldId(editable) {
-        return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id') || editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('data-id');
+        return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id') || editable.dom.find("[data-adaptiveform-id]").attr('data-adaptiveform-id');
     }
 
     function showAlert() {
