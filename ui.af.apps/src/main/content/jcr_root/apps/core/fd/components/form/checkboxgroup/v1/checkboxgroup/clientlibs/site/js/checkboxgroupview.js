@@ -32,7 +32,7 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widgets: `.${CheckBoxGroup.bemBlock}__widgets`,
-            widget: `.${CheckBoxGroup.checkboxBemBlock}__widget`,
+            widget: `.${CheckBoxGroup.checkboxBemBlock}__option__widget`,
             widgetLabel: `.${CheckBoxGroup.checkboxBemBlock}__label`,
             label: `.${CheckBoxGroup.bemBlock}__label`,
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
