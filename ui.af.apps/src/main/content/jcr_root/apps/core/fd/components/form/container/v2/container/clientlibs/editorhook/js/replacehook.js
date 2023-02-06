@@ -40,7 +40,7 @@
 
     const irreplaceable = ['fileinput', 'checkboxgroup', 'image'];
 
-    const doReplace = window.CQ.FormsCoreComponents.editorhooks.replace;
+    const doReplace = window.CQ.FormsCoreComponents.editorhooks.doReplace;
 
     window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
         return !irreplaceable.includes(editable.getResourceTypeName());
@@ -119,7 +119,6 @@
 
                             var item = document.createElement('coral-selectlist-item');
                             item.value = cfg.path;
-                            item.classList.add('_coral-Menu-item'); //add item css here
                             item.innerHTML = Granite.I18n.getVar(cfg.title);
 
                             groups[g].items.add(item);
