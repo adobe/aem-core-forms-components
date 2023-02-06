@@ -1,12 +1,11 @@
 {
-  "id":"panel-d29e24f4ca",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
-
-  "items":[
-    {
+  "id": "panel-d29e24f4ca",
+  "fieldType": "panel",
+  "name": "abc",
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
+  ":items": {
+    "textinput" : {
       "id": "textinput-3a2afcbdfd",
       "fieldType": "text-input",
       "name": "abc",
@@ -32,7 +31,8 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
     "richText": false,
     "visible": true,

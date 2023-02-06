@@ -1,37 +1,39 @@
 {
-  "id":"panelcontainer-da2cf7dff5",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
-  "items":[
-    {
-      "id": "textinput-2d7a7460fa",
-      "fieldType": "text-input",
-      "name": "abc",
-      "visible": false,
-      "description": "dummy",
-      "type": "string",
-      "required": false,
-      "label": {
-        "richText": false,
-        "visible": true,
-        "value": "def"
-      },
-      "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
-      },
-      "properties": {
-        "fd:dor": {
-          "dorExclusion": false
+  "id": "panelcontainer-da2cf7dff5",
+  "fieldType": "panel",
+  "name": "abc",
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
+  ":items": {
+      "textinput" : {
+        "id": "textinput-2d7a7460fa",
+        "fieldType": "text-input",
+        "name": "abc",
+        "visible": false,
+        "description": "dummy",
+        "type": "string",
+        "required": false,
+        "readOnly": false,
+        "label": {
+          "richText": false,
+          "visible": true,
+          "value": "def"
         },
-        "fd:path": "/content/rules-panelcontainer/textinput"
-      },
-      ":type": "core/fd/components/form/textinput/v1/textinput"
-    }
-  ],
+        "events": {
+          "custom:setProperty": [
+            "$event.payload"
+          ]
+        },
+        "properties": {
+          "fd:dor": {
+            "dorExclusion": false
+          },
+          "fd:path": "/content/rules-panelcontainer/textinput"
+        },
+        ":type": "core/fd/components/form/textinput/v1/textinput"
+      }
+  },
+  ":itemsOrder": ["textinput"],
   "label": {
     "richText": false,
     "visible": true,

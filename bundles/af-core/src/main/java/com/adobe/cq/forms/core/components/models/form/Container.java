@@ -21,12 +21,15 @@ import java.util.Map;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
+import com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Defines the form {@code Container} Sling Model used for form container component (like fieldset or panel)
@@ -34,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Container extends Base, BaseConstraint, ContainerExporter {
+public interface Container extends Base, BaseConstraint, ContainerExporter, ResponsiveGridExporter {
 
     /**
      * Returns the list of items present inside the container as an array.
@@ -43,6 +46,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonIgnore
     List<? extends ComponentExporter> getItems();
 
     /**
@@ -51,7 +55,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
      */
     @NotNull
     @Override
-    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default Map<String, ? extends ComponentExporter> getExportedItems() {
         return Collections.emptyMap();
     }
@@ -65,7 +69,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     @NotNull
     @Override
-    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default String[] getExportedItemsOrder() {
         return ArrayUtils.EMPTY_STRING_ARRAY;
     }
@@ -78,5 +82,11 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
     @Override
     default String getExportedType() {
         return "";
+    }
+
+    @JsonProperty("appliedCssClassNames")
+    @Nullable
+    default String getAppliedCssClasses() {
+        return null;
     }
 }
