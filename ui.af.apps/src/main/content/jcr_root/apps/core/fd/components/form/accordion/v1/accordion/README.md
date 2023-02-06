@@ -92,6 +92,7 @@ We support replace feature that allows replacing accordion component to any of t
 * Panel
 * Wizard Layout
 
+
 ## Information
 * **Vendor**: Adobe
 * **Version**: v1
