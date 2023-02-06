@@ -408,3 +408,19 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
 });
+
+Cypress.Commands.add("openSidePanelTab", (tab) => {
+    cy.window().then(function(win) {
+        let isSidePanelOpen = win.$("#SidePanel").hasClass("sidepanel-opened");
+        if(!isSidePanelOpen) {
+            cy.get("#Content .toggle-sidepanel").click();
+        }
+    });
+    var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
+    cy.get(tabSelector)
+        .should("be.visible")
+        .click();
+    cy.get(tabSelector + ".is-selected").should("exist");
+})
+
+
