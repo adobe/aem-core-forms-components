@@ -9,11 +9,9 @@
         "id": "textinput-bec585e910",
         "fieldType": "text-input",
         "name": "abc",
-        "visible": false,
         "description": "dummy",
         "type": "string",
         "required": false,
-        "readOnly": false,
         "label": {
           "richText": false,
           "visible": true,
