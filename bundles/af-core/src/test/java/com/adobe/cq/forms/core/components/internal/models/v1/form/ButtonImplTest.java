@@ -89,7 +89,7 @@ public class ButtonImplTest {
         assertEquals(false, button.isVisible());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, buttonMock.isVisible());
+        assertEquals(null, buttonMock.isVisible());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class ButtonImplTest {
         assertEquals(true, button.isEnabled());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, buttonMock.isEnabled());
+        assertEquals(null, buttonMock.isEnabled());
     }
 
     @Test

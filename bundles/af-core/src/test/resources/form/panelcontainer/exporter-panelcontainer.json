@@ -1,12 +1,10 @@
 {
-  "id": "panelcontainer-94f9ea9e7d",
-  "fieldType": "panel",
-  "name": "abc",
-  "visible": true,
-  "description": "dependent names description",
-  "tooltip": "dependent names tooltip",
-  "enabled": true,
-  "items": [
+  "id":"panelcontainer-94f9ea9e7d",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "fieldType":"panel",
+  "name":"abc",
+  "items":[
     {
       "id": "textinput-6c994d85b4",
       "fieldType": "text-input",
@@ -15,8 +13,6 @@
       "description": "dummy",
       "type": "string",
       "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
         "richText": false,
         "visible": true,

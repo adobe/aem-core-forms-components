@@ -20,6 +20,7 @@
                     assistPriority="name"
                     description="&lt;p>panel long&lt;/p>&#xd;&#xa;"
                     enabled="{Boolean}true"
+                    readOnly="{Boolean}false"
                     fieldType="panel"
                     repeatable="{Boolean}true"
                     maxOccur="4"
@@ -39,6 +40,169 @@
                         name="datepicker1662462777790"
                         type="string"/>
             </panelcontainer>
+            <panelcontainer2
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="DisabledPanel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    assistPriority="name"
+                    description="&lt;p>panel long&lt;/p>&#xd;&#xa;"
+                    enabled="{Boolean}false"
+                    readOnly="{Boolean}false"
+                    fieldType="panel"
+                    maxItems="4"
+                    minItems="0"
+                    name="panelcontainer2"
+                    roleAttribute="toolbar"
+                    tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
+                    tooltipVisible="true"
+                    visible="{Boolean}true">
+                <numberInput1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input 1"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1"
+                        type="string"/>
+            </panelcontainer2>
+            <panelcontainer3
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Readonly Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    assistPriority="name"
+                    description="&lt;p>panel long&lt;/p>&#xd;&#xa;"
+                    enabled="{Boolean}true"
+                    readOnly="{Boolean}true"
+                    fieldType="panel"
+                    maxItems="4"
+                    minItems="0"
+                    name="panelcontainer3"
+                    roleAttribute="toolbar"
+                    tooltip="&lt;p>panel short&lt;/p>&#xd;&#xa;"
+                    tooltipVisible="true"
+                    visible="{Boolean}true">
+                <numberInput2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input 2"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberInput2"
+                        type="string"/>
+            </panelcontainer3>
+            <textinput1
+                    jcr:primaryType="nt:unstructured"
+                    jcr:createdBy="admin"
+                    jcr:title="Text Input 1"
+                    jcr:lastModifiedBy="admin"
+                    jcr:created="Fri Jan 13 2023 11:23:56 GMT+0530"
+                    name="textinput1"
+                    jcr:lastModified="Fri Jan 13 2023 11:23:56 GMT+0530"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input">
+                    <fd:rules
+                        jcr:primaryType="nt:unstructured"
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;a&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enabled&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer4.numberinput3&quot;\,&quot;displayName&quot;:&quot;Number Input&quot;\,&quot;type&quot;:&quot;FIELD|NUMBER FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Panel/Number Input/&quot;\,&quot;name&quot;:&quot;numberinput3&quot;\,&quot;parent&quot;:&quot;$form.panelcontainer4&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;True&quot;\,&quot;value&quot;:null}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == &#x27;a&#x27;\, dispatchEvent($form.panelcontainer4.numberinput3\, &#x27;custom:setProperty&#x27;\, {enabled : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},
+                                         {&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;b&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer4&quot;\,&quot;displayName&quot;:&quot;DisabledPanelWithRule&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/DisabledPanelWithRule/&quot;\,&quot;name&quot;:&quot;panelcontainer4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == &#x27;b&#x27;\, dispatchEvent(panelcontainer4\, &#x27;custom:setProperty&#x27;\, {enabled : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},
+                                         {&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;c&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;readOnly&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer5.numberinput4&quot;\,&quot;displayName&quot;:&quot;Number Input In ReadOnly Panel&quot;\,&quot;type&quot;:&quot;FIELD|NUMBER FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/ReadOnlyPanelWithRule/Number Input In ReadOnly Panel/&quot;\,&quot;name&quot;:&quot;numberinput4&quot;\,&quot;parent&quot;:&quot;$form.panelcontainer5&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;False&quot;\,&quot;value&quot;:null}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == &#x27;c&#x27;\, dispatchEvent($form.panelcontainer5.numberinput4\, &#x27;custom:setProperty&#x27;\, {readOnly : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"/>
+                    <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == 'a'\, dispatchEvent($form.panelcontainer4.numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {}),
+                                 if($field == 'b'\, dispatchEvent(panelcontainer4\, 'custom:setProperty'\, {enabled : true()})\, {}),
+                                 if($field == 'c'\, dispatchEvent($form.panelcontainer5.numberinput4\, 'custom:setProperty'\, {readOnly : false()})\, {})]"/>
+            </textinput1>
+            <panelcontainer4
+                    jcr:primaryType="nt:unstructured"
+                    wrapData="false"
+                    jcr:createdBy="admin"
+                    jcr:title="DisabledPanelWithRule"
+                    enabled="false"
+                    jcr:lastModifiedBy="admin"
+                    readOnly="false"
+                    jcr:created="Fri Jan 13 2023 11:11:45 GMT+0530"
+                    name="panelcontainer4"
+                    visible="true"
+                    jcr:lastModified="Tue Jan 17 2023 22:11:25 GMT+0530"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    textIsRich="true">
+                    <numberinput3
+                            jcr:primaryType="nt:unstructured"
+                            jcr:createdBy="admin"
+                            jcr:title="Number Input"
+                            enabled="false"
+                            jcr:lastModifiedBy="admin"
+                            readOnly="false"
+                            jcr:created="Wed Jan 11 2023 14:26:53 GMT+0530"
+                            name="numberinput3"
+                            type="number"
+                            visible="true"
+                            jcr:lastModified="Tue Jan 17 2023 22:11:32 GMT+0530"
+                            sling:resourceType="forms-components-examples/components/form/numberinput"
+                            fieldType="number-input"
+                            textIsRich="true"/>
+                    <textinput2
+                            jcr:primaryType="nt:unstructured"
+                            jcr:createdBy="admin"
+                            jcr:title="Text Input"
+                            enabled="true"
+                            validatePictureClauseMessage=""
+                            jcr:lastModifiedBy="admin"
+                            readOnly="false"
+                            autocomplete="off"
+                            jcr:created="Mon Jan 16 2023 14:28:36 GMT+0530"
+                            name="textinput2"
+                            visible="true"
+                            jcr:lastModified="Mon Jan 16 2023 14:49:00 GMT+0530"
+                            sling:resourceType="forms-components-examples/components/form/textinput"
+                            fieldType="text-input"
+                            textIsRich="true"/>
+            </panelcontainer4>
+            <panelcontainer5
+                    jcr:primaryType="nt:unstructured"
+                    wrapData="false"
+                    jcr:createdBy="admin"
+                    jcr:title="ReadOnlyPanelWithRule"
+                    enabled="true"
+                    jcr:lastModifiedBy="admin"
+                    readOnly="true"
+                    jcr:created="Fri Jan 13 2023 11:11:45 GMT+0530"
+                    name="panelcontainer5"
+                    visible="true"
+                    jcr:lastModified="Tue Jan 17 2023 22:11:25 GMT+0530"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    textIsRich="true">
+                <numberinput4
+                        jcr:primaryType="nt:unstructured"
+                        jcr:createdBy="admin"
+                        jcr:title="Number Input In ReadOnly Panel"
+                        enabled="true"
+                        jcr:lastModifiedBy="admin"
+                        readOnly="true"
+                        jcr:created="Wed Jan 11 2023 14:26:53 GMT+0530"
+                        name="numberinput4"
+                        type="number"
+                        visible="true"
+                        jcr:lastModified="Tue Jan 17 2023 22:11:32 GMT+0530"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        textIsRich="true"/>
+                <textinput3
+                        jcr:primaryType="nt:unstructured"
+                        jcr:createdBy="admin"
+                        jcr:title="Text Input In ReadOnly Panel"
+                        enabled="true"
+                        validatePictureClauseMessage=""
+                        jcr:lastModifiedBy="admin"
+                        readOnly="false"
+                        autocomplete="off"
+                        jcr:created="Mon Jan 16 2023 14:28:36 GMT+0530"
+                        name="textinput2"
+                        visible="true"
+                        jcr:lastModified="Mon Jan 16 2023 14:49:00 GMT+0530"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        textIsRich="true"/>
+            </panelcontainer5>
             <panelcontainer1
                     jcr:lastModified="{Date}2023-01-25T11:10:51.415+05:30"
                     jcr:lastModifiedBy="admin"
