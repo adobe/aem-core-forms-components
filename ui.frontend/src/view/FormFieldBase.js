@@ -230,7 +230,7 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html class based on the existance of a value in a field
+     * updates the html class based on the existence of a value in a field
      */
     updateEmptyStatus() {
         if(!this.getWidget())
