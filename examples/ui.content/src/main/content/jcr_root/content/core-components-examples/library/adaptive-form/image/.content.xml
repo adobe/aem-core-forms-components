@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>An Image component in an Adaptive Form is a way to include images in a form. These images can be used to enhance the overall design of the form, provide additional information, or serve as a visual aid to help users understand the form's purpose. The image component can be used to add a logo, a photo, or a graphic in the form.&lt;/p>"
+                        text="&lt;p>An Image component in an Adaptive Form is a way to include images in a form. These images can be used to enhance the overall design of the form, provide additional information, or serve as a visual aid to help users understand the form's purpose. The image component can be used to add a logo, a photo, or a graphic in the form.&lt;/p>&lt;p>For accessibility, it is important to specify &lt;b>Alternate text&lt;/b> to the image to provide a short, descriptive text alternative for the image, that describes the image to users who cannot see it.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
