@@ -46,7 +46,9 @@ public interface Container extends Base, BaseConstraint, ContainerExporter, Resp
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    // @JsonView(Views.Author.class) // including in author for backward compatibility of DOR
     @JsonIgnore
+    // todo: needs to be removed later, since this is used in DOR today
     List<? extends ComponentExporter> getItems();
 
     /**
