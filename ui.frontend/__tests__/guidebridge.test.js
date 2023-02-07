@@ -14,8 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-import {Constants} from "../src/index.js";
-import FormContainer from "../src/view/FormContainer.js";
+import {Constants} from "../src/index";
+import FormContainer from "../src/view/FormContainer";
 import formJson from './resources/form.json';
 
 
