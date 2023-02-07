@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe( "Form Runtime with Panel Container", () => {
+describe( "Form Runtime with Panel Container - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
     const bemBlock = 'cmp-container';
@@ -271,4 +271,15 @@ describe( "Form Runtime with Panel Container", () => {
         })
 
     });
+})
+
+describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
+    const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/repeatability-tests/basic.html";
+    let formContainer = null;
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
 })
