@@ -15,7 +15,7 @@
  ******************************************************************************/
 (function (window, author, Coral, channel) {
 
-    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select_one', LIST: 'list', DATE: 'date'}
+    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select', LIST: 'list', DATE: 'date'}
     const typeMap = {
         'button': fieldTypes.TEXT,
         'checkboxgroup': fieldTypes.LIST,
