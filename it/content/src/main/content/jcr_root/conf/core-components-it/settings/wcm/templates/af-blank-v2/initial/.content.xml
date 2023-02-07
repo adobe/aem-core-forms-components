@@ -5,6 +5,7 @@
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
             jcr:primaryType="cq:PageContent"
             sling:resourceType="forms-components-examples/components/page"
+            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             guideComponentType="fd/af/templates">
         <guideContainer
                 fd:version="2.1"
