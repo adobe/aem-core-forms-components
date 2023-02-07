@@ -32,39 +32,44 @@ describe('Button - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
-    const testButtonBehaviour = function (buttonEditPathSelector, buttonDrop) {
-        var resetButton = "[value='/apps/forms-components-examples/components/form/actions/reset']",
+    const testButtonBehaviour = function (buttonEditPathSelector, textinputDrop) {
+        var textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
+            textInputTitle = 'Adaptive Form Text Box',
             submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']";
 
         dropButtonInSites();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
-        cy.get(resetButton)
+        cy.get(textInput)
             .should("exist");
         cy.get(submitButton)
             .should("exist");
-        cy.get(resetButton)
+        cy.get(textInput)
             .click();
 
-        // Checking some dynamic behaviours
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-        cy.deleteComponentByPath(buttonDrop);
+        cy.log('checking if text box exist')
+        cy.get('[title="Adaptive Form Text Box"]')
+            .should('exist');
+
+        cy.log('opening component editable toolbar')
+        cy.deleteComponentByTitle(textInputTitle);
     }
 
     context('Open Sites Editor', function () {
-        const pagePath = "/content/core-components-examples/library/adaptive-form/button",
-            buttonEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/button",
+        const buttonPagePath = "/content/core-components-examples/library/adaptive-form/button",
+            buttonEditPath = buttonPagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/button",
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
-            buttonDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formbutton.split("/").pop();
+            textInputPagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+            textinputDrop = textInputPagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(pagePath);
+            cy.openAuthoring(buttonPagePath);
         });
 
         it('open edit dialog of aem forms Button', function () {
-            testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+            testButtonBehaviour(buttonEditPathSelector, textinputDrop, true);
         });
 
     });

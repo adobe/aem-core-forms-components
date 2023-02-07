@@ -62,8 +62,10 @@ describe('component replace - Authoring', function () {
     }
 
     const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop) {
-        var resetButton = "[value='/apps/forms-components-examples/components/form/actions/reset']",
+
+        var textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
             submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']",
+            textInputTitle = 'Adaptive Form Text Box',
 
             horizontalTabs = "[value='/apps/forms-components-examples/components/form/tabsontop']",
             accordion = "[value='/apps/forms-components-examples/components/form/accordion']",
@@ -76,12 +78,16 @@ describe('component replace - Authoring', function () {
 
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == buttonEditPathSelector) {
-            cy.get(resetButton)
+            cy.get(textInput)
                 .should("exist");
             cy.get(submitButton)
                 .should("exist");
-            cy.get(resetButton)
+            cy.get(textInput)
                 .click();
+            cy.get('[title="Adaptive Form Text Box"]')
+                .should('exist');
+            cy.deleteComponentByTitle(textInputTitle);
+            return;
         } else {
             cy.get(horizontalTabs)
                 .should("exist");
