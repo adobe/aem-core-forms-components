@@ -323,7 +323,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
 });
 
-// cypress command to delete component by path
+// cypress command to delete component by title
 Cypress.Commands.add("deleteComponentByTitle", (title) => {
     const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
         componentPathSelector = "[title='"+title+"']",
