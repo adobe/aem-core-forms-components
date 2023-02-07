@@ -23,6 +23,7 @@ Adaptive Form Number input field component written in HTL.
   * html5 number input
 * Custom constraint messages for the above types
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.NumberInput` Sling Model for its Use-object.
@@ -68,6 +69,20 @@ BLOCK cmp-adaptiveform-numberinput
 The following attributes must be added for the initialization of the number-input component in the form view:
 1. `data-cmp-is="adaptiveFormButton"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Date Picker
+* Email Input
+* Reset Button
+* Submit Button
+* Telephone Input
+* Text
+* Text Box
+* Text Input
+* Title
 
 
 ## Information
