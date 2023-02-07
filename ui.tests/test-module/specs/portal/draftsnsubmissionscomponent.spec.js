@@ -43,6 +43,8 @@ describe('Drafts And Submissions - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(componentDropPath);
         });
 
         it('insert drafts and submission component', { retries: 3 }, function () {

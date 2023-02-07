@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import javax.annotation.Nullable;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 import com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
@@ -34,8 +36,9 @@ public interface Field extends Base, BaseConstraint {
      * @return {@code true} if the field should be read-only, {@code false} otherwise
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isReadOnly() {
-        return false;
+    @Nullable
+    default Boolean isReadOnly() {
+        return null;
     }
 
     /**

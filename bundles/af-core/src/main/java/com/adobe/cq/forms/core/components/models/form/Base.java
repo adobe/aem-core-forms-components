@@ -87,8 +87,9 @@ public interface Base extends FormComponent {
      * @return {@code true} if form field should be enabled, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isEnabled() {
-        return true;
+    @Nullable
+    default Boolean isEnabled() {
+        return null;
     }
 
     /**

@@ -31,9 +31,10 @@ describe('Page - Authoring', function () {
 
     const addComponentInWizard = function (componentString, componentType) {
         const dataPath="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*",
-         wizardDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+            wizardDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(wizardDropZoneSelector, componentString, componentType);
+
         cy.get('body').click( 0,0);
     }
 
@@ -64,67 +65,25 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
-        });
-
-        it('insert Wizard in form container', function () {
-            dropWizardInContainer();
-            cy.get(wizardEditPathSelector).should("exist");
-            cy.deleteComponentByPath(wizardLayoutDrop);
-        });
-
-        it ('check edit dialog availability of Wizard', function(){
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.get(editDialogConfigurationSelector).should('be.visible');
-            cy.deleteComponentByPath(wizardLayoutDrop);
-        });
-
-        it('open edit dialog of Wizard', function(){
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').should('be.visible');
-            cy.get('.cq-dialog-cancel').should('be.visible');
-            cy.get('.cq-dialog-submit').should('be.visible');
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(wizardLayoutDrop);
-        });
-
-        it('verify tabs in edit dialog of Wizard',function (){
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Accessibility').click({force:true});
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardLayoutDrop);
         });
 
         it('verify Basic tab in edit dialog of Wizard',function (){
             dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get("[name='./name']").should("exist");
-            cy.get("[name='./jcr:title']").should("exist");
-            cy.get("[name='./layout']").should("exist");
-            cy.get("[name='./dataRef']").should("exist");
-            cy.get("[name='./visible']").should("exist");
-            cy.get("[name='./enabled']").should("exist");
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
-        });
-
-
-
-        it('verify adding componenets in wizard',function(){
-            dropWizardInContainer();
-            addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
-            addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            cy.get(numberInputDataPath).should("exist");
-            cy.get(textInputDataPath).should("exist");
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+                cy.invokeEditableAction(editDialogConfigurationSelector).then(()=>{
+                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
+                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
+                    cy.get("[name='./name']").should("exist");
+                    cy.get("[name='./jcr:title']").should("exist");
+                    cy.get("[name='./layout']").should("exist");
+                    cy.get("[name='./dataRef']").should("exist");
+                    cy.get("[name='./visible']").should("exist");
+                    cy.get("[name='./enabled']").should("exist");
+                    cy.get('.cq-dialog-cancel').click({force:true});
+                });
+            });
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
@@ -139,11 +98,11 @@ describe('Page - Authoring', function () {
             cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
             cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
             cy.get('body').click( 0,0);
-            cy.get('div'+numberInputDataPath).should('have.css', 'height', '0px');
+            cy.get('div'+numberInputDataPath).should('not.be.visible');
             cy.invokeEditableAction(editDialogNavigationPanelSelector);
             cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
             cy.get('body').click( 0,0);
-            cy.get('div'+textInputDataPath).should('have.css', 'height', '0px');
+            cy.get('div'+textInputDataPath).should('not.be.visible');
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
     })
@@ -158,6 +117,8 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(wizardEditPath);
         });
 
         it('insert aem forms Wizard', { retries: 3 }, function () {

@@ -4,8 +4,6 @@
   "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-  "visible":true,
-  "enabled":true,
   "repeatable": true,
   "minOccur":1,
   "maxOccur":10,
@@ -18,8 +16,6 @@
       "description": "dummy",
       "type": "string",
       "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
         "richText": false,
         "visible": true,

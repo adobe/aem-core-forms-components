@@ -44,6 +44,9 @@ describe('Page - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
             cy.openAuthoring(pagePath);
+            // conditionally clean the test, when there are retries
+            cy.cleanTest(aemFormContainerDropPath);
+
         });
 
         it('insert aem forms container component', { retries: 3 }, function () {

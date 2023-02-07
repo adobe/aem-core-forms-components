@@ -33,8 +33,7 @@
       "jcr:title" : "def",
       "hideTitle" : false,
       "fieldType" : "text-input",
-      "description" : "dummy",
-      "visible" : false
+      "description" : "dummy"
     },
     "fd:rules" : {
       "jcr:primaryType": "nt:unstructured",

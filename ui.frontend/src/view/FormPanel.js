@@ -85,4 +85,5 @@ export default class FormPanel extends FormFieldBase {
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
     }
+
 }

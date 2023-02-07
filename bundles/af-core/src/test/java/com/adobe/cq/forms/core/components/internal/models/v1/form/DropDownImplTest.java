@@ -132,7 +132,7 @@ public class DropDownImplTest {
         assertEquals(false, dropdown.isVisible());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, dropdownMock.isVisible());
+        assertEquals(null, dropdownMock.isVisible());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class DropDownImplTest {
         assertEquals(true, dropdown.isEnabled());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, dropdownMock.isEnabled());
+        assertEquals(null, dropdownMock.isEnabled());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class DropDownImplTest {
         assertEquals(false, dropdown.isReadOnly());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, dropdownMock.isReadOnly());
+        assertEquals(null, dropdownMock.isReadOnly());
     }
 
     @Test

@@ -14,7 +14,6 @@
  *  limitations under the License.
  */
 
-
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
@@ -91,6 +90,15 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(textInputDrop+"_copy");
   }
 
+  const getRuleEditorIframe = () => {
+    // get the iframe > document > body
+    // and retry until the body element is not empty
+    return cy
+        .get('iframe#af-rule-editor')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+    }
+
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
@@ -136,5 +144,20 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
+    it('Test z-index of Rule editor iframe', function () {
+      dropTextInputInSites();
+      cy.openSidePanelTab("Content Tree");
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+      cy.invokeEditableAction("[data-action='editexpression']");
+      cy.get("#af-rule-editor").should("be.visible");
+      cy.get("#af-rule-editor")
+          .invoke("css", "z-index")
+          .should("equal", '10');
+      getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+      getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+      cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
+      getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+      cy.deleteComponentByPath(textInputDrop);
+    });
   });
 });

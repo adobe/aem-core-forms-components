@@ -164,7 +164,7 @@ public class TextInputImplTest {
         assertEquals(false, textInput.isVisible());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, textInputMock.isVisible());
+        assertEquals(null, textInputMock.isVisible());
     }
 
     @Test
@@ -173,7 +173,7 @@ public class TextInputImplTest {
         assertEquals(true, textInput.isEnabled());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, textInputMock.isEnabled());
+        assertEquals(null, textInputMock.isEnabled());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class TextInputImplTest {
         assertEquals(false, textInput.isReadOnly());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, textInputMock.isReadOnly());
+        assertEquals(null, textInputMock.isReadOnly());
     }
 
     @Test

@@ -43,6 +43,43 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./redirect'").should("exist"); // should exist
             cy.get("[name='./actionType'").should("exist"); // should exist
             cy.get("[name='./prefillService'").should("exist"); // prefillService option exist in v2
+
+            //open submission tab
+            cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
+            cy.get("[name='./actionType']").should("exist");
+
+            //select email submit action
+            cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
+            cy.get("._coral-Menu-itemLabel").contains('Send email').should('be.visible').click();
+            cy.get("[name='./useExternalEmailTemplate']").should("exist");
+            cy.get("[name='./templatePath']").should("exist");
+            cy.get("[name='./template']").parent().should("have.attr", "hidden");
+
+            cy.get("[name='./useExternalEmailTemplate']").should("exist").first().click();
+            cy.get("[name='./template']").should("exist");
+            cy.get("[name='./templatePath']").parent().should("have.attr", "hidden");
+
+            //select rest endpoint submit action
+            cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
+            cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
+            cy.get("[name='./enableRestEndpointPost']").should("exist");
+            cy.get("[name='./enableRestEndpointPost']").first().click();
+            cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
+
+            //save the configuration
+            cy.get('.cq-dialog-submit').click();
+            cy.wait(1000);
+
+            //check if saved configuration persists
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+            cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
+            cy.get("[name='./actionType'] coral-select-item:selected").first().should(
+                "have.text",
+                "Submit to REST endpoint"
+            );
+            cy.get("[name='./restEndpointPostUrl'").should("exist");
+            cy.get("[name='./restEndpointPostUrl'").invoke('attr', 'value').should('eq', 'http://localhost:4502/some/endpoint');
         };
 
         context("Open Forms Editor", function () {
@@ -59,13 +96,14 @@ describe('Page/Form Authoring', function () {
             it('open edit dialog of adaptive form container component', function () {
                 // click configure action on adaptive form container component
                 checkEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
             });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
         context.skip("Open Sites Editor", function () {
             // we can use these values to log in
-            const pagePath = "/content/core-components-examples/library/adaptive-form/guideContainer",
+            const pagePath = "/content/core-components-examples/library/adaptive-form/container",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
                 formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
                 formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop(),
