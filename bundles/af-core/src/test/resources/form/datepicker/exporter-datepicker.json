@@ -7,7 +7,6 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "string",
-  "required": false,
   "enabled": false,
   "constraintMessages": {
     "type": "incorrect type"
@@ -15,7 +14,6 @@
   "readOnly": true,
   "default": "2022-02-07",
   "label": {
-    "richText": false,
     "visible": true,
     "value": "def"
   },

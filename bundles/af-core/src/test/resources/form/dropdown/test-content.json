@@ -24,7 +24,7 @@
     "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
+    "hideTitle" : true,
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
@@ -39,7 +39,8 @@
     "enum" : [0, 1, 2],
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
-    "maxItems" : 2
+    "maxItems" : 2,
+    "required": true
   },
   "dropdown2" : {
     "jcr:primaryType": "nt:unstructured",

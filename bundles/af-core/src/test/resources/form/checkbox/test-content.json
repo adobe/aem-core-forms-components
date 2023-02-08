@@ -4,7 +4,6 @@
     "sling:resourceType"    : "core/fd/components/form/checkbox/v1/checkbox",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",

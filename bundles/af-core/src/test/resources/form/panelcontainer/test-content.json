@@ -42,6 +42,7 @@
       "hideTitle" : false,
       "fieldType" : "text-input",
       "description" : "dummy",
+      "required": "true",
       "visible" : false
     },
     "fd:rules" : {

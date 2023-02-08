@@ -21,8 +21,6 @@
   "default": "0",
   "screenReaderText": "'custom text'",
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "Radio Button"
   },
   "events": {

@@ -12,6 +12,7 @@
     "visible" : false,
     "readOnly": false,
     "enabled": true,
+    "required": true,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",

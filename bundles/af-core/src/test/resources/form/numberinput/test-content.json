@@ -4,7 +4,7 @@
     "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
+    "hideTitle" : true,
     "description" : "dummy",
     "visible" : false,
     "readOnly": false,

@@ -24,7 +24,6 @@
     "fieldType": "file-input",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",

@@ -7,7 +7,6 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "number",
-  "required": false,
   "enabled": true,
   "constraintMessages": {
     "type": "incorrect type"
@@ -19,8 +18,7 @@
   "exclusiveMaximum": 2000002,
   "screenReaderText": "'Custom screen reader text'",
   "label": {
-    "richText": false,
-    "visible": true,
+    "visible": false,
     "value": "def"
   },
   "events": {

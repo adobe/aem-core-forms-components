@@ -12,9 +12,7 @@
       "visible": false,
       "description": "dummy",
       "type": "string",
-      "required": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -33,8 +31,6 @@
     }
   ],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {

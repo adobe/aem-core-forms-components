@@ -32,8 +32,9 @@ public interface Label {
      * @return {@code true} if label is rich text, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isRichText() {
-        return false;
+    @Nullable
+    default Boolean isRichText() {
+        return null;
     }
 
     /**
@@ -42,8 +43,9 @@ public interface Label {
      * @return {@code true} if label should be visible, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isVisible() {
-        return true;
+    @Nullable
+    default Boolean isVisible() {
+        return null;
     }
 
     /**
