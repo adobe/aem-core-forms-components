@@ -17,7 +17,7 @@
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
-import {FunctionRuntime} from '@aemforms/af-core';
+import {FunctionRuntime} from '@aemforms/af-core'
 
 export default class Utils {
     static #contextPath = "";
