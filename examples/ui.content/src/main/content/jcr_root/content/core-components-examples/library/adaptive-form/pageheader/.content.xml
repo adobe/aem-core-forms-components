@@ -6,7 +6,7 @@
     cq:lastModifiedBy="admin"
     cq:tags="[]"
     cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-    jcr:description="Page Header"
+    jcr:description="Header"
     jcr:primaryType="cq:PageContent"
     jcr:title="Header"
     sling:resourceType="forms-components-examples/components/page">
@@ -24,7 +24,7 @@
           jcr:lastModifiedBy="admin"
           jcr:primaryType="nt:unstructured"
           sling:resourceType="core/wcm/components/text/v2/text"
-          text="&lt;h1>Page Header&lt;sub>v1&lt;/sub>&lt;/h1>"
+          text="&lt;h1>Header&lt;sub>v1&lt;/sub>&lt;/h1>"
           textIsRich="true"/>
         <text
           cq:styleIds="[1544762734201]"
@@ -34,7 +34,7 @@
           jcr:lastModifiedBy="admin"
           jcr:primaryType="nt:unstructured"
           sling:resourceType="core/wcm/components/text/v2/text"
-          text="&lt;p>The Number Input component is a server side component written in HTL, allowing to create Adaptive Form Number Input fields"
+          text="&lt;p>A Header component in an Adaptive Form is a section at the top of the form that typically includes the title, logo, or name of the form. The header can also include other information such as a brief description of the form's purpose, the name of the organization that created the form, or contact information for help with the form. The header is used to give users an overview of the form and provide context for the information they are about to fill out. It is usually used to help users understand the purpose of the form and how to fill it out correctly.&lt;/p>"
           textIsRich="true"/>
         <teaser
           cq:styleIds="[1550165685463]"
@@ -48,6 +48,7 @@
           sling:resourceType="core-components-examples/components/teaser"
           actionsEnabled="false"
           descriptionFromPage="false"
+          fileReference="/content/dam/core-components-examples/library/github-logo.svg"
           linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader"
           textIsRich="true"
           titleFromPage="false"/>
@@ -78,7 +79,7 @@
           jcr:lastModifiedBy="admin"
           jcr:primaryType="nt:unstructured"
           sling:resourceType="core/wcm/components/text/v2/text"
-          text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+          text="&lt;p>A simple Header component.&lt;/p>"
           textIsRich="true"/>
         <demo
           jcr:created="{Date}2018-12-07T12:55:03.496+01:00"

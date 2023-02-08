@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2022 Adobe
+  ~ Copyright 2021 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,26 +14,24 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    jcr:primaryType="cq:EditConfig"
-    cq:actions="[edit,-,copymove,delete,-,insert,-]"
-    cq:dialogMode="floating"
-    cq:layout="editbar"
-    cq:disableTargeting="{Boolean}true">
-    <cq:listeners
-    jcr:primaryType="cq:EditListenersConfig"
-    afterchilddelete="CQ.CoreComponents.panelcontainer.v1.AFTER_CHILD_DELETE"
-    afterchildinsert="CQ.CoreComponents.panelcontainer.v1.AFTER_CHILD_INSERT"
-    afterchildmove="CQ.CoreComponents.panelcontainer.v1.AFTER_CHILD_MOVE"/>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:EditConfig"
+          cq:actions="[edit,-,copymove,delete,-,insert,-]"
+          cq:dialogMode="floating"
+          cq:layout="editbar">
+    <cq:inplaceEditing
+            jcr:primaryType="cq:InplaceEditingConfig"
+            active="{Boolean}true"
+            configPath="inplaceEditingConfig"
+            editorType="title">
+        <inplaceEditingConfig
+                jcr:primaryType="nt:unstructured"
+                titleTag="[h1,h2,h3,h4,h5,h6]"/>
+    </cq:inplaceEditing>
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
-        <editexpression
-            jcr:primaryType="nt:unstructured"
-            handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
-            order="after CONFIGURE"
-            icon="bidRule"
-            text="Edit Rules"/>
         <replace
                 jcr:primaryType="nt:unstructured"
+                condition="CQ.FormsCoreComponents.editorhooks.isReplaceable"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 text="Replace"/>
     </cq:actionConfigs>

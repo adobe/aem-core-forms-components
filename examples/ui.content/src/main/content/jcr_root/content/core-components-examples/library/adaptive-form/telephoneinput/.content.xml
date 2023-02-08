@@ -34,7 +34,7 @@
                   jcr:lastModifiedBy="admin"
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The Telephone Input component is a server side component written in HTL, allowing to create Adaptive Form Telephone Input fields"
+                  text="&lt;p>The Adaptive Form telephone input Core Component allows users to input a telephone number. It can be customized with additional attributes such as &quot;pattern&quot; and &quot;placeholder&quot; to specify the format and description of the telephone number.&lt;/p>&lt;p>The telephone input field is commonly used in contact forms, registration forms, and other forms where a telephone number is required as a means of contact. The telephone input field can also be used to ensure that the user inputs a valid telephone number, as the browser can enforce certain constraints, such as the length and format of the telephone number, based on the &quot;pattern&quot; attribute.&lt;/p>"
                   textIsRich="true"/>
                 <teaser
                   cq:styleIds="[1550165685463]"
@@ -48,7 +48,8 @@
                   sling:resourceType="core-components-examples/components/teaser"
                   actionsEnabled="false"
                   descriptionFromPage="false"
-                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/dev/ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton"
+                  fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/telephoneinput/v1/telephoneinput"
                   textIsRich="true"
                   titleFromPage="false"/>
                 <title_865328580
@@ -78,7 +79,7 @@
                   jcr:lastModifiedBy="admin"
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                  text="&lt;p>Simple Telephone Input component.&lt;/p>"
                   textIsRich="true"/>
                 <demo
                   jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
