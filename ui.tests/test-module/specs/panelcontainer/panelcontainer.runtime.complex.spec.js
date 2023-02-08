@@ -14,15 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 describe( "Form Runtime with Panel Container complex repeatability use cases ", () => {
-
-    const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/complex.html";
     let formContainer = null;
-
-    beforeEach(() => {
-        cy.previewFormWithPanel(pagePath).then(p => {
-            formContainer = p;
-        });
-    });
 
     const computeModelLength = (modelArray) => {
         let modelLength = 0;
@@ -153,41 +145,102 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         return innerPromise;
     };
 
+    const checkSiteInnerRepeatableInstance = (innerInstanceManagerModel, label) => {
+        const allFields = formContainer.getAllFields();
+        const innerInstanceManagerChildrenModel = innerInstanceManagerModel.items;
+        cy.get(`#${innerInstanceManagerChildrenModel[0].id}`).should('exist');
+        cy.get(`#${innerInstanceManagerChildrenModel[1].id}`).should('exist').then(() => {
+            const innerInstanceManager = allFields[innerInstanceManagerModel.id];
+            expect(innerInstanceManager.children.length, label + " Number of children inside inner repeatable panel view should be equal to its child models  ").to.equal(innerInstanceManagerChildrenModel.length);
+            for (let i = 0; i < innerInstanceManagerChildrenModel.length; i++) {
+                expect(innerInstanceManager.children[i].getId(), label + " Inner Repeatable Panel children view Id to be equal for same index panel model Id ").to.equal(innerInstanceManagerChildrenModel[i].id);
+            }
+        });
+    };
+
+    const checkSiteOuterRepeatableInstance = (outerInstancManagerModel, index, label) => {
+        const outerInstanceModel = outerInstancManagerModel.items[index];
+        //4 children, out of which 2 are instance manager
+        const outerInstanceChildrenModel = outerInstanceModel.items;
+        cy.get(`#${outerInstanceChildrenModel[0].id}`).should('exist');
+        cy.get(`#${outerInstanceChildrenModel[1].id}`).should('exist');
+        cy.get(`#${outerInstanceChildrenModel[2].items[0].id}`).should('exist');
+        cy.get(`#${outerInstanceChildrenModel[2].items[1].id}`).should('exist');
+        cy.get(`#${outerInstanceChildrenModel[3].items[0].id}`).should('exist')
+        cy.get(`#${outerInstanceChildrenModel[3].items[1].id}`).should('exist').then(() => {
+            const allFields = formContainer.getAllFields();
+            const outerInstanceManager = allFields[outerInstancManagerModel.id];
+            const outerInstanceView = outerInstanceManager.children[index];
+            const outerInstanceChildrenView = outerInstanceView.children;
+            expect(outerInstanceView.getId(), label + " Outer Repeatable Panel instance view Id to be equal for panel model Id ").to.equal(outerInstanceModel.id);
+            let viewLength = computeViewLength(outerInstanceView.children);
+            let modelLength = computeModelLength(outerInstanceModel.items);
+            expect(viewLength, label + " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(modelLength);
+            for (let i = 0; i < modelLength; i++) {
+                expect(outerInstanceChildrenView[i].getId(), label + " Outer Repeatable Panel children view Id to be equal for same index panel model Id ").to.equal(outerInstanceChildrenModel[i].id);
+            }
+            const innerInstanceManagerModel1 = outerInstanceChildrenModel[2];
+            checkSiteInnerRepeatableInstance(innerInstanceManagerModel1, "First: ");
+            const innerInstanceManagerModel2 = outerInstanceChildrenModel[3];
+            checkSiteInnerRepeatableInstance(innerInstanceManagerModel2, "Second: ");
+        });
+        return cy.get(`#${outerInstanceChildrenModel[3].items[1].id}`);
+    };
+
     it(" Repeatable inside repeatable - min occur of model should be reflected in html, and view child should be established ", () => {
-        const outerInstancManagerModel = formContainer._model.items[0];
-        const outerInstancesModel = outerInstancManagerModel.items;
-        checkInstance(outerInstancesModel, 0).then(() => {
-            // check for all three instances in HTML as per min occur
-            checkInstance(outerInstancesModel, 1).then(() => {
-                checkInstance(outerInstancesModel, 2).then(() => {
-                    const allFields = formContainer.getAllFields();
-                    const outerInstanceManagerView = allFields[outerInstancManagerModel.id];
-                    const outerInstancesView = outerInstanceManagerView.children;
-                    for (let i = 0; i < outerInstancesModel.length; i++) {
-                        const modelId = outerInstancesModel[i].id;
-                        const textInputId = outerInstancesModel[i].items[0].id;
-                        const numberInputId = outerInstancesModel[i].items[1].id;
-                        expect(outerInstancesView[i].getId(), " Outer Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
-                        expect(allFields[textInputId].getId(), " Text input box view with corresponding model Id exists  ").to.equal(textInputId);
-                        expect(outerInstancesView[i].children[0].getId(), " Text input box view Id inside outer repeatable panel to be equal to its model  ").to.equal(textInputId);
-                        expect(allFields[numberInputId].getId(), " Number input box view with corresponding model Id exists  ").to.equal(numberInputId);
-                        expect(outerInstancesView[i].children[1].getId(), " Number input box view Id inside outer repeatable panel to be equal to its model  ").to.equal(numberInputId);
-                        let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
-                        let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
-                        expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
-                    }
-                    expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
-                    checkInstanceHTML(outerInstanceManagerView, 3)
-                        .then(() => {
-                            checkAddRemoveInstance(outerInstanceManagerView, 4, true)
-                                .then(() => {
-                                    checkAddRemoveInstance(outerInstanceManagerView, 3)
-                                        .then(() => {
-                                            //min is 3, can't go below this
-                                            checkAddRemoveInstance(outerInstanceManagerView, 3);
-                                        });
-                                });
-                        });
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/complex.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            formContainer = p;
+            const outerInstancManagerModel = formContainer._model.items[0];
+            const outerInstancesModel = outerInstancManagerModel.items;
+            checkInstance(outerInstancesModel, 0).then(() => {
+                // check for all three instances in HTML as per min occur
+                checkInstance(outerInstancesModel, 1).then(() => {
+                    checkInstance(outerInstancesModel, 2).then(() => {
+                        const allFields = formContainer.getAllFields();
+                        const outerInstanceManagerView = allFields[outerInstancManagerModel.id];
+                        const outerInstancesView = outerInstanceManagerView.children;
+                        for (let i = 0; i < outerInstancesModel.length; i++) {
+                            const modelId = outerInstancesModel[i].id;
+                            const textInputId = outerInstancesModel[i].items[0].id;
+                            const numberInputId = outerInstancesModel[i].items[1].id;
+                            expect(outerInstancesView[i].getId(), " Outer Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
+                            expect(allFields[textInputId].getId(), " Text input box view with corresponding model Id exists  ").to.equal(textInputId);
+                            expect(outerInstancesView[i].children[0].getId(), " Text input box view Id inside outer repeatable panel to be equal to its model  ").to.equal(textInputId);
+                            expect(allFields[numberInputId].getId(), " Number input box view with corresponding model Id exists  ").to.equal(numberInputId);
+                            expect(outerInstancesView[i].children[1].getId(), " Number input box view Id inside outer repeatable panel to be equal to its model  ").to.equal(numberInputId);
+                            let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
+                            let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
+                            expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
+                        }
+                        expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
+                        checkInstanceHTML(outerInstanceManagerView, 3)
+                            .then(() => {
+                                checkAddRemoveInstance(outerInstanceManagerView, 4, true)
+                                    .then(() => {
+                                        checkAddRemoveInstance(outerInstanceManagerView, 3)
+                                            .then(() => {
+                                                //min is 3, can't go below this
+                                                checkAddRemoveInstance(outerInstanceManagerView, 3);
+                                            });
+                                    });
+                            });
+                    });
+                });
+            });
+        });
+    });
+
+    it(" Site container inside and outside Repeatable inside repeatable - min occur of model should be reflected in html, and view child should be established ", () => {
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/site-container-repeatability.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            formContainer = p;
+            const outerInstancManagerModel = formContainer._model.items[0];
+            checkSiteOuterRepeatableInstance(outerInstancManagerModel, 0, "First Outer : ").then(() => {
+                const allFields = formContainer.getAllFields();
+                const outerInstanceManager = allFields[outerInstancManagerModel.id];
+                checkAddRemoveInstance(outerInstanceManager, 2, true).then(() => {
+                    checkSiteOuterRepeatableInstance(outerInstancManagerModel, 1, "Second Outer : ");
                 });
             });
         });
