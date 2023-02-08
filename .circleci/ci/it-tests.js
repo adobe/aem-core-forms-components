@@ -35,8 +35,8 @@ try {
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
         // Download latest add-on release from artifactory
-        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=LATEST -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-addon.far`);
-        extras = ` --install-file ${buildPath}/forms-addon.far`;
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=LATEST -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.zip`);
+        extras += ` --install-file ${buildPath}/forms-linux-addon.zip`;
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     } else if (AEM === 'addon') {
