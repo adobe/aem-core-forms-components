@@ -289,6 +289,8 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
 
     const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormButton"] // BUG WITH THESE(CQ-4351961) ->, "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput"];
 
+    const repeatabilityCount = 2;
+
     const forceFieldError = (field, coreComponent) => {
         switch (coreComponent) {
             case "adaptiveFormTextInput":
@@ -363,6 +365,7 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
             // Check duplicate IDs
             cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
                 instances = [...instances]; // Convert into normal Array to use things like .forEach()
+                expect(instances.length).to.equal(repeatabilityCount, `Repeatability check for ${coreComponent}`); // Repeatability check
                 const root = instances[0]; // main component
 
                 // Compare IDs of main component with all its repeated instances
