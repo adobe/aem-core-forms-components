@@ -98,7 +98,7 @@ Bad title: `Search component has security problems`
 Good title: `[Search] Fulltext search of pages might lead to DDOS`
 
 ##### Description
-See our [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) or [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) for details on what is expected to be described. The same information is available when creating a new issue on GitHub.
+See our [bug report template](.github/ISSUE_TEMPLATE/BUG_REPORT.md) or [feature request template](.github/ISSUE_TEMPLATE/FEATURE_REQUEST.md) for details on what is expected to be described. The same information is available when creating a new issue on GitHub.
 
 ## Contributor License Agreement
 
