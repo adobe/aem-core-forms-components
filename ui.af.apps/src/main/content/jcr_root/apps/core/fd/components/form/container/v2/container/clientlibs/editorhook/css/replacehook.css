@@ -1,0 +1,15 @@
+.cmp-replace-dialog-search {
+    width: 100%;
+}
+
+.cmp-replace-dialog-list {
+    position: static;
+    margin: 0;
+    max-height: 400px;
+    border-radius: 0;
+    overflow-y: auto;
+}
+
+.cmp-replace-dialog-search-components {
+    padding: 0;
+}

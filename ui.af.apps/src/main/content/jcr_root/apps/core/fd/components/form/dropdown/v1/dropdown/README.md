@@ -24,6 +24,7 @@ Adaptive Form Drop-down List field component written in HTL.
   * boolean
   * number
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Dropdown component uses the `com.adobe.cq.forms.core.components.models.form.DropDown` Sling Model for its Use-object.
@@ -66,7 +67,11 @@ BLOCK cmp-adaptiveform-dropdown
 The following attributes must be added for the initialization of the dropdown-list component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
- 
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Radio Button 
  
 ## Information
 * **Vendor**: Adobe

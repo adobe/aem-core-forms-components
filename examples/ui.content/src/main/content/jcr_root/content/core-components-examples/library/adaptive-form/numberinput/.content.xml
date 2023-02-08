@@ -34,7 +34,8 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Number Input component is a server side component written in HTL, allowing to create Adaptive Form Number Input fields"
+                        text="&lt;p>A Number Input component in an Adaptive form is a type of form field that allows users to input numerical values. The component is typically represented by a text field with a up and down arrow for incrementing and decrementing the number.&lt;/p>&lt;p>It can also be used with attributes like min, max, step, value, and more. These attributes can be used to set the minimum and maximum values allowed in the field, the step interval for incrementing or decrementing the number, and the default value of the field.&lt;/p>&lt;p>This component can be used to gather numerical data like age, quantity, and more. and can also be used to perform mathematical operations like addition and  subtraction. This component can also be used to validate the numerical data entered by the user.&lt;/p>&lt;p>For accessibility, it is important to specify 'label' that describes the purpose of the number input field, and what kind of input is expected.&lt;/p>
+"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,6 +49,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                         linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput"
                         textIsRich="true"
                         titleFromPage="false"/>
@@ -78,7 +80,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>Simple Number Input with an &quot;up&quot; and &quot;down&quot; arrow for incrementing and decrementing the number&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"

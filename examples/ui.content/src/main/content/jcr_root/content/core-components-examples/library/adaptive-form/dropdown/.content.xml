@@ -6,9 +6,9 @@
             cq:lastModifiedBy="admin"
             cq:tags="[]"
             cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="Dropdown Component"
+            jcr:description="Dropdown List"
             jcr:primaryType="cq:PageContent"
-            jcr:title="Dropdown Component"
+            jcr:title="Dropdown List"
             sling:resourceType="forms-components-examples/components/page">
         <root
                 jcr:primaryType="nt:unstructured"
@@ -24,7 +24,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>Dropdown Component&lt;sub>v1&lt;/sub>&lt;/h1>"
+                        text="&lt;h1>Dropdown List&lt;sub>v1&lt;/sub>&lt;/h1>"
                         textIsRich="true"/>
                 <text
                         cq:styleIds="[1544762734201]"
@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Dropdown component is a server side component written in HTL, allowing to create Adaptive Form Dropdown field"
+                        text="&lt;p>A drop-down list in an Adaptive form allows users to select one or more option from a list of predefined options. The options can be of type String, Number, or Boolean. Additionally, the drop-down list component can be configured to have different validation and default values.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,6 +48,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                         linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown"
                         textIsRich="true"
                         titleFromPage="false"/>
@@ -78,7 +79,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>A simple dropdown list with two options.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"

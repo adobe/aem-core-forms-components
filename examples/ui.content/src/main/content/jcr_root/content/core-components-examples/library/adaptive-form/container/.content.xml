@@ -1,124 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-          jcr:primaryType="cq:Page">
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
     <jcr:content
-            cq:lastModified="{Date}2020-07-15T13:25:39.732+02:00"
-            cq:lastModifiedBy="admin"
-            cq:tags="[]"
-            cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="Form Container"
-            jcr:primaryType="cq:PageContent"
-            jcr:title="Form Container"
-            sling:resourceType="forms-components-examples/components/page">
+        cq:lastModified="{Date}2023-02-03T10:55:29.178+05:30"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+        jcr:description="Form Container"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Form Container"
+        sling:resourceType="forms-components-examples/components/page">
         <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/foundation/components/responsivegrid">
-            <responsivegrid
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="wcm/foundation/components/responsivegrid">
                 <text_1740702241
-                        cq:styleIds="[1644862132301]"
-                        jcr:created="{Date}2019-02-15T19:05:53.032+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>Form Container&lt;sub>v2&lt;/sub>&lt;/h1>"
-                        textIsRich="true"/>
+                    cq:styleIds="[1644862132301]"
+                    jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;h1>Form Container&lt;sub>v2&lt;/sub>&lt;/h1>"
+                    textIsRich="true"/>
                 <text
-                        cq:styleIds="[1544762734201]"
-                        jcr:created="{Date}2018-12-06T19:11:23.947+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Adaptive Form Container component is a server side component written in HTL, allowing to create Adaptive Form"
-                        textIsRich="true"/>
+                    cq:styleIds="[1544762734201]"
+                    jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>Forms allow website visitors to interact with the website by providing valuable information, which can increase engagement and user satisfaction. An Adaptive Form Container in Adobe Experience Manager (AEM) Sites enables website owners to easily add forms to their pages. This helps facilitate communication between website visitors and the website owner or organization by providing a streamlined way for visitors to provide feedback, make inquiries, and complete other actions.&lt;/p>"
+                    textIsRich="true"/>
                 <teaser
-                        cq:styleIds="[1550165685463]"
-                        jcr:created="{Date}2019-02-14T16:41:54.952+01:00"
-                        jcr:createdBy="admin"
-                        jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
-                        jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Technical Documentation"
-                        sling:resourceType="core-components-examples/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="false"
-                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container"
-                        textIsRich="true"
-                        titleFromPage="false"/>
+                    cq:styleIds="[1550165685463]"
+                    jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                    jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Technical Documentation"
+                    sling:resourceType="core-components-examples/components/teaser"
+                    actionsEnabled="false"
+                    descriptionFromPage="false"
+                    fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                    linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container"
+                    textIsRich="true"
+                    titleFromPage="false"/>
                 <title_865328580
-                        cq:styleIds="[1544759664489]"
-                        jcr:created="{Date}2018-12-06T19:22:23.729+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Examples"
-                        sling:resourceType="core/wcm/components/title/v2/title"
-                        type="h2"/>
+                    cq:styleIds="[1544759664489]"
+                    jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Examples"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h2"/>
                 <title_290384408
-                        cq:styleIds="[1544759676459]"
-                        jcr:created="{Date}2018-12-06T19:22:48.620+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Standard"
-                        sling:resourceType="core/wcm/components/title/v2/title"
-                        type="h3"/>
+                    cq:styleIds="[1544759676459]"
+                    jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Standard"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h3"/>
                 <text_1337506761
-                        jcr:created="{Date}2018-12-06T19:23:41.968+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
-                        textIsRich="true"/>
+                    jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>Adaptive Form Container with Text Input, Radio Button and Submit Button as child elements.&lt;/p>"
+                    textIsRich="true"/>
                 <demo
-                        jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="forms-components-examples/components/demo">
+                    jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="forms-components-examples/components/demo">
                     <component
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/demo/component">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core-components-examples/components/demo/component">
                         <formContainer
-                                jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                            jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/form/container"
+                            fieldType="form"
+                            formModelDocumentPath="/content/dam/core-components-examples/library/forms-components/sample.json"
+                            thankYouMessage="Thank you for submitting the form">
+                            <emailinput
+                                jcr:lastModified="{Date}2023-02-03T10:55:29.169+05:30"
                                 jcr:lastModifiedBy="admin"
                                 jcr:primaryType="nt:unstructured"
-                                fieldType="form"
-                                thankYouMessage="Thank you for submitting the form"
-                                formModelDocumentPath="/content/dam/core-components-examples/library/forms-components/sample.json"
-                                sling:resourceType="forms-components-examples/components/form/container"/>
+                                jcr:title="E-Mail"
+                                sling:resourceType="forms-components-examples/components/form/emailinput"
+                                enabled="{Boolean}true"
+                                fieldType="text-input"
+                                name="emailinput1675401458032"
+                                readOnly="{Boolean}false"
+                                textIsRich="[true,true]"
+                                visible="{Boolean}true"/>
+                            <radiobutton
+                                jcr:lastModified="{Date}2023-02-03T10:49:19.540+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Newsletter"
+                                sling:resourceType="forms-components-examples/components/form/radiobutton"
+                                enabled="{Boolean}true"
+                                enum="[0,1]"
+                                enumNames="[Do you want to get notified about News and Sales?,No]"
+                                fieldType="radio-group"
+                                name="radiobutton1675401513976"
+                                orientation="vertical"
+                                readOnly="{Boolean}false"
+                                textIsRich="[true,true]"
+                                type="string"
+                                visible="{Boolean}true"/>
+                            <submit
+                                jcr:lastModified="{Date}2023-02-03T10:50:02.247+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Register"
+                                sling:resourceType="forms-components-examples/components/form/actions/submit"
+                                buttonType="submit"
+                                dorExclusion="true"
+                                fieldType="button"
+                                name="submit1675401595563">
+                                <fd:rules
+                                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                    jcr:primaryType="nt:unstructured"/>
+                                <fd:events
+                                    jcr:primaryType="nt:unstructured"
+                                    click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                            </submit>
+                        </formContainer>
                     </component>
                     <info
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/tabs">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core-components-examples/components/tabs">
                         <properties
-                                cq:panelTitle="Properties"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component"/>
+                            cq:panelTitle="Properties"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/properties"
+                            reference="../../component"/>
                         <markup
-                                cq:panelTitle="Markup"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component"/>
+                            cq:panelTitle="Markup"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/markup"
+                            reference="../../component"/>
                         <json
-                                cq:panelTitle="JSON"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component"/>
+                            cq:panelTitle="JSON"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/json"
+                            reference="../../component"/>
                     </info>
                 </demo>
             </responsivegrid>

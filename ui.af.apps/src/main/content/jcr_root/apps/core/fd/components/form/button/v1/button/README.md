@@ -21,6 +21,7 @@ Adaptive Form Button component written in HTL.
 
 * Accessibility friendly 
 * Custom description/tooltip for help
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
@@ -55,6 +56,20 @@ BLOCK cmp-adaptiveform-button
 The following attributes must be added for the initialization of the button component in the form view:  
  1. `data-cmp-is="adaptiveFormButton"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Date Picker
+* Email Input
+* Number Input
+* Reset Button
+* Submit Button
+* Telephone Input
+* Text
+* Text Box
+* Text Input
+* Title
  
 ## Information
 * **Vendor**: Adobe

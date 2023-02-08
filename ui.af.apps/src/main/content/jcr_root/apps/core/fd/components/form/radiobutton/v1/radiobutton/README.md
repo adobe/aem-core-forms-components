@@ -25,6 +25,7 @@ Adaptive form Radio Button component written in HTL.
     * number
 * Alignment of Options (`horizontal` or `vertical`)
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Radio Button component uses the `com.adobe.cq.forms.core.components.models.form.RadioButton` Sling Model for its Use-object.
@@ -72,6 +73,11 @@ BLOCK cmp-adaptiveform-radiobutton
 The following attributes must be added for the initialization of the radio-button component in the form view:
 1. `data-cmp-is="adaptiveFormRadioButton"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Drop down
 
 
 ## Information

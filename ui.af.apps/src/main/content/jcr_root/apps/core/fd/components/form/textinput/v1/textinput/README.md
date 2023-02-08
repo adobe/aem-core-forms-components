@@ -24,6 +24,7 @@ Adaptive Form Text input field component written in HTL.
   * textarea
 * Custom constraint messages for the above types
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
@@ -57,6 +58,20 @@ BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__longdescription
     ELEMENT cmp-adaptiveform-textinput__errormessage
 ```
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Date Picker
+* Email Input
+* Number Input
+* Reset Button
+* Submit Button
+* Telephone Input
+* Text
+* Text Box
+* Title
 
 ## JavaScript Data Attribute Bindings
 
