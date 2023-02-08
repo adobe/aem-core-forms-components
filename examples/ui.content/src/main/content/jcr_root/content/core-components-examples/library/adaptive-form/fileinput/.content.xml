@@ -6,7 +6,7 @@
             cq:lastModifiedBy="admin"
             cq:tags="[]"
             cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="File Input"
+            jcr:description="File Attachment"
             jcr:primaryType="cq:PageContent"
             jcr:title="File Attachment"
             sling:resourceType="forms-components-examples/components/page">
@@ -24,7 +24,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>File Input&lt;sub>v1&lt;/sub>&lt;/h1>"
+                        text="&lt;h1>File Attachment&lt;sub>v1&lt;/sub>&lt;/h1>"
                         textIsRich="true"/>
                 <text
                         cq:styleIds="[1544762734201]"
@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The File Input component is a server side component written in HTL, allowing to create Adaptive Form File Input fields"
+                        text="&lt;p>A file attachment component in an Adaptive Form allows users to select and upload files from their local computer or device. The file attachment component can be configured to allow specific file types, size limits and multiple attachments.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,6 +48,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                         linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput"
                         textIsRich="true"
                         titleFromPage="false"/>
@@ -78,7 +79,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p> A File Attachment component which allows users to upload files from their devices.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
