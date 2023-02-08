@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2023 Adobe
+ * Copyright 2022 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-const esModules = ['@adobe/json-formula'].join('|');
-
-module.exports = {
-    transformIgnorePatterns: [`node_modules/(?!${esModules})`],
-    transform: {
-        '^.+\\.(js|jsx)$': 'babel-jest'
-    },
-    "moduleFileExtensions": [
-        "js"
-    ],
-    "moduleDirectories": [
-        "node_modules",
-        "src",
-        "__tests__/mocks"
-    ],
-    "testEnvironment": "jsdom"
-};
+module.exports = {presets: ['@babel/preset-env']}
