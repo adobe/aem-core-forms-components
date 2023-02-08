@@ -282,7 +282,12 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
         })
     });
 
-    const components = ["adaptiveFormTextInput"];
+    const zip = (a, b) => a.map((k, i) => [k, b[i]]); // same as python's zip function
+
+    // List of IDs that need to be ignored during duplicate test
+    const exceptionIDsList  = ["emptyValue"] // dropdown has a hardcoded id="emptyValue" in all of its first <option> instances
+
+    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormButton"] // BUG WITH THESE(CQ-4351961) ->, "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput"];
 
     const forceFieldError = (field, coreComponent) => {
         switch (coreComponent) {
@@ -304,22 +309,65 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
             case "adaptiveFormFileInput":
                 cy.wrap(field).attachFile("empty.pdf");
                 break;
+            case "adaptiveFormDatePicker":
+                cy.wrap(field).find("input").type("2022-12-23").clear().blur();
+                break;
+            case "adaptiveFormButton":
+                cy.wrap(field).find("button").eq(0).click();
+                break;
             default: break;
         }
     };
 
+
+    const checkNonDuplicateIDs = (root, instance) => {
+        if(root?.id !== '' && !(exceptionIDsList.includes(root.id))) {
+            expect(root?.id).to.not.equal(instance?.id, `Ids generated should be different`) // redundant but good for debugging as this will show up in the UI
+            return root?.id !== instance?.id;
+        }
+        return true;
+    };
+
+    const testNonDuplicateIDs = (root, instance) => {
+        expect(root?.children.length).to.equal(instance?.children.length, `The number of children for this component must be the same as the repeated instance`) // redundant but will make debugging easier later on
+        if (root?.children.length !== instance?.children.length)
+            return false;
+
+        if(!checkNonDuplicateIDs(root, instance))
+            return false;
+
+        for(let [rootChild, instanceChild] of zip([...root.children], [...instance.children])) {
+            if(!checkNonDuplicateIDs(rootChild, instanceChild))
+                return false;
+
+            // Check for nested elements
+            if(rootChild.children.length > 0 && instanceChild.children.length > 0) {
+                for (let [rootGrandchild, instanceGrandChild] of zip([...rootChild.children], [...instanceChild.children]))
+                    if(!testNonDuplicateIDs(rootGrandchild, instanceGrandChild))
+                        return false;
+            }
+        }
+        return true;
+    };
+
     components.forEach((coreComponent) => {
         it(`Check if ${coreComponent}'s repeated instances have non duplicate IDs`,() => {
+
+            // Force an error to be shown for each component so that the errorMessage IDs can also be checked
             cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
-                // Force an error to be shown for each component so that the errorMessage IDs can also be checked
                 [...instances].forEach((instance) => {
                     forceFieldError(instance, coreComponent);
                 });
             });
 
             // Check duplicate IDs
+            cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
+                instances = [...instances]; // Convert into normal Array to use things like .forEach()
+                const root = instances[0]; // main component
 
-
+                // Compare IDs of main component with all its repeated instances
+                instances.slice(1).forEach((instance) => expect(testNonDuplicateIDs(root, instance), `${coreComponent} repeated instance IDs must not match`).to.be.true);
+            });
         });
     });
 });
