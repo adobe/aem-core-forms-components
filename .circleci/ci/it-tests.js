@@ -22,6 +22,7 @@ ci.stage('Project Configuration');
 const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
+const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 
 try {
@@ -33,6 +34,9 @@ try {
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
+        // Download latest add-on release from artifactory
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=LATEST -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-addon.far`);
+        extras = '--install-file forms-addon.far';
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     } else if (AEM === 'addon') {
@@ -118,8 +122,8 @@ try {
         ci.sh('curl -s https://codecov.io/bash | bash -s -- -c -F integration -f target/site/jacoco/jacoco.xml');
     };
 
-    //ci.dir('bundles/core', createCoverageReport);
-    //ci.dir('examples/bundle', createCoverageReport);
+    ci.dir('bundles/core', createCoverageReport);
+    ci.dir('examples/core', createCoverageReport);
 
 } finally { // Always download logs from AEM container
     ci.sh('mkdir logs');
