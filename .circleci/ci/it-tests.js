@@ -87,8 +87,6 @@ try {
             ci.sh(`mvn clean install -PautoInstallPackage`);
         });
 
-        // test-results folder will store the test-timing data for parallelising test-suites
-        ci.sh('mkdir -p test-results');
 
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
@@ -136,4 +134,7 @@ try {
     ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
     ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
     });
+    // test-results folder will store the test-timing data for parallelising test-suites
+    ci.sh('mkdir test-results');
+    
 }
