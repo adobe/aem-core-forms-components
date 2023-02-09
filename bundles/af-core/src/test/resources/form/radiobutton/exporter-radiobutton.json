@@ -13,7 +13,6 @@
     "required": "This is a required field",
     "validationExpression": "Required Expression"
   },
-  "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
     "Item 1",

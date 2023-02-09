@@ -27,7 +27,8 @@
             granite:class="cmp-tabs__editor"
             jcr:primaryType="nt:unstructured">
         <items jcr:primaryType="nt:unstructured">
-            <tabs jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  granite:class="cmp-adaptiveform-base__editdialogbasic">
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                             jcr:primaryType="nt:unstructured"

@@ -130,7 +130,7 @@ public class NumberInputImplTest {
         assertEquals(false, numberInput.isVisible());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, numberInputMock.isVisible());
+        assertEquals(null, numberInputMock.isVisible());
     }
 
     @Test
@@ -139,7 +139,7 @@ public class NumberInputImplTest {
         assertEquals(true, numberInput.isEnabled());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, numberInputMock.isEnabled());
+        assertEquals(null, numberInputMock.isEnabled());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class NumberInputImplTest {
         assertEquals(false, numberInput.isReadOnly());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, numberInputMock.isReadOnly());
+        assertEquals(null, numberInputMock.isReadOnly());
     }
 
     @Test

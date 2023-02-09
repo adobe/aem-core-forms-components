@@ -23,6 +23,7 @@ Title component written in HTL, allowing to define a section heading.
 * Automatic reading of the page title from the current page, if no title text is defined
 * HTML element configuration (`h1` - `h6`)
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Title component uses the `com.adobe.cq.wcm.core.components.models.Title` Sling model as its Use-object.
@@ -43,6 +44,20 @@ to the value defined by the component's policy
 ## Client Libraries
 The component leverages `core.wcm.components.title.v2.editor` editor client library category that includes JavaScript
 handling for dialog interaction. It is already included by its edit and design dialogs.
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Date Picker
+* Email Input
+* Number Input
+* Reset Button
+* Submit Button
+* Telephone Input
+* Text
+* Text Box
+* Text Input
 
 ## BEM Description
 ```

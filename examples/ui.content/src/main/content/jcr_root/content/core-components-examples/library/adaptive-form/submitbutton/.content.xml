@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Submit Button component is a server side component written in HTL, allowing to create Submit Button"
+                        text="&lt;p>A Submit button in an Adaptive Form is a button that allows users to submit the form data to a server for processing. When the submit button is clicked, the form data is sent to the server, where it can be stored, processed, or used for various purposes such as sending an email or updating a database.&lt;/p>&lt;p>The Submit button is typically the final step in the form-filling process, and is used to initiate the process of sending the form data to the server.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,7 +48,8 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
-                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accprdion/v1/accordion"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/submit/v1/submit"
                         textIsRich="true"
                         titleFromPage="false"/>
                 <title_865328580
@@ -78,7 +79,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>A simple Submit Button.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
@@ -97,7 +98,6 @@
                           sling:resourceType="forms-components-examples/components/form/container">
                             <container
                               jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
                               sling:resourceType="forms-components-examples/components/demo/component">
                                 <submitbutton_demo
                                   jcr:title="Submit"

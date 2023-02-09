@@ -323,6 +323,26 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
 });
 
+// cypress command to delete component by title
+Cypress.Commands.add("deleteComponentByTitle", (title) => {
+    const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
+        componentPathSelector = "[title='"+title+"']",
+        overlayRepositionEvent = siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED;
+    // intialize the event handler for editableUpdateEvent
+    cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
+    // intialize the event handler for overlay overlayRepositionEvent event
+    cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+    // open editable toolbar
+    cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
+    // click the delete action
+    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+    // check if delete dialog is seen and click on yes
+    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
+    // wait for event to complete to signify deletion is complete
+    cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
+    cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
+});
+
 
 // cypress command to insert component
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
@@ -408,3 +428,19 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
 });
+
+Cypress.Commands.add("openSidePanelTab", (tab) => {
+    cy.window().then(function(win) {
+        let isSidePanelOpen = win.$("#SidePanel").hasClass("sidepanel-opened");
+        if(!isSidePanelOpen) {
+            cy.get("#Content .toggle-sidepanel").click();
+        }
+    });
+    var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
+    cy.get(tabSelector)
+        .should("be.visible")
+        .click();
+    cy.get(tabSelector + ".is-selected").should("exist");
+})
+
+

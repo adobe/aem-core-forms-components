@@ -124,6 +124,8 @@
                 <configuration>
                     <excludes>
                         <exclude>frontend-maven-plugin/**/*</exclude>
+                        <exclude>it/**/*</exclude>
+                        <exclude>ui.tests/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
