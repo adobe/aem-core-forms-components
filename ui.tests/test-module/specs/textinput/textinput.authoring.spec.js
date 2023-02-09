@@ -144,7 +144,8 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
-    it('Test z-index of Rule editor iframe', function () {
+    // todo: dependent on latest far
+    it.skip('Test z-index of Rule editor iframe', function () {
       dropTextInputInSites();
       cy.openSidePanelTab("Content Tree");
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
