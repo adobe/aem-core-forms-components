@@ -64,6 +64,11 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
+
+    if (AEM === 'classic') {
+        // add a sleep for 10 mins, add-on takes times to come up
+        ci.sh(`sleep 10m`);
+    }
 });
 
     // Run integration tests
