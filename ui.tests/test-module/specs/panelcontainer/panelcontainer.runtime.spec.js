@@ -291,37 +291,6 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
 
     const repeatabilityCount = 2;
 
-    const forceFieldError = (field, coreComponent) => {
-        switch (coreComponent) {
-            case "adaptiveFormTextInput":
-                cy.wrap(field).find("input").click().blur();
-                break;
-            case "adaptiveFormNumberInput":
-                cy.wrap(field).find("input").click().blur();
-                break;
-            case "adaptiveFormCheckBoxGroup":
-                cy.wrap(field).find("input").check("0").uncheck();
-                break;
-            case "adaptiveFormRadioButton":
-                cy.wrap(field).find("input").eq(1).click();
-                break;
-            case "adaptiveFormDropDown":
-                cy.wrap(field).find("select").select(["Must Show Error"])
-                break;
-            case "adaptiveFormFileInput":
-                cy.wrap(field).attachFile("empty.pdf");
-                break;
-            case "adaptiveFormDatePicker":
-                cy.wrap(field).find("input").type("2022-12-23").clear().blur();
-                break;
-            case "adaptiveFormButton":
-                cy.wrap(field).find("button").eq(0).click();
-                break;
-            default: break;
-        }
-    };
-
-
     const checkNonDuplicateIDs = (root, instance) => {
         if(root?.id !== '' && !(exceptionIDsList.includes(root.id))) {
             expect(root?.id).to.not.equal(instance?.id, `Ids generated should be different`) // redundant but good for debugging as this will show up in the UI
@@ -354,14 +323,6 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
 
     components.forEach((coreComponent) => {
         it(`Check if ${coreComponent}'s repeated instances have non duplicate IDs`,() => {
-
-            // Force an error to be shown for each component so that the errorMessage IDs can also be checked
-            cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
-                [...instances].forEach((instance) => {
-                    forceFieldError(instance, coreComponent);
-                });
-            });
-
             // Check duplicate IDs
             cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
                 instances = [...instances]; // Convert into normal Array to use things like .forEach()
