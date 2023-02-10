@@ -104,7 +104,6 @@ export default class FormFieldBase extends FormField {
         this.updateVisible(state.visible)
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
-        this.updateLabel(state.label)
         this.initializeHelpContent(state);
     }
 
