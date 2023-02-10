@@ -22,6 +22,7 @@ ci.stage('Project Configuration');
 const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
+const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 
 try {
@@ -33,6 +34,9 @@ try {
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
+        // Download latest add-on release from artifactory
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=6.0.888 -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+        extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     } else if (AEM === 'addon') {
@@ -60,6 +64,14 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
+
+    if (AEM === 'classic') {
+        // add a sleep for 5 mins, add-on takes times to come up
+        ci.sh(`sleep 5m`);
+        // restart the AEM insatnce
+        ci.sh(`./qp.sh stop --id author`);
+        ci.sh(`./qp.sh start --id author`);
+    }
 });
 
     // Run integration tests
@@ -118,8 +130,8 @@ try {
         ci.sh('curl -s https://codecov.io/bash | bash -s -- -c -F integration -f target/site/jacoco/jacoco.xml');
     };
 
-    //ci.dir('bundles/core', createCoverageReport);
-    //ci.dir('examples/bundle', createCoverageReport);
+    ci.dir('bundles/core', createCoverageReport);
+    ci.dir('examples/core', createCoverageReport);
 
 } finally { // Always download logs from AEM container
     ci.sh('mkdir logs');
