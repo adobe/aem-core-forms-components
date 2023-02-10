@@ -70,8 +70,6 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
             ]
         }
     ];
-    const outputDataAll = "{\"panelcontainer1675677605384\":[{\"textinput1675677621293\":\"Green\",\"numberinput1675677627103\":\"70\",\"panelcontainer1675683107466\":[{\"dropdown1675683126156\":\"yes\"},{\"dropdown1675683126156\":\"no\"},{\"dropdown1675683126156\":\"yes\"}],\"panelcontainer1675683023882\":[{\"datepicker1675683030738\":\"2023-02-24\",\"emailinput1675683037592\":\"test@test.com\"},{\"datepicker1675683030738\":\"2023-02-25\",\"emailinput1675683037592\":\"blue@blue.com\"},{\"datepicker1675683030738\":\"2023-02-14\",\"emailinput1675683037592\":\"qw@qw.com\"}]},{\"textinput1675677621293\":\"Orange\",\"numberinput1675677627103\":\"98\",\"panelcontainer1675683107466\":[{\"dropdown1675683126156\":\"no\"},{\"dropdown1675683126156\":\"yes\"},{\"dropdown1675683126156\":\"no\"}],\"panelcontainer1675683023882\":[{\"datepicker1675683030738\":\"2023-02-28\",\"emailinput1675683037592\":\"ty@ty.com\"},{\"datepicker1675683030738\":\"2023-03-04\",\"emailinput1675683037592\":\"p@p.com\"}]},{\"textinput1675677621293\":\"Horse\",\"numberinput1675677627103\":\"54\",\"panelcontainer1675683107466\":[{\"dropdown1675683126156\":\"yes\"},{\"dropdown1675683126156\":\"no\"}],\"panelcontainer1675683023882\":[{\"datepicker1675683030738\":\"2023-03-11\",\"emailinput1675683037592\":\"try@y.com\"},{\"datepicker1675683030738\":\"2023-02-28\",\"emailinput1675683037592\":\"n@n.com\"}]}]}";
-    const outputData = "{\"panelcontainer1675677605384\":[{\"textinput1675677621293\":\"Green\",\"numberinput1675677627103\":\"70\",\"panelcontainer1675683107466\":[{\"dropdown1675683126156\":\"yes\"},{\"dropdown1675683126156\":\"no\"},{\"dropdown1675683126156\":\"yes\"}],\"panelcontainer1675683023882\":[{\"datepicker1675683030738\":\"2023-02-24\",\"emailinput1675683037592\":\"test@test.com\"},{\"datepicker1675683030738\":\"2023-02-25\",\"emailinput1675683037592\":\"blue@blue.com\"},{\"datepicker1675683030738\":\"2023-02-14\",\"emailinput1675683037592\":\"qw@qw.com\"}]},{\"textinput1675677621293\":\"Orange\",\"numberinput1675677627103\":\"98\",\"panelcontainer1675683107466\":[{\"dropdown1675683126156\":\"no\"},{\"dropdown1675683126156\":\"yes\"},{\"dropdown1675683126156\":\"no\"}],\"panelcontainer1675683023882\":[{\"datepicker1675683030738\":\"2023-02-28\",\"emailinput1675683037592\":\"ty@ty.com\"},{\"datepicker1675683030738\":\"2023-03-04\",\"emailinput1675683037592\":\"p@p.com\"}]}]}";
 
     const fillInput = (fieldModel, fillValue) => {
         cy.get(`#${fieldModel.id}`).find("input").type(fillValue).blur().then(x => {
@@ -372,11 +370,15 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                                 fillFields(outerInstanceManager, 1).then(() => {
                                     fillFields(outerInstanceManager, 2).then(() => {
                                         cy.getFormData().then((result) => {
-                                            expect(result.data.data).to.equal(outputDataAll);
+                                            cy.fixture('panelcontainer/siteContainerSubmissionAdd.json').then((outputData) => {
+                                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                            });
                                             //check data after removing instance
                                             checkAddRemoveInstance(outerInstanceManager, 2).then(() => {
                                                 cy.getFormData().then((result) => {
-                                                    expect(result.data.data).to.equal(outputData);
+                                                    cy.fixture('panelcontainer/siteContainerSubmissionRemove.json').then((outputData) => {
+                                                        expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                                    });
                                                 });
                                             });
                                         });
@@ -392,9 +394,6 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
 
     it("Check submission data: With Bank schema, Repeatable inside repeatable panel", () =>{
         const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/bank-form.html";
-        const dataOutput = "{\"Offer\":{\"type\":\"1 Check\",\"amount\":\"78\"},\"Customer\":{\"education\":[{}]},\"Validation\":{},\"PersonalLoan\":{\"customer\":{\"education\":[{}]},\"employment\":{},\"offer\":{},\"attachments\":[null],\"homeAddress\":{},\"officeAddress\":{},\"witness\":[{\"firstName\":\"w1\",\"lastName\":\"w11\",\"education\":[{\"sessionEncryptedValue\":\"ssn\",\"grade\":\"B\",\"degree\":\"phd\",\"fieldOfStudy\":\"science\",\"instituteName\":\"dce\"},{\"sessionEncryptedValue\":\"ss2\",\"grade\":\"A\",\"degree\":\"b.tech\",\"fieldOfStudy\":\"computer\"}],\"gender\":\"Female\"},{\"firstName\":\"w2\",\"lastName\":\"w22\",\"education\":[{\"sessionEncryptedValue\":\"ss3\",\"grade\":\"C\",\"degree\":\"PGCCL\",\"fieldOfStudy\":\"Law\"}],\"gender\":\"Male\"},{\"firstName\":\"w3\",\"lastName\":\"w33\",\"education\":[{\"instituteName\":\"DU\"}],\"gender\":\"Female\"}]},\"Document\":{}}";
-        const dataOutput1 = "{\"Offer\":{\"type\":\"1 Check\",\"amount\":\"78\"},\"Customer\":{\"education\":[{}]},\"Validation\":{},\"PersonalLoan\":{\"customer\":{\"education\":[{}]},\"employment\":{},\"offer\":{},\"attachments\":[null],\"homeAddress\":{},\"officeAddress\":{},\"witness\":[{\"firstName\":\"w1\",\"lastName\":\"w11\",\"education\":[{\"sessionEncryptedValue\":\"ssn\",\"grade\":\"B\",\"degree\":\"phd\",\"fieldOfStudy\":\"science\",\"instituteName\":\"dce\"},{\"sessionEncryptedValue\":\"ss2\",\"grade\":\"A\",\"degree\":\"b.tech\",\"fieldOfStudy\":\"computer\"}],\"gender\":\"Female\"},{\"firstName\":\"w2\",\"lastName\":\"w22\",\"education\":[{\"sessionEncryptedValue\":\"ss3\",\"grade\":\"C\",\"degree\":\"PGCCL\",\"fieldOfStudy\":\"Law\"}],\"gender\":\"Male\"}]},\"Document\":{}}";
-        const dataOutput2 = '{"Offer":{"type":"1 Check","amount":"78"},"Customer":{"education":[{}]},"Validation":{},"PersonalLoan":{"customer":{"education":[{}]},"employment":{},"offer":{},"attachments":[null],"homeAddress":{},"officeAddress":{},"witness":[{"firstName":"w1","lastName":"w11","education":[{"sessionEncryptedValue":"ssn","grade":"B","degree":"phd","fieldOfStudy":"science","instituteName":"dce"},{"sessionEncryptedValue":"ss2","grade":"A","degree":"b.tech","fieldOfStudy":"computer"}],"gender":"Female"},{"firstName":"w2","lastName":"w22","education":[],"gender":"Male"}]},"Document":{}}';
         cy.previewFormWithPanel(pagePath).then(p => {
             formContainer = p;
             const formContainerModelItems = formContainer._model.items;
@@ -455,16 +454,22 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                         return cy.get(`#${edu12[9].id}`);
                     }).then(() => {
                         cy.getFormData().then((result) => {
-                            expect(result.data.data).to.equal(dataOutput);
+                            cy.fixture('panelcontainer/bankSubmissionAll.json').then((outputData) => {
+                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                            });
                             //check data after removing instance
                             checkAddRemoveInstance(witnessIM, 2).then(() => {
                                 cy.getFormData().then((result) => {
-                                    expect(result.data.data).to.equal(dataOutput1);
+                                    cy.fixture('panelcontainer/bankSubmissionOuterInstanceRemoved.json').then((outputData) => {
+                                        expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                    });
                                     const secondEducationIMModel = secondInstanceModelItems[2];
                                     const secondEducationIM = allFields[secondEducationIMModel.id];
                                     checkAddRemoveInstance(secondEducationIM, 0).then(() => {
                                         cy.getFormData().then((result) => {
-                                            expect(result.data.data).to.equal(dataOutput2);
+                                            cy.fixture('panelcontainer/bankSubmissionInnerInstanceRemoved.json').then((outputData) => {
+                                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                            });
                                         });
                                     });
                                 });
