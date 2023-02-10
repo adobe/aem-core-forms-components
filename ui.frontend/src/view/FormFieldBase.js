@@ -105,9 +105,11 @@ export default class FormFieldBase extends FormField {
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        this.registerWidgetEventListeners();
     }
 
     /**
+     * Initialise Hint ('?') and long description.
      * Initialise Hint ('?') and long description.
      * @param state
      */
@@ -116,6 +118,38 @@ export default class FormFieldBase extends FormField {
         if (this.getDescription()) {
             this.#addHelpIconHandler(state);
         }
+    }
+
+    registerWidgetEventListeners() {
+        const guideBridge = window.guideBridge;
+        const onfocus = (e) => {
+            const formContainerPath = this.formContainer.getPath();
+            const formName = this.#getFormName();
+            const panelName = this.#getPanelName();
+            const fieldName = this._model._jsonModel.name;
+            const eventPayload = {
+                formName,
+                fieldName,
+                panelName
+            };
+            guideBridge.trigger("elementFocusChanged", eventPayload, formContainerPath);
+        }
+        const widget = this.getWidget();
+        if (widget.length && widget.length > 1) {
+            for (let opt of widget) {
+                opt.onfocus = onfocus;
+            }
+        } else {
+            widget.onfocus = onfocus;
+        }
+    }
+
+    #getFormName() {
+        return this.formContainer.getPath().replace('/jcr:content/guideContainer', '')
+    }
+
+    #getPanelName() {
+        return this.parentView._model._jsonModel.name;
     }
 
     /**

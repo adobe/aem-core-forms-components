@@ -145,7 +145,7 @@
 
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new CheckBoxGroup({element})
+        return new CheckBoxGroup({element, formContainer})
     }, CheckBoxGroup.selectors.self);
 
 })();

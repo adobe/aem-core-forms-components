@@ -123,7 +123,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new RadioButton({element});
+        return new RadioButton({element, formContainer});
     }, RadioButton.selectors.self);
 
 })();
