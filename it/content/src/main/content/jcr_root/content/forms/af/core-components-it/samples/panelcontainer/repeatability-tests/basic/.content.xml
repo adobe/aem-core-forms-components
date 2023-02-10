@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-02-07T12:26:36.133+05:30"
+            cq:lastModified="{Date}2023-02-10T16:23:47.577+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -30,14 +30,24 @@
                     minOccur="2"
                     name="panelcontainer1675680976002"
                     repeatable="{Boolean}true">
+                <text
+                        jcr:lastModified="{Date}2023-02-10T15:06:54.779+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text"
+                        sling:resourceType="forms-components-examples/components/form/text"
+                        fieldType="plain-text"
+                        name="text1676021775377"
+                        textIsRich="true"
+                        value="&lt;p>AEM Forms&lt;/p>&#xd;&#xa;"/>
                 <textinput
-                        jcr:lastModified="{Date}2023-02-07T12:13:45.195+05:30"
+                        jcr:lastModified="{Date}2023-02-10T15:00:08.617+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         autocomplete="off"
-                        description="&lt;p>This is the Long description&lt;/p>&#xd;&#xa;"
+                        description="&lt;p>This is the long description&lt;/p>&#xd;&#xa;"
                         enabled="{Boolean}true"
                         fieldType="text-input"
                         minLength="0"
@@ -49,6 +59,118 @@
                         tooltipVisible="true"
                         validatePictureClauseMessage="[,]"
                         visible="{Boolean}true"/>
+                <wizard
+                        jcr:lastModified="{Date}2023-02-10T15:42:56.977+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="wizard"
+                        sling:resourceType="forms-components-examples/components/form/wizard"
+                        fieldType="panel"
+                        name="wizard1676023977034"
+                        order="[submit,reset,pageheader,linkcomponent]">
+                    <submit
+                            jcr:lastModified="{Date}2023-02-10T16:14:29.566+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Submit"
+                            sling:resourceType="forms-components-examples/components/form/actions/submit"
+                            buttonType="submit"
+                            description="&lt;p>Long Desc&lt;/p>&#xd;&#xa;"
+                            dorExclusion="true"
+                            enabled="{Boolean}true"
+                            fieldType="button"
+                            name="submit1676025586309"
+                            readOnly="{Boolean}false"
+                            textIsRich="[true,true]"
+                            tooltip="&lt;p>Short Desc&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            visible="{Boolean}true">
+                        <fd:rules
+                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                                jcr:primaryType="nt:unstructured"
+                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                    </submit>
+                    <reset
+                            jcr:lastModified="{Date}2023-02-10T16:15:23.790+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Reset"
+                            sling:resourceType="forms-components-examples/components/form/actions/reset"
+                            buttonType="reset"
+                            description="&lt;p>Long Desc&lt;/p>&#xd;&#xa;"
+                            dorExclusion="true"
+                            enabled="{Boolean}true"
+                            fieldType="button"
+                            name="reset1676025591681"
+                            readOnly="{Boolean}false"
+                            textIsRich="[true,true]"
+                            tooltip="&lt;p>Short Desc&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            visible="{Boolean}true">
+                        <fd:rules
+                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_9021426441667454270189&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_9021426441667454270189&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;RESET_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent('reset')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                                jcr:primaryType="nt:unstructured"
+                                click="[dispatchEvent('reset')]"/>
+                    </reset>
+                </wizard>
+                <button
+                        jcr:lastModified="{Date}2023-02-06T16:36:16.769+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Button"
+                        sling:resourceType="forms-components-examples/components/form/button"
+                        description="&lt;p>This is the long description&lt;/p>&#xd;&#xa;"
+                        dorExclusion="true"
+                        enabled="{Boolean}true"
+                        fieldType="button"
+                        name="button1675681073243"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true]"
+                        tooltip="&lt;p>This is the short description&lt;/p>&#xd;&#xa;"
+                        tooltipVisible="true"
+                        visible="{Boolean}true"/>
+                <emailinput
+                        jcr:lastModified="{Date}2023-02-10T14:42:16.711+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                        enabled="{Boolean}true"
+                        fieldType="text-input"
+                        name="emailinput1676020300606"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true]"
+                        tooltip="&lt;p>This is short description&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p>&#xd;&#xa;"
+                        tooltipVisible="true"
+                        visible="{Boolean}true"/>
+                <accordion
+                        jcr:lastModified="{Date}2023-02-10T15:05:32.068+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Accordion"
+                        sling:resourceType="forms-components-examples/components/form/accordion"
+                        fieldType="panel"
+                        name="accordion1676021732127">
+                    <item_1
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Item 1"
+                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                            fieldType="panel"
+                            layout="responsiveGrid"
+                            name="item_1"/>
+                    <item_2
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Item 2"
+                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                            fieldType="panel"
+                            layout="responsiveGrid"
+                            name="item_2"/>
+                </accordion>
                 <numberinput
                         jcr:lastModified="{Date}2023-02-07T12:13:49.220+05:30"
                         jcr:lastModifiedBy="admin"
@@ -113,6 +235,21 @@
                         tooltipVisible="true"
                         type="number[]"
                         visible="{Boolean}true"/>
+                <telephoneinput
+                        jcr:lastModified="{Date}2023-02-10T14:42:35.552+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Telephone Input"
+                        sling:resourceType="forms-components-examples/components/form/telephoneinput"
+                        description="&lt;p>Long description&lt;/p>&#xd;&#xa;"
+                        enabled="{Boolean}true"
+                        fieldType="text-input"
+                        name="telephoneinput1676020310676"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true]"
+                        tooltip="&lt;p>Short description&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p>&#xd;&#xa;"
+                        tooltipVisible="true"
+                        visible="{Boolean}true"/>
                 <dropdown
                         jcr:lastModified="{Date}2023-02-07T12:11:43.082+05:30"
                         jcr:lastModifiedBy="admin"
@@ -159,6 +296,71 @@
                         tooltipVisible="true"
                         type="file[]"
                         visible="{Boolean}true"/>
+                <tabsontop
+                        jcr:lastModified="{Date}2023-02-10T14:57:10.233+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tabs on top"
+                        sling:resourceType="forms-components-examples/components/form/tabsontop"
+                        description="&lt;p>Long description&lt;/p>&#xd;&#xa;"
+                        enabled="{Boolean}true"
+                        fieldType="panel"
+                        name="tabsontop1676020762846"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true]"
+                        tooltip="&lt;p>Short Description&lt;/p>&#xd;&#xa;"
+                        tooltipVisible="true"
+                        visible="{Boolean}true"
+                        wrapData="{Boolean}false">
+                    <reset
+                            jcr:lastModified="{Date}2023-02-10T16:16:07.824+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Reset"
+                            sling:resourceType="forms-components-examples/components/form/actions/reset"
+                            buttonType="reset"
+                            description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                            dorExclusion="true"
+                            enabled="{Boolean}true"
+                            fieldType="button"
+                            name="reset1676021294717"
+                            readOnly="{Boolean}false"
+                            textIsRich="[true,true]"
+                            tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            visible="{Boolean}true">
+                        <fd:rules
+                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_9021426441667454270189&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_9021426441667454270189&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;RESET_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent('reset')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                                jcr:primaryType="nt:unstructured"
+                                click="[dispatchEvent('reset')]"/>
+                    </reset>
+                    <submit
+                            jcr:lastModified="{Date}2023-02-10T16:16:22.767+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Submit"
+                            sling:resourceType="forms-components-examples/components/form/actions/submit"
+                            buttonType="submit"
+                            description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                            dorExclusion="true"
+                            enabled="{Boolean}true"
+                            fieldType="button"
+                            name="submit1676021305568"
+                            readOnly="{Boolean}false"
+                            textIsRich="[true,true]"
+                            tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            visible="{Boolean}true">
+                        <fd:rules
+                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                                jcr:primaryType="nt:unstructured"
+                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                    </submit>
+                </tabsontop>
                 <datepicker
                         jcr:lastModified="{Date}2023-02-07T12:26:36.118+05:30"
                         jcr:lastModifiedBy="admin"
@@ -175,22 +377,14 @@
                         tooltip="&lt;p>This is the short description&lt;/p>&#xd;&#xa;"
                         tooltipVisible="true"
                         visible="{Boolean}true"/>
-                <button
-                        jcr:lastModified="{Date}2023-02-06T16:36:16.769+05:30"
+                <image
+                        jcr:lastModified="{Date}2023-02-10T15:05:48.547+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Button"
-                        sling:resourceType="forms-components-examples/components/form/button"
-                        description="&lt;p>This is the long description&lt;/p>&#xd;&#xa;"
-                        dorExclusion="true"
-                        enabled="{Boolean}true"
-                        fieldType="button"
-                        name="button1675681073243"
-                        readOnly="{Boolean}false"
-                        textIsRich="[true,true]"
-                        tooltip="&lt;p>This is the short description&lt;/p>&#xd;&#xa;"
-                        tooltipVisible="true"
-                        visible="{Boolean}true"/>
+                        jcr:title="Image"
+                        sling:resourceType="forms-components-examples/components/form/image"
+                        fieldType="image"
+                        name="image1676021756047"/>
             </panelcontainer>
         </guideContainer>
     </jcr:content>
