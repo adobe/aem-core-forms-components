@@ -28,7 +28,7 @@ export default class FormFieldBase extends FormField {
         this.qm = this.getQuestionMarkDiv();
         this.tooltip = this.getTooltipDiv()
     }
-
+    GUIDE_ELEMENT_FOCUS_CHANGED = "elementFocusChanged"
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
@@ -132,15 +132,17 @@ export default class FormFieldBase extends FormField {
                 fieldName,
                 panelName
             };
-            guideBridge.trigger("elementFocusChanged", eventPayload, formContainerPath);
+            guideBridge.trigger(this.GUIDE_ELEMENT_FOCUS_CHANGED, eventPayload, formContainerPath);
         }
         const widget = this.getWidget();
-        if (widget.length && widget.length > 1) {
-            for (let opt of widget) {
-                opt.onfocus = onfocus;
+        if (widget) {
+            if (widget.length && widget.length > 1) {
+                for (let opt of widget) {
+                    opt.onfocus = onfocus;
+                }
+            } else {
+                widget.onfocus = onfocus;
             }
-        } else {
-            widget.onfocus = onfocus;
         }
     }
 
