@@ -101,7 +101,7 @@ public class ComponentUtils {
         @Nullable I18n i18n) {
         String translatedValue = propertyValue;
         if (i18n != null) {
-            translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, i18n);
+            translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
         }
         return translatedValue;
     }
