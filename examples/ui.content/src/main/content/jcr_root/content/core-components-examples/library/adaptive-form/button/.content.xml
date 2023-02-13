@@ -34,7 +34,8 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Button component is a server side component written in HTL, allowing to create Adaptive Form Buttons"
+                        text="&lt;p>A button in an Adaptive Form is a UI element that allows users to initiate an action when clicked. The button element can be used to submit a form, reset a form, or perform other actions such as navigating to a different page or triggering custom code. The button can be created using the Button Core Component and can be styled using CSS.&lt;/p>
+&lt;p>The Adaptive Forms Rule Editor allows users to set various actions for the button component. These actions include opening a website, showing or hiding form components, adding an instance of a panel or component, submitting or resetting a form, and more.&lt;/p>&lt;p>Adaptive Forms also provide separate button components for submitting or resetting a form, but the button component can also be configured to perform these actions if needed.&lt;/p>&lt;p>Users can access the complete list of actions supported for the button component by using the Adaptive Forms Rule Editor. The Rule Editor allows users to create rules that are triggered by various events, such as when a button is clicked, when a form is loaded, or when a field value changes. These rules can then be used to perform various actions, such as showing or hiding components, setting field values, or submitting the form.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,7 +49,8 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
-                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button"
                         textIsRich="true"
                         titleFromPage="false"/>
                 <title_865328580
@@ -78,7 +80,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>Simple Button with only a text configured.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"

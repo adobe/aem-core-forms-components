@@ -75,13 +75,13 @@ export default class FormField {
         return this.id;
     }
 
-    syncElementLabelBy() {
+    #syncElementLabelBy() {
         if (this.element.hasAttribute('aria-labelby')) {
             this.element.setAttribute('aria-labelby', this.getId() + "-label");
         }
     }
 
-    syncLabel() {
+    #syncLabel() {
         let labelElement = this.getLabel ? this.getLabel() : null;
         if (labelElement) {
             const labelId = this.getId() + "-label";
@@ -90,24 +90,31 @@ export default class FormField {
         }
     }
 
-    syncLongDescription() {
+    #syncLongDescription() {
         let longDescriptionElement = this.getDescription ? this.getDescription() : null;
         if (longDescriptionElement) {
             longDescriptionElement.id = this.getId() + "-longDescription";
         }
     }
 
-    syncShortDescription() {
+    #syncShortDescription() {
         let shortDescriptionElement = this.getTooltipDiv ? this.getTooltipDiv() : null;
         if (shortDescriptionElement) {
             shortDescriptionElement.id = this.getId() + "-shortDescription";
         }
     }
 
-    syncErrorDiv() {
+    #syncErrorDiv() {
         let errorDivElement = this.getErrorDiv ? this.getErrorDiv() : null;
         if (errorDivElement) {
             errorDivElement.id = this.getId() + "-errorMessage";
+        }
+    }
+
+    syncWidget() {
+        let widgetElement = this.getWidget ? this.getWidget() : null;
+        if (widgetElement) {
+            widgetElement.id = this.getId() + "__widget";
         }
     }
 
@@ -115,11 +122,12 @@ export default class FormField {
      * Update the HTML, with respective model
      */
     syncHTMLWithModel() {
-        this.syncElementLabelBy();
-        this.syncLabel();
-        this.syncLongDescription();
-        this.syncShortDescription();
-        this.syncErrorDiv();
+        this.#syncElementLabelBy();
+        this.#syncLabel();
+        this.#syncLongDescription();
+        this.#syncShortDescription();
+        this.#syncErrorDiv();
+        this.syncWidget();
     }
 
     setModel(model) {

@@ -107,6 +107,16 @@
             });
         }
 
+        syncWidget() {
+            let widgetElementList =this.getWidget();
+            if(widgetElementList){
+                widgetElementList.forEach((widgetElement)=>{
+                    let idToReplace=widgetElement.id.split('_')[0];
+                    widgetElement.id=widgetElement.id.replace(idToReplace,this.getId());
+                });
+            }
+        }
+
         updateValue(modelValue) {
             this.widget.forEach(widget => {
                 if (modelValue && widget.value != null && modelValue.toString() == widget.value.toString()) {

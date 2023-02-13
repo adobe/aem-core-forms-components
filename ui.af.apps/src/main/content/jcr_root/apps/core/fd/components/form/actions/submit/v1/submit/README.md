@@ -22,6 +22,7 @@ Adaptive Form Submit Button component written in HTL.
 * Accessibility friendly 
 * Custom description/tooltip for help
 * Out of the box Submit rule in the button to submit the form
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The submit button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
@@ -56,6 +57,20 @@ BLOCK cmp-adaptiveform-button
 The following attributes must be added for the initialization of the button component in the form view:  
  1. `data-cmp-is="adaptiveFormButton"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Date Picker
+* Email Input
+* Number Input
+* Reset Button
+* Telephone Input
+* Text
+* Text Box
+* Text Input
+* Title
  
 ## Information
 * **Vendor**: Adobe

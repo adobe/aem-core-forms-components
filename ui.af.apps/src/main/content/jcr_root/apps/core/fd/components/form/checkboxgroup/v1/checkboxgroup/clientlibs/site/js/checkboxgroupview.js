@@ -71,6 +71,19 @@
             return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
         }
 
+        syncWidget() {
+            let widgetElementList = this.getWidget();
+            if(widgetElementList) {
+                widgetElementList.forEach((widgetElement) => {
+                    let idToReplace=widgetElement.id.split('_')[0];
+                    widgetElement.id=widgetElement.id.replace(idToReplace,this.getId());
+                    if(widgetElement.parentElement.tagName.toLowerCase()==='label') {
+                        widgetElement.parentElement.setAttribute('for', this.getId());
+                    }
+                });
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             let widgets = this.widget;
