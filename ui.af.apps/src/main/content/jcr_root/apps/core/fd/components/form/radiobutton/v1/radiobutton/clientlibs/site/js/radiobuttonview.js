@@ -119,6 +119,7 @@
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
+            super.updateEmptyStatus();
         }
     }
 
