@@ -130,6 +130,37 @@
             return this.element.querySelector(Tabs.selectors.qm);
         }
 
+        #syncTabLabels(){
+            var tabs = this._elements["tab"];
+            if (tabs) {
+                tabs.forEach((tab)=>{
+                    var splitIdArr=tab.id.split("-");
+                    var replaceableId=splitIdArr[0]+"-"+splitIdArr[1];
+                    tab.id=tab.id.replace(replaceableId,this.getId());
+                    tab.setAttribute("aria-controls",
+                        tab.getAttribute("aria-controls").replace(replaceableId,this.getId()));
+                });
+            }
+        }
+
+        #syncTabPanels(){
+            var tabPanels = this._elements["tabpanel"];
+            if(tabPanels) {
+                tabPanels.forEach((tabPanel)=>{
+                    var splitIdArr=tabPanel.id.split("-");
+                    var replaceableId=splitIdArr[0]+"-"+splitIdArr[1];
+                    tabPanel.id=tabPanel.id.replace(replaceableId,this.getId());
+                    tabPanel.setAttribute("aria-labelledby",
+                        tabPanel.getAttribute("aria-labelledby").replace(replaceableId,this.getId()));
+                })
+            }
+        }
+
+        syncLayoutHtmlWithModel() {
+            this.#syncTabLabels();
+            this.#syncTabPanels();
+        }
+
         /**
          * Binds Tabs event handling
          *
