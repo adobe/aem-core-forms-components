@@ -15,6 +15,113 @@
  ******************************************************************************/
 describe( "Form Runtime with Panel Container complex repeatability use cases ", () => {
     let formContainer = null;
+    const selectMap = {
+        "OK": "yes",
+        "I don't think so": "no"
+    };
+    const data = [
+        {
+            "textInput": "Green",
+            "numInput": 70,
+            "panel1": ["OK", "I don't think so", "OK"],
+            "panel2": [
+                {
+                    "date" : "2023-02-24",
+                    "email" : "test@test.com"
+                },
+                {
+                    "date" : "2023-02-25",
+                    "email" : "blue@blue.com"
+                },
+                {
+                    "date" : "2023-02-14",
+                    "email" : "qw@qw.com"
+                }
+            ]
+        },
+        {
+            "textInput": "Orange",
+            "numInput": 98,
+            "panel1": ["I don't think so", "OK", "I don't think so"],
+            "panel2": [
+                {
+                    "date" : "2023-02-28",
+                    "email" : "ty@ty.com"
+                },
+                {
+                    "date" : "2023-03-04",
+                    "email" : "p@p.com"
+                }
+            ]
+        },
+        {
+            "textInput": "Horse",
+            "numInput": 54,
+            "panel1": ["OK", "I don't think so"],
+            "panel2": [
+                {
+                    "date" : "2023-03-11",
+                    "email" : "try@y.com"
+                },
+                {
+                    "date" : "2023-02-28",
+                    "email" : "n@n.com"
+                }
+            ]
+        }
+    ];
+
+    const fillInput = (fieldModel, fillValue) => {
+        cy.get(`#${fieldModel.id}`).find("input").type(fillValue).blur().then(x => {
+            expect(fieldModel.getState().value).to.equal(fillValue.toString());
+        });
+    };
+
+    const fillSelect = (fieldModel, fillValue) => {
+        cy.get(`#${fieldModel.id} select`).select(fillValue).then(x => {
+            let val = selectMap[fillValue] ? selectMap[fillValue] : fillValue;
+            expect(fieldModel.getState().value).to.equal(val);
+        });
+    };
+
+    const fillFields = (outerInstanceManager, index) => {
+        let instanceData = data[index];
+        const instanceModel = outerInstanceManager.children[index].getModel();
+        fillInput(instanceModel.items[0], instanceData['textInput']);
+        fillInput(instanceModel.items[1], instanceData['numInput']);
+
+        const panel1IM = instanceModel.items[2];
+        fillSelect(panel1IM.items[0].items[0], instanceData['panel1'][0]);
+        fillSelect(panel1IM.items[1].items[0], instanceData['panel1'][1]);
+        if (instanceData['panel1'].length > 2) {
+            const allFields = formContainer.getAllFields();
+            const panel1IMView = allFields[panel1IM.id];
+            checkAddRemoveInstance(panel1IMView, 3, true).then(() => {
+                fillSelect(panel1IM.items[2].items[0], instanceData['panel1'][2]);
+            });
+        }
+
+        const panel2IM = instanceModel.items[3];
+        let panelData = instanceData['panel2'][0];
+        fillInput(panel2IM.items[0].items[0], panelData["date"]);
+        fillInput(panel2IM.items[0].items[1], panelData["email"]);
+
+        panelData = instanceData['panel2'][1];
+        fillInput(panel2IM.items[1].items[0], panelData["date"]);
+        fillInput(panel2IM.items[1].items[1], panelData["email"]);
+
+        if (instanceData['panel2'].length > 2) {
+            const allFields = formContainer.getAllFields();
+            const panel2IMView = allFields[panel2IM.id];
+            checkAddRemoveInstance(panel2IMView, 3, true).then(() => {
+                const panelData = instanceData['panel2'][2];
+                fillInput(panel2IM.items[2].items[0], panelData["date"]);
+                fillInput(panel2IM.items[2].items[1], panelData["email"]);
+            });
+        }
+
+        return cy.get(`#${panel2IM.items[1].items[1].id}`);
+    };
 
     const computeModelLength = (modelArray) => {
         let modelLength = 0;
@@ -116,7 +223,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         return cy.get(`#${numberInputId}-errorMessage`).should('exist');
     };
 
-    const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
+    const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
         const EVENT_NAME = isAdd ? "AF_PanelInstanceAdded" : "AF_PanelInstanceRemoved";
         let innerResolution = undefined;
         const innerPromise = new Cypress.Promise((resolve, reject) => {innerResolution = resolve;});
@@ -137,7 +244,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                 instanceManager.removeInstance();
             }
             promise.then(() => {
-                const e = checkInstanceHTML(instanceManager, count, childCount);
+                const e = checkInstanceHTML(instanceManager, count);
                 innerResolution(e);
             });
         });
@@ -235,15 +342,142 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/site-container-repeatability.html";
         cy.previewFormWithPanel(pagePath).then(p => {
             formContainer = p;
-            const outerInstancManagerModel = formContainer._model.items[0];
-            checkSiteOuterRepeatableInstance(outerInstancManagerModel, 0, "First Outer : ").then(() => {
+            const outerInstanceManagerModel = formContainer._model.items[0];
+            checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 0, "First Outer : ").then(() => {
                 const allFields = formContainer.getAllFields();
-                const outerInstanceManager = allFields[outerInstancManagerModel.id];
+                const outerInstanceManager = allFields[outerInstanceManagerModel.id];
                 checkAddRemoveInstance(outerInstanceManager, 2, true).then(() => {
-                    checkSiteOuterRepeatableInstance(outerInstancManagerModel, 1, "Second Outer : ");
+                    checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 1, "Second Outer : ");
                 });
             });
         });
     });
 
+    it("Check submission data: Without schema, Repeatable inside repeatable panel, with site container", () =>{
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/site-container-repeatability.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            formContainer = p;
+            const outerInstanceManagerModel = formContainer._model.items[0];
+            checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 0, "First Outer : ").then(() => {
+                const allFields = formContainer.getAllFields();
+                const outerInstanceManager = allFields[outerInstanceManagerModel.id];
+                checkAddRemoveInstance(outerInstanceManager, 2, true).then(() => {
+                    checkAddRemoveInstance(outerInstanceManager, 3, true).then(() => {
+                        checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 0, "First Outer : ");
+                        checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 1, "Second Outer : ");
+                        checkSiteOuterRepeatableInstance(outerInstanceManagerModel, 2, "Third Outer : ").then(() => {
+                            fillFields(outerInstanceManager, 0).then(() => {
+                                fillFields(outerInstanceManager, 1).then(() => {
+                                    fillFields(outerInstanceManager, 2).then(() => {
+                                        cy.getFormData().then((result) => {
+                                            cy.fixture('panelcontainer/siteContainerSubmissionAdd.json').then((outputData) => {
+                                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                            });
+                                            //check data after removing instance
+                                            checkAddRemoveInstance(outerInstanceManager, 2).then(() => {
+                                                cy.getFormData().then((result) => {
+                                                    cy.fixture('panelcontainer/siteContainerSubmissionRemove.json').then((outputData) => {
+                                                        expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it("Check submission data: With Bank schema, Repeatable inside repeatable panel", () =>{
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/bank-form.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            formContainer = p;
+            const formContainerModelItems = formContainer._model.items;
+            const offerModelItems = formContainerModelItems[0].items;
+            fillSelect(offerModelItems[0], "1 Check");
+            fillInput(offerModelItems[1], 78);
+            const personalLoanModelItems = formContainerModelItems[3].items;
+            const witnessIMModel = personalLoanModelItems[7];
+            const allFields = formContainer.getAllFields();
+            const witnessIM = allFields[witnessIMModel.id];
+            checkAddRemoveInstance(witnessIM, 2, true).then(() => {
+                checkAddRemoveInstance(witnessIM, 3, true).then(() => {
+                    //Fill Instances
+                    const firstInstanceModelItems = witnessIMModel.items[0].items;
+                    fillInput(firstInstanceModelItems[0], "w1");
+                    fillInput(firstInstanceModelItems[1], "w11");
+                    fillSelect(firstInstanceModelItems[3], "Female");
+
+                    const secondInstanceModelItems = witnessIMModel.items[1].items;
+                    fillInput(secondInstanceModelItems[0], "w2");
+                    fillInput(secondInstanceModelItems[1], "w22");
+                    fillSelect(secondInstanceModelItems[3], "Male");
+
+                    const thirdInstanceModelItems = witnessIMModel.items[2].items;
+                    fillInput(thirdInstanceModelItems[0], "w3");
+                    fillInput(thirdInstanceModelItems[1], "w33");
+                    fillSelect(thirdInstanceModelItems[3], "Female");
+
+                    const firstEducationIMModel = firstInstanceModelItems[2];
+                    const firstEducationIM = allFields[firstEducationIMModel.id];
+                    checkAddRemoveInstance(firstEducationIM, 2, true).then(() => {
+                        //Fill education instances
+                        const firstEducationIMModelItems = firstEducationIMModel.items;
+                        const edu11 = firstEducationIMModelItems[0].items;
+                        fillInput(edu11[0], "ssn");
+                        fillInput(edu11[1], "B");
+                        fillInput(edu11[2], "phd");
+                        fillInput(edu11[7], "science");
+                        fillInput(edu11[9], "dce");
+
+                        const edu12 = firstEducationIMModelItems[1].items;
+                        fillInput(edu12[0], "ss2");
+                        fillInput(edu12[1], "A");
+                        fillInput(edu12[2], "b.tech");
+                        fillInput(edu12[7], "computer");
+
+                        const secondEducationIMModelItems = secondInstanceModelItems[2].items;
+                        const secondEdu = secondEducationIMModelItems[0].items;
+                        fillInput(secondEdu[0], "ss3");
+                        fillInput(secondEdu[1], "C");
+                        fillInput(secondEdu[2], "PGCCL");
+                        fillInput(secondEdu[7], "Law");
+
+                        const thirdEducationIMModelItems = thirdInstanceModelItems[2].items;
+                        const thirdEdu = thirdEducationIMModelItems[0].items;
+                        fillInput(thirdEdu[9], "DU");
+
+                        return cy.get(`#${edu12[9].id}`);
+                    }).then(() => {
+                        cy.getFormData().then((result) => {
+                            cy.fixture('panelcontainer/bankSubmissionAll.json').then((outputData) => {
+                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                            });
+                            //check data after removing instance
+                            checkAddRemoveInstance(witnessIM, 2).then(() => {
+                                cy.getFormData().then((result) => {
+                                    cy.fixture('panelcontainer/bankSubmissionOuterInstanceRemoved.json').then((outputData) => {
+                                        expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                    });
+                                    const secondEducationIMModel = secondInstanceModelItems[2];
+                                    const secondEducationIM = allFields[secondEducationIMModel.id];
+                                    checkAddRemoveInstance(secondEducationIM, 0).then(() => {
+                                        cy.getFormData().then((result) => {
+                                            cy.fixture('panelcontainer/bankSubmissionInnerInstanceRemoved.json').then((outputData) => {
+                                                expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
 })

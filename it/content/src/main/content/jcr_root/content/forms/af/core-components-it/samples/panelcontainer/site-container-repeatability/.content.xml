@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2023-02-06T17:06:13.379+05:30"
+        cq:lastModified="{Date}2023-02-09T10:22:57.610+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
@@ -82,13 +82,21 @@
                                 visible="{Boolean}true"
                                 wrapData="{Boolean}false">
                                 <dropdown
-                                    jcr:lastModified="{Date}2023-02-06T17:02:06.037+05:30"
+                                    jcr:lastModified="{Date}2023-02-09T10:22:57.577+05:30"
                                     jcr:lastModifiedBy="admin"
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Dropdown"
                                     sling:resourceType="forms-components-examples/components/form/dropdown"
+                                    enabled="{Boolean}true"
+                                    enum="[yes,no]"
+                                    enumNames="[OK,I don't think so]"
                                     fieldType="drop-down"
-                                    name="dropdown1675683126156"/>
+                                    name="dropdown1675683126156"
+                                    readOnly="{Boolean}false"
+                                    textIsRich="[true,true]"
+                                    type="string"
+                                    typeIndex="0"
+                                    visible="{Boolean}true"/>
                             </panelcontainer>
                         </container>
                         <panelcontainer

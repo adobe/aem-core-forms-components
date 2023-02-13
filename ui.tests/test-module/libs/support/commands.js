@@ -279,6 +279,16 @@ const waitForChildViewAddition = () => {
         });
 }
 
+Cypress.Commands.add("getFormData", () => {
+    return cy.window().then(win => {
+        const promise = new Cypress.Promise((resolve, reject) => {
+            const successhandler = data => { resolve(data); };
+            win.guideBridge.getFormDataString({success: successhandler});
+        });
+        return promise;
+    });
+});
+
 Cypress.Commands.add("previewForm", (formPath, options={}) => {
     let pagePath = `${formPath}?wcmmode=disabled`;
     if(options?.params) {
