@@ -111,6 +111,13 @@ export default class FormField {
         }
     }
 
+    syncWidget() {
+        let widgetElement = this.getWidget ? this.getWidget() : null;
+        if (widgetElement) {
+            widgetElement.id = this.getId() + "__widget";
+        }
+    }
+
     /**
      * Update the HTML, with respective model
      */
@@ -120,6 +127,7 @@ export default class FormField {
         this.#syncLongDescription();
         this.#syncShortDescription();
         this.#syncErrorDiv();
+        this.syncWidget();
     }
 
     setModel(model) {
