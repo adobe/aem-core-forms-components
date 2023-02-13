@@ -36,263 +36,289 @@
                             jcr:title="Basic"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <value
-                                    wrapperClass="cmp-adaptiveform-textinput__value"
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Default value"
-                                    name="./default"/>
-                            <richTextValue
-                                    jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-textinput__richtextvalue"
-                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                    fieldLabel="Default value"
-                                    name="./_richTextValue@Delete"
-                                    useFixedInlineToolbar="{Boolean}true">
-                                <rtePlugins jcr:primaryType="nt:unstructured">
-                                    <links jcr:primaryType="nt:unstructured">
-                                        <linkDialogConfig
-                                                jcr:primaryType="nt:unstructured"
-                                                height="{Long}316">
-                                            <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
-                                        </linkDialogConfig>
-                                    </links>
-                                    <format
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <lists
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <justify
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <keys
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <paraformat
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <misctools
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <fullscreen
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                </rtePlugins>
-                                <uiSettings jcr:primaryType="nt:unstructured">
-                                    <cui jcr:primaryType="nt:unstructured">
-                                        <inline
-                                                jcr:primaryType="nt:unstructured"
-                                                toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <justify
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
-                                                        ref="justify"/>
-                                                <lists
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
-                                                        ref="lists"/>
-                                            </popovers>
-                                        </inline>
-                                        <fullscreen
-                                                jcr:primaryType="nt:unstructured"
-                                                toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <styles
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="styles:getStyles:styles-pulldown"
-                                                        ref="styles"/>
-                                                <paraformat
-                                                        jcr:primaryType="nt:unstructured"
-                                                        items="paraformat:getFormats:paraformat-pulldown"
-                                                        ref="paraformat"/>
-                                            </popovers>
-                                        </fullscreen>
-                                    </cui>
-                                </uiSettings>
-                            </richTextValue>
-                            <multiLine
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    name="./multiLine"
-                                    text="Allow multiple lines"
-                                    value="true"/>
-                            <allowRichText
-                                    granite:class="cmp-adaptiveform-textinput__allowrichtext"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    name="./allowRichText"
-                                    text="Allow Rich Text"
-                                    value="true">
-                            </allowRichText>
-                            <autocomplete
-                              wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
-                              fieldLabel="Autofill attribute"
-                              forceSelection="{Boolean}true"
-                              name="./autocomplete"
-                              value="off">
-                                <options
-                                  jcr:primaryType="nt:unstructured"
-                                  sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <off
-                                      jcr:primaryType="nt:unstructured"
-                                      text="off"
-                                      value="off"/>
-                                    <on
-                                      jcr:primaryType="nt:unstructured"
-                                      text="on"
-                                      value="on"/>
-                                    <name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="name"
-                                      value="name"/>
-                                    <first_x0020_name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="given-name"
-                                      value="given-name"/>
-                                    <address
-                                      jcr:primaryType="nt:unstructured"
-                                      text="street-address"
-                                      value="street-address"/>
-                                    <zip
-                                      jcr:primaryType="nt:unstructured"
-                                      text="postal-code"
-                                      value="postal-code"/>
-                                    <card_x0020_name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-name"
-                                      value="cc-name"/>
-                                    <middle_x0020_name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="additional-name"
-                                      value="additional-name"/>
-                                    <last_x0020_name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="family-name"
-                                      value="family-name"/>
-                                    <address-line1
-                                      jcr:primaryType="nt:unstructured"
-                                      text="address-line1"
-                                      value="address-line1"/>
-                                    <address-line2
-                                      jcr:primaryType="nt:unstructured"
-                                      text="address-line2"
-                                      value="address-line2"/>
-                                    <address-level1
-                                      jcr:primaryType="nt:unstructured"
-                                      text="address-level1"
-                                      value="address-level1"/>
-                                    <address-level2
-                                      jcr:primaryType="nt:unstructured"
-                                      text="address-level2"
-                                      value="address-level2"/>
-                                    <country
-                                      jcr:primaryType="nt:unstructured"
-                                      text="country"
-                                      value="country"/>
-                                    <cc-name
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-name"
-                                      value="cc-name"/>
-                                    <cc-number
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-number"
-                                      value="cc-number"/>
-                                    <cc-csc
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-csc"
-                                      value="cc-csc"/>
-                                    <cc-exp-month
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-exp-month"
-                                      value="cc-exp-month"/>
-                                    <cc-exp-year
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-exp-year"
-                                      value="cc-exp-year"/>
-                                    <cc-exp
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-exp"
-                                      value="cc-exp"/>
-                                    <cc-type
-                                      jcr:primaryType="nt:unstructured"
-                                      text="cc-type"
-                                      value="cc-type"/>
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <value
+                                                    wrapperClass="cmp-adaptiveform-textinput__value"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Default value"
+                                                    name="./default"/>
+                                            <richTextValue
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-textinput__richtextvalue"
+                                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                                    fieldLabel="Default value"
+                                                    name="./_richTextValue@Delete"
+                                                    useFixedInlineToolbar="{Boolean}true">
+                                                <rtePlugins jcr:primaryType="nt:unstructured">
+                                                    <links jcr:primaryType="nt:unstructured">
+                                                        <linkDialogConfig
+                                                                jcr:primaryType="nt:unstructured"
+                                                                height="{Long}316">
+                                                            <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
+                                                        </linkDialogConfig>
+                                                    </links>
+                                                    <format
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <lists
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <justify
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <keys
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <paraformat
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <misctools
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                    <fullscreen
+                                                            jcr:primaryType="nt:unstructured"
+                                                            features="*"/>
+                                                </rtePlugins>
+                                                <uiSettings jcr:primaryType="nt:unstructured">
+                                                    <cui jcr:primaryType="nt:unstructured">
+                                                        <inline
+                                                                jcr:primaryType="nt:unstructured"
+                                                                toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
+                                                            <popovers jcr:primaryType="nt:unstructured">
+                                                                <justify
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                                                        ref="justify"/>
+                                                                <lists
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                                                        ref="lists"/>
+                                                            </popovers>
+                                                        </inline>
+                                                        <fullscreen
+                                                                jcr:primaryType="nt:unstructured"
+                                                                toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
+                                                            <popovers jcr:primaryType="nt:unstructured">
+                                                                <styles
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        items="styles:getStyles:styles-pulldown"
+                                                                        ref="styles"/>
+                                                                <paraformat
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        items="paraformat:getFormats:paraformat-pulldown"
+                                                                        ref="paraformat"/>
+                                                            </popovers>
+                                                        </fullscreen>
+                                                    </cui>
+                                                </uiSettings>
+                                            </richTextValue>
+                                            <multiLine
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./multiLine"
+                                                    text="Allow multiple lines"
+                                                    value="true"/>
+                                            <allowRichText
+                                                    granite:class="cmp-adaptiveform-textinput__allowrichtext"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./allowRichText"
+                                                    text="Allow Rich Text"
+                                                    value="true">
+                                            </allowRichText>
+                                            <autocomplete
+                                                    wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                                    fieldLabel="Autofill attribute"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./autocomplete"
+                                                    value="off">
+                                                <options
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <off
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="off"
+                                                            value="off"/>
+                                                    <on
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="on"
+                                                            value="on"/>
+                                                    <name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="name"
+                                                            value="name"/>
+                                                    <first_x0020_name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="given-name"
+                                                            value="given-name"/>
+                                                    <address
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="street-address"
+                                                            value="street-address"/>
+                                                    <zip
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="postal-code"
+                                                            value="postal-code"/>
+                                                    <card_x0020_name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-name"
+                                                            value="cc-name"/>
+                                                    <middle_x0020_name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="additional-name"
+                                                            value="additional-name"/>
+                                                    <last_x0020_name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="family-name"
+                                                            value="family-name"/>
+                                                    <address-line1
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-line1"
+                                                            value="address-line1"/>
+                                                    <address-line2
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-line2"
+                                                            value="address-line2"/>
+                                                    <address-level1
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-level1"
+                                                            value="address-level1"/>
+                                                    <address-level2
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-level2"
+                                                            value="address-level2"/>
+                                                    <country
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="country"
+                                                            value="country"/>
+                                                    <cc-name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-name"
+                                                            value="cc-name"/>
+                                                    <cc-number
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-number"
+                                                            value="cc-number"/>
+                                                    <cc-csc
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-csc"
+                                                            value="cc-csc"/>
+                                                    <cc-exp-month
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-exp-month"
+                                                            value="cc-exp-month"/>
+                                                    <cc-exp-year
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-exp-year"
+                                                            value="cc-exp-year"/>
+                                                    <cc-exp
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-exp"
+                                                            value="cc-exp"/>
+                                                    <cc-type
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-type"
+                                                            value="cc-type"/>
+                                                </items>
+                                            </autocomplete>
+                                        </items>
+                                    </column>
                                 </items>
-                            </autocomplete>
+                            </columns>
                         </items>
                     </basic>
                     <validation
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <maxLength
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-textinput__maxlength"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Maximum Number of characters"
-                                    min="0"
-                                    name="./maxLength"/>
-                            <maxLengthMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when more than maximum characters are entered."
-                                    granite:class="cmp-adaptiveform-base__maxlengthmessage"
-                                    fieldLabel="Maximum characters error message"
-                                    name="./maxLengthMessage"/>
-                            <minLength
-                                    jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-textinput__minlength"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    defaultValue=""
-                                    fieldLabel="Minimum number of characters"
-                                    min="0"
-                                    name="./minLength"/>
-                            <minLengthMessage
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldDescription="Error message shown when less than minimum characters are entered."
-                                    granite:class="cmp-adaptiveform-base__minlengthmessage"
-                                    fieldLabel="Minimum characters error message"
-                                    name="./minLengthMessage"/>
-                            <validationPatternGroup
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Validation Pattern"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                    title="Validation Pattern">
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <validationPatternType
+                                    <column
                                             jcr:primaryType="nt:unstructured"
-                                            granite:class="cmp-adaptiveform-textinput__validationpattern"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            fieldLabel="Type"
-                                            name="./validatePictureClauseMessage">
-                                        <datasource
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                fieldType="text-input"
-                                                type="formatters"/>
-                                    </validationPatternType>
-                                    <validateFormat
-                                            jcr:primaryType="nt:unstructured"
-                                            granite:class="cmp-adaptiveform-textinput__validationformat"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                            fieldDescription="Regular Expression is permitted."
-                                            fieldLabel="Pattern"
-                                            name="./pattern">
-                                    </validateFormat>
-                                    <validatePictureClauseMessage
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                            fieldLabel="Error message"
-                                            name="./validatePictureClauseMessage"/>
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <maxLength
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-textinput__maxlength"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue=""
+                                                    fieldLabel="Maximum Number of characters"
+                                                    min="0"
+                                                    name="./maxLength"/>
+                                            <maxLengthMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldDescription="Error message shown when more than maximum characters are entered."
+                                                    granite:class="cmp-adaptiveform-base__maxlengthmessage"
+                                                    fieldLabel="Maximum characters error message"
+                                                    name="./maxLengthMessage"/>
+                                            <minLength
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-textinput__minlength"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue=""
+                                                    fieldLabel="Minimum number of characters"
+                                                    min="0"
+                                                    name="./minLength"/>
+                                            <minLengthMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldDescription="Error message shown when less than minimum characters are entered."
+                                                    granite:class="cmp-adaptiveform-base__minlengthmessage"
+                                                    fieldLabel="Minimum characters error message"
+                                                    name="./minLengthMessage"/>
+                                            <validationPatternGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Validation Pattern"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                                    title="Validation Pattern">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <validationPatternType
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-textinput__validationpattern"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Type"
+                                                            name="./validatePictureClauseMessage">
+                                                        <datasource
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                fieldType="text-input"
+                                                                type="formatters"/>
+                                                    </validationPatternType>
+                                                    <validateFormat
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-textinput__validationformat"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Regular Expression is permitted."
+                                                            fieldLabel="Pattern"
+                                                            name="./pattern">
+                                                    </validateFormat>
+                                                    <validatePictureClauseMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Error message"
+                                                            name="./validatePictureClauseMessage"/>
+                                                </items>
+                                            </validationPatternGroup>
+                                        </items>
+                                    </column>
                                 </items>
-                            </validationPatternGroup>
+                            </columns>
                         </items>
                     </validation>
                     <help

@@ -36,70 +36,82 @@
                             jcr:title="Basic"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <saveValueType
-                                    granite:class="cmp-adaptiveform-dropdown__savevaluetype"
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    sling:orderBefore="placeholder"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    fieldLabel="Save value as"
-                                    typeHint="String"
-                                    name="./typeIndex">
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <String jcr:primaryType="nt:unstructured"
-                                            text="String"
-                                            value="0"/>
-                                    <Number jcr:primaryType="nt:unstructured"
-                                            text="Number"
-                                            value="1"/>
-                                    <Boolean jcr:primaryType="nt:unstructured"
-                                            text="Boolean"
-                                            value="2"/>
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <saveValueType
+                                                    granite:class="cmp-adaptiveform-dropdown__savevaluetype"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="placeholder"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Save value as"
+                                                    typeHint="String"
+                                                    name="./typeIndex">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <String jcr:primaryType="nt:unstructured"
+                                                            text="String"
+                                                            value="0"/>
+                                                    <Number jcr:primaryType="nt:unstructured"
+                                                            text="Number"
+                                                            value="1"/>
+                                                    <Boolean jcr:primaryType="nt:unstructured"
+                                                             text="Boolean"
+                                                             value="2"/>
+                                                </items>
+                                            </saveValueType>
+                                            <type   jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./type"/>
+                                            <enums jcr:primaryType="nt:unstructured"
+                                                   sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enums"
+                                                   sling:orderBefore="placeholder"
+                                                   sling:hideResource="{Boolean}false"/>
+                                            <multiSelect
+                                                    granite:class="cmp-adaptiveform-dropdown__allowmultiselect"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="saveValueType"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./multiSelect"
+                                                    text="Allow multiple selection"
+                                                    value="true"/>
+                                            <multiSelect-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./multiSelect@TypeHint"
+                                                    value="Boolean"/>
+                                            <defaultValueSS
+                                                    wrapperClass="cmp-adaptiveform-dropdown__defaultvalue"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="placeholder"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Specified default option is preselected on form load."
+                                                    fieldLabel="Default option"
+                                                    name="./default"/>
+                                            <defaultValueMS
+                                                    wrapperClass="cmp-adaptiveform-dropdown__defaultvaluemultiselect"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="placeholder"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    typeHint="String[]"
+                                                    fieldDescription="Specified default options are preselected on form load."
+                                                    fieldLabel="Default options">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        name="./default"
+                                                        required="{Boolean}false"/>
+                                            </defaultValueMS>
+                                        </items>
+                                    </column>
                                 </items>
-                            </saveValueType>
-                            <type   jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./type"/>
-                            <enums jcr:primaryType="nt:unstructured"
-                                   sling:resourceType="granite/ui/components/coral/foundation/include"
-                                   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/enums"
-                                   sling:orderBefore="placeholder"
-                                   sling:hideResource="{Boolean}false"/>
-                            <multiSelect
-                                    granite:class="cmp-adaptiveform-dropdown__allowmultiselect"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:orderBefore="saveValueType"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    name="./multiSelect"
-                                    text="Allow multiple selection"
-                                    value="true"/>
-                            <multiSelect-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./multiSelect@TypeHint"
-                                    value="Boolean"/>
-                            <defaultValueSS
-                                    wrapperClass="cmp-adaptiveform-dropdown__defaultvalue"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:orderBefore="placeholder"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldDescription="Specified default option is preselected on form load."
-                                    fieldLabel="Default option"
-                                    name="./default"/>
-                            <defaultValueMS
-                                    wrapperClass="cmp-adaptiveform-dropdown__defaultvaluemultiselect"
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:orderBefore="placeholder"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                    typeHint="String[]"
-                                    fieldDescription="Specified default options are preselected on form load."
-                                    fieldLabel="Default options">
-                                <field
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        name="./default"
-                                        required="{Boolean}false"/>
-                            </defaultValueMS>
-
+                            </columns>
                         </items>
                     </basic>
                     <help
