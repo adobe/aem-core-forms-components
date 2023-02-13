@@ -17,7 +17,7 @@ common:
       - run:
           name: Check out previous test metadata
           command: |
-            cat "${CIRCLE_INTERNAL_TASK_DATA}/circle-test-results/results.json" | jq .
+            cat "${CIRCLE_INTERNAL_TASK_DATA}/circle-test-results/test/results.json" | jq .
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
