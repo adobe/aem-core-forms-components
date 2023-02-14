@@ -48,7 +48,6 @@ public class StaticImageImplTest {
     private static final String PATH_IMAGE_CUSTOMIZED = CONTENT_ROOT + "/image-customized";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
 
-
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
