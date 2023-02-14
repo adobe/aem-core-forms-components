@@ -75,60 +75,20 @@ export default class FormField {
         return this.id;
     }
 
-    #syncElementLabelBy() {
-        if (this.element.hasAttribute('aria-labelby')) {
-            this.element.setAttribute('aria-labelby', this.getId() + "-label");
-        }
-    }
-
-    #syncLabel() {
-        let labelElement = this.getLabel ? this.getLabel() : null;
-        if (labelElement) {
-            const labelId = this.getId() + "-label";
-            labelElement.id = labelId;
-            labelElement.setAttribute('for', this.getId());
-        }
-    }
-
-    #syncLongDescription() {
-        let longDescriptionElement = this.getDescription ? this.getDescription() : null;
-        if (longDescriptionElement) {
-            longDescriptionElement.id = this.getId() + "-longDescription";
-        }
-    }
-
-    #syncShortDescription() {
-        let shortDescriptionElement = this.getTooltipDiv ? this.getTooltipDiv() : null;
-        if (shortDescriptionElement) {
-            shortDescriptionElement.id = this.getId() + "-shortDescription";
-        }
-    }
-
-    #syncErrorDiv() {
-        let errorDivElement = this.getErrorDiv ? this.getErrorDiv() : null;
-        if (errorDivElement) {
-            errorDivElement.id = this.getId() + "-errorMessage";
-        }
-    }
-
-    /**
-     * Update the HTML, with respective model
-     */
-    syncHTMLWithModel() {
-        this.#syncElementLabelBy();
-        this.#syncLabel();
-        this.#syncLongDescription();
-        this.#syncShortDescription();
-        this.#syncErrorDiv();
-    }
-
     setModel(model) {
         if (typeof this._model === "undefined" || this._model === null) {
             this._model = model;
         } else {
             throw "Re-initializing model is not permitted"
         }
-        this.syncHTMLWithModel();
+    }
+
+    /**
+     * Update the HTML, with respective model
+     * It is for the markup that is generated on the client-side (eg: repeatable panel)
+     */
+    syncMarkupWithModel() {
+        throw "method not implemented";
     }
 
     /**
