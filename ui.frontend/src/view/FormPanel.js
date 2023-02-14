@@ -43,11 +43,6 @@ export default class FormPanel extends FormFieldBase {
             instanceManager.addChild(this);
             this.setInstanceManager(instanceManager);
         }
-        this.syncLayoutHtmlWithModel();
-    }
-
-    syncLayoutHtmlWithModel() {
-        //This needs to be handled in tabs, accordion, wizard
     }
 
     addChild(childView) {

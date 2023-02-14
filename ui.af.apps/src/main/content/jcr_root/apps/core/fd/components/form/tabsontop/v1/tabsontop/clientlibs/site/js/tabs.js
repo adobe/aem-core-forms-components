@@ -156,7 +156,8 @@
             }
         }
 
-        syncLayoutHtmlWithModel() {
+        syncHTMLWithModel() {
+            super.syncHTMLWithModel();
             this.#syncTabLabels();
             this.#syncTabPanels();
         }
