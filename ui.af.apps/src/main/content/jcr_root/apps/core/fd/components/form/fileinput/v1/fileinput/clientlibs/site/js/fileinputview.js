@@ -71,7 +71,7 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        getAttachButtonLabel() {
+        #getAttachButtonLabel() {
             return this.element.querySelector(FileInput.selectors.attachButtonLabel);
         }
 
@@ -89,13 +89,18 @@
             }
         }
 
-        syncWidget() {
+        #syncWidget() {
             let widgetElement = this.getWidget ? this.getWidget() : null;
             if (widgetElement) {
                 widgetElement.id = this.getId() + "__widget";
-                this.getAttachButtonLabel().setAttribute('for',this.getId());
+                this.#getAttachButtonLabel().setAttribute('for',this.getId());
             }
 
+        }
+
+        syncHTMLWithModel() {
+            super.syncHTMLWithModel();
+            this.#syncWidget();
         }
     }
 

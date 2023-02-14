@@ -133,7 +133,7 @@
         #syncTabLabels(){
             var tabs = this._elements["tab"];
             if (tabs) {
-                tabs.forEach((tab)=>{
+                tabs.forEach((tab) => {
                     var splitIdArr=tab.id.split("-");
                     var replaceableId=splitIdArr[0]+"-"+splitIdArr[1];
                     tab.id=tab.id.replace(replaceableId,this.getId());

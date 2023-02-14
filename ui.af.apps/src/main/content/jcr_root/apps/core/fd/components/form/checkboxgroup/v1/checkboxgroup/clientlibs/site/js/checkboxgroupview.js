@@ -71,7 +71,7 @@
             return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
         }
 
-        syncWidget() {
+        #syncWidget() {
             let widgetElementList = this.getWidget();
             if(widgetElementList) {
                 widgetElementList.forEach((widgetElement) => {
@@ -82,6 +82,11 @@
                     }
                 });
             }
+        }
+
+        syncHTMLWithModel() {
+            super.syncHTMLWithModel();
+            this.#syncWidget();
         }
 
         setModel(model) {

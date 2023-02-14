@@ -107,7 +107,7 @@
             });
         }
 
-        syncWidget() {
+        #syncWidget() {
             let widgetElementList =this.getWidget();
             if(widgetElementList){
                 widgetElementList.forEach((widgetElement)=>{
@@ -129,6 +129,11 @@
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
+        }
+
+        syncHTMLWithModel() {
+            super.syncHTMLWithModel();
+            this.#syncWidget();
         }
     }
 
