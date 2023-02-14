@@ -6,6 +6,18 @@
     "sling:resourceType" : "core/fd/components/form/button/v1/button",
     "name" : "test-button",
     "jcr:title" : "test-button",
+    "description" : "test-description",
+    "dataRef" : "test-button-ref",
+    "tooltip": "test-short-description",
+    "fieldType": "button"
+  },
+  "button-customized" : {
+    "id": "button-112234",
+    "jcr:primaryType": "nt:unstructured",
+    "dorExclusion": true,
+    "sling:resourceType" : "core/fd/components/form/button/v1/button",
+    "name" : "test-button--customized",
+    "jcr:title" : "test-button--customized",
     "hideTitle" : false,
     "description" : "test-description",
     "enabled": true,

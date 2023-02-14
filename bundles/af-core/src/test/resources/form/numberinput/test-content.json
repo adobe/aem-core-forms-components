@@ -4,6 +4,13 @@
     "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
     "name" : "abc",
     "jcr:title" : "def",
+    "fieldType": "number-input"
+  },
+  "numberinput-customized" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
+    "name" : "abc",
+    "jcr:title" : "def",
     "hideTitle" : true,
     "description" : "dummy",
     "visible" : false,

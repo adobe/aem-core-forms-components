@@ -1,0 +1,47 @@
+{
+  "id": "dropdown-2bbdc7f660",
+  "dataRef": "a.b",
+  "fieldType": "drop-down",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "number",
+  "enabled": true,
+  "required": false,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "m",
+    "f",
+    "o"
+  ],
+  "label": {
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dropdown-1"
+  },
+  "enum": [
+    0,
+    1,
+    2
+  ],
+  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+}
