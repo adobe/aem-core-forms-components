@@ -80,6 +80,7 @@
                 this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }
             this.widgetObject.setValue(value);
+            super.updateEmptyStatus();
         }
 
         setModel(model) {

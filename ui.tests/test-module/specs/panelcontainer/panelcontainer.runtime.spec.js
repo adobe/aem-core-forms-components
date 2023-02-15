@@ -268,8 +268,7 @@ describe( "Form Runtime with Panel Container - Basic Tests", () => {
             .type("c").blur().then(() => {
             cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr', 'readonly');
             cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
-        })
-
+        });
     });
 })
 
