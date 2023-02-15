@@ -16,6 +16,7 @@
 
 import {Constants} from "../constants.js";
 import FormField from './FormField.js';
+import {LanguageUtils} from "../index";
 
 export default class FormFieldBase extends FormField {
 
@@ -210,9 +211,68 @@ export default class FormFieldBase extends FormField {
     updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
           this.errorDiv.innerHTML = state.errorMessage;
-          if (state.valid === false && !state.errorMessage) {
-            this.errorDiv.innerHTML = 'There is an error in the field';
-          }
+            if (state.valid === false && !state.errorMessage) {
+                let validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "DefaultError");
+                let validationState = this.widget.validity;
+                if (validationState.required === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "ValueMissingDefaultError");
+                }
+                if (validationState.stepMismatch === true) {
+                    if (((state.maximum - state.minimum)/ state.step + 1) >= 2) {
+                        let validInput = Math.floor(state.value / state.step) * state.step;
+                        if (state.minimum < validInput) {
+                            validInput = validInput + state.step;
+                        }
+                        if (state.maximum < (validInput + state.step)) {
+                            validInput = validInput - state.step;
+                        }
+                        validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "StepMismatchDefaultError", [validInput, validInput + state.step]);
+                    } else {
+                        validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "StepMismatchGenDefaultError", [state.step]);
+                    }
+
+                }
+                if (validationState.rangeUnderflow === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "RangeUnderFlowDefaultError", [state.minimum]);
+                }
+                if (validationState.rangeOverflow === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "RangeOverFlowDefaultError", [state.maximum]);
+                }
+                if (validationState.typeMismatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "TypeMismatchDefaultError", [state.type]);
+                }
+                if (validationState.tooLong === true || state.value.length > state.maxLength) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "TooLongDefaultError", [state.maxLength]);
+                }
+                if (validationState.tooShort === true || state.value.length < state.minLength) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "TooShortDefaultError", [state.minLength]);
+                }
+                if (validationState.patternMismatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "PatternMismatchDefaultError");
+                }
+                if (validationState.formatMismatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "FormatMismatchDefaultError", [state.format]);
+                }
+                if (validationState.acceptMismatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "AcceptMismatchDefaultError");
+                }
+                if (validationState.fileSizeMistmatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "FileSizeMismatchDefaultError");
+                }
+                if (validationState.uniqueItemsMismatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "UniqueItemsMismatchDefaultError");
+                }
+                if (validationState.minItemsMistmatch === true ) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "MinItemsMismatchDefaultError", [state.minItems]);
+                }
+                if (validationState.maxItemsMistmatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "MaxItemsMismatchDefaultError", [state.maxItems]);
+                }
+                if (validationState.expressionMistmatch === true) {
+                    validationMessage = LanguageUtils.getTranslatedString(this.formContainer._model._jsonModel.lang, "ExpressionMismatchDefaultError");
+                }
+                this.errorDiv.innerHTML = validationMessage;
+            }
         }
     }
 

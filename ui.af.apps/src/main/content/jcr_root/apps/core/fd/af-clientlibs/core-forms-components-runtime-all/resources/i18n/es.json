@@ -3,5 +3,22 @@
   "FileSizeGreater"       :        "FLos archivos {0} tienen un tamaño superior al esperado: {1}MB.",
   "FileNameInvalid"       :       "El nombre de los archivos {0} contiene caracteres no válidos. Solo se admiten caracteres alfanuméricos",
   "FileMimeTypeInvalid"   :       "Los tipos de archivo {0} no son compatibles",
-  "InternalFormSubmissionError" :  "Error interno al enviar el formulario."
+  "InternalFormSubmissionError" :  "Error interno al enviar el formulario.",
+  "RangeUnderFlowDefaultError" :      "",
+  "RangeOverFlowDefaultError" :       "",
+  "TypeMismatchDefaultError" :        "",
+  "ValueMissingDefaultError" :        "",
+  "StepMismatchDefaultError" :        "",
+  "StepMismatchGenDefaultError" :     "",
+  "FormatMismatchDefaultError" :      "",
+  "AcceptMismatchDefaultError" :      "",
+  "FileSizeMismatchDefaultError" :    "",
+  "UniqueItemsMismatchDefaultError" : "",
+  "PatternMismatchDefaultError" :     "",
+  "MinItemsMismatchDefaultError" :    "",
+  "MaxItemsMismatchDefaultError" :    "",
+  "ExpressionMismatchDefaultError" :  "",
+  "TooLongDefaultError" :             "",
+  "TooShortDefaultError" :            "",
+  "DefaultError" :                    ""
 }

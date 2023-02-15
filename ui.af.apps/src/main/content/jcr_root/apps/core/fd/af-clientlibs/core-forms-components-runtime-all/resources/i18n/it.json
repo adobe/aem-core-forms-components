@@ -3,5 +3,22 @@
   "FileSizeGreater"       :        "I file {0} superano le dimensioni previste: {1} MB.",
   "FileNameInvalid"       :       "I file {0} contengono caratteri non validi nel nome. Sono supportati solo caratteri alfanumerici",
   "FileMimeTypeInvalid"   :       "I file {0} non sono tipi di file supportati",
-  "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
+  "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo.",
+  "RangeUnderFlowDefaultError" :      "",
+  "RangeOverFlowDefaultError" :       "",
+  "TypeMismatchDefaultError" :        "",
+  "ValueMissingDefaultError" :        "",
+  "StepMismatchDefaultError" :        "",
+  "StepMismatchGenDefaultError" :     "",
+  "FormatMismatchDefaultError" :      "",
+  "AcceptMismatchDefaultError" :      "",
+  "FileSizeMismatchDefaultError" :    "",
+  "UniqueItemsMismatchDefaultError" : "",
+  "PatternMismatchDefaultError" :     "",
+  "MinItemsMismatchDefaultError" :    "",
+  "MaxItemsMismatchDefaultError" :    "",
+  "ExpressionMismatchDefaultError" :  "",
+  "TooLongDefaultError" :             "",
+  "TooShortDefaultError" :            "",
+  "DefaultError" :                    ""
 }
