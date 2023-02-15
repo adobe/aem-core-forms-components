@@ -35,6 +35,9 @@
             showAlert();
         } else {
             let ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
+            if(window.location.pathname.startsWith('/lc/editor.html')) {
+                ruleEditorUri = '/lc' + ruleEditorUri;
+            }
             ruleEditorFrame.setAttribute('src', ruleEditorUri);
             ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
             ruleEditorFrame.style.display = "block";
