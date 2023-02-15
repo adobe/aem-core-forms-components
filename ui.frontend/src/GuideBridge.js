@@ -102,20 +102,22 @@ export default class GuideBridge {
             return this.#guideContainerMap[this.#formContainerPath];
         } else {
             //choose any form container in case no formContainerPath is provided in GuideBridge#connect API
-            const formContainerPath = this.#getRandomFormContainerPath();
+            const formContainerPath = this.#getFormContainerPath();
             this.#formContainerPath = formContainerPath;
             return this.#guideContainerMap[formContainerPath];
         }
     }
 
-    #getRandomFormContainerPath() {
-        let randomFormContainerPath = "";
-        for(let formContainerPath in this.#guideContainerMap) {
-            if(this.#guideContainerMap.hasOwnProperty(formContainerPath)) {
-                randomFormContainerPath =  formContainerPath;
+    #getFormContainerPath() {
+        let actualFormContainerPath = this.#formContainerPath;
+        if (!actualFormContainerPath) {
+            for(let formContainerPath in this.#guideContainerMap) {
+                if(this.#guideContainerMap.hasOwnProperty(formContainerPath)) {
+                    actualFormContainerPath =  formContainerPath;
+                }
             }
         }
-        return randomFormContainerPath;
+        return actualFormContainerPath;
     }
 
     /**
@@ -266,7 +268,7 @@ export default class GuideBridge {
         if (formContainerPath) {
             formContainer = this.#formContainerViewMap[formContainerPath];
         } else {
-            formContainer = this.#formContainerViewMap[this.#getRandomFormContainerPath()];
+            formContainer = this.#formContainerViewMap[this.#getFormContainerPath()];
         }
         if (formContainer && formContainer.getFormElement()) {
             const formElement = formContainer.getFormElement();

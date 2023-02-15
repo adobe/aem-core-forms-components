@@ -28,7 +28,12 @@ export default class FormFieldBase extends FormField {
         this.qm = this.getQuestionMarkDiv();
         this.tooltip = this.getTooltipDiv()
     }
-    GUIDE_ELEMENT_FOCUS_CHANGED = "elementFocusChanged"
+
+    ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
+
+    ELEMENT_HELP_SHOWN = "elementHelpShown";
+
+    ELEMENT_ERROR_SHOWN = "elementErrorShown";
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
@@ -84,6 +89,7 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this.applyState(state);
+        this.#registerEventListeners();
     }
 
     /**
@@ -105,7 +111,6 @@ export default class FormFieldBase extends FormField {
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
-        this.registerWidgetEventListeners();
     }
 
     /**
@@ -120,30 +125,45 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    registerWidgetEventListeners() {
-        const guideBridge = window.guideBridge;
-        const onfocus = (e) => {
-            const formContainerPath = this.formContainer.getPath();
-            const formName = this.#getFormName();
-            const panelName = this.#getPanelName();
-            const fieldName = this._model._jsonModel.name;
-            const eventPayload = {
-                formName,
-                fieldName,
-                panelName
-            };
-            guideBridge.trigger(this.GUIDE_ELEMENT_FOCUS_CHANGED, eventPayload, formContainerPath);
+    /**
+     * Register all event listeners on this field
+     */
+    #registerEventListeners() {
+        this.#addOnFocusEventListener();
+        this.#addOnHelpIconClickEventListener();
+    }
+
+    #addOnHelpIconClickEventListener() {
+        const questionMarkDiv = this.qm;
+        if (questionMarkDiv) {
+            questionMarkDiv.addEventListener('click', () => {this.#triggerEventOnGuideBridge(this.ELEMENT_HELP_SHOWN)})
         }
+    }
+
+    #addOnFocusEventListener() {
         const widget = this.getWidget();
         if (widget) {
             if (widget.length && widget.length > 1) {
                 for (let opt of widget) {
-                    opt.onfocus = onfocus;
+                    opt.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
                 }
             } else {
-                widget.onfocus = onfocus;
+                widget.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
             }
         }
+    }
+
+    #triggerEventOnGuideBridge(eventType) {
+        const formContainerPath = this.formContainer.getPath();
+        const formName = this.#getFormName();
+        const panelName = this.#getPanelName();
+        const fieldName = this._model.name;
+        const eventPayload = {
+            formName,
+            fieldName,
+            panelName
+        };
+        window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
     }
 
     #getFormName() {
@@ -151,7 +171,7 @@ export default class FormFieldBase extends FormField {
     }
 
     #getPanelName() {
-        return this.parentView._model._jsonModel.name;
+        return this.parentView.getModel().name;
     }
 
     /**
@@ -247,6 +267,7 @@ export default class FormFieldBase extends FormField {
           this.errorDiv.innerHTML = state.errorMessage;
           if (state.valid === false && !state.errorMessage) {
             this.errorDiv.innerHTML = 'There is an error in the field';
+            this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
           }
         }
     }
