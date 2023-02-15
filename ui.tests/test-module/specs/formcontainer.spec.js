@@ -82,6 +82,28 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./restEndpointPostUrl'").invoke('attr', 'value').should('eq', 'http://localhost:4502/some/endpoint');
         };
 
+    const checkDataModelInEditDialog = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open submission tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+        cy.get("[name='./schemaType']").should("exist");
+        cy.get("[name='./schemaRef']").invoke('attr', 'type').should('eq', 'hidden');
+        cy.get("[name='./xsdRef']").invoke('attr', 'type').should('eq', 'hidden');
+
+        //select email submit action
+        cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
+        cy.get("._coral-Menu-itemLabel").contains('Form Data Model').should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__fdmselector").should("exist");
+
+        cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
+        cy.get("._coral-Menu-itemLabel").contains('Schema').should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
+
+    };
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -96,6 +118,12 @@ describe('Page/Form Authoring', function () {
             it('open edit dialog of adaptive form container component', function () {
                 // click configure action on adaptive form container component
                 checkEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            });
+
+            it('data model in container', function () {
+                // click configure action on adaptive form container component
+                checkDataModelInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
             });
         });
