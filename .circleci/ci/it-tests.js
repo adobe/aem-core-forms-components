@@ -15,6 +15,7 @@
 'use strict';
 
 const ci = new (require('./ci.js'))();
+const process = require('process');
 
 ci.context();
 
@@ -96,9 +97,12 @@ try {
             ci.sh(`mvn clean install -PautoInstallPackage`);
         });
 
+
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true`);
+            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DspecFiles="${testSuites}"`);
     });
     }
 
@@ -139,5 +143,9 @@ try {
     ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
     ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
     ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
-});
+    });
+    // test-results folder will store the test-timing data for parallelising test-suites
+    ci.sh('mkdir -p test-results/test/');
+    ci.sh('cp ./ui.tests/test-module/target/reports/*.xml ./test-results/test/');
+    
 }

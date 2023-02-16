@@ -14,6 +14,10 @@ common:
 
   cypress_test_steps: &cypress_test_steps
     steps:
+      - run:
+          name: Check out previous test metadata
+          command: |
+            cat "${CIRCLE_INTERNAL_TASK_DATA}/circle-test-results/test/results.json" | jq .
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
@@ -28,9 +32,15 @@ common:
           at: /home/circleci/build
       - run:
           name: UI tests
-          command: node .circleci/ci/it-tests.js
+          command: |
+                cd ui.tests/test-module
+                shopt -s globstar
+                SPEC_PATH="specs/**/*.spec.js"
+                TEST=$(circleci tests glob ${SPEC_PATH} | circleci tests split --split-by=timings)
+                cd ../../
+                node .circleci/ci/it-tests.js $TEST
       - store_test_results:
-          path: ui.tests/test-module/target/reports
+          path: test-results
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -123,6 +133,7 @@ jobs:
       PRERELEASE: 'true'
     resource_class: large
     working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
