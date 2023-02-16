@@ -34,10 +34,7 @@
         if (!formContainerPath) {
             showAlert();
         } else {
-            let ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
-            if(window.location.pathname.startsWith('/lc/editor.html')) {
-                ruleEditorUri = '/lc' + ruleEditorUri;
-            }
+            let ruleEditorUri = getRuleEditorUri(editable);
             ruleEditorFrame.setAttribute('src', ruleEditorUri);
             ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
             ruleEditorFrame.style.display = "block";
@@ -62,6 +59,11 @@
     function showAlert() {
         var ui = $(window).adaptTo('foundation-ui');
         ui.alert(Granite.I18n.get('Information'), Granite.I18n.get('Please initialise the component to open the rule editor'), 'notice');
+    }
+
+    function getRuleEditorUri(editable) {
+        return Granite.HTTP.externalize('/aem/af/expeditor.html' + getFormContainerPath(editable) 
+                    + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable));
     }
 
 })(jQuery);
