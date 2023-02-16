@@ -107,16 +107,6 @@
             });
         }
 
-        #syncWidget() {
-            let widgetElementList =this.getWidget();
-            if(widgetElementList){
-                widgetElementList.forEach((widgetElement)=>{
-                    let newId=this.getId()+"__widget"+widgetElement.id.substring(widgetElement.id.lastIndexOf('_'))
-                    widgetElement.id=newId;
-                });
-            }
-        }
-
         updateValue(modelValue) {
             this.widget.forEach(widget => {
                 if (modelValue && widget.value != null && modelValue.toString() == widget.value.toString()) {
@@ -132,10 +122,6 @@
             super.updateEmptyStatus();
         }
 
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncWidget();
-        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

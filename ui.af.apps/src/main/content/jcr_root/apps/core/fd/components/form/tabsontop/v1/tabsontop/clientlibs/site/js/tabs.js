@@ -135,12 +135,12 @@
             if (tabs) {
                 if(Array.isArray(tabs)){
                     tabs.forEach((tab) => {
-                        tab.id = this.getId() + "-tab";
-                        tab.setAttribute("aria-controls", this.getId() + "-tabpanel");
+                        tab.id = this.getId() + "__tab";
+                        tab.setAttribute("aria-controls", this.getId() + "__tabpanel");
                     });
                 }else{
-                    tabs.id = this.getId() + "-tab";
-                    tabs.setAttribute("aria-controls", this.getId() + "-tabpanel");
+                    tabs.id = this.getId() + "__tab";
+                    tabs.setAttribute("aria-controls", this.getId() + "__tabpanel");
                 }
             }
         }
@@ -150,12 +150,12 @@
             if(tabPanels) {
                 if(Array.isArray(tabPanels)) {
                     tabPanels.forEach((tabPanel) => {
-                        tabPanel.id = this.getId() + "-tabpanel";
-                        tabPanel.setAttribute("aria-labelledby", this.getId() + "-tab");
+                        tabPanel.id = this.getId() + "__tabpanel";
+                        tabPanel.setAttribute("aria-labelledby", this.getId() + "__tab");
                     });
                 }else{
-                    tabPanels.id = this.getId() + "-tabpanel";
-                    tabPanels.setAttribute("aria-labelledby", this.getId() + "-tab");
+                    tabPanels.id = this.getId() + "__tabpanel";
+                    tabPanels.setAttribute("aria-labelledby", this.getId() + "__tab");
                 }
             }
         }
