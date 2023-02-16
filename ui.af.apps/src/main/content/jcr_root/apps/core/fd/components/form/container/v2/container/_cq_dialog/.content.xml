@@ -103,14 +103,9 @@
                                                     value="formdatamodel"/>
                                         </items>
                                     </selectformmodel>
-                                    <schemaRef
-                                            name="./schemaRef"
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
-                                    <xsdRef
-                                            name="./xsdRef"
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+                                    <schemaRef name="./schemaRef"
+                                               jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                     <schemaSelectorContainer
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container"
@@ -131,15 +126,6 @@
                                                         layoutType="fd/af/layouts/panel"
                                                         type="xmljsonschema"/>
                                             </schemaSelector>
-                                            <rootElementSelector
-                                                    granite:class="cmp-adaptiveform-container__rootelementselector"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/container"/>
-                                            <xsdRootElement
-                                                    granite:class="cmp-adaptiveform-container__xsdrootelement"
-                                                    name="./xsdRootElement"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                         </items>
                                     </schemaSelectorContainer>
                                     <fdmselectorcontainer
@@ -164,10 +150,6 @@
                                             </fdmselector>
                                         </items>
                                     </fdmselectorcontainer>
-                                    <formmodelparameters
-                                            granite:id="formmodelparameters"
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                 </items>
                             </formmodel>
                         </items>

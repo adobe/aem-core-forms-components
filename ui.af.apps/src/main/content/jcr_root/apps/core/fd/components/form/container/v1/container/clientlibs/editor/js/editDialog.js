@@ -42,26 +42,20 @@
 
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-    var XSD_EXTENSION = '.xsd',
-        JSON_EXTENSION = '.schema.json',
-        XML_SCHEMA = 'xmlschema',
+    var XML_SCHEMA = 'xmlschema',
         JSON_SCHEMA = 'jsonschema',
         NONE = "none",
         SCHEMA ="schema",
         FORM_DATA_MODEL = "formdatamodel",
         SCHEMA_REF = "input[name='./schemaRef']",
-        XSD_REF = "input[name='./xsdRef']",
         SCHEMA_TYPE = "input[name='./schemaType']",
         SCHEMA_CONTAINER = ".cmp-adaptiveform-container__schemaselectorcontainer",
         FDM_CONTAINER = ".cmp-adaptiveform-container__fdmselectorcontainer",
         SCHEMA_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__schemaselector",
         FDM_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__fdmselector",
-        FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel",
-        SCHEMA_ROOT_ELEMENT_SELECTOR = ".cmp-adaptiveform-container__rootelementselector",
-        XSD_ROOT_ELEMENT_SELECTOR = ".cmp-adaptiveform-container__xsdrootelement";
+        FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel";
 
-    var lastSelectedXsd,
-        configuredFormModel,
+    var configuredFormModel,
         toBeConfiguredFormModel,
         isConfirmationDialogAccept = false,
         doNotShowDialogFlag = false,
@@ -100,7 +94,7 @@
         var schemaType = dialog.find(FORM_MODEL_SELECTOR)[0].value;
         hideContainersExcept(schemaType);
         prefillSchema(schemaType, dialog);
-        if (!isTemplate() && schemaType != NONE) {
+        if (schemaType != NONE) {
             document.querySelector(FORM_MODEL_SELECTOR).disabled = true;
             dialog.find(SCHEMA_TYPE)[0].removeAttribute("disabled");
         }
@@ -110,46 +104,20 @@
     function selectFormModelOnChanged(dialog) {
         var schemaTypeSelected = dialog.find(FORM_MODEL_SELECTOR)[0].value;
         hideContainersExcept(schemaTypeSelected);
-        if (schemaTypeSelected == SCHEMA) {
-            if (lastSelectedXsd) {
-                $(SCHEMA_ROOT_ELEMENT_SELECTOR).show();
-                createRootElementSelectionMarkup(lastSelectedXsd);
-            }
-        } else {
-            removeXsdRootElementMarkup();
-        }
     };
 
     function prefillSchema(schemaType, dialog){
-        var schemaRef = dialog.find(SCHEMA_REF)[0].value,
-            xsdRef = dialog.find(XSD_REF)[0].value;
+        var schemaRef = dialog.find(SCHEMA_REF)[0].value;
         if (schemaType == SCHEMA) {
-            $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef ? schemaRef : xsdRef);
+            $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef);
         } else if (schemaType == FORM_DATA_MODEL) {
-            $(FDM_DROPDOWN_SELECTOR).val(schemaRef ? schemaRef : xsdRef);
-        }
-        if(xsdRef){
-            fillXsdDetails(xsdRef);
+            $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
         }
     };
 
     function schemaSelectorOnChanged(dialog) {
         var selectedSchema = dialog.find(SCHEMA_DROPDOWN_SELECTOR)[0].value;
-        if (selectedSchema.indexOf(XSD_EXTENSION) != -1) {
-            $(SCHEMA_ROOT_ELEMENT_SELECTOR).show();
-            dialog.find(XSD_REF)[0].value = selectedSchema;
-            dialog.find(SCHEMA_REF)[0].value = '';
-            createRootElementSelectionMarkup(selectedSchema);
-        } else if (selectedSchema.indexOf(JSON_EXTENSION) != -1) {
-            $(SCHEMA_ROOT_ELEMENT_SELECTOR).hide();
-            removeXsdRootElementMarkup();
-            handleJsonSelection(selectedSchema);
-            dialog.find(SCHEMA_REF)[0].value = selectedSchema;
-            dialog.find(XSD_REF)[0].value = '';
-        } else {
-            dialog.find(SCHEMA_REF)[0].value = selectedSchema;
-            dialog.find(XSD_REF)[0].value = '';
-        }
+        dialog.find(SCHEMA_REF)[0].value = selectedSchema;
         if (configuredFormModel) {
             confirmFormModelChange(selectedSchema, $(SCHEMA_DROPDOWN_SELECTOR));
         } else {
@@ -160,75 +128,10 @@
     function fdmSelectorOnChanged(dialog) {
         var selectedSchema = dialog.find(FDM_DROPDOWN_SELECTOR)[0].value;
         dialog.find(SCHEMA_REF)[0].value = selectedSchema;
-        dialog.find(XSD_REF)[0].value = '';
         if (configuredFormModel) {
             confirmFormModelChange(selectedSchema, $(FDM_DROPDOWN_SELECTOR));
         } else {
             toBeConfiguredFormModel = selectedSchema;
-        }
-    };
-
-    function handleJsonSelection(selectedSchema) {
-        lastSelectedXsd = '';
-        $(SCHEMA_DROPDOWN_SELECTOR).val(selectedSchema);
-        removeXsdRootElementMarkup();
-    };
-
-    function createRootElementSelectionMarkup(selectedSchema, preselectedRootElement) {
-        lastSelectedXsd = selectedSchema;
-        var path = selectedSchema + '/jcr:content/renditions/original';
-        $.ajax({
-            type: "POST",
-            url: Granite.HTTP.externalize("/libs/fd/fm/gui/content/forms/guide/validate.html?xsdFilePath=" + encodeURIComponent(path) + "&assetType=guide")
-        }).done(function(html){
-            var autocomplete =  getXsdRootElementDropDown(html, preselectedRootElement);
-            var label = '<label class="coral-Form-fieldlabel">' + Granite.I18n.get("XML Schema Root Element *") + '</label>';
-            $(SCHEMA_ROOT_ELEMENT_SELECTOR).html(label);
-            $(SCHEMA_ROOT_ELEMENT_SELECTOR).append($(autocomplete));
-            $(SCHEMA_DROPDOWN_SELECTOR).val(selectedSchema);
-        }).fail(function(e){
-            console.log(e);
-        });
-    };
-
-    function getXsdRootElementDropDown(json, preselectedRootElement){
-        var placeHolder = Granite.I18n.get("Select or type a Root Element");
-        removeXsdRootElementMarkup();
-        var autocomplete = new Coral.Autocomplete().set({
-            placeholder : placeHolder,
-            required : true
-        });
-        autocomplete.forceSelection = true;
-        $(autocomplete).addClass('rootSelect');
-        for(var i = 0; i < json.length; i++){
-            var key = Object.keys(json[i]);
-            var value = json[i][key];
-            var selected = preselectedRootElement == value;
-            autocomplete.items.add({
-                value : _g.shared.XSS.getXSSValue(value),
-                content:
-                    {
-                        innerHTML : _g.shared.XSS.getXSSValue(key)
-                    },
-                selected: selected
-            });
-        }
-        return autocomplete;
-    };
-
-    function fillXsdDetails(xsdRef) {
-        var xsdRootElement = $(XSD_ROOT_ELEMENT_SELECTOR).val();
-        createRootElementSelectionMarkup(xsdRef, xsdRootElement);
-    };
-
-    /**
-     * Clears the ./xsdRootElement attr and deletes the rootElement dropdown markup
-     */
-    function removeXsdRootElementMarkup(){
-        $(XSD_ROOT_ELEMENT_SELECTOR).val('');
-        const elements = document.getElementsByClassName('rootSelect');
-        while(elements.length > 0){
-            elements[0].parentNode.removeChild(elements[0]);
         }
     };
 
@@ -243,11 +146,6 @@
             $(FDM_CONTAINER).hide();
             $(SCHEMA_CONTAINER).hide();
         }
-    };
-
-    function isTemplate() {
-        var currentUrl = window.location.href;
-        return !currentUrl.includes("editor.html/content/forms/af/");
     };
 
     function confirmFormModelChange(selectedSchema, dataModelSelector) {
@@ -289,9 +187,6 @@
                 fdmSelectorOnChanged(dialog);
             });
         };
-        channel.on('change', '.rootSelect', function() {
-            $(XSD_ROOT_ELEMENT_SELECTOR).val($('.rootSelect').val());
-        });
         selectFormModelOnLoad(dialog);
     }
 

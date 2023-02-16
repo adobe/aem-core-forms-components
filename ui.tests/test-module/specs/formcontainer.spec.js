@@ -91,12 +91,10 @@ describe('Page/Form Authoring', function () {
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
         cy.get("[name='./schemaType']").should("exist");
         cy.get("[name='./schemaRef']").invoke('attr', 'type').should('eq', 'hidden');
-        cy.get("[name='./xsdRef']").invoke('attr', 'type').should('eq', 'hidden');
 
         //select email submit action
         cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Form Data Model').should('be.visible').click();
-        cy.get(".cmp-adaptiveform-container__fdmselector").should("exist");
+        cy.get("._coral-Menu-itemLabel").contains('None').should('exist');
 
         cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
         cy.get("._coral-Menu-itemLabel").contains('Schema').should('be.visible').click();
