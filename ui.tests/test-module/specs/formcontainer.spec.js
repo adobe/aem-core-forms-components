@@ -95,8 +95,6 @@ describe('Page/Form Authoring', function () {
         //select email submit action
         cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
         cy.get("._coral-Menu-itemLabel").contains('None').should('exist');
-
-        cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
         cy.get("._coral-Menu-itemLabel").contains('Schema').should('be.visible').click();
         cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
 
