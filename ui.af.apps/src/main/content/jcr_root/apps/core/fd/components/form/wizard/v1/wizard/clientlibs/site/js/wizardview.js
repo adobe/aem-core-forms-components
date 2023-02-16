@@ -321,6 +321,42 @@
             this.#navigate(index);
             this.focusWithoutScroll(this._elements["tab"][index]);
         }
+
+        #syncWizardNavLabels(){
+            var tabs = this._elements["tab"];
+            if (tabs) {
+                if(Array.isArray(tabs)) {
+                    tabs.forEach((tab) => {
+                        tab.id = this.getId() + "_wizard-item-nav";
+                        tab.setAttribute("aria-controls", this.getId() + "__wizardpanel");
+                    });
+                }else{
+                    tabs.id = this.getId() + "_wizard-item-nav";
+                    tabs.setAttribute("aria-controls", this.getId() + "__wizardpanel");
+                }
+            }
+        }
+
+        #syncWizardPanels(){
+            var wizardPanels = this._elements["wizardpanel"];
+            if(wizardPanels) {
+                if(Array.isArray(wizardPanels)) {
+                    wizardPanels.forEach((wizardPanel) => {
+                        wizardPanel.id = this.getId() + "__wizardpanel";
+                        wizardPanel.setAttribute("aria-labelledby", this.getId() + "_wizard-item-nav");
+                    });
+                }else{
+                    wizardPanels.id = this.getId() + "__wizardpanel";
+                    wizardPanels.setAttribute("aria-labelledby", this.getId() + "_wizard-item-nav");
+                }
+            }
+        }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.#syncWizardNavLabels();
+            this.#syncWizardPanels();
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

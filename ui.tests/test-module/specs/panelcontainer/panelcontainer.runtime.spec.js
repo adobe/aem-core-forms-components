@@ -288,8 +288,8 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
 
     // List of IDs that need to be ignored during duplicate test
     const exceptionIDsList  = ["emptyValue"] // dropdown has a hardcoded id="emptyValue" in all of its first <option> instances
-    //accordion and wizard components needs to be added once repeatability is implemented in them
-    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormTelephoneInput", "adaptiveFormText", "adaptiveFormImage", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTabs", "adaptiveFormButton"];
+    //accordion components needs to be added once repeatability is implemented in them
+    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormTelephoneInput", "adaptiveFormText", "adaptiveFormImage", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTabs", "adaptiveFormButton","adaptiveFormWizard"];
     //const components = ["adaptiveFormButton"]
     const repeatabilityCount = 2;
 

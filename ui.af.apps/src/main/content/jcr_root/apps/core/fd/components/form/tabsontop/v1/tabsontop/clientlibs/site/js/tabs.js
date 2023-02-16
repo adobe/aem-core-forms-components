@@ -133,31 +133,35 @@
         #syncTabLabels(){
             var tabs = this._elements["tab"];
             if (tabs) {
-                tabs.forEach((tab) => {
-                    var splitIdArr=tab.id.split("-");
-                    var replaceableId=splitIdArr[0]+"-"+splitIdArr[1];
-                    tab.id=tab.id.replace(replaceableId,this.getId());
-                    tab.setAttribute("aria-controls",
-                        tab.getAttribute("aria-controls").replace(replaceableId,this.getId()));
-                });
+                if(Array.isArray(tabs)){
+                    tabs.forEach((tab) => {
+                        tab.id = this.getId() + "-tab";
+                        tab.setAttribute("aria-controls", this.getId() + "-tabpanel");
+                    });
+                }else{
+                    tabs.id = this.getId() + "-tab";
+                    tabs.setAttribute("aria-controls", this.getId() + "-tabpanel");
+                }
             }
         }
 
         #syncTabPanels(){
             var tabPanels = this._elements["tabpanel"];
             if(tabPanels) {
-                tabPanels.forEach((tabPanel)=>{
-                    var splitIdArr=tabPanel.id.split("-");
-                    var replaceableId=splitIdArr[0]+"-"+splitIdArr[1];
-                    tabPanel.id=tabPanel.id.replace(replaceableId,this.getId());
-                    tabPanel.setAttribute("aria-labelledby",
-                        tabPanel.getAttribute("aria-labelledby").replace(replaceableId,this.getId()));
-                })
+                if(Array.isArray(tabPanels)) {
+                    tabPanels.forEach((tabPanel) => {
+                        tabPanel.id = this.getId() + "-tabpanel";
+                        tabPanel.setAttribute("aria-labelledby", this.getId() + "-tab");
+                    });
+                }else{
+                    tabPanels.id = this.getId() + "-tabpanel";
+                    tabPanels.setAttribute("aria-labelledby", this.getId() + "-tab");
+                }
             }
         }
 
-        syncHTMLWithModel() {
-            super.syncHTMLWithModel();
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
             this.#syncTabLabels();
             this.#syncTabPanels();
         }

@@ -45,7 +45,7 @@
                         title="${wizardItem.label.value}"
                         role="tab"
                         class="cmp-adaptiveform-wizard__tab"
-                        aria-controls="${wizardItem.id}_guide-item"
+                        aria-controls="${wizardItem.id}__wizardpanel"
                         tabindex="0"
                         data-cmp-hook-adaptiveFormWizard="tab">
                         ${wizardItem.label.value}
@@ -63,8 +63,9 @@
         <sly data-sly-repeat="${wizard.exportedItems}">
             <div
                     role="tabpanel"
+                    id="${wizard.exportedItems[item].id}__wizardpanel"
                     class="cmp-adaptiveform-wizard__wizardpanel"
-                    aria-labelledby="${wizard.exportedItems[item].name}_wizard-item-nav"
+                    aria-labelledby="${wizard.exportedItems[item].id}_wizard-item-nav"
                     data-cmp-hook-adaptiveFormWizard="wizardpanel">
                 <sly data-sly-resource=${item}>
                 </sly>

@@ -111,8 +111,8 @@
             let widgetElementList =this.getWidget();
             if(widgetElementList){
                 widgetElementList.forEach((widgetElement)=>{
-                    let idToReplace=widgetElement.id.split('_')[0];
-                    widgetElement.id=widgetElement.id.replace(idToReplace,this.getId());
+                    let newId=this.getId()+"__widget"+widgetElement.id.substring(widgetElement.id.lastIndexOf('_'))
+                    widgetElement.id=newId;
                 });
             }
         }
@@ -132,8 +132,8 @@
             super.updateEmptyStatus();
         }
 
-        syncHTMLWithModel() {
-            super.syncHTMLWithModel();
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
             this.#syncWidget();
         }
     }

@@ -99,8 +99,8 @@
 
         }
 
-        syncHTMLWithModel() {
-            super.syncHTMLWithModel();
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
             this.#syncWidget();
         }
     }

@@ -38,8 +38,8 @@
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
                 <label class="cmp-adaptiveform-checkboxgroup__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
-                       for="${component.id}${'_'}${itemList.index}__widget">
-                    <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
+                       for="${component.id}__widget${'_'}${itemList.index}">
+                    <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox" id="${component.id}__widget${'_'}${itemList.index}"
                            aria-describedby="${checkboxgroup.labelForId}_desc"
                            name="${checkboxgroup.name}"
                            value="${checkboxgroup.enums[itemList.index].toString}"
