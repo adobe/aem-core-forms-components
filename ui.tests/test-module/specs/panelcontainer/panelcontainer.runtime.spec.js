@@ -49,24 +49,32 @@ describe( "Form Runtime with Panel Container - Basic Tests", () => {
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    //TODO: change lookup for label/description etc to BEM classes
-    const checkInstance = (instancesModel, index) => {
+    const checkInstance = (instancesModel,formContainer,index) => {
+        const allFields = formContainer.getAllFields();
         const modelId = instancesModel[index].id;
+        const parentView=allFields[instancesModel[index].id];
         const textInputId = instancesModel[index].items[0].id;
+        const textInputView = allFields[instancesModel[index].items[0].id];
         const numberInputId = instancesModel[index].items[1].id;
-        return cy.get(`#${modelId}`).should('exist');
-        /*
-        cy.get(`#${modelId}-label`).should('exist');
-        cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-        cy.get(`#${modelId}-shortDescription`).should('exist');
-        cy.get(`#${modelId}-longDescription`).should('exist');
-        cy.get(`#${textInputId}-label`).should('exist');
-        cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-        cy.get(`#${textInputId}-errorMessage`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        return cy.get(`#${numberInputId}-errorMessage`).should('exist');
-         */
+        const numberInputView = allFields[instancesModel[index].items[1].id];
+        const parentLabelClass = parentView.getLabel().className;
+        const parentTooltipClass = parentView.getTooltipDiv().className;
+        const parentDescriptionClass = parentView.getDescription().className;
+        const textInputLabelClass = textInputView.getLabel().className;
+        const textInputErrorClass = textInputView.getErrorDiv().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        cy.get(`#${modelId}`).should('exist');
+        cy.get(`.${parentLabelClass}`).should('exist');
+        cy.get('[for="'+modelId+'"]').should('exist');
+        cy.get(`.${parentTooltipClass}`).should('exist');
+        cy.get(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`.${textInputLabelClass}`).should('exist');
+        cy.get('[for="'+textInputId+'"]').should('exist');
+        cy.get(`.${textInputErrorClass}`).should('exist');
+        cy.get(`.${numberInputLabelClass}`).should('exist');
+        cy.get('[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`.${numberInputErrorClass}`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
@@ -182,11 +190,11 @@ describe( "Form Runtime with Panel Container - Basic Tests", () => {
         const instanceManagerView = allFields[instancManagerModel.id];
         const instancesView = instanceManagerView.children;
 
-        checkInstance(instancesModel, 0).then(() => {
+        checkInstance(instancesModel,formContainer, 0).then(() => {
             // check for all four instances in HTML as per min occur
-            checkInstance(instancesModel, 1).then(() => {
-                checkInstance(instancesModel, 2).then(() => {
-                    checkInstance(instancesModel, 3).then(() => {
+            checkInstance(instancesModel,formContainer, 1).then(() => {
+                checkInstance(instancesModel,formContainer, 2).then(() => {
+                    checkInstance(instancesModel,formContainer, 3).then(() => {
                         for (let i = 0; i < instancesModel.length; i++) {
                             const modelId = instancesModel[i].id;
                             const textInputId = instancesModel[i].items[0].id;
