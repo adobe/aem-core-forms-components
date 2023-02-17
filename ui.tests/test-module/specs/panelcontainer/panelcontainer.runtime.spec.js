@@ -65,16 +65,16 @@ describe( "Form Runtime with Panel Container - Basic Tests", () => {
         const numberInputLabelClass = numberInputView.getLabel().className;
         const numberInputErrorClass = numberInputView.getErrorDiv().className;
         cy.get(`#${modelId}`).should('exist');
-        cy.get(`.${parentLabelClass}`).should('exist');
-        cy.get('[for="'+modelId+'"]').should('exist');
-        cy.get(`.${parentTooltipClass}`).should('exist');
-        cy.get(`.${parentDescriptionClass}`).should('exist');
-        cy.get(`.${textInputLabelClass}`).should('exist');
-        cy.get('[for="'+textInputId+'"]').should('exist');
-        cy.get(`.${textInputErrorClass}`).should('exist');
-        cy.get(`.${numberInputLabelClass}`).should('exist');
-        cy.get('[for="'+numberInputId+'"]').should('exist');
-        return cy.get(`.${numberInputErrorClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
+        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
