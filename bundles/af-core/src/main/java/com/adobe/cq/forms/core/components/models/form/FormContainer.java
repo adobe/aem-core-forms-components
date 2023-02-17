@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -317,8 +316,4 @@ public interface FormContainer extends Container {
         return null;
     }
 
-    @JsonIgnore
-    default String getContextPath() {
-        return StringUtils.EMPTY;
-    }
 }
