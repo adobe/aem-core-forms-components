@@ -167,14 +167,82 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    const checkInstance = (instancesModel,formContainer, index) => {
+    const checkInnerRepeatability = (instancesModel, index) => {
+        const innerInstanceManagerModel = instancesModel[index].items[2];
+        const innerInstancesModel = innerInstanceManagerModel.items;
+        checkInnerInstance(innerInstancesModel, 0).then(() => {
+            checkInnerInstance(innerInstancesModel, 1).then(() => {
+                const allFields = formContainer.getAllFields();
+                const innerInstanceManagerView = allFields[innerInstanceManagerModel.id];
+                const innerInstancesView = innerInstanceManagerView.children;
+                for (let i = 0; i < innerInstancesModel.length; i++) {
+                    const numberInputId = innerInstancesModel[i].items[0].id;
+                    const checkBoxGroupId = innerInstancesModel[i].items[1].id;
+                    expect(allFields[numberInputId].getId(), " Number input box view with corresponding model Id exists  ").to.equal(numberInputId);
+                    expect(innerInstancesView[i].children[0].getId(), " Number input box view Id inside inner repeatable panel to be equal to its model  ").to.equal(numberInputId);
+                    expect(allFields[checkBoxGroupId].getId(), " Check box group view with corresponding model Id exists  ").to.equal(checkBoxGroupId);
+                    expect(innerInstancesView[i].children[1].getId(), " Check box group  view Id inside inner repeatable panel to be equal to its model  ").to.equal(checkBoxGroupId);
+                    expect(innerInstancesView[i].children.length, " Number of children inside inner repeatable panel view should be equal to its child models  ").to.equal(innerInstancesModel[i].items.length);
+                }
+                expect(innerInstancesView.length, " Number of inner instances view to equal Number of instances model ").to.equal(innerInstancesModel.length);
+                return cy.get(`#${innerInstancesModel[(innerInstancesModel.length - 1)].items[1].id}`).should('exist');
+            }).then(() => {
+                const allFields = formContainer.getAllFields();
+                const innerInstanceManager = allFields[innerInstanceManagerModel.id];
+                checkInstanceHTML(innerInstanceManager, 2)
+                    .then(() => {
+                        checkAddRemoveInstance(innerInstanceManager, 3, true)
+                            .then(() => {
+                                checkAddRemoveInstance(innerInstanceManager, 2)
+                                    .then(() => {
+                                        //min is 2, can't go below this
+                                        checkAddRemoveInstance(innerInstanceManager, 2);
+                                    });
+                            });
+                    });
+            });
+        });
+
+    };
+
+    const checkInnerInstance = (instancesModel, index) => {
+        const allFields = formContainer.getAllFields();
+        const instanceModel = instancesModel[index];
+        const innerModelId = instanceModel.id;
+        const innerView=allFields[innerModelId];
+        const numberInputId = instanceModel.items[0].id;
+        const numberInputView = allFields[numberInputId];
+        const checkBoxGroupId = instanceModel.items[1].id;
+        const checkBoxGroupView = allFields[checkBoxGroupId];
+        const innerLabelClass = innerView.getLabel().className;
+        const innerTooltipClass = innerView.getTooltipDiv().className;
+        const innerDescriptionClass = innerView.getDescription().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        const checkBoxGroupLabelClass = checkBoxGroupView.getLabel().className;
+        const checkBoxGroupViewErrorClass = checkBoxGroupView.getErrorDiv().className;
+
+        cy.get(`#${innerModelId}`).should('exist');
+        cy.get(`.${innerLabelClass}`).should('exist');
+        cy.get('[for="'+innerModelId+'"]').should('exist');
+        cy.get(`.${innerTooltipClass}`).should('exist');
+        cy.get(`.${innerDescriptionClass}`).should('exist');
+        cy.get(`.${numberInputLabelClass}`).should('exist');
+        cy.get('[for="'+numberInputId+'"]').should('exist');
+        cy.get(`.${numberInputErrorClass}`).should('exist');
+        cy.get(`.${checkBoxGroupLabelClass}`).should('exist');
+        cy.get('[for="'+checkBoxGroupId+'"]').should('exist');
+        return cy.get(`.${checkBoxGroupViewErrorClass}`).should('exist');
+    };
+
+    const checkInstance = (instancesModel, index) => {
         const allFields = formContainer.getAllFields();
         const modelId = instancesModel[index].id;
-        const parentView=allFields[instancesModel[index].id];
+        const parentView=allFields[modelId];
         const textInputId = instancesModel[index].items[0].id;
-        const textInputView = allFields[instancesModel[index].items[0].id];
+        const textInputView = allFields[textInputId];
         const numberInputId = instancesModel[index].items[1].id;
-        const numberInputView = allFields[instancesModel[index].items[1].id];
+        const numberInputView = allFields[numberInputId];
         cy.get(`#${modelId}`).should('exist');
         const parentLabelClass = parentView.getLabel().className;
         const parentTooltipClass = parentView.getTooltipDiv().className;
@@ -272,10 +340,10 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
             formContainer = p;
             const outerInstancManagerModel = formContainer._model.items[0];
             const outerInstancesModel = outerInstancManagerModel.items;
-            checkInstance(outerInstancesModel,formContainer, 0).then(() => {
+            checkInstance(outerInstancesModel, 0).then(() => {
                 // check for all three instances in HTML as per min occur
-                checkInstance(outerInstancesModel,formContainer, 1).then(() => {
-                    checkInstance(outerInstancesModel,formContainer, 2).then(() => {
+                checkInstance(outerInstancesModel, 1).then(() => {
+                    checkInstance(outerInstancesModel, 2).then(() => {
                         const allFields = formContainer.getAllFields();
                         const outerInstanceManagerView = allFields[outerInstancManagerModel.id];
                         const outerInstancesView = outerInstanceManagerView.children;
@@ -291,6 +359,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                             let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
                             let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
                             expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
+                            checkInnerRepeatability(outerInstancesModel, i);
                         }
                         expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
                         checkInstanceHTML(outerInstanceManagerView, 3)
