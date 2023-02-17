@@ -20,5 +20,5 @@
   "ExpressionMismatchDefaultError" :  "The validation expression is invalid.",
   "TooLongDefaultError" :             "Specify characters less than or equal to {0}.",
   "TooShortDefaultError" :            "Specify characters more than or equal to {0}.",
-  "DefaultError" :                    "There is an error in the field"
+  "DefaultError" :                    "There is an error in the field."
 }

@@ -157,7 +157,7 @@ describe("Form with Number Input", () => {
         const correctInput = "64";
 
         cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"There is an error in the field.")
         })
 
         cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {

@@ -242,11 +242,9 @@ export default class FormFieldBase extends FormField {
                     validationMessage = LanguageUtils.getTranslatedString(this.formContainer.getModel()._jsonModel.lang, "TypeMismatchDefaultError", [state.type]);
                 }
                 if (validationState.tooLong === true ) {
-                    //if(state.hasOwnProperty("value") && state.value.length > state.maxLength)
                     validationMessage = LanguageUtils.getTranslatedString(this.formContainer.getModel()._jsonModel.lang, "TooLongDefaultError", [state.maxLength]);
                 }
                 if (validationState.tooShort === true ) {
-                    //if(state.hasOwnProperty("value") && state.value.length < state.minLength)
                     validationMessage = LanguageUtils.getTranslatedString(this.formContainer.getModel()._jsonModel.lang, "TooShortDefaultError", [state.minLength]);
                 }
                 if (validationState.patternMismatch === true) {

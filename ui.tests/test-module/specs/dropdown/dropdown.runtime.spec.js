@@ -183,7 +183,7 @@ describe("Form with Dropdown", () => {
 
         cy.get(`#${dropdown3} select`).select("cauliflower").blur().then(x => {
             cy.get(`#${dropdown6} select`).select("beans")
-            cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"There is an error in the field.")
 
             cy.get(`#${dropdown6} select`).select("carrot")
             cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"")
