@@ -24,6 +24,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,6 +59,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
+
+    @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private SlingHttpServletRequest request;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -177,7 +182,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @JsonIgnore
     @Nullable
     public String getRedirectUrl() {
-        return GuideUtils.getRedirectUrl(redirect, getPath());
+        return getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
+    }
+
+    @JsonIgnore
+    public String getContextPath() {
+        String contextPath = null;
+        if (request != null) {
+            contextPath = request.getContextPath();
+        }
+        return contextPath != null ? contextPath : StringUtils.EMPTY;
     }
 
     @JsonIgnore
@@ -189,7 +203,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Override
     public String getAction() {
         if (getCurrentPage() != null) {
-            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
+            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
         } else {
             return null;
         }
@@ -199,8 +213,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @JsonIgnore
     public String getDataUrl() {
         if (getCurrentPage() != null) {
-            return ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(getCurrentPage()
-                .getPath());
+            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(
+                getCurrentPage()
+                    .getPath());
         } else {
             return null;
         }
