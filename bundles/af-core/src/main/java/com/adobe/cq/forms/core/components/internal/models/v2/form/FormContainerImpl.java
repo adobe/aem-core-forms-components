@@ -176,7 +176,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     }
 
     @JsonIgnore
-    public String getContextPath() {
+    private String getContextPath() {
         String contextPath = null;
         if (request != null) {
             contextPath = request.getContextPath();
