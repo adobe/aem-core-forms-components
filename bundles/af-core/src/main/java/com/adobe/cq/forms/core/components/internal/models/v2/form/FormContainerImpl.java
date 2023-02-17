@@ -91,7 +91,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     @JsonIgnore
     public String getThankYouMessage() {
-        return thankYouMessage;
+        return translate("thankYouMessage", thankYouMessage);
     }
 
     @Override

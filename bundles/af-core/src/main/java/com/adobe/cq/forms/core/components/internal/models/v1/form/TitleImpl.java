@@ -37,7 +37,6 @@ import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -74,7 +73,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     /**
      * Translation of the title property
      */
-    protected I18n i18n = null;
 
     @PostConstruct
     private void initModel() {
