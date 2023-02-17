@@ -48,6 +48,7 @@
             super(params);
             const {element} = params;
             this.#cacheElements(element);
+            this.#cacheTabPanelElementIds();
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.#refreshActive();
             this.#bindEvents();
@@ -98,6 +99,23 @@
             }
         }
 
+        #cacheTabPanelElementIds() {
+            var tabpanels = this._elements["tabpanel"];
+            this._elements["tabPanelElementId"]={};
+            if (tabpanels) {
+                if (Array.isArray(tabpanels)) {
+                    for (var i = 0; i < tabpanels.length; i++) {
+                        this._elements["tabPanelElementId"][i] = tabpanels[i].querySelectorAll(
+                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    }
+                } else {
+                    // only one tab
+                    this._elements["tabPanelElementId"][0] = tabpanels.querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                }
+            }
+        }
+
         getClass() {
             return Tabs.IS;
         }
@@ -134,13 +152,13 @@
             var tabs = this._elements["tab"];
             if (tabs) {
                 if(Array.isArray(tabs)){
-                    tabs.forEach((tab) => {
-                        tab.id = this.getId() + "__tab";
-                        tab.setAttribute("aria-controls", this.getId() + "__tabpanel");
-                    });
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].id = this._elements["tabPanelElementId"][i] + "__tab";
+                        tabs[i].setAttribute("aria-controls", this._elements["tabPanelElementId"][i] + "__tabpanel");
+                    }
                 }else{
-                    tabs.id = this.getId() + "__tab";
-                    tabs.setAttribute("aria-controls", this.getId() + "__tabpanel");
+                    tabs.id = this._elements["tabPanelElementId"][0] + "__tab";
+                    tabs.setAttribute("aria-controls", this._elements["tabPanelElementId"][0] + "__tabpanel");
                 }
             }
         }
@@ -149,13 +167,13 @@
             var tabPanels = this._elements["tabpanel"];
             if(tabPanels) {
                 if(Array.isArray(tabPanels)) {
-                    tabPanels.forEach((tabPanel) => {
-                        tabPanel.id = this.getId() + "__tabpanel";
-                        tabPanel.setAttribute("aria-labelledby", this.getId() + "__tab");
-                    });
+                    for (var i = 0; i < tabPanels.length; i++) {
+                        tabPanels[i].id = this._elements["tabPanelElementId"][i] + "__tabpanel";
+                        tabPanels[i].setAttribute("aria-labelledby", this._elements["tabPanelElementId"][i] + "__tab");
+                    }
                 }else{
-                    tabPanels.id = this.getId() + "__tabpanel";
-                    tabPanels.setAttribute("aria-labelledby", this.getId() + "__tab");
+                    tabPanels.id = this._elements["tabPanelElementId"][0] + "__tabpanel";
+                    tabPanels.setAttribute("aria-labelledby", this._elements["tabPanelElementId"][0] + "__tab");
                 }
             }
         }
