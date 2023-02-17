@@ -219,12 +219,12 @@ public class FormContainerImplTest {
         context.currentResource(PATH_FORM_1);
         MockSlingHttpServletRequest request = context.request();
         FormContainer formContainer = request.adaptTo(FormContainer.class);
-        assertEquals(formContainer.getContextPath(), "");
+        assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");
 
         // Test with contextPath set
         request.setContextPath("/test");
         FormContainer formContainer2 = request.adaptTo(FormContainer.class);
-        assertEquals(formContainer2.getContextPath(), "/test");
+        assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
     }
 
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
