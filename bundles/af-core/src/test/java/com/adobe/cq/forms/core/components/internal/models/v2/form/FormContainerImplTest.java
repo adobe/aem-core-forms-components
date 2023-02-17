@@ -213,6 +213,15 @@ public class FormContainerImplTest {
         assertEquals("FDM", formContainer.getPrefillService());
     }
 
+    @Test
+    void testGetContextPath() throws Exception {
+        context.currentResource(PATH_FORM_1);
+        MockSlingHttpServletRequest request = context.request();
+        request.setContextPath("/test");
+        FormContainer formContainer = request.adaptTo(FormContainer.class);
+        assertEquals(formContainer.getContextPath(), "/test");
+    }
+
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present
