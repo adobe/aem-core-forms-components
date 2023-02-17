@@ -184,15 +184,31 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                     expect(innerInstancesView[i].children.length, " Number of children inside inner repeatable panel view should be equal to its child models  ").to.equal(innerInstancesModel[i].items.length);
                 }
                 expect(innerInstancesView.length, " Number of inner instances view to equal Number of instances model ").to.equal(innerInstancesModel.length);
+                return cy.get(`#${innerInstancesModel[(innerInstancesModel.length - 1)].items[1].id}`).should('exist');
+            }).then(() => {
+                const allFields = formContainer.getAllFields();
+                const innerInstanceManager = allFields[innerInstanceManagerModel.id];
+                checkInstanceHTML(innerInstanceManager, 2)
+                    .then(() => {
+                        checkAddRemoveInstance(innerInstanceManager, 3, true)
+                            .then(() => {
+                                checkAddRemoveInstance(innerInstanceManager, 2)
+                                    .then(() => {
+                                        //min is 2, can't go below this
+                                        checkAddRemoveInstance(innerInstanceManager, 2);
+                                    });
+                            });
+                    });
             });
         });
 
     };
 
     const checkInnerInstance = (instancesModel, index) => {
-        const innerModelId = instancesModel.id;
-        const numberInputId = instancesModel[index].items[0].id;
-        const checkBoxGroupId = instancesModel[index].items[1].id;
+        const instanceModel = instancesModel[index];
+        const innerModelId = instanceModel.id;
+        const numberInputId = instanceModel.items[0].id;
+        const checkBoxGroupId = instanceModel.items[1].id;
         cy.get(`#${innerModelId}`).should('exist');
         cy.get(`#${innerModelId}-label`).should('exist');
         cy.get(`#${innerModelId}-label`).invoke('attr', 'for').should('eq', innerModelId);
@@ -319,6 +335,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                             let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
                             let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
                             expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
+                            checkInnerRepeatability(outerInstancesModel, i);
                         }
                         expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
                         checkInstanceHTML(outerInstanceManagerView, 3)
