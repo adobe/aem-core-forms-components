@@ -175,7 +175,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         return getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
     }
 
-
     @JsonIgnore
     @Nullable
     public String getPrefillService() {
