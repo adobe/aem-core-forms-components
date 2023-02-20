@@ -166,6 +166,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         instanceManager.children.forEach(checkChild);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
+
     const checkInnerRepeatability = (instancesModel, index) => {
         const innerInstanceManagerModel = instancesModel[index].items[2];
         const innerInstancesModel = innerInstanceManagerModel.items;
@@ -184,43 +185,82 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                     expect(innerInstancesView[i].children.length, " Number of children inside inner repeatable panel view should be equal to its child models  ").to.equal(innerInstancesModel[i].items.length);
                 }
                 expect(innerInstancesView.length, " Number of inner instances view to equal Number of instances model ").to.equal(innerInstancesModel.length);
+                return cy.get(`#${innerInstancesModel[(innerInstancesModel.length - 1)].items[1].id}`).should('exist');
+            }).then(() => {
+                const allFields = formContainer.getAllFields();
+                const innerInstanceManager = allFields[innerInstanceManagerModel.id];
+                checkInstanceHTML(innerInstanceManager, 2)
+                    .then(() => {
+                        checkAddRemoveInstance(innerInstanceManager, 3, true)
+                            .then(() => {
+                                checkAddRemoveInstance(innerInstanceManager, 2)
+                                    .then(() => {
+                                        //min is 2, can't go below this
+                                        checkAddRemoveInstance(innerInstanceManager, 2);
+                                    });
+                            });
+                    });
             });
         });
 
     };
 
     const checkInnerInstance = (instancesModel, index) => {
-        const innerModelId = instancesModel.id;
-        const numberInputId = instancesModel[index].items[0].id;
-        const checkBoxGroupId = instancesModel[index].items[1].id;
+        const allFields = formContainer.getAllFields();
+        const instanceModel = instancesModel[index];
+        const innerModelId = instanceModel.id;
+        const innerView=allFields[innerModelId];
+        const numberInputId = instanceModel.items[0].id;
+        const numberInputView = allFields[numberInputId];
+        const checkBoxGroupId = instanceModel.items[1].id;
+        const checkBoxGroupView = allFields[checkBoxGroupId];
+        const innerLabelClass = innerView.getLabel().className;
+        const innerTooltipClass = innerView.getTooltipDiv().className;
+        const innerDescriptionClass = innerView.getDescription().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        const checkBoxGroupLabelClass = checkBoxGroupView.getLabel().className;
+        const checkBoxGroupViewErrorClass = checkBoxGroupView.getErrorDiv().className;
+
         cy.get(`#${innerModelId}`).should('exist');
-        cy.get(`#${innerModelId}-label`).should('exist');
-        cy.get(`#${innerModelId}-label`).invoke('attr', 'for').should('eq', innerModelId);
-        cy.get(`#${innerModelId}-shortDescription`).should('exist');
-        cy.get(`#${innerModelId}-longDescription`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        cy.get(`#${numberInputId}-errorMessage`).should('exist');
-        cy.get(`#${checkBoxGroupId}-label`).should('exist');
-        cy.get(`#${checkBoxGroupId}-label`).invoke('attr', 'for').should('eq', checkBoxGroupId);
-        return cy.get(`#${checkBoxGroupId}-errorMessage`).should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerLabelClass}`).should('exist');
+        cy.get(`#${innerModelId}`).find('label[for="'+innerModelId+'"]').should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerTooltipClass}`).should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerDescriptionClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
+        cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupLabelClass}`).should('exist');
+        cy.get(`#${checkBoxGroupId}`).find('label[for="'+checkBoxGroupId+'"]').should('exist');
+        return cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupViewErrorClass}`).should('exist');
     };
 
     const checkInstance = (instancesModel, index) => {
+        const allFields = formContainer.getAllFields();
         const modelId = instancesModel[index].id;
+        const parentView=allFields[modelId];
         const textInputId = instancesModel[index].items[0].id;
+        const textInputView = allFields[textInputId];
         const numberInputId = instancesModel[index].items[1].id;
+        const numberInputView = allFields[numberInputId];
         cy.get(`#${modelId}`).should('exist');
-        cy.get(`#${modelId}-label`).should('exist');
-        cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-        cy.get(`#${modelId}-shortDescription`).should('exist');
-        cy.get(`#${modelId}-longDescription`).should('exist');
-        cy.get(`#${textInputId}-label`).should('exist');
-        cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-        cy.get(`#${textInputId}-errorMessage`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        return cy.get(`#${numberInputId}-errorMessage`).should('exist');
+        const parentLabelClass = parentView.getLabel().className;
+        const parentTooltipClass = parentView.getTooltipDiv().className;
+        const parentDescriptionClass = parentView.getDescription().className;
+        const textInputLabelClass = textInputView.getLabel().className;
+        const textInputErrorClass = textInputView.getErrorDiv().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
+        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
@@ -319,6 +359,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                             let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
                             let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
                             expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
+                            checkInnerRepeatability(outerInstancesModel, i);
                         }
                         expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
                         checkInstanceHTML(outerInstanceManagerView, 3)
