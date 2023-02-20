@@ -272,8 +272,8 @@ export default class FormFieldBase extends FormField {
                     if (validationState.expressionMistmatch === true) {
                         validationMessage = LanguageUtils.getTranslatedString(this.formContainer.getModel()._jsonModel.lang, "ExpressionMismatchDefaultError");
                     }
-                    this.errorDiv.innerHTML = validationMessage;
                 }
+                this.errorDiv.innerHTML = validationMessage;
             }
 
         }
