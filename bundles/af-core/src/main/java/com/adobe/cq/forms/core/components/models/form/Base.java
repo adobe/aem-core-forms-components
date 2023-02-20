@@ -136,4 +136,12 @@ public interface Base extends FormComponent {
     default boolean isTooltipVisible() {
         return false;
     }
+
+    /**
+     * Set the contextPath in Base
+     * 
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default void setContextPath(String contextPath) {}
 }
