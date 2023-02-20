@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2022-11-23T12:08:53.637+05:30"
+            cq:lastModified="{Date}2023-02-09T12:40:58.769+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -15,12 +15,11 @@
                 fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container"
+                dorType="none"
                 fieldType="form"
                 thankYouOption="page"
                 themeRef="/libs/fd/af/themes/canvas">
             <textinput
-                    jcr:created="{Date}2022-11-23T12:08:48.290+05:30"
-                    jcr:createdBy="admin"
                     jcr:lastModified="{Date}2022-11-23T12:08:48.290+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
@@ -28,9 +27,87 @@
                     sling:resourceType="forms-components-examples/components/form/textinput"
                     fieldType="text-input"
                     name="textinput1669185528315"/>
+            <checkboxgroup
+                    jcr:lastModified="{Date}2023-02-09T12:38:59.339+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    enum="[0,1]"
+                    enumNames="[Item 1, Item 2]"
+                    fieldType="checkbox-group"
+                    name="checkboxgroup1675926539393"
+                    type="number[]"/>
+            <numberinput
+                    jcr:lastModified="{Date}2023-02-09T12:40:50.496+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    fieldType="number-input"
+                    name="numberinput1675926650526"/>
+            <radiobutton
+                    jcr:lastModified="{Date}2023-02-09T12:40:54.098+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Radio Button"
+                    sling:resourceType="forms-components-examples/components/form/radiobutton"
+                    enum="[0,1]"
+                    enumNames="[Item 1,Item 2]"
+                    fieldType="radio-group"
+                    name="radiobutton1675926654141"
+                    orientation="horizontal"/>
+            <telephoneinput
+                    jcr:lastModified="{Date}2023-02-09T12:40:58.760+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Telephone Input"
+                    sling:resourceType="forms-components-examples/components/form/telephoneinput"
+                    fieldType="text-input"
+                    name="telephoneinput1675926658825"/>
+            <emailinput
+                    jcr:lastModified="{Date}2023-02-09T12:40:18.449+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Email Input"
+                    sling:resourceType="forms-components-examples/components/form/emailinput"
+                    fieldType="text-input"
+                    name="emailinput1675926618504"/>
+            <fileinput
+                    jcr:lastModified="{Date}2023-02-09T12:40:21.945+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Attachment"
+                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                    buttonText="Attach"
+                    fieldType="file-input"
+                    name="fileinput1675926621987"/>
+            <dropdown
+                    jcr:lastModified="{Date}2023-02-09T12:39:35.867+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[Apple,Orange]"
+                    fieldType="drop-down"
+                    name="dropdown1675926555342"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}true"/>
+            <datepicker
+                    jcr:lastModified="{Date}2023-02-09T12:39:05.222+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    fieldType="date-input"
+                    name="datepicker1675926545285"/>
             <reset
-                    jcr:created="{Date}2022-11-23T12:08:53.629+05:30"
-                    jcr:createdBy="admin"
                     jcr:lastModified="{Date}2022-11-23T12:08:53.629+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
