@@ -67,6 +67,12 @@ BLOCK cmp-adaptiveform-checkboxgroup
 The following attributes must be added for the initialization of the checkbox-group component in the form view:  
  1. `data-cmp-is="adaptiveFormCheckBoxGroup"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Drop Dwon
+* Radio Button
  
 ## Information
 * **Vendor**: Adobe
