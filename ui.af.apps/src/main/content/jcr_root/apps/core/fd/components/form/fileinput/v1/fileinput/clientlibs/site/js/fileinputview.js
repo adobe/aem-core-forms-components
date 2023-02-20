@@ -36,7 +36,6 @@
             errorDiv: `.${FileInput.bemBlock}__errormessage`,
             tooltipDiv: `.${FileInput.bemBlock}__shortdescription`,
             fileListDiv : `.${FileInput.bemBlock}__filelist`,
-            attachButtonLabel : `.${FileInput.bemBlock}__widgetlabel`
         };
 
         constructor(params) {
@@ -71,10 +70,6 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        #getAttachButtonLabel() {
-            return this.element.querySelector(FileInput.selectors.attachButtonLabel);
-        }
-
         updateValue(value) {
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
@@ -88,20 +83,6 @@
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }
-        }
-
-        #syncWidget() {
-            let widgetElement = this.getWidget ? this.getWidget() : null;
-            if (widgetElement) {
-                widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for',this.getId());
-            }
-
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncWidget();
         }
     }
 

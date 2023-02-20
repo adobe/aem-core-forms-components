@@ -69,7 +69,6 @@ export default class FormContainer {
             this._fields[fieldId] = fieldView;
             let model = this.getModel(fieldId);
             fieldView.setModel(model);
-            fieldView.syncMarkupWithModel();
             const parentId = this.getParentFormElementId(model);
             if (parentId != '$form') {
                 let parentView = this._fields[parentId];

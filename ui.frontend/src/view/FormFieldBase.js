@@ -87,17 +87,6 @@ export default class FormFieldBase extends FormField {
         this.applyState(state);
     }
 
-    #syncLabel() {
-        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-        if (labelElement) {
-            labelElement.setAttribute('for', this.getId());
-        }
-    }
-
-    syncMarkupWithModel() {
-       this.#syncLabel()
-    }
-
     /**
      * Sets the focus on component's widget.
      */

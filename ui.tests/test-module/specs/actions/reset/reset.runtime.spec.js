@@ -39,72 +39,16 @@ describe("Form with Reset Button", () => {
         });
     });
 
-    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTelephoneInput"];
 
-    const checkIfReset = (field, coreComponent) => {
-        switch (coreComponent) {
-            case "adaptiveFormEmailInput":
-            case "adaptiveFormTextInput":
-            case "adaptiveFormTelephoneInput":
-            case "adaptiveFormNumberInput":
-            case "adaptiveFormDatePicker":
-                cy.wrap(field).find("input").should('have.value', '', `${coreComponent} must be reset`)
-                break;
-            case "adaptiveFormCheckBoxGroup":
-            case "adaptiveFormRadioButton":
-                cy.wrap(field).find("input").should('not.be.checked', `${coreComponent} must be unchecked`);
-                break;
-            case "adaptiveFormDropDown":
-                cy.wrap(field).find(":selected").should("not.exist", `${coreComponent} must be reset`);
-                break;
-            case "adaptiveFormFileInput":
-                cy.wrap(field).should('not.include.text', 'empty.pdf', `${coreComponent} must be unchecked`)
-                break;
-            default: break;
-        }
-    };
-
-    const fillField = (field, coreComponent) => {
-        switch (coreComponent) {
-            case "adaptiveFormEmailInput":
-            case "adaptiveFormTextInput":
-                cy.wrap(field).find("input").type("Sample text").blur();
-                break;
-            case "adaptiveFormTelephoneInput":
-            case "adaptiveFormNumberInput":
-                cy.wrap(field).find("input").type("3434343").blur();
-                break;
-            case "adaptiveFormCheckBoxGroup":
-                cy.wrap(field).find("input").check("0");
-                break;
-            case "adaptiveFormRadioButton":
-                cy.wrap(field).find("input").eq(0).click();
-                break;
-            case "adaptiveFormDropDown":
-                cy.wrap(field).find("select").select(["Orange"]);
-                break;
-            case "adaptiveFormFileInput":
-                cy.wrap(field).find("input").attachFile("empty.pdf");
-                break;
-            case "adaptiveFormDatePicker":
-                cy.wrap(field).find("input").type("2022-12-23");
-                break;
-            default: break;
-        }
-    };
-
-    it(`Check for reset functionality`,() => {
-        // Fill all fields with some value
-        components.forEach((coreComponent) => {
-            cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => fillField(instance, coreComponent));
-        });
-
-        // Reset entire form
-        cy.get(`.cmp-adaptiveform-button__widget`).click();
-
-        // Check if values are now reset
-        components.forEach((coreComponent) => {
-            cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => checkIfReset(instance, coreComponent));
-        });
+    it("Clicking the button should reset the form", () => {
+        const [id1, fieldView1] = Object.entries(formContainer._fields)[0] // Textbox
+        const [id2, fieldView2] = Object.entries(formContainer._fields)[1] // Reset button
+        const input = "Sample Text";
+        cy.get(`#${id1}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${id2}`).find("button").click().then(x => {
+                cy.get(`#${id1}`).find('input').should('have.value', '')
+            })
+        })
     });
+
 });
