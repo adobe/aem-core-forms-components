@@ -30,6 +30,7 @@
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
       afConstants = require('../../libs/commons/formsConstants');
 
+// todo: skipping until available in release/650
 describe('Link - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/link",
@@ -38,7 +39,8 @@ describe('Link - Authoring', function () {
             linkComponentDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.fplinkcomponent.split("/").pop(),
             linkComponentDropPathSelector = "[data-path='" + linkComponentDropPath + "']";
 
-    context('Open Editor', function () {
+    // todo: skipping until available in release/650
+    context.skip('Open Editor', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
