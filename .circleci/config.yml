@@ -176,6 +176,13 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - cypress-chrome-655:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
       - release:
           requires:
             - build-java-11
