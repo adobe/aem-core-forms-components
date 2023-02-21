@@ -91,8 +91,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected String assistPriorityJcr;
     private AssistPriority assistPriority;
 
-    protected String contextPath = StringUtils.EMPTY;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "custom")
     @Nullable
     protected String customAssistPriorityMsg;
@@ -131,9 +129,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         super.initBaseModel();
         assistPriority = AssistPriority.fromString(assistPriorityJcr);
         type = Type.fromString(typeJcr);
-        if (request != null) {
-            contextPath = request.getContextPath();
-        }
     }
 
     /**
@@ -145,16 +140,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     public Label getLabel() {
         return new LabelImpl(resource, getName(), i18n);
-    }
-
-    @Override
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
-    }
-
-    @JsonIgnore
-    public String getContextPath() {
-        return contextPath;
     }
 
     @Override
