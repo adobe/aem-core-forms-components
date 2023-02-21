@@ -328,7 +328,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
     //Open toolbar of root panel
     const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
+        insertComponentDialog_searchField = ".InsertComponentDialog-components .coral3-Search-input";
     cy.openEditableToolbar(selector);
     cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
     recurse(
