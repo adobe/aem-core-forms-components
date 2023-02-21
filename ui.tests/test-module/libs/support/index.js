@@ -45,6 +45,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes('Page info could not be loaded')) {
         return false;
     }
+    // sometimes AEM throws this error, but does not impact functionality
+    // Cannot read properties of null (reading 'getEditContext')
+    if (err.message.includes('getEditContext')) {
+        return false;
+    }
     if (err.message.includes("reading 'extend'")) {
         return false;
     }
