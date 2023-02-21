@@ -52,7 +52,7 @@
     };
 
     ns.aemform.v2.actions.featureEnabled = function (editable) {
-        return Granite.Toggles.isEnabled("FT_CQ-4343036");
+        return Granite.Toggles ? Granite.Toggles.isEnabled("FT_CQ-4343036") : true;
     };
 
 }(window.Granite, CQ.FormsCoreComponents));
