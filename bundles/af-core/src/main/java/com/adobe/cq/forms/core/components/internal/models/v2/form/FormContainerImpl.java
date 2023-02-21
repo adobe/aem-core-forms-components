@@ -110,7 +110,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @JsonIgnore
     public String getContextPath() {
-        return contextPath;
+        return contextPath != null ? contextPath : StringUtils.EMPTY;
     }
 
     @Override
