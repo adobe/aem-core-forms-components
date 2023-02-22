@@ -6,7 +6,7 @@
 
 # AEM Forms Core Components
 
-The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data. 
+The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data.
 
 This project is intended to be used in conjunction with the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). AEM Forms Core Components use the AEM Sites Core Components as a foundation where possible and extending them.
 
@@ -17,36 +17,45 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ## Available Components
 
-### Page Authoring Components
-
--   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
-
-### Forms And Communications Portal
-
--   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
--   [Drafts and Submissions Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
--   [Search and Lister Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
-
 ### Adaptive Form
 
-
--   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
--   [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
+-   [Form Container](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
+-   [Text Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
+-   [Number Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
+-   [Date Picker](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
+-   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
+-   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
+-   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
+-   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
+-   [Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
+-   [Panel](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
+-   [Accordion](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
+-   [Wizard](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/wizard/v1/wizard)
+-   [Horizontal Tabs](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop)
+-   [Text](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
+-   [Image](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
+-   [Title](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v1/title)
+-   [Submit Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/submit/v1/submit)
+-   [Reset Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/reset/v1/reset)
+-   [Email Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/emailinput/v1/emailinput)
+-   [Telephone Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/telephoneinput/v1/telephoneinput)
+-   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
+-   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
-| --------------------- |---------------------| ---------------------------- | ----- | ------ | 
-| 1.0.16                | 2.20.2              | Continual                    | 8, 11 | 3.3.9+ |
+|-----------------------| ------------------- | ---------------------------- | ----- | ------ | 
+| 1.1.12                | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
 
 ### AEM Sites Core Components
 
-This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.  
+This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.
 
 ## Building
 
@@ -88,7 +97,7 @@ The hostname and port of the instance can be changed with the following user def
 We have a set of example proxy components to demonstrate how the existing components can be customized or
 new components can be added. The `examples` module contains the code for all the components
 
-To build and install that, from the examples directory (or from the root directory), 
+To build and install that, from the examples directory (or from the root directory),
 run the following command
 
 ```shell
@@ -96,13 +105,13 @@ mvn clean install -PautoInstallExamples,include-wcm-components-examples
 ```
 
 ### AEM as a Cloud Service SDK
-When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
-(in conjunction with previously documented profiles) to generate cloud-ready artifacts 
-(with components located in `/libs` instead of `/apps`). 
+When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile
+(in conjunction with previously documented profiles) to generate cloud-ready artifacts
+(with components located in `/libs` instead of `/apps`).
 To allow recompilation of the HTL scripts, you should disable `aem-precompiled-scripts` bundle.
 
-Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365), 
-please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
+Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365),
+please only use `autoInstallPackage` and `autoInstallPackagePublish` when
 working with the AEM as a Cloud Service SDK!
 
 ### UberJar
@@ -140,7 +149,7 @@ to the `content-package-maven-plugin`.
 
 
 ## Using Pre-release versions
-In order to use components under pre-release:  
+In order to use components under pre-release:
 1. Enable the pre-release channel. Instructions at https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/release-notes/prerelease.html?lang=en
    1. Replace `core-forms-components-*` version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project. This can be done by updating `<core.forms.components.version>x.y.z</core.forms.components.version>` in the top level pom.xml of archetype project.
 

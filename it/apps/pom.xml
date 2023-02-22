@@ -83,11 +83,6 @@
                             <name>core.wcm.components.examples.ui.apps</name>
                             <version>${core.wcm.components.library.version}</version>
                         </dependency>
-                        <dependency>
-                            <group>${vault.package.group}</group>
-                            <name>core-forms-components-apps</name>
-                            <version>${project.version}</version>
-                        </dependency>
                     </dependencies>
                 </configuration>
             </plugin>
