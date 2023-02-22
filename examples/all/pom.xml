@@ -193,12 +193,6 @@
             <artifactId>core-forms-components-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>core-forms-components-apps</artifactId>
-            <type>zip</type>
-            <version>${project.version}</version>
-        </dependency>
 
         <!-- Forms Components Library -->
         <dependency>
