@@ -141,12 +141,5 @@
             <type>zip</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>core-forms-components-apps</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>
