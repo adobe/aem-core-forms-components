@@ -44,7 +44,7 @@ describe('Page - Authoring', function () {
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
-        closeCQDialog();
+        cy.closeCQDialog();
         cy.deleteComponentByPath(datePickerDrop);
     }
 
@@ -62,7 +62,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./hideTitle']").should("exist");
         cy.get("[name='./placeholder']").should("exist");
         cy.get("[name='./default']").should("exist");
-        closeCQDialog();
+        cy.closeCQDialog();
         cy.deleteComponentByPath(datePickerDrop);
     }
 
@@ -80,13 +80,8 @@ describe('Page - Authoring', function () {
         cy.get("[name='./minimumMessage']").should("exist");
         cy.get("[name='./maximumDate']").should("exist");
         cy.get("[name='./maximumMessage']").should("exist");
-        closeCQDialog();
+        cy.closeCQDialog();
         cy.deleteComponentByPath(datePickerDrop);
-    }
-
-    const closeCQDialog = function () {
-        cy.get('.cq-dialog-cancel').should('be.visible');
-        cy.get('.cq-dialog-cancel').click();
     }
 
     context('Open Forms Editor', function () {

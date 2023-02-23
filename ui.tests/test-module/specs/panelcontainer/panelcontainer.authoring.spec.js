@@ -68,14 +68,10 @@ describe('Page - Authoring', function () {
     cy.get("[name='./custom']")
         .should("exist");
 
-    closeCQDialog();
+    cy.closeCQDialog();
     cy.deleteComponentByPath(panelContainerDrop);
   }
 
-  const closeCQDialog = function () {
-    cy.get('.cq-dialog-cancel').should('be.visible');
-    cy.get('.cq-dialog-cancel').click();
-  }
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
