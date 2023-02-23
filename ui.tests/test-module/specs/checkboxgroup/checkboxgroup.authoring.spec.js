@@ -125,6 +125,7 @@ describe('Page - Authoring', function () {
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
       cy.get('.cq-dialog-submit').click();
+      cy.get('.coral-Form-fielderror').should('be.visible');
       cy.get('.coral-Form-fielderror').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
 
       cy.get('.cq-dialog-cancel').click();
@@ -140,6 +141,7 @@ describe('Page - Authoring', function () {
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
       cy.get('.cq-dialog-submit').click();
+      cy.get('.coral-Form-fielderror').should('be.visible');
       cy.get('.coral-Form-fielderror').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
 
       cy.get('.cq-dialog-cancel').click();
