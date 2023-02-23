@@ -292,6 +292,16 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         return innerPromise;
     };
 
+    const checkAddRemoveButton = (instanceManager, count, buttonId) => {
+        let resolution = undefined;
+        const promise = new Cypress.Promise((resolve, reject) => {resolution = resolve;});
+        cy.get(`#${buttonId} button`).click().then(() => {
+            const e = checkInstanceHTML(instanceManager, count);
+            resolution(e);
+        });
+        return promise;
+    };
+
     const checkSiteInnerRepeatableInstance = (innerInstanceManagerModel, label) => {
         const allFields = formContainer.getAllFields();
         const innerInstanceManagerChildrenModel = innerInstanceManagerModel.items;
@@ -511,6 +521,115 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                                             cy.fixture('panelcontainer/bankSubmissionInnerInstanceRemoved.json').then((outputData) => {
                                                 expect(result.data.data).to.equal(JSON.stringify(outputData));
                                             });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it("Reset, Add and Remove Button: With Bank schema, Repeatable inside repeatable panel", () =>{
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/reset-repeatability.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            //check initial data
+            cy.getFormData().then((result) => {
+                cy.fixture('panelcontainer/initialResetBank.json').then((outputData) => {
+                    expect(result.data.data).to.equal(JSON.stringify(outputData));
+                });
+            });
+            formContainer = p;
+            const formContainerModelItems = formContainer._model.items;
+            fillSelect(formContainerModelItems[0], "1 Check");
+            fillInput(formContainerModelItems[1], 101);
+            const personalLoanModelItems = formContainerModelItems[2].items;
+            const witnessIMModel = personalLoanModelItems[1];
+            const allFields = formContainer.getAllFields();
+            const witnessIM = allFields[witnessIMModel.id];
+            const addWitnessButtonId = personalLoanModelItems[2].id;
+            const removeWitnessButtonId = personalLoanModelItems[3].id;
+            const resetButtonId = formContainerModelItems[3].id;
+            checkAddRemoveButton(witnessIM, 3, addWitnessButtonId).then(() => {
+                checkAddRemoveButton(witnessIM, 2, removeWitnessButtonId).then(() => {
+                    checkAddRemoveButton(witnessIM, 3, addWitnessButtonId).then(() => {
+                        //Fill Instances
+                        const firstInstanceModelItems = witnessIMModel.items[0].items;
+                        fillInput(firstInstanceModelItems[0], "w1");
+                        fillInput(firstInstanceModelItems[1], "w11");
+                        fillSelect(firstInstanceModelItems[3], "Female");
+
+                        const secondInstanceModelItems = witnessIMModel.items[1].items;
+                        fillInput(secondInstanceModelItems[0], "w2");
+                        fillInput(secondInstanceModelItems[1], "w22");
+                        fillSelect(secondInstanceModelItems[3], "Male");
+
+                        const thirdInstanceModelItems = witnessIMModel.items[2].items;
+                        fillInput(thirdInstanceModelItems[0], "w3");
+                        fillInput(thirdInstanceModelItems[1], "w33");
+                        fillSelect(thirdInstanceModelItems[3], "Female");
+
+                        const firstEducationIMModel = firstInstanceModelItems[2];
+                        const firstEducationIM = allFields[firstEducationIMModel.id];
+                        checkAddRemoveInstance(firstEducationIM, 3, true).then(() => {
+                            //Fill education instances
+                            const firstEducationIMModelItems = firstEducationIMModel.items;
+                            const edu11 = firstEducationIMModelItems[0].items;
+                            fillInput(edu11[0], "ssn");
+                            fillInput(edu11[1], "B");
+                            fillInput(edu11[2], "phd");
+                            fillInput(edu11[7], "science");
+                            fillInput(edu11[9], "dce");
+
+                            const edu12 = firstEducationIMModelItems[1].items;
+                            fillInput(edu12[0], "ss2");
+                            fillInput(edu12[1], "A");
+                            fillInput(edu12[2], "b.tech");
+                            fillInput(edu12[7], "computer");
+
+                            const edu13 = firstEducationIMModelItems[2].items;
+                            fillInput(edu13[9], "DU");
+
+                            const secondEducationIMModelItems = secondInstanceModelItems[2].items;
+                            const secondEdu = secondEducationIMModelItems[0].items;
+                            fillInput(secondEdu[0], "ss3");
+                            fillInput(secondEdu[1], "C");
+                            fillInput(secondEdu[2], "PGCCL");
+                            fillInput(secondEdu[7], "Law");
+
+                            const secondEdu1 = secondEducationIMModelItems[1].items;
+                            fillInput(secondEdu1[0], "ss5");
+                            fillInput(secondEdu1[1], "A+");
+                            fillInput(secondEdu1[2], "ME");
+                            fillInput(secondEdu1[7], "CA");
+
+                            const thirdEducationIMModelItems = thirdInstanceModelItems[2].items;
+                            const thirdEdu = thirdEducationIMModelItems[0].items;
+                            fillInput(thirdEdu[9], "DU");
+
+                            return cy.get(`#${edu12[9].id}`);
+                        }).then(() => {
+                            cy.getFormData().then((result) => {
+                                cy.fixture('panelcontainer/beforeResetBank.json').then((outputData) => {
+                                    expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                });
+                                //check reset button
+                                cy.get(`#${resetButtonId} button`).click().then(() => {
+
+                                    //check instances with min occur
+                                    checkInstanceHTML(witnessIM, 2);
+                                    const allFields = formContainer.getAllFields();
+                                    const firstEducationIM = allFields[witnessIMModel.items[0].items[2].id];
+                                    checkInstanceHTML(firstEducationIM, 2);
+                                    const secondEducationIM = allFields[witnessIMModel.items[1].items[2].id];
+                                    checkInstanceHTML(secondEducationIM, 2);
+
+                                    //check data
+                                    cy.getFormData().then((result) => {
+                                        cy.fixture('panelcontainer/afterResetBank.json').then((outputData) => {
+                                            expect(result.data.data).to.equal(JSON.stringify(outputData));
                                         });
                                     });
                                 });
