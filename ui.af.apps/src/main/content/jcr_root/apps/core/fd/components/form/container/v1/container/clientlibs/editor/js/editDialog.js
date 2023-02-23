@@ -39,13 +39,10 @@
         FDM = ".fdm",
         EMAIL = ".email",
 
-
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-    var XML_SCHEMA = 'xmlschema',
-        JSON_SCHEMA = 'jsonschema',
+    var JSON_SCHEMA = 'jsonschema',
         NONE = "none",
-        SCHEMA ="schema",
         FORM_DATA_MODEL = "formdatamodel",
         SCHEMA_REF = "input[name='./schemaRef']",
         SCHEMA_TYPE = "input[name='./schemaType']",
@@ -53,7 +50,11 @@
         FDM_CONTAINER = ".cmp-adaptiveform-container__fdmselectorcontainer",
         SCHEMA_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__schemaselector",
         FDM_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__fdmselector",
-        FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel";
+        FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel",
+        FM_AF_ROOT = "/content/forms/af/",
+        FM_DAM_ROOT ="/content/dam/formsanddocuments/",
+        DAM_SCHEMA_TYPE,
+        DAM_SCHEMA_REF;
 
     var configuredFormModel,
         toBeConfiguredFormModel,
@@ -80,6 +81,11 @@
     channel.on("dialog-success", function (e) {
         configuredFormModel = toBeConfiguredFormModel;
         isConfirmationDialogAccept = false;
+        if(isForm()){
+            var customEvent = document.createEvent("CustomEvent");
+            customEvent.initCustomEvent("data-model-selected", true, true);
+            window.dispatchEvent(customEvent);
+        }
     });
 
     channel.on('change', '#doNotShowDialogCheckBox', function(e) {
@@ -91,52 +97,103 @@
     });
 
     function selectFormModelOnLoad(dialog) {
-        var schemaType = dialog.find(FORM_MODEL_SELECTOR)[0].value;
-        hideContainersExcept(schemaType);
-        prefillSchema(schemaType, dialog);
-        if (schemaType != NONE) {
-            document.querySelector(FORM_MODEL_SELECTOR).disabled = true;
-            dialog.find(SCHEMA_TYPE)[0].removeAttribute("disabled");
+        var schemaType = dialog.find(FORM_MODEL_SELECTOR);
+        if(schemaType.length > 0){
+            schemaType = schemaType[0].value;
+            hideContainersExcept(schemaType);
+            if (isForm()){
+                var afAssetPath = getAfAssetMetadataPath();
+                DAM_SCHEMA_TYPE = "[name='" + afAssetPath + "/formmodel']";
+                DAM_SCHEMA_REF = "[name='" + afAssetPath + "/schemaRef']";
+                addFormParameter(afAssetPath + '/formmodel', schemaType);
+                addFormParameter(afAssetPath + '/schemaRef');
+            }
+            if (schemaType != NONE) {
+                document.querySelector(FORM_MODEL_SELECTOR).disabled = true;
+                dialog.find(SCHEMA_TYPE)[0].removeAttribute("disabled");
+            }
+            document.body.appendChild(formModelChangeConfirmationDialog);
+            prefillSchema(schemaType, dialog);
         }
-        document.body.appendChild(formModelChangeConfirmationDialog);
     };
 
     function selectFormModelOnChanged(dialog) {
-        var schemaTypeSelected = dialog.find(FORM_MODEL_SELECTOR)[0].value;
-        hideContainersExcept(schemaTypeSelected);
+        var schemaTypeSelected = dialog.find(FORM_MODEL_SELECTOR);
+        if(schemaTypeSelected.length > 0){
+            schemaTypeSelected = schemaTypeSelected[0].value;
+            setElementValue(dialog, DAM_SCHEMA_TYPE, schemaTypeSelected)
+            hideContainersExcept(schemaTypeSelected);
+        }
     };
 
     function prefillSchema(schemaType, dialog){
-        var schemaRef = dialog.find(SCHEMA_REF)[0].value;
-        if (schemaType == SCHEMA) {
-            $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef);
-        } else if (schemaType == FORM_DATA_MODEL) {
-            $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
+        var schemaRef = dialog.find(SCHEMA_REF);
+        if(schemaRef.length > 0){
+            schemaRef = schemaRef[0].value;
+            setElementValue(dialog, DAM_SCHEMA_REF, schemaRef);
+            if (schemaType == JSON_SCHEMA) {
+                $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef);
+            } else if (schemaType == FORM_DATA_MODEL) {
+                $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
+            }
         }
     };
 
     function schemaSelectorOnChanged(dialog) {
-        var selectedSchema = dialog.find(SCHEMA_DROPDOWN_SELECTOR)[0].value;
-        dialog.find(SCHEMA_REF)[0].value = selectedSchema;
-        if (configuredFormModel) {
-            confirmFormModelChange(selectedSchema, $(SCHEMA_DROPDOWN_SELECTOR));
-        } else {
-            toBeConfiguredFormModel = selectedSchema;
+        var selectedSchema = dialog.find(SCHEMA_DROPDOWN_SELECTOR);
+        if(selectedSchema.length > 0){
+            selectedSchema = selectedSchema[0].value;
+            setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            if (configuredFormModel) {
+                confirmFormModelChange(selectedSchema, $(SCHEMA_DROPDOWN_SELECTOR));
+            } else {
+                toBeConfiguredFormModel = selectedSchema;
+            }
         }
     };
 
     function fdmSelectorOnChanged(dialog) {
-        var selectedSchema = dialog.find(FDM_DROPDOWN_SELECTOR)[0].value;
-        dialog.find(SCHEMA_REF)[0].value = selectedSchema;
-        if (configuredFormModel) {
-            confirmFormModelChange(selectedSchema, $(FDM_DROPDOWN_SELECTOR));
-        } else {
-            toBeConfiguredFormModel = selectedSchema;
+        var selectedSchema = dialog.find(FDM_DROPDOWN_SELECTOR);
+        if(selectedSchema.length > 0) {
+            selectedSchema = selectedSchema[0].value;
+            setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            if (configuredFormModel) {
+                confirmFormModelChange(selectedSchema, $(FDM_DROPDOWN_SELECTOR));
+            } else {
+                toBeConfiguredFormModel = selectedSchema;
+            }
         }
     };
 
+    function setElementValue(dialog, elementRef, value){
+        var element = dialog.find(elementRef);
+        if(element.length > 0){
+            element[0].value = value;
+        }
+    }
+
+    function getAfAssetMetadataPath() {
+        return window.guidelib.author.AuthorUtils.getGuideContainerPath().replace(FM_AF_ROOT, FM_DAM_ROOT).replace("/guideContainer", "/metadata");
+    }
+
+    function isForm(){
+        return Granite.author.page.path.startsWith(FM_AF_ROOT);
+    }
+
+    function addFormParameter(name, value) {
+        var input = channel[0].createElement('input');
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", name);
+        if(value) {
+            input.setAttribute("value", value);
+        }
+        $("#formmodelparameters").append(input);
+    };
+
     function hideContainersExcept(selectedSchemaType) {
-        if (selectedSchemaType == SCHEMA || selectedSchemaType == JSON_SCHEMA || selectedSchemaType == XML_SCHEMA) {
+        if (selectedSchemaType == JSON_SCHEMA) {
             $(FDM_CONTAINER).hide();
             $(SCHEMA_CONTAINER).show();
         } else if (selectedSchemaType == FORM_DATA_MODEL) {
@@ -334,6 +391,16 @@
             });
         }
     }
+
+    $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+        selector : "[data-validation~='datamodel.config']",
+        validate : function (el) {
+            let $el = $(el);
+            if($el.is(":visible") && $el[0].value === '') {
+                return Granite.I18n.getMessage("This is a required field");
+            }
+        }
+    });
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);

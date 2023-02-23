@@ -87,17 +87,19 @@ describe('Page/Form Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
 
-        //open submission tab
+        //open data model tab
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
         cy.get("[name='./schemaType']").should("exist");
         cy.get("[name='./schemaRef']").invoke('attr', 'type').should('eq', 'hidden');
 
-        //select email submit action
-        cy.get(".cmp-adaptiveform-container__selectformmodel").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('None').should('exist');
-        cy.get("._coral-Menu-itemLabel").contains('Schema').should('be.visible').click();
+        //select data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
         cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
-
+        cy.get(".cq-dialog-submit").click();
+        cy.get(".coral-Form-errorlabel").should("be.visible");
+        cy.get('.cq-dialog-cancel').click();
     };
 
         context("Open Forms Editor", function () {
@@ -120,7 +122,6 @@ describe('Page/Form Authoring', function () {
             it('data model in container', function () {
                 // click configure action on adaptive form container component
                 checkDataModelInEditDialog(formContainerEditPathSelector);
-                cy.get('.cq-dialog-cancel').click();
             });
         });
 

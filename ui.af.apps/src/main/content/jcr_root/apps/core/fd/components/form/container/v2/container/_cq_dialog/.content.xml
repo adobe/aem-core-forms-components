@@ -96,7 +96,7 @@
                                             <optionSchema
                                                     jcr:primaryType="nt:unstructured"
                                                     text="Schema"
-                                                    value="schema"/>
+                                                    value="jsonschema"/>
                                             <optionFormdatamodel
                                                     jcr:primaryType="nt:unstructured"
                                                     text="Form Data Model"
@@ -150,6 +150,10 @@
                                             </fdmselector>
                                         </items>
                                     </fdmselectorcontainer>
+                                    <formmodelparameters
+                                            granite:id="formmodelparameters"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                 </items>
                             </formmodel>
                         </items>
