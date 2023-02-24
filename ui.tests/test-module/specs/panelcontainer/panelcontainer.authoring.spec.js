@@ -68,7 +68,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./custom']")
         .should("exist");
 
-    cy.closeCQDialog();
+    cy.get('.cq-dialog-cancel').should('be.visible').click();
     cy.deleteComponentByPath(panelContainerDrop);
   }
 

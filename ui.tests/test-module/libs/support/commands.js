@@ -244,11 +244,6 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
     return cy.wrap(isEventComplete); // return a chainable object
 });
 
-// cypress command to initialize event handler on channel
-Cypress.Commands.add("closeCQDialog", (eventName) => {
-    cy.get('.cq-dialog-cancel').should('be.visible');
-    cy.get('.cq-dialog-cancel').click();
-});
 
 const waitForFormInit = () => {
     const INIT_EVENT = "AF_FormContainerInitialised"
