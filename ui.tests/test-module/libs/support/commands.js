@@ -244,6 +244,7 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
     return cy.wrap(isEventComplete); // return a chainable object
 });
 
+
 const waitForFormInit = () => {
     const INIT_EVENT = "AF_FormContainerInitialised"
     return cy.document().then(document => {

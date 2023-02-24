@@ -66,9 +66,10 @@ describe('Page - Authoring', function () {
     cy.get("[name='./custom']")
         .should("exist");
 
-    cy.get('.cq-dialog-cancel').click();
+    cy.get('.cq-dialog-cancel').should('be.visible').click();
     cy.deleteComponentByPath(accordionDrop);
   }
+
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",

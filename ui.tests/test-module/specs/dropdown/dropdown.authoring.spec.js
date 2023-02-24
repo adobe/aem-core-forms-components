@@ -99,7 +99,7 @@ describe('Page - Authoring', function () {
             cy.get("coral-selectlist-item").contains('Number').should('be.visible').click({force: true});
             cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Number');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+            cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
 
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(dropdown);
@@ -112,7 +112,7 @@ describe('Page - Authoring', function () {
             cy.get("coral-selectlist-item").contains('Boolean').click({force: true});
             cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Boolean');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-fielderror').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+            cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
 
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(dropdown);
