@@ -121,6 +121,7 @@
             }, this)
             super.updateEmptyStatus();
         }
+
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
