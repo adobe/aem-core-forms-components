@@ -71,7 +71,7 @@ The following attributes must be added for the initialization of the checkbox-gr
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:
 
-* Drop Dwon
+* Drop Down
 * Radio Button
  
 ## Information
