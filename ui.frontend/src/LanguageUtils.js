@@ -40,20 +40,27 @@ export default class LanguageUtils {
      * @param key       key for which translation needs to be fetched
      * @param snippets  comma separated list of template value
      */
-    static getTranslatedString(lang, key, snippets) {
-        let translatedText = "";
-        if (lang in this.#langData)
-        {
-            translatedText = this.#langData[lang][key];
-            if (snippets) {
-                //resolve message with snippet
-                translatedText = translatedText.replace(/{(\d+)}/g, function (match, number) {
-                    return typeof snippets[number] != 'undefined'
-                        ? snippets[number]
-                        : match;
-                });
+    static getTranslation(lang) {
+        return function(key, snippets) {
+            let translatedText = "";
+            if (lang in LanguageUtils.#langData)
+            {
+                translatedText = LanguageUtils.#langData[lang][key];
+                if (snippets) {
+                    //resolve message with snippet
+                    translatedText = translatedText.replace(/{(\d+)}/g, function (match, number) {
+                        return typeof snippets[number] != 'undefined'
+                            ? snippets[number]
+                            : match;
+                    });
+                }
             }
+            return translatedText;
         }
-        return translatedText;
+    }
+
+    static getTranslatedString(lang, key, snippets) {
+        let temp = this.getTranslation(lang);
+        return temp.call(this,key,snippets);
     }
 }
