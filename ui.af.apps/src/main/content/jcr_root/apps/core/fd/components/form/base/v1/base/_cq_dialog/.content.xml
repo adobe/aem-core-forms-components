@@ -106,7 +106,7 @@
                             </enums>
                             <bindref
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
                                     emptyText="Bind reference"
                                     fieldLabel="Bind reference"
                                     name="./dataRef">
