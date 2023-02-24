@@ -125,8 +125,8 @@ describe('Page - Authoring', function () {
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
       cy.get('.cq-dialog-submit').click();
-      cy.get('.coral-Form-fielderror').should('be.visible');
-      cy.get('.coral-Form-fielderror').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+      cy.get('.coral3-Tooltip--error coral-tooltip-content').should('be.visible').should('have.text', 'Value Type Mismatch');
+
 
       cy.get('.cq-dialog-cancel').click();
       cy.deleteComponentByPath(checkBoxGroupDrop);
@@ -141,8 +141,7 @@ describe('Page - Authoring', function () {
       cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
       cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
       cy.get('.cq-dialog-submit').click();
-      cy.get('.coral-Form-fielderror').should('be.visible');
-      cy.get('.coral-Form-fielderror').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+      cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
 
       cy.get('.cq-dialog-cancel').click();
       cy.deleteComponentByPath(checkBoxGroupDrop);
