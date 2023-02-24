@@ -22,7 +22,6 @@
             schemaType="jsonschema"
             thankYouOption="page"
             themeRef="/libs/fd/af/themes/canvas">
-            <_x0031_675943297619 jcr:primaryType="nt:unstructured"/>
             <Offer1675943313154
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Offer"

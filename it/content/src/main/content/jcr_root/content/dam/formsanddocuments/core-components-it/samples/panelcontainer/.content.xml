@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/"
-    jcr:mixinTypes="[mix:referenceable]"
-    jcr:primaryType="dam:Asset"
-    jcr:uuid="9f0ae42f-6d89-420a-9451-dfcd067f3889">
-    <jcr:content
-        dam:assetState="processed"
-        jcr:lastModified="{Date}2023-02-09T17:12:35.086+05:30"
-        jcr:lastModifiedBy="admin"
-        jcr:primaryType="dam:AssetContent"
-        lcResource="{Long}1"
-        type="lcResource">
-        <metadata
-            dam:extracted="{Date}2023-02-09T17:12:34.713+05:30"
-            dam:sha1="77be883dbd6c74b9536423f89bae0e05228eef13"
-            dam:size="{Long}89126"
-            dc:format="application/json"
-            jcr:lastModified="{Date}2023-02-09T17:12:34.295+05:30"
-            jcr:lastModifiedBy="admin"
-            jcr:mixinTypes="[mix:created,mix:lastModified]"
-            jcr:primaryType="nt:unstructured"/>
-    </jcr:content>
-</jcr:root>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="sling:Folder"
+    lcFolder="{Long}0"
+    type="lcFolder"
+/>

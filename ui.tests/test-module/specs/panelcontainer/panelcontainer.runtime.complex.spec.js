@@ -166,6 +166,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         instanceManager.children.forEach(checkChild);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
+
     const checkInnerRepeatability = (instancesModel, index) => {
         const innerInstanceManagerModel = instancesModel[index].items[2];
         const innerInstancesModel = innerInstanceManagerModel.items;
@@ -184,43 +185,82 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                     expect(innerInstancesView[i].children.length, " Number of children inside inner repeatable panel view should be equal to its child models  ").to.equal(innerInstancesModel[i].items.length);
                 }
                 expect(innerInstancesView.length, " Number of inner instances view to equal Number of instances model ").to.equal(innerInstancesModel.length);
+                return cy.get(`#${innerInstancesModel[(innerInstancesModel.length - 1)].items[1].id}`).should('exist');
+            }).then(() => {
+                const allFields = formContainer.getAllFields();
+                const innerInstanceManager = allFields[innerInstanceManagerModel.id];
+                checkInstanceHTML(innerInstanceManager, 2)
+                    .then(() => {
+                        checkAddRemoveInstance(innerInstanceManager, 3, true)
+                            .then(() => {
+                                checkAddRemoveInstance(innerInstanceManager, 2)
+                                    .then(() => {
+                                        //min is 2, can't go below this
+                                        checkAddRemoveInstance(innerInstanceManager, 2);
+                                    });
+                            });
+                    });
             });
         });
 
     };
 
     const checkInnerInstance = (instancesModel, index) => {
-        const innerModelId = instancesModel.id;
-        const numberInputId = instancesModel[index].items[0].id;
-        const checkBoxGroupId = instancesModel[index].items[1].id;
+        const allFields = formContainer.getAllFields();
+        const instanceModel = instancesModel[index];
+        const innerModelId = instanceModel.id;
+        const innerView=allFields[innerModelId];
+        const numberInputId = instanceModel.items[0].id;
+        const numberInputView = allFields[numberInputId];
+        const checkBoxGroupId = instanceModel.items[1].id;
+        const checkBoxGroupView = allFields[checkBoxGroupId];
+        const innerLabelClass = innerView.getLabel().className;
+        const innerTooltipClass = innerView.getTooltipDiv().className;
+        const innerDescriptionClass = innerView.getDescription().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        const checkBoxGroupLabelClass = checkBoxGroupView.getLabel().className;
+        const checkBoxGroupViewErrorClass = checkBoxGroupView.getErrorDiv().className;
+
         cy.get(`#${innerModelId}`).should('exist');
-        cy.get(`#${innerModelId}-label`).should('exist');
-        cy.get(`#${innerModelId}-label`).invoke('attr', 'for').should('eq', innerModelId);
-        cy.get(`#${innerModelId}-shortDescription`).should('exist');
-        cy.get(`#${innerModelId}-longDescription`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        cy.get(`#${numberInputId}-errorMessage`).should('exist');
-        cy.get(`#${checkBoxGroupId}-label`).should('exist');
-        cy.get(`#${checkBoxGroupId}-label`).invoke('attr', 'for').should('eq', checkBoxGroupId);
-        return cy.get(`#${checkBoxGroupId}-errorMessage`).should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerLabelClass}`).should('exist');
+        cy.get(`#${innerModelId}`).find('label[for="'+innerModelId+'"]').should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerTooltipClass}`).should('exist');
+        cy.get(`#${innerModelId}`).find(`.${innerDescriptionClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
+        cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupLabelClass}`).should('exist');
+        cy.get(`#${checkBoxGroupId}`).find('label[for="'+checkBoxGroupId+'"]').should('exist');
+        return cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupViewErrorClass}`).should('exist');
     };
 
     const checkInstance = (instancesModel, index) => {
+        const allFields = formContainer.getAllFields();
         const modelId = instancesModel[index].id;
+        const parentView=allFields[modelId];
         const textInputId = instancesModel[index].items[0].id;
+        const textInputView = allFields[textInputId];
         const numberInputId = instancesModel[index].items[1].id;
+        const numberInputView = allFields[numberInputId];
         cy.get(`#${modelId}`).should('exist');
-        cy.get(`#${modelId}-label`).should('exist');
-        cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-        cy.get(`#${modelId}-shortDescription`).should('exist');
-        cy.get(`#${modelId}-longDescription`).should('exist');
-        cy.get(`#${textInputId}-label`).should('exist');
-        cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-        cy.get(`#${textInputId}-errorMessage`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        return cy.get(`#${numberInputId}-errorMessage`).should('exist');
+        const parentLabelClass = parentView.getLabel().className;
+        const parentTooltipClass = parentView.getTooltipDiv().className;
+        const parentDescriptionClass = parentView.getDescription().className;
+        const textInputLabelClass = textInputView.getLabel().className;
+        const textInputErrorClass = textInputView.getErrorDiv().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
+        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
@@ -250,6 +290,16 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         });
 
         return innerPromise;
+    };
+
+    const checkAddRemoveButton = (instanceManager, count, buttonId) => {
+        let resolution = undefined;
+        const promise = new Cypress.Promise((resolve, reject) => {resolution = resolve;});
+        cy.get(`#${buttonId} button`).click().then(() => {
+            const e = checkInstanceHTML(instanceManager, count);
+            resolution(e);
+        });
+        return promise;
     };
 
     const checkSiteInnerRepeatableInstance = (innerInstanceManagerModel, label) => {
@@ -319,6 +369,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                             let outerViewChildren = computeViewLength(outerInstancesView[i].children);  //outerInstancesView[i].children.length - 2; //-2 for 2 minOccur of inside repeatable panel
                             let outerModelChildren = computeModelLength(outerInstancesModel[i].items); //outerInstancesModel[i].items.length - 1; //-1 for instance manager model of inside repeatable panel
                             expect(outerViewChildren, " Number of children inside outer repeatable panel view should be equal to its child models  ").to.equal(outerModelChildren);
+                            checkInnerRepeatability(outerInstancesModel, i);
                         }
                         expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
                         checkInstanceHTML(outerInstanceManagerView, 3)
@@ -470,6 +521,115 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                                             cy.fixture('panelcontainer/bankSubmissionInnerInstanceRemoved.json').then((outputData) => {
                                                 expect(result.data.data).to.equal(JSON.stringify(outputData));
                                             });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it("Reset, Add and Remove Button: With Bank schema, Repeatable inside repeatable panel", () =>{
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/reset-repeatability.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            //check initial data
+            cy.getFormData().then((result) => {
+                cy.fixture('panelcontainer/initialResetBank.json').then((outputData) => {
+                    expect(result.data.data).to.equal(JSON.stringify(outputData));
+                });
+            });
+            formContainer = p;
+            const formContainerModelItems = formContainer._model.items;
+            fillSelect(formContainerModelItems[0], "1 Check");
+            fillInput(formContainerModelItems[1], 101);
+            const personalLoanModelItems = formContainerModelItems[2].items;
+            const witnessIMModel = personalLoanModelItems[1];
+            const allFields = formContainer.getAllFields();
+            const witnessIM = allFields[witnessIMModel.id];
+            const addWitnessButtonId = personalLoanModelItems[2].id;
+            const removeWitnessButtonId = personalLoanModelItems[3].id;
+            const resetButtonId = formContainerModelItems[3].id;
+            checkAddRemoveButton(witnessIM, 3, addWitnessButtonId).then(() => {
+                checkAddRemoveButton(witnessIM, 2, removeWitnessButtonId).then(() => {
+                    checkAddRemoveButton(witnessIM, 3, addWitnessButtonId).then(() => {
+                        //Fill Instances
+                        const firstInstanceModelItems = witnessIMModel.items[0].items;
+                        fillInput(firstInstanceModelItems[0], "w1");
+                        fillInput(firstInstanceModelItems[1], "w11");
+                        fillSelect(firstInstanceModelItems[3], "Female");
+
+                        const secondInstanceModelItems = witnessIMModel.items[1].items;
+                        fillInput(secondInstanceModelItems[0], "w2");
+                        fillInput(secondInstanceModelItems[1], "w22");
+                        fillSelect(secondInstanceModelItems[3], "Male");
+
+                        const thirdInstanceModelItems = witnessIMModel.items[2].items;
+                        fillInput(thirdInstanceModelItems[0], "w3");
+                        fillInput(thirdInstanceModelItems[1], "w33");
+                        fillSelect(thirdInstanceModelItems[3], "Female");
+
+                        const firstEducationIMModel = firstInstanceModelItems[2];
+                        const firstEducationIM = allFields[firstEducationIMModel.id];
+                        checkAddRemoveInstance(firstEducationIM, 3, true).then(() => {
+                            //Fill education instances
+                            const firstEducationIMModelItems = firstEducationIMModel.items;
+                            const edu11 = firstEducationIMModelItems[0].items;
+                            fillInput(edu11[0], "ssn");
+                            fillInput(edu11[1], "B");
+                            fillInput(edu11[2], "phd");
+                            fillInput(edu11[7], "science");
+                            fillInput(edu11[9], "dce");
+
+                            const edu12 = firstEducationIMModelItems[1].items;
+                            fillInput(edu12[0], "ss2");
+                            fillInput(edu12[1], "A");
+                            fillInput(edu12[2], "b.tech");
+                            fillInput(edu12[7], "computer");
+
+                            const edu13 = firstEducationIMModelItems[2].items;
+                            fillInput(edu13[9], "DU");
+
+                            const secondEducationIMModelItems = secondInstanceModelItems[2].items;
+                            const secondEdu = secondEducationIMModelItems[0].items;
+                            fillInput(secondEdu[0], "ss3");
+                            fillInput(secondEdu[1], "C");
+                            fillInput(secondEdu[2], "PGCCL");
+                            fillInput(secondEdu[7], "Law");
+
+                            const secondEdu1 = secondEducationIMModelItems[1].items;
+                            fillInput(secondEdu1[0], "ss5");
+                            fillInput(secondEdu1[1], "A+");
+                            fillInput(secondEdu1[2], "ME");
+                            fillInput(secondEdu1[7], "CA");
+
+                            const thirdEducationIMModelItems = thirdInstanceModelItems[2].items;
+                            const thirdEdu = thirdEducationIMModelItems[0].items;
+                            fillInput(thirdEdu[9], "DU");
+
+                            return cy.get(`#${edu12[9].id}`);
+                        }).then(() => {
+                            cy.getFormData().then((result) => {
+                                cy.fixture('panelcontainer/beforeResetBank.json').then((outputData) => {
+                                    expect(result.data.data).to.equal(JSON.stringify(outputData));
+                                });
+                                //check reset button
+                                cy.get(`#${resetButtonId} button`).click().then(() => {
+
+                                    //check instances with min occur
+                                    checkInstanceHTML(witnessIM, 2);
+                                    const allFields = formContainer.getAllFields();
+                                    const firstEducationIM = allFields[witnessIMModel.items[0].items[2].id];
+                                    checkInstanceHTML(firstEducationIM, 2);
+                                    const secondEducationIM = allFields[witnessIMModel.items[1].items[2].id];
+                                    checkInstanceHTML(secondEducationIM, 2);
+
+                                    //check data
+                                    cy.getFormData().then((result) => {
+                                        cy.fixture('panelcontainer/afterResetBank.json').then((outputData) => {
+                                            expect(result.data.data).to.equal(JSON.stringify(outputData));
                                         });
                                     });
                                 });
