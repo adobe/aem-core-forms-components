@@ -44,8 +44,7 @@ describe('Page - Authoring', function () {
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
-        // todo: needs to be fixed
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
         cy.deleteComponentByPath(datePickerDrop);
     }
 
@@ -63,8 +62,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./hideTitle']").should("exist");
         cy.get("[name='./placeholder']").should("exist");
         cy.get("[name='./default']").should("exist");
-        // todo: needs to be fixed
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
         cy.deleteComponentByPath(datePickerDrop);
     }
 
@@ -82,8 +80,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./minimumMessage']").should("exist");
         cy.get("[name='./maximumDate']").should("exist");
         cy.get("[name='./maximumMessage']").should("exist");
-        // todo: needs to be fixed
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
         cy.deleteComponentByPath(datePickerDrop);
     }
 
