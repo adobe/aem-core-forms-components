@@ -95,8 +95,10 @@ describe('Page/Form Authoring', function () {
         //select data model
         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
-        cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
-        cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
+        // cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
+        cy.get("coral-selectlist-item[value='formdatamodel']").contains('Form Data Model').should('be.visible').click();
+        // cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
+        cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();
         cy.get(".cq-dialog-submit").click();
     };
 
