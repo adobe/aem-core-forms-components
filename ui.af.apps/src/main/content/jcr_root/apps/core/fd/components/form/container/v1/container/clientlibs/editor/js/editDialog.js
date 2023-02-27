@@ -60,6 +60,7 @@
         toBeConfiguredFormModel,
         isConfirmationDialogAccept = false,
         doNotShowDialogFlag = false,
+        isSchemaChanged = false,
         dialogHeader = Granite.I18n.get("Form Model"),
         dialogContent = "<p>" + Granite.I18n.get("When you replace the old data model with a new model, some data bindings might break and lead to form submission errors.") + "</p>" + "<coral-checkbox id='doNotShowDialogCheckBox'>" + Granite.I18n.get("Don't show this again") + "</coral-checkbox>",
         dialogFooter = '<button id="formModelDialogCancelButton" is="coral-button" variant="default" coral-close>' + Granite.I18n.get("Cancel") + '</button><button id="formModelDialogAcceptButton" is="coral-button" variant="primary" coral-close>' + Granite.I18n.get("Ok") + '</button>';
@@ -81,7 +82,7 @@
     channel.on("dialog-success", function (e) {
         configuredFormModel = toBeConfiguredFormModel;
         isConfirmationDialogAccept = false;
-        if(isForm()){
+        if(isForm() && isSchemaChanged){
             var customEvent = document.createEvent("CustomEvent");
             customEvent.initCustomEvent("data-model-selected", true, true);
             window.dispatchEvent(customEvent);
@@ -146,6 +147,7 @@
             selectedSchema = selectedSchema[0].value;
             setElementValue(dialog, SCHEMA_REF, selectedSchema);
             setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            isSchemaChanged = true;
             if (configuredFormModel) {
                 confirmFormModelChange(selectedSchema, $(SCHEMA_DROPDOWN_SELECTOR));
             } else {
@@ -160,6 +162,7 @@
             selectedSchema = selectedSchema[0].value;
             setElementValue(dialog, SCHEMA_REF, selectedSchema);
             setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            isSchemaChanged = true;
             if (configuredFormModel) {
                 confirmFormModelChange(selectedSchema, $(FDM_DROPDOWN_SELECTOR));
             } else {
