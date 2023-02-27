@@ -127,7 +127,6 @@ export default class FormFieldBase extends FormField {
 
     /**
      * Initialise Hint ('?') and long description.
-     * Initialise Hint ('?') and long description.
      * @param state
      */
     initializeHelpContent(state) {
@@ -179,7 +178,7 @@ export default class FormFieldBase extends FormField {
     }
 
     #getFormName() {
-        return this.formContainer.getPath().replace('/jcr:content/guideContainer', '')
+        return this.formContainer.getFormName();
     }
 
     #getPanelName() {

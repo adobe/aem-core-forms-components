@@ -20,7 +20,6 @@ import AfFormData from "./FormData.js";
 
 export default class GuideBridge {
 
-    #guideContainerMap = {};
     #formContainerViewMap = {};
     #guideBridgeConnectHandlers = [];
     #formContainerPath = "";
@@ -36,7 +35,6 @@ export default class GuideBridge {
         let self = this;
         function onFormContainerInitialised(e) {
             let formContainer = e.detail;
-            self.#guideContainerMap[formContainer.getPath()] = formContainer.getModel();
             self.#formContainerViewMap[formContainer.getPath()] = formContainer;
             self.#invokeConnectHandlers(formContainer.getPath());
         }
@@ -99,20 +97,20 @@ export default class GuideBridge {
      */
     getFormModel() {
         if (this.#formContainerPath) {
-            return this.#guideContainerMap[this.#formContainerPath];
+            return this.#formContainerViewMap[this.#formContainerPath].getModel();
         } else {
             //choose any form container in case no formContainerPath is provided in GuideBridge#connect API
             const formContainerPath = this.#getFormContainerPath();
             this.#formContainerPath = formContainerPath;
-            return this.#guideContainerMap[formContainerPath];
+            return this.#formContainerViewMap[formContainerPath] ? this.#formContainerViewMap[formContainerPath].getModel(): null;
         }
     }
 
     #getFormContainerPath() {
         let actualFormContainerPath = this.#formContainerPath;
         if (!actualFormContainerPath) {
-            for(let formContainerPath in this.#guideContainerMap) {
-                if(this.#guideContainerMap.hasOwnProperty(formContainerPath)) {
+            for(let formContainerPath in this.#formContainerViewMap) {
+                if(this.#formContainerViewMap.hasOwnProperty(formContainerPath)) {
                     actualFormContainerPath =  formContainerPath;
                 }
             }

@@ -127,4 +127,8 @@ export default class FormContainer {
     getAllFields() {
         return this._fields;
     }
+
+    getFormName() {
+        return this._model._jsonModel.name;
+    }
 }
