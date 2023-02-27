@@ -160,7 +160,20 @@ export default class InstanceManager {
         //get the model from added instance state
         let addedModel = this.formContainer.getModel(addedInstanceJson.id);
         this.updateCloneIds(htmlElement, 'temp_0', addedModel);
-        this.repeatableParentView.customRepeatableHtmlHandler(this,addedModel,htmlElement,beforeElement);
+        if (this.repeatableParentView && (typeof this.repeatableParentView.customRepeatableHtmlHandler === "function")) {
+            this.repeatableParentView.customRepeatableHtmlHandler(this, addedModel, htmlElement, beforeElement);
+        } else {
+            // this is required if repeatableParentView is the formContainer.
+            if (this.children.length == 0) {
+                this.parentElement.append(htmlElement);
+            } else if (addedModel.index == 0) {
+                let afterElement = this.children[0].element.parentElement;
+                this.parentElement.insertBefore(htmlElement, afterElement);
+            } else {
+                let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
+                beforeViewElement.after(htmlElement);
+            }
+        }
         return htmlElement;
     }
 
