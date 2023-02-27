@@ -41,15 +41,16 @@
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
-            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`
+            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
+            olTabList: `.${Tabs.bemBlock}__tablist`
         };
 
         constructor(params) {
             super(params);
             const {element} = params;
+            this._templateHTML = {};
             this.#cacheElements(element);
-            this.#cacheTabPanelElementIds();
-            this._active = this.getActiveIndex(this._elements["tab"]);
+            this._active = this.getActiveTab(this.#getCachedTabs());
             this.#refreshActive();
             this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
@@ -64,7 +65,7 @@
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
                     if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
-                            _self.#navigate(message.data.index);
+                            _self.#navigate(_self._elements["tab"][message.data.index].id);
                         }
                     }
                 });
@@ -93,25 +94,8 @@
                         }
                         this._elements[key].push(hook);
                     } else {
-                        this._elements[key] = hook;
+                        this._elements[key] = [hook];
                     }
-                }
-            }
-        }
-
-        #cacheTabPanelElementIds() {
-            var tabpanels = this._elements["tabpanel"];
-            this._elements["tabPanelElementId"]={};
-            if (tabpanels) {
-                if (Array.isArray(tabpanels)) {
-                    for (var i = 0; i < tabpanels.length; i++) {
-                        this._elements["tabPanelElementId"][i] = tabpanels[i].querySelectorAll(
-                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                    }
-                } else {
-                    // only one tab
-                    this._elements["tabPanelElementId"][0] = tabpanels.querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
                 }
             }
         }
@@ -148,32 +132,31 @@
             return this.element.querySelector(Tabs.selectors.qm);
         }
 
+        #getTabListElement() {
+            return this.element.querySelector(Tabs.selectors.olTabList)
+        }
+
         #syncTabLabels(){
-            var tabs = this._elements["tab"];
-            if (tabs) {
-                if(Array.isArray(tabs)){
-                    for (var i = 0; i < tabs.length; i++) {
-                        tabs[i].id = this._elements["tabPanelElementId"][i] + "__tab";
-                        tabs[i].setAttribute("aria-controls", this._elements["tabPanelElementId"][i] + "__tabpanel");
-                    }
-                }else{
-                    tabs.id = this._elements["tabPanelElementId"][0] + "__tab";
-                    tabs.setAttribute("aria-controls", this._elements["tabPanelElementId"][0] + "__tabpanel");
+            var tabs = this.#getCachedTabs();
+            var tabPanels = this.#getCachedTabPanels();
+            if (tabPanels) {
+                for (var i = 0; i < tabPanels.length; i++) {
+                    var childViewId = tabPanels[i].querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    tabs[i].id = childViewId + "__tab";
+                    tabs[i].setAttribute("aria-controls", childViewId + "__tabpanel");
                 }
             }
         }
 
         #syncTabPanels(){
-            var tabPanels = this._elements["tabpanel"];
+            var tabPanels = this.#getCachedTabPanels();
             if(tabPanels) {
-                if(Array.isArray(tabPanels)) {
-                    for (var i = 0; i < tabPanels.length; i++) {
-                        tabPanels[i].id = this._elements["tabPanelElementId"][i] + "__tabpanel";
-                        tabPanels[i].setAttribute("aria-labelledby", this._elements["tabPanelElementId"][i] + "__tab");
-                    }
-                }else{
-                    tabPanels.id = this._elements["tabPanelElementId"][0] + "__tabpanel";
-                    tabPanels.setAttribute("aria-labelledby", this._elements["tabPanelElementId"][0] + "__tab");
+                for (var i = 0; i < tabPanels.length; i++) {
+                        var childViewId = tabPanels[i].querySelectorAll(
+                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                        tabPanels[i].id = childViewId + "__tabpanel";
+                        tabPanels[i].setAttribute("aria-labelledby", childViewId + "__tab");
                 }
             }
         }
@@ -190,13 +173,13 @@
          * @private
          */
         #bindEvents() {
-            var tabs = this._elements["tab"];
+            var tabs = this.#getCachedTabs();
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     var _self = this;
                     (function(index){
                         tabs[index].addEventListener("click", function(event) {
-                            _self.#navigateAndFocusTab(index);
+                            _self.#navigateAndFocusTab(tabs[index].id);
                         });
                     }(i));
                     
@@ -207,21 +190,35 @@
             }
         }
 
+        #bindEventsToTab(tabId){
+            var _self = this;
+            var tabs = this.#getCachedTabs();
+            var index = this.#getTabIndexById(tabId);
+            tabs[index].addEventListener("click", function(event) {
+                _self.#navigateAndFocusTab(tabId);
+            });
+            tabs[index].addEventListener("keydown", function(event) {
+                _self.#onKeyDown(event);
+            });
+        }
+
          /**
          * Returns the index of the active tab, if no tab is active returns 0
          *
          * @param {Array} tabs Tab elements
          * @returns {Number} Index of the active tab, 0 if none is active
          */
-        getActiveIndex(tabs) {
+        getActiveTab(tabs) {
             if (tabs) {
+                var result=tabs[0].id;
                 for (var i = 0; i < tabs.length; i++) {
                     if (tabs[i].classList.contains(Tabs.selectors.active.tab)) {
-                        return i;
+                        result= tabs[i].id;
+                        break;
                     }
                 }
+                return result;
             }
-            return 0;
         }
 
          /**
@@ -231,32 +228,32 @@
          * @param {Object} event The keydown event
          */
         #onKeyDown(event) {
-            var index = this._active;
-
-            var lastIndex = this._elements["tab"].length - 1;
+            var index = this.#getTabIndexById(this._active);
+            var tabs = this.#getCachedTabs();
+            var lastIndex = tabs.length - 1;
 
             switch (event.keyCode) {
                 case keyCodes.ARROW_LEFT:
                 case keyCodes.ARROW_UP:
                     event.preventDefault();
                     if (index > 0) {
-                        this.#navigateAndFocusTab(index - 1);
+                        this.#navigateAndFocusTab(tabs[index - 1].id);
                     }
                     break;
                 case keyCodes.ARROW_RIGHT:
                 case keyCodes.ARROW_DOWN:
                     event.preventDefault();
                     if (index < lastIndex) {
-                        this.#navigateAndFocusTab(index + 1);
+                        this.#navigateAndFocusTab(tabs[index + 1].id);
                     }
                     break;
                 case keyCodes.HOME:
                     event.preventDefault();
-                    this.#navigateAndFocusTab(0);
+                    this.#navigateAndFocusTab(tabs[0].id);
                     break;
                 case keyCodes.END:
                     event.preventDefault();
-                    this.#navigateAndFocusTab(lastIndex);
+                    this.#navigateAndFocusTab(tabs[lastIndex].id);
                     break;
                 default:
                     return;
@@ -269,33 +266,49 @@
          * @private
          */
         #refreshActive() {
-            var tabpanels = this._elements["tabpanel"];
-            var tabs = this._elements["tab"];
-
+            var tabpanels = this.#getCachedTabPanels();
+            var tabs = this.#getCachedTabs();
             if (tabpanels) {
-                if (Array.isArray(tabpanels)) {
-                    for (var i = 0; i < tabpanels.length; i++) {
-                        if (i === parseInt(this._active)) {
-                            tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
-                            tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
-                            tabs[i].classList.add(Tabs.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
-                        } else {
-                            tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
-                            tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
-                            tabs[i].classList.remove(Tabs.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
-                        }
+                for (var i = 0; i < tabpanels.length; i++) {
+                    if (tabs[i].id === this._active) {
+                        tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
+                        tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
+                        tabs[i].classList.add(Tabs.selectors.active.tab);
+                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
+                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
+                    } else {
+                        tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
+                        tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
+                        tabs[i].classList.remove(Tabs.selectors.active.tab);
+                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
+                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
                     }
-                } else {
-                    // only one tab
-                    tabpanels.classList.add(Tabs.selectors.active.tabpanel);
-                    tabs.classList.add(Tabs.selectors.active.tab);
                 }
             }
         }
+
+        #getBeforeViewElement(instanceManager,instanceIndex) {
+            var result={};
+            var instanceManagerId=instanceManager.getId();
+            if(instanceIndex==0){
+                var closestNonRepeatableFieldId=this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                var closestRepeatableFieldInstanceManagerId=this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
+                var indexToInsert=this.#getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId);
+                var tabPanels=this.#getCachedTabPanels();
+                if(indexToInsert>0){
+                    result.beforeViewElement = this.#getTabPanelElementById(tabPanels[indexToInsert - 1].id);
+                }else{
+                    result.beforeViewElement = this.#getTabListElement();
+                }
+            }else {
+                var previousInstanceElement=instanceManager.children[instanceIndex-1].element;
+                result.beforeViewElement = previousInstanceElement.parentElement.parentElement;
+            }
+            result.elementToEnclose= this._templateHTML[instanceManagerId]['targetTabPanel'].cloneNode(false);
+            result.idSuffix= "__tabpanel";
+            return result;
+        }
+
 
         /**
          * Focuses the element and prevents scrolling the element into view
@@ -315,8 +328,8 @@
          * @private
          * @param {Number} index The index of the tab to navigate to
          */
-        #navigate(index) {
-            this._active = index;
+        #navigate(tabId) {
+            this._active = tabId;
             this.#refreshActive();
         }
 
@@ -326,10 +339,174 @@
          * @private
          * @param {Number} index The index of the item to navigate to
          */
-        #navigateAndFocusTab(index) {
+        #navigateAndFocusTab(tabId) {
             var exActive = this._active;
-            this.#navigate(index);
-            this.focusWithoutScroll(this._elements["tab"][index]);
+            this.#navigate(tabId);
+            this.focusWithoutScroll(this.#getTabNavElementById(tabId));
+        }
+
+        handleChildAddition(childView){
+            if(childView.getInstanceManager()!=null && this._templateHTML[childView.getInstanceManager().getId()]!=null){
+                var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab']
+                                                    .cloneNode(true);
+                navigationTabToBeRepeated.id = childView.id+"__tab";
+                navigationTabToBeRepeated.setAttribute("aria-controls",childView.id+"__tabpanel");
+                var instanceIndex = childView.getModel().index;
+                var instanceManagerId = childView.getInstanceManager().getId()
+                if(instanceIndex==0){
+                    var closestNonRepeatableFieldId=this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                    var closestRepeatableFieldInstanceManagerId=this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
+                    var indexToInsert=this.#getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId);
+                    if(indexToInsert==0) {
+                        var tabListParentElement = this.#getTabListElement();
+                        tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
+                    }else{
+                        var beforeElement = this.#getCachedTabs()[indexToInsert-1];
+                        beforeElement.after(navigationTabToBeRepeated);
+                    }
+                }else {
+                    var beforeTabPanelElementId = childView.getInstanceManager().children[instanceIndex - 1].element.parentElement.parentElement.id;
+                    var beforeTabNavElementId = beforeTabPanelElementId.substring(0, beforeTabPanelElementId.lastIndexOf("__")) + "__tab"
+                    var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
+                    beforeElement.after(navigationTabToBeRepeated);
+                }
+                this.#cacheElements(this._elements.self);
+                var repeatedTabPanel = this.#getTabPanelElementById(childView.id+"__tabpanel");
+                repeatedTabPanel.setAttribute("aria-labelledby",childView.id+"__tab");
+                this.#refreshActive();
+                this.#bindEventsToTab(navigationTabToBeRepeated.id);
+                this.#navigateAndFocusTab(navigationTabToBeRepeated.id);
+            }
+        }
+
+        handleChildRemoval(removedInstanceView){
+            var removedTabPanelId=removedInstanceView.element.parentElement.parentElement.id;
+            var removedTabNavId=removedTabPanelId.substring(0,removedTabPanelId.lastIndexOf("__"))+"__tab";
+            var tabPanelElement=this.#getTabPanelElementById(removedTabPanelId);
+            var tabNavElement=this.#getTabNavElementById(removedTabNavId);
+            tabNavElement.remove();
+            tabPanelElement.remove();
+            this.children.splice(this.children.indexOf(removedInstanceView),1);
+            this.#cacheElements(this._elements.self);
+            this._active=this.getActiveTab(this._elements["tab"]);
+            this.#refreshActive();
+        }
+
+        addChild(childView) {
+            super.addChild(childView);
+            this.#cacheTemplateHTML(childView);
+        }
+
+        customRepeatableHtmlHandler(instanceManager,addedModel,htmlElement,beforeElement){
+            let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
+            let beforeViewElement = result.beforeViewElement;
+            let elementToEnclose = result.elementToEnclose;
+            elementToEnclose.id=addedModel.id+result.idSuffix;
+            beforeViewElement.after(elementToEnclose);
+            elementToEnclose.append(htmlElement);
+        }
+
+
+        #cacheTemplateHTML(childView){
+            if(childView.getInstanceManager()!=null && (this._templateHTML==null || this._templateHTML[childView.getInstanceManager().getId()]==null)) {
+                var tabPanelToBeRepeated=childView.element.parentElement.parentElement;
+                var tabId=tabPanelToBeRepeated.id.substring(0,tabPanelToBeRepeated.id.lastIndexOf("__"))+"__tab";
+                var indexOfRepeatedTabPanel=this.#getTabIndexById(tabId)
+                var instanceManagerId = childView.getInstanceManager().getId();
+                var navigationTabToBeRepeated=this.#getCachedTabs()[indexOfRepeatedTabPanel];
+                var result=this.#getClosestFields(indexOfRepeatedTabPanel);
+                this._templateHTML[instanceManagerId] = {};
+                this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
+                this._templateHTML[instanceManagerId]['targetTabPanel'] = tabPanelToBeRepeated;
+                this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
+                this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+            }
+        }
+
+
+
+        #getClosestFields(index){
+            var allTabPanels= this.#getCachedTabPanels();
+            var result={};
+            for (let i = 0; i < index; i++) {
+                var fieldId=allTabPanels[i].id.substring(0,allTabPanels[i].id.lastIndexOf("__"));
+                var fieldView=this.getChild(fieldId);
+                if(fieldView.getInstanceManager()==null){
+                    result["closestNonRepeatableFieldId"]=fieldId;
+                }else{
+                    result["closestRepeatableFieldInstanceManagerId"]=fieldView.getInstanceManager().getId();
+                }
+            }
+            return result;
+        }
+
+        #getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId){
+            var tabPanels=this.#getCachedTabPanels();
+            var closestNonRepeatableFieldFound=(closestNonRepeatableFieldId==null)?true:false;
+            var closestRepeatableFieldFound=(closestRepeatableFieldInstanceManagerId==null)?true:false;
+            var resultIndex=-1;
+            if(tabPanels){
+                for(let i=0;i<tabPanels.length;i++){
+                    var currentFieldId = tabPanels[i].id.substring(0,tabPanels[i].id.lastIndexOf("__"));
+                    if(closestNonRepeatableFieldId===currentFieldId){
+                        resultIndex=i;
+                        closestNonRepeatableFieldFound=true;
+                    }else{
+                        var fieldView=this.getChild(currentFieldId);
+                        if(fieldView.getInstanceManager()!=null && fieldView.getInstanceManager().getId()===closestRepeatableFieldInstanceManagerId){
+                            resultIndex=i;
+                            closestRepeatableFieldFound=true;
+                            continue;
+                        }
+                    }
+                    if(closestNonRepeatableFieldFound && closestRepeatableFieldFound){
+                        break;
+                    }
+                }
+            }
+            return resultIndex+1;
+        }
+
+        #getTabNavElementById(tabId){
+            var tabs = this.#getCachedTabs();
+            if(tabs){
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].id === tabId) {
+                        return tabs[i];
+                    }
+                }
+            }
+        }
+
+        #getTabPanelElementById(tabPanelId){
+            var tabPanels = this.#getCachedTabPanels();
+            if(tabPanels){
+                for (var i = 0; i < tabPanels.length; i++) {
+                    if (tabPanels[i].id === tabPanelId) {
+                        return tabPanels[i];
+                    }
+                }
+            }
+        }
+
+        #getTabIndexById(tabId){
+            var tabs = this.#getCachedTabs();
+            if(tabs){
+                for(var i = 0; i < tabs.length; i++){
+                    if(tabs[i].id===tabId){
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        #getCachedTabs() {
+            return this._elements["tab"];
+        }
+
+        #getCachedTabPanels() {
+            return this._elements["tabpanel"]
         }
     }
 

@@ -40,13 +40,34 @@ export default class FormPanel extends FormFieldBase {
                 instanceManager = this.instantiateInstanceManager();
                 this.formContainer.addInstanceManager(instanceManager);
             }
-            instanceManager.addChild(this);
             this.setInstanceManager(instanceManager);
+            instanceManager.addChild(this);
         }
     }
 
     addChild(childView) {
         this.children.push(childView);
+    }
+
+    getChild(id){
+        for(let key in this.children){
+            if(this.children[key].id===id){
+                return this.children[key];
+            }
+        }
+    }
+
+    customRepeatableHtmlHandler(instanceManager,addedModel,htmlElement,beforeElement){
+        var instanceIndex=addedModel.index;
+        if (instanceManager.children.length == 0) {
+            instanceManager.parentElement.append(htmlElement);
+        }else if (addedModel.index == 0) {
+            let afterElement = instanceManager.children[0].element.parentElement;
+            instanceManager.parentElement.insertBefore(htmlElement, afterElement);
+        }else{
+            let beforeViewElement = (beforeElement != null) ? beforeElement : instanceManager.children[instanceIndex - 1].element.parentElement;
+            beforeViewElement.after(htmlElement);
+        }
     }
 
     handleChildAddition(childView) {
