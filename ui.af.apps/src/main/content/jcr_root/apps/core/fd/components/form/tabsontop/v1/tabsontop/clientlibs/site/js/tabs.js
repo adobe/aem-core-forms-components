@@ -50,7 +50,7 @@
             const {element} = params;
             this._templateHTML = {};
             this.#cacheElements(element);
-            this._active = this.getActiveTab(this.#getCachedTabs());
+            this._active = this.getActiveTabId(this.#getCachedTabs());
             this.#refreshActive();
             this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
@@ -153,10 +153,10 @@
             var tabPanels = this.#getCachedTabPanels();
             if(tabPanels) {
                 for (var i = 0; i < tabPanels.length; i++) {
-                        var childViewId = tabPanels[i].querySelectorAll(
-                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                        tabPanels[i].id = childViewId + "__tabpanel";
-                        tabPanels[i].setAttribute("aria-labelledby", childViewId + "__tab");
+                    var childViewId = tabPanels[i].querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    tabPanels[i].id = childViewId + "__tabpanel";
+                    tabPanels[i].setAttribute("aria-labelledby", childViewId + "__tab");
                 }
             }
         }
@@ -182,7 +182,6 @@
                             _self.#navigateAndFocusTab(tabs[index].id);
                         });
                     }(i));
-                    
                     tabs[i].addEventListener("keydown", function(event) {
                         _self.#onKeyDown(event);
                     });
@@ -202,13 +201,13 @@
             });
         }
 
-         /**
-         * Returns the index of the active tab, if no tab is active returns 0
+        /**
+         * Returns the id of the active tab, if no tab is active returns 0th element id
          *
          * @param {Array} tabs Tab elements
-         * @returns {Number} Index of the active tab, 0 if none is active
+         * @returns {Number} Id of the active tab, 0th element id if none is active
          */
-        getActiveTab(tabs) {
+        getActiveTabId(tabs) {
             if (tabs) {
                 var result=tabs[0].id;
                 for (var i = 0; i < tabs.length; i++) {
@@ -221,7 +220,7 @@
             }
         }
 
-         /**
+        /**
          * Handles tab keydown events
          *
          * @private
@@ -260,8 +259,8 @@
             }
         }
 
-         /**
-         * Refreshes the tab markup based on the current {@code Tabs#_active} index
+        /**
+         * Refreshes the tab markup based on the current {@code Tabs_active} index
          *
          * @private
          */
@@ -291,21 +290,22 @@
             var result={};
             var instanceManagerId=instanceManager.getId();
             if(instanceIndex==0){
-                var closestNonRepeatableFieldId=this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerId=this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
-                var indexToInsert=this.#getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId);
-                var tabPanels=this.#getCachedTabPanels();
+                var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                var closestRepeatableFieldInstanceManagerId = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
+                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId);
+                var tabPanels = this.#getCachedTabPanels();
                 if(indexToInsert>0){
                     result.beforeViewElement = this.#getTabPanelElementById(tabPanels[indexToInsert - 1].id);
                 }else{
                     result.beforeViewElement = this.#getTabListElement();
                 }
             }else {
-                var previousInstanceElement=instanceManager.children[instanceIndex-1].element;
-                result.beforeViewElement = previousInstanceElement.parentElement.parentElement;
+                var previousInstanceElement = instanceManager.children[instanceIndex-1].element;
+                var previousInstanceTabPanelIndex = this.#getTabIndexById(previousInstanceElement.id+"__tab");
+                result.beforeViewElement = this.#getCachedTabPanels()[previousInstanceTabPanelIndex];
             }
-            result.elementToEnclose= this._templateHTML[instanceManagerId]['targetTabPanel'].cloneNode(false);
-            result.idSuffix= "__tabpanel";
+            result.elementToEnclose = this._templateHTML[instanceManagerId]['targetTabPanel'].cloneNode(false);
+            result.idSuffix = "__tabpanel";
             return result;
         }
 
@@ -347,8 +347,7 @@
 
         handleChildAddition(childView){
             if(childView.getInstanceManager()!=null && this._templateHTML[childView.getInstanceManager().getId()]!=null){
-                var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab']
-                                                    .cloneNode(true);
+                var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab'].cloneNode(true);
                 navigationTabToBeRepeated.id = childView.id+"__tab";
                 navigationTabToBeRepeated.setAttribute("aria-controls",childView.id+"__tabpanel");
                 var instanceIndex = childView.getModel().index;
@@ -365,8 +364,7 @@
                         beforeElement.after(navigationTabToBeRepeated);
                     }
                 }else {
-                    var beforeTabPanelElementId = childView.getInstanceManager().children[instanceIndex - 1].element.parentElement.parentElement.id;
-                    var beforeTabNavElementId = beforeTabPanelElementId.substring(0, beforeTabPanelElementId.lastIndexOf("__")) + "__tab"
+                    var beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + "__tab"
                     var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
                     beforeElement.after(navigationTabToBeRepeated);
                 }
@@ -380,15 +378,15 @@
         }
 
         handleChildRemoval(removedInstanceView){
-            var removedTabPanelId=removedInstanceView.element.parentElement.parentElement.id;
-            var removedTabNavId=removedTabPanelId.substring(0,removedTabPanelId.lastIndexOf("__"))+"__tab";
-            var tabPanelElement=this.#getTabPanelElementById(removedTabPanelId);
-            var tabNavElement=this.#getTabNavElementById(removedTabNavId);
+            var removedTabPanelId = removedInstanceView.element.id+"__tabpanel";
+            var removedTabNavId = removedInstanceView.element.id+"__tab";
+            var tabPanelElement = this.#getTabPanelElementById(removedTabPanelId);
+            var tabNavElement = this.#getTabNavElementById(removedTabNavId);
             tabNavElement.remove();
             tabPanelElement.remove();
             this.children.splice(this.children.indexOf(removedInstanceView),1);
             this.#cacheElements(this._elements.self);
-            this._active=this.getActiveTab(this._elements["tab"]);
+            this._active = this.getActiveTabId(this._elements["tab"]);
             this.#refreshActive();
         }
 
@@ -397,11 +395,17 @@
             this.#cacheTemplateHTML(childView);
         }
 
-        customRepeatableHtmlHandler(instanceManager,addedModel,htmlElement,beforeElement){
+        /**
+         * Adds unique HTML for added instance corresponding to requirements of different types of repeatableParent
+         * @param instanceManager of the repeated component
+         * @param addedModel of the repeated component
+         * @param htmlElement of the repeated component
+         */
+        addRepeatableMarkup(instanceManager,addedModel,htmlElement){
             let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
             let beforeViewElement = result.beforeViewElement;
             let elementToEnclose = result.elementToEnclose;
-            elementToEnclose.id=addedModel.id+result.idSuffix;
+            elementToEnclose.id = addedModel.id+result.idSuffix;
             beforeViewElement.after(elementToEnclose);
             elementToEnclose.append(htmlElement);
         }
@@ -409,12 +413,13 @@
 
         #cacheTemplateHTML(childView){
             if(childView.getInstanceManager()!=null && (this._templateHTML==null || this._templateHTML[childView.getInstanceManager().getId()]==null)) {
-                var tabPanelToBeRepeated=childView.element.parentElement.parentElement;
-                var tabId=tabPanelToBeRepeated.id.substring(0,tabPanelToBeRepeated.id.lastIndexOf("__"))+"__tab";
-                var indexOfRepeatedTabPanel=this.#getTabIndexById(tabId)
+                var tabId = childView.element.id+"__tab";
+                var tabPanelId = childView.element.id+"__tabpanel";
+                var indexOfRepeatedTabPanel = this.#getTabIndexById(tabId)
                 var instanceManagerId = childView.getInstanceManager().getId();
-                var navigationTabToBeRepeated=this.#getCachedTabs()[indexOfRepeatedTabPanel];
-                var result=this.#getClosestFields(indexOfRepeatedTabPanel);
+                var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
+                var tabPanelToBeRepeated = this.#getTabPanelElementById(tabPanelId);
+                var result = this.#getClosestFields(indexOfRepeatedTabPanel);
                 this._templateHTML[instanceManagerId] = {};
                 this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
                 this._templateHTML[instanceManagerId]['targetTabPanel'] = tabPanelToBeRepeated;
@@ -426,36 +431,36 @@
 
 
         #getClosestFields(index){
-            var allTabPanels= this.#getCachedTabPanels();
+            var allTabPanels = this.#getCachedTabPanels();
             var result={};
             for (let i = 0; i < index; i++) {
                 var fieldId=allTabPanels[i].id.substring(0,allTabPanels[i].id.lastIndexOf("__"));
-                var fieldView=this.getChild(fieldId);
+                var fieldView = this.getChild(fieldId);
                 if(fieldView.getInstanceManager()==null){
-                    result["closestNonRepeatableFieldId"]=fieldId;
+                    result["closestNonRepeatableFieldId"] = fieldId;
                 }else{
-                    result["closestRepeatableFieldInstanceManagerId"]=fieldView.getInstanceManager().getId();
+                    result["closestRepeatableFieldInstanceManagerId"] = fieldView.getInstanceManager().getId();
                 }
             }
             return result;
         }
 
         #getTabIndexToInsert(closestNonRepeatableFieldId,closestRepeatableFieldInstanceManagerId){
-            var tabPanels=this.#getCachedTabPanels();
-            var closestNonRepeatableFieldFound=(closestNonRepeatableFieldId==null)?true:false;
-            var closestRepeatableFieldFound=(closestRepeatableFieldInstanceManagerId==null)?true:false;
-            var resultIndex=-1;
+            var tabPanels = this.#getCachedTabPanels();
+            var closestNonRepeatableFieldFound = (closestNonRepeatableFieldId==null)?true:false;
+            var closestRepeatableFieldFound = (closestRepeatableFieldInstanceManagerId==null)?true:false;
+            var resultIndex = -1;
             if(tabPanels){
                 for(let i=0;i<tabPanels.length;i++){
                     var currentFieldId = tabPanels[i].id.substring(0,tabPanels[i].id.lastIndexOf("__"));
-                    if(closestNonRepeatableFieldId===currentFieldId){
-                        resultIndex=i;
-                        closestNonRepeatableFieldFound=true;
+                    if(closestNonRepeatableFieldId === currentFieldId){
+                        resultIndex = i;
+                        closestNonRepeatableFieldFound = true;
                     }else{
-                        var fieldView=this.getChild(currentFieldId);
-                        if(fieldView.getInstanceManager()!=null && fieldView.getInstanceManager().getId()===closestRepeatableFieldInstanceManagerId){
-                            resultIndex=i;
-                            closestRepeatableFieldFound=true;
+                        var fieldView = this.getChild(currentFieldId);
+                        if(fieldView.getInstanceManager()!=null && fieldView.getInstanceManager().getId() === closestRepeatableFieldInstanceManagerId){
+                            resultIndex = i;
+                            closestRepeatableFieldFound = true;
                             continue;
                         }
                     }
@@ -493,7 +498,7 @@
             var tabs = this.#getCachedTabs();
             if(tabs){
                 for(var i = 0; i < tabs.length; i++){
-                    if(tabs[i].id===tabId){
+                    if(tabs[i].id === tabId){
                         return i;
                     }
                 }
@@ -513,5 +518,5 @@
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Tabs({element, formContainer})
     }, Tabs.selectors.self);
-    
+
 }());

@@ -160,8 +160,8 @@ export default class InstanceManager {
         //get the model from added instance state
         let addedModel = this.formContainer.getModel(addedInstanceJson.id);
         this.updateCloneIds(htmlElement, 'temp_0', addedModel);
-        if (this.repeatableParentView && (typeof this.repeatableParentView.customRepeatableHtmlHandler === "function")) {
-            this.repeatableParentView.customRepeatableHtmlHandler(this, addedModel, htmlElement, beforeElement);
+        if (this.repeatableParentView && (typeof this.repeatableParentView.addRepeatableMarkup === "function")) {
+            this.repeatableParentView.addRepeatableMarkup(this, addedModel, htmlElement);
         } else {
             // this is required if repeatableParentView is the formContainer.
             if (this.children.length == 0) {
@@ -205,7 +205,7 @@ export default class InstanceManager {
         const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, { "detail": childView });
         if (this.repeatableParentView && (typeof this.repeatableParentView.handleChildAddition === "function")) {
             //give parentView chance to adjust to added instance
-            this.repeatableParentView.handleChildAddition( childView);
+            this.repeatableParentView.handleChildAddition(childView);
         }
         this.formContainer.getFormElement().dispatchEvent(event);
     }
