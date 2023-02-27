@@ -130,6 +130,7 @@
         var schemaRef = dialog.find(SCHEMA_REF);
         if(schemaRef.length > 0){
             schemaRef = schemaRef[0].value;
+            configuredFormModel = schemaRef;
             setElementValue(dialog, DAM_SCHEMA_REF, schemaRef);
             if (schemaType == JSON_SCHEMA) {
                 $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef);

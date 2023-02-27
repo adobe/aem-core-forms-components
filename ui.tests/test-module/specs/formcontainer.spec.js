@@ -95,10 +95,15 @@ describe('Page/Form Authoring', function () {
         //select data model
         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
-        // cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
         cy.get("coral-selectlist-item[value='formdatamodel']").contains('Form Data Model').should('be.visible').click();
-        // cy.get(".cmp-adaptiveform-container__schemaselector").should("be.visible");
+
+        //click save without selecting the fdm model, error should be displayed
+        cy.get(".cq-dialog-submit").click();
+        cy.get(".coral-Form-errorlabel").should("be.visible");
+
+        //select fdm and save it
         cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/portal-unified-storage-form-data-model']").contains('Portal Unified Storage Form Data Model').should('be.visible').click();
         cy.get(".cq-dialog-submit").click();
     };
 
@@ -112,11 +117,11 @@ describe('Page/Form Authoring', function () {
 
         //since data model is already selected it should be disabled
         cy.get(".cmp-adaptiveform-container__selectformmodel").should("have.attr", "disabled");
-        cy.get(".cmp-adaptiveform-container__schemaselector").click();
+        cy.get(".cmp-adaptiveform-container__fdmselector").click();
 
-        // cy.get("coral-selectlist-item[value='abc']").contains('abc').should('be.visible').click();
-        // cy.get("#formModelChange").should("be.visible");
-        // cy.get("#formModelDialogAcceptButton").click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/forms-ootb-usc-workflow-fdm']").contains('Workflow Unified Storage Form Data Model').should('be.visible').click();
+        cy.get("#formModelChange").should("be.visible");
+        cy.get("#formModelDialogAcceptButton").click();
         cy.get(".cq-dialog-submit").click();
     };
 
