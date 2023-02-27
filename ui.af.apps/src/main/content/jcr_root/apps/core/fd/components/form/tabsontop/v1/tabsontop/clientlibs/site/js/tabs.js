@@ -393,6 +393,9 @@
         addChild(childView) {
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
+            if(this.getModel()._children.length===this.children.length){
+                this.#getClosestFieldsInView();
+            }
         }
 
         /**
@@ -415,16 +418,29 @@
             if(childView.getInstanceManager()!=null && (this._templateHTML==null || this._templateHTML[childView.getInstanceManager().getId()]==null)) {
                 var tabId = childView.element.id+"__tab";
                 var tabPanelId = childView.element.id+"__tabpanel";
-                var indexOfRepeatedTabPanel = this.#getTabIndexById(tabId)
                 var instanceManagerId = childView.getInstanceManager().getId();
                 var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
                 var tabPanelToBeRepeated = this.#getTabPanelElementById(tabPanelId);
-                var result = this.#getClosestFields(indexOfRepeatedTabPanel);
                 this._templateHTML[instanceManagerId] = {};
                 this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
                 this._templateHTML[instanceManagerId]['targetTabPanel'] = tabPanelToBeRepeated;
-                this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
-                this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+            }
+        }
+
+        #getClosestFieldsInView(){
+            var tabPanels=this.#getCachedTabPanels();
+            for(let i=0;i<tabPanels.length;i++){
+                var tabPanel=tabPanels[i];
+                var fieldView=this.getChild(tabPanel.id.substring(0,tabPanel.id.lastIndexOf("__")));
+                if(fieldView.getInstanceManager()!=null) {
+                    var instanceManagerId = fieldView.getInstanceManager().getId();
+                    if( this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] ==null &&
+                        this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] ==null){
+                        var result=this.#getClosestFields(i);
+                        this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
+                        this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+                    }
+                }
             }
         }
 
