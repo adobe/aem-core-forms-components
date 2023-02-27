@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
 import Utils from "../utils.js";
 import {Constants} from "../constants.js";
+
 export default class InstanceManager {
+
     constructor(params) {
         this.formContainer = params.formContainer;
         this._model = params.model;
@@ -47,6 +50,7 @@ export default class InstanceManager {
         }
         return addedHtmlElement;
     }
+
     /**
      * Syncs instanceManager model items with HTML
      */
@@ -87,20 +91,22 @@ export default class InstanceManager {
             }
         }
     }
+
     updateTemplate(childView) {
         const repeatableElement = childView.element.parentElement;
         /**
-         //inserting marker
-         let markerElement = document.createElement('div');
-         markerElement.setAttribute("id", this.getId());
-         markerElement.classList.add("form-instance-marker");
-         this.parentElement.insertBefore(markerElement, repeatableElement);
-         this.markerElement = markerElement;
+        //inserting marker
+        let markerElement = document.createElement('div');
+        markerElement.setAttribute("id", this.getId());
+        markerElement.classList.add("form-instance-marker");
+        this.parentElement.insertBefore(markerElement, repeatableElement);
+        this.markerElement = markerElement;
          **/
         //adding template
         this._templateHTML = repeatableElement.cloneNode(true);
         this.#updateTemplateIds(this._templateHTML, childView.getModel(), 'temp_0');
     }
+
     #dispatchModelEvent(event, eventName, payload) {
         const customEvent = new CustomEvent(eventName);
         if (payload) {
@@ -109,6 +115,7 @@ export default class InstanceManager {
         // todo else derive the index and count from event
         this.getModel().dispatch(customEvent);
     }
+
     #addChildInstance(addedModel, beforeElement) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
@@ -116,6 +123,7 @@ export default class InstanceManager {
         }
         return this.handleAddition(addedModel, beforeElement);
     }
+
     #removeChildInstance(removedModel) {
         const removedIndex = removedModel.index;
         const removedChildView = this.children[removedIndex];
@@ -125,27 +133,34 @@ export default class InstanceManager {
         const event = new CustomEvent(Constants.PANEL_INSTANCE_REMOVED, {"detail": removedChildView});
         this.formContainer.getFormElement().dispatchEvent(event);
     }
+
     addInstance(event, payload) {
         this.#dispatchModelEvent(event,"addInstance", payload);
     }
+
     removeInstance(event, payload) {
         this.#dispatchModelEvent(event,"removeInstance", payload);
     }
+
     #registerInstanceHandlers(childView) {
         //doesn't support repeatable panel inside repeatable panel
         Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this.addInstance(event)});
         Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this.removeInstance(event)});
     }
+
     /**
      * Inserts HTML for added instance
-     * @param addedInstanceModel
+     * @param addedInstanceJson
      * @param beforeElement
      * @returns added htmlElement
      */
-    handleAddition(addedInstanceModel, beforeElement) {
-        const instanceIndex = addedInstanceModel.index;
+    handleAddition(addedInstanceJson, beforeElement) {
+        const instanceIndex = addedInstanceJson.index;
         let htmlElement = this._templateHTML.cloneNode(true);
-        this.updateCloneIds(htmlElement, 'temp_0', addedInstanceModel);
+        //get the model from added instance state
+        let addedModel = this.formContainer.getModel(addedInstanceJson.id);
+        this.updateCloneIds(htmlElement, 'temp_0', addedModel);
+
         //no child exist in the view
         if (this.children.length == 0) {
             this.parentElement.append(htmlElement);
@@ -160,6 +175,7 @@ export default class InstanceManager {
         }
         return htmlElement;
     }
+
     /**
      * Removes HTML for removed instance
      * @param removedInstanceView
@@ -172,6 +188,7 @@ export default class InstanceManager {
         //removing just the parent view HTML child instance, to avoid repainting of UI for removal of each child HTML
         removedInstanceView.element.parentElement.remove();
     }
+
     /**
      * Add repeatable instance view
      * @param childView
@@ -191,6 +208,7 @@ export default class InstanceManager {
         }
         this.formContainer.getFormElement().dispatchEvent(event);
     }
+
     /**
      * Adds or remove repeatable children
      * @param prevValue will have removed instances, for removeItem otherwise its null
@@ -205,6 +223,7 @@ export default class InstanceManager {
             this.#addChildInstance(currentValue);
         }
     }
+
     /**
      * Subscribes model for change handler
      */
@@ -221,12 +240,15 @@ export default class InstanceManager {
             })
         });
     }
+
     getId() {
         return this.id;
     }
+
     getModel() {
         return this._model;
     }
+
     setRepeatableParentView(parentView) {
         //adding repeatable parent view
         this.repeatableParentView = parentView;
@@ -234,6 +256,7 @@ export default class InstanceManager {
         // so proceed with syncing instanceManager model items with HTML
         this.#syncInstancesHTML();
     }
+
     getRepeatableParentView() {
         return this.repeatableParentView;
     }

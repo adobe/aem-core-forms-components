@@ -32,8 +32,8 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widgets: `.${CheckBoxGroup.bemBlock}__widgets`,
-            widget: `.${CheckBoxGroup.checkboxBemBlock}__widget`,
-            widgetLabel: `.${CheckBoxGroup.checkboxBemBlock}__label`,
+            widget: `.${CheckBoxGroup.bemBlock}__option__widget`,
+            widgetLabel: `.${CheckBoxGroup.bemBlock}__label`,
             label: `.${CheckBoxGroup.bemBlock}__label`,
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
@@ -101,7 +101,7 @@
             this.widget.forEach(widget => {
                 if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.CHECKED)
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
                 } else {
                     widget.checked = false
@@ -109,6 +109,7 @@
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
+            super.updateEmptyStatus();
         }
 
         updateEnabled(enabled, state) {

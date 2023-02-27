@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe( "Form Runtime with Panel Container", () => {
+describe( "Form Runtime with Panel Container - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
     const bemBlock = 'cmp-container';
@@ -49,21 +49,32 @@ describe( "Form Runtime with Panel Container", () => {
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    const checkInstance = (instancesModel, index) => {
+    const checkInstance = (instancesModel,formContainer,index) => {
+        const allFields = formContainer.getAllFields();
         const modelId = instancesModel[index].id;
+        const parentView=allFields[instancesModel[index].id];
         const textInputId = instancesModel[index].items[0].id;
+        const textInputView = allFields[instancesModel[index].items[0].id];
         const numberInputId = instancesModel[index].items[1].id;
+        const numberInputView = allFields[instancesModel[index].items[1].id];
+        const parentLabelClass = parentView.getLabel().className;
+        const parentTooltipClass = parentView.getTooltipDiv().className;
+        const parentDescriptionClass = parentView.getDescription().className;
+        const textInputLabelClass = textInputView.getLabel().className;
+        const textInputErrorClass = textInputView.getErrorDiv().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
         cy.get(`#${modelId}`).should('exist');
-        cy.get(`#${modelId}-label`).should('exist');
-        cy.get(`#${modelId}-label`).invoke('attr', 'for').should('eq', modelId);
-        cy.get(`#${modelId}-shortDescription`).should('exist');
-        cy.get(`#${modelId}-longDescription`).should('exist');
-        cy.get(`#${textInputId}-label`).should('exist');
-        cy.get(`#${textInputId}-label`).invoke('attr', 'for').should('eq', textInputId);
-        cy.get(`#${textInputId}-errorMessage`).should('exist');
-        cy.get(`#${numberInputId}-label`).should('exist');
-        cy.get(`#${numberInputId}-label`).invoke('attr', 'for').should('eq', numberInputId);
-        return cy.get(`#${numberInputId}-errorMessage`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
+        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
     };
 
     const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
@@ -179,11 +190,11 @@ describe( "Form Runtime with Panel Container", () => {
         const instanceManagerView = allFields[instancManagerModel.id];
         const instancesView = instanceManagerView.children;
 
-        checkInstance(instancesModel, 0).then(() => {
+        checkInstance(instancesModel,formContainer, 0).then(() => {
             // check for all four instances in HTML as per min occur
-            checkInstance(instancesModel, 1).then(() => {
-                checkInstance(instancesModel, 2).then(() => {
-                    checkInstance(instancesModel, 3).then(() => {
+            checkInstance(instancesModel,formContainer, 1).then(() => {
+                checkInstance(instancesModel,formContainer, 2).then(() => {
+                    checkInstance(instancesModel,formContainer, 3).then(() => {
                         for (let i = 0; i < instancesModel.length; i++) {
                             const modelId = instancesModel[i].id;
                             const textInputId = instancesModel[i].items[0].id;
@@ -268,7 +279,75 @@ describe( "Form Runtime with Panel Container", () => {
             .type("c").blur().then(() => {
             cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr', 'readonly');
             cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
-        })
-
+        });
     });
 })
+
+describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
+    const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/repeatability-tests/basic.html";
+    let formContainer = null;
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const zip = (a, b) => a.map((k, i) => [k, b[i]]); // same as python's zip function
+
+    // List of IDs that need to be ignored during duplicate test
+    const exceptionIDsList  = ["emptyValue"] // dropdown has a hardcoded id="emptyValue" in all of its first <option> instances
+    //accordion components needs to be added once repeatability is implemented in them
+    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormTelephoneInput", "adaptiveFormText", "adaptiveFormImage", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTabs", "adaptiveFormButton","adaptiveFormWizard"];
+    //const components = ["adaptiveFormButton"]
+    const repeatabilityCount = 2;
+
+    const checkNonDuplicateIDs = (root, instance) => {
+        if(root?.id !== '' && !(exceptionIDsList.includes(root.id))) {
+            expect(root?.id).to.not.equal(instance?.id, `Ids generated should be different`) // redundant but good for debugging as this will show up in the UI
+            return root?.id !== instance?.id;
+        }
+        return true;
+    };
+
+    const testNonDuplicateIDs = (root, instance) => {
+        expect(root?.children.length).to.equal(instance?.children.length, `The number of children for this component must be the same as the repeated instance`) // redundant but will make debugging easier later on
+        if (root?.children.length !== instance?.children.length)
+            return false;
+
+        if(!checkNonDuplicateIDs(root, instance))
+            return false;
+
+        for(let [rootChild, instanceChild] of zip([...root.children], [...instance.children])) {
+            if(!checkNonDuplicateIDs(rootChild, instanceChild))
+                return false;
+
+            // Check for nested elements
+            if(rootChild.children.length > 0 && instanceChild.children.length > 0) {
+                for (let [rootGrandchild, instanceGrandChild] of zip([...rootChild.children], [...instanceChild.children]))
+                    if(!testNonDuplicateIDs(rootGrandchild, instanceGrandChild))
+                        return false;
+            }
+        }
+        return true;
+    };
+
+    const numberOfComponentsUsed = (component) => {
+        if(component === "adaptiveFormButton")
+            return 5;
+        return 1;
+    };
+
+    components.forEach((coreComponent) => {
+        it(`Check if ${coreComponent}'s repeated instances have non duplicate IDs`,() => {
+            // Check duplicate IDs
+            cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
+                instances = [...instances]; // Convert into normal Array to use things like .forEach()
+                expect(instances.length).to.equal(repeatabilityCount * numberOfComponentsUsed(coreComponent), `Repeatability check for ${coreComponent}`); // Repeatability check
+                const root = instances[0]; // main component
+
+                // Compare IDs of main component with all its repeated instances
+                instances.slice(1).forEach((instance) => expect(testNonDuplicateIDs(root, instance), `${coreComponent} repeated instance IDs must not match`).to.be.true);
+            });
+        });
+    });
+});

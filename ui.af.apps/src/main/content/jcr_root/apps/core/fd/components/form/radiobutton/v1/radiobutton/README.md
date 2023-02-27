@@ -77,6 +77,7 @@ The following attributes must be added for the initialization of the radio-butto
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:
 
+* Check Box Group
 * Drop down
 
 

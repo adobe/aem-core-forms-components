@@ -87,23 +87,23 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
-        // todo: flaky
-        it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
+        it('verify Navigation Working between tabs in Authoring', function(){
             dropWizardInContainer();
             addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
             addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
             cy.invokeEditableAction(editDialogNavigationPanelSelector);
-            cy.wait(2000);
-            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-            cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
-            cy.get('body').click( 0,0);
-            cy.get('div'+numberInputDataPath).should('not.be.visible');
-            cy.invokeEditableAction(editDialogNavigationPanelSelector);
-            cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
-            cy.get('body').click( 0,0);
-            cy.get('div'+textInputDataPath).should('not.be.visible');
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
+            cy.wait(2000).then(() => {
+                cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
+                cy.get('body').click( 0,0);
+                cy.get('div'+numberInputDataPath).should('not.be.visible');
+                cy.invokeEditableAction(editDialogNavigationPanelSelector);
+                cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
+                cy.get('body').click( 0,0);
+                cy.get('div'+textInputDataPath).should('not.be.visible');
+                cy.deleteComponentByPath(wizardLayoutDrop);
+            });
         });
     })
 
