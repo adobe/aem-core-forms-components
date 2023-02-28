@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-(function() {
+(function () {
 
     var keyCodes = {
         END: 35,
@@ -28,9 +28,14 @@
 
     class Wizard extends FormView.FormPanel {
 
+        #_templateHTML = {};
+        #_active;
+
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormWizard";
         static bemBlock = "cmp-adaptiveform-wizard";
+        static #tabIdSuffix = "_wizard-item-nav";
+        static #wizardPanelIdSuffix = "__wizardpanel";
 
         static selectors = {
             self: "[data-" + Wizard.NS + '-is="' + Wizard.IS + '"]',
@@ -44,16 +49,17 @@
             widget: `.${Wizard.bemBlock}__widget`,
             tooltipDiv: `.${Wizard.bemBlock}__shortdescription`,
             previousButton: `.${Wizard.bemBlock}__previousNav`,
-            nextButton: `.${Wizard.bemBlock}__nextNav`
+            nextButton: `.${Wizard.bemBlock}__nextNav`,
+            olTabList: `.${Wizard.bemBlock}__tabList`
         };
 
         constructor(params) {
             super(params);
             const {element} = params;
             this.#cacheElements(element);
-            this.#cacheWizardPanelElementIds();
-            this.#setActive(this._elements["tab"])
-            this._active = this.getActiveIndex(this._elements["tab"]);
+
+            this.#setActive(this.#getCachedTabs())
+            this.#_active = this.#getActiveIndex(this.#getCachedTabs());
             this.#refreshActive();
             this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
@@ -65,7 +71,7 @@
                  */
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
-                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
+                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-adaptiveform-wizard" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
                             _self.#navigate(message.data.index);
@@ -88,7 +94,7 @@
 
             for (var i = 0; i < hooks.length; i++) {
                 var hook = hooks[i];
-                if (hook.closest("[data-cmp-is="+Wizard.IS+"]") === this._elements.self) { // only process own tab elements
+                if (hook.closest("[data-cmp-is=" + Wizard.IS + "]") === this._elements.self) { // only process own tab elements
                     var key = hook.dataset[Wizard.NS + "Hook" + "Adaptiveformwizard"];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
@@ -97,25 +103,8 @@
                         }
                         this._elements[key].push(hook);
                     } else {
-                        this._elements[key] = hook;
+                        this._elements[key] = [hook];
                     }
-                }
-            }
-        }
-
-        #cacheWizardPanelElementIds() {
-            var wizardpanels = this._elements["wizardpanel"];
-            this._elements["wizardPanelElementId"]={};
-            if (wizardpanels) {
-                if (Array.isArray(wizardpanels)) {
-                    for (var i = 0; i < wizardpanels.length; i++) {
-                        this._elements["wizardPanelElementId"][i] = wizardpanels[i].querySelectorAll(
-                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                    }
-                } else {
-                    // only one tab
-                    this._elements["wizardPanelElementId"][0] = wizardpanels.querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
                 }
             }
         }
@@ -160,6 +149,10 @@
             return this.element.querySelector(Wizard.selectors.nextButton);
         }
 
+        #getTabListElement() {
+            return this.element.querySelector(Wizard.selectors.olTabList)
+        }
+
 
         /**
          * Binds navigation buttons event handling
@@ -168,10 +161,10 @@
          */
         #bindEvents() {
             var _self = this;
-            this.getNextButtonDiv().addEventListener("click", function (event){
+            this.getNextButtonDiv().addEventListener("click", function (event) {
                 _self.#navigateToNextTab();
             })
-            this.getPreviousButtonDiv().addEventListener("click", function (event){
+            this.getPreviousButtonDiv().addEventListener("click", function (event) {
                 _self.#navigateToPreviousTab();
             })
 
@@ -184,7 +177,7 @@
          * @param {Array} tabs Tab elements
          * @returns {Number} Index of the active tab, 0 if none is active
          */
-        getActiveIndex(tabs) {
+        #getActiveIndex(tabs) {
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     if (tabs[i].classList.contains(Wizard.selectors.active.tab)) {
@@ -198,11 +191,7 @@
 
         #setActive(tabs) {
             if (tabs) {
-                if (Array.isArray(tabs)){
-                    tabs[0].classList.add(Wizard.selectors.active.tab);
-                }else{
-                    tabs.classList.add(Wizard.selectors.active.tab);
-                }
+                tabs[0].classList.add(Wizard.selectors.active.tab);
             }
         }
 
@@ -213,9 +202,9 @@
          * @param {Object} event The keydown event
          */
         #onKeyDown(event) {
-            var index = this._active;
+            var index = this.#_active;
 
-            var lastIndex = this._elements["tab"].length - 1;
+            var lastIndex = this.#getCachedTabs().length - 1;
 
             switch (event.keyCode) {
                 case keyCodes.ARROW_LEFT:
@@ -251,30 +240,23 @@
          * @private
          */
         #refreshActive() {
-            var wizardPanels = this._elements["wizardpanel"];
-            var tabs = this._elements["tab"];
-
+            var wizardPanels = this.#getCachedWizardPanels();
+            var tabs = this.#getCachedTabs();
             if (wizardPanels) {
-                if (Array.isArray(wizardPanels)) {
-                    for (var i = 0; i < wizardPanels.length; i++) {
-                        if (i === parseInt(this._active)) {
-                            wizardPanels[i].classList.add(Wizard.selectors.active.wizardpanel);
-                            wizardPanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
-                            tabs[i].classList.add(Wizard.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
-                        } else {
-                            wizardPanels[i].classList.remove(Wizard.selectors.active.wizardpanel);
-                            wizardPanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
-                            tabs[i].classList.remove(Wizard.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
-                        }
+                for (var i = 0; i < wizardPanels.length; i++) {
+                    if (i === parseInt(this.#_active)) {
+                        wizardPanels[i].classList.add(Wizard.selectors.active.wizardpanel);
+                        wizardPanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
+                        tabs[i].classList.add(Wizard.selectors.active.tab);
+                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
+                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
+                    } else {
+                        wizardPanels[i].classList.remove(Wizard.selectors.active.wizardpanel);
+                        wizardPanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
+                        tabs[i].classList.remove(Wizard.selectors.active.tab);
+                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
+                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
                     }
-                } else {
-                    // only one tab
-                    wizardPanels.classList.add(Wizard.selectors.active.wizardpanel);
-                    tabs.classList.add(Wizard.selectors.active.tab);
                 }
             }
         }
@@ -293,25 +275,25 @@
 
 
         #navigateToNextTab() {
-            var activeIndex=this._active;
-            var tabs=this._elements["tab"];
+            var activeIndex = this.#_active;
+            var tabs = this.#getCachedTabs();
             if (tabs) {
                 if (Array.isArray(tabs)) {
-                    var totalTabs=tabs.length;
-                    if(activeIndex<totalTabs-1){
-                        this.#navigateAndFocusTab(activeIndex+1);
+                    var totalTabs = tabs.length;
+                    if (activeIndex < totalTabs - 1) {
+                        this.#navigateAndFocusTab(activeIndex + 1);
                     }
                 }
             }
         }
 
         #navigateToPreviousTab() {
-            var activeIndex=this._active;
-            var tabs=this._elements["tab"];
+            var activeIndex = this.#_active;
+            var tabs = this.#getCachedTabs();
             if (tabs) {
                 if (Array.isArray(tabs)) {
-                    if(activeIndex>0){
-                        this.#navigateAndFocusTab(activeIndex-1);
+                    if (activeIndex > 0) {
+                        this.#navigateAndFocusTab(activeIndex - 1);
                     }
                 }
             }
@@ -325,7 +307,7 @@
          * @param {Number} index The index of the tab to navigate to
          */
         #navigate(index) {
-            this._active = index;
+            this.#_active = index;
             this.#refreshActive();
         }
 
@@ -337,35 +319,30 @@
          */
         #navigateAndFocusTab(index) {
             this.#navigate(index);
-            this.focusWithoutScroll(this._elements["tab"][index]);
+            this.focusWithoutScroll(this.#getCachedTabs()[index]);
         }
 
-        #syncWizardNavLabels(){
-            var tabs = this._elements["tab"];
+        #syncWizardNavLabels() {
+            var tabs = this.#getCachedTabs();
+            var wizardPanels = this.#getCachedWizardPanels();
             if (tabs) {
-                if(Array.isArray(tabs)) {
-                    for (var i = 0; i < tabs.length; i++) {
-                        tabs[i].id = this._elements["wizardPanelElementId"][i] + "_wizard-item-nav";
-                        tabs[i].setAttribute("aria-controls", this._elements["wizardPanelElementId"][i] + "__wizardpanel");
-                    }
-                }else{
-                    tabs.id = this._elements["wizardPanelElementId"][0] + "_wizard-item-nav";
-                    tabs.setAttribute("aria-controls", this._elements["wizardPanelElementId"][0] + "__wizardpanel");
+                for (var i = 0; i < tabs.length; i++) {
+                    var id = wizardPanels[i].querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    tabs[i].id = id + Wizard.#tabIdSuffix;
+                    tabs[i].setAttribute("aria-controls", id + Wizard.#wizardPanelIdSuffix);
                 }
             }
         }
 
-        #syncWizardPanels(){
-            var wizardPanels = this._elements["wizardpanel"];
-            if(wizardPanels) {
-                if(Array.isArray(wizardPanels)) {
-                    for (var i = 0; i < wizardPanels.length; i++) {
-                        wizardPanels[i].id = this._elements["wizardPanelElementId"][i] + "__wizardpanel";
-                        wizardPanels[i].setAttribute("aria-labelledby", this._elements["wizardPanelElementId"][i] + "_wizard-item-nav");
-                    }
-                }else{
-                    wizardPanels.id = this._elements["wizardPanelElementId"][0] + "__wizardpanel";
-                    wizardPanels.setAttribute("aria-labelledby", this._elements["wizardPanelElementId"][0] + "_wizard-item-nav");
+        #syncWizardPanels() {
+            var wizardPanels = this.#getCachedWizardPanels();
+            if (wizardPanels) {
+                for (var i = 0; i < wizardPanels.length; i++) {
+                    var id = wizardPanels[i].querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    wizardPanels[i].id = id + Wizard.#wizardPanelIdSuffix;
+                    wizardPanels[i].setAttribute("aria-labelledby", id + Wizard.#tabIdSuffix);
                 }
             }
         }
@@ -374,6 +351,213 @@
             super.syncMarkupWithModel();
             this.#syncWizardNavLabels();
             this.#syncWizardPanels();
+        }
+
+        handleChildAddition(childView) {
+            if (childView.getInstanceManager() != null && this.#_templateHTML[childView.getInstanceManager().getId()] != null) {
+                var navigationTabToBeRepeated = this.#_templateHTML[childView.getInstanceManager().getId()]['navigationTab']
+                    .cloneNode(true);
+                navigationTabToBeRepeated.id = childView.id + Wizard.#tabIdSuffix;
+                navigationTabToBeRepeated.setAttribute("aria-controls", childView.id + Wizard.#wizardPanelIdSuffix);
+                var instanceIndex = childView.getModel().index;
+                var instanceManagerId = childView.getInstanceManager().getId()
+                if (instanceIndex == 0) {
+                    var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                    var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
+                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                    if (indexToInsert == 0) {
+                        var tabListParentElement = this.#getTabListElement();
+                        tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
+                    } else {
+                        var beforeElement = this.#getCachedTabs()[indexToInsert - 1];
+                        beforeElement.after(navigationTabToBeRepeated);
+                    }
+                } else {
+                    var beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + Wizard.#tabIdSuffix
+                    var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
+                    beforeElement.after(navigationTabToBeRepeated);
+                }
+                this.#cacheElements(this._elements.self);
+                var repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
+                repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
+                this.#refreshActive();
+                this.#getTabIndexById()
+                this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
+            }
+        }
+
+        handleChildRemoval(removedInstanceView) {
+            var removedTabPanelId = removedInstanceView.element.id + Wizard.#wizardPanelIdSuffix;
+            var removedTabNavId = removedTabPanelId.substring(0, removedTabPanelId.lastIndexOf("__")) + Wizard.#tabIdSuffix;
+            var wizardPanelElement = this.#getWizardPanelElementById(removedTabPanelId);
+            var tabNavElement = this.#getTabNavElementById(removedTabNavId);
+            tabNavElement.remove();
+            wizardPanelElement.remove();
+            this.children.splice(this.children.indexOf(removedInstanceView), 1);
+            this.#cacheElements(this._elements.self);
+            this.#_active = this.#getActiveIndex(this.#getCachedTabs());
+            this.#refreshActive();
+        }
+
+        addChild(childView) {
+            super.addChild(childView);
+            this.#cacheTemplateHTML(childView);
+            //when all children are available in view
+            if (this.getModel()._children.length === this.children.length) {
+                this.#getClosestFieldsInView();
+            }
+        }
+
+        /**
+         * Adds unique HTML for added instance corresponding to requirements of different types of repeatableParent
+         * @param instanceManager of the repeated component
+         * @param addedModel of the repeated component
+         * @param htmlElement of the repeated component
+         */
+        addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
+            let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
+            let beforeViewElement = result.beforeViewElement;
+            let elementToEnclose = result.elementToEnclose;
+            elementToEnclose.id = addedModel.id + result.idSuffix;
+            beforeViewElement.after(elementToEnclose);
+            elementToEnclose.append(htmlElement.querySelector('#' + addedModel.id));
+        }
+
+        #cacheTemplateHTML(childView) {
+            if (childView.getInstanceManager() != null && (this.#_templateHTML == null || this.#_templateHTML[childView.getInstanceManager().getId()] == null)) {
+                var tabId = childView.element.id + Wizard.#tabIdSuffix;
+                var wizardPanelId = childView.element.id + Wizard.#wizardPanelIdSuffix;
+                var instanceManagerId = childView.getInstanceManager().getId();
+                var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
+                var wizardPanelToBeRepeated = this.#getWizardPanelElementById(wizardPanelId)
+                this.#_templateHTML[instanceManagerId] = {};
+                this.#_templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
+                this.#_templateHTML[instanceManagerId]['targetWizardPanel'] = wizardPanelToBeRepeated;
+            }
+        }
+
+        #getClosestFieldsInView() {
+            var wizardPanels = this.#getCachedWizardPanels();
+            for (let i = 0; i < wizardPanels.length; i++) {
+                var wizardPanel = wizardPanels[i];
+                var fieldView = this.getChild(wizardPanel.id.substring(0, wizardPanel.id.lastIndexOf("__")));
+                if (fieldView.getInstanceManager() != null) {
+                    var instanceManagerId = fieldView.getInstanceManager().getId();
+                    if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] == null) {
+                        var result = this.#getClosestFields(i);
+                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+                    }
+                }
+            }
+        }
+
+        #getCachedTabs() {
+            return this._elements["tab"];
+        }
+
+        #getCachedWizardPanels() {
+            return this._elements["wizardpanel"]
+        }
+
+        #getTabNavElementById(tabId) {
+            var tabs = this.#getCachedTabs();
+            if (tabs) {
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].id === tabId) {
+                        return tabs[i];
+                    }
+                }
+            }
+        }
+
+        #getWizardPanelElementById(wizardPanelId) {
+            var wizardPanels = this.#getCachedWizardPanels();
+            if (wizardPanels) {
+                for (var i = 0; i < wizardPanels.length; i++) {
+                    if (wizardPanels[i].id === wizardPanelId) {
+                        return wizardPanels[i];
+                    }
+                }
+            }
+        }
+
+        #getTabIndexById(tabId) {
+            var tabs = this.#getCachedTabs();
+            if (tabs) {
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].id === tabId) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        #getClosestFields(index) {
+            var allWizardPanels = this.#getCachedWizardPanels();
+            var result = {};
+            for (let i = 0; i < index; i++) {
+                var fieldId = allWizardPanels[i].id.substring(0, allWizardPanels[i].id.lastIndexOf("__"));
+                var fieldView = this.getChild(fieldId);
+                if (fieldView.getInstanceManager() == null) {
+                    result["closestNonRepeatableFieldId"] = fieldId;
+                } else {
+                    result["closestRepeatableFieldInstanceManagerId"] = fieldView.getInstanceManager().getId();
+                }
+            }
+            return result;
+        }
+
+        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId) {
+            var wizardPanels = this.#getCachedWizardPanels();
+            var closestNonRepeatableFieldFound = (closestNonRepeatableFieldId == null) ? true : false;
+            var closestRepeatableFieldFound = (closestRepeatableFieldInstanceManagerId == null) ? true : false;
+            var resultIndex = -1;
+            if (wizardPanels) {
+                for (let i = 0; i < wizardPanels.length; i++) {
+                    var currentFieldId = wizardPanels[i].id.substring(0, wizardPanels[i].id.lastIndexOf("__"));
+                    if (closestNonRepeatableFieldId === currentFieldId) {
+                        resultIndex = i;
+                        closestNonRepeatableFieldFound = true;
+                    } else {
+                        var fieldView = this.getChild(currentFieldId);
+                        if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getId() === closestRepeatableFieldInstanceManagerId) {
+                            resultIndex = i;
+                            closestRepeatableFieldFound = true;
+                            continue;
+                        }
+                    }
+                    if (closestNonRepeatableFieldFound && closestRepeatableFieldFound) {
+                        break;
+                    }
+                }
+            }
+            return resultIndex + 1;
+        }
+
+        #getBeforeViewElement(instanceManager, instanceIndex) {
+            var result = {};
+            var instanceManagerId = instanceManager.getId();
+            if (instanceIndex == 0) {
+                var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
+                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                var wizardPanels = this.#getCachedWizardPanels();
+                if (indexToInsert > 0) {
+                    result.beforeViewElement = this.#getWizardPanelElementById(wizardPanels[indexToInsert - 1].id);
+                } else {
+                    result.beforeViewElement = this.getPreviousButtonDiv();
+                }
+            } else {
+                var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
+                var previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
+                result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
+            }
+            result.elementToEnclose = this.#_templateHTML[instanceManagerId]['targetWizardPanel'].cloneNode(false);
+            result.idSuffix = Wizard.#wizardPanelIdSuffix;
+            return result;
         }
     }
 
