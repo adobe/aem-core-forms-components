@@ -64,7 +64,7 @@ describe("Form with TabsOnTop Container", () => {
             cy.get("button").contains("+R1").click().then(() => {
                 const maxOccurAllowed = 4;
                 const initialNoOfTabs = 4;
-                const length = i < maxOccurAllowed - 1 ? initialNoOfTabs + (i + 1) : 7;   // panel is allowed max occurence of 4
+                const length = i < maxOccurAllowed - 1 ? initialNoOfTabs + (i + 1) : initialNoOfTabs + maxOccurAllowed - 1;   // panel is allowed max occurence of 4
                 getTabs().should('have.length', length);
                 getTabPanels().should('have.length', length);
             })
