@@ -134,7 +134,7 @@ describe.only('Page - Authoring', function () {
         });
     });
 
-  })
+  });
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/panelcontainer",
