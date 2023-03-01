@@ -90,8 +90,6 @@ describe.only('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(tabsPath);
     });
 
     it('insert Tabs on top in form container', function () {
@@ -101,36 +99,42 @@ describe.only('Page - Authoring', function () {
 
       // todo: flaky
     it('drop element in tabs on top', { retries: 3 }, function () {
-        dropTabsInContainer();
-        dropTextInputInTabComponent();
-        cy.get(`[data-path="${tabsPath}"] [data-path="${tabsPath}/textinput"]`).should('be.visible');
-        cy.deleteComponentByPath(tabsPath);
+        cy.cleanTest(tabsPath).then(function(){
+            dropTabsInContainer();
+            dropTextInputInTabComponent();
+            cy.get(`[data-path="${tabsPath}"] [data-path="${tabsPath}/textinput"]`).should('be.visible');
+            cy.deleteComponentByPath(tabsPath);
+        });
     });
 
     // todo: flaky
     it('switch tabs using dialog select panel button in toolbar', { retries: 3 }, function(){
-      dropTabsInContainer();
-      //Add 2 children in tabs on top component
-      dropTextInputInTabComponent();
-      dropDatePickerInTabComponent();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
-      cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-      cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-      const datePickerPath = tabsPath+"/datepicker";
-      cy.get(`[data-id="${datePickerPath}`).click();
-      cy.get('body').click( 0,0);
-      cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-      //Click datepicker from panel select list
-      cy.get(`[data-id="${datePickerPath}`).click();
-      cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
-      cy.deleteComponentByPath(tabsPath);
+        cy.cleanTest(tabsPath).then(function() {
+            dropTabsInContainer();
+            //Add 2 children in tabs on top component
+            dropTextInputInTabComponent();
+            dropDatePickerInTabComponent();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
+            cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+            const datePickerPath = tabsPath + "/datepicker";
+            cy.get(`[data-id="${datePickerPath}`).click();
+            cy.get('body').click(0, 0);
+            cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+            //Click datepicker from panel select list
+            cy.get(`[data-id="${datePickerPath}`).click();
+            cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
+            cy.deleteComponentByPath(tabsPath);
+        });
     });
 
     it ('open edit dialog of Tab on top',{ retries: 3 }, function(){
-      testPanelBehaviour(tabsContainerPathSelector, tabsPath);
+        cy.cleanTest(tabsPath).then(function() {
+            testPanelBehaviour(tabsContainerPathSelector, tabsPath);
+        });
     });
 
-  })
+  });
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/panelcontainer",
@@ -140,8 +144,6 @@ describe.only('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(panelContainerEditPath);
     });
 
     it('insert tabs on top of form', function () {
@@ -150,7 +152,9 @@ describe.only('Page - Authoring', function () {
     });
 
     it('open edit dialog of tabs on top of form', { retries: 3 }, function() {
-      testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+        cy.cleanTest(panelContainerEditPath).then(function(){
+            testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+        });
     });
 
   });
