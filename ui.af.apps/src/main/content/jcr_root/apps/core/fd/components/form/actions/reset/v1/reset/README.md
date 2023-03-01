@@ -67,10 +67,8 @@ We support replace feature that allows replacing Reset Button component to any o
 * Number Input
 * Submit Button
 * Telephone Input
-* Text
 * Text Box
 * Text Input
-* Title
 
 ## Information
 * **Vendor**: Adobe

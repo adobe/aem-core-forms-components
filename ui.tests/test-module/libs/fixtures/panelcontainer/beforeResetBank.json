@@ -1,0 +1,49 @@
+{
+  "Offer": {
+    "type": "1 Check",
+    "amount": "101"
+  },
+  "PersonalLoan": {
+    "witness": [{
+      "firstName": "w1",
+      "lastName": "w11",
+      "education": [{
+        "sessionEncryptedValue": "ssn",
+        "grade": "B",
+        "degree": "phd",
+        "fieldOfStudy": "science",
+        "instituteName": "dce"
+      }, {
+        "sessionEncryptedValue": "ss2",
+        "grade": "A",
+        "degree": "b.tech",
+        "fieldOfStudy": "computer"
+      }, {
+        "instituteName": "DU"
+      }],
+      "gender": "Female"
+    }, {
+      "firstName": "w2",
+      "lastName": "w22",
+      "education": [{
+        "sessionEncryptedValue": "ss3",
+        "grade": "C",
+        "degree": "PGCCL",
+        "fieldOfStudy": "Law"
+      }, {
+        "sessionEncryptedValue": "ss5",
+        "grade": "A+",
+        "degree": "ME",
+        "fieldOfStudy": "CA"
+      }],
+      "gender": "Male"
+    }, {
+      "firstName": "w3",
+      "lastName": "w33",
+      "education": [{
+        "instituteName": "DU"
+      }, {}],
+      "gender": "Female"
+    }]
+  }
+}
