@@ -14,7 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 
-export default {
+const esModules = ['@adobe/json-formula'].join('|');
+
+module.exports = {
+    transformIgnorePatterns: [`node_modules/(?!${esModules})`],
+    transform: {
+        '^.+\\.(js|jsx)$': 'babel-jest'
+    },
     "moduleFileExtensions": [
         "js"
     ],
@@ -23,6 +29,5 @@ export default {
         "src",
         "__tests__/mocks"
     ],
-    transform: {},
     "testEnvironment": "jsdom"
-}
+};

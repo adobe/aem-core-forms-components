@@ -26,7 +26,8 @@ export default class FormFieldBase extends FormField {
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
         this.qm = this.getQuestionMarkDiv();
-        this.tooltip = this.getTooltipDiv()
+        this.tooltip = this.getTooltipDiv();
+        this.updateEmptyStatus();
     }
 
     /**
@@ -84,6 +85,17 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this.applyState(state);
+    }
+
+    #syncLabel() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        if (labelElement) {
+            labelElement.setAttribute('for', this.getId());
+        }
+    }
+
+    syncMarkupWithModel() {
+       this.#syncLabel()
     }
 
     /**
@@ -224,6 +236,31 @@ export default class FormFieldBase extends FormField {
         let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
             this.widget.value = widgetValue;
+            this.updateEmptyStatus();
+        }
+    }
+
+    /**
+     * updates the html class based on the existence of a value in a field
+     */
+    updateEmptyStatus() {
+        if(!this.getWidget())
+            return;
+
+        const updateModifierClass = (widget, newValue) => {
+            const widgetBemClass = widget.className.split(/\s+/).filter(bemClass => bemClass.endsWith("__widget"))[0];
+            const filledModifierClass = `${widgetBemClass}--filled`;
+            const emptyModifierClass = `${widgetBemClass}--empty`;
+
+            widget.classList.add(newValue ? filledModifierClass : emptyModifierClass);
+            widget.classList.remove(newValue ? emptyModifierClass : filledModifierClass);
+        };
+
+        // radiobutton, checkbox, datefield(AFv1, not datepicker), etc. have multiple widgets in the form of a NodeList
+        if(this.widget instanceof NodeList) {
+            this.widget.forEach((widget) => updateModifierClass(widget, (widget.type === "radio" || widget.type === "checkbox") ? widget.checked : widget.value))
+        } else {
+            updateModifierClass(this.widget, this.widget.value)
         }
     }
 

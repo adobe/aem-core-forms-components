@@ -51,6 +51,7 @@
             super(params);
             const {element} = params;
             this.#cacheElements(element);
+            this.#cacheWizardPanelElementIds();
             this.#setActive(this._elements["tab"])
             this._active = this.getActiveIndex(this._elements["tab"]);
             this.#refreshActive();
@@ -98,6 +99,23 @@
                     } else {
                         this._elements[key] = hook;
                     }
+                }
+            }
+        }
+
+        #cacheWizardPanelElementIds() {
+            var wizardpanels = this._elements["wizardpanel"];
+            this._elements["wizardPanelElementId"]={};
+            if (wizardpanels) {
+                if (Array.isArray(wizardpanels)) {
+                    for (var i = 0; i < wizardpanels.length; i++) {
+                        this._elements["wizardPanelElementId"][i] = wizardpanels[i].querySelectorAll(
+                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    }
+                } else {
+                    // only one tab
+                    this._elements["wizardPanelElementId"][0] = wizardpanels.querySelectorAll(
+                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
                 }
             }
         }
@@ -320,6 +338,42 @@
         #navigateAndFocusTab(index) {
             this.#navigate(index);
             this.focusWithoutScroll(this._elements["tab"][index]);
+        }
+
+        #syncWizardNavLabels(){
+            var tabs = this._elements["tab"];
+            if (tabs) {
+                if(Array.isArray(tabs)) {
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].id = this._elements["wizardPanelElementId"][i] + "_wizard-item-nav";
+                        tabs[i].setAttribute("aria-controls", this._elements["wizardPanelElementId"][i] + "__wizardpanel");
+                    }
+                }else{
+                    tabs.id = this._elements["wizardPanelElementId"][0] + "_wizard-item-nav";
+                    tabs.setAttribute("aria-controls", this._elements["wizardPanelElementId"][0] + "__wizardpanel");
+                }
+            }
+        }
+
+        #syncWizardPanels(){
+            var wizardPanels = this._elements["wizardpanel"];
+            if(wizardPanels) {
+                if(Array.isArray(wizardPanels)) {
+                    for (var i = 0; i < wizardPanels.length; i++) {
+                        wizardPanels[i].id = this._elements["wizardPanelElementId"][i] + "__wizardpanel";
+                        wizardPanels[i].setAttribute("aria-labelledby", this._elements["wizardPanelElementId"][i] + "_wizard-item-nav");
+                    }
+                }else{
+                    wizardPanels.id = this._elements["wizardPanelElementId"][0] + "__wizardpanel";
+                    wizardPanels.setAttribute("aria-labelledby", this._elements["wizardPanelElementId"][0] + "_wizard-item-nav");
+                }
+            }
+        }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.#syncWizardNavLabels();
+            this.#syncWizardPanels();
         }
     }
 
