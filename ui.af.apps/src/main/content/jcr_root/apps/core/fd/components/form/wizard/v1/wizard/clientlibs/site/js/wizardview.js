@@ -363,8 +363,8 @@
                 var instanceManagerId = childView.getInstanceManager().getId()
                 if (instanceIndex == 0) {
                     var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                    var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
-                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                    var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                     if (indexToInsert == 0) {
                         var tabListParentElement = this.#getTabListElement();
                         tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
@@ -441,13 +441,13 @@
             for (let i = 0; i < wizardPanels.length; i++) {
                 var wizardPanel = wizardPanels[i];
                 var fieldView = this.getChild(wizardPanel.id.substring(0, wizardPanel.id.lastIndexOf("__")));
-                if (fieldView.getInstanceManager() != null) {
+                if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
                     var instanceManagerId = fieldView.getInstanceManager().getId();
                     if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] == null) {
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
                         var result = this.#getClosestFields(i);
                         this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result.closestRepeatableFieldInstanceManagerIds;
                     }
                 }
             }
@@ -498,43 +498,43 @@
         #getClosestFields(index) {
             var allWizardPanels = this.#getCachedWizardPanels();
             var result = {};
-            for (let i = 0; i < index; i++) {
+            result["closestRepeatableFieldInstanceManagerIds"] = [];
+            for (let i = index - 1; i >= 0; i--) {
                 var fieldId = allWizardPanels[i].id.substring(0, allWizardPanels[i].id.lastIndexOf("__"));
                 var fieldView = this.getChild(fieldId);
                 if (fieldView.getInstanceManager() == null) {
                     result["closestNonRepeatableFieldId"] = fieldId;
+                    break;
                 } else {
-                    result["closestRepeatableFieldInstanceManagerId"] = fieldView.getInstanceManager().getId();
+                    result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
+                    if (fieldView.getInstanceManager().getModel().minOccur != 0) {
+                        break;
+                    }
                 }
             }
             return result;
         }
 
-        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId) {
+        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
             var wizardPanels = this.#getCachedWizardPanels();
-            var closestNonRepeatableFieldFound = (closestNonRepeatableFieldId == null) ? true : false;
-            var closestRepeatableFieldFound = (closestRepeatableFieldInstanceManagerId == null) ? true : false;
             var resultIndex = -1;
             if (wizardPanels) {
-                for (let i = 0; i < wizardPanels.length; i++) {
+                for (let i = wizardPanels.length - 1; i >= 0; i--) {
                     var currentFieldId = wizardPanels[i].id.substring(0, wizardPanels[i].id.lastIndexOf("__"));
                     if (closestNonRepeatableFieldId === currentFieldId) {
                         resultIndex = i;
-                        closestNonRepeatableFieldFound = true;
+                        break;
                     } else {
                         var fieldView = this.getChild(currentFieldId);
-                        if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getId() === closestRepeatableFieldInstanceManagerId) {
+                        if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
                             resultIndex = i;
-                            closestRepeatableFieldFound = true;
-                            continue;
+                            break;
                         }
-                    }
-                    if (closestNonRepeatableFieldFound && closestRepeatableFieldFound) {
-                        break;
                     }
                 }
             }
             return resultIndex + 1;
+
         }
 
         #getBeforeViewElement(instanceManager, instanceIndex) {
@@ -542,8 +542,8 @@
             var instanceManagerId = instanceManager.getId();
             if (instanceIndex == 0) {
                 var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
-                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 var wizardPanels = this.#getCachedWizardPanels();
                 if (indexToInsert > 0) {
                     result.beforeViewElement = this.#getWizardPanelElementById(wizardPanels[indexToInsert - 1].id);
