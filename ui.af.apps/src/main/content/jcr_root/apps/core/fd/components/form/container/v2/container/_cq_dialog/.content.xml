@@ -72,6 +72,92 @@
                                 jcr:primaryType="nt:unstructured"
                                 active="{Boolean}true"/>
                     </basic>
+                    <dataModel
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Data Model"
+                            granite:class="cmp-adaptiveform-container__datamodel"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <formmodel
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <selectformmodel
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            granite:class="cmp-adaptiveform-container__selectformmodel"
+                                            fieldLabel="Form Model"
+                                            name="./schemaType">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <optionNone
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="None"
+                                                    value="none"/>
+                                            <optionSchema
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Schema"
+                                                    value="jsonschema"/>
+                                            <optionFormdatamodel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Form Data Model"
+                                                    value="formdatamodel"/>
+                                        </items>
+                                    </selectformmodel>
+                                    <schemaRef name="./schemaRef"
+                                               jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+                                    <schemaSelectorContainer
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            granite:class="cmp-adaptiveform-container__schemaselectorcontainer">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <schemaSelector
+                                                    granite:class="cmp-adaptiveform-container__schemaselector"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    disabled="false"
+                                                    fieldLabel="Select Schema *"
+                                                    validation="datamodel.config"
+                                                    renderReadOnly="false">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                        guideDataModel="basic"
+                                                        layoutType="fd/af/layouts/panel"
+                                                        type="xmljsonschema"/>
+                                            </schemaSelector>
+                                        </items>
+                                    </schemaSelectorContainer>
+                                    <fdmselectorcontainer
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            granite:class="cmp-adaptiveform-container__fdmselectorcontainer">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <fdmselector
+                                                    granite:class="cmp-adaptiveform-container__fdmselector"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    disabled="false"
+                                                    fieldLabel="Select Form Data Model *"
+                                                    validation="datamodel.config"
+                                                    renderReadOnly="false">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                        guideDataModel="basic"
+                                                        layoutType="fd/af/layouts/panel"
+                                                        type="formdatamodel"/>
+                                            </fdmselector>
+                                        </items>
+                                    </fdmselectorcontainer>
+                                    <formmodelparameters
+                                            granite:id="formmodelparameters"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+                                </items>
+                            </formmodel>
+                        </items>
+                    </dataModel>
                     <submitActions
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Submission"
