@@ -53,15 +53,7 @@ The following attributes must be added for the initialization of the text compon
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:
 
-* Button
-* Date Picker
-* Email Input
-* Number Input
-* Reset Button
-* Submit Button
-* Telephone Input
-* Text Box
-* Text Input
+* Image
 * Title
 
  

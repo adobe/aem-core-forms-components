@@ -27,80 +27,69 @@ describe("Form with Wizard Layout Container", () => {
     });
 
 
-    it("check If Two Tabs are present in the page",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").should('have.length',2);
-    }) ;
+    it("check If Two Tabs are present in the page", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").should('have.length', 2);
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").should('have.length', 2);
+    });
 
-    it("check If Two Components are present in the page",()=> {
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").should('have.length',2);
-    }) ;
+    it("check First tab is active", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+    });
 
-    it("check First tab is active",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-    }) ;
+    it("verify Next Navigation Button Functionality", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-    it("check First Component div is active",()=> {
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-    it("check If Navigation Buttons are present",()=> {
-        cy.get(".cmp-adaptiveform-wizard__previousNav").should('have.length',1);
-        cy.get(".cmp-adaptiveform-wizard__nextNav").should('have.length',1);
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-    it("verify Next Navigation Button Functionality",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+    });
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+    it("verify Prev Navigation Button Functionality", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
 
-    it("verify Prev Navigation Button Functionality",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force:true});
-
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-    }) ;
+    });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
