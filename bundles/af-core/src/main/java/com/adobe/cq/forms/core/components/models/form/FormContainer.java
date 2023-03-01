@@ -156,6 +156,7 @@ public interface FormContainer extends Container {
         return true;
     }
 
+    @JsonIgnore
     @Override
     default String getName() {
         // explicitly setting null, since form container does not have name property, but other containers like panel have a name

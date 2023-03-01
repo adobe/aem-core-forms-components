@@ -28,7 +28,8 @@
         constructor(params) {
             const triggerEventOnGuideBridge = () => {
                 const eventPayload = {
-                    formName: this.getPath().replace('/jcr:content/guideContainer', '')
+                    formId: this.getFormId(),
+                    formTitle: this.getFormTitle(),
                 };
                 window.guideBridge.trigger("submitStart", eventPayload, this.getPath());
             }

@@ -190,11 +190,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         }
     }
 
-    @Override
-    public String getName() {
-        return getCurrentPage() != null ? getCurrentPage().getPath() : getPath();
-    }
-
     @JsonIgnore
     @Nullable
     public String getRedirectUrl() {

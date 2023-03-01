@@ -165,21 +165,20 @@ export default class FormFieldBase extends FormField {
     }
 
     #triggerEventOnGuideBridge(eventType) {
-        const formContainerPath = this.formContainer.getPath();
-        const formName = this.#getFormName();
+        const formId =  this.formContainer.getFormId();
+        const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
         const eventPayload = {
-            formName,
+            formId,
+            formTitle,
             fieldName,
             panelName
         };
+        const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
     }
 
-    #getFormName() {
-        return this.formContainer.getFormName();
-    }
 
     #getPanelName() {
         return this.parentView.getModel().name;

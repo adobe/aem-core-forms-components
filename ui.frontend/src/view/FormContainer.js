@@ -116,6 +116,14 @@ export default class FormContainer {
         }
     }
 
+    getFormId() {
+        return this._model._jsonModel.id;
+    }
+
+    getFormTitle() {
+        return this._model._jsonModel.title;
+    }
+
     getPath() {
         return this._path;
     }
@@ -126,9 +134,5 @@ export default class FormContainer {
 
     getAllFields() {
         return this._fields;
-    }
-
-    getFormName() {
-        return this._model._jsonModel.name;
     }
 }
