@@ -193,7 +193,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')){
-                        cy.get(selector).click({force: true});
+                        cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
                         cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click

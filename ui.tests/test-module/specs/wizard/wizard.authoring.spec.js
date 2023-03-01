@@ -117,31 +117,32 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
-            // conditionally clean the test, when there are retries
-            cy.cleanTest(wizardEditPath);
         });
 
         it('insert aem forms Wizard', { retries: 3 }, function () {
-            dropWizardInSites();
-            cy.deleteComponentByPath(wizardEditPath);
+            cy.cleanTest(wizardEditPath).then(function(){
+                dropWizardInSites();
+                cy.deleteComponentByPath(wizardEditPath);
+            });
         });
 
         // adding retry, sometimes site editor does not load
         it('open edit dialog of aem forms Wizard', { retries: 3 }, function() {
-            dropWizardInSites();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-            cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-            cy.get("[name='./name']").should("exist");
-            cy.get("[name='./jcr:title']").should("exist");
-            cy.get("[name='./layout']").should("exist");
-            cy.get("[name='./dataRef']").should("exist");
-            cy.get("[name='./visible']").should("exist");
-            cy.get("[name='./enabled']").should("exist");
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(wizardEditPath) ;
-
+            cy.cleanTest(wizardEditPath).then(function() {
+                dropWizardInSites();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(editDialogConfigurationSelector);
+                cy.get(wizardBlockBemSelector + '__editdialog').contains('Help Content').click({force: true});
+                cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click({force: true});
+                cy.get("[name='./name']").should("exist");
+                cy.get("[name='./jcr:title']").should("exist");
+                cy.get("[name='./layout']").should("exist");
+                cy.get("[name='./dataRef']").should("exist");
+                cy.get("[name='./visible']").should("exist");
+                cy.get("[name='./enabled']").should("exist");
+                cy.get('.cq-dialog-cancel').click({force: true});
+                cy.deleteComponentByPath(wizardEditPath);
+            });
         });
 
     });
