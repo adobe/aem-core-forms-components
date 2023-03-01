@@ -293,8 +293,8 @@
             var instanceManagerId = instanceManager.getId();
             if (instanceIndex == 0) {
                 var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
-                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 var tabPanels = this.#getCachedTabPanels();
                 if (indexToInsert > 0) {
                     result.beforeViewElement = this.#getTabPanelElementById(tabPanels[indexToInsert - 1].id);
@@ -356,8 +356,8 @@
                 var instanceManagerId = childView.getInstanceManager().getId();
                 if (instanceIndex == 0) {
                     var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                    var closestRepeatableFieldInstanceManagerId = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'];
-                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId);
+                    var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                     if (indexToInsert == 0) {
                         var tabListParentElement = this.#getTabListElement();
                         tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
@@ -434,13 +434,13 @@
             for (let i = 0; i < tabPanels.length; i++) {
                 var tabPanel = tabPanels[i];
                 var fieldView = this.getChild(tabPanel.id.substring(0, tabPanel.id.lastIndexOf("__")));
-                if (fieldView.getInstanceManager() != null) {
+                if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
                     var instanceManagerId = fieldView.getInstanceManager().getId();
                     if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] == null) {
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
                         var result = this.#getClosestFields(i);
-                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerId'] = result.closestRepeatableFieldInstanceManagerId;
+                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result["closestNonRepeatableFieldId"];
+                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result["closestRepeatableFieldInstanceManagerIds"];
                     }
                 }
             }
@@ -450,39 +450,38 @@
         #getClosestFields(index) {
             var allTabPanels = this.#getCachedTabPanels();
             var result = {};
-            for (let i = 0; i < index; i++) {
+            result["closestRepeatableFieldInstanceManagerIds"] = [];
+            for (let i = index - 1; i >= 0; i--) {
                 var fieldId = allTabPanels[i].id.substring(0, allTabPanels[i].id.lastIndexOf("__"));
                 var fieldView = this.getChild(fieldId);
                 if (fieldView.getInstanceManager() == null) {
                     result["closestNonRepeatableFieldId"] = fieldId;
+                    break;
                 } else {
-                    result["closestRepeatableFieldInstanceManagerId"] = fieldView.getInstanceManager().getId();
+                    result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
+                    if (fieldView.getInstanceManager().getModel().minOccur != 0) {
+                        break;
+                    }
                 }
             }
             return result;
         }
 
-        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerId) {
+        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
             var tabPanels = this.#getCachedTabPanels();
-            var closestNonRepeatableFieldFound = (closestNonRepeatableFieldId == null) ? true : false;
-            var closestRepeatableFieldFound = (closestRepeatableFieldInstanceManagerId == null) ? true : false;
             var resultIndex = -1;
             if (tabPanels) {
-                for (let i = 0; i < tabPanels.length; i++) {
+                for (let i = tabPanels.length - 1; i >= 0; i--) {
                     var currentFieldId = tabPanels[i].id.substring(0, tabPanels[i].id.lastIndexOf("__"));
                     if (closestNonRepeatableFieldId === currentFieldId) {
                         resultIndex = i;
-                        closestNonRepeatableFieldFound = true;
+                        break;
                     } else {
                         var fieldView = this.getChild(currentFieldId);
-                        if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getId() === closestRepeatableFieldInstanceManagerId) {
+                        if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
                             resultIndex = i;
-                            closestRepeatableFieldFound = true;
-                            continue;
+                            break;
                         }
-                    }
-                    if (closestNonRepeatableFieldFound && closestRepeatableFieldFound) {
-                        break;
                     }
                 }
             }
