@@ -63,7 +63,7 @@ export default class InstanceManager {
         let addedHtmlElement = null;
         for (let index = 0; index < maxLength; index++) {
             const instanceView = (index < viewInstancesLength) ? views[index] : null;
-            const instanceModel = (index < modelInstancesLength) ? models[index]: null;
+            const instanceModel = (index < modelInstancesLength) ? models[index] : null;
             addedHtmlElement = this.#syncViewModel(instanceView, instanceModel, addedHtmlElement);
         }
     }
@@ -95,12 +95,12 @@ export default class InstanceManager {
     updateTemplate(childView) {
         const repeatableElement = childView.element.parentElement;
         /**
-        //inserting marker
-        let markerElement = document.createElement('div');
-        markerElement.setAttribute("id", this.getId());
-        markerElement.classList.add("form-instance-marker");
-        this.parentElement.insertBefore(markerElement, repeatableElement);
-        this.markerElement = markerElement;
+         //inserting marker
+         let markerElement = document.createElement('div');
+         markerElement.setAttribute("id", this.getId());
+         markerElement.classList.add("form-instance-marker");
+         this.parentElement.insertBefore(markerElement, repeatableElement);
+         this.markerElement = markerElement;
          **/
         //adding template
         this._templateHTML = repeatableElement.cloneNode(true);
@@ -135,17 +135,21 @@ export default class InstanceManager {
     }
 
     addInstance(event, payload) {
-        this.#dispatchModelEvent(event,"addInstance", payload);
+        this.#dispatchModelEvent(event, "addInstance", payload);
     }
 
     removeInstance(event, payload) {
-        this.#dispatchModelEvent(event,"removeInstance", payload);
+        this.#dispatchModelEvent(event, "removeInstance", payload);
     }
 
     #registerInstanceHandlers(childView) {
         //doesn't support repeatable panel inside repeatable panel
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this.addInstance(event)});
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this.removeInstance(event)});
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {
+            this.addInstance(event)
+        });
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {
+            this.removeInstance(event)
+        });
     }
 
     /**
@@ -164,9 +168,12 @@ export default class InstanceManager {
             this.repeatableParentView.addRepeatableMarkup(this, addedModel, htmlElement);
         } else {
             // this is required if repeatableParentView is the formContainer.
+            //no child exist in the view
             if (this.children.length == 0) {
                 this.parentElement.append(htmlElement);
+                //this.markerElement.after(htmlElement);
             } else if (addedModel.index == 0) {
+                //special case for first element
                 let afterElement = this.children[0].element.parentElement;
                 this.parentElement.insertBefore(htmlElement, afterElement);
             } else {
@@ -202,7 +209,7 @@ export default class InstanceManager {
         //adding view post mutation observer has added view for repeatable instance
         this.children.splice(childView.getModel().index, 0, childView);
         this.#registerInstanceHandlers(childView);
-        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, { "detail": childView });
+        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, {"detail": childView});
         if (this.repeatableParentView && (typeof this.repeatableParentView.handleChildAddition === "function")) {
             //give parentView chance to adjust to added instance
             this.repeatableParentView.handleChildAddition(childView);
