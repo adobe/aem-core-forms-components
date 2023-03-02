@@ -283,11 +283,9 @@
             if (validationErrorList === undefined || validationErrorList.length == 0) {
                 var tabs = this.#getCachedTabs();
                 if (tabs) {
-                    if (Array.isArray(tabs)) {
-                        var totalTabs = tabs.length;
-                        if (activeIndex < totalTabs - 1) {
-                            this.#navigateAndFocusTab(activeIndex + 1);
-                        }
+                    var totalTabs = tabs.length;
+                    if (activeIndex < totalTabs - 1) {
+                        this.#navigateAndFocusTab(activeIndex + 1);
                     }
                 }
             }
@@ -297,11 +295,10 @@
             var activeIndex = this.#_active;
             var tabs = this.#getCachedTabs();
             if (tabs) {
-                if (Array.isArray(tabs)) {
-                    if (activeIndex > 0) {
-                        this.#navigateAndFocusTab(activeIndex - 1);
-                    }
+                if (activeIndex > 0) {
+                    this.#navigateAndFocusTab(activeIndex - 1);
                 }
+
             }
         }
 
