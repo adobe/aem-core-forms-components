@@ -40,8 +40,6 @@
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}">
                     <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox"
                            name="${checkboxgroup.name}"
-                           data-cmp-data-layer="${checkboxgroup.data.json}"
-                           data-cmp-clickable="${checkboxgroup.data ? true : false}"
                            value="${checkboxgroup.enums[itemList.index].toString}"
                            checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                            disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"

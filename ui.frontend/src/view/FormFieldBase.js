@@ -168,12 +168,18 @@ export default class FormFieldBase extends FormField {
         const formId =  this.formContainer.getFormId();
         const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
+        const panelTitle = this.#getPanelTitle();
         const fieldName = this._model.name;
+        const fieldLabel = this._model.label.value;
+        const fieldType = this._model[':type'];
         const eventPayload = {
             formId,
             formTitle,
             fieldName,
-            panelName
+            fieldLabel,
+            fieldType,
+            panelName,
+            panelTitle,
         };
         const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
@@ -182,6 +188,10 @@ export default class FormFieldBase extends FormField {
 
     #getPanelName() {
         return this.parentView.getModel().name;
+    }
+
+    #getPanelTitle() {
+        return this.parentView.getModel().label ? this.parentView.getModel().label.value: "Root Panel";
     }
 
     /**

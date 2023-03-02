@@ -31,7 +31,7 @@
         ABANDON: "Abandoned forms",
         HELP: "Help views",
         TIMESPENT: "Time Spent",
-        SAVE: 'Drafts'
+        SAVE: 'Drafts' // TODO: implement when available for CC
     }
 
     const getFormName = () => {
@@ -41,32 +41,12 @@
         return name + '(' + formPath + ')';
     }
 
-    const getFieldName = (element) => {
-        return element.getAttribute('aria-label') || '';
-    }
-
-    const getFieldType = (element) => {
-        const dataElement = element.dataset.cmpDataLayer
-        if (dataElement) {
-            return JSON.parse(element.dataset.cmpDataLayer)[Object.keys(JSON.parse(element.dataset.cmpDataLayer))[0]]['@type'] || '';
-        } else {
-            return '';
-        }
-    }
-
-    const getPanelName = (element) => {
-        let panel = element;
-        while(panel.getAttribute('data-cmp-is')!=='adaptiveFormPanel' && panel.getAttribute('data-cmp-is')!=='adaptiveFormContainer'){
-            panel = panel.parentElement;
-        }
-
-        if(panel.getElementsByTagName('label').length > 0  && panel.getElementsByTagName('label')[0].parentElement === panel)
-            return panel.getElementsByTagName('label')[0].textContent;
-        else
-            return 'Root Panel';
-    }
-
     const _getEventInfo = (_eventName, _fieldName, _fieldType, _panelName,_formName ) => {
+        // local variables to be used in abandon event which can be triggered anytime
+        formName = _formName;
+        fieldName = _fieldName;
+        fieldType = _fieldType;
+        panelName = _panelName;
         return {
             formTitle: _formName,
             fieldTitle: _fieldName,
@@ -76,9 +56,7 @@
         }
     }
 
-
-
-    function dispatchRenderEvent(){
+    const registerGuideBridgeEvents = () => {
         window.guideBridge.connect(()=>{
             formName = getFormName();
 
@@ -89,40 +67,46 @@
                     eventName: FormEvents.RENDER
                 }
             });
-        });
-    }
 
-    function addFocusToDataLayer(event) {
-        const element = event.currentTarget;
-        fieldName = getFieldName(element);
-        panelName = getPanelName(element);
-        fieldType = getFieldType(element);
-
-        dataLayer.push({
-            event: FASTTRACK_ANALYTICS_EVENT,
-            eventInfo: _getEventInfo(FormEvents.FIELD, fieldName, fieldType, panelName, formName)
-        });
-    }
-
-    function attachFocusEventListener(element) {
-        element.addEventListener("focus", addFocusToDataLayer);
-    }
-
-
-    function onDocumentReady() {
-        const dataLayerEnabled = document.body.hasAttribute("data-cmp-data-layer-enabled");
-        dataLayer        = (dataLayerEnabled) ? window.adobeDataLayer = window.adobeDataLayer || [] : undefined;
-
-        if (dataLayerEnabled) {
-
-            var components        = document.querySelectorAll("[data-cmp-data-layer]");
-            var clickableElements = document.querySelectorAll("[data-cmp-clickable]");
-
-            dispatchRenderEvent();
-            clickableElements.forEach(function(element) {
-                attachFocusEventListener(element);
+            guideBridge.on('elementFocusChanged', function(event){
+                dataLayer.push({
+                    event: FASTTRACK_ANALYTICS_EVENT,
+                    eventInfo: _getEventInfo(FormEvents.FIELD, event.detail.fieldLabel, event.detail.fieldType, event.detail.panelTitle, formName)
+                });
             });
 
+            guideBridge.on('elementHelpShown', function(event){
+                dataLayer.push({
+                    event: FASTTRACK_ANALYTICS_EVENT,
+                    eventInfo: _getEventInfo(FormEvents.HELP, event.detail.fieldLabel, event.detail.fieldType, event.detail.panelTitle, formName)
+                });
+            });
+
+            guideBridge.on('elementErrorShown', function(event){
+                dataLayer.push({
+                    event: FASTTRACK_ANALYTICS_EVENT,
+                    eventInfo: _getEventInfo(FormEvents.ERROR, event.detail.fieldLabel, event.detail.fieldType, event.detail.panelTitle, formName)
+                });
+            });
+
+            guideBridge.on('submitStart', function(event){
+                let eventInfo = _getEventInfo(FormEvents.SUBMIT, event.detail.fieldLabel, event.detail.fieldType, event.detail.panelTitle, formName)
+                eventInfo.timeSpentOnForm = ((new Date()).getTime() - startTime)/1000;
+                dataLayer.push({
+                    event: FASTTRACK_ANALYTICS_EVENT,
+                    eventInfo: eventInfo
+                });
+            });
+        });
+    }
+
+
+    const onDocumentReady = () => {
+        const dataLayerEnabled = document.body.hasAttribute("data-cmp-data-layer-enabled");
+        dataLayer = (dataLayerEnabled) ? window.adobeDataLayer = window.adobeDataLayer || [] : undefined;
+
+        if (dataLayerEnabled) {
+            registerGuideBridgeEvents();
 
             window.addEventListener('beforeunload', function(){
                 let eventInfo = _getEventInfo(FormEvents.ABANDON, fieldName, fieldType, panelName, formName)
