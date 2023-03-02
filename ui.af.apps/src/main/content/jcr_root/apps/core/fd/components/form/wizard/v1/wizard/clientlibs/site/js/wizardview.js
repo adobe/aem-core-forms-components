@@ -276,13 +276,14 @@
 
         #navigateToNextTab() {
             var activeIndex = this.#_active;
-            var tabs = this.#getCachedTabs();
-            if (tabs) {
-                if (Array.isArray(tabs)) {
-                    var totalTabs = tabs.length;
-                    if (activeIndex < totalTabs - 1) {
-                        this.#navigateAndFocusTab(activeIndex + 1);
-                    }
+            var activeTabElement = this.#getCachedTabs()[activeIndex];
+            var activeChildId = activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
+            var activeChildView = this.getChild(activeChildId);
+            var validationErrorList = activeChildView.getModel().validate();
+            if (validationErrorList === undefined || validationErrorList.length == 0) {
+                var tabs = this.#getCachedTabs();
+                if (tabs && activeIndex < tabs.length - 1) {
+                    this.#navigateAndFocusTab(activeIndex + 1);
                 }
             }
         }
@@ -290,12 +291,8 @@
         #navigateToPreviousTab() {
             var activeIndex = this.#_active;
             var tabs = this.#getCachedTabs();
-            if (tabs) {
-                if (Array.isArray(tabs)) {
-                    if (activeIndex > 0) {
-                        this.#navigateAndFocusTab(activeIndex - 1);
-                    }
-                }
+            if (tabs && activeIndex > 0) {
+                this.#navigateAndFocusTab(activeIndex - 1);
             }
         }
 
