@@ -97,7 +97,7 @@ export default class GuideBridge {
      */
     getFormModel() {
         if (this.#formContainerPath) {
-            return this.#formContainerViewMap[this.#formContainerPath].getModel();
+            return this.#formContainerViewMap[this.#formContainerPath]? this.#formContainerViewMap[this.#formContainerPath].getModel() : null;
         } else {
             //choose any form container in case no formContainerPath is provided in GuideBridge#connect API
             const formContainerPath = this.#getFormContainerPath();
