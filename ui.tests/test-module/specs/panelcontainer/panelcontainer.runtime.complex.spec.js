@@ -628,7 +628,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
 
                                     //check data
                                     cy.getFormData().then((result) => {
-                                        cy.fixture('panelcontainer/afterResetBank.json').then((outputData) => {
+                                        cy.fixture('panelcontainer/initialResetBank.json').then((outputData) => {
                                             expect(result.data.data).to.equal(JSON.stringify(outputData));
                                         });
                                     });
