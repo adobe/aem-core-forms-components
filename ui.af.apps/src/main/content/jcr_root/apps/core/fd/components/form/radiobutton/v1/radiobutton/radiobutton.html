@@ -42,6 +42,8 @@
                         name="${radioButton.name}"
                         class="cmp-adaptiveform-radiobutton__option__widget"
                         value="${item.toString}"
+                        data-cmp-data-layer="${radioButton.data.json}"
+                        data-cmp-clickable="${radioButton.data ? true : false}"
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                         aria-readonly="${radioButton.readOnly ? 'true' : 'false'}"/>
