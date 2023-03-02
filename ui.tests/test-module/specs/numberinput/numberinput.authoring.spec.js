@@ -94,9 +94,6 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop) ;
         });
 
-
-
-
         it('verify editFormat Value Getting saved correctly',function(){
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
