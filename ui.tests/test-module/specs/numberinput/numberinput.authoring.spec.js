@@ -94,29 +94,29 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop) ;
         });
 
-
-
-
         it('verify editFormat Value Getting saved correctly',function(){
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
-            cy.wait(1000);
-            cy.get(numberInputBlockBemSelector+'__leaddigits').clear();
-            cy.get(numberInputBlockBemSelector+'__leaddigits').type(4);
-            cy.get(numberInputBlockBemSelector+'__fracdigits').clear();
-            cy.get(numberInputBlockBemSelector+'__fracdigits').type(4);
-            cy.get('.cq-dialog-submit').click();
-            cy.wait(1000);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__leaddigits').should('have.value',4);
-            cy.get(numberInputBlockBemSelector+'__fracdigits').should('have.value',4);
-            cy.wait(1000);
-            cy.get('.cq-dialog-cancel').should('be.visible').click({force:true});
-            cy.deleteComponentByPath(numberInputDrop) ;
+            cy.wait(1000).then(() => {
+                cy.get(numberInputBlockBemSelector+'__leaddigits').clear();
+                cy.get(numberInputBlockBemSelector+'__leaddigits').type(4);
+                cy.get(numberInputBlockBemSelector+'__fracdigits').clear();
+                cy.get(numberInputBlockBemSelector+'__fracdigits').type(4);
+                cy.get('.cq-dialog-submit').click();
+                cy.wait(1000).then(() => {
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+                    cy.invokeEditableAction(editDialogConfigurationSelector);
+                    cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
+                    cy.get(numberInputBlockBemSelector+'__leaddigits').should('have.value',4);
+                    cy.get(numberInputBlockBemSelector+'__fracdigits').should('have.value',4);
+                    cy.wait(1000).then(() => {
+                        cy.get('.cq-dialog-cancel').should('be.visible').click({force:true});
+                        cy.deleteComponentByPath(numberInputDrop) ;
+                    });
+                });
+            });
         })
     });
 

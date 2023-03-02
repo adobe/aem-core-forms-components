@@ -104,7 +104,12 @@ export default class InstanceManager {
          **/
         //adding template
         this._templateHTML = repeatableElement.cloneNode(true);
-        this.#updateTemplateIds(this._templateHTML, childView.getModel(), 'temp_0');
+        let childModel = childView.getModel();
+        // In case of removed instance by prefill, that is index is -1, model is not associated with view
+        if (!childModel) {
+            childModel = this.formContainer.getModel(childView.getId());
+        }
+        this.#updateTemplateIds(this._templateHTML, childModel, 'temp_0');
     }
 
     #dispatchModelEvent(event, eventName, payload) {
@@ -126,10 +131,15 @@ export default class InstanceManager {
 
     #removeChildInstance(removedModel) {
         const removedIndex = removedModel.index;
-        const removedChildView = this.children[removedIndex];
+        let removedChildView = this.children[removedIndex];
+        if (removedIndex == -1) {
+            //That is, model was removed by prefill, and instance manager was synced with child already removed
+            removedChildView = this.formContainer.getField(removedModel.id);
+        }
         Utils.removeFieldReferences(removedChildView, this.formContainer);
         this.handleRemoval(removedChildView);
         this.children.splice(removedIndex, 1);
+
         const event = new CustomEvent(Constants.PANEL_INSTANCE_REMOVED, {"detail": removedChildView});
         this.formContainer.getFormElement().dispatchEvent(event);
     }
