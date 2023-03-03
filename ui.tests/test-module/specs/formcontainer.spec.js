@@ -28,8 +28,6 @@
 
 const commons = require('../libs/commons/commons'),
     sitesSelectors = require('../libs/commons/sitesSelectors'),
-    sitesConstants = require('../libs/commons/sitesConstants'),
-    guideSelectors = require('../libs/commons/guideSelectors'),
     afConstants = require('../libs/commons/formsConstants');
 
 // todo: beta specific form authoring test cases are not run (only common functionality [of beta and to be GA] test are executed)
@@ -47,40 +45,92 @@ describe('Page/Form Authoring', function () {
             //open submission tab
             cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
             cy.get("[name='./actionType']").should("exist");
-
-            //select email submit action
-            cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-            cy.get("._coral-Menu-itemLabel").contains('Send email').should('be.visible').click();
-            cy.get("[name='./useExternalEmailTemplate']").should("exist");
-            cy.get("[name='./templatePath']").should("exist");
-            cy.get("[name='./template']").parent().should("have.attr", "hidden");
-
-            cy.get("[name='./useExternalEmailTemplate']").should("exist").first().click();
-            cy.get("[name='./template']").should("exist");
-            cy.get("[name='./templatePath']").parent().should("have.attr", "hidden");
-
-            //select rest endpoint submit action
-            cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-            cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
-            cy.get("[name='./enableRestEndpointPost']").should("exist");
-            cy.get("[name='./enableRestEndpointPost']").first().click();
-            cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
-
-            //save the configuration
-            cy.get('.cq-dialog-submit').click();
-            cy.wait(1000);
-
-            //check if saved configuration persists
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
-            cy.get("[name='./actionType'] coral-select-item:selected").first().should(
-                "have.text",
-                "Submit to REST endpoint"
-            );
-            cy.get("[name='./restEndpointPostUrl'").should("exist");
-            cy.get("[name='./restEndpointPostUrl'").invoke('attr', 'value').should('eq', 'http://localhost:4502/some/endpoint');
         };
+
+    const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open submission tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
+        cy.get("[name='./actionType']").should("exist");
+
+        //select email submit action
+        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
+        cy.get("._coral-Menu-itemLabel").contains('Send email').should('be.visible').click();
+        cy.get("[name='./useExternalEmailTemplate']").should("exist");
+        cy.get("[name='./templatePath']").should("exist");
+
+        cy.get("[name='./useExternalEmailTemplate']").should("exist").first().click();
+        cy.get("[name='./template']").should("exist");
+
+        //select rest endpoint submit action
+        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
+        cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
+        cy.get("[name='./enableRestEndpointPost']").should("exist");
+        cy.get("[name='./enableRestEndpointPost']").first().click();
+        cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
+
+        //save the configuration
+        cy.get('.cq-dialog-submit').click();
+    };
+
+    const verifySavedSubmitAction = function(formContainerEditPathSelector) {
+        //check if saved configuration persists
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
+        cy.get("[name='./actionType'] coral-select-item:selected").first().should(
+            "have.text",
+            "Submit to REST endpoint"
+        );
+        cy.get("[name='./restEndpointPostUrl'").should("exist");
+        cy.get("[name='./restEndpointPostUrl'").invoke('attr', 'value').should('eq', 'http://localhost:4502/some/endpoint');
+    };
+
+    const verifyOpenDataModel = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+        cy.get("[name='./schemaType']").should("exist");
+        cy.get("[name='./schemaRef']").invoke('attr', 'type').should('eq', 'hidden');
+
+        //select data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='formdatamodel']").contains('Form Data Model').should('be.visible').click();
+
+        //click save without selecting the fdm model, error should be displayed
+        cy.get(".cq-dialog-submit").click();
+        cy.get(".coral-Form-errorlabel").should("be.visible");
+
+        //select fdm and save it
+        cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/portal-unified-storage-form-data-model']").contains('Portal Unified Storage Form Data Model').should('be.visible').click();
+        cy.get(".cq-dialog-submit").click();
+    };
+
+    const verifyChangeDataModel = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+
+        //since data model is already selected it should be disabled
+        cy.get(".cmp-adaptiveform-container__selectformmodel").should("have.attr", "disabled");
+        cy.get(".cmp-adaptiveform-container__fdmselector").click();
+
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/forms-ootb-usc-workflow-fdm']").contains('Workflow Unified Storage Form Data Model').should('be.visible').click();
+        cy.get("#formModelChange").should("be.visible");
+        cy.get("#formModelDialogAcceptButton").click();
+        cy.get(".cq-dialog-submit").click();
+    };
 
         context("Open Forms Editor", function () {
             // we can use these values to log in
@@ -98,16 +148,32 @@ describe('Page/Form Authoring', function () {
                 checkEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
             });
+
+            it('open edit dialog, check and save a submit action', function() {
+                checkAndSaveSubmitAction(formContainerEditPathSelector);
+            });
+
+            it('open edit dialog, verify saved submit action', function() {
+                verifySavedSubmitAction(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            });
+
+            it('open and select data model in container edit dialog box', function () {
+                verifyOpenDataModel(formContainerEditPathSelector);
+            });
+
+            it('change data model in container edit dialog box', function () {
+                verifyChangeDataModel(formContainerEditPathSelector);
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
-        context.skip("Open Sites Editor", function () {
+        context("Open Sites Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/core-components-examples/library/adaptive-form/container",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
                 formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
-                formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop(),
-                formContainerDropPathSelector = "[data-path='" + formContainerDropPath + "']";
+                formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
                 beforeEach(function () {
                     // this is done since cypress session results in 403 sometimes
                     cy.openAuthoring(pagePath);
@@ -127,6 +193,23 @@ describe('Page/Form Authoring', function () {
                 it('open edit dialog of adaptive form container component', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                });
+
+                it('open edit dialog, check and save a submit action', function() {
+                    checkAndSaveSubmitAction(formContainerEditPathSelector);
+                });
+
+                it('open edit dialog, verify saved submit action', function() {
+                    verifySavedSubmitAction(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                });
+
+                it('open and select data model in container edit dialog box', function () {
+                    verifyOpenDataModel(formContainerEditPathSelector);
+                });
+
+                it('change data model in container edit dialog box', function () {
+                    verifyChangeDataModel(formContainerEditPathSelector);
                 });
         });
 

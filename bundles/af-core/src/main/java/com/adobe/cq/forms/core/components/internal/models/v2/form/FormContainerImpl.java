@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.internal.models.v2.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -76,6 +78,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     private String clientLibRef;
 
+    protected String contextPath = StringUtils.EMPTY;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String title;
@@ -92,11 +96,28 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     private String data;
 
+    @PostConstruct
+    protected void initFormContainerModel() {
+        if (request != null) {
+            contextPath = request.getContextPath();
+        }
+    }
+
+    @Override
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
+
+    @JsonIgnore
+    public String getContextPath() {
+        return contextPath != null ? contextPath : StringUtils.EMPTY;
+    }
+
     @Override
     @Nullable
     @JsonIgnore
     public String getThankYouMessage() {
-        return thankYouMessage;
+        return translate("thankYouMessage", thankYouMessage);
     }
 
     @Override
@@ -173,15 +194,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     public String getRedirectUrl() {
         return getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
-    }
-
-    @JsonIgnore
-    private String getContextPath() {
-        String contextPath = null;
-        if (request != null) {
-            contextPath = request.getContextPath();
-        }
-        return contextPath != null ? contextPath : StringUtils.EMPTY;
     }
 
     @JsonIgnore

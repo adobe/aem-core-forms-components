@@ -215,14 +215,10 @@ public class FormContainerImplTest {
 
     @Test
     void testGetContextPath() throws Exception {
-        context.currentResource(PATH_FORM_1);
-        MockSlingHttpServletRequest request = context.request();
-        FormContainer formContainer = request.adaptTo(FormContainer.class);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");
-
         // Test with contextPath set
-        request.setContextPath("/test");
-        FormContainer formContainer2 = request.adaptTo(FormContainer.class);
+        formContainer.setContextPath("/test");
         assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
     }
 

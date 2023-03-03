@@ -316,4 +316,12 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    /**
+     * Set the contextPath in formContainer
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default void setContextPath(String contextPath) {}
+
 }

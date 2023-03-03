@@ -63,7 +63,7 @@ export default class InstanceManager {
         let addedHtmlElement = null;
         for (let index = 0; index < maxLength; index++) {
             const instanceView = (index < viewInstancesLength) ? views[index] : null;
-            const instanceModel = (index < modelInstancesLength) ? models[index]: null;
+            const instanceModel = (index < modelInstancesLength) ? models[index] : null;
             addedHtmlElement = this.#syncViewModel(instanceView, instanceModel, addedHtmlElement);
         }
     }
@@ -95,16 +95,21 @@ export default class InstanceManager {
     updateTemplate(childView) {
         const repeatableElement = childView.element.parentElement;
         /**
-        //inserting marker
-        let markerElement = document.createElement('div');
-        markerElement.setAttribute("id", this.getId());
-        markerElement.classList.add("form-instance-marker");
-        this.parentElement.insertBefore(markerElement, repeatableElement);
-        this.markerElement = markerElement;
+         //inserting marker
+         let markerElement = document.createElement('div');
+         markerElement.setAttribute("id", this.getId());
+         markerElement.classList.add("form-instance-marker");
+         this.parentElement.insertBefore(markerElement, repeatableElement);
+         this.markerElement = markerElement;
          **/
         //adding template
         this._templateHTML = repeatableElement.cloneNode(true);
-        this.#updateTemplateIds(this._templateHTML, childView.getModel(), 'temp_0');
+        let childModel = childView.getModel();
+        // In case of removed instance by prefill, that is index is -1, model is not associated with view
+        if (!childModel) {
+            childModel = this.formContainer.getModel(childView.getId());
+        }
+        this.#updateTemplateIds(this._templateHTML, childModel, 'temp_0');
     }
 
     #dispatchModelEvent(event, eventName, payload) {
@@ -126,26 +131,35 @@ export default class InstanceManager {
 
     #removeChildInstance(removedModel) {
         const removedIndex = removedModel.index;
-        const removedChildView = this.children[removedIndex];
+        let removedChildView = this.children[removedIndex];
+        if (removedIndex == -1) {
+            //That is, model was removed by prefill, and instance manager was synced with child already removed
+            removedChildView = this.formContainer.getField(removedModel.id);
+        }
         Utils.removeFieldReferences(removedChildView, this.formContainer);
         this.handleRemoval(removedChildView);
         this.children.splice(removedIndex, 1);
+
         const event = new CustomEvent(Constants.PANEL_INSTANCE_REMOVED, {"detail": removedChildView});
         this.formContainer.getFormElement().dispatchEvent(event);
     }
 
     addInstance(event, payload) {
-        this.#dispatchModelEvent(event,"addInstance", payload);
+        this.#dispatchModelEvent(event, "addInstance", payload);
     }
 
     removeInstance(event, payload) {
-        this.#dispatchModelEvent(event,"removeInstance", payload);
+        this.#dispatchModelEvent(event, "removeInstance", payload);
     }
 
     #registerInstanceHandlers(childView) {
         //doesn't support repeatable panel inside repeatable panel
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this.addInstance(event)});
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this.removeInstance(event)});
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {
+            this.addInstance(event)
+        });
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {
+            this.removeInstance(event)
+        });
     }
 
     /**
@@ -160,18 +174,22 @@ export default class InstanceManager {
         //get the model from added instance state
         let addedModel = this.formContainer.getModel(addedInstanceJson.id);
         this.updateCloneIds(htmlElement, 'temp_0', addedModel);
-
-        //no child exist in the view
-        if (this.children.length == 0) {
-            this.parentElement.append(htmlElement);
-            //this.markerElement.after(htmlElement);
-        } else if (instanceIndex == 0) {
-            //special case for first element
-            let afterElement = this.children[0].element.parentElement;
-            this.parentElement.insertBefore(htmlElement, afterElement);
+        if (this.repeatableParentView && (typeof this.repeatableParentView.addRepeatableMarkup === "function")) {
+            this.repeatableParentView.addRepeatableMarkup(this, addedModel, htmlElement);
         } else {
-            let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
-            beforeViewElement.after(htmlElement);
+            // this is required if repeatableParentView is the formContainer.
+            //no child exist in the view
+            if (this.children.length == 0) {
+                this.parentElement.append(htmlElement);
+                //this.markerElement.after(htmlElement);
+            } else if (addedModel.index == 0) {
+                //special case for first element
+                let afterElement = this.children[0].element.parentElement;
+                this.parentElement.insertBefore(htmlElement, afterElement);
+            } else {
+                let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
+                beforeViewElement.after(htmlElement);
+            }
         }
         return htmlElement;
     }
@@ -201,7 +219,7 @@ export default class InstanceManager {
         //adding view post mutation observer has added view for repeatable instance
         this.children.splice(childView.getModel().index, 0, childView);
         this.#registerInstanceHandlers(childView);
-        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, { "detail": childView });
+        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, {"detail": childView});
         if (this.repeatableParentView && (typeof this.repeatableParentView.handleChildAddition === "function")) {
             //give parentView chance to adjust to added instance
             this.repeatableParentView.handleChildAddition(childView);

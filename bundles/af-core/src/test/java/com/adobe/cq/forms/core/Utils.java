@@ -222,7 +222,6 @@ public class Utils {
     public static <T> T getComponentUnderTest(String resourcePath, Class<T> clazz, AemContext context) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
-        request.setContextPath("");
         assertNotNull("resource adaptation should not be null", context.currentResource().adaptTo(clazz));
         assertNotNull("request adaptation should not be null", request.adaptTo(clazz));
         return request.adaptTo(clazz);
