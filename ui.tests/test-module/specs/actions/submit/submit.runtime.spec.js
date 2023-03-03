@@ -17,6 +17,7 @@ describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
+    const customSubmitLocalisationPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/thankyoumessage_localisation.de.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -96,6 +97,15 @@ describe("Form with Submit Button", () => {
         cy.previewForm(customSubmitPagePath);
         cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")
+        });
+    })
+
+    it("Custom Submit Action Localisation Test", () => {
+        cy.previewForm(customSubmitLocalisationPagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get('body')
+                .find('div.tyMessage')
+                .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
         });
     })
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="de"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/actions/submit/customsubmit/thankyoumessage_localisation/jcr:content/dictionary">
+    <e830e1e2-d1ab-4d3c-86fb-09d4b5485252
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##9397"
+        sling:message="thankYouMessaage_Localisation"/>
+    <_x0032_09bbcb1-381e-4a4a-9c77-38fb5aff8827
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##thankYouMessage##315"
+        sling:message="Vielen Dank für das Absenden des Formulars."/>
+    <_x0037_9393d22-482a-4d7d-94e9-59055af81f17
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##2811"
+        sling:message="Senden"/>
+</jcr:root>
