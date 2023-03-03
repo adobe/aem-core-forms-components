@@ -92,7 +92,7 @@ describe('Page - Authoring', function () {
                 addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
-                cy.wait(2000).then(() = > {
+                cy.wait(2000).then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force: true});
                     cy.get('body').click(0, 0);
@@ -105,7 +105,7 @@ describe('Page - Authoring', function () {
                 });
             });
         });
-    })
+    });
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/wizard",
