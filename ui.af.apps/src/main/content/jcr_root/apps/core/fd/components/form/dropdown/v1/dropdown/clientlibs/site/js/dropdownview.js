@@ -151,7 +151,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new DropDown({element})
+        return new DropDown({element, formContainer})
     }, DropDown.selectors.self);
 
 })();

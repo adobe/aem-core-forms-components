@@ -111,7 +111,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Override
     @Nullable
     public String getThankYouMessage() {
-        return thankyouMessage;
+        return translate("thankyouMessage", thankyouMessage);
     }
 
     @Override

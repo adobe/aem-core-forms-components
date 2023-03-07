@@ -35,6 +35,7 @@ import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilde
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.ComponentContext;
 
@@ -83,6 +84,8 @@ public abstract class AbstractComponentImpl implements Component {
      * The ID for this component.
      */
     private String id;
+
+    protected I18n i18n = null;
 
     /**
      * Flag indicating if the data layer is enabled.
@@ -185,6 +188,14 @@ public abstract class AbstractComponentImpl implements Component {
                     .orElse(null)))
             .withType(() -> this.resource.getResourceType())
             .build();
+    }
+
+    @Nullable
+    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
+        if (StringUtils.isBlank(propertyValue)) {
+            return null;
+        }
+        return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
     }
 
 }
