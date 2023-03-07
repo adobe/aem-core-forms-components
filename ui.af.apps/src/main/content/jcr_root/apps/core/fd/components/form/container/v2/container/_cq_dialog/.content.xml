@@ -44,6 +44,12 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
+                                    <formTitle
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                      fieldDescription="Title of the form"
+                                      fieldLabel="Title"
+                                      name="./title"/>
                                     <prefill_service
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-prefill-service-selection"
