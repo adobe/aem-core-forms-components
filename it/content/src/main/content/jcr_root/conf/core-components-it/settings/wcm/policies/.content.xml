@@ -94,7 +94,6 @@
                 <panelcontainer jcr:primaryType="nt:unstructured">
                     <default
                             jcr:lastModified="{Date}2023-03-07T11:41:57.902+05:30"
-                            jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="panelcontainer-default-policy"
                             sling:resourceType="wcm/core/components/policy/policy"

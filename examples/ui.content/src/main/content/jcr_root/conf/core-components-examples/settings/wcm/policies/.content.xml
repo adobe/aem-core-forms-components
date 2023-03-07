@@ -8,7 +8,7 @@
             <page jcr:primaryType="nt:unstructured">
                 <policy_212634895490169
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Core Components Examples - Page"
+                        jcr:title="Form Core Components Examples"
                         sling:resourceType="wcm/core/components/policy/policy"
                         ampMode="pairedAmp"
                         appResourcesClientlib="cmp-examples.site"
@@ -147,7 +147,6 @@
                 <datepicker jcr:primaryType="nt:unstructured">
                     <default
                             jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
-                            jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="datepicker-default-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
