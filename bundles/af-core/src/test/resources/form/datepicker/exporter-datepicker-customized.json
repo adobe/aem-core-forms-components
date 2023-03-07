@@ -1,5 +1,5 @@
 {
-  "id": "datepicker-fffa242824",
+  "id": "datepicker-cb8e90e488",
   "dataRef": "a.b",
   "fieldType": "date-input",
   "name": "abc",
@@ -7,14 +7,15 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "string",
-  "required": true,
+  "required": false,
+  "enabled": false,
   "constraintMessages": {
-    "type": "incorrect type",
-    "minimum": "Date should be greater than 4th Feb 2022",
-    "maximum": "Date should be less than 9th Feb 2022"
+    "type": "incorrect type"
   },
+  "readOnly": true,
   "default": "2022-02-07",
   "label": {
+    "visible": true,
     "value": "def"
   },
   "screenReaderText": "'Custom screen reader text'",
@@ -23,12 +24,6 @@
       "$event.payload"
     ]
   },
-  "rules": {
-    "visible": "true()",
-    "label": "{value : 'some label'}",
-    "value": "false()",
-    "enabled": "true()"
-  },
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
@@ -36,7 +31,13 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/datepicker-message"
+    "fd:path": "/content/datepicker-customized"
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
   },
   "format": "date",
   "minimum": "2022-02-04",

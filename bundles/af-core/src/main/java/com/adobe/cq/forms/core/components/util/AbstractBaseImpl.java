@@ -83,8 +83,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected String validationExpression;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
-    @Default(booleanValues = false)
-    protected boolean required;
+    @Nullable
+    protected Boolean required;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
     @Nullable

@@ -1,8 +1,12 @@
 {
-  "id": "checkbox-42948c9a6c",
-  "name": "abc",
+  "id": "checkbox-d98f771fbc",
+  "name": "checkbox-customized",
+  "visible": false,
+  "enabled" : false,
+  "required" : true,
+  "readOnly" : true,
   "fieldType": "checkbox",
-  "description" : "dummy",
+  "description" : "checkbox-customized",
   "tooltip": "test-short-description",
   "properties": {
     "afs:layout" : {
@@ -12,13 +16,14 @@
     "fd:dor": {
       "dorExclusion":false
     },
-    "fd:path":"/content/checkbox"
+    "fd:path":"/content/checkbox-customized"
   },
   "enforceEnum":true,
   "enum" : [true, false],
   "enumNames" : ["yes", "no"],
   "label": {
-    "value": "def"
+    "value": "checkbox-customized",
+    "visible": true
   },
   "dataRef":"a.b",
   "screenReaderText": "'Custom screen reader text'",

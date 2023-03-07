@@ -7,7 +7,6 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "file[]",
-  "required": false,
   "minItems": 1,
   "maxItems": 2,
   "constraintMessages": {
@@ -20,8 +19,6 @@
   ],
   "screenReaderText": "'Custom screen reader text'",
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "def"
   },
   "events": {
