@@ -214,6 +214,12 @@ class AEMFormImplTest {
     }
 
     @Test
+    void testGetFormPageResourcePath() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals("/content/forms/af/abc", aemform.getFormPageResourcePath());
+    }
+
+    @Test
     void testGetFormEditPagePath() {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
         assertEquals("/content/forms/af/abc", aemform.getFormEditPagePath());

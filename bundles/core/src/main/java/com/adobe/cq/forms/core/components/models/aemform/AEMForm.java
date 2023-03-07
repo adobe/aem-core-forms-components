@@ -176,6 +176,17 @@ public interface AEMForm extends Component {
     }
 
     /**
+     * Returns the form page resource path (ie) path excluding the container of the form resource
+     *
+     * @return the form page path, if one was set
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.3.0;
+     */
+    @JsonIgnore
+    default String getFormPageResourcePath() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Returns the form locale
      *
      * @return the form locale, if one was set

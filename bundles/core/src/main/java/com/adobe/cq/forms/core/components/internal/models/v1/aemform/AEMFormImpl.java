@@ -165,6 +165,11 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     }
 
     @Override
+    public String getFormPageResourcePath() {
+        return StringUtils.replace(getFormPagePath(), "/jcr:content/guideContainer", "");
+    }
+
+    @Override
     public String getFormEditPagePath() {
         String formPagePath = getFormPagePath();
         return StringUtils.substringBefore(formPagePath, "/" + org.apache.jackrabbit.JcrConstants.JCR_CONTENT);
