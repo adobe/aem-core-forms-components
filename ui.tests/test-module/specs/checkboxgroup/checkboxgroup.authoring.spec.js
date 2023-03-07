@@ -100,50 +100,49 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(checkBoxGroupDrop);
     });
 
     it('insert CheckBoxGroup in form container', function () {
-      dropCheckBoxGroupInContainer();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        dropCheckBoxGroupInContainer();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
     it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
-      testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        });
     });
 
     it ('check value type validations', function() {
+        // For Number Type
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+        cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
 
-      // For Number Type
-      dropCheckBoxGroupInContainer();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
-      cy.get('.cq-dialog-submit').click();
-      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
 
-      cy.get('.cq-dialog-cancel').click();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        // For Boolean
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+        cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
 
-      // For Boolean
-      dropCheckBoxGroupInContainer();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
-      cy.get('.cq-dialog-submit').click();
-      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
-
-      cy.get('.cq-dialog-cancel').click();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     })
   })
 /*

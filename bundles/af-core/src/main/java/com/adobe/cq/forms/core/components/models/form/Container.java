@@ -58,7 +58,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     @JsonIgnore
     @Override
-    default boolean isRequired() {
+    default Boolean isRequired() {
         // explicitly setting null, since containers don't have required property
         return false;
     }

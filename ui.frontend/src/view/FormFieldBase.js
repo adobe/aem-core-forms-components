@@ -30,6 +30,11 @@ export default class FormFieldBase extends FormField {
         this.updateEmptyStatus();
     }
 
+    ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
+
+    ELEMENT_HELP_SHOWN = "elementHelpShown";
+
+    ELEMENT_ERROR_SHOWN = "elementErrorShown";
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
@@ -85,6 +90,18 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this.applyState(state);
+        this.#registerEventListeners();
+    }
+
+    #syncLabel() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        if (labelElement) {
+            labelElement.setAttribute('for', this.getId());
+        }
+    }
+
+    syncMarkupWithModel() {
+       this.#syncLabel()
     }
 
     /**
@@ -117,6 +134,54 @@ export default class FormFieldBase extends FormField {
         if (this.getDescription()) {
             this.#addHelpIconHandler(state);
         }
+    }
+
+    /**
+     * Register all event listeners on this field
+     */
+    #registerEventListeners() {
+        this.#addOnFocusEventListener();
+        this.#addOnHelpIconClickEventListener();
+    }
+
+    #addOnHelpIconClickEventListener() {
+        const questionMarkDiv = this.qm;
+        if (questionMarkDiv) {
+            questionMarkDiv.addEventListener('click', () => {this.#triggerEventOnGuideBridge(this.ELEMENT_HELP_SHOWN)})
+        }
+    }
+
+    #addOnFocusEventListener() {
+        const widget = this.getWidget();
+        if (widget) {
+            if (widget.length && widget.length > 1) {
+                for (let opt of widget) {
+                    opt.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
+                }
+            } else {
+                widget.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
+            }
+        }
+    }
+
+    #triggerEventOnGuideBridge(eventType) {
+        const formId =  this.formContainer.getFormId();
+        const formTitle = this.formContainer.getFormTitle();
+        const panelName = this.#getPanelName();
+        const fieldName = this._model.name;
+        const eventPayload = {
+            formId,
+            formTitle,
+            fieldName,
+            panelName
+        };
+        const formContainerPath = this.formContainer.getPath();
+        window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
+    }
+
+
+    #getPanelName() {
+        return this.parentView.getModel().name;
     }
 
     /**
@@ -212,6 +277,7 @@ export default class FormFieldBase extends FormField {
           this.errorDiv.innerHTML = state.errorMessage;
           if (state.valid === false && !state.errorMessage) {
             this.errorDiv.innerHTML = 'There is an error in the field';
+            this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
           }
         }
     }

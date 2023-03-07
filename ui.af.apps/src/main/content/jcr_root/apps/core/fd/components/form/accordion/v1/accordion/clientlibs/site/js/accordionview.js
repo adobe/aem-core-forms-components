@@ -24,7 +24,8 @@
             self: `.${Accordion.bemBlock}`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
-            tooltipDiv: `.${Accordion.bemBlock}__shortdescription`
+            tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
+            label: `.${Accordion.bemBlock}__label`
         };
 
         constructor(params) {
@@ -44,7 +45,7 @@
         }
 
         getLabel() {
-            return null;
+            return this.element.querySelector(Accordion.selectors.label);
         }
 
         getErrorDiv() {

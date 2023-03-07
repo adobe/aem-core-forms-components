@@ -7,7 +7,7 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "number[]",
-  "required": false,
+  "required": true,
   "minItems": 1,
   "maxItems": 2,
   "constraintMessages": {
@@ -24,8 +24,7 @@
     1
   ],
   "label": {
-    "richText": false,
-    "visible": true,
+    "visible": false,
     "value": "def"
   },
   "screenReaderText": "'Custom screen reader text'",

@@ -97,7 +97,7 @@
     });
 
     it("switch tab in runtime using keyboard", () => {
-       
+        tab1().click();
         tab1().trigger('keydown',{
             keyCode: 40
         });

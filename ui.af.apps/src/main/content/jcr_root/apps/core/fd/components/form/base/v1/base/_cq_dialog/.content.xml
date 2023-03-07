@@ -64,6 +64,7 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     name="./hideTitle"
                                                     text="Hide title"
+                                                    uncheckedValue="false"
                                                     value="true"/>
                                             <placeholder
                                                     jcr:primaryType="nt:unstructured"

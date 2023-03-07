@@ -94,29 +94,29 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop) ;
         });
 
-
-
-
         it('verify editFormat Value Getting saved correctly',function(){
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
-            cy.wait(1000);
-            cy.get(numberInputBlockBemSelector+'__leaddigits').clear();
-            cy.get(numberInputBlockBemSelector+'__leaddigits').type(4);
-            cy.get(numberInputBlockBemSelector+'__fracdigits').clear();
-            cy.get(numberInputBlockBemSelector+'__fracdigits').type(4);
-            cy.get('.cq-dialog-submit').click();
-            cy.wait(1000);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
-            cy.get(numberInputBlockBemSelector+'__leaddigits').should('have.value',4);
-            cy.get(numberInputBlockBemSelector+'__fracdigits').should('have.value',4);
-            cy.wait(1000);
-            cy.get('.cq-dialog-cancel').should('be.visible').click({force:true});
-            cy.deleteComponentByPath(numberInputDrop) ;
+            cy.wait(1000).then(() => {
+                cy.get(numberInputBlockBemSelector+'__leaddigits').clear();
+                cy.get(numberInputBlockBemSelector+'__leaddigits').type(4);
+                cy.get(numberInputBlockBemSelector+'__fracdigits').clear();
+                cy.get(numberInputBlockBemSelector+'__fracdigits').type(4);
+                cy.get('.cq-dialog-submit').click();
+                cy.wait(1000).then(() => {
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+                    cy.invokeEditableAction(editDialogConfigurationSelector);
+                    cy.get(numberInputBlockBemSelector+'__editdialog').contains('Formats').click({force:true});
+                    cy.get(numberInputBlockBemSelector+'__leaddigits').should('have.value',4);
+                    cy.get(numberInputBlockBemSelector+'__fracdigits').should('have.value',4);
+                    cy.wait(1000).then(() => {
+                        cy.get('.cq-dialog-cancel').should('be.visible').click({force:true});
+                        cy.deleteComponentByPath(numberInputDrop) ;
+                    });
+                });
+            });
         })
     });
 
@@ -130,8 +130,6 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
-            // conditionally clean the test, when there are retries
-            cy.cleanTest(numberInputDrop);
         });
 
         it('insert aem forms NumberInput', function () {
@@ -140,23 +138,25 @@ describe('Page - Authoring', function () {
         });
 
         it('open edit dialog of aem forms NumberInput', { retries: 3 }, function() {
-            dropNumberInputInSites();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            cy.get("[name='./name']").should("exist");
-            cy.get("[name='./jcr:title']").should("exist");
-            cy.get("[name='./hideTitle']").should("exist");
-            cy.get("[name='./placeholder']").should("exist");
-            cy.get("[name='./type']").should("exist");
-            cy.get("[name='./default']").should("exist");
-            cy.get("[name='./minimum']").should("exist");
-            cy.get("[name='./exclusiveMinimum']").should("exist");
-            cy.get("[name='./maximum']").should("exist");
-            cy.get("[name='./exclusiveMaximum']").should("exist");
-            cy.get('.cq-dialog-cancel').should('be.visible');
-            cy.get('.cq-dialog-submit').should('be.visible');
-            cy.get('.cq-dialog-cancel').click({force:true});
-            cy.deleteComponentByPath(numberInputDrop);
+            cy.cleanTest(numberInputDrop).then(function(){
+                dropNumberInputInSites();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+                cy.get("[name='./name']").should("exist");
+                cy.get("[name='./jcr:title']").should("exist");
+                cy.get("[name='./hideTitle']").should("exist");
+                cy.get("[name='./placeholder']").should("exist");
+                cy.get("[name='./type']").should("exist");
+                cy.get("[name='./default']").should("exist");
+                cy.get("[name='./minimum']").should("exist");
+                cy.get("[name='./exclusiveMinimum']").should("exist");
+                cy.get("[name='./maximum']").should("exist");
+                cy.get("[name='./exclusiveMaximum']").should("exist");
+                cy.get('.cq-dialog-cancel').should('be.visible');
+                cy.get('.cq-dialog-submit').should('be.visible');
+                cy.get('.cq-dialog-cancel').click({force:true});
+                cy.deleteComponentByPath(numberInputDrop);
+            });
         });
         
     });
