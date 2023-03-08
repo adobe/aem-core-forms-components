@@ -154,6 +154,7 @@
                                     <CYPRESS_baseUrl>${AEM_AUTHOR_URL}</CYPRESS_baseUrl>
                                     <crx.username>${AEM_AUTHOR_USERNAME}</crx.username>
                                     <crx.password>${AEM_AUTHOR_PASSWORD}</crx.password>
+                                    <forms.far>${FORMS_FAR}</forms.far> <!-- value is addon or addon-latest -->
                                 </environmentVariables>
                             </environmentVariables>
                         </configuration>

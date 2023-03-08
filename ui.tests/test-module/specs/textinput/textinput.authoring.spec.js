@@ -144,20 +144,23 @@ describe('Page - Authoring', function () {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
-    it('Test z-index of Rule editor iframe', function () {
-      dropTextInputInSites();
-      cy.openSidePanelTab("Content Tree");
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-      cy.invokeEditableAction("[data-action='editexpression']");
-      cy.get("#af-rule-editor").should("be.visible");
-      cy.get("#af-rule-editor")
-          .invoke("css", "z-index")
-          .should("equal", '10');
-      getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-      getRuleEditorIframe().find("#create-rule-button").should("be.visible");
-      cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
-      getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
-      cy.deleteComponentByPath(textInputDrop);
-    });
+    // conditionally run the test on latest addon
+    if (cy.af.isLatestAddon()) {
+      it('Test z-index of Rule editor iframe', function () {
+          dropTextInputInSites();
+          cy.openSidePanelTab("Content Tree");
+          cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+          cy.invokeEditableAction("[data-action='editexpression']");
+          cy.get("#af-rule-editor").should("be.visible");
+          cy.get("#af-rule-editor")
+              .invoke("css", "z-index")
+              .should("equal", '10');
+          getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+          getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+          cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
+          getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+          cy.deleteComponentByPath(textInputDrop);
+      });
+    }
   });
 });
