@@ -79,8 +79,10 @@ describe('Button - Authoring', function () {
             cy.deleteComponentByPath(buttonDrop);
         });
 
-        it ('open edit dialog of Button', function(){
-            testButtonBehaviour(buttonEditPathSelector, buttonDrop);
+        it ('open edit dialog of Button',{ retries: 3 }, function(){
+            cy.cleanTest(buttonDrop).then(function(){
+                testButtonBehaviour(buttonEditPathSelector, buttonDrop);
+            });
         })
     })
 

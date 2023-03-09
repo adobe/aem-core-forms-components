@@ -18,5 +18,15 @@
 cy.af = {
     getEditorUrl : (pagePath) => {
         return (Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "") + "/editor.html" + pagePath + ".html"
+    },
+
+    isLatestAddon : () => {
+        // if not defined always return true for local execution to pass
+        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "addon-latest";
+    },
+
+    isReleasedAddon : () => {
+        // if not defined always return true for local execution to pass
+        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "addon";
     }
 };
