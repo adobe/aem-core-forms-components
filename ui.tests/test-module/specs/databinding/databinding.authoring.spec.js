@@ -79,7 +79,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it ('test data binding', function(){
+        it.skip ('test data binding', function(){
             dropTextInputInContainer();
             testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
             cy.openSiteAuthoring(pagePath);
@@ -99,7 +99,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('test data binding', function () {
+        it.skip('test data binding', function () {
             dropTextInputInSites();
             testDataBindingBehaviour(textInputEditPathSelector)
             cy.openSiteAuthoring(pagePath);

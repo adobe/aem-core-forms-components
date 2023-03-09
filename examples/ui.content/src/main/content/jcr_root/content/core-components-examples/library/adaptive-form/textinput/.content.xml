@@ -94,8 +94,6 @@
                             <guideContainer
                               fd:version="2.1"
                               fieldType="form"
-                              schemaType="jsonschema"
-                              schemaRef="/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json"
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="forms-components-examples/components/form/container">
                                 <container
