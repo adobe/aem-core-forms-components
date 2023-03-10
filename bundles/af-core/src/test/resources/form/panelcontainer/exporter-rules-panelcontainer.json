@@ -4,8 +4,8 @@
   "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-  ":items":[
-    {
+  ":items": {
+    "textinput" : {
       "id": "textinput-2d7a7460fa",
       "fieldType": "text-input",
       "name": "abc",
@@ -26,21 +26,11 @@
         "fd:dor": {
           "dorExclusion": false
         },
-        "events": {
-          "custom:setProperty": [
-            "$event.payload"
-          ]
-        },
-        "properties": {
-          "fd:dor": {
-            "dorExclusion": false
-          },
-          "fd:path": "/content/rules-panelcontainer/textinput"
-        },
-        ":type": "core/fd/components/form/textinput/v1/textinput"
-      }
-   }
-  ],
+        "fd:path": "/content/rules-panelcontainer/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+   },
   ":itemsOrder": ["textinput"],
   "label": {
     "value": "dependent names"
