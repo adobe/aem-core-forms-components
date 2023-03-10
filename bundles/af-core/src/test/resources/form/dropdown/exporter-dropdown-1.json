@@ -1,19 +1,24 @@
 {
-  "id": "textinput-566534ba93",
+  "id": "dropdown-2bbdc7f660",
   "dataRef": "a.b",
-  "fieldType": "text-input",
+  "fieldType": "drop-down",
   "name": "abc",
   "visible": false,
   "description": "dummy",
   "tooltip": "test-short-description",
-  "type": "string",
+  "type": "number",
   "enabled": true,
+  "required": false,
   "constraintMessages": {
     "type": "incorrect type"
   },
   "readOnly": false,
-  "format": "email",
-  "default": "abc",
+  "enforceEnum": true,
+  "enumNames": [
+    "m",
+    "f",
+    "o"
+  ],
   "label": {
     "visible": true,
     "value": "def"
@@ -31,7 +36,12 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/textinput-format"
+    "fd:path": "/content/dropdown-1"
   },
-  ":type": "core/fd/components/form/textinput/v1/textinput"
+  "enum": [
+    0,
+    1,
+    2
+  ],
+  ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }

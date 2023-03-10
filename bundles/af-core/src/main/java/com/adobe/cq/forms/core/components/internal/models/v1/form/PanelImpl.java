@@ -52,7 +52,7 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
 
     @JsonIgnore
     @Override
-    public boolean isRequired() {
+    public Boolean isRequired() {
         return false; // overriding since base is defining isRequired, to avoid creating a new interface, added jsonIgnore here
     }
 

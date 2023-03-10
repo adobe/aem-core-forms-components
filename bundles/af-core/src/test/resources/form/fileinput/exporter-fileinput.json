@@ -1,39 +1,24 @@
 {
   "id": "fileinput-8857e83bbf",
-  "dataRef": "a.b",
   "fieldType": "file-input",
   "name": "abc",
-  "visible": false,
-  "description": "dummy",
-  "tooltip": "test-short-description",
-  "type": "file",
-  "required": false,
-  "enabled": true,
-  "constraintMessages": {
-    "type": "incorrect type"
-  },
-  "readOnly": false,
-  "maxFileSize": "4MB",
-  "accept": [
-    "audio/*",
-    "video/*",
-    "image/*"
-  ],
-  "screenReaderText": "'Custom screen reader text'",
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "def"
   },
+  "type": "file",
+  "accept": [
+    "audio/*",
+    " video/*",
+    " image/*",
+    " text/*",
+    " application/pdf"
+  ],
   "events": {
     "custom:setProperty": [
       "$event.payload"
     ]
   },
   "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
     "fd:dor": {
       "dorExclusion": false
     },

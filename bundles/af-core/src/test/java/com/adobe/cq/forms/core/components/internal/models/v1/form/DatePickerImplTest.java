@@ -38,9 +38,11 @@ import static org.mockito.Mockito.mock;
 public class DatePickerImplTest {
     private static final String BASE = "/form/datepicker";
     private static final String CONTENT_ROOT = "/content";
-    private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
+    private static final String PATH_DATEPICKER_CUSTOMIZED = CONTENT_ROOT + "/datepicker-customized";
 
     private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
+
+    private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -51,7 +53,7 @@ public class DatePickerImplTest {
 
     @Test
     void testExportedType() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(FormConstants.RT_FD_FORM_DATE_PICKER_V1, datePicker.getExportedType());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getExportedType()).thenCallRealMethod();
@@ -60,13 +62,13 @@ public class DatePickerImplTest {
 
     @Test
     void testFieldType() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(FieldType.DATE_INPUT.getValue(), datePicker.getFieldType());
     }
 
     @Test
     void testGetLabel() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals("def", datePicker.getLabel().getValue());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getLabel()).thenCallRealMethod();
@@ -74,16 +76,16 @@ public class DatePickerImplTest {
 
         Label labelMock = Mockito.mock(Label.class);
         Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
+        assertEquals(null, labelMock.isRichText());
         Mockito.when(labelMock.getValue()).thenCallRealMethod();
         assertEquals(null, labelMock.getValue());
         Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(null, labelMock.isVisible());
     }
 
     @Test
     void testGetName() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals("abc", datePicker.getName());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getName()).thenCallRealMethod();
@@ -92,7 +94,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetDataRef() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals("a.b", datePicker.getDataRef());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getDataRef()).thenCallRealMethod();
@@ -101,7 +103,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetDescription() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals("dummy", datePicker.getDescription());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getDescription()).thenCallRealMethod();
@@ -110,7 +112,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetScreenReaderText() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals("'Custom screen reader text'", datePicker.getScreenReaderText());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getScreenReaderText()).thenCallRealMethod();
@@ -120,6 +122,15 @@ public class DatePickerImplTest {
     @Test
     void testIsVisible() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        assertEquals(null, datePicker.isVisible());
+        DatePicker datePickerMock = Mockito.mock(DatePicker.class);
+        Mockito.when(datePickerMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, datePickerMock.isVisible());
+    }
+
+    @Test
+    void testIsVisibleForCustomized() {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(false, datePicker.isVisible());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isVisible()).thenCallRealMethod();
@@ -129,6 +140,15 @@ public class DatePickerImplTest {
     @Test
     void testIsEnabled() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        assertEquals(null, datePicker.isEnabled());
+        DatePicker datePickerMock = Mockito.mock(DatePicker.class);
+        Mockito.when(datePickerMock.isEnabled()).thenCallRealMethod();
+        assertEquals(null, datePickerMock.isEnabled());
+    }
+
+    @Test
+    void testIsEnabledForCustomized() {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(false, datePicker.isEnabled());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isEnabled()).thenCallRealMethod();
@@ -137,19 +157,28 @@ public class DatePickerImplTest {
 
     @Test
     void testGetMinimumDate() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(new Date("Fri Feb 04 2022 05:30:00 GMT+0530"), datePicker.getMinimumDate());
     }
 
     @Test
     void testGetDefault() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertArrayEquals(new Object[] { new Date("Mon Feb 07 2022 05:30:00 GMT+0530") }, datePicker.getDefault());
     }
 
     @Test
     void testIsReadOnly() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        assertEquals(null, datePicker.isReadOnly());
+        DatePicker datePickerMock = Mockito.mock(DatePicker.class);
+        Mockito.when(datePickerMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(null, datePickerMock.isReadOnly());
+    }
+
+    @Test
+    void testIsReadOnlyForCustomized() {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(true, datePicker.isReadOnly());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isReadOnly()).thenCallRealMethod();
@@ -158,7 +187,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetPlaceHolder() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(null, datePicker.getPlaceHolder());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getPlaceHolder()).thenCallRealMethod();
@@ -167,7 +196,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetDisplayFormat() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(null, datePicker.getDisplayFormat());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getDisplayFormat()).thenCallRealMethod();
@@ -176,7 +205,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetEditFormat() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(null, datePicker.getEditFormat());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getEditFormat()).thenCallRealMethod();
@@ -185,7 +214,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetDataFormat() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         assertEquals(null, datePicker.getDataFormat());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getDataFormat()).thenCallRealMethod();
@@ -194,7 +223,7 @@ public class DatePickerImplTest {
 
     @Test
     void testGetConstraintMessages() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         Map<ConstraintType, String> constraintsMessages = datePicker.getConstraintMessages();
         assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
@@ -206,6 +235,12 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
+    }
+
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_CUSTOMIZED));
     }
 
     @Test

@@ -1,22 +1,14 @@
 {
   "id":"panel-d29e24f4ca",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-
   "items":[
     {
       "id": "textinput-3a2afcbdfd",
       "fieldType": "text-input",
       "name": "abc",
-      "visible": false,
-      "description": "dummy",
       "type": "string",
-      "required": false,
       "label": {
-        "richText": false,
-        "visible": true,
         "value": "def"
       },
       "events": {
@@ -34,8 +26,6 @@
     }
   ],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {
@@ -44,9 +34,6 @@
     ]
   },
   "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
     "fd:path": "/content/panel"
   },
   ":type": "core/fd/components/form/panel/v1/panel"

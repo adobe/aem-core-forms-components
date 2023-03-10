@@ -65,8 +65,6 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
-            // conditionally clean the test, when there are retries
-            cy.cleanTest(wizardLayoutDrop);
         });
 
         it('verify Basic tab in edit dialog of Wizard',function (){
@@ -87,25 +85,27 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(wizardLayoutDrop) ;
         });
 
-        it('verify Navigation Working between tabs in Authoring', function(){
-            dropWizardInContainer();
-            addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
-            addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-            cy.invokeEditableAction(editDialogNavigationPanelSelector);
-            cy.wait(2000).then(() => {
-                cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-                cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force:true});
-                cy.get('body').click( 0,0);
-                cy.get('div'+numberInputDataPath).should('not.be.visible');
+        it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
+            cy.cleanTest(wizardLayoutDrop).then(function() {
+                dropWizardInContainer();
+                addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
+                addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
-                cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force:true});
-                cy.get('body').click( 0,0);
-                cy.get('div'+textInputDataPath).should('not.be.visible');
-                cy.deleteComponentByPath(wizardLayoutDrop);
+                cy.wait(2000).then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click({force: true});
+                    cy.get('body').click(0, 0);
+                    cy.get('div' + numberInputDataPath).should('not.be.visible');
+                    cy.invokeEditableAction(editDialogNavigationPanelSelector);
+                    cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click({force: true});
+                    cy.get('body').click(0, 0);
+                    cy.get('div' + textInputDataPath).should('not.be.visible');
+                    cy.deleteComponentByPath(wizardLayoutDrop);
+                });
             });
         });
-    })
+    });
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/wizard",
