@@ -2,7 +2,7 @@
   "id": "panelcontainer-94f9ea9e7d",
   "fieldType": "panel",
   "name": "abc",
-  "items": [
+  ":items": [
     {
       "id": "textinput-6c994d85b4",
       "fieldType": "text-input",
@@ -20,11 +20,22 @@
         "fd:dor": {
           "dorExclusion": false
         },
-        "fd:path": "/content/panelcontainer/textinput"
-      },
-      ":type": "core/fd/components/form/textinput/v1/textinput"
-    }
+        "events": {
+          "custom:setProperty": [
+            "$event.payload"
+          ]
+        },
+        "properties": {
+          "fd:dor": {
+            "dorExclusion": false
+          },
+          "fd:path": "/content/panelcontainer/textinput"
+        },
+        ":type": "core/fd/components/form/textinput/v1/textinput"
+      }
+   }
   ],
+  ":itemsOrder" : ["textinput"],
   "label": {
     "value": "dependent names"
   },

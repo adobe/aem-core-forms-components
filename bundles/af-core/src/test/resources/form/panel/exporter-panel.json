@@ -2,7 +2,7 @@
   "id":"panel-d29e24f4ca",
   "fieldType":"panel",
   "name":"abc",
-  "items":[
+  ":items":[
     {
       "id": "textinput-3a2afcbdfd",
       "fieldType": "text-input",
@@ -25,6 +25,7 @@
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   ],
+  ":itemsOrder" : ["textinput"],
   "label": {
     "value": "dependent names"
   },
