@@ -30,7 +30,7 @@
      data-cmp-visible="${checkboxgroup.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, labelRichText=checkboxgroup.label.richText, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
@@ -44,7 +44,7 @@
                            checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                            disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                            aria-readonly="${checkboxgroup.readOnly ? 'true' : 'false'}"/>
-                    <span>${checkboxgroup.enumNames[itemList.index]}</span>
+                    <span>${checkboxgroup.enumNames[itemList.index] @ context = checkboxgroup.label.richText ? 'html' : 'text'}</span>
                 </label>
             </div>
         </div>

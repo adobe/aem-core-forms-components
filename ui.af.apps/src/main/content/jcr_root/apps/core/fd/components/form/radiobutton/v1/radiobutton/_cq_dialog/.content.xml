@@ -46,6 +46,14 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <isTitleRichText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-base__istitlerichtext"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./isTitleRichText"
+                                                    text="Allow Rich Text for Title and Options"
+                                                    value="true">
+                                            </isTitleRichText>
                                             <placeholder jcr:primaryType="nt:unstructured"
                                                          sling:hideResource="{Boolean}true"/>
                                             <type jcr:primaryType="nt:unstructured"

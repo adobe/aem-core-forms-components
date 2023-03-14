@@ -30,7 +30,7 @@
      data-cmp-enabled="${telText.enabled ? 'true' : 'false'}"
      id="${component.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=telText.label.value, labelVisible=telText.label.visible, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=component.id, labelValue=telText.label.value, labelVisible=telText.label.visible, labelRichText=telText.label.richText, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
     <input title="${telText.tooltipVisible ? '' : telText.tooltipText}"
            class="cmp-adaptiveform-telephoneinput__widget"
            aria-label="${telText.label.visible && telText.label.value}"
