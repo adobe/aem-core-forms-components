@@ -5,11 +5,9 @@
   "visible": false,
   "description": "dummy",
   "type": "string",
-  "required": false,
   "enabled": true,
   "readOnly": false,
   "label": {
-    "richText": false,
     "visible": true,
     "value": "def"
   },

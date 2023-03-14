@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="ko-kr"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content/dictionary">
+    <_x0032_b026106-e1fb-443d-8f57-e40d87f948ba
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##5619"
+        sling:message="AF2 형식 번역"/>
+    <_x0034_d5d7bba-1f46-4b4c-8c74-60eded54b8d0
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##accordion##jcr:title##257"
+        sling:message="아코디언"/>
+    <b5d7d064-9595-4b71-ba75-0c1f79a3b611
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##button##jcr:title##7236"
+        sling:message="단추"/>
+    <cf7e68df-97dd-4ab3-8f2c-91a4af55df66
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##jcr:title##3503"
+        sling:message="확인란 그룹"/>
+    <fd50b3e8-a753-4eb8-a0da-12e0f1e71682
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##0"
+        sling:message="항목 1"/>
+    <_x0038_9310675-e07e-4986-b2b0-998ef28b013c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##1"
+        sling:message=" 항목 2"/>
+    <e075a8da-bbd1-4c53-b91f-295104e5f7f1
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##datepicker##jcr:title##9506"
+        sling:message="날짜 입력"/>
+    <_x0036_fdd374a-37bb-4c54-b7a5-8d02189b927a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##dropdown##jcr:title##4797"
+        sling:message="드롭다운"/>
+    <_x0033_05a0d0c-1e2c-4a8a-8a49-510365454d9b
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##emailinput##jcr:title##7492"
+        sling:message="이메일 입력"/>
+    <d3f7a71f-7468-4c03-8876-8078745fa92b
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##jcr:title##6496"
+        sling:message="첨부파일"/>
+    <a8284e7a-650c-4940-a94e-9898be606ad5
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##buttonText##3328"
+        sling:message="붙이다"/>
+    <fe04c80c-c4bb-44d9-8868-9b816b3e870a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##tabsontop##jcr:title##9454"
+        sling:message="상단의 탭"/>
+    <_x0038_7d5357d-1128-441d-99aa-1b39177d6534
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##image##jcr:title##3969"
+        sling:message="이미지"/>
+    <_x0030_edaffd0-8186-42fc-a6c0-141710f8c83b
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##numberinput##jcr:title##9936"
+        sling:message="숫자 입력"/>
+    <cb2d133d-711b-4191-a23f-5db49656b4b4
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##jcr:title##8236"
+        sling:message="패널"/>
+    <ac166d6e-15a6-40b0-95ba-31d3a8268bc7
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##jcr:title##6191"
+        sling:message="라디오 버튼"/>
+    <e47a0aec-0b1c-439b-a9b2-e5fcceb18d9c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##0"
+        sling:message="항목 1"/>
+    <a55e96e5-e553-4c02-b118-a86bd41f2810
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##1"
+        sling:message="항목 2"/>
+    <_x0033_234918a-61df-4ec6-aba7-9ee58db82786
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##reset##jcr:title##3395"
+        sling:message="재설정"/>
+    <ac3a8adc-7695-4d79-8b2c-3765f13f2cf7
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##4521"
+        sling:message="전송"/>
+    <a45604ba-73b4-4484-892a-0ad90340d6f2
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##telephoneinput##jcr:title##8743"
+        sling:message="전화 입력"/>
+    <acc5ee7a-0abb-44f1-9bed-01642c8acb85
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##text##jcr:title##9404"
+        sling:message="문자 메시지"/>
+    <_x0036_c0df3e0-9906-4801-9a0e-34a652dd91c2
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##6594"
+        sling:message="텍스트 입력"/>
+    <e8ac90a8-8d27-48b5-9c4d-df4131a98552
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##title##jcr:title##8175"
+        sling:message="타이틀"/>
+    <_x0035_ea031e9-1eb9-4886-8352-1c1cb939200f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##wizard##jcr:title##299"
+        sling:message="마법사"/>
+</jcr:root>

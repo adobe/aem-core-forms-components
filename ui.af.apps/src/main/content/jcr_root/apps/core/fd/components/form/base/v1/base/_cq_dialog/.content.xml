@@ -35,134 +35,148 @@
                             active="{Boolean}true"
                             selected="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
-                            <name
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Name"
-                                    name="./name"
-                                    required="{Boolean}true">
-                                <granite:data
-                                        jcr:primaryType="nt:unstructured"
-                                        node-name-validation=""/>
-                            </name>
-                            <title
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Title"
-                                    name="./jcr:title"/>
-                            <hideTitle
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    name="./hideTitle"
-                                    text="Hide title"
-                                    value="true"/>
-                            <placeholder
-                                    jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-base__placeholder"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Placeholder text"
-                                    name="./placeholder"/>
-                            <enums jcr:primaryType="nt:unstructured"
-                                   sling:resourceType="granite/ui/components/coral/foundation/container"
-                                   sling:hideResource="{Boolean}true">
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <enumOptions jcr:primaryType="nt:unstructured"
-                                             sling:orderBefore="bindref"
-                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                             fieldDescription="Provide the pair of enum (data value) and enumName (display text) for each option."
-                                             fieldLabel="Options">
-                                        <field jcr:primaryType="nt:unstructured"
-                                               sling:resourceType="granite/ui/components/coral/foundation/container"
-                                               name="./enum">
-                                            <items jcr:primaryType="nt:unstructured">
-                                                <enum jcr:primaryType="nt:unstructured"
-                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                      granite:class="cmp-adaptiveform-base__enum"
-                                                      name="./enum"
-                                                      fieldLabel="Data value"
-                                                      fieldDescription="Specify the content to submit, when the option is selected."
-                                                      required="{Boolean}true"/>
-                                                <enumNames
-                                                       jcr:primaryType="nt:unstructured"
-                                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                       granite:class="cmp-adaptiveform-base__enumNames"
-                                                       name="./enumNames"
-                                                       fieldLabel="Display text"
-                                                       fieldDescription="Specify the content to display in the adaptive form."
-                                                       required="{Boolean}false"/>
-                                            </items>
-                                        </field>
-                                    </enumOptions>
-                                    <enumNames jcr:primaryType="nt:unstructured"
-                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                               granite:hidden="true">
-                                        <field jcr:primaryType="nt:unstructured"
-                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                               name="./enumNames"
-                                               granite:class="cmp-adaptiveform-base__enumNamesHidden"
-                                               granite:hidden="true"/>
-                                    </enumNames>
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <name
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Name"
+                                                    name="./name"
+                                                    required="{Boolean}true">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        node-name-validation=""/>
+                                            </name>
+                                            <title
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Title"
+                                                    name="./jcr:title"/>
+                                            <hideTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./hideTitle"
+                                                    text="Hide title"
+                                                    uncheckedValue="false"
+                                                    value="true"/>
+                                            <placeholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-base__placeholder"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Placeholder text"
+                                                    name="./placeholder"/>
+                                            <enums jcr:primaryType="nt:unstructured"
+                                                   sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                   sling:hideResource="{Boolean}true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                                                 sling:orderBefore="bindref"
+                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                 fieldDescription="Provide the pair of enum (data value) and enumName (display text) for each option."
+                                                                 fieldLabel="Options">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                               name="./enum">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <enum jcr:primaryType="nt:unstructured"
+                                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                      granite:class="cmp-adaptiveform-base__enum"
+                                                                      name="./enum"
+                                                                      fieldLabel="Data value"
+                                                                      fieldDescription="Specify the content to submit, when the option is selected."
+                                                                      required="{Boolean}true"/>
+                                                                <enumNames
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        granite:class="cmp-adaptiveform-base__enumNames"
+                                                                        name="./enumNames"
+                                                                        fieldLabel="Display text"
+                                                                        fieldDescription="Specify the content to display in the adaptive form."
+                                                                        required="{Boolean}false"/>
+                                                            </items>
+                                                        </field>
+                                                    </enumOptions>
+                                                    <enumNames jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                               granite:hidden="true">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                               name="./enumNames"
+                                                               granite:class="cmp-adaptiveform-base__enumNamesHidden"
+                                                               granite:hidden="true"/>
+                                                    </enumNames>
+                                                </items>
+                                            </enums>
+                                            <bindref
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    emptyText="Bind reference"
+                                                    fieldLabel="Bind reference"
+                                                    name="./dataRef">
+                                            </bindref>
+                                            <dorBindref
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
+                                                    emptyText="Document of Record bind reference"
+                                                    fieldDescription="You can specify a Document of Record Bind Reference to link an adaptive form field with a document of record field. When you fill any value in the linked field of an adaptive form, the value is also displayed in the linked field of the corresponding document of a record."
+                                                    fieldLabel="Document of Record bind reference"
+                                                    name="./dorBindRef"/>
+                                            <visible
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    granite:class="cmp-adaptiveform-base__visible"
+                                                    name="./visible"
+                                                    text="Hide component"
+                                                    uncheckedValue="true"
+                                                    value="false">
+                                            </visible>
+                                            <visible-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./visible@TypeHint"
+                                                    value="Boolean"/>
+                                            <enabled
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    granite:class="cmp-adaptiveform-base__enabled"
+                                                    name="./enabled"
+                                                    text="Disable component"
+                                                    uncheckedValue="true"
+                                                    value="false">
+                                            </enabled>
+                                            <enabled-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./enabled@TypeHint"
+                                                    value="Boolean"/>
+                                            <toBeRemoved
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <readonly
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    granite:class="cmp-adaptiveform-base__readOnly"
+                                                    name="./readOnly"
+                                                    value="true"
+                                                    uncheckedValue="false"
+                                                    text="Read-only">
+                                            </readonly>
+                                            <readonly-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./readOnly@TypeHint"
+                                                    value="Boolean"/>
+                                        </items>
+                                    </column>
                                 </items>
-                            </enums>
-                            <bindref
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    emptyText="Bind reference"
-                                    fieldLabel="Bind reference"
-                                    name="./dataRef">
-                            </bindref>
-                            <dorBindref
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="fd/af/authoring/components/granite/form/bindrefselector"
-                                    emptyText="Document of Record bind reference"
-                                    fieldDescription="You can specify a Document of Record Bind Reference to link an adaptive form field with a document of record field. When you fill any value in the linked field of an adaptive form, the value is also displayed in the linked field of the corresponding document of a record."
-                                    fieldLabel="Document of Record bind reference"
-                                    name="./dorBindRef"/>
-                            <visible
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    granite:class="cmp-adaptiveform-base__visible"
-                                    name="./visible"
-                                    text="Hide component"
-                                    uncheckedValue="true"
-                                    value="false">
-                            </visible>
-                            <visible-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./visible@TypeHint"
-                                    value="Boolean"/>
-                            <enabled
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    granite:class="cmp-adaptiveform-base__enabled"
-                                    name="./enabled"
-                                    text="Disable component"
-                                    uncheckedValue="true"
-                                    value="false">
-                            </enabled>
-                            <enabled-typehint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    name="./enabled@TypeHint"
-                                    value="Boolean"/>
-                            <toBeRemoved
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:hideResource="{Boolean}true"/>
-                            <readonly
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              granite:class="cmp-adaptiveform-base__readOnly"
-                              name="./readOnly"
-                              value="true"
-                              uncheckedValue="false"
-                              text="Read-only">
-                            </readonly>
-                            <readonly-typehint
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                              name="./readOnly@TypeHint"
-                              value="Boolean"/>
+                            </columns>
                         </items>
                         <parentConfig
                                 jcr:primaryType="nt:unstructured"
@@ -174,30 +188,43 @@
                             margin="{Boolean}true"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                     <items jcr:primaryType="nt:unstructured">
-                        <required
+                        <columns
                                 jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                checked="{Boolean}false"
-                                fieldLabel="Required"
-                                labelledBy="Mandatory"
-                                name="./required"
-                                granite:class="cmp-adaptiveform-base__required"
-                                text="Required"
-                                value="true">
-                        </required>
-                        <mandatoryMessage
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                fieldDescription="Error message shown when required field is left empty."
-                                granite:class="cmp-adaptiveform-base__mandatorymessage"
-                                fieldLabel="Error message"
-                                name="./mandatoryMessage"/>
-                        <validateExpMessage
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                fieldDescription="Displayed when validation script fails."
-                                fieldLabel="Script validation message"
-                                name="./validateExpMessage"/>
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                            <items jcr:primaryType="nt:unstructured">
+                                <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <required
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                checked="{Boolean}false"
+                                                fieldLabel="Required"
+                                                labelledBy="Mandatory"
+                                                name="./required"
+                                                granite:class="cmp-adaptiveform-base__required"
+                                                text="Required"
+                                                value="true">
+                                        </required>
+                                        <mandatoryMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldDescription="Error message shown when required field is left empty."
+                                                granite:class="cmp-adaptiveform-base__mandatorymessage"
+                                                fieldLabel="Error message"
+                                                name="./mandatoryMessage"/>
+                                        <validateExpMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldDescription="Displayed when validation script fails."
+                                                fieldLabel="Script validation message"
+                                                name="./validateExpMessage"/>
+                                    </items>
+                                </column>
+                            </items>
+                        </columns>
                     </items>
                     </validation>
                     <help
@@ -205,153 +232,167 @@
                             jcr:title="Help Content"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <shortDescription
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                              fieldLabel="Short description"
-                              fieldDescription="Provide the text to display as a tooltip when a user hovers on the field."
-                              name="./tooltip"
-                              useFixedInlineToolbar="{Boolean}true">
-                                <rtePlugins jcr:primaryType="nt:unstructured">
-                                    <links jcr:primaryType="nt:unstructured">
-                                        <linkDialogConfig
-                                          jcr:primaryType="nt:unstructured"
-                                          height="{Long}316">
-                                            <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
-                                        </linkDialogConfig>
-                                    </links>
-                                    <format
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <lists
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <justify
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <keys
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <paraformat
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <misctools
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                    <fullscreen
-                                      jcr:primaryType="nt:unstructured"
-                                      features="*"/>
-                                </rtePlugins>
-                                <uiSettings jcr:primaryType="nt:unstructured">
-                                    <cui jcr:primaryType="nt:unstructured">
-                                        <inline
-                                          jcr:primaryType="nt:unstructured"
-                                          toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <justify
-                                                  jcr:primaryType="nt:unstructured"
-                                                  items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
-                                                  ref="justify"/>
-                                                <lists
-                                                  jcr:primaryType="nt:unstructured"
-                                                  items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
-                                                  ref="lists"/>
-                                            </popovers>
-                                        </inline>
-                                        <fullscreen
-                                          jcr:primaryType="nt:unstructured"
-                                          toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <styles
-                                                  jcr:primaryType="nt:unstructured"
-                                                  items="styles:getStyles:styles-pulldown"
-                                                  ref="styles"/>
-                                                <paraformat
-                                                  jcr:primaryType="nt:unstructured"
-                                                  items="paraformat:getFormats:paraformat-pulldown"
-                                                  ref="paraformat"/>
-                                            </popovers>
-                                        </fullscreen>
-                                    </cui>
-                                </uiSettings>
-                            </shortDescription>
-                            <shortDescVisible
-                              jcr:primaryType="nt:unstructured"
-                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                              name="./tooltipVisible"
-                              text="Always show short description"
-                              fieldDescription="Select the option to display the short description around the component and no tooltip text when a user hovers over the component."
-                              value="true"/>
-                            <longDescription
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
-                                    fieldLabel="Help text"
-                                    name="./description"
-                                    useFixedInlineToolbar="{Boolean}true">
-                                <rtePlugins jcr:primaryType="nt:unstructured">
-                                    <links jcr:primaryType="nt:unstructured">
-                                        <linkDialogConfig
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                            <items jcr:primaryType="nt:unstructured">
+                                <column
+                                        jcr:primaryType="nt:unstructured"
+                                        granite:class="cq-RichText-FixedColumn-column"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <shortDescription
                                                 jcr:primaryType="nt:unstructured"
-                                                height="{Long}316">
-                                            <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
-                                        </linkDialogConfig>
-                                    </links>
-                                    <format
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <lists
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <justify
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <keys
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <paraformat
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <misctools
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                    <fullscreen
-                                            jcr:primaryType="nt:unstructured"
-                                            features="*"/>
-                                </rtePlugins>
-                                <uiSettings jcr:primaryType="nt:unstructured">
-                                    <cui jcr:primaryType="nt:unstructured">
-                                        <inline
-                                                jcr:primaryType="nt:unstructured"
-                                                toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <justify
+                                                sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                                fieldLabel="Short description"
+                                                fieldDescription="Provide the text to display as a tooltip when a user hovers on the field."
+                                                name="./tooltip"
+                                                useFixedInlineToolbar="{Boolean}true">
+                                            <rtePlugins jcr:primaryType="nt:unstructured">
+                                                <links jcr:primaryType="nt:unstructured">
+                                                    <linkDialogConfig
+                                                            jcr:primaryType="nt:unstructured"
+                                                            height="{Long}316">
+                                                        <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
+                                                    </linkDialogConfig>
+                                                </links>
+                                                <format
                                                         jcr:primaryType="nt:unstructured"
-                                                        items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
-                                                        ref="justify"/>
+                                                        features="*"/>
                                                 <lists
                                                         jcr:primaryType="nt:unstructured"
-                                                        items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
-                                                        ref="lists"/>
-                                            </popovers>
-                                        </inline>
-                                        <fullscreen
-                                                jcr:primaryType="nt:unstructured"
-                                                fieldDescription="Tap full screen for more options."
-                                                toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
-                                            <popovers jcr:primaryType="nt:unstructured">
-                                                <styles
+                                                        features="*"/>
+                                                <justify
                                                         jcr:primaryType="nt:unstructured"
-                                                        items="styles:getStyles:styles-pulldown"
-                                                        ref="styles"/>
+                                                        features="*"/>
+                                                <keys
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
                                                 <paraformat
                                                         jcr:primaryType="nt:unstructured"
-                                                        items="paraformat:getFormats:paraformat-pulldown"
-                                                        ref="paraformat"/>
-                                            </popovers>
-                                        </fullscreen>
-                                    </cui>
-                                </uiSettings>
-                            </longDescription>
+                                                        features="*"/>
+                                                <misctools
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <fullscreen
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                            </rtePlugins>
+                                            <uiSettings jcr:primaryType="nt:unstructured">
+                                                <cui jcr:primaryType="nt:unstructured">
+                                                    <inline
+                                                            jcr:primaryType="nt:unstructured"
+                                                            toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
+                                                        <popovers jcr:primaryType="nt:unstructured">
+                                                            <justify
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                                                    ref="justify"/>
+                                                            <lists
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                                                    ref="lists"/>
+                                                        </popovers>
+                                                    </inline>
+                                                    <fullscreen
+                                                            jcr:primaryType="nt:unstructured"
+                                                            toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
+                                                        <popovers jcr:primaryType="nt:unstructured">
+                                                            <styles
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="styles:getStyles:styles-pulldown"
+                                                                    ref="styles"/>
+                                                            <paraformat
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="paraformat:getFormats:paraformat-pulldown"
+                                                                    ref="paraformat"/>
+                                                        </popovers>
+                                                    </fullscreen>
+                                                </cui>
+                                            </uiSettings>
+                                        </shortDescription>
+                                        <shortDescVisible
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                name="./tooltipVisible"
+                                                text="Always show short description"
+                                                fieldDescription="Select the option to display the short description around the component and no tooltip text when a user hovers over the component."
+                                                value="true"/>
+                                        <longDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                                fieldLabel="Help text"
+                                                name="./description"
+                                                useFixedInlineToolbar="{Boolean}true">
+                                            <rtePlugins jcr:primaryType="nt:unstructured">
+                                                <links jcr:primaryType="nt:unstructured">
+                                                    <linkDialogConfig
+                                                            jcr:primaryType="nt:unstructured"
+                                                            height="{Long}316">
+                                                        <linkAttributes jcr:primaryType="cq:WidgetCollection"/>
+                                                    </linkDialogConfig>
+                                                </links>
+                                                <format
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <lists
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <justify
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <keys
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <paraformat
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <misctools
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                                <fullscreen
+                                                        jcr:primaryType="nt:unstructured"
+                                                        features="*"/>
+                                            </rtePlugins>
+                                            <uiSettings jcr:primaryType="nt:unstructured">
+                                                <cui jcr:primaryType="nt:unstructured">
+                                                    <inline
+                                                            jcr:primaryType="nt:unstructured"
+                                                            toolbar="[format#bold,format#italic,format#underline,fullscreen#start]">
+                                                        <popovers jcr:primaryType="nt:unstructured">
+                                                            <justify
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                                                    ref="justify"/>
+                                                            <lists
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                                                    ref="lists"/>
+                                                        </popovers>
+                                                    </inline>
+                                                    <fullscreen
+                                                            jcr:primaryType="nt:unstructured"
+                                                            fieldDescription="Tap full screen for more options."
+                                                            toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,-,links#modifylink,links#unlink,links#anchor,tracklinks#modifylinktracking,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,image#imageProps,-,lists#unordered,lists#ordered,lists#outdent,lists#indent,-,misctools#sourceedit,fullscreen#finish]">
+                                                        <popovers jcr:primaryType="nt:unstructured">
+                                                            <styles
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="styles:getStyles:styles-pulldown"
+                                                                    ref="styles"/>
+                                                            <paraformat
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    items="paraformat:getFormats:paraformat-pulldown"
+                                                                    ref="paraformat"/>
+                                                        </popovers>
+                                                    </fullscreen>
+                                                </cui>
+                                            </uiSettings>
+                                        </longDescription>
+                                    </items>
+                                </column>
+                            </items>
+                        </columns>
                         </items>
                     </help>
                     <accessibility
@@ -359,47 +400,60 @@
                             jcr:title="Accessibility"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <assistPriority
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    granite:class="cmp-adaptiveform-base__assistpriority"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    emptyText="Select"
-                                    fieldLabel="Text for screen readers"
-                                    name="./assistPriority"
-                                    value="custom">
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">
-                                    <empty
+                                    <column
                                             jcr:primaryType="nt:unstructured"
-                                            text=""
-                                            value=""/>
-                                    <customText
-                                            jcr:primaryType="nt:unstructured"
-                                            text="Custom Text"
-                                            value="custom"/>
-                                    <description
-                                            jcr:primaryType="nt:unstructured"
-                                            text="Description"
-                                            value="description"/>
-                                    <caption
-                                            jcr:primaryType="nt:unstructured"
-                                            text="Title"
-                                            value="label"/>
-                                    <name
-                                            jcr:primaryType="nt:unstructured"
-                                            text="Name"
-                                            value="name"/>
-                                    <none
-                                            jcr:primaryType="nt:unstructured"
-                                            text="None"
-                                            value="none"/>
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <assistPriority
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-base__assistpriority"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    emptyText="Select"
+                                                    fieldLabel="Text for screen readers"
+                                                    name="./assistPriority"
+                                                    value="custom">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <empty
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text=""
+                                                            value=""/>
+                                                    <customText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Custom Text"
+                                                            value="custom"/>
+                                                    <description
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Description"
+                                                            value="description"/>
+                                                    <caption
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Title"
+                                                            value="label"/>
+                                                    <name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Name"
+                                                            value="name"/>
+                                                    <none
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="None"
+                                                            value="none"/>
+                                                </items>
+                                            </assistPriority>
+                                            <customText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-base__assistpriority-customtext"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldLabel="Custom text"
+                                                    name="./custom"/>
+                                        </items>
+                                    </column>
                                 </items>
-                            </assistPriority>
-                            <customText
-                                    jcr:primaryType="nt:unstructured"
-                                    wrapperClass="cmp-adaptiveform-base__assistpriority-customtext"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                    fieldLabel="Custom text"
-                                    name="./custom"/>
+                            </columns>
                         </items>
                     </accessibility>
                     <patterns
@@ -408,26 +462,39 @@
                             sling:hideResource="{Boolean}true"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <displayPatternGroup
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Display Format"
-                                sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                title="Display Format">
-                            <items jcr:primaryType="nt:unstructured">
-                                <displayPatternType
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                        fieldLabel="Type"
-                                        name="./displayPatternType">
-                                </displayPatternType>
-                                <displayPictureClause
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        fieldLabel="Display format"
-                                        name="./displayFormat">
-                                </displayPictureClause>
-                            </items>
-                        </displayPatternGroup>
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <displayPatternGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Display Format"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                                    title="Display Format">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <displayPatternType
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Type"
+                                                            name="./displayPatternType">
+                                                    </displayPatternType>
+                                                    <displayPictureClause
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Display format"
+                                                            name="./displayFormat">
+                                                    </displayPictureClause>
+                                                </items>
+                                            </displayPatternGroup>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
                         </items>
                     </patterns>
                     <dor
@@ -436,29 +503,42 @@
                             sling:resourceType="granite/ui/components/coral/foundation/container"
                             margin="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
-                            <excludeFromDor
+                            <columns
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                    checked="{Boolean}false"
-                                    name="./dorExclusion"
-                                    text="Exclude component from Document of Record"
-                                    value="true"/>
-                            <excludeFromDor-typeHint
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                    ignoreData="{Boolean}true"
-                                    name="dorExclusion@TypeHint"
-                                    value="Boolean"/>
-                            <dorColspan
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                    disabled="false"
-                                    defaultValue=""
-                                    fieldDescription="It is supported only for column layout in Document of Record."
-                                    fieldLabel="Number of columns to use to display the field in a Document of Record"
-                                    name="./dorColspan"
-                                    renderReadOnly="false">
-                            </dorColspan>
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <excludeFromDor
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="{Boolean}false"
+                                                    name="./dorExclusion"
+                                                    text="Exclude component from Document of Record"
+                                                    value="true"/>
+                                            <excludeFromDor-typeHint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    ignoreData="{Boolean}true"
+                                                    name="dorExclusion@TypeHint"
+                                                    value="Boolean"/>
+                                            <dorColspan
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    disabled="false"
+                                                    defaultValue=""
+                                                    fieldDescription="It is supported only for column layout in Document of Record."
+                                                    fieldLabel="Number of columns to use to display the field in a Document of Record"
+                                                    name="./dorColspan"
+                                                    renderReadOnly="false">
+                                            </dorColspan>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
                         </items>
                         <granite:rendercondition
                                 jcr:primaryType="nt:unstructured"

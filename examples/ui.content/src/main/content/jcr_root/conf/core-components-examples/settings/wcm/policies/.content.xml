@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
-    jcr:mixinTypes="[rep:AccessControllable]"
-    jcr:primaryType="cq:Page">
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+          jcr:mixinTypes="[rep:AccessControllable]"
+          jcr:primaryType="cq:Page">
     <core-components-examples jcr:primaryType="nt:unstructured">
         <components jcr:primaryType="nt:unstructured">
             <page jcr:primaryType="nt:unstructured">
                 <policy_212634895490169
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Core Components Examples - Page"
-                    sling:resourceType="wcm/core/components/policy/policy"
-                    ampMode="pairedAmp"
-                    appResourcesClientlib="cmp-examples.site"
-                    clientlibs="[cmp-examples.base,forms-examples.base]">
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Form Core Components Examples"
+                        sling:resourceType="wcm/core/components/policy/policy"
+                        ampMode="pairedAmp"
+                        appResourcesClientlib="cmp-examples.site"
+                        clientlibs="[cmp-examples.base,forms-examples.base]">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </policy_212634895490169>
             </page>
@@ -23,7 +24,8 @@
                             jcr:lastModifiedBy="admin"
                             jcr:title="formcontainer-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
-                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">>
+                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                        >
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </policy_212634895490171>
                 </container>
@@ -145,7 +147,6 @@
                 <datepicker jcr:primaryType="nt:unstructured">
                     <default
                             jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
-                            jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="datepicker-default-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
@@ -159,6 +160,19 @@
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
                 </datepicker>
+                <panelcontainer jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2023-03-07T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="panelcontainer-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            layout="responsiveGrid"
+                            layoutDisabled="true">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </panelcontainer>
             </form>
             <page jcr:primaryType="nt:unstructured">
                 <default

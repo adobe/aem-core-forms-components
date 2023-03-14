@@ -37,7 +37,7 @@ public class BaseConstraintTest {
     void testIsRequired() {
         BaseConstraint baseConstraintMock = Mockito.mock(BaseConstraint.class);
         Mockito.when(baseConstraintMock.isRequired()).thenCallRealMethod();
-        assertEquals(false, baseConstraintMock.isRequired());
+        assertEquals(null, baseConstraintMock.isRequired());
     }
 
     @Test

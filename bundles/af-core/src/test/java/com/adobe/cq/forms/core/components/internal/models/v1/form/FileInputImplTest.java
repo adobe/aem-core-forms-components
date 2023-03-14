@@ -51,6 +51,8 @@ import static org.mockito.Mockito.spy;
 public class FileInputImplTest {
     private static final String BASE = "/form/fileinput";
     private static final String CONTENT_ROOT = "/content";
+    private static final String PATH_FILEINPUT_CUSTOMIZED = CONTENT_ROOT + "/fileinput-customized";
+
     private static final String PATH_FILEINPUT = CONTENT_ROOT + "/fileinput";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
 
@@ -63,7 +65,7 @@ public class FileInputImplTest {
 
     @Test
     void testExportedType() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(FormConstants.RT_FD_FORM_FILE_INPUT_V1, fileInput.getExportedType());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getExportedType()).thenCallRealMethod();
@@ -72,13 +74,13 @@ public class FileInputImplTest {
 
     @Test
     void testFieldType() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(FieldType.FILE_INPUT.getValue(), fileInput.getFieldType());
     }
 
     @Test
     void testGetLabel() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("def", fileInput.getLabel().getValue());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getLabel()).thenCallRealMethod();
@@ -86,16 +88,16 @@ public class FileInputImplTest {
 
         Label labelMock = Mockito.mock(Label.class);
         Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
+        assertEquals(null, labelMock.isRichText());
         Mockito.when(labelMock.getValue()).thenCallRealMethod();
         assertEquals(null, labelMock.getValue());
         Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(null, labelMock.isVisible());
     }
 
     @Test
     void testGetName() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("abc", fileInput.getName());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getName()).thenCallRealMethod();
@@ -104,7 +106,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetDataRef() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("a.b", fileInput.getDataRef());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getDataRef()).thenCallRealMethod();
@@ -113,7 +115,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetDescription() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("dummy", fileInput.getDescription());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getDescription()).thenCallRealMethod();
@@ -122,7 +124,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetScreenReaderText() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("'Custom screen reader text'", fileInput.getScreenReaderText());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getScreenReaderText()).thenCallRealMethod();
@@ -132,6 +134,15 @@ public class FileInputImplTest {
     @Test
     void testIsVisible() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        assertEquals(null, fileInput.isVisible());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, fileInputMock.isVisible());
+    }
+
+    @Test
+    void testIsVisibleForCustomized() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(false, fileInput.isVisible());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isVisible()).thenCallRealMethod();
@@ -141,6 +152,15 @@ public class FileInputImplTest {
     @Test
     void testIsEnabled() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        assertEquals(null, fileInput.isEnabled());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.isEnabled()).thenCallRealMethod();
+        assertEquals(null, fileInputMock.isEnabled());
+    }
+
+    @Test
+    void testIsEnabledForCustomized() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(true, fileInput.isEnabled());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isEnabled()).thenCallRealMethod();
@@ -148,8 +168,35 @@ public class FileInputImplTest {
     }
 
     @Test
+    void testIsRequired() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        assertEquals(null, fileInput.isRequired());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.isRequired()).thenCallRealMethod();
+        assertEquals(null, fileInputMock.isRequired());
+    }
+
+    @Test
+    void testIsRequiredForCustomized() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        assertEquals(true, fileInput.isRequired());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.isRequired()).thenCallRealMethod();
+        assertEquals(null, fileInputMock.isRequired());
+    }
+
+    @Test
     void testIsReadOnly() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        assertEquals(null, fileInput.isReadOnly());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(null, fileInputMock.isReadOnly());
+    }
+
+    @Test
+    void testIsReadOnlyForCustomized() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(false, fileInput.isReadOnly());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isReadOnly()).thenCallRealMethod();
@@ -158,7 +205,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetPlaceHolder() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(null, fileInput.getPlaceHolder());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getPlaceHolder()).thenCallRealMethod();
@@ -167,7 +214,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetDisplayFormat() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(null, fileInput.getDisplayFormat());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getDisplayFormat()).thenCallRealMethod();
@@ -176,7 +223,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetEditFormat() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(null, fileInput.getEditFormat());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getEditFormat()).thenCallRealMethod();
@@ -185,7 +232,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetDataFormat() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(null, fileInput.getDataFormat());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getDataFormat()).thenCallRealMethod();
@@ -194,7 +241,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetMaxFileSize() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("4MB", fileInput.getMaxFileSize());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getMaxFileSize()).thenCallRealMethod();
@@ -203,7 +250,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetAccept() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertThat(Arrays.asList("audio/*", "video/*", "image/*"), is(fileInput.getAccept()));
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getAccept()).thenCallRealMethod();
@@ -212,7 +259,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetTooltip() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals("test-short-description", fileInput.getTooltip());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getTooltip()).thenCallRealMethod();
@@ -221,7 +268,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetConstraintMessages() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         Map<ConstraintType, String> constraintsMessages = fileInput.getConstraintMessages();
         assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         FileInput fileInputMock = Mockito.mock(FileInput.class);
@@ -236,6 +283,12 @@ public class FileInputImplTest {
     }
 
     @Test
+    void testJSONExportForCustomized() throws Exception {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_CUSTOMIZED));
+    }
+
+    @Test
     void testMultiSelectJSONExport() throws Exception {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT, FileInput.class, context);
         Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_MULTISELECT_FILEINPUT));
@@ -243,7 +296,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetProperties() throws Exception {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         Map<String, Object> properties = fileInput.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "afs:layout"
@@ -274,7 +327,7 @@ public class FileInputImplTest {
 
     @Test
     void testGetType() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(BaseConstraint.Type.FILE, fileInput.getType());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getType()).thenCallRealMethod();
@@ -308,7 +361,7 @@ public class FileInputImplTest {
     @Test
     void testStyleSystemClasses() {
         ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
-        Resource resource = spy(context.resourceResolver().getResource(PATH_FILEINPUT));
+        Resource resource = spy(context.resourceResolver().getResource(PATH_FILEINPUT_CUSTOMIZED));
         Mockito.doReturn(componentStyleInfoMock).when(resource).adaptTo(ComponentStyleInfo.class);
         MockSlingHttpServletRequest request = context.request();
         request.setResource(resource);
