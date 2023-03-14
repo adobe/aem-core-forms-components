@@ -87,7 +87,9 @@
             for (var i = 0; i < hooks.length; i++) {
                 var hook = hooks[i];
                 if (hook.closest("[data-cmp-is=" + Tabs.IS + "]") === this._elements.self) { // only process own tab elements
-                    var key = hook.dataset[Tabs.NS + "Hook" + "Adaptiveformtabs"];
+                    var lowerCased = Tabs.IS.toLowerCase();
+                    var capitalized = lowerCased.charAt(0).toUpperCase() + lowerCased.slice(1);
+                    var key = hook.dataset[Tabs.NS + "Hook" + capitalized];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
                             var tmp = this._elements[key];
