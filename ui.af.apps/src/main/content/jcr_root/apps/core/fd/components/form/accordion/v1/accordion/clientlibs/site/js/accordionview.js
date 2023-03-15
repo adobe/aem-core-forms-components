@@ -86,7 +86,24 @@
                 }
                 this.#refreshItems();
                 this.#bindEvents();
-
+            }
+            if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
+                /*
+                 * Editor message handling:
+                 * - subscribe to "cmp.panelcontainer" message requests sent by the editor frame
+                 * - check that the message data panel container type is correct and that the id (path) matches this specific Accordion component
+                 * - if so, route the "navigate" operation to enact a navigation of the Accordion based on index data
+                 */
+                window.CQ.CoreComponents.MESSAGE_CHANNEL = window.CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
+                var _self = this;
+                window.CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
+                    if (message.data && message.data.type === "cmp-accordion" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
+                        if (message.data.operation === "navigate") {
+                            _self.#toggle(_self.#getCachedItems()[message.data.index].id);
+                            _self.#collapseAllOtherItems(_self.#getCachedItems()[message.data.index].id);
+                        }
+                    }
+                });
             }
         }
 
