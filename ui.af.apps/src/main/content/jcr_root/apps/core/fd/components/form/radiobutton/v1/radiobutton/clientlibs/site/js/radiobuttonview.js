@@ -119,13 +119,11 @@
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
-            super.updateEmptyStatus();
         }
-
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new RadioButton({element, formContainer});
+        return new RadioButton({element});
     }, RadioButton.selectors.self);
 
 })();

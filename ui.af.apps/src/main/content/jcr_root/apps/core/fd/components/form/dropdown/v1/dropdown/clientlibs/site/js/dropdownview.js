@@ -113,13 +113,12 @@
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
-                if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
-                    option.setAttribute('selected', 'selected');
-                } else {
-                    option.removeAttribute('selected');
-                }
+                    if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
+                        option.setAttribute('selected', 'selected');
+                    } else {
+                        option.removeAttribute('selected');
+                    }
             });
-            super.updateEmptyStatus();
         }
 
 
@@ -151,7 +150,7 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new DropDown({element, formContainer})
+        return new DropDown({element})
     }, DropDown.selectors.self);
 
 })();

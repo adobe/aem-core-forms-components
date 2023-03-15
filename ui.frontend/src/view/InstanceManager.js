@@ -29,6 +29,18 @@ export default class InstanceManager {
     }
 
     /**
+     * Creates the child of added element
+     * @param addedElement
+     */
+    #createChildView(addedElement) {
+        let childElement = addedElement.querySelector(this.child_selector);
+        let fieldCreator = ({element, formContainer}) => {
+            return new this.child_proto.constructor({element, formContainer});
+        };
+        Utils.createFormContainerField(fieldCreator, childElement, this.formContainer);
+    }
+
+    /**
      * Syncs Instance View HTML with Instance Model
      * @param instanceView
      * @param instanceModel
@@ -40,12 +52,12 @@ export default class InstanceManager {
         let addedHtmlElement = null;
         if (instanceView == null) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
-            Utils.createFieldsForAddedElement(addedHtmlElement, this.formContainer);
+            this.#createChildView(addedHtmlElement);
         } else if (instanceModel == null) {
             this.#removeChildInstance(instanceView.getModel());
         } else if (instanceView.getId() != instanceModel.id) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
-            Utils.createFieldsForAddedElement(addedHtmlElement, this.formContainer);
+            this.#createChildView(addedHtmlElement);
             this.#removeChildInstance(instanceView.getModel());
         }
         return addedHtmlElement;
@@ -63,17 +75,14 @@ export default class InstanceManager {
         let addedHtmlElement = null;
         for (let index = 0; index < maxLength; index++) {
             const instanceView = (index < viewInstancesLength) ? views[index] : null;
-            const instanceModel = (index < modelInstancesLength) ? models[index] : null;
+            const instanceModel = (index < modelInstancesLength) ? models[index]: null;
             addedHtmlElement = this.#syncViewModel(instanceView, instanceModel, addedHtmlElement);
         }
     }
 
     #updateTemplateIds(html, model, newId) {
-        //In case of instance manager, type is an array, which doesn't have presence in HTML
-        if (model.type != 'array') {
-            Utils.updateId(html, model.id, newId);
-        }
-        if (model.fieldType == 'panel' && model.items) {
+        Utils.updateId(html, model.id, newId);
+        if ((model.type == 'array' || model.type == 'object') && model.items) {
             for (let i = 0; i < model.items.length; i++) {
                 this.#updateTemplateIds(html, model.items[i], newId + "_" + i);
             }
@@ -81,11 +90,8 @@ export default class InstanceManager {
     }
 
     updateCloneIds(html, oldId, newModel) {
-        //In case of instance manager, type is an array, which doesn't have presence in HTML
-        if (newModel.type != 'array') {
-            Utils.updateId(html, oldId, newModel.id);
-        }
-        if (newModel.fieldType == 'panel' && newModel.items) {
+        Utils.updateId(html, oldId, newModel.id);
+        if ((newModel.type == 'array' || newModel.type == 'object') && newModel.items) {
             for (let i = 0; i < newModel.items.length; i++) {
                 this.updateCloneIds(html, oldId + "_" + i, newModel.items[i]);
             }
@@ -95,12 +101,12 @@ export default class InstanceManager {
     updateTemplate(childView) {
         const repeatableElement = childView.element.parentElement;
         /**
-         //inserting marker
-         let markerElement = document.createElement('div');
-         markerElement.setAttribute("id", this.getId());
-         markerElement.classList.add("form-instance-marker");
-         this.parentElement.insertBefore(markerElement, repeatableElement);
-         this.markerElement = markerElement;
+        //inserting marker
+        let markerElement = document.createElement('div');
+        markerElement.setAttribute("id", this.getId());
+        markerElement.classList.add("form-instance-marker");
+        this.parentElement.insertBefore(markerElement, repeatableElement);
+        this.markerElement = markerElement;
          **/
         //adding template
         this._templateHTML = repeatableElement.cloneNode(true);
@@ -127,7 +133,7 @@ export default class InstanceManager {
     #removeChildInstance(removedModel) {
         const removedIndex = removedModel.index;
         const removedChildView = this.children[removedIndex];
-        Utils.removeFieldReferences(removedChildView, this.formContainer);
+        Utils.removeFieldReferences(removedChildView);
         this.handleRemoval(removedChildView);
         this.children.splice(removedIndex, 1);
         const event = new CustomEvent(Constants.PANEL_INSTANCE_REMOVED, {"detail": removedChildView});
@@ -135,51 +141,41 @@ export default class InstanceManager {
     }
 
     addInstance(event, payload) {
-        this.#dispatchModelEvent(event, "addInstance", payload);
+        this.#dispatchModelEvent(event,"addInstance", payload);
     }
 
     removeInstance(event, payload) {
-        this.#dispatchModelEvent(event, "removeInstance", payload);
+        this.#dispatchModelEvent(event,"removeInstance", payload);
     }
 
     #registerInstanceHandlers(childView) {
         //doesn't support repeatable panel inside repeatable panel
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {
-            this.addInstance(event)
-        });
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {
-            this.removeInstance(event)
-        });
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {this.addInstance(event)});
+        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {this.removeInstance(event)});
     }
 
     /**
      * Inserts HTML for added instance
-     * @param addedInstanceJson
+     * @param addedInstanceModel
      * @param beforeElement
      * @returns added htmlElement
      */
-    handleAddition(addedInstanceJson, beforeElement) {
-        const instanceIndex = addedInstanceJson.index;
+    handleAddition(addedInstanceModel, beforeElement) {
+        const instanceIndex = addedInstanceModel.index;
         let htmlElement = this._templateHTML.cloneNode(true);
-        //get the model from added instance state
-        let addedModel = this.formContainer.getModel(addedInstanceJson.id);
-        this.updateCloneIds(htmlElement, 'temp_0', addedModel);
-        if (this.repeatableParentView && (typeof this.repeatableParentView.addRepeatableMarkup === "function")) {
-            this.repeatableParentView.addRepeatableMarkup(this, addedModel, htmlElement);
+        this.updateCloneIds(htmlElement, 'temp_0', addedInstanceModel);
+
+        //no child exist in the view
+        if (this.children.length == 0) {
+            this.parentElement.append(htmlElement);
+            //this.markerElement.after(htmlElement);
+        } else if (instanceIndex == 0) {
+            //special case for first element
+            let afterElement = this.children[0].element.parentElement;
+            this.parentElement.insertBefore(htmlElement, afterElement);
         } else {
-            // this is required if repeatableParentView is the formContainer.
-            //no child exist in the view
-            if (this.children.length == 0) {
-                this.parentElement.append(htmlElement);
-                //this.markerElement.after(htmlElement);
-            } else if (addedModel.index == 0) {
-                //special case for first element
-                let afterElement = this.children[0].element.parentElement;
-                this.parentElement.insertBefore(htmlElement, afterElement);
-            } else {
-                let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
-                beforeViewElement.after(htmlElement);
-            }
+            let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
+            beforeViewElement.after(htmlElement);
         }
         return htmlElement;
     }
@@ -205,11 +201,13 @@ export default class InstanceManager {
         //Add template when first view is added
         if (!(this._templateHTML)) {
             this.updateTemplate(childView);
+            this.child_proto = childView.__proto__;
+            this.child_selector = '[data-cmp-is="' + childView.getClass() +'"]';
         }
         //adding view post mutation observer has added view for repeatable instance
         this.children.splice(childView.getModel().index, 0, childView);
         this.#registerInstanceHandlers(childView);
-        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, {"detail": childView});
+        const event = new CustomEvent(Constants.PANEL_INSTANCE_ADDED, { "detail": childView });
         if (this.repeatableParentView && (typeof this.repeatableParentView.handleChildAddition === "function")) {
             //give parentView chance to adjust to added instance
             this.repeatableParentView.handleChildAddition(childView);

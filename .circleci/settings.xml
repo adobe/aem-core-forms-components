@@ -16,52 +16,6 @@
 
     <profiles>
         <profile>
-            <id>artifactory-cloud</id>
-            <properties>
-                <releaseRepository-Id>maven-aemforms-release</releaseRepository-Id>
-                <releaseRepository-Name>maven-aemforms-release</releaseRepository-Name>
-                <releaseRepository-URL>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release</releaseRepository-URL>
-
-                <snapshotRepository-Id>maven-aemforms-snapshot</snapshotRepository-Id>
-                <snapshotRepository-Name>maven-aemforms-snapshot</snapshotRepository-Name>
-                <snapshotRepository-URL>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-snapshot</snapshotRepository-URL>
-            </properties>
-
-            <repositories>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>maven-aemforms-release</id>
-                    <name>maven-aemforms-release</name>
-                    <url>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release</url>
-                </repository>
-                <repository>
-                    <snapshots />
-                    <id>maven-aemforms-snapshot</id>
-                    <name>maven-aemforms-snapshot</name>
-                    <url>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-snapshot</url>
-                </repository>
-            </repositories>
-
-            <pluginRepositories>
-                <pluginRepository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>maven-aemforms-release</id>
-                    <name>maven-aemforms-release</name>
-                    <url>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release</url>
-                </pluginRepository>
-                <pluginRepository>
-                    <snapshots />
-                    <id>maven-aemforms-snapshot</id>
-                    <name>maven-aemforms-snapshot</name>
-                    <url>https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-snapshot</url>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-        <profile>
             <id>ossrh</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -78,16 +32,6 @@
             <id>ossrh</id>
             <username>${env.SONATYPE_USER}</username>
             <password>${env.SONATYPE_PASSWORD}</password>
-        </server>
-        <server>
-            <id>maven-aemforms-release</id>
-            <username>${env.DOCKER_USER}</username>
-            <password>${env.DOCKER_PASS}</password>
-        </server>
-        <server>
-            <id>maven-aemforms-snapshot</id>
-            <username>${env.DOCKER_USER}</username>
-            <password>${env.DOCKER_PASS}</password>
         </server>
     </servers>
 

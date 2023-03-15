@@ -40,21 +40,13 @@ export default class FormPanel extends FormFieldBase {
                 instanceManager = this.instantiateInstanceManager();
                 this.formContainer.addInstanceManager(instanceManager);
             }
-            this.setInstanceManager(instanceManager);
             instanceManager.addChild(this);
+            this.setInstanceManager(instanceManager);
         }
     }
 
     addChild(childView) {
         this.children.push(childView);
-    }
-
-    getChild(id){
-        for(let key in this.children){
-            if(this.children[key].id===id){
-                return this.children[key];
-            }
-        }
     }
 
     handleChildAddition(childView) {

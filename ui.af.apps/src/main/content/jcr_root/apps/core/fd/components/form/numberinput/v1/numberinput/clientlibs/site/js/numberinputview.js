@@ -78,7 +78,6 @@
             }
             if (this.widgetObject) {
                 this.widgetObject.setValue(value);
-                super.updateEmptyStatus();
             } else {
                 super.updateValue(value);
             }

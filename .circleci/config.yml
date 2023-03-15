@@ -124,17 +124,6 @@ jobs:
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
-
-  cypress-chrome-cloudready-with-latest-addon:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon-latest
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: large
-    working_directory: /home/circleci/build
-    <<: *cypress_test_steps
  
   release:
     executor: forms_executor
@@ -171,13 +160,6 @@ workflows:
             tags:
               only: /.*/
       - cypress-chrome-cloudready-with-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
               only: /.*/

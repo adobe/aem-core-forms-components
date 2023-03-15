@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-(function () {
+(function() {
 
     var keyCodes = {
         END: 35,
@@ -27,13 +27,11 @@
 
 
     class Tabs extends FormView.FormPanel {
-        #_active;
-        #_templateHTML = {};
+
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormTabs";
         static bemBlock = "cmp-tabs";
-        static #tabIdSuffix = "__tab";
-        static #tabPanelIdSuffix = "__tabpanel";
+
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             active: {
@@ -43,15 +41,14 @@
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
-            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
-            olTabList: `.${Tabs.bemBlock}__tablist`
+            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`
         };
 
         constructor(params) {
             super(params);
             const {element} = params;
             this.#cacheElements(element);
-            this.#_active = this.getActiveTabId(this.#getCachedTabs());
+            this._active = this.getActiveIndex(this._elements["tab"]);
             this.#refreshActive();
             this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
@@ -63,10 +60,10 @@
                  */
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
-                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
+                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
                     if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
-                            _self.#navigate(_self._elements["tab"][message.data.index].id);
+                            _self.#navigate(message.data.index);
                         }
                     }
                 });
@@ -86,8 +83,8 @@
 
             for (var i = 0; i < hooks.length; i++) {
                 var hook = hooks[i];
-                if (hook.closest("[data-cmp-is=" + Tabs.IS + "]") === this._elements.self) { // only process own tab elements
-                    var key = hook.dataset[Tabs.NS + "Hook" + "Adaptiveformtabs"];
+                if (hook.closest("[data-cmp-is="+Tabs.IS+"]") === this._elements.self) { // only process own tab elements
+                   var key = hook.dataset[Tabs.NS + "Hook" + "Adaptiveformtabs"];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
                             var tmp = this._elements[key];
@@ -95,7 +92,7 @@
                         }
                         this._elements[key].push(hook);
                     } else {
-                        this._elements[key] = [hook];
+                        this._elements[key] = hook;
                     }
                 }
             }
@@ -114,7 +111,7 @@
         }
 
         getDescription() {
-            return this.element.querySelector(Tabs.selectors.description);
+          return this.element.querySelector(Tabs.selectors.description);
         }
 
         getLabel() {
@@ -126,46 +123,11 @@
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(Tabs.selectors.tooltipDiv);
+          return this.element.querySelector(Tabs.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
             return this.element.querySelector(Tabs.selectors.qm);
-        }
-
-        #getTabListElement() {
-            return this.element.querySelector(Tabs.selectors.olTabList)
-        }
-
-        #syncTabLabels() {
-            var tabs = this.#getCachedTabs();
-            var tabPanels = this.#getCachedTabPanels();
-            if (tabPanels) {
-                for (var i = 0; i < tabPanels.length; i++) {
-                    var childViewId = tabPanels[i].querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                    tabs[i].id = childViewId + Tabs.#tabIdSuffix;
-                    tabs[i].setAttribute("aria-controls", childViewId + Tabs.#tabPanelIdSuffix);
-                }
-            }
-        }
-
-        #syncTabPanels() {
-            var tabPanels = this.#getCachedTabPanels();
-            if (tabPanels) {
-                for (var i = 0; i < tabPanels.length; i++) {
-                    var childViewId = tabPanels[i].querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                    tabPanels[i].id = childViewId + Tabs.#tabPanelIdSuffix;
-                    tabPanels[i].setAttribute("aria-labelledby", childViewId + Tabs.#tabIdSuffix);
-                }
-            }
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncTabLabels();
-            this.#syncTabPanels();
         }
 
         /**
@@ -174,143 +136,112 @@
          * @private
          */
         #bindEvents() {
-            var tabs = this.#getCachedTabs();
+            var tabs = this._elements["tab"];
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     var _self = this;
-                    (function (index) {
-                        tabs[index].addEventListener("click", function (event) {
-                            _self.#navigateAndFocusTab(tabs[index].id);
+                    (function(index){
+                        tabs[index].addEventListener("click", function(event) {
+                            _self.#navigateAndFocusTab(index);
                         });
                     }(i));
-                    tabs[i].addEventListener("keydown", function (event) {
+                    
+                    tabs[i].addEventListener("keydown", function(event) {
                         _self.#onKeyDown(event);
                     });
-                }
-                ;
+                };
             }
         }
 
-        #bindEventsToTab(tabId) {
-            var _self = this;
-            var tabs = this.#getCachedTabs();
-            var index = this.#getTabIndexById(tabId);
-            tabs[index].addEventListener("click", function (event) {
-                _self.#navigateAndFocusTab(tabId);
-            });
-            tabs[index].addEventListener("keydown", function (event) {
-                _self.#onKeyDown(event);
-            });
-        }
-
-        /**
-         * Returns the id of the active tab, if no tab is active returns 0th element id
+         /**
+         * Returns the index of the active tab, if no tab is active returns 0
          *
          * @param {Array} tabs Tab elements
-         * @returns {Number} Id of the active tab, 0th element id if none is active
+         * @returns {Number} Index of the active tab, 0 if none is active
          */
-        getActiveTabId(tabs) {
+        getActiveIndex(tabs) {
             if (tabs) {
-                var result = tabs[0].id;
                 for (var i = 0; i < tabs.length; i++) {
                     if (tabs[i].classList.contains(Tabs.selectors.active.tab)) {
-                        result = tabs[i].id;
-                        break;
+                        return i;
                     }
                 }
-                return result;
             }
+            return 0;
         }
 
-        /**
+         /**
          * Handles tab keydown events
          *
          * @private
          * @param {Object} event The keydown event
          */
         #onKeyDown(event) {
-            var index = this.#getTabIndexById(this.#_active);
-            var tabs = this.#getCachedTabs();
-            var lastIndex = tabs.length - 1;
+            var index = this._active;
+
+            var lastIndex = this._elements["tab"].length - 1;
 
             switch (event.keyCode) {
                 case keyCodes.ARROW_LEFT:
                 case keyCodes.ARROW_UP:
                     event.preventDefault();
                     if (index > 0) {
-                        this.#navigateAndFocusTab(tabs[index - 1].id);
+                        this.#navigateAndFocusTab(index - 1);
                     }
                     break;
                 case keyCodes.ARROW_RIGHT:
                 case keyCodes.ARROW_DOWN:
                     event.preventDefault();
                     if (index < lastIndex) {
-                        this.#navigateAndFocusTab(tabs[index + 1].id);
+                        this.#navigateAndFocusTab(index + 1);
                     }
                     break;
                 case keyCodes.HOME:
                     event.preventDefault();
-                    this.#navigateAndFocusTab(tabs[0].id);
+                    this.#navigateAndFocusTab(0);
                     break;
                 case keyCodes.END:
                     event.preventDefault();
-                    this.#navigateAndFocusTab(tabs[lastIndex].id);
+                    this.#navigateAndFocusTab(lastIndex);
                     break;
                 default:
                     return;
             }
         }
 
-        /**
+         /**
          * Refreshes the tab markup based on the current {@code Tabs#_active} index
          *
          * @private
          */
         #refreshActive() {
-            var tabpanels = this.#getCachedTabPanels();
-            var tabs = this.#getCachedTabs();
+            var tabpanels = this._elements["tabpanel"];
+            var tabs = this._elements["tab"];
+
             if (tabpanels) {
-                for (var i = 0; i < tabpanels.length; i++) {
-                    if (tabs[i].id === this.#_active) {
-                        tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
-                        tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
-                        tabs[i].classList.add(Tabs.selectors.active.tab);
-                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
-                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
-                    } else {
-                        tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
-                        tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
-                        tabs[i].classList.remove(Tabs.selectors.active.tab);
-                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
-                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
+                if (Array.isArray(tabpanels)) {
+                    for (var i = 0; i < tabpanels.length; i++) {
+                        if (i === parseInt(this._active)) {
+                            tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
+                            tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
+                            tabs[i].classList.add(Tabs.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
+                        } else {
+                            tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
+                            tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
+                            tabs[i].classList.remove(Tabs.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
+                        }
                     }
-                }
-            }
-        }
-
-        #getBeforeViewElement(instanceManager, instanceIndex) {
-            var result = {};
-            var instanceManagerId = instanceManager.getId();
-            if (instanceIndex == 0) {
-                var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
-                var tabPanels = this.#getCachedTabPanels();
-                if (indexToInsert > 0) {
-                    result.beforeViewElement = this.#getTabPanelElementById(tabPanels[indexToInsert - 1].id);
                 } else {
-                    result.beforeViewElement = this.#getTabListElement();
+                    // only one tab
+                    tabpanels.classList.add(Tabs.selectors.active.tabpanel);
+                    tabs.classList.add(Tabs.selectors.active.tab);
                 }
-            } else {
-                var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceTabPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Tabs.#tabIdSuffix);
-                result.beforeViewElement = this.#getCachedTabPanels()[previousInstanceTabPanelIndex];
             }
-            result.elementToEnclose = this.#_templateHTML[instanceManagerId]['targetTabPanel'].cloneNode(false);
-            result.idSuffix = Tabs.#tabPanelIdSuffix;
-            return result;
         }
-
 
         /**
          * Focuses the element and prevents scrolling the element into view
@@ -330,8 +261,8 @@
          * @private
          * @param {Number} index The index of the tab to navigate to
          */
-        #navigate(tabId) {
-            this.#_active = tabId;
+        #navigate(index) {
+            this._active = index;
             this.#refreshActive();
         }
 
@@ -341,198 +272,15 @@
          * @private
          * @param {Number} index The index of the item to navigate to
          */
-        #navigateAndFocusTab(tabId) {
-            var exActive = this.#_active;
-            this.#navigate(tabId);
-            this.focusWithoutScroll(this.#getTabNavElementById(tabId));
-        }
-
-        handleChildAddition(childView) {
-            if (childView.getInstanceManager() != null && this.#_templateHTML[childView.getInstanceManager().getId()] != null) {
-                var navigationTabToBeRepeated = this.#_templateHTML[childView.getInstanceManager().getId()]['navigationTab'].cloneNode(true);
-                navigationTabToBeRepeated.id = childView.id + Tabs.#tabIdSuffix;
-                navigationTabToBeRepeated.setAttribute("aria-controls", childView.id + Tabs.#tabPanelIdSuffix);
-                var instanceIndex = childView.getModel().index;
-                var instanceManagerId = childView.getInstanceManager().getId();
-                if (instanceIndex == 0) {
-                    var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                    var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
-                    if (indexToInsert == 0) {
-                        var tabListParentElement = this.#getTabListElement();
-                        tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
-                    } else {
-                        var beforeElement = this.#getCachedTabs()[indexToInsert - 1];
-                        beforeElement.after(navigationTabToBeRepeated);
-                    }
-                } else {
-                    var beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + Tabs.#tabIdSuffix
-                    var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
-                    beforeElement.after(navigationTabToBeRepeated);
-                }
-                this.#cacheElements(this._elements.self);
-                var repeatedTabPanel = this.#getTabPanelElementById(childView.id + Tabs.#tabPanelIdSuffix);
-                repeatedTabPanel.setAttribute("aria-labelledby", childView.id + Tabs.#tabIdSuffix);
-                this.#refreshActive();
-                this.#bindEventsToTab(navigationTabToBeRepeated.id);
-                this.#navigateAndFocusTab(navigationTabToBeRepeated.id);
-            }
-        }
-
-        handleChildRemoval(removedInstanceView) {
-            var removedTabPanelId = removedInstanceView.element.id + Tabs.#tabPanelIdSuffix;
-            var removedTabNavId = removedInstanceView.element.id + Tabs.#tabIdSuffix;
-            var tabPanelElement = this.#getTabPanelElementById(removedTabPanelId);
-            var tabNavElement = this.#getTabNavElementById(removedTabNavId);
-            tabNavElement.remove();
-            tabPanelElement.remove();
-            this.children.splice(this.children.indexOf(removedInstanceView), 1);
-            this.#cacheElements(this._elements.self);
-            this.#_active = this.getActiveTabId(this._elements["tab"]);
-            this.#refreshActive();
-        }
-
-        addChild(childView) {
-            super.addChild(childView);
-            this.#cacheTemplateHTML(childView);
-            if (this.getModel()._children.length === this.children.length) {
-                this.#getClosestFieldsInView();
-            }
-        }
-
-        /**
-         * Adds unique HTML for added instance corresponding to requirements of different types of repeatableParent
-         * @param instanceManager of the repeated component
-         * @param addedModel of the repeated component
-         * @param htmlElement of the repeated component
-         */
-        addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
-            let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
-            let beforeViewElement = result.beforeViewElement;
-            let elementToEnclose = result.elementToEnclose;
-            elementToEnclose.id = addedModel.id + result.idSuffix;
-            beforeViewElement.after(elementToEnclose);
-            elementToEnclose.append(htmlElement);
-        }
-
-
-        #cacheTemplateHTML(childView) {
-            if (childView.getInstanceManager() != null && (this.#_templateHTML == null || this.#_templateHTML[childView.getInstanceManager().getId()] == null)) {
-                var tabId = childView.element.id + Tabs.#tabIdSuffix;
-                var tabPanelId = childView.element.id + Tabs.#tabPanelIdSuffix;
-                var instanceManagerId = childView.getInstanceManager().getId();
-                var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
-                var tabPanelToBeRepeated = this.#getTabPanelElementById(tabPanelId);
-                this.#_templateHTML[instanceManagerId] = {};
-                this.#_templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
-                this.#_templateHTML[instanceManagerId]['targetTabPanel'] = tabPanelToBeRepeated;
-            }
-        }
-
-        #getClosestFieldsInView() {
-            var tabPanels = this.#getCachedTabPanels();
-            for (let i = 0; i < tabPanels.length; i++) {
-                var tabPanel = tabPanels[i];
-                var fieldView = this.getChild(tabPanel.id.substring(0, tabPanel.id.lastIndexOf("__")));
-                if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
-                    var instanceManagerId = fieldView.getInstanceManager().getId();
-                    if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
-                        var result = this.#getClosestFields(i);
-                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result["closestNonRepeatableFieldId"];
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result["closestRepeatableFieldInstanceManagerIds"];
-                    }
-                }
-            }
-        }
-
-
-        #getClosestFields(index) {
-            var allTabPanels = this.#getCachedTabPanels();
-            var result = {};
-            result["closestRepeatableFieldInstanceManagerIds"] = [];
-            for (let i = index - 1; i >= 0; i--) {
-                var fieldId = allTabPanels[i].id.substring(0, allTabPanels[i].id.lastIndexOf("__"));
-                var fieldView = this.getChild(fieldId);
-                if (fieldView.getInstanceManager() == null) {
-                    result["closestNonRepeatableFieldId"] = fieldId;
-                    break;
-                } else {
-                    result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
-                    if (fieldView.getInstanceManager().getModel().minOccur != 0) {
-                        break;
-                    }
-                }
-            }
-            return result;
-        }
-
-        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
-            var tabPanels = this.#getCachedTabPanels();
-            var resultIndex = -1;
-            if (tabPanels) {
-                for (let i = tabPanels.length - 1; i >= 0; i--) {
-                    var currentFieldId = tabPanels[i].id.substring(0, tabPanels[i].id.lastIndexOf("__"));
-                    if (closestNonRepeatableFieldId === currentFieldId) {
-                        resultIndex = i;
-                        break;
-                    } else {
-                        var fieldView = this.getChild(currentFieldId);
-                        if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
-                            resultIndex = i;
-                            break;
-                        }
-                    }
-                }
-            }
-            return resultIndex + 1;
-        }
-
-        #getTabNavElementById(tabId) {
-            var tabs = this.#getCachedTabs();
-            if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
-                    if (tabs[i].id === tabId) {
-                        return tabs[i];
-                    }
-                }
-            }
-        }
-
-        #getTabPanelElementById(tabPanelId) {
-            var tabPanels = this.#getCachedTabPanels();
-            if (tabPanels) {
-                for (var i = 0; i < tabPanels.length; i++) {
-                    if (tabPanels[i].id === tabPanelId) {
-                        return tabPanels[i];
-                    }
-                }
-            }
-        }
-
-        #getTabIndexById(tabId) {
-            var tabs = this.#getCachedTabs();
-            if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
-                    if (tabs[i].id === tabId) {
-                        return i;
-                    }
-                }
-            }
-            return -1;
-        }
-
-        #getCachedTabs() {
-            return this._elements["tab"];
-        }
-
-        #getCachedTabPanels() {
-            return this._elements["tabpanel"]
+        #navigateAndFocusTab(index) {
+            var exActive = this._active;
+            this.#navigate(index);
+            this.focusWithoutScroll(this._elements["tab"][index]);
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Tabs({element, formContainer})
     }, Tabs.selectors.self);
-
+    
 }());

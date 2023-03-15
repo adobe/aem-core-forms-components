@@ -71,8 +71,7 @@ The following attributes must be added for the initialization of the dropdown-li
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:
 
-* Check Box Group
-* Radio Button
+* Radio Button 
  
 ## Information
 * **Vendor**: Adobe

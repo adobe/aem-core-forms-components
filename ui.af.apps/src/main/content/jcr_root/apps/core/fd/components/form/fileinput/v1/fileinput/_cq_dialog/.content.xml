@@ -80,7 +80,6 @@
                                     fieldLabel="Minimum number of files"
                                     name="./minItems"/>
                             <minFilesMessage
-                                    wrapperClass="cmp-adaptiveform-fileinput__minimumFilesMessage"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when less than minimum Files are uploaded."
@@ -94,7 +93,6 @@
                                     fieldLabel="Maximum number of files"
                                     name="./maxItems"/>
                             <maxFilesMessage
-                                    wrapperClass="cmp-adaptiveform-fileinput__maximumFilesMessage"
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                     fieldDescription="Error message shown when more than maximum Files are uploaded."

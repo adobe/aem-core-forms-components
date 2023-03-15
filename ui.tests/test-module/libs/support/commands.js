@@ -193,7 +193,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')){
-                        cy.get(selector).first().click({force: true});
+                        cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
                         cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click
@@ -279,16 +279,6 @@ const waitForChildViewAddition = () => {
         });
 }
 
-Cypress.Commands.add("getFormData", () => {
-    return cy.window().then(win => {
-        const promise = new Cypress.Promise((resolve, reject) => {
-            const successhandler = data => { resolve(data); };
-            win.guideBridge.getFormDataString({success: successhandler});
-        });
-        return promise;
-    });
-});
-
 Cypress.Commands.add("previewForm", (formPath, options={}) => {
     let pagePath = `${formPath}?wcmmode=disabled`;
     if(options?.params) {
@@ -300,7 +290,7 @@ Cypress.Commands.add("previewForm", (formPath, options={}) => {
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
-    return cy.get("body").then($body => {
+    cy.get("body").then($body => {
         const selector12 =  "[data-path='" + editPath + "']";
         if ($body.find(selector12).length > 0) {
             cy.deleteComponentByPath(editPath);

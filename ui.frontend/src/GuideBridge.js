@@ -20,7 +20,7 @@ import AfFormData from "./FormData.js";
 
 export default class GuideBridge {
 
-    #formContainerViewMap = {};
+    #guideContainerMap = {};
     #guideBridgeConnectHandlers = [];
     #formContainerPath = "";
 
@@ -35,7 +35,7 @@ export default class GuideBridge {
         let self = this;
         function onFormContainerInitialised(e) {
             let formContainer = e.detail;
-            self.#formContainerViewMap[formContainer.getPath()] = formContainer;
+            self.#guideContainerMap[formContainer.getPath()] = formContainer.getModel();
             self.#invokeConnectHandlers(formContainer.getPath());
         }
         document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
@@ -97,25 +97,17 @@ export default class GuideBridge {
      */
     getFormModel() {
         if (this.#formContainerPath) {
-            return this.#formContainerViewMap[this.#formContainerPath].getModel();
+            return this.#guideContainerMap[this.#formContainerPath];
         } else {
             //choose any form container in case no formContainerPath is provided in GuideBridge#connect API
-            const formContainerPath = this.#getFormContainerPath();
-            this.#formContainerPath = formContainerPath;
-            return this.#formContainerViewMap[formContainerPath] ? this.#formContainerViewMap[formContainerPath].getModel(): null;
-        }
-    }
-
-    #getFormContainerPath() {
-        let actualFormContainerPath = this.#formContainerPath;
-        if (!actualFormContainerPath) {
-            for(let formContainerPath in this.#formContainerViewMap) {
-                if(this.#formContainerViewMap.hasOwnProperty(formContainerPath)) {
-                    actualFormContainerPath =  formContainerPath;
+            for(let formContainerPath in this.#guideContainerMap) {
+                if(this.#guideContainerMap.hasOwnProperty(formContainerPath)) {
+                    this.#formContainerPath = formContainerPath;
+                    return this.#guideContainerMap[formContainerPath];
                 }
             }
         }
-        return actualFormContainerPath;
+        return null;
     }
 
     /**
@@ -255,42 +247,6 @@ export default class GuideBridge {
         //TODO: implement it later. NO-OP for now.
     }
 
-    /**
-     *
-     * @param eventName name of the event to trigger on GuideBridge
-     * @param eventPayload
-     * @param formContainerPath if no argument passed, use any form container
-     */
-    trigger(eventName, eventPayload, formContainerPath) {
-        let formContainer;
-        if (formContainerPath) {
-            formContainer = this.#formContainerViewMap[formContainerPath];
-        } else {
-            formContainer = this.#formContainerViewMap[this.#getFormContainerPath()];
-        }
-        if (formContainer && formContainer.getFormElement()) {
-            const formElement = formContainer.getFormElement();
-            formElement.dispatchEvent(new CustomEvent(eventName, {detail: eventPayload}));
-        }
-    }
-
-    /**
-     * The API can be used to add an event listener for events triggered by GuideBridge object
-     * Subscriber must first be connected to GuideBridge to be able to use this API
-     * @param eventName
-     * @param handler
-     */
-    on(eventName, handler) {
-        if (this.isConnected()) {
-            const formContainer = this.#formContainerViewMap[this.#formContainerPath];
-            if (formContainer && formContainer.getFormElement()) {
-                const formElement = formContainer.getFormElement();
-                formElement.addEventListener(eventName, handler);
-            }
-        } else {
-            throw new Error("GuideBridge is not connected");
-        }
-    }
 }
 
 

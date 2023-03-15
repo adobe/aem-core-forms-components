@@ -26,17 +26,9 @@
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
-            const triggerEventOnGuideBridge = () => {
-                const eventPayload = {
-                    formId: this.getFormId(),
-                    formTitle: this.getFormTitle(),
-                };
-                window.guideBridge.trigger("submitStart", eventPayload, this.getPath());
-            }
             super(params);
             let self = this;
             this._model.subscribe((action) => {
-                triggerEventOnGuideBridge();
                 let state = action.target.getState();
                 let body = action.payload?.body;
                 if (body) {
