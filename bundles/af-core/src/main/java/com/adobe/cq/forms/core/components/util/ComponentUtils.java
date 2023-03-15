@@ -70,6 +70,16 @@ public class ComponentUtils {
         return resource.isResourceType(RT_FD_FORM_CONTAINER_V2);
     }
 
+    public static Resource getFormContainer(Resource resource) {
+        if (resource == null) {
+            return null;
+        }
+        if (isAFContainer(resource)) {
+            return resource;
+        }
+        return getFormContainer(resource.getParent());
+    }
+
     /**
      * Translates the given property as per the {@link I18n} object passed
      * 
