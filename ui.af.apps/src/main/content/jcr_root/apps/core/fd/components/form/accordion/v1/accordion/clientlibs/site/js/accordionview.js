@@ -81,11 +81,11 @@
                 // multiple expanded items annotated, display the last item open.
                 if (expandedItems.length > 1) {
                     var lastExpandedItem = expandedItems[expandedItems.length - 1]
-                    this.expandItem(lastExpandedItem);
+                    this.#expandItem(lastExpandedItem);
                     this.#collapseAllOtherItems(lastExpandedItem.id);
                 }
-                this.refreshItems();
-                this.bindEvents();
+                this.#refreshItems();
+                this.#bindEvents();
 
             }
         }
@@ -163,7 +163,7 @@
 
             for (var i = 0; i < this.#getCachedItems().length; i++) {
                 var item = this.#getCachedItems()[i];
-                var expanded = this.isItemExpanded(item);
+                var expanded = this.#isItemExpanded(item);
                 if (expanded) {
                     expandedItems.push(item);
                 }
@@ -179,7 +179,7 @@
          * @param {HTMLElement} item The item for checking its expanded state
          * @returns {Boolean} true if the item is expanded, false otherwise
          */
-        isItemExpanded(item) {
+        #isItemExpanded(item) {
             return item && item.dataset && item.dataset["cmpExpanded"] !== undefined;
         }
 
@@ -188,7 +188,7 @@
          *
          * @private
          */
-        bindEvents() {
+        #bindEvents() {
             var buttons = this.#getCachedButtons();
             if (buttons) {
                 var _self = this;
@@ -196,12 +196,12 @@
                     (function (index) {
                         buttons[index].addEventListener("click", function (event) {
                             var itemDivId = _self.#convertToItemDivId(buttons[index].id);
-                            _self.toggle(itemDivId);
+                            _self.#toggle(itemDivId);
                             _self.#collapseAllOtherItems(itemDivId);
-                            _self.focusButton(buttons[index].id);
+                            _self.#focusButton(buttons[index].id);
                         });
                         buttons[index].addEventListener("keydown", function (event) {
-                            _self.onButtonKeyDown(event, buttons[index].id);
+                            _self.#onButtonKeyDown(event, buttons[index].id);
                         });
                     })(i);
                 }
@@ -219,12 +219,12 @@
             var button = this.#getButtonById(buttonId);
             button.addEventListener("click", function (event) {
                 var itemDivId = _self.#convertToItemDivId(buttonId);
-                _self.toggle(itemDivId);
+                _self.#toggle(itemDivId);
                 _self.#collapseAllOtherItems(itemDivId);
-                _self.focusButton(buttonId);
+                _self.#focusButton(buttonId);
             });
             button.addEventListener("keydown", function (event) {
-                _self.onButtonKeyDown(event, buttonId);
+                _self.#onButtonKeyDown(event, buttonId);
             });
         }
 
@@ -235,7 +235,7 @@
          * @param {Object} event The keydown event
          * @param {Number} id The id of the button triggering the event
          */
-        onButtonKeyDown(event, id) {
+        #onButtonKeyDown(event, id) {
             var buttons = this.#getCachedButtons();
             var lastIndex = buttons.length - 1;
             var index = this.#getButtonIndexById(id);
@@ -245,31 +245,31 @@
                 case Accordion.keyCodes.ARROW_UP:
                     event.preventDefault();
                     if (index > 0) {
-                        this.focusButton(buttons[index - 1].id);
+                        this.#focusButton(buttons[index - 1].id);
                     }
                     break;
                 case Accordion.keyCodes.ARROW_RIGHT:
                 case Accordion.keyCodes.ARROW_DOWN:
                     event.preventDefault();
                     if (index < lastIndex) {
-                        this.focusButton(buttons[index + 1].id);
+                        this.#focusButton(buttons[index + 1].id);
                     }
                     break;
                 case Accordion.keyCodes.HOME:
                     event.preventDefault();
-                    this.focusButton(buttons[0].id);
+                    this.#focusButton(buttons[0].id);
                     break;
                 case Accordion.keyCodes.END:
                     event.preventDefault();
-                    this.focusButton(buttons[lastIndex].id);
+                    this.#focusButton(buttons[lastIndex].id);
                     break;
                 case Accordion.keyCodes.ENTER:
                 case Accordion.keyCodes.SPACE:
                     event.preventDefault();
                     var itemDivId = this.#convertToItemDivId(buttons[index].id);
-                    this.toggle(itemDivId);
+                    this.#toggle(itemDivId);
                     this.#collapseAllOtherItems(itemDivId);
-                    this.focusButton(buttons[index].id);
+                    this.#focusButton(buttons[index].id);
                     break;
                 default:
                     return;
@@ -282,10 +282,10 @@
          * @private
          * @param {Number} id The id of the item to toggle
          */
-        toggle(id) {
+        #toggle(id) {
             var itemToToggle = this.#getItemById(id);
             if (itemToToggle) {
-                (this.isItemExpanded(itemToToggle) === false) ? this.expandItem(itemToToggle) : this.collapseItem(itemToToggle);
+                (this.#isItemExpanded(itemToToggle) === false) ? this.#expandItem(itemToToggle) : this.#collapseItem(itemToToggle);
             }
         }
 
@@ -296,11 +296,11 @@
          * @param {HTMLElement} item The item to refresh
          */
         #refreshItem(item) {
-            var expanded = this.isItemExpanded(item);
+            var expanded = this.#isItemExpanded(item);
             if (expanded) {
-                this.expandItem(item);
+                this.#expandItem(item);
             } else {
-                this.collapseItem(item);
+                this.#collapseItem(item);
             }
         }
 
@@ -309,7 +309,7 @@
          *
          * @private
          */
-        refreshItems() {
+        #refreshItems() {
             for (var i = 0; i < this.#getCachedItems().length; i++) {
                 this.#refreshItem(this.#getCachedItems()[i]);
             }
@@ -323,7 +323,7 @@
          * @private
          * @param {HTMLElement} item The item to annotate as expanded
          */
-        expandItem(item) {
+        #expandItem(item) {
             var index = this.#getCachedItems().indexOf(item);
             if (index > -1) {
                 item.setAttribute(Accordion.dataAttributes.item.expanded, "");
@@ -348,7 +348,7 @@
          * @private
          * @param {HTMLElement} item The item to annotate as not expanded
          */
-        collapseItem(item) {
+        #collapseItem(item) {
             var index = this.#getCachedItems().indexOf(item);
             if (index > -1) {
                 item.removeAttribute(Accordion.dataAttributes.item.expanded);
@@ -372,7 +372,7 @@
          * @private
          * @param {Number} id The id of the button to focus
          */
-        focusButton(id) {
+        #focusButton(id) {
             var button = this.#getButtonById(id);
             button.focus();
         }
@@ -411,7 +411,7 @@
                 this.#cacheElements(this._elements.self);
                 var addedItemDiv = this.#getItemById(childView.id + Accordion.idSuffixes.item);
                 this.#bindEventsToAddedChild(childView.id);
-                this.expandItem(addedItemDiv);
+                this.#expandItem(addedItemDiv);
                 this.#collapseAllOtherItems(addedItemDiv.id);
             }
         }
@@ -425,7 +425,7 @@
             var cachedItems = this.#getCachedItems();
             if (cachedItems && cachedItems.length > 0) {
                 var firstItem = cachedItems[0];
-                this.expandItem(firstItem);
+                this.#expandItem(firstItem);
                 this.#collapseAllOtherItems(firstItem.id);
             }
         }
@@ -562,9 +562,9 @@
             var itemList = this.#getCachedItems();
             for (var i = 0; i < itemList.length; i++) {
                 if (itemList[i] !== itemToToggle) {
-                    var expanded = this.isItemExpanded(itemList[i]);
+                    var expanded = this.#isItemExpanded(itemList[i]);
                     if (expanded) {
-                        this.collapseItem(this.#getCachedItems()[i]);
+                        this.#collapseItem(this.#getCachedItems()[i]);
                     }
                 }
             }
