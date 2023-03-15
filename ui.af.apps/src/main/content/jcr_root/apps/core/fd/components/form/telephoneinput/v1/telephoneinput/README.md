@@ -56,8 +56,10 @@ We support replace feature that allows replacing Reset Button component to any o
 * Number Input
 * Reset Button
 * Submit Button
+* Text
 * Text Box
 * Text Input
+* Title
 
 ## BEM Description
 ```

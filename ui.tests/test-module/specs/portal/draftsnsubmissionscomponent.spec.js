@@ -44,46 +44,41 @@ describe('Drafts And Submissions - Authoring', function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
             // conditionally clean the test, when there are retries
-
+            cy.cleanTest(componentDropPath);
         });
 
         it('insert drafts and submission component', { retries: 3 }, function () {
-            cy.cleanTest(componentDropPath).then(function(){
-                const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                    responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-                cy.selectLayer("Edit");
-                // Add drafts and submissions component and delete it
-                cy.insertComponent(responsiveGridDropZoneSelector, "Drafts and submissions", afConstants.components.forms.resourceType.fpdnscomponent);
-                // once component is added, to remove the overlay from being active, we click on body
-                cy.get('body').click(0,0);
-                cy.deleteComponentByPath(componentDropPath);
-            });
-
+            const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+            cy.selectLayer("Edit");
+            // Add drafts and submissions component and delete it
+            cy.insertComponent(responsiveGridDropZoneSelector, "Drafts and submissions", afConstants.components.forms.resourceType.fpdnscomponent);
+            // once component is added, to remove the overlay from being active, we click on body
+            cy.get('body').click(0,0);
+            cy.deleteComponentByPath(componentDropPath);
         });
 
         it('verify edit dialog properties', { retries: 3 }, function () {
-            cy.cleanTest(componentDropPath).then(function() {
-                const x = "";
-                // click configure action on search and lister component
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
-                cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+            const x = "";
+            // click configure action on search and lister component
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
 
-                // check values
-                cy.get("[name='./title']")
-                    .should("be.visible")
-                    .should("have.value", "Drafts");
-                cy.get("[name='./layout']")
-                    .should("be.visible")
-                    .should("have.value", "card");
-                cy.get("input[name='./type']")
-                    .should("have.value", "DRAFT");
+            // check values
+            cy.get("[name='./title']")
+                .should("be.visible")
+                .should("have.value", "Drafts");
+            cy.get("[name='./layout']")
+                .should("be.visible")
+                .should("have.value", "card");
+            cy.get("input[name='./type']")
+                .should("have.value", "DRAFT");
 
-                // dismiss window via cancel
-                cy.get("button[title=\"Done\"")
-                    .should("be.visible")
-                    .click()
-                    .should("not.exist");
-            });
+            // dismiss window via cancel
+            cy.get("button[title=\"Done\"")
+                .should("be.visible")
+                .click()
+                .should("not.exist");
         });
     });
 });

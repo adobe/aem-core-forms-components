@@ -53,12 +53,6 @@ It should be added to a relevant site client library using the `embed` property.
 The following attributes must be added for the initialization of the image component in the form view:  
  1. `data-cmp-is="adaptiveFormImage"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
-
-## Replace feature:
-We support replace feature that allows replacing Reset Button component to any of the below components:
-
-* Text
-* Title
  
 ## Information
 * **Vendor**: Adobe

@@ -15,10 +15,10 @@
  ******************************************************************************/
 (function (window, author, Coral, channel) {
 
-    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select', LIST: 'list', DATE: 'date', NON_INPUT: 'nonInputReadOnly'}
+    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select', LIST: 'list', DATE: 'date'}
     const typeMap = {
         'button': fieldTypes.TEXT,
-        'checkboxgroup': fieldTypes.SELECT,
+        'checkboxgroup': fieldTypes.LIST,
         'datepicker': fieldTypes.TEXT,
         'dropdown': fieldTypes.SELECT,
         'emailinput': fieldTypes.TEXT,
@@ -27,19 +27,18 @@
         'reset': fieldTypes.TEXT,
         'submit': fieldTypes.TEXT,
         'telephoneinput': fieldTypes.TEXT,
-        'text': fieldTypes.NON_INPUT,
+        'text': fieldTypes.TEXT,
         'textbox': fieldTypes.TEXT,
         'textinput': fieldTypes.TEXT,
-        'title': fieldTypes.NON_INPUT,
-        'image': fieldTypes.NON_INPUT
+        'title': fieldTypes.TEXT
     }
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
-    const cannotBeReplacedWith = ['fileinput'];
+    const cannotBeReplacedWith = ['fileinput', 'image'];
 
-    const irreplaceable = ['fileinput'];
+    const irreplaceable = ['fileinput', 'checkboxgroup', 'image'];
 
     const doReplace = window.CQ.FormsCoreComponents.editorhooks.doReplace;
 

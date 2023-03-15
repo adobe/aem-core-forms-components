@@ -26,15 +26,9 @@ export default class FormFieldBase extends FormField {
         this.label = this.getLabel();
         this.errorDiv = this.getErrorDiv();
         this.qm = this.getQuestionMarkDiv();
-        this.tooltip = this.getTooltipDiv();
-        this.updateEmptyStatus();
+        this.tooltip = this.getTooltipDiv()
     }
 
-    ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
-
-    ELEMENT_HELP_SHOWN = "elementHelpShown";
-
-    ELEMENT_ERROR_SHOWN = "elementErrorShown";
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
@@ -90,18 +84,6 @@ export default class FormFieldBase extends FormField {
         super.setModel(model);
         const state = this._model.getState();
         this.applyState(state);
-        this.#registerEventListeners();
-    }
-
-    #syncLabel() {
-        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-        if (labelElement) {
-            labelElement.setAttribute('for', this.getId());
-        }
-    }
-
-    syncMarkupWithModel() {
-       this.#syncLabel()
     }
 
     /**
@@ -134,54 +116,6 @@ export default class FormFieldBase extends FormField {
         if (this.getDescription()) {
             this.#addHelpIconHandler(state);
         }
-    }
-
-    /**
-     * Register all event listeners on this field
-     */
-    #registerEventListeners() {
-        this.#addOnFocusEventListener();
-        this.#addOnHelpIconClickEventListener();
-    }
-
-    #addOnHelpIconClickEventListener() {
-        const questionMarkDiv = this.qm;
-        if (questionMarkDiv) {
-            questionMarkDiv.addEventListener('click', () => {this.#triggerEventOnGuideBridge(this.ELEMENT_HELP_SHOWN)})
-        }
-    }
-
-    #addOnFocusEventListener() {
-        const widget = this.getWidget();
-        if (widget) {
-            if (widget.length && widget.length > 1) {
-                for (let opt of widget) {
-                    opt.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
-                }
-            } else {
-                widget.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
-            }
-        }
-    }
-
-    #triggerEventOnGuideBridge(eventType) {
-        const formId =  this.formContainer.getFormId();
-        const formTitle = this.formContainer.getFormTitle();
-        const panelName = this.#getPanelName();
-        const fieldName = this._model.name;
-        const eventPayload = {
-            formId,
-            formTitle,
-            fieldName,
-            panelName
-        };
-        const formContainerPath = this.formContainer.getPath();
-        window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
-    }
-
-
-    #getPanelName() {
-        return this.parentView.getModel().name;
     }
 
     /**
@@ -277,7 +211,6 @@ export default class FormFieldBase extends FormField {
           this.errorDiv.innerHTML = state.errorMessage;
           if (state.valid === false && !state.errorMessage) {
             this.errorDiv.innerHTML = 'There is an error in the field';
-            this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
           }
         }
     }
@@ -291,31 +224,6 @@ export default class FormFieldBase extends FormField {
         let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
             this.widget.value = widgetValue;
-            this.updateEmptyStatus();
-        }
-    }
-
-    /**
-     * updates the html class based on the existence of a value in a field
-     */
-    updateEmptyStatus() {
-        if(!this.getWidget())
-            return;
-
-        const updateModifierClass = (widget, newValue) => {
-            const widgetBemClass = widget.className.split(/\s+/).filter(bemClass => bemClass.endsWith("__widget"))[0];
-            const filledModifierClass = `${widgetBemClass}--filled`;
-            const emptyModifierClass = `${widgetBemClass}--empty`;
-
-            widget.classList.add(newValue ? filledModifierClass : emptyModifierClass);
-            widget.classList.remove(newValue ? emptyModifierClass : filledModifierClass);
-        };
-
-        // radiobutton, checkbox, datefield(AFv1, not datepicker), etc. have multiple widgets in the form of a NodeList
-        if(this.widget instanceof NodeList) {
-            this.widget.forEach((widget) => updateModifierClass(widget, (widget.type === "radio" || widget.type === "checkbox") ? widget.checked : widget.value))
-        } else {
-            updateModifierClass(this.widget, this.widget.value)
         }
     }
 

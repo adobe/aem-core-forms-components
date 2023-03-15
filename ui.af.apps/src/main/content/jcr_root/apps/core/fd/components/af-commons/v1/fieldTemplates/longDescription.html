@@ -1,6 +1,6 @@
 <template data-sly-template.longDescription="${@ componentId, longDescription, bemBlock}">
   <div aria-live="polite">
-    <div class="${bemBlock}__longdescription" data-sly-test="${longDescription}">
+    <div id="${componentId}-longDescription" class="${bemBlock}__longdescription" data-sly-test="${longDescription}">
       ${longDescription @context='html'}
     </div>
   </div>
