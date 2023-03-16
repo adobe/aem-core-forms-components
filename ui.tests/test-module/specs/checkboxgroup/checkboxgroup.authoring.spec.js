@@ -153,7 +153,7 @@ describe('Page - Authoring', function () {
 
         // check rich text selector and see if RTE is visible.
         cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-        cy.get("div[name='richTextTitle']").should('be.visible');
+        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
         cy.get('.cq-dialog-submit').click();
     });
 
