@@ -115,19 +115,21 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-        // conditionally clean the test, when there are retries
-        cy.cleanTest(accordionEditPath);
 
     });
 
     it('insert aem forms Accordion', { retries: 3 }, function () {
-      dropAccordionInSites();
-      cy.deleteComponentByPath(accordionEditPath);
+      cy.cleanTest(accordionEditPath).then(function(){
+          dropAccordionInSites();
+          cy.deleteComponentByPath(accordionEditPath);
+      });
     });
 
     // todo: intermittent failure
     it('open edit dialog of aem forms Accordion', { retries: 3 }, function() {
-      testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
+      cy.cleanTest(accordionEditPath).then(function() {
+          testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
+      });
     });
 
   });

@@ -1,0 +1,38 @@
+{
+  "id": "checkbox-d98f771fbc",
+  "name": "checkbox-customized",
+  "visible": false,
+  "enabled" : false,
+  "required" : true,
+  "readOnly" : true,
+  "fieldType": "checkbox",
+  "description" : "checkbox-customized",
+  "tooltip": "test-short-description",
+  "properties": {
+    "afs:layout" : {
+      "tooltipVisible": false,
+      "orientation" : "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion":false
+    },
+    "fd:path":"/content/checkbox-customized"
+  },
+  "enforceEnum":true,
+  "enum" : [true, false],
+  "enumNames" : ["yes", "no"],
+  "label": {
+    "value": "checkbox-customized",
+    "visible": true
+  },
+  "dataRef":"a.b",
+  "screenReaderText": "'Custom screen reader text'",
+  "constraintMessages":{
+    "type":"incorrect type"
+  },
+  "events" : {
+    "custom:setProperty" : ["$event.payload"]
+  },
+  "type": "boolean",
+  ":type": "core/fd/components/form/checkbox/v1/checkbox"
+}

@@ -213,6 +213,15 @@ public class FormContainerImplTest {
         assertEquals("FDM", formContainer.getPrefillService());
     }
 
+    @Test
+    void testGetContextPath() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");
+        // Test with contextPath set
+        formContainer.setContextPath("/test");
+        assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
+    }
+
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present

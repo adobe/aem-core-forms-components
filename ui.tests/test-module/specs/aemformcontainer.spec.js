@@ -44,43 +44,44 @@ describe('Page - Authoring', function () {
     context('Open Editor', function () {
         beforeEach(function () {
             cy.openAuthoring(pagePath);
-            // conditionally clean the test, when there are retries
-            cy.cleanTest(aemFormContainerDropPath);
-
         });
 
         it('insert aem forms container component', { retries: 3 }, function () {
-            const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-            cy.selectLayer("Edit");
-            // Add aem forms container component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "AEM Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
-            // once component is added, to remove the overlay from being active, we click on body
-            cy.get('body').click(0,0);
-            cy.deleteComponentByPath(aemFormContainerDropPath);
+            cy.cleanTest(aemFormContainerDropPath).then(function(){
+                const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+                    responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
+                cy.selectLayer("Edit");
+                // Add aem forms container component and delete it
+                cy.insertComponent(responsiveGridDropZoneSelector, "AEM Forms Container", afConstants.components.forms.resourceType.aemformcontainer);
+                // once component is added, to remove the overlay from being active, we click on body
+                cy.get('body').click(0,0);
+                cy.deleteComponentByPath(aemFormContainerDropPath);
+            });
         });
 
         it('open edit dialog of aem forms container component', { retries: 3 }, function() {
-            // click configure action on aem forms container component
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-            // check for dynamic operations performed using JS
-            cy.get("[name='./thankyouConfig'][value='message']")
-                .should("be.visible")
-                .click({multiple: true});
-            cy.get("[name='./thankyouMessage']").should("be.visible");
-            // check for dynamic operations performed using JS
-            cy.get("[name='./thankyouConfig'][value='page']")
-                .should("be.visible")
-                .click({multiple: true});
-            cy.get("[name='./thankyouPage']").should("be.visible");
-            // check if use page locale is selected
-            cy.get("[name='./usePageLocale'").should("be.checked");
-            // check if set focus form on form is selected
-            cy.get("[name='./enableFocusOnFirstField'").should("be.checked");
-            // check if by default iframe is not selected
-            cy.get("[name='./useiframe'").should("be.checked");
-            cy.get(sitesSelectors.confirmDialog.actions.first).click();
+            cy.cleanTest(aemFormContainerDropPath).then(function(){
+                // click configure action on aem forms container component
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+                // check for dynamic operations performed using JS
+                cy.get("[name='./thankyouConfig'][value='message']")
+                    .should("be.visible")
+                    .click({multiple: true});
+                cy.get("[name='./thankyouMessage']").should("be.visible");
+                // check for dynamic operations performed using JS
+                cy.get("[name='./thankyouConfig'][value='page']")
+                    .should("be.visible")
+                    .click({multiple: true});
+                cy.get("[name='./thankyouPage']").should("be.visible");
+                // check if use page locale is selected
+                cy.get("[name='./usePageLocale'").should("be.checked");
+                // check if set focus form on form is selected
+                cy.get("[name='./enableFocusOnFirstField'").should("be.checked");
+                // check if by default iframe is not selected
+                cy.get("[name='./useiframe'").should("be.checked");
+                cy.get(sitesSelectors.confirmDialog.actions.first).click();
+            });
         });
 
         after(function() {

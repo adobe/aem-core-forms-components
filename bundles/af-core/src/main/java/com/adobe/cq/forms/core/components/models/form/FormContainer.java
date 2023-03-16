@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-// todo: have to add rule events here
 public interface FormContainer extends Container {
 
     /**
@@ -315,4 +314,13 @@ public interface FormContainer extends Container {
     default String getPrefillService() {
         return null;
     }
+
+    /**
+     * Set the contextPath in formContainer
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default void setContextPath(String contextPath) {}
+
 }

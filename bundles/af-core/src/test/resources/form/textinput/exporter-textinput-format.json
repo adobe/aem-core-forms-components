@@ -7,7 +7,6 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "string",
-  "required": false,
   "enabled": true,
   "constraintMessages": {
     "type": "incorrect type"
@@ -16,7 +15,6 @@
   "format": "email",
   "default": "abc",
   "label": {
-    "richText": false,
     "visible": true,
     "value": "def"
   },

@@ -45,6 +45,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes('Page info could not be loaded')) {
         return false;
     }
+    // sometimes AEM throws this error, but does not impact functionality
+    // Cannot read properties of null (reading 'getEditContext')
+    if (err.message.includes('getEditContext')) {
+        return false;
+    }
     if (err.message.includes("reading 'extend'")) {
         return false;
     }
@@ -52,6 +57,13 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
     if (err.message.includes("sling:resourceType")) { // sometimes delete component gets called twice, hence added thiw
+        return false;
+    }
+    // sites editor is dependent on few clientlibs which is only available on forms editor
+    if (err.message.includes("Cannot read properties of undefined (reading 'touchlib')")) {
+        return false;
+    }
+    if (err.message.includes("Cannot read properties of undefined (reading 'editLayer')")) {
         return false;
     }
     // we still want to ensure there are no other unexpected

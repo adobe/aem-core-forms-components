@@ -4,11 +4,21 @@
     "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
     "name" : "abc",
     "jcr:title" : "def",
+    "fieldType": "drop-down",
+    "enum" : [0, 1, 2],
+    "enumNames" : ["m", "f", "o"]
+  },
+  "dropdown-1" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "name" : "abc",
+    "jcr:title" : "def",
     "hideTitle" : false,
     "description" : "dummy",
     "visible" : false,
     "readOnly": false,
     "enabled": true,
+    "required": false,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
@@ -24,7 +34,7 @@
     "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
+    "hideTitle" : true,
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
@@ -39,7 +49,8 @@
     "enum" : [0, 1, 2],
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
-    "maxItems" : 2
+    "maxItems" : 2,
+    "required": true
   },
   "dropdown2" : {
     "jcr:primaryType": "nt:unstructured",
