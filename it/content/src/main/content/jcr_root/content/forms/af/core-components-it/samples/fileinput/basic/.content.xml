@@ -44,7 +44,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 2"
                     sling:resourceType="forms-components-examples/components/form/fileinput"
-                    accept="[application/pdf]"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     fieldType="file-input"
                     name="fileinput2"
                     type="file"/>
