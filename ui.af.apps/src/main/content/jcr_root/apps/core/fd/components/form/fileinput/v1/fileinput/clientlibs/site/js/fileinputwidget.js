@@ -428,8 +428,13 @@ class FileInputWidget {
                     // if the file is not invalid, show it and push it to internal array
                     if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
                         this.#showFileList(currFileName);
-                        this.#values.push(currFileName);
-                        this.#fileArr.push(file);
+                        if(this.#isMultiSelect()) {
+                            this.#values.push(currFileName);
+                            this.#fileArr.push(file);
+                        } else {
+                            this.#values = [currFileName];
+                            this.#fileArr = [file];
+                        }
                     } else {
                         invalidFilesIndexes.push(fileIndex);
                     }
