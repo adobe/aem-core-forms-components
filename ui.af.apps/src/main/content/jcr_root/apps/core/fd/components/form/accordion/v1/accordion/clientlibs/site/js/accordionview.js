@@ -20,7 +20,7 @@
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormAccordion";
         static bemBlock = 'cmp-accordion'
-        #_templateHTML = {};
+        _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
             description: `.${Accordion.bemBlock}__longdescription`,
@@ -398,7 +398,7 @@
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
             if (this.getModel()._children.length === this.children.length) {
-                this.#getClosestFieldsInView();
+                this.cacheClosestFieldsInView();
             }
         }
 
@@ -424,13 +424,11 @@
         }
 
         handleChildAddition(childView) {
-            if (childView.getInstanceManager() != null && this.#_templateHTML[childView.getInstanceManager().getId()] != null) {
-                this.#cacheElements(this._elements.self);
-                var addedItemDiv = this.#getItemById(childView.id + Accordion.idSuffixes.item);
-                this.#bindEventsToAddedChild(childView.id);
-                this.#expandItem(addedItemDiv);
-                this.#collapseAllOtherItems(addedItemDiv.id);
-            }
+            this.#cacheElements(this._elements.self);
+            var addedItemDiv = this.#getItemById(childView.id + Accordion.idSuffixes.item);
+            this.#bindEventsToAddedChild(childView.id);
+            this.#expandItem(addedItemDiv);
+            this.#collapseAllOtherItems(addedItemDiv.id);
         }
 
         handleChildRemoval(removedInstanceView) {
@@ -455,13 +453,19 @@
 
         }
 
+        getChildViewByIndex(index) {
+            var accordionPanels = this.#getCachedPanels();
+            var fieldId = accordionPanels[index].id.substring(0, accordionPanels[index].id.lastIndexOf("-"));
+            return this.getChild(fieldId);
+        }
+
         #getBeforeViewElement(instanceManager, instanceIndex) {
             var result = {};
             var instanceManagerId = instanceManager.getId();
             if (instanceIndex == 0) {
-                var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                var indexToInsert = this.#getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
+                var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 if (indexToInsert > 0) {
                     result.beforeViewElement = this.#getCachedItems()[indexToInsert - 1];
                 } else {
@@ -476,7 +480,7 @@
         }
 
         #prepareAccordionMarkupToBeAdded(instanceManager, addedModel, htmlElement) {
-            var accordionItemDivToBeRepeated = this.#_templateHTML[instanceManager.getId()]['accordionItemDiv'].cloneNode(true);
+            var accordionItemDivToBeRepeated = this._templateHTML[instanceManager.getId()]['accordionItemDiv'].cloneNode(true);
             var itemDivId = accordionItemDivToBeRepeated.id;
             var accordionPanelId = this.#convertToPanelId(itemDivId);
             var accordionPanelToBeRepeated = accordionItemDivToBeRepeated.querySelector('#' + accordionPanelId);
@@ -494,8 +498,7 @@
             var accordionButtonId = this.#convertToButtonId(accordionItemDivId);
             var accordionButton = accordionItemDiv.querySelector('#' + accordionButtonId);
             var accordionPanelDiv = accordionItemDiv.querySelector('#' + accordionPanelId);
-            var childViewId = accordionItemDiv.querySelector(
-                '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]').id;
+            var childViewId = accordionItemDiv.querySelector("[data-cmp-is]").id;
             accordionItemDiv.id = childViewId + Accordion.idSuffixes.item;
             accordionButton.id = childViewId + Accordion.idSuffixes.button;
             accordionPanelDiv.id = childViewId + Accordion.idSuffixes.panel;
@@ -503,75 +506,14 @@
             accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
         }
 
-
-        #getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
-            var accordionPanels = this.#getCachedPanels();
-            var resultIndex = -1;
-            if (accordionPanels) {
-                for (let i = accordionPanels.length - 1; i >= 0; i--) {
-                    var currentFieldId = accordionPanels[i].id.substring(0, accordionPanels[i].id.lastIndexOf("-"));
-                    if (closestNonRepeatableFieldId === currentFieldId) {
-                        resultIndex = i;
-                        break;
-                    } else {
-                        var fieldView = this.getChild(currentFieldId);
-                        if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
-                            resultIndex = i;
-                            break;
-                        }
-                    }
-                }
-            }
-            return resultIndex + 1;
-        }
-
-
         #cacheTemplateHTML(childView) {
-            if (childView.getInstanceManager() != null && (this.#_templateHTML == null || this.#_templateHTML[childView.getInstanceManager().getId()] == null)) {
+            if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
                 var accordionItemDivId = childView.element.id + Accordion.idSuffixes.item;
                 var instanceManagerId = childView.getInstanceManager().getId();
                 var accordionItemDiv = this.#getItemById(accordionItemDivId);
-                this.#_templateHTML[instanceManagerId] = {};
-                this.#_templateHTML[instanceManagerId]['accordionItemDiv'] = accordionItemDiv;
+                this._templateHTML[instanceManagerId] = {};
+                this._templateHTML[instanceManagerId]['accordionItemDiv'] = accordionItemDiv;
             }
-        }
-
-        #getClosestFieldsInView() {
-            var accordionPanels = this.#getCachedPanels();
-            for (let i = 0; i < accordionPanels.length; i++) {
-                var accordionPanel = accordionPanels[i];
-                var fieldView = this.getChild(accordionPanel.id.substring(0, accordionPanel.id.lastIndexOf("-")));
-                if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
-                    var instanceManagerId = fieldView.getInstanceManager().getId();
-                    if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
-                        var result = this.#getClosestFields(i);
-                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result["closestNonRepeatableFieldId"];
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result["closestRepeatableFieldInstanceManagerIds"];
-                    }
-                }
-            }
-        }
-
-
-        #getClosestFields(index) {
-            var accordionPanels = this.#getCachedPanels();
-            var result = {};
-            result["closestRepeatableFieldInstanceManagerIds"] = [];
-            for (let i = index - 1; i >= 0; i--) {
-                var fieldId = accordionPanels[i].id.substring(0, accordionPanels[i].id.lastIndexOf("-"));
-                var fieldView = this.getChild(fieldId);
-                if (fieldView.getInstanceManager() == null) {
-                    result["closestNonRepeatableFieldId"] = fieldId;
-                    break;
-                } else {
-                    result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
-                    if (fieldView.getInstanceManager().getModel().minOccur != 0) {
-                        break;
-                    }
-                }
-            }
-            return result;
         }
 
         #collapseAllOtherItems(itemId) {

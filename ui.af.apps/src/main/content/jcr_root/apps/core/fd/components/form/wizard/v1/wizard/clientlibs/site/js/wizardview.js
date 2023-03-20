@@ -28,7 +28,7 @@
 
     class Wizard extends FormView.FormPanel {
 
-        #_templateHTML = {};
+        _templateHTML = {};
         #_active;
 
         static NS = FormView.Constants.NS;
@@ -324,8 +324,7 @@
             var wizardPanels = this.#getCachedWizardPanels();
             if (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
-                    var id = wizardPanels[i].querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    var id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
                     tabs[i].id = id + Wizard.#tabIdSuffix;
                     tabs[i].setAttribute("aria-controls", id + Wizard.#wizardPanelIdSuffix);
                 }
@@ -336,8 +335,7 @@
             var wizardPanels = this.#getCachedWizardPanels();
             if (wizardPanels) {
                 for (var i = 0; i < wizardPanels.length; i++) {
-                    var id = wizardPanels[i].querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
+                    var id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
                     wizardPanels[i].id = id + Wizard.#wizardPanelIdSuffix;
                     wizardPanels[i].setAttribute("aria-labelledby", id + Wizard.#tabIdSuffix);
                 }
@@ -351,17 +349,17 @@
         }
 
         handleChildAddition(childView) {
-            if (childView.getInstanceManager() != null && this.#_templateHTML[childView.getInstanceManager().getId()] != null) {
-                var navigationTabToBeRepeated = this.#_templateHTML[childView.getInstanceManager().getId()]['navigationTab']
+            if (childView.getInstanceManager() != null && this._templateHTML[childView.getInstanceManager().getId()] != null) {
+                var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab']
                     .cloneNode(true);
                 navigationTabToBeRepeated.id = childView.id + Wizard.#tabIdSuffix;
                 navigationTabToBeRepeated.setAttribute("aria-controls", childView.id + Wizard.#wizardPanelIdSuffix);
                 var instanceIndex = childView.getModel().index;
                 var instanceManagerId = childView.getInstanceManager().getId()
                 if (instanceIndex == 0) {
-                    var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                    var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                    var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
+                    var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                    var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                    var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                     if (indexToInsert == 0) {
                         var tabListParentElement = this.#getTabListElement();
                         tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
@@ -401,8 +399,14 @@
             this.#cacheTemplateHTML(childView);
             //when all children are available in view
             if (this.getModel()._children.length === this.children.length) {
-                this.#getClosestFieldsInView();
+                this.cacheClosestFieldsInView();
             }
+        }
+
+        getChildViewByIndex(index) {
+            var wizardPanels = this.#getCachedWizardPanels();
+            var fieldId = wizardPanels[index].id.substring(0, wizardPanels[index].id.lastIndexOf("__"));
+            return this.getChild(fieldId);
         }
 
         /**
@@ -412,41 +416,24 @@
          * @param htmlElement of the repeated component
          */
         addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
+            let elementToEnclose = this._templateHTML[instanceManager.getId()]['targetWizardPanel'].cloneNode(false);
+            elementToEnclose.id = addedModel.id + Wizard.#wizardPanelIdSuffix;
             let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
             let beforeViewElement = result.beforeViewElement;
-            let elementToEnclose = result.elementToEnclose;
-            elementToEnclose.id = addedModel.id + result.idSuffix;
             beforeViewElement.after(elementToEnclose);
             elementToEnclose.append(htmlElement.querySelector('#' + addedModel.id));
         }
 
         #cacheTemplateHTML(childView) {
-            if (childView.getInstanceManager() != null && (this.#_templateHTML == null || this.#_templateHTML[childView.getInstanceManager().getId()] == null)) {
+            if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
                 var tabId = childView.element.id + Wizard.#tabIdSuffix;
                 var wizardPanelId = childView.element.id + Wizard.#wizardPanelIdSuffix;
                 var instanceManagerId = childView.getInstanceManager().getId();
                 var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
                 var wizardPanelToBeRepeated = this.#getWizardPanelElementById(wizardPanelId)
-                this.#_templateHTML[instanceManagerId] = {};
-                this.#_templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
-                this.#_templateHTML[instanceManagerId]['targetWizardPanel'] = wizardPanelToBeRepeated;
-            }
-        }
-
-        #getClosestFieldsInView() {
-            var wizardPanels = this.#getCachedWizardPanels();
-            for (let i = 0; i < wizardPanels.length; i++) {
-                var wizardPanel = wizardPanels[i];
-                var fieldView = this.getChild(wizardPanel.id.substring(0, wizardPanel.id.lastIndexOf("__")));
-                if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
-                    var instanceManagerId = fieldView.getInstanceManager().getId();
-                    if (this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
-                        var result = this.#getClosestFields(i);
-                        this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result.closestNonRepeatableFieldId;
-                        this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result.closestRepeatableFieldInstanceManagerIds;
-                    }
-                }
+                this._templateHTML[instanceManagerId] = {};
+                this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
+                this._templateHTML[instanceManagerId]['targetWizardPanel'] = wizardPanelToBeRepeated;
             }
         }
 
@@ -492,58 +479,15 @@
             return -1;
         }
 
-        #getClosestFields(index) {
-            var allWizardPanels = this.#getCachedWizardPanels();
-            var result = {};
-            result["closestRepeatableFieldInstanceManagerIds"] = [];
-            for (let i = index - 1; i >= 0; i--) {
-                var fieldId = allWizardPanels[i].id.substring(0, allWizardPanels[i].id.lastIndexOf("__"));
-                var fieldView = this.getChild(fieldId);
-                if (fieldView.getInstanceManager() == null) {
-                    result["closestNonRepeatableFieldId"] = fieldId;
-                    break;
-                } else {
-                    result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
-                    if (fieldView.getInstanceManager().getModel().minOccur != 0) {
-                        break;
-                    }
-                }
-            }
-            return result;
-        }
-
-        #getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
-            var wizardPanels = this.#getCachedWizardPanels();
-            var resultIndex = -1;
-            if (wizardPanels) {
-                for (let i = wizardPanels.length - 1; i >= 0; i--) {
-                    var currentFieldId = wizardPanels[i].id.substring(0, wizardPanels[i].id.lastIndexOf("__"));
-                    if (closestNonRepeatableFieldId === currentFieldId) {
-                        resultIndex = i;
-                        break;
-                    } else {
-                        var fieldView = this.getChild(currentFieldId);
-                        if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
-                            resultIndex = i;
-                            break;
-                        }
-                    }
-                }
-            }
-            return resultIndex + 1;
-
-        }
-
         #getBeforeViewElement(instanceManager, instanceIndex) {
             var result = {};
             var instanceManagerId = instanceManager.getId();
             if (instanceIndex == 0) {
-                var closestNonRepeatableFieldId = this.#_templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerIds = this.#_templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                var indexToInsert = this.#getTabIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
-                var wizardPanels = this.#getCachedWizardPanels();
+                var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 if (indexToInsert > 0) {
-                    result.beforeViewElement = this.#getWizardPanelElementById(wizardPanels[indexToInsert - 1].id);
+                    result.beforeViewElement = this.#getCachedWizardPanels()[indexToInsert - 1].id;
                 } else {
                     result.beforeViewElement = this.getPreviousButtonDiv();
                 }
@@ -552,8 +496,6 @@
                 var previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
                 result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
             }
-            result.elementToEnclose = this.#_templateHTML[instanceManagerId]['targetWizardPanel'].cloneNode(false);
-            result.idSuffix = Wizard.#wizardPanelIdSuffix;
             return result;
         }
     }
