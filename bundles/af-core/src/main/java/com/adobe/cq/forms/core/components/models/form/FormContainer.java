@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-// todo: have to add rule events here
 public interface FormContainer extends Container {
 
     /**

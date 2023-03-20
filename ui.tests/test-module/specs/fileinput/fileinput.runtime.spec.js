@@ -23,6 +23,11 @@ const getFormObjTest = (fileList) => {
                 expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
                 assert.equal(afFormData.attachments.length, fileList.length, "incorrect attachments returned from guideBridge#getFormDataObject API");
 
+                // checks if the right file names are present
+                fileList.forEach((file) => {
+                    expect(afFormData.attachments.filter(e => e.name === file).length, `could not find ${file} attachment`).to.be.greaterThan(0);
+                })
+
                 // explicitly calling this to ensure there are no errors during this API invocation
                 let htmlFormData = afFormData.toHTMLFormData();
                 // Display the key/value pairs
@@ -126,7 +131,9 @@ describe("Form with File Input - Basic Tests", () => {
 
 describe("Form with File Input - Prefill & Submit tests", () => {
     let prefillId;
-    const fileInput1 = "input[name='fileinput1']";
+    const multiSelectFileInput1 = "input[name='fileinput1']";
+    const singleSelectFileInput2 = "input[name='fileinput2']";
+
     const submitBtn = "submit1673953138924";
     const pagePath = "content/forms/af/core-components-it/samples/fileinput/basic.html"
 
@@ -167,79 +174,86 @@ describe("Form with File Input - Prefill & Submit tests", () => {
         });
     }
 
+    const fileInputs = [{
+        type: "Single Select", selector: singleSelectFileInput2
+        }, {
+        type: "Multi Select", selector: multiSelectFileInput1
+    }];
 
-    it("attach files, check model, view, preview attachment and submit the form", () => {
-        cy.previewForm(pagePath, {
-            onBeforeLoad : (win) => {
-                cy.stub(win, 'open'); // creating a stub to check file preview
-            }
-        });
-        const fileName = "empty.pdf";
-        // attach the file
-        cy.get(fileInput1).attachFile(fileName);
-
-        // check for successful attachment of file in the view
-        checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf']);
-
-        // check preview of the file
-        checkFilePreviewInFileAttachment(fileInput1)
-
-        // submit the form
-        cy.get(".cmp-adaptiveform-button__widget").click();
-
-        // check for successful submission
-        submitTest();
-    })
-
-    it(`view prefill of submitted form, make changes to attachments and submit`, () => {
-        cy.get("@prefillId").then(id => {
+    fileInputs.forEach((fileInput, idx) => {
+        it(`${fileInput.type} - attach files, check model, view, preview attachment and submit the form`, () => {
             cy.previewForm(pagePath, {
-                params: [`prefillId=${id}`],
-                onBeforeLoad(win) {
+                onBeforeLoad : (win) => {
                     cy.stub(win, 'open'); // creating a stub to check file preview
                 }
             });
+            const fileName = "empty.pdf";
+            // attach the file
+            cy.get(fileInput.selector).attachFile(fileName);
 
-            // check if files were prefilled
-            checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf']);
+            // check for successful attachment of file in the view
+            checkFileNamesInFileAttachmentView(fileInput.selector, ['empty.pdf']);
 
-            // check if guideBridge API returns file attachments correctly
-            getFormObjTest(['empty.pdf']);
-
-            // check the preview of the file attachment
-            checkFilePreviewInFileAttachment(fileInput1);
-
-            // add new files after preview to both the component
-            cy.get(fileInput1).attachFile(['sample.txt'])
-
-            // check if guideBridge API returns correctly after prefill and attaching more files
-            getFormObjTest(['empty.pdf', 'sample.txt']);
+            // check preview of the file
+            checkFilePreviewInFileAttachment(fileInput.selector)
 
             // submit the form
             cy.get(".cmp-adaptiveform-button__widget").click();
 
-            // check if submission is success
+            // check for successful submission
             submitTest();
-        });
-    });
+        })
 
-    it(`prefill of submitted prefilled form`, () => {
-        cy.get("@prefillId").then(id => {
-            cy.previewForm(pagePath, {
-                params: [`prefillId=${id}`],
-                onBeforeLoad(win) {
-                    cy.stub(win, 'open'); // creating a stub to check file preview
-                }
+        it(`${fileInput.type} - view prefill of submitted form, make changes to attachments and submit`, () => {
+            cy.get("@prefillId").then(id => {
+                cy.previewForm(pagePath, {
+                    params: [`prefillId=${id}`],
+                    onBeforeLoad(win) {
+                        cy.stub(win, 'open'); // creating a stub to check file preview
+                    }
+                });
+
+                // check if files were prefilled
+                checkFileNamesInFileAttachmentView(fileInput.selector, ['empty.pdf']);
+
+                // check if guideBridge API returns file attachments correctly
+                getFormObjTest(['empty.pdf']);
+
+                // check the preview of the file attachment
+                checkFilePreviewInFileAttachment(fileInput.selector);
+
+                // add new files after preview to both the component
+                cy.get(fileInput.selector).attachFile(['sample.txt'])
+
+                // check if guideBridge API returns correctly after prefill and attaching more files
+                getFormObjTest(['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
+
+                // submit the form
+                cy.get(".cmp-adaptiveform-button__widget").click();
+
+                // check if submission is success
+                submitTest();
+            });
+        });
+
+        it(`${fileInput.type} - prefill of submitted prefilled form`, () => {
+            cy.get("@prefillId").then(id => {
+                cy.previewForm(pagePath, {
+                    params: [`prefillId=${id}`],
+                    onBeforeLoad(win) {
+                        cy.stub(win, 'open'); // creating a stub to check file preview
+                    }
+                });
+
+                // check if files were prefilled
+                checkFileNamesInFileAttachmentView(fileInput.selector, ['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
+                getFormObjTest(['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
+
+                // check if file preview works fine after prefill
+                checkFilePreviewInFileAttachment(fileInput.selector);
             });
 
-            // check if files were prefilled
-            checkFileNamesInFileAttachmentView(fileInput1, ['empty.pdf', 'sample.txt']);
-            getFormObjTest(['empty.pdf', 'sample.txt']);
-
-            // check if file preview works fine after prefill
-            checkFilePreviewInFileAttachment(fileInput1);
         });
-
-    });
+    })
 
 });
