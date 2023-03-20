@@ -486,8 +486,9 @@
                 var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
                 var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
                 var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
+                var wizardPanels = this.#getCachedWizardPanels();
                 if (indexToInsert > 0) {
-                    result.beforeViewElement = this.#getCachedWizardPanels()[indexToInsert - 1].id;
+                    result.beforeViewElement = this.#getWizardPanelElementById(wizardPanels[indexToInsert - 1].id);
                 } else {
                     result.beforeViewElement = this.getPreviousButtonDiv();
                 }

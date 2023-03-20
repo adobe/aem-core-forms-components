@@ -450,7 +450,6 @@
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
-
         }
 
         getChildViewByIndex(index) {
@@ -531,7 +530,7 @@
 
 
         #getCachedItems() {
-            return this._elements[Accordion.cacheKeys.itemKey];
+            return (this._elements[Accordion.cacheKeys.itemKey] != null) ? this._elements[Accordion.cacheKeys.itemKey] : [];
         }
 
         #getCachedPanels() {
