@@ -310,6 +310,87 @@
                             </columns>
                         </items>
                     </submitActions>
+                    <dor
+                            granite:class="cmp-adaptiveform-container__dortemplate"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Document of Record Template"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <dortypeselector
+                                                    granite:class="cmp-adaptiveform-container__dortypeselector"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                                    ignoreData="{Boolean}true"
+                                                    fieldLabel="Select template type"
+                                                    name="dortypeselector"
+                                                    vertical="{Boolean}true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <none
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="None"
+                                                            value="none"/>
+                                                    <selectdor
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Associate form template as the Document of Record template"
+                                                            value="select">
+                                                        <granite:rendercondition
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="fd/af/dor/rendercondition/selectdor"/>
+                                                    </selectdor>
+                                                    <generatedor
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Generate Document of Record"
+                                                            value="generate"/>
+                                                </items>
+                                            </dortypeselector>
+                                            <dortemplateselector
+                                                    granite:class="cmp-adaptiveform-container__dortemplateselectorcontainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                                            <selecteddortype
+                                                    granite:class="cmp-adaptiveform-container__dorType"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./dorType"/>
+                                            <dorrefmetadata
+                                                    granite:class="cmp-adaptiveform-container__dortemplateref"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./dorTemplateRef"/>
+                                            <dor-template-type
+                                                    granite:class="cmp-adaptiveform-container__dortemplatetype"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fd:formtype"/>
+                                            <dorGenerateView
+                                                    granite:class="cmp-adaptiveform-container__dorgenerateview"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                                            <dor-default-template
+                                                    granite:class="cmp-adaptiveform-container__dordefaulttemplate"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    value="/libs/fd/af/dor/templates/defaultTemplate.xdp"/>
+                                            <dor-sling-resourceType
+                                                    granite:class="cmp-adaptiveform-container__dorslingresourcetype"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    value="fd/af/authoring/components/dor/dorPropertiesTabs"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </dor>
                 </items>
             </tabs>
         </items>

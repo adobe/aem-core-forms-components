@@ -407,6 +407,7 @@
     });
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
-        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);
+        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs,
+        registerEmailDialogClientlibs, initialiseDataModel, Granite.author.afUtils.initialiseDorTemplateConfig);
 
 })(jQuery, Granite, jQuery(document), Coral);
