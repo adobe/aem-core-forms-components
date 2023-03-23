@@ -16,6 +16,7 @@
 (function (ns, document) {
     var DOR_DIALOG_PATH = "fd/af/authoring/components/dor/dorPropertiesTabs",
          PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print";
+         isrde = true;
 
       var getFormPath = function (contentPath) {
                 return contentPath.replace(Granite.HTTP.getContextPath(), "");
@@ -37,6 +38,15 @@
                 layout : "auto"
             };
         };
+
+    var toolBar = document.getElementById("EditableToolbar");
+    toolBar.addEventListener('DOMNodeInserted',() => {
+        dorPreviewElement = document.querySelector(`[title="The Document of Record feature is not available for Rapid Development Environment"][icon="printPreview"]`);
+        
+        if (dorPreviewElement){
+            dorPreviewElement.disabled = true;
+        }
+    });
 
     var dorPropertiesDialogDef =  {
             getConfig : function getConfig() {
