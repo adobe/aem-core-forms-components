@@ -315,6 +315,9 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Document of Record Template"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <granite:rendercondition
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core/forms/components/rendercondition/dortemplateconfig"/>
                         <items jcr:primaryType="nt:unstructured">
                             <columns
                                     jcr:primaryType="nt:unstructured"
