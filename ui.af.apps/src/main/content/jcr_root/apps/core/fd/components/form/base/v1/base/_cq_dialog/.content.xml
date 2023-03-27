@@ -61,7 +61,7 @@
                                                    fieldLabel="Title"
                                                    name="./jcr:title"/>
                                             <richTextTitle jcr:primaryType="nt:unstructured"
-                                                           granite:class="cmp-adaptiveform-base__richtexttitle"
+                                                           wrapperClass="cmp-adaptiveform-base__richtexttitle"
                                                            sling:resourceType="cq/gui/components/authoring/dialog/richtext"
                                                            fieldLabel="Title"
                                                            name="richTextTitle"

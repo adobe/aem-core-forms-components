@@ -26,7 +26,8 @@
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
         BASE_TITLE = ".cmp-adaptiveform-base__title",
-        BASE_RICH_TEXT_TITLE = "input[name='richTextTitle']",
+        BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
+        BASE_WRAPPER_RICH_TEXT_TITLE = "input[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
         BASE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
@@ -177,15 +178,13 @@
     function resolveRichText(dialog, isTitleRichText, isToggled) {
         var title = dialog.find(BASE_TITLE)[0],
             richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
-            richTextTitleDiv = dialog.find("div[name='richTextTitle']")[0];
+            richTextTitleDiv = dialog.find("div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
         if(isTitleRichText.checked){
             hideGraniteComponent(title);
             showGraniteComponent(richTextTitle);
-            showGraniteComponent($(richTextTitle).parent('div.richtext-container').siblings('label'));
             copyTextValueToRte(title, richTextTitleDiv);
         } else {
             hideGraniteComponent(richTextTitle);
-            hideGraniteComponent($(richTextTitle).parent('div.richtext-container').siblings('label'));
             showGraniteComponent(title);
             if(isToggled){
                 title.value = $('<div>').html(richTextTitleDiv.innerHTML).text();
@@ -260,9 +259,9 @@
     /**
      * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
      */
-    channel.on("change", "div[name='richTextTitle']", function (e) {
+    channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
         Coral.commons.ready(e.target, function() {
-            var richTextValue = channel.find(BASE_RICH_TEXT_TITLE)[0],
+            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
                 textValue = channel.find(BASE_TITLE)[0];
             changeTextValue(textValue, richTextValue);
         });
