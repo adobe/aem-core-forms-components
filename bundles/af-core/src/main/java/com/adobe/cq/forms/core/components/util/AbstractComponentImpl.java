@@ -121,6 +121,7 @@ public abstract class AbstractComponentImpl implements Component {
 
     @PostConstruct
     private void init() {
+        // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
         if (currentPage != null && resource != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
