@@ -13,3 +13,17 @@
 .cmp-replace-dialog-search-components {
     padding: 0;
 }
+
+#EditableToolbar > button:first-child{
+    margin-left: 0px;
+}
+
+#EditableToolbar button {
+    margin-left: 8px;
+}
+
+.dor-preview-button-wrapper button{
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;    
+}
