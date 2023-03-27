@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2023-03-14T16:00:04.944+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="afv2_it"
+        sling:configRef="/conf/forms/afv2_it/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas">
+            <accordion
+                jcr:lastModified="{Date}2023-03-14T15:57:14.451+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Accordion"
+                sling:resourceType="forms-components-examples/components/form/accordion"
+                enabled="{Boolean}true"
+                fieldType="panel"
+                hideTitle="false"
+                name="accordion1678246997341"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true"
+                wrapData="{Boolean}false">
+                <item_1
+                    cq:panelTitle="Item 1"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Item 1"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    layout="responsiveGrid"
+                    maxOccur="{Decimal}4"
+                    minOccur="{Decimal}0"
+                    name="item_1"
+                    repeatable="{Boolean}true">
+                    <emailinput
+                        jcr:lastModified="{Date}2023-03-10T13:34:32.278+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        fieldType="text-input"
+                        name="emailinput1678435473081"/>
+                </item_1>
+                <item_1678777484517
+                    cq:panelTitle="datepicker"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    fieldType="date-input"
+                    name="item_16787774845171678777499654"/>
+                <item_2
+                    cq:panelTitle="Item 2"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Item 2"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    layout="responsiveGrid"
+                    maxOccur="{Decimal}4"
+                    minOccur="{Decimal}0"
+                    name="item_2"
+                    repeatable="{Boolean}true">
+                    <textinput
+                        jcr:lastModified="{Date}2023-03-10T13:34:45.373+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1678435486044"/>
+                </item_2>
+                <item_1678789629867
+                    cq:panelTitle="RP4"
+                    jcr:lastModified="{Date}2023-03-14T15:58:54.378+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="RP4"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    maxOccur="{Decimal}4"
+                    minOccur="{Decimal}0"
+                    name="RP4"
+                    readOnly="{Boolean}false"
+                    repeatable="{Boolean}true"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                    <checkboxgroup
+                        jcr:lastModified="{Date}2023-03-14T16:00:04.933+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Check Box Group"
+                        sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                        enum="[0,1]"
+                        enumNames="[Item 1, Item 2]"
+                        fieldType="checkbox-group"
+                        name="checkboxgroup1678789805519"
+                        type="number[]"/>
+                </item_1678789629867>
+                <item_1678775772877
+                    cq:panelTitle="tabs"
+                    jcr:lastModified="{Date}2023-03-14T12:33:13.131+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="RP3Tabs"
+                    sling:resourceType="forms-components-examples/components/form/tabsontop"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    maxOccur="{Decimal}4"
+                    minOccur="{Decimal}1"
+                    name="RP3Tabs"
+                    readOnly="{Boolean}false"
+                    repeatable="{Boolean}true"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                    <numberinput
+                        cq:panelTitle="Number Input"
+                        jcr:lastModified="{Date}2023-03-14T12:06:26.886+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1678775787076"/>
+                </item_1678775772877>
+            </accordion>
+            <button
+                jcr:lastModified="{Date}2023-03-14T09:33:06.498+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="+RP1"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP1Add"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP1Add&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP1Add&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ADD_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.item_1&quot;\,&quot;displayName&quot;:&quot;Item 1&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/Item 1/&quot;\,&quot;name&quot;:&quot;item_1&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.item_1\, 'addInstance')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.item_1\, 'addInstance')]"/>
+            </button>
+            <button_464877576
+                jcr:lastModified="{Date}2023-03-14T09:33:20.888+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="-RP1"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP1Sub"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP1Sub&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP1Sub&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;REMOVE_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.item_1&quot;\,&quot;displayName&quot;:&quot;Item 1&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/Item 1/&quot;\,&quot;name&quot;:&quot;item_1&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.item_1\, 'removeInstance'\, length($form.accordion1678246997341.item_1) - 1)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.item_1\, 'removeInstance'\, length($form.accordion1678246997341.item_1) - 1)]"/>
+            </button_464877576>
+            <button_642566839
+                jcr:lastModified="{Date}2023-03-14T09:33:31.750+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="+RP2"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP2Add"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP2Add&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP2Add&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ADD_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.item_2&quot;\,&quot;displayName&quot;:&quot;Item 2&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/Item 2/&quot;\,&quot;name&quot;:&quot;item_2&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.item_2\, 'addInstance')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.item_2\, 'addInstance')]"/>
+            </button_642566839>
+            <button_1809827120
+                jcr:lastModified="{Date}2023-03-14T09:33:42.351+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="-RP2"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP2Sub"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP2Sub&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP2Sub&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;REMOVE_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.item_2&quot;\,&quot;displayName&quot;:&quot;Item 2&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/Item 2/&quot;\,&quot;name&quot;:&quot;item_2&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.item_2\, 'removeInstance'\, length($form.accordion1678246997341.item_2) - 1)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.item_2\, 'removeInstance'\, length($form.accordion1678246997341.item_2) - 1)]"/>
+            </button_1809827120>
+            <button_814697240
+                jcr:lastModified="{Date}2023-03-14T12:03:39.887+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="+RP3"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP3Add"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP3Add&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP3Add&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ADD_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.RP3Tabs&quot;\,&quot;displayName&quot;:&quot;RP3Tabs&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/RP3Tabs/&quot;\,&quot;name&quot;:&quot;RP3Tabs&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.RP3Tabs\, 'addInstance')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.RP3Tabs\, 'addInstance')]"/>
+            </button_814697240>
+            <button_1601473027
+                jcr:lastModified="{Date}2023-03-14T12:03:51.423+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="-RP3"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="RP3Sub"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.RP3Sub&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;RP3Sub&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;REMOVE_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.RP3Tabs&quot;\,&quot;displayName&quot;:&quot;RP3Tabs&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/RP3Tabs/&quot;\,&quot;name&quot;:&quot;RP3Tabs&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.RP3Tabs\, 'removeInstance'\, length($form.accordion1678246997341.RP3Tabs) - 1)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.RP3Tabs\, 'removeInstance'\, length($form.accordion1678246997341.RP3Tabs) - 1)]"/>
+            </button_1601473027>
+            <button_1603393216
+                jcr:lastModified="{Date}2023-03-14T15:58:12.638+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="+RP4"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="button_16033932161678789679221"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_16033932161678789679221&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_16033932161678789679221&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ADD_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.RP4&quot;\,&quot;displayName&quot;:&quot;RP4&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/RP4/&quot;\,&quot;name&quot;:&quot;RP4&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.RP4\, 'addInstance')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.RP4\, 'addInstance')]"/>
+            </button_1603393216>
+            <button_481260099
+                jcr:lastModified="{Date}2023-03-14T15:58:19.467+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="-RP4"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                enabled="{Boolean}true"
+                fieldType="button"
+                name="button_4812600991678789682901"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_4812600991678789682901&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_4812600991678789682901&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;REMOVE_INSTANCE&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;REPEATABLE_COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.accordion1678246997341.RP4&quot;\,&quot;displayName&quot;:&quot;RP4&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;displayPath&quot;:&quot;FORM/Accordion/RP4/&quot;\,&quot;name&quot;:&quot;RP4&quot;\,&quot;parent&quot;:&quot;$form.accordion1678246997341&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent($form.accordion1678246997341.RP4\, 'removeInstance'\, length($form.accordion1678246997341.RP4) - 1)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent($form.accordion1678246997341.RP4\, 'removeInstance'\, length($form.accordion1678246997341.RP4) - 1)]"/>
+            </button_481260099>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
