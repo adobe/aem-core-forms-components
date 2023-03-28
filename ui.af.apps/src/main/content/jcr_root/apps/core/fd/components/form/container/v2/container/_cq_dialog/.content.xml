@@ -283,7 +283,7 @@
                                             granite:class="warning-icon"
                                             granite:id="dorWarningIcon"
                                             jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="fd/af/components/dorAbsenceBanner"
+                                            sling:resourceType="fd/af/authoring/components/dorAbsenceBanner"
                                             text="Use a non-Rapid Development Environment to use or test a Submit actions that requires the Document of Record feature"
                                             variant="minimal">
                                             <granite:rendercondition
