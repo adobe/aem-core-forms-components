@@ -28,7 +28,7 @@
      data-cmp-visible="${file.visible ? 'true' : 'false'}"
      data-cmp-enabled="${file.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, labelRichText=file.label.richText, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </br>
     <label data-sly-test="${file.buttonText}" for="${file.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
