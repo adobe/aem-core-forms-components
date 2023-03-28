@@ -54,7 +54,7 @@
                 var dor_message_tooltip = new Coral.Tooltip();
                 dor_message_tooltip.set({
                     content: {
-                        innerHTML: "The Document of Record feature is not available for Rapid Development Environment"
+                        innerHTML: Granite.I18n.get("The Document of Record feature is not available for Rapid Development Environment")
                     },
                     placement: "bottom",
                     target: ".dor-preview-button-wrapper",
