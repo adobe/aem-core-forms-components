@@ -24,7 +24,7 @@ describe("Form with Wizard/Tab/Accordion and Prefill with Zero occurance", () =>
     })
 
     it("test that repeatable instances with zero occurance is not in the dom", () => {
-        const children = formContainer._model._children;
+        const children = formContainer.getModel()._children;
         expect(children.length).to.be.equal(3);
         for (let i = 0; i < children.length; i++) {
             let currChild = children[i];
