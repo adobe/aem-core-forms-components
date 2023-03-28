@@ -23,14 +23,13 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
      data-cmp-visible="${text.visible ? 'true' : 'false'}"
      data-cmp-enabled="${text.enabled ? 'true' : 'false'}"
-     id="${component.id}"
+     id="${text.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=text.label.value, labelVisible=text.label.visible, labelRichText=text.label.richText, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=text.id, labelValue=text.label.value, labelVisible=text.label.visible, labelRichText=text.label.richText, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               title="${text.tooltipVisible ? '' : text.tooltipText}"
               aria-label="${text.label.visible && text.label.value}"
@@ -55,9 +54,9 @@
            placeholder="${text.placeHolder}"
            minlength="${text.minLength}"
            maxlength="${text.maxLength}"/>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
+    <div data-sly-call="${questionMark.questionMark @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=text.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=text.id, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
 </div>

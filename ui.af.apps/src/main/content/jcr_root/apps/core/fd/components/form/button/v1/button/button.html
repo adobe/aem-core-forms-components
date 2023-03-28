@@ -19,11 +19,10 @@
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-sly-use.iconTemplate="icon.html"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 <div class="cmp-adaptiveform-button"
-     id="${component.id}"
+     id="${button.id}"
      data-cmp-visible="${button.visible}"
      data-cmp-enabled="${button.enabled}"
      data-cmp-is="adaptiveFormButton"
@@ -38,8 +37,8 @@
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
     <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text" data-richtext="${button.label.richText}">${button.label.value @ context = button.label.richText ? 'html' : 'text'}</span>
   </button>
-  <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
-  <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap>
+  <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
+  <div data-sly-call="${shortDescription.shortDescription @componentId=button.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap>
   </div>
-  <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
+  <div data-sly-call="${longDescription.longDescription @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
 </div>

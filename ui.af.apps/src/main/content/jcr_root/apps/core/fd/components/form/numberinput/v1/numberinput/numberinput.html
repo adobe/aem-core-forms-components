@@ -21,17 +21,16 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.numberinput="com.adobe.cq.forms.core.components.models.form.NumberInput"></sly>
 <div class="cmp-adaptiveform-numberinput"
      data-cmp-is="adaptiveFormNumberInput"
      data-cmp-visible="${numberinput.visible ? 'true' : 'false'}"
      data-cmp-enabled="${numberinput.enabled ? 'true' : 'false'}"
-     id="${component.id}"
+     id="${numberinput.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, labelRichText=numberinput.label.richText, bemBlock='cmp-adaptiveform-numberinput'}"></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
+    <div data-sly-call="${label.label @componentId=numberinput.id, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, labelRichText=numberinput.label.richText, bemBlock='cmp-adaptiveform-numberinput'}"></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
     <input
             class="cmp-adaptiveform-numberinput__widget"
             aria-label="${numberinput.label.visible && numberinput.label.value}"
@@ -45,8 +44,8 @@
             readonly="${numberinput.readOnly}"
             required="${numberinput.required}"
             placeholder="${numberinput.placeHolder}"/>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=numberinput.tooltipVisible, shortDescription=numberinput.tooltip, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=numberinput.id, shortDescriptionVisible=numberinput.tooltipVisible, shortDescription=numberinput.tooltip, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=numberinput.id, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
 </div>
