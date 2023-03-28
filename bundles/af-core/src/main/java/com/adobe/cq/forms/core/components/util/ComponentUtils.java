@@ -35,7 +35,7 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.RT_FD_FORM_CONTAINER_V2;
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
 /**
  * Utility helper functions for components.
@@ -67,7 +67,8 @@ public class ComponentUtils {
      */
     @NotNull
     public static boolean isAFContainer(@NotNull Resource resource) {
-        return resource.isResourceType(RT_FD_FORM_CONTAINER_V2);
+        String fieldType = resource.getValueMap().get("fieldType", String.class);
+        return FORM_FIELD_TYPE.equals(fieldType);
     }
 
     public static Resource getFormContainer(Resource resource) {

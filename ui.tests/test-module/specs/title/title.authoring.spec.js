@@ -47,12 +47,10 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get('.cq-dialog-cancel').click();
-            cy.wait(1000).then(() => {
-                cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
-                .invoke('attr', 'data-path')
-                .then(dataPath => {
-                    cy.deleteComponentByPath(dataPath);
-                })
+            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+            .invoke('attr', 'data-path')
+            .then(dataPath => {
+                cy.deleteComponentByPath(dataPath);
             })
         }
 
@@ -72,14 +70,12 @@ describe('Page - Authoring', function () {
 
         it('insert Title in form container', function () {
             dropTitleInContainer();
-            cy.wait(1000).then(() => {
-                 cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
-                    .invoke('attr', 'data-path')
-                .then(dataPath => {
-                    const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_', '');
-                    const _titleDrop = titleDrop + id;
-                    cy.deleteComponentByPath(dataPath);
-                })
+            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+            .invoke('attr', 'data-path')
+            .then(dataPath => {
+                const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_', '');
+                const _titleDrop = titleDrop + id;
+                cy.deleteComponentByPath(dataPath);
             })
         });
 

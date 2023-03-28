@@ -40,7 +40,7 @@
                       jcr:title="Basic"
                       sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <column
+                            <container
                               jcr:primaryType="nt:unstructured"
                               sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
@@ -72,7 +72,7 @@
                                       fieldLabel="Client library category"
                                       name="./clientLibRef"/>
                                 </items>
-                            </column>
+                            </container>
                         </items>
                         <parentConfig
                           jcr:primaryType="nt:unstructured"
