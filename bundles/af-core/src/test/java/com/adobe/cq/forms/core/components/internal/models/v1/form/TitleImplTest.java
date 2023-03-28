@@ -113,6 +113,7 @@ public class TitleImplTest {
         Mockito.when(mockGuideContainerResource.isResourceType(Mockito.anyString())).thenReturn(true);
         ValueMap mockVM = Mockito.mock(ValueMap.class);
         Mockito.when(mockVM.get("title", String.class)).thenReturn("form title");
+        Mockito.when(mockVM.get("fieldType", String.class)).thenReturn("form");
         Mockito.when(mockGuideContainerResource.getValueMap()).thenReturn(mockVM);
         Field resourceField = title.getClass().getDeclaredField("resource");
         resourceField.setAccessible(true);
