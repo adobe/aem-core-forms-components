@@ -18,6 +18,6 @@
                 dorType="none"
                 formmodel="none"
                 hasCustomThumbnail="{Boolean}false"
-                title="Repeatability"/>
+                title="Repeatability In ResponsiveGrid"/>
     </jcr:content>
 </jcr:root>
