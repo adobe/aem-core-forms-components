@@ -84,6 +84,10 @@
                             jcr:title="Data Model"
                             granite:class="cmp-adaptiveform-container__datamodel"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <granite:rendercondition
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                toggleName="FT_FORMS-2474"/>
                         <items jcr:primaryType="nt:unstructured">
                             <formmodel
                                     jcr:primaryType="nt:unstructured"

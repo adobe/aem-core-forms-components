@@ -158,11 +158,12 @@ describe('Page/Form Authoring', function () {
                 cy.get('.cq-dialog-cancel').click();
             });
 
-            it('open and select data model in container edit dialog box', function () {
+            // skipping test cases because feature is now behind toggle and will fail in circleci.
+            it.skip('open and select data model in container edit dialog box', function () {
                 verifyOpenDataModel(formContainerEditPathSelector);
             });
 
-            it('change data model in container edit dialog box', function () {
+            it.skip('change data model in container edit dialog box', function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
             });
         });
