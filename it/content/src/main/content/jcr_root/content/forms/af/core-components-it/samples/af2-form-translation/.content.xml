@@ -75,7 +75,7 @@
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Email Input"
                 sling:resourceType="forms-components-examples/components/form/emailinput"
-                fieldType="text-input"
+                fieldType="email-input"
                 name="emailinput1678442892736"/>
             <fileinput
                 fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##fileinput##jcr:title##6496&quot;,&quot;buttonText&quot;:&quot;guideContainer##fileinput##buttonText##3328&quot;}"

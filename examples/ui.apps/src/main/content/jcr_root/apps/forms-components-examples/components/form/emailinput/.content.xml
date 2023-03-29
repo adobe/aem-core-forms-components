@@ -4,4 +4,5 @@
   jcr:title="Adaptive Form Email Input"
   jcr:description="Add a field to capture Email IDs."
   sling:resourceSuperType="core/fd/components/form/emailinput/v1/emailinput"
+  fieldType="email-input"
   componentGroup="Core Components Examples - Adaptive Form"/>

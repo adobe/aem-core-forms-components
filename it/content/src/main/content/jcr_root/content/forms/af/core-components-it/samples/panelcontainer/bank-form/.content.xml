@@ -674,7 +674,7 @@
                         jcr:title="Email Id"
                         sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         dataRef="$.PersonalLoan.homeAddress.emailId"
-                        fieldType="text-input"
+                        fieldType="email-input"
                         icon="abc"
                         name="emailId"
                         type="string"/>
@@ -755,7 +755,7 @@
                         jcr:title="Email Id"
                         sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         dataRef="$.PersonalLoan.officeAddress.emailId"
-                        fieldType="text-input"
+                        fieldType="email-input"
                         icon="abc"
                         name="emailId_1"
                         type="string"/>
