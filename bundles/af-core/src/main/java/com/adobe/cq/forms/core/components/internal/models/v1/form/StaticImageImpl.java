@@ -27,12 +27,15 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
+import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.wcm.foundation.Image;
 
 @Model(
@@ -98,5 +101,20 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public String getDataRef() {
         return null;
+    }
+
+    @Override
+    @NotNull
+    protected ComponentData getComponentData() {
+        return DataLayerBuilder.extending(super.getComponentData()).asComponent()
+            .withDescription(this::getAltText)
+            .withLinkUrl(() -> {
+                try {
+                    return this.getImageSrc();
+                } catch (RepositoryException | IOException e) {
+                    return null;
+                }
+            })
+            .build();
     }
 }

@@ -42,6 +42,8 @@
            accept="${file.accept}"
            id="${component.id}_widget"
            type="file"
+           data-cmp-data-layer="${file.data.json}"
+           data-cmp-clickable="${file.data ? true : false}"
     />
     <ul class="cmp-adaptiveform-fileinput__filelist"></ul>
     <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>

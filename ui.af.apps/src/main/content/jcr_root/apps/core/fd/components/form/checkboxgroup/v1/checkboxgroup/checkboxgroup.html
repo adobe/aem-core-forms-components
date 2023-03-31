@@ -29,6 +29,8 @@
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-visible="${checkboxgroup.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
+     data-cmp-data-layer="${checkboxgroup.data.json}"
+     data-cmp-clickable="${checkboxgroup.data ? true : false}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>

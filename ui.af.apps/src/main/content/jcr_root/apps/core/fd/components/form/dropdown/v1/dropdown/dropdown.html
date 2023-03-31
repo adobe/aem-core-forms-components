@@ -36,6 +36,8 @@
             aria-label="${dropdown.label.visible && dropdown.label.value}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
+            data-cmp-data-layer="${dropdown.data.json}"
+            data-cmp-clickable="${dropdown.data ? true : false}"
             disabled="${!dropdown.enabled || dropdown.readOnly}"
             required="${dropdown.required}"
             data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
