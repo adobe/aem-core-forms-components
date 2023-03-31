@@ -123,7 +123,7 @@ describe('Page/Form Authoring', function () {
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
 
         //since data model is already selected it should be disabled
-        cy.get(".cmp-adaptiveform-container__selectformmodel").should("have.attr", "disabled");
+        cy.get(".cmp-adaptiveform-container__selectformmodel").should("not.have.attr", "disabled");
         cy.get(".cmp-adaptiveform-container__fdmselector").click();
 
         cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/forms-ootb-usc-workflow-fdm']").contains('Workflow Unified Storage Form Data Model').should('be.visible').click();

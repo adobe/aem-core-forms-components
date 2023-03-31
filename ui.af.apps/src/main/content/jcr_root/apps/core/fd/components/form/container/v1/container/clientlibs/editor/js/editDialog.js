@@ -110,10 +110,6 @@
                 addFormParameter(afAssetPath + '/formmodel', schemaType);
                 addFormParameter(afAssetPath + '/schemaRef');
             }
-            if (schemaType != NONE) {
-                document.querySelector(FORM_MODEL_SELECTOR).disabled = true;
-                dialog.find(SCHEMA_TYPE)[0].removeAttribute("disabled");
-            }
             document.body.appendChild(formModelChangeConfirmationDialog);
             prefillSchema(schemaType, dialog);
         }
