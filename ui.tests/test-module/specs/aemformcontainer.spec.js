@@ -17,7 +17,7 @@
 
 /// <reference types="cypress" />
 
-// This recipe is to test the Adaptive Form – Embed Component functionality
+// This recipe is to test the Adaptive Form - Embed Component functionality
 
 // We are going to test a few things:
 // 1. Open Edit layer
@@ -46,22 +46,22 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert Adaptive Form – Embed component', { retries: 3 }, function () {
+        it('insert Adaptive Form - Embed component', { retries: 3 }, function () {
             cy.cleanTest(aemFormContainerDropPath).then(function(){
                 const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
                     responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
                 cy.selectLayer("Edit");
-                // Add Adaptive Form – Embed component and delete it
-                cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form – Embed", afConstants.components.forms.resourceType.aemformcontainer);
+                // Add Adaptive Form - Embed component and delete it
+                cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form - Embed", afConstants.components.forms.resourceType.aemformcontainer);
                 // once component is added, to remove the overlay from being active, we click on body
                 cy.get('body').click(0,0);
                 cy.deleteComponentByPath(aemFormContainerDropPath);
             });
         });
 
-        it('open edit dialog of Adaptive Form – Embed component', { retries: 3 }, function() {
+        it('open edit dialog of Adaptive Form - Embed component', { retries: 3 }, function() {
             cy.cleanTest(aemFormContainerDropPath).then(function(){
-                // click configure action on Adaptive Form – Embed component
+                // click configure action on Adaptive Form - Embed component
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
                 cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
                 // check for dynamic operations performed using JS
