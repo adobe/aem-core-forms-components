@@ -18,5 +18,5 @@
     cq:icon="form"
     jcr:description="Container for AEM Forms"
     jcr:primaryType="cq:Component"
-    jcr:title="AEM Forms Container (v2)"
+    jcr:title="Adaptive Form – Embed (v2)"
     componentGroup=".core-forms"/>
