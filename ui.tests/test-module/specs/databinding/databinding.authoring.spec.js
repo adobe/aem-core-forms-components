@@ -69,6 +69,26 @@ describe('Page - Authoring', function () {
         cy.get('.cq-dialog-cancel').click();
     }
 
+    const configureDataModel = (formContainerEditPathSelector) => {
+         // click configure action on adaptive form container component
+         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+ 
+         //open data model tab
+         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+         cy.get("[name='./schemaType']").should("exist");
+ 
+         //select data model
+         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
+         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+         cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
+ 
+         //select json schema and save it
+         cy.get(".cmp-adaptiveform-container__schemaselectorcontainer").should("be.visible").click();
+         cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json']").contains('sample.schema.json').should('be.visible').click();
+         cy.get(".cq-dialog-submit").click();
+    }
+
     context('Open Forms Editor', function() {
         const pagePath ="/content/forms/af/core-components-it/samples/databinding/basic",
             textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
@@ -79,7 +99,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it.skip ('test data binding', function(){
+        it ('test data binding', function(){
             dropTextInputInContainer();
             testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
             cy.openSiteAuthoring(pagePath);
@@ -90,6 +110,8 @@ describe('Page - Authoring', function () {
 
     context('Open Sites Editor', function () {
         const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+            formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer",
+            formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
             textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
             textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
             textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
@@ -99,7 +121,8 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it.skip('test data binding', function () {
+        it('test data binding', function () {
+            configureDataModel(formContainerEditPathSelector);
             dropTextInputInSites();
             testDataBindingBehaviour(textInputEditPathSelector)
             cy.openSiteAuthoring(pagePath);
