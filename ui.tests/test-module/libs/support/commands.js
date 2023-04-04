@@ -193,7 +193,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')){
-                        cy.get(selector).click({force: true});
+                        cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
                         cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click
@@ -279,6 +279,16 @@ const waitForChildViewAddition = () => {
         });
 }
 
+Cypress.Commands.add("getFormData", () => {
+    return cy.window().then(win => {
+        const promise = new Cypress.Promise((resolve, reject) => {
+            const successhandler = data => { resolve(data); };
+            win.guideBridge.getFormDataString({success: successhandler});
+        });
+        return promise;
+    });
+});
+
 Cypress.Commands.add("previewForm", (formPath, options={}) => {
     let pagePath = `${formPath}?wcmmode=disabled`;
     if(options?.params) {
@@ -290,7 +300,7 @@ Cypress.Commands.add("previewForm", (formPath, options={}) => {
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
-    cy.get("body").then($body => {
+    return cy.get("body").then($body => {
         const selector12 =  "[data-path='" + editPath + "']";
         if ($body.find(selector12).length > 0) {
             cy.deleteComponentByPath(editPath);
@@ -307,6 +317,26 @@ Cypress.Commands.add("previewFormWithPanel", (formPath) => {
 Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
     const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
         componentPathSelector = "[data-path='" + componentPath + "']",
+        overlayRepositionEvent = siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED;
+    // intialize the event handler for editableUpdateEvent
+    cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
+    // intialize the event handler for overlay overlayRepositionEvent event
+    cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+    // open editable toolbar
+    cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
+    // click the delete action
+    cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+    // check if delete dialog is seen and click on yes
+    cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
+    // wait for event to complete to signify deletion is complete
+    cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
+    cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
+});
+
+// cypress command to delete component by title
+Cypress.Commands.add("deleteComponentByTitle", (title) => {
+    const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
+        componentPathSelector = "[title='"+title+"']",
         overlayRepositionEvent = siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED;
     // intialize the event handler for editableUpdateEvent
     cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
@@ -408,3 +438,19 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
 });
+
+Cypress.Commands.add("openSidePanelTab", (tab) => {
+    cy.window().then(function(win) {
+        let isSidePanelOpen = win.$("#SidePanel").hasClass("sidepanel-opened");
+        if(!isSidePanelOpen) {
+            cy.get("#Content .toggle-sidepanel").click();
+        }
+    });
+    var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
+    cy.get(tabSelector)
+        .should("be.visible")
+        .click();
+    cy.get(tabSelector + ".is-selected").should("exist");
+})
+
+

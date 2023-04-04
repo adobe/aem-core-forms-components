@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function ($) {
+(function ($, ns) {
 
     "use strict";
     window.CQ = window.CQ || {};
@@ -43,15 +43,32 @@
             ruleEditorFrame.style.top = "0";
             ruleEditorFrame.style.left = "0";
             ruleEditorFrame.style.position = "fixed";
+            ruleEditorFrame.style.zIndex = "10";
             document.body.appendChild(ruleEditorFrame);
         }
     }
 
     function getFormContainerPath(editable) {
-        return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").data("cmpAdaptiveformcontainerPath");
+        let path = editable.dom.find("[data-cmp-adaptiveformcontainer-path]").data("cmpAdaptiveformcontainerPath");
+        if (typeof path !== 'string' || !path) {
+            path = getFormContainerFromDom(editable);
+
+        }
+        return path;
+    }
+
+    function getFormContainerFromDom(editable) {
+        let selector = "[data-cmp-is='adaptiveFormContainer']";
+        let elem = $(editable.dom[0]).closest(selector);
+        let path = null;
+        if (elem.length > 0) {
+            path = elem.data("cmp-path");
+        }
+        return path;
     }
 
     function getFieldId(editable) {
+        // todo: dead code, not used
         return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id');
     }
 
@@ -60,4 +77,4 @@
         ui.alert(Granite.I18n.get('Information'), Granite.I18n.get('Please initialise the component to open the rule editor'), 'notice');
     }
 
-})(jQuery);
+})(jQuery, Granite.author);

@@ -22,7 +22,7 @@
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>core-forms-components-demo</artifactId>
+    <artifactId>core-forms-components-examples-core</artifactId>
     <packaging>bundle</packaging>
 
 
@@ -50,8 +50,6 @@
     <!-- P R O P E R T I E S                                                    -->
     <!-- ====================================================================== -->
     <properties>
-        <bnd.version>5.0.0</bnd.version>
-        <aem.forms.sdk.api>2020.08.26.04</aem.forms.sdk.api>
     </properties>
 
     <!-- ====================================================================== -->
@@ -85,6 +83,7 @@
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
                             javax.annotation;version=0.0.0,
+                            com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)",
                             *
                         </Import-Package>
                     </instructions>
@@ -107,40 +106,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-maven-plugin</artifactId>
-                <version>${bnd.version}</version>
-                <executions>
-                    <execution>
-                        <id>bnd-process</id>
-                        <goals>
-                            <goal>bnd-process</goal>
-                        </goals>
-                        <configuration>
-                            <bnd><![CDATA[
-Import-Package: javax.annotation;version=0.0.0,*
-                                ]]></bnd>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-baseline-maven-plugin</artifactId>
-                <version>${bnd.version}</version>
-                <configuration>
-                    <failOnMissing>false</failOnMissing>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>baseline</id>
-                        <goals>
-                            <goal>baseline</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
@@ -158,10 +123,13 @@ Import-Package: javax.annotation;version=0.0.0,*
 
     <dependencies>
         <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>core-forms-components-af-core</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.adobe.cq</groupId>
+            <artifactId>core.wcm.components.core</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>uk.org.lidalia</groupId>
@@ -177,7 +145,6 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
-            <version>${aem.forms.sdk.api}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

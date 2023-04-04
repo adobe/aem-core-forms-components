@@ -3,24 +3,18 @@
   "dataRef": "$.contact_1501573930059",
   "fieldType": "panel",
   "name": "abc",
-  "visible": true,
   "description": "dependent names description",
   "tooltip": "dependent names tooltip",
   "type": "object",
-  "enabled": true,
-  "items": [
-    {
+  ":items": {
+    "textinput": {
       "id": "textinput-49ec424aa1",
       "fieldType": "text-input",
       "name": "abc",
       "visible": false,
       "description": "dummy",
       "type": "string",
-      "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -37,10 +31,9 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {

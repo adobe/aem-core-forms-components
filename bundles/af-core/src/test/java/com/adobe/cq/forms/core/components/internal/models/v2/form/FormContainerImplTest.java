@@ -50,6 +50,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -211,6 +212,45 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getPrefillService());
         assertEquals("FDM", formContainer.getPrefillService());
+    }
+
+    @Test
+    void testGetContextPath() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");
+        // Test with contextPath set
+        formContainer.setContextPath("/test");
+        assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
+    }
+
+    @Test
+    void testGetGridClassNames() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getGridClassNames());
+    }
+
+    @Test
+    void testGetColumnClassNames() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(formContainer.getColumnClassNames().isEmpty(), true);
+    }
+
+    @Test
+    void testGetColumnCount() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(formContainer.getColumnCount(), 0);
+    }
+
+    @Test
+    void testGetAppliedCSSClass() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getAppliedCssClasses());
+    }
+
+    @Test
+    void testGetExportedAllowedComponents() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getExportedAllowedComponents());
     }
 
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {

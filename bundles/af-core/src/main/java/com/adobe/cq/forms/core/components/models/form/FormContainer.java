@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-// todo: have to add rule events here
 public interface FormContainer extends Container {
 
     /**
@@ -137,7 +136,7 @@ public interface FormContainer extends Container {
 
     @JsonIgnore
     @Override
-    default boolean isEnabled() {
+    default Boolean isEnabled() {
         // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
         return true;
     }
@@ -151,7 +150,7 @@ public interface FormContainer extends Container {
 
     @JsonIgnore
     @Override
-    default boolean isVisible() {
+    default Boolean isVisible() {
         // explicitly setting true, since form container does not have visible property, but other containers like panel have visible
         return true;
     }
@@ -315,4 +314,13 @@ public interface FormContainer extends Container {
     default String getPrefillService() {
         return null;
     }
+
+    /**
+     * Set the contextPath in formContainer
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default void setContextPath(String contextPath) {}
+
 }

@@ -1,172 +1,276 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-          jcr:primaryType="cq:Page">
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
     <jcr:content
-            cq:lastModified="{Date}2020-07-15T13:25:39.732+02:00"
-            cq:lastModifiedBy="admin"
-            cq:tags="[]"
-            cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="Tabs on top"
-            jcr:primaryType="cq:PageContent"
-            jcr:title="Tabs on top"
-            sling:resourceType="forms-components-examples/components/page">
+        cq:lastModified="{Date}2020-07-15T13:25:39.732+02:00"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+        jcr:description="Tabs on top"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Tabs on top"
+        sling:resourceType="forms-components-examples/components/page">
         <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="wcm/foundation/components/responsivegrid">
-            <responsivegrid
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="wcm/foundation/components/responsivegrid">
                 <text_1740702241
-                        cq:styleIds="[1644862132301]"
-                        jcr:created="{Date}2019-02-15T19:05:53.032+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>Tabs on Top&lt;sub>v1&lt;/sub>&lt;/h1>"
-                        textIsRich="true"/>
+                    cq:styleIds="[1644862132301]"
+                    jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;h1>Tabs on Top&lt;sub>v1&lt;/sub>&lt;/h1>"
+                    textIsRich="true"/>
                 <text
-                        cq:styleIds="[1544762734201]"
-                        jcr:created="{Date}2018-12-06T19:11:23.947+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Tabs on top component is a server side component written in HTL, allowing to create Adaptive Form Tabs on top fields"
-                        textIsRich="true"/>
+                    cq:styleIds="[1544762734201]"
+                    jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>A tabs-on-top layout in an Adaptive Form is a way to organize and group related fields and sections of a form into separate tabs. Each tab is represented by a tab label, typically located at the top of the form, and contains a specific set of form fields and sections. This layout allows users to easily navigate and access different sections of the form, making it more user-friendly and less overwhelming. It is generally used when the form contains a lot of fields and sections, and it is necessary to divide them into smaller, manageable chunks.&lt;/p>"
+                    textIsRich="true"/>
                 <teaser
-                        cq:styleIds="[1550165685463]"
-                        jcr:created="{Date}2019-02-14T16:41:54.952+01:00"
-                        jcr:createdBy="admin"
-                        jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
-                        jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Technical Documentation"
-                        sling:resourceType="core-components-examples/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="false"
-                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/dev/ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop"
-                        textIsRich="true"
-                        titleFromPage="false"/>
+                    cq:styleIds="[1550165685463]"
+                    jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                    jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Technical Documentation"
+                    sling:resourceType="core-components-examples/components/teaser"
+                    actionsEnabled="false"
+                    descriptionFromPage="false"
+                    fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                    linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop"
+                    textIsRich="true"
+                    titleFromPage="false"/>
                 <title_865328580
-                        cq:styleIds="[1544759664489]"
-                        jcr:created="{Date}2018-12-06T19:22:23.729+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Examples"
-                        sling:resourceType="core/wcm/components/title/v2/title"
-                        type="h2"/>
+                    cq:styleIds="[1544759664489]"
+                    jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Examples"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h2"/>
                 <title_290384408
-                        cq:styleIds="[1544759676459]"
-                        jcr:created="{Date}2018-12-06T19:22:48.620+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Standard"
-                        sling:resourceType="core/wcm/components/title/v2/title"
-                        type="h3"/>
+                    cq:styleIds="[1544759676459]"
+                    jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Standard"
+                    sling:resourceType="core/wcm/components/title/v2/title"
+                    type="h3"/>
                 <text_1337506761
-                        jcr:created="{Date}2018-12-06T19:23:41.968+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
-                        textIsRich="true"/>
+                    jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/text/v2/text"
+                    text="&lt;p>Tabs on Top with two panels representing a simple Contact Us Form&lt;/p>"
+                    textIsRich="true"/>
                 <demo
-                        jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="forms-components-examples/components/demo">
+                    jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="forms-components-examples/components/demo">
                     <component
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="forms-components-examples/components/demo/component">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="forms-components-examples/components/demo/component">
                         <guideContainer
-                          fd:version="2.1"
-                          fieldType="form"
-                          jcr:primaryType="nt:unstructured"
-                          sling:resourceType="forms-components-examples/components/form/container">
+                            fd:version="2.1"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/form/container"
+                            fieldType="form">
                             <container
-                              jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
-                              sling:resourceType="forms-components-examples/components/demo/component">
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="forms-components-examples/components/demo/component">
                                 <tabsontop_demo
-                                  jcr:title="Tabs on Top"
-                                  fieldType="panel"
-                                  jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
-                                  jcr:createdBy="admin"
-                                  jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
-                                  jcr:lastModifiedBy="admin"
-                                  jcr:primaryType="nt:unstructured"
-                                  description="&lt;p>This is a long description.&lt;/p>"
-                                  tooltip="&lt;p>This is a short description.&lt;/p>"
-                                  tooltipVisible="true"
-                                  sling:resourceType="forms-components-examples/components/form/tabsontop">
-                                    <item_1 jcr:primaryType="nt:unstructured"
-                                      jcr:title="Item 1"
-                                      name="item_1"
-                                      fieldType="panel"
-                                      sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                                      layout="responsiveGrid">
-                                        <text
-                                          jcr:lastModified="{Date}2023-01-19T15:08:54.790+05:30"
-                                          jcr:lastModifiedBy="admin"
-                                          jcr:primaryType="nt:unstructured"
-                                          jcr:title="Text"
-                                          sling:resourceType="forms-components-examples/components/form/text"
-                                          fieldType="plain-text"
-                                          name="text1674121111370"
-                                          textIsRich="true"
-                                          value="&lt;p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque egestas. Varius morbi enim nunc faucibus a pellentesque. Scelerisque eleifend donec pretium vulputate sapien nec sagittis.&lt;/p>&#xd;&#xa;"/>
-                                    </item_1>
-                                    <item_2 jcr:primaryType="nt:unstructured"
-                                      jcr:title="Item 2"
-                                      name="item_2"
-                                      fieldType="panel"
-                                      sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                                      layout="responsiveGrid">
-                                        <text
-                                          jcr:lastModified="{Date}2023-01-19T15:08:54.790+05:30"
-                                          jcr:lastModifiedBy="admin"
-                                          jcr:primaryType="nt:unstructured"
-                                          jcr:title="Text"
-                                          sling:resourceType="forms-components-examples/components/form/text"
-                                          fieldType="plain-text"
-                                          name="text1674121111370"
-                                          textIsRich="true"
-                                          value="&lt;p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque egestas. Varius morbi enim nunc faucibus a pellentesque. Scelerisque eleifend donec pretium vulputate sapien nec sagittis.&lt;/p>&#xd;&#xa;"/>
-                                    </item_2>
+                                    jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                    jcr:lastModifiedBy="admin"
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Tabs on Top"
+                                    sling:resourceType="forms-components-examples/components/form/tabsontop"
+                                    description="&lt;p>This is a long description.&lt;/p>"
+                                    fieldType="panel"
+                                    name="tabsontop_demo1675672899233"
+                                    tooltip="&lt;p>This is a short description.&lt;/p>"
+                                    tooltipVisible="true">
+                                    <panelcontainer
+                                        cq:panelTitle="Request"
+                                        jcr:lastModified="Wed Feb 01 2023 11:30:00 GMT+0000"
+                                        jcr:lastModifiedBy="admin"
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Request"
+                                        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                                        enabled="{Boolean}true"
+                                        fieldType="panel"
+                                        hideTitle="true"
+                                        name="RequestDetails"
+                                        textIsRich="[true,true]"
+                                        visible="{Boolean}true"
+                                        wrapData="{Boolean}false">
+                                        <dropdown
+                                            jcr:lastModified="Thu Feb 02 2023 10:24:06 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Reason *"
+                                            sling:resourceType="forms-components-examples/components/form/dropdown"
+                                            enabled="{Boolean}true"
+                                            enum="[InformationRequest,PermissionToAccessAserviceOrResource,OrderingAserviceOrResource,ServiceDeliveryAction,FeedbackAndComplaints]"
+                                            enumNames="[Information request,Permission to access a service or resource,Ordering a service or resource,Service delivery action,Feedback and complaints]"
+                                            fieldType="drop-down"
+                                            mandatoryMessage="Please select a category for the request."
+                                            name="RequestType"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true]"
+                                            type="string"
+                                            typeIndex="0"
+                                            visible="{Boolean}true">
+                                            <fd:rules
+                                                fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.RequestType&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;RequestType&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Others&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.Others&quot;\,&quot;displayName&quot;:&quot;Others *&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Tabs on top/Request/Others */&quot;\,&quot;name&quot;:&quot;Others&quot;\,&quot;parent&quot;:&quot;$form.tabsontop1675249053865.RequestDetails&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'Others'\, dispatchEvent(Others\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                                jcr:primaryType="nt:unstructured"
+                                                validationStatus="valid"/>
+                                            <fd:events
+                                                jcr:primaryType="nt:unstructured"
+                                                change="[if($field == 'Others'\, dispatchEvent(Others\, 'custom:setProperty'\, {visible : true()})\, {})]"/>
+                                        </dropdown>
+                                        <textinput_1498874814
+                                            jcr:lastModified="Thu Feb 02 2023 10:25:29 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Describe your request in detail *"
+                                            sling:resourceType="forms-components-examples/components/form/textinput"
+                                            autocomplete="off"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide a description of your request."
+                                            multiLine="true"
+                                            name="RequestMessage"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true,true]"
+                                            validatePictureClauseMessage="[,]"
+                                            visible="{Boolean}true"/>
+                                    </panelcontainer>
+                                    <panelcontainer_20874
+                                        cq:panelTitle="Contact Details"
+                                        jcr:lastModified="Wed Feb 01 2023 11:06:01 GMT+0000"
+                                        jcr:lastModifiedBy="admin"
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Communication Details"
+                                        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                                        enabled="{Boolean}true"
+                                        fieldType="panel"
+                                        hideTitle="true"
+                                        name="ContactNumberAndEmailPanel"
+                                        textIsRich="[true,true]"
+                                        visible="{Boolean}true"
+                                        wrapData="{Boolean}false">
+                                        <textinput_78125210
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:19 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Name *"
+                                            sling:resourceType="forms-components-examples/components/form/textinput"
+                                            autocomplete="off"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide your name."
+                                            name="Name"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true,true]"
+                                            validatePictureClauseMessage="[,]"
+                                            visible="{Boolean}true"/>
+                                        <emailinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:36 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Email *"
+                                            sling:resourceType="forms-components-examples/components/form/emailinput"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide the email address."
+                                            name="emailinput"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true"/>
+                                        <telephoneinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:54 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Phone Number *"
+                                            sling:resourceType="forms-components-examples/components/form/telephoneinput"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide your contact number."
+                                            name="PhoneNumber"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true"/>
+                                        <textinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:07:43 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Address (Optional)"
+                                            sling:resourceType="forms-components-examples/components/form/textinput"
+                                            autocomplete="off"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            multiLine="true"
+                                            name="Address"
+                                            readOnly="{Boolean}false"
+                                            textIsRich="[true,true,true]"
+                                            validatePictureClauseMessage="[,]"
+                                            visible="{Boolean}true"/>
+                                        <submit
+                                            jcr:lastModified="{Date}2023-02-05T16:12:29.769Z"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Submit"
+                                            sling:resourceType="forms-components-examples/components/form/actions/submit"
+                                            buttonType="submit"
+                                            dorExclusion="true"
+                                            enabled="{Boolean}true"
+                                            fieldType="button"
+                                            name="submit"
+                                            readOnly="{Boolean}false"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true">
+                                            <fd:rules
+                                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                                jcr:primaryType="nt:unstructured"/>
+                                            <fd:events
+                                                jcr:primaryType="nt:unstructured"
+                                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                                        </submit>
+                                    </panelcontainer_20874>
                                 </tabsontop_demo>
                             </container>
                         </guideContainer>
                     </component>
                     <info
-                            jcr:primaryType="nt:unstructured"
-                            sling:resourceType="core-components-examples/components/tabs">
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core-components-examples/components/tabs">
                         <properties
-                                cq:panelTitle="Properties"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/properties"
-                                reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="Properties"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/properties"
+                            reference="../../component/guideContainer/container"/>
                         <markup
-                                cq:panelTitle="Markup"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/markup"
-                                reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="Markup"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/markup"
+                            reference="../../component/guideContainer/container"/>
                         <json
-                                cq:panelTitle="JSON"
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="core-components-examples/components/demo/json"
-                                reference="../../component/guideContainer/container"/>
+                            cq:panelTitle="JSON"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/demo/json"
+                            reference="../../component/guideContainer/container"/>
                     </info>
                 </demo>
             </responsivegrid>

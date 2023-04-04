@@ -23,12 +23,11 @@
   data-sly-use.questionMark="${renderer.questionMarkPath}"
   id="${panel.id}"
   class="cmp-tabs"
-  aria-labelby="${panel.id}-label"
   data-panelcontainer="${wcmmode.edit && 'tabs'}"
   data-cmp-is="adaptiveFormTabs"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
   data-placeholder-text="${wcmmode.edit && 'Please drag Tab components here' @ i18n}">
-     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
@@ -41,18 +40,18 @@
      aria-multiselectable="false">
      <sly data-sly-test.isActive="${tab.name == tabs.activeItem}"/>
      <li role="tab"
-         id="${tab.id}-tab"
+         id="${tab.id}__tab"
          class="cmp-tabs__tab${isActive ? ' cmp-tabs__tab--active' : ''}"
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
-         aria-controls="${tab.id}-tabpanel"
+         aria-controls="${tab.id}__tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
          data-cmp-hook-adaptiveFormTabs="tab">${tab.title}</li>
  </ol>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"
-      id="${item.id}-tabpanel"
+      id="${item.id}__tabpanel"
       role="tabpanel"
-      aria-labelledby="${item.id}-tab"
+      aria-labelledby="${item.id}__tab"
       tabindex="0"
       class="cmp-tabs__tabpanel${item.name == tabs.activeItem ? ' cmp-tabs__tabpanel--active' : ''}"
       data-cmp-hook-adaptiveFormTabs="tabpanel"></div>

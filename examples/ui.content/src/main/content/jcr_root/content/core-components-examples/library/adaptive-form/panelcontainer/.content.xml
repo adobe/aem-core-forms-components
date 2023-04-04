@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:lastModified="{Date}2022-09-01T13:25:39.732+02:00"
         cq:lastModifiedBy="admin"
         cq:tags="[]"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-        jcr:description="Panel Container"
+        jcr:description="Panel"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Panel Container"
+        jcr:title="Panel"
         sling:resourceType="forms-components-examples/components/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -22,7 +22,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;h1>Panel &lt;sub>v1&lt;/sub>&lt;/h1>"
+                    text="&lt;h1>Panel&lt;sub>v1&lt;/sub>&lt;/h1>"
                     textIsRich="true"/>
                 <text
                     cq:styleIds="[1544762734201]"
@@ -30,7 +30,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>The Panel component is a server side component written in HTL, allowing to create Adaptive Form Panels"
+                    text="&lt;p>In an Adaptive Form, a panel is a container element that can be used to group together related form elements. It allows you to group and organize different form elements in a logical and meaningful way. This can help to improve the overall structure and readability of the form, making it easier for users to understand and navigate.&lt;/p>&lt;p>Panels can also be used to create collapsible sections, which can be useful for hiding complex or less frequently used form fields, thus keeping the form simple and easy to use. It also allows you to include other components like text, checkbox, button, etc.&lt;/p>&lt;p>It also can be used to set different rule based actions like submitting form, opening a website, show/hide components, or add an instance of a panel.&lt;/p>"
                     textIsRich="true"/>
                 <teaser
                     cq:styleIds="[1550165685463]"
@@ -42,6 +42,7 @@
                     sling:resourceType="core-components-examples/components/teaser"
                     actionsEnabled="false"
                     descriptionFromPage="false"
+                    fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                     linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer"
                     textIsRich="true"
                     titleFromPage="false"/>
@@ -66,7 +67,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                    text="&lt;p>A Panel with a Text Input, Email Input and Telephone Input fields.&lt;/p>"
                     textIsRich="true"/>
                 <demo
                     jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
@@ -77,35 +78,119 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="forms-components-examples/components/demo/component">
                         <guideContainer
-                          fd:version="2.1"
-                          fieldType="form"
-                          jcr:primaryType="nt:unstructured"
-                          sling:resourceType="forms-components-examples/components/form/container">
+                            fd:version="2.1"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/form/container"
+                            fieldType="form">
                             <container
-                              jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
-                              sling:resourceType="forms-components-examples/components/demo/component">
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="forms-components-examples/components/demo/component">
                                 <panelcontainer_demo
-                                  jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
-                                  jcr:lastModifiedBy="admin"
-                                  jcr:primaryType="nt:unstructured"
-                                  jcr:title="Panel"
-                                  sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                                  fieldType="panel"
-                                  description="&lt;p>This is a long description.&lt;/p>"
-                                  tooltip="&lt;p>This is a short description.&lt;/p>"
-                                  tooltipVisible="true"
-                                  name="panelcontainer_demo1674110267107">
-                                    <text
-                                      jcr:lastModified="{Date}2023-01-19T15:08:54.790+05:30"
-                                      jcr:lastModifiedBy="admin"
-                                      jcr:primaryType="nt:unstructured"
-                                      jcr:title="Text"
-                                      sling:resourceType="forms-components-examples/components/form/text"
-                                      fieldType="plain-text"
-                                      name="text1674121111370"
-                                      textIsRich="true"
-                                      value="&lt;p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque egestas. Varius morbi enim nunc faucibus a pellentesque. Scelerisque eleifend donec pretium vulputate sapien nec sagittis.&lt;/p>&#xd;&#xa;"/>
+                                    jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                    jcr:lastModifiedBy="admin"
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Panel"
+                                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                                    description="&lt;p>This is a long description.&lt;/p>"
+                                    fieldType="panel"
+                                    name="panelcontainer_demo1674110267107"
+                                    tooltip="&lt;p>This is a short description.&lt;/p>"
+                                    tooltipVisible="true">
+                                    <panelcontainer_20874
+                                        cq:panelTitle="Contact Details"
+                                        jcr:lastModified="Wed Feb 01 2023 11:06:01 GMT+0000"
+                                        jcr:lastModifiedBy="admin"
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Communication Details"
+                                        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                                        enabled="{Boolean}true"
+                                        fieldType="panel"
+                                        hideTitle="true"
+                                        name="ContactNumberAndEmailPanel"
+                                        textIsRich="[true,true]"
+                                        visible="{Boolean}true"
+                                        wrapData="{Boolean}false">
+                                        <textinput_78125210
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:19 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Name *"
+                                            sling:resourceType="forms-components-examples/components/form/textinput"
+                                            autocomplete="off"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide your name."
+                                            name="Name"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true,true]"
+                                            validatePictureClauseMessage="[,]"
+                                            visible="{Boolean}true"/>
+                                        <emailinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:36 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Email *"
+                                            sling:resourceType="forms-components-examples/components/form/emailinput"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide the email address."
+                                            name="emailinput"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true"/>
+                                        <telephoneinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:26:54 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Phone Number *"
+                                            sling:resourceType="forms-components-examples/components/form/telephoneinput"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            mandatoryMessage="Please provide your contact number."
+                                            name="PhoneNumber"
+                                            readOnly="{Boolean}false"
+                                            required="true"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true"/>
+                                        <textinput
+                                            jcr:lastModified="Thu Feb 02 2023 10:07:43 GMT+0000"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Address (Optional)"
+                                            sling:resourceType="forms-components-examples/components/form/textinput"
+                                            autocomplete="off"
+                                            enabled="{Boolean}true"
+                                            fieldType="text-input"
+                                            multiLine="true"
+                                            name="Address"
+                                            readOnly="{Boolean}false"
+                                            textIsRich="[true,true,true]"
+                                            validatePictureClauseMessage="[,]"
+                                            visible="{Boolean}true"/>
+                                        <submit
+                                            jcr:lastModified="{Date}2023-02-05T16:12:29.769Z"
+                                            jcr:lastModifiedBy="admin"
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Submit"
+                                            sling:resourceType="forms-components-examples/components/form/actions/submit"
+                                            buttonType="submit"
+                                            dorExclusion="true"
+                                            enabled="{Boolean}true"
+                                            fieldType="button"
+                                            name="submit"
+                                            readOnly="{Boolean}false"
+                                            textIsRich="[true,true]"
+                                            visible="{Boolean}true">
+                                            <fd:rules
+                                                fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                                jcr:primaryType="nt:unstructured"/>
+                                            <fd:events
+                                                jcr:primaryType="nt:unstructured"
+                                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                                        </submit>
+                                    </panelcontainer_20874>
                                 </panelcontainer_demo>
                             </container>
                         </guideContainer>

@@ -24,6 +24,7 @@ Adaptive Form Accordion component written in HTL.
 * Toggle accordion panels from accordion header controls.
 * Ability to force a single panel to be displayed.
 * First Item is expanded by default.
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Accordion component uses the `com.adobe.cq.forms.core.components.models.form.Accordion` Sling model as its Use-object.
@@ -83,6 +84,14 @@ The following properties and child nodes are required in the proxy component to 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Accordion as a container component
 2. `./cq:editConfig` - `afterchilddelete`, `afterchildinsert` and `afterchildmove` listeners should be provided via
 the edit configuration of the proxy. `_cq_editConfig.xml` contains the recommended actions and can be copied to the proxy component.
+
+## Replace feature:
+We support replace feature that allows replacing accordion component to any of the below components:
+
+* Horizontal tabs
+* Panel
+* Wizard Layout
+
 
 ## Information
 * **Vendor**: Adobe

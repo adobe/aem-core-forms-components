@@ -3,9 +3,9 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-06T15:44:36.259+05:30"
+            cq:lastModified="{Date}2023-01-30T15:58:14.444+05:30"
             cq:lastModifiedBy="admin"
-            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
@@ -18,7 +18,7 @@
                 dorType="none"
                 fieldType="form"
                 themeRef="/libs/fd/af/themes/canvas">
-            <numberinput
+            <numberinput1
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input 1"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
@@ -30,7 +30,7 @@
                 <fd:events
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
-            </numberinput>
+            </numberinput1>
             <numberinput2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="number Input 2"
@@ -38,12 +38,12 @@
                     enabled="{Boolean}true"
                     fieldType="number-input"
                     name="numberinput2"
-                    visible="{Boolean}false">
-            </numberinput2>
+                    visible="{Boolean}false"/>
             <numberinput3
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input 3"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
+                    displayFormat="$123"
                     enabled="{Boolean}false"
                     fieldType="number-input"
                     name="numberinput3"
@@ -73,13 +73,40 @@
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </numberinput4>
             <numberinput5
+                    jcr:lastModified="{Date}2023-01-30T15:58:14.432+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input 5"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    name="numberinput5"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput_8120614151673506189885&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;numberinput_8120614151673506189885&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;4502&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput4&quot;\,&quot;displayName&quot;:&quot;Number Input 4&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input 4/&quot;\,&quot;name&quot;:&quot;numberinput4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;400&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1&quot;\,&quot;displayName&quot;:&quot;Number Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input 1/&quot;\,&quot;name&quot;:&quot;numberinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 4502\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {value : 400})\, {})&quot;\,&quot;if($field == 4502\, dispatchEvent(numberinput1\, 'custom:setProperty'\, {value : `null`})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == 4502\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {value : 400})\, {}),if($field == 4502\, dispatchEvent(numberinput1\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
+            </numberinput5>
+            <numberinput6
+                    jcr:lastModified="{Date}2023-01-30T15:58:08.713+05:30"
+                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Number Input With Display Pattern"
                     sling:resourceType="forms-components-examples/components/form/numberinput"
                     displayFormat="#,###,##0.000"
                     displayPatternType="#,###,##0.000"
+                    enabled="{Boolean}true"
                     fieldType="number-input"
-                    name="numberinput5"
+                    name="numberinput6"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number"
                     visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>

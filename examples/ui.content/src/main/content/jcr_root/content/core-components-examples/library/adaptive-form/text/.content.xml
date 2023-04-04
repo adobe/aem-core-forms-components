@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The Text component is a server side component written in HTL, allowing to add static Adaptive Form Text field"
+                        text="&lt;p>In an Adaptive Form, text refers to the content that is displayed on the form for the user to read. This can include the text that is used to label a group of form elements, such as text fields, as well as any additional instructions or information that is provided to the user.&lt;/p>&lt;p>This can also help divide a form's structure into logical sections, making it easier for users to understand and complete the form. Additionally, it could be used for accessibility purpose to give a brief description of the element it is associated with. Such text field is typically displayed near the form components, such as before or after it.&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -48,6 +48,7 @@
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
                         linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text"
                         textIsRich="true"
                         titleFromPage="false"/>
@@ -78,7 +79,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                        text="&lt;p>Simple paragraph of text with no formatting applied.&lt;/p>"
                         textIsRich="true"/>
                 <demo
                         jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
@@ -97,7 +98,6 @@
                               sling:resourceType="forms-components-examples/components/form/container">
                             <container
                               jcr:primaryType="nt:unstructured"
-                              fieldType="demo-component"
                               sling:resourceType="forms-components-examples/components/demo/component">
                                 <text_demo
                                   jcr:title="Text"

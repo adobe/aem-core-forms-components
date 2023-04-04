@@ -4,24 +4,18 @@
   "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-  "visible":true,
-  "enabled":true,
   "repeatable": true,
   "minOccur":1,
   "maxOccur":10,
-  "items":[
-    {
+  ":items": {
+    "textinput" : {
       "id": "textinput-fae1400d3e",
       "fieldType": "text-input",
       "name": "abc",
       "visible": false,
       "description": "dummy",
       "type": "string",
-      "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -38,10 +32,9 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {

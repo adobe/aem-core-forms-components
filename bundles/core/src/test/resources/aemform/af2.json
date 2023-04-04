@@ -6,7 +6,7 @@
     "jcr:primaryType": "cq:PageContent",
     "jcr:createdBy": "admin",
     "jcr:title": "test",
-    "cq:template": "/conf/core-components-it/settings/wcm/templates/af-blank-v2",
+    "cq:template": "/conf/core-components-examples/settings/wcm/templates/af-blank-v2",
     "sling:configRef": "/conf/forms/test",
     "jcr:created": "Thu Sep 15 2022 14:57:08 GMT+0530",
     "cq:lastModified": "Thu Sep 15 2022 16:48:25 GMT+0530",

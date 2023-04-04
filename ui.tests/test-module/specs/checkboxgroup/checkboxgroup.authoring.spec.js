@@ -100,52 +100,71 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(checkBoxGroupDrop);
     });
 
     it('insert CheckBoxGroup in form container', function () {
-      dropCheckBoxGroupInContainer();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        dropCheckBoxGroupInContainer();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
     it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
-      testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        });
     });
 
     it ('check value type validations', function() {
+        // For Number Type
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+        cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
 
-      // For Number Type
-      dropCheckBoxGroupInContainer();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
-      cy.get('.cq-dialog-submit').click();
-      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
 
-      cy.get('.cq-dialog-cancel').click();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        // For Boolean
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+        cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
 
-      // For Boolean
-      dropCheckBoxGroupInContainer();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
-      cy.get('.cq-dialog-submit').click();
-      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
 
-      cy.get('.cq-dialog-cancel').click();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
-    })
-  })
+    it('check rich text support for label', function(){
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+        // check rich text selector and see if RTE is visible.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+        cy.get('.cq-dialog-submit').click();
+    });
+
+    it('check rich text inline editor is present', function(){
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get(".rte-toolbar").should('be.visible');
+        cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
+  });
 /*
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",

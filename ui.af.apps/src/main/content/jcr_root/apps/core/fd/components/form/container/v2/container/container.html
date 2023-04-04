@@ -22,7 +22,7 @@
       data-cmp-is="adaptiveFormContainer"
       data-cmp-context-path="${request.contextPath}"
       data-cmp-path="${resource.path}"
-      class="cmp-adaptiveform-container ${grid.cssClass} cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}">
+      class="cmp-adaptiveform-container cmp-container">
     <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
          data-sly-use.allowedTemplate="allowedcomponents.html"
          data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>
@@ -30,7 +30,7 @@
     <input type="hidden" name="_charset_" value="utf-8"/>
     <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl @ extension='html'}"/>
     <div id="${container.id}-wrapper"
-         class="cmp-adaptiveform-container__wrapper">
+         class="cmp-adaptiveform-container__wrapper ${grid.cssClass} ${allowed.cssClass}">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"
              data-sly-resource="${paragraph.path @ resourceType=paragraph.resourceType, decorationTagName='div', cssClassName=paragraph.cssClass}"></sly>
         <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/responsivegrid/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"

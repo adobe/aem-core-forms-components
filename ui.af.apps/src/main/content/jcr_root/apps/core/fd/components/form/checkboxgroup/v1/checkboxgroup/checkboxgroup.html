@@ -23,24 +23,21 @@
 
 <div class="cmp-adaptiveform-checkboxgroup"
      data-cmp-is="adaptiveFormCheckBoxGroup"
-     id="${component.id}"
+     id="${checkboxgroup.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.checkboxgroup="com.adobe.cq.forms.core.components.models.form.CheckBoxGroup"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-visible="${checkboxgroup.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, labelRichText=checkboxgroup.label.richText, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkbox__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
-                       title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}"
-                       for="${component.id}${'_'}${itemList.index}__widget">
-                    <input class="cmp-adaptiveform-checkbox__widget" type="checkbox" id="${component.id}${'_'}${itemList.index}__widget"
-                           aria-describedby="${checkboxgroup.labelForId}_desc"
+                <label class="cmp-adaptiveform-checkboxgroup__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                       title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}">
+                    <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox"
                            name="${checkboxgroup.name}"
                            value="${checkboxgroup.enums[itemList.index].toString}"
                            checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
@@ -52,8 +49,8 @@
         </div>
     </div>
 
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=checkboxgroup.tooltipVisible, shortDescription=checkboxgroup.tooltip, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=checkboxgroup.id, shortDescriptionVisible=checkboxgroup.tooltipVisible, shortDescription=checkboxgroup.tooltip, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=checkboxgroup.id, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 </div>

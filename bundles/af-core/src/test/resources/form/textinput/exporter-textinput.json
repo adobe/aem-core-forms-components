@@ -1,38 +1,19 @@
 {
   "id": "textinput-3c50c84973",
-  "dataRef": "a.b",
   "fieldType": "text-input",
   "name": "abc",
-  "visible": false,
-  "description": "dummy",
-  "tooltip": "test-short-description",
   "type": "string",
-  "required": false,
-  "enabled": true,
-  "constraintMessages": {
-    "type": "incorrect type"
-  },
-  "readOnly": false,
-  "default": "abc",
   "label": {
-    "richText": false,
-    "visible": true,
-    "value": "def"
+   "value": "def"
   },
-  "screenReaderText": "'Custom screen reader text'",
   "events": {
     "custom:setProperty": [
       "$event.payload"
     ]
   },
   "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
-    "fd:dor": {
-      "dorExclusion": true,
-      "dorColspan": "4",
-      "dorBindRef": "Text1"
+   "fd:dor": {
+      "dorExclusion": false
     },
     "fd:path": "/content/textinput"
   },

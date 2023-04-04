@@ -58,19 +58,105 @@ describe("Form with Accordion Container", () => {
     })
 
     it(" model's changes are reflected in the html ", () => {
-        const panelId = formContainer._model.items[0].id;
-        const model = formContainer._model.getElement(panelId);
-        const datepickerId = formContainer._model.items[0].items[0].id;
-        const datepickerView = formContainer._fields[datepickerId];
+        const accordionId = formContainer._model.items[0].id;
+        const model = formContainer._model.getElement(accordionId);
+        const panelId = formContainer._model.items[0].items[0].id;
+        const panelView = formContainer._fields[panelId];
         const count = 2;
-        checkHTML(model.id, model.getState(), datepickerView, count).then(() => {
+        checkHTML(model.id, model.getState(), panelView, count).then(() => {
             model.visible = false;
-            return checkHTML(model.id, model.getState(), datepickerView, count);
+            return checkHTML(model.id, model.getState(), panelView, count);
         }).then(() => {
             model.enable = false;
-            return checkHTML(model.id, model.getState(),  datepickerView, count);
+            return checkHTML(model.id, model.getState(), panelView, count);
         });
     });
+
+    it("should collapse/expand view properly", () => {
+
+        const firstChildComponentId = formContainer._model.items[0].items[0].id;
+        const firstChildComponentItemId = firstChildComponentId + "-item";
+        const firstChildComponentButtonId = firstChildComponentId + "-button";
+        const firstChildComponentPanelId = firstChildComponentId + "-panel";
+
+        const secondChildComponentId = formContainer._model.items[0].items[1].id;
+        const secondChildComponentItemId = secondChildComponentId + "-item";
+        const secondChildComponentButtonId = secondChildComponentId + "-button";
+        const secondChildComponentPanelId = secondChildComponentId + "-panel";
+
+        cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+        cy.get(`#${firstChildComponentButtonId}`).should('have.attr', 'aria-controls', firstChildComponentPanelId);
+        cy.get(`#${firstChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+        cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+        cy.get(`#${firstChildComponentPanelId}`).should('have.attr', 'aria-labelledby', firstChildComponentButtonId);
+
+        cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+        cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+        cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+        //all collapsed state by clicking the expanded panel
+        cy.get(`#${firstChildComponentButtonId}`).click().then(() => {
+            cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+            cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+            cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+            cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+            cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+            //expanded 2nd panel
+            cy.get(`#${secondChildComponentButtonId}`).click().then(() => {
+                cy.get(`#${secondChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+                cy.get(`#${secondChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+                cy.get(`#${secondChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+
+                cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+            });
+        })
+    })
+
+    it("should collapse/expand view properly with keyboard", () => {
+
+        const firstChildComponentId = formContainer._model.items[0].items[0].id;
+        const firstChildComponentItemId = firstChildComponentId + "-item";
+        const firstChildComponentButtonId = firstChildComponentId + "-button";
+        const firstChildComponentPanelId = firstChildComponentId + "-panel";
+
+        const secondChildComponentId = formContainer._model.items[0].items[1].id;
+        const secondChildComponentItemId = secondChildComponentId + "-item";
+        const secondChildComponentButtonId = secondChildComponentId + "-button";
+        const secondChildComponentPanelId = secondChildComponentId + "-panel";
+
+        cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+        cy.get(`#${firstChildComponentButtonId}`).should('have.attr', 'aria-controls', firstChildComponentPanelId);
+        cy.get(`#${firstChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+        cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+        cy.get(`#${firstChildComponentPanelId}`).should('have.attr', 'aria-labelledby', firstChildComponentButtonId);
+
+        cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+        cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+        cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+        //all collapsed state by clicking the expanded panel
+        cy.get(`#${firstChildComponentButtonId}`).focus().trigger('keydown', {keyCode: 13})
+            .then(() => {
+                cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+                //expanded 2nd panel
+                cy.get(`#${secondChildComponentButtonId}`).focus().trigger('keydown', {keyCode: 13})
+                    .then(() => {
+                        cy.get(`#${secondChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+                        cy.get(`#${secondChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+                        cy.get(`#${secondChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+                        cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                        cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                        cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+                    });
+            })
+    })
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');

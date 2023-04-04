@@ -34,6 +34,7 @@ public class ButtonImplTest {
     private static final String BASE = "/form/button";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_BUTTON_1 = CONTENT_ROOT + "/button";
+    private static final String PATH_BUTTON_CUSTOMIZED = CONTENT_ROOT + "/button-customized";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -86,19 +87,37 @@ public class ButtonImplTest {
     @Test
     void testIsVisible() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(false, button.isVisible());
+        assertEquals(null, button.isVisible());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, buttonMock.isVisible());
+        assertEquals(null, buttonMock.isVisible());
+    }
+
+    @Test
+    void testIsVisibleForCustomizedButton() {
+        Button buttonCustomized = Utils.getComponentUnderTest(PATH_BUTTON_CUSTOMIZED, Button.class, context);
+        assertEquals(false, buttonCustomized.isVisible());
+        Button buttonMock = Mockito.mock(Button.class);
+        Mockito.when(buttonMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, buttonMock.isVisible());
     }
 
     @Test
     void testIsEnabled() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(true, button.isEnabled());
+        assertEquals(null, button.isEnabled());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, buttonMock.isEnabled());
+        assertEquals(null, buttonMock.isEnabled());
+    }
+
+    @Test
+    void testIsEnabledForCustomizedButton() {
+        Button buttonCustomized = Utils.getComponentUnderTest(PATH_BUTTON_CUSTOMIZED, Button.class, context);
+        assertEquals(true, buttonCustomized.isEnabled());
+        Button buttonMock = Mockito.mock(Button.class);
+        Mockito.when(buttonMock.isEnabled()).thenCallRealMethod();
+        assertEquals(null, buttonMock.isEnabled());
     }
 
     @Test

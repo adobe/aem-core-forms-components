@@ -174,4 +174,19 @@ describe("Form with Dropdown", () => {
             cy.get(`#${dropdown3} select`).should('not.be.enabled')
         })
     })
+
+    it("should show validation error messages based on expression rules", () => {
+        // Rule on dropdown6: Validate dropdown using Expression: dropdown6 === dropdown3
+
+        const [dropdown3, dropdown3FieldView] = Object.entries(formContainer._fields)[4];
+        const [dropdown6, dropdown6FieldView] = Object.entries(formContainer._fields)[7];
+
+        cy.get(`#${dropdown3} select`).select("cauliflower").blur().then(x => {
+            cy.get(`#${dropdown6} select`).select("beans")
+            cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"There is an error in the field")
+
+            cy.get(`#${dropdown6} select`).select("carrot")
+            cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"")
+        })
+    })
 })
