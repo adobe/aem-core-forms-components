@@ -71,6 +71,12 @@ public class ComponentUtils {
         return FORM_FIELD_TYPE.equals(fieldType);
     }
 
+    /**
+     * Returns the form container resource
+     * 
+     * @param resource reference to the {@link Resource}
+     * @return form container resource, null if no form container found
+     */
     public static Resource getFormContainer(Resource resource) {
         if (resource == null) {
             return null;
