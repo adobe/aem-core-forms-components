@@ -38,20 +38,29 @@ describe('Page - Authoring', function () {
     const testTitleEditDialog = function(titleEditPathSelector, titleDrop, isSites) {
         if (isSites) {
             dropTitleInSites();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(titleDrop);
         } else {
             dropTitleInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cq-dialog-cancel').click();
+            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+            .invoke('attr', 'data-path')
+            .then(dataPath => {
+                cy.deleteComponentByPath(dataPath);
+            })
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(titleDrop);
+
     }
 
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
-            titleEditPathSelector = "[data-path='" + titleEditPath + "']",
+            titleEditPathSelector = "[data-path^='" + titleEditPath + "']",
             titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop();
 
         beforeEach(function () {
@@ -61,11 +70,17 @@ describe('Page - Authoring', function () {
 
         it('insert Title in form container', function () {
             dropTitleInContainer();
-            cy.deleteComponentByPath(titleDrop);
+            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+            .invoke('attr', 'data-path')
+            .then(dataPath => {
+                const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_', '');
+                const _titleDrop = titleDrop + id;
+                cy.deleteComponentByPath(dataPath);
+            })
         });
 
         it ('check edit dialog availability of Title', function(){
-            testTitleEditDialog(titleEditPathSelector,titleDrop
+            testTitleEditDialog(titleEditPathSelector,titleDrop, false
             );
         });
 

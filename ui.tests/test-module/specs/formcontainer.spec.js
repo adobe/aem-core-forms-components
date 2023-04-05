@@ -47,6 +47,13 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./actionType']").should("exist");
         };
 
+        const checkTitleInEditDialog = function(formContainerEditPathSelector) {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[name='./title'").should("exist");
+            cy.get("[name='./title'").should("have.value", "Adaptive Form V2 (IT)");
+        }
+
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
@@ -165,6 +172,11 @@ describe('Page/Form Authoring', function () {
             it('change data model in container edit dialog box', function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
             });
+
+            it ('check title in edit dialog', function() {
+                checkTitleInEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            })
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
@@ -179,15 +191,17 @@ describe('Page/Form Authoring', function () {
                     cy.openAuthoring(pagePath);
                 });
 
-                it('insert adaptive form container component', function () {
-                    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
-                    cy.selectLayer("Edit");
-                    // Add adaptibe form container component and delete it
-                    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
-                    // once component is added, to remove the overlay from being active, we click on body
-                    cy.get('body').click(0, 0);
-                    cy.deleteComponentByPath(formContainerDropPath);
+                it('insert adaptive form container component', { retries: 3 }, function () {
+                    cy.cleanTest(formContainerDropPath).then(function() {
+                        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+                            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
+                        cy.selectLayer("Edit");
+                        // Add adaptibe form container component and delete it
+                        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
+                        // once component is added, to remove the overlay from being active, we click on body
+                        cy.get('body').click(0, 0);
+                        cy.deleteComponentByPath(formContainerDropPath);
+                    });
                 });
 
                 it('open edit dialog of adaptive form container component', function () {
@@ -211,6 +225,11 @@ describe('Page/Form Authoring', function () {
                 it('change data model in container edit dialog box', function () {
                     verifyChangeDataModel(formContainerEditPathSelector);
                 });
+
+                it ('check title in edit dialog', function() {
+                    checkEditDialog(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                })
         });
 
 });

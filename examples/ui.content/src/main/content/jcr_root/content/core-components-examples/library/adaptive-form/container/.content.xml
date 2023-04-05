@@ -83,6 +83,7 @@
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="forms-components-examples/components/form/container"
                             fieldType="form"
+                            title="Adaptive Form V2 (IT)"
                             formModelDocumentPath="/content/dam/core-components-examples/library/forms-components/sample.json"
                             thankYouMessage="Thank you for submitting the form">
                             <emailinput
