@@ -47,6 +47,13 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./actionType']").should("exist");
         };
 
+        const checkTitleInEditDialog = function(formContainerEditPathSelector) {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[name='./title'").should("exist");
+            cy.get("[name='./title'").should("have.value", "Adaptive Form V2 (IT)");
+        }
+
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
@@ -165,6 +172,11 @@ describe('Page/Form Authoring', function () {
             it('change data model in container edit dialog box', function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
             });
+
+            it ('check title in edit dialog', function() {
+                checkTitleInEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            })
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
@@ -211,6 +223,11 @@ describe('Page/Form Authoring', function () {
                 it('change data model in container edit dialog box', function () {
                     verifyChangeDataModel(formContainerEditPathSelector);
                 });
+
+                it ('check title in edit dialog', function() {
+                    checkEditDialog(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                })
         });
 
 });
