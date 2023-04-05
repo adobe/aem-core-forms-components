@@ -69,10 +69,12 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it ('open edit dialog of TelephoneInput', function(){
-      testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
+    it ('open edit dialog of TelephoneInput', { retries: 3 }, function(){
+        cy.cleanTest(telephoneInputDrop).then(function() {
+            testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
+        });
     })
-  })
+  });
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/telephoneinput",

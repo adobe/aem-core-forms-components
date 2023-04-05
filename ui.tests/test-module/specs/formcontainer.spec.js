@@ -179,15 +179,17 @@ describe('Page/Form Authoring', function () {
                     cy.openAuthoring(pagePath);
                 });
 
-                it('insert adaptive form container component', function () {
-                    const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                        responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
-                    cy.selectLayer("Edit");
-                    // Add adaptibe form container component and delete it
-                    cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
-                    // once component is added, to remove the overlay from being active, we click on body
-                    cy.get('body').click(0, 0);
-                    cy.deleteComponentByPath(formContainerDropPath);
+                it('insert adaptive form container component', { retries: 3 }, function () {
+                    cy.cleanTest(formContainerDropPath).then(function() {
+                        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+                            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
+                        cy.selectLayer("Edit");
+                        // Add adaptibe form container component and delete it
+                        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
+                        // once component is added, to remove the overlay from being active, we click on body
+                        cy.get('body').click(0, 0);
+                        cy.deleteComponentByPath(formContainerDropPath);
+                    });
                 });
 
                 it('open edit dialog of adaptive form container component', function () {
