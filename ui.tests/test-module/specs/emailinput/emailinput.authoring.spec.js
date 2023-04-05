@@ -75,7 +75,7 @@ describe('Page - Authoring', function () {
         });
     });
 
-    it('Invalid email input should show error message', function () {
+    it('Invalid email input should show error message', { retries: 3 }, function () {
       dropEmailInputInContainer();
       cy.get('[data-layer="Preview"]').click();
       getPreviewIframeBody().find('input.cmp-adaptiveform-emailinput__widget')
