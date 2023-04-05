@@ -1,0 +1,21 @@
+{
+  "title": "Example Schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "married": {
+      "type": "boolean"
+    },
+    "numberOfDependents" : {
+      "type" : "number"
+    }
+  },
+  "required": [
+    "firstName"
+  ]
+}

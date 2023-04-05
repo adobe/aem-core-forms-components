@@ -108,4 +108,14 @@ public class AEMFormImplTest {
         }
 
     }
+
+    @Test
+    void testGetFormVersion() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        // junit 5 doesn't support power mock yet
+        assertEquals("2.1", aemform.getFormVersion());
+        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
+        Mockito.when(aemFormMock.getFormVersion()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getFormVersion);
+    }
 }

@@ -30,7 +30,8 @@
                 "useIframe" : "${form.useIframe @ context='scriptString'}",
                 "height" : "${form.height @ context='scriptString'}",
                 "aemFormComponentPath" : "${resource.path @ context='scriptString'}",
-                "enableFocusOnFirstField" : "${form.enableFocusOnFirstField @ context='scriptString'}"
+                "enableFocusOnFirstField" : "${form.enableFocusOnFirstField @ context='scriptString'}",
+                "version" : "${form.formVersion @ context='scriptString'}"
             });
             //remove the event listener after completion
             window.removeEventListener("aemform-onscript-load", onScriptLoad);

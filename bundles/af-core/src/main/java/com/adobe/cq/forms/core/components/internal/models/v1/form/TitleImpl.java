@@ -79,7 +79,12 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
-
+        if (StringUtils.isBlank(title)) {
+            Resource formContainerResource = ComponentUtils.getFormContainer(resource);
+            if (formContainerResource != null) {
+                title = formContainerResource.getValueMap().get("title", String.class);
+            }
+        }
         if (heading == null) {
             heading = Heading.getHeading(type);
             if (heading == null && currentStyle != null) {

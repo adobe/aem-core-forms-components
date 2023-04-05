@@ -15,11 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -99,6 +103,25 @@ public class TitleImplTest {
         Title title = getTitleUnderTest(PATH_TITLE_NOPROPS, Title.PN_DESIGN_DEFAULT_TYPE, "h2");
         assertEquals("h2", title.getType());
         Utils.testJSONExport(title, Utils.getTestExporterJSONPath(BASE, PATH_TITLE_NOPROPS));
+    }
+
+    @Test
+    protected void defaultTitleShouldBePickedFromGuideContainer()
+        throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        Title title = getTitleUnderTest(PATH_TITLE_NOPROPS, Title.PN_DESIGN_DEFAULT_TYPE, "h2");
+        Resource mockGuideContainerResource = Mockito.mock(Resource.class);
+        Mockito.when(mockGuideContainerResource.isResourceType(Mockito.anyString())).thenReturn(true);
+        ValueMap mockVM = Mockito.mock(ValueMap.class);
+        Mockito.when(mockVM.get("title", String.class)).thenReturn("form title");
+        Mockito.when(mockVM.get("fieldType", String.class)).thenReturn("form");
+        Mockito.when(mockGuideContainerResource.getValueMap()).thenReturn(mockVM);
+        Field resourceField = title.getClass().getDeclaredField("resource");
+        resourceField.setAccessible(true);
+        resourceField.set(title, mockGuideContainerResource);
+        Method initModel = title.getClass().getDeclaredMethod("initModel");
+        initModel.setAccessible(true);
+        initModel.invoke(title);
+        assertEquals("form title", title.getText());
     }
 
     @Test

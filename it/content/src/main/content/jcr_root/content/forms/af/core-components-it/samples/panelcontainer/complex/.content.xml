@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[mobile/groups/responsive]"
-        cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="Adaptive Form V2 (IT)"
