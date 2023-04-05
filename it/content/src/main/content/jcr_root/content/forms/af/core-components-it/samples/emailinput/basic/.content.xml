@@ -16,13 +16,13 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container">
             <emailinput
-                fieldType="email-input"
+                fieldType="email"
                 jcr:primaryType="nt:unstructured"
                 name="emailinput1"
                 jcr:title="Email Input 1"
                 sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput2
-                    fieldType="email-input"
+                    fieldType="email"
                     jcr:primaryType="nt:unstructured"
                     name="emailinput2"
                     jcr:title="Email Input 2"
@@ -30,7 +30,7 @@
                     enabled="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput3
-                    fieldType="email-input"
+                    fieldType="email"
                     jcr:primaryType="nt:unstructured"
                     name="emailinput3"
                     jcr:title="Email Input 3"
@@ -38,7 +38,7 @@
                     enabled="{Boolean}true"
                     sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput4
-              fieldType="email-input"
+              fieldType="email"
               jcr:primaryType="nt:unstructured"
               jcr:title="Email Input With Tooltip, Description, Tooltip always visible"
               id="tooltip_scenario_test"

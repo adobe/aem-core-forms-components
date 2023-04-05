@@ -50,7 +50,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Email Input"
                         sling:resourceType="forms-components-examples/components/form/emailinput"
-                        fieldType="email-input"
+                        fieldType="text-input"
                         name="emailinput1678435473081"/>
                 </item_1>
                 <item_1678777484517
