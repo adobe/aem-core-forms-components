@@ -99,13 +99,15 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it ('test data binding', function(){
-            dropTextInputInContainer();
-            testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
-            cy.openSiteAuthoring(pagePath);
-            testBindingPersistence(textInputEditPathSelector);
-            cy.deleteComponentByPath(textInputDrop);
-        })
+        if (cy.af.isLatestAddon()) {
+            it ('test data binding', function(){
+                dropTextInputInContainer();
+                testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
+                cy.openSiteAuthoring(pagePath);
+                testBindingPersistence(textInputEditPathSelector);
+                cy.deleteComponentByPath(textInputDrop);
+            })
+        }
     })
 
     context('Open Sites Editor', function () {
@@ -121,13 +123,15 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('test data binding', function () {
-            configureDataModel(formContainerEditPathSelector);
-            dropTextInputInSites();
-            testDataBindingBehaviour(textInputEditPathSelector)
-            cy.openSiteAuthoring(pagePath);
-            testBindingPersistence(textInputEditPathSelector);
-            cy.deleteComponentByPath(textInputDrop);
-        });
+        if (cy.af.isLatestAddon()) {
+            it('test data binding', function () {
+                configureDataModel(formContainerEditPathSelector);
+                dropTextInputInSites();
+                testDataBindingBehaviour(textInputEditPathSelector)
+                cy.openSiteAuthoring(pagePath);
+                testBindingPersistence(textInputEditPathSelector);
+                cy.deleteComponentByPath(textInputDrop);
+            });
+        }
     });
 });
