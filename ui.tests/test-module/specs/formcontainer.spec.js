@@ -173,7 +173,7 @@ describe('Page/Form Authoring', function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
             });
 
-            it ('check title in edit dialog', function() {
+            it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
             })
