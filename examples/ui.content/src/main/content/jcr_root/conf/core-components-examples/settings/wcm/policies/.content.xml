@@ -97,6 +97,26 @@
                             </item0>
                         </cq:styleGroups>
                     </policy_1545309074617>
+                    <page-header
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="page-header-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="/apps/forms-components-examples/components/form/pageheader">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </page-header>
+                    <page-footer
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="page-footer-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="/apps/forms-components-examples/components/form/footer">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </page-footer>
                 </responsivegrid>
             </components>
         </foundation>

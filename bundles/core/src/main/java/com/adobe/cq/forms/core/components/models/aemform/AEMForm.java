@@ -352,4 +352,15 @@ public interface AEMForm extends Component {
         return new ArrayList();
     }
 
+    /**
+     * Provides the form version
+     *
+     * @return form version as set in guidecontainer
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.3.0;
+     */
+    @JsonIgnore
+    default String getFormVersion() {
+        throw new UnsupportedOperationException();
+    }
+
 }

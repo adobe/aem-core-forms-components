@@ -22,32 +22,31 @@
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div class="cmp-adaptiveform-fileinput"
      data-cmp-is="adaptiveFormFileInput"
-     id="${component.id}"
+     id="${file.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.file="com.adobe.cq.forms.core.components.models.form.FileInput"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-visible="${file.visible ? 'true' : 'false'}"
      data-cmp-enabled="${file.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, labelRichText=file.label.richText, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </br>
-    <label data-sly-test="${file.buttonText}" for="${component.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
+    <label data-sly-test="${file.buttonText}" for="${file.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
     <input class="cmp-adaptiveform-fileinput__widget"
            data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
            style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
-           title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
+           title="${file.tooltipVisible ? '' : file.tooltipText}"
            name="${file.name}"
            disabled="${!file.enabled}"
            accept="${file.accept}"
-           id="${component.id}_widget"
+           id="${file.id}_widget"
            type="file"
     />
     <ul class="cmp-adaptiveform-fileinput__filelist"></ul>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=file.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=file.id, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
 </div>
 
 

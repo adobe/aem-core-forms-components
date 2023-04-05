@@ -216,7 +216,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         String formPath = getFormPath();
         if (!("".equals(formPath))) {
             ResourceResolver resolver = request.getResourceResolver();
-            if (GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.ADAPTIVE_FORM)) {
+            if (getFormVersion().equals("2.1") || GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.ADAPTIVE_FORM)) {
                 formType = FormType.ADAPTIVE_FORM;
             } else if (GuideUtils.isValidFormResource(resolver, formPath, GuideConstants.MC_DOCUMENT)) {
                 formType = FormType.MC_DOCUMENT;
@@ -277,5 +277,25 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
             }
         }
         return height;
+    }
+
+    public String getFormVersion() {
+        String version = "";
+        String formPath = getFormPath();
+        ResourceResolver resourceResolver = request.getResourceResolver();
+        if ((!formPath.isEmpty()) && (resourceResolver != null)) {
+            formPath = GuideUtils.convertFMAssetPathToFormPagePath(formPath);
+            Resource formResource = resourceResolver.getResource(formPath);
+            if (formResource != null) {
+                Resource jcrContentResource = formResource.getChild("jcr:content");
+                if (jcrContentResource != null) {
+                    Resource guideContainerResource = jcrContentResource.getChild("guideContainer");
+                    if (guideContainerResource != null) {
+                        version = guideContainerResource.getValueMap().get(GuideConstants.FD_VERSION).toString();
+                    }
+                }
+            }
+        }
+        return version;
     }
 }

@@ -23,14 +23,13 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-telephoneinput"
      data-cmp-is="adaptiveFormTelephoneInput"
      data-cmp-visible="${telText.visible ? 'true' : 'false'}"
      data-cmp-enabled="${telText.enabled ? 'true' : 'false'}"
-     id="${component.id}"
+     id="${telText.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=telText.label.value, labelVisible=telText.label.visible, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=telText.id, labelValue=telText.label.value, labelVisible=telText.label.visible, labelRichText=telText.label.richText, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
     <input title="${telText.tooltipVisible ? '' : telText.tooltipText}"
            class="cmp-adaptiveform-telephoneinput__widget"
            aria-label="${telText.label.visible && telText.label.value}"
@@ -43,9 +42,9 @@
            placeholder="${telText.placeHolder}"
            minlength="${telText.minLength}"
            maxlength="${telText.maxLength}"/>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=telText.tooltipVisible, shortDescription=telText.tooltip, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap>
+    <div data-sly-call="${questionMark.questionMark @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=telText.id, shortDescriptionVisible=telText.tooltipVisible, shortDescription=telText.tooltip, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=telText.id, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
 </div>
