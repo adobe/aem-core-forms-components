@@ -301,10 +301,14 @@ Cypress.Commands.add("previewForm", (formPath, options={}) => {
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
     return cy.get("body").then($body => {
-        const selector12 =  "[data-path='" + editPath + "']";
-        if ($body.find(selector12).length > 0) {
-            cy.deleteComponentByPath(editPath);
-        }
+        return new Cypress.Promise((resolve, reject) => {
+            // do something custom here
+            const selector12 =  "[data-path='" + editPath + "']";
+            if ($body.find(selector12).length > 0) {
+                cy.deleteComponentByPath(editPath);
+            }
+            resolve(editPath);
+        });
     });
 })
 
