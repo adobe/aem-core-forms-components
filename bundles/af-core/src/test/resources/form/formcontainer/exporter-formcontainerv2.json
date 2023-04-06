@@ -11,8 +11,8 @@
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC"
   },
-  ":items": {
-    "textinput": {
+  "items": [
+    {
       "id": "textinput-9a52c5fa93",
       "fieldType": "text-input",
       "name": "abc",
@@ -36,8 +36,7 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  },
-  ":itemsOrder" : ["textinput"],
+  ],
   "events": {
     "custom:setProperty": [
       "$event.payload"
