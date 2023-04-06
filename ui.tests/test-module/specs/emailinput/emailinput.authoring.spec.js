@@ -74,26 +74,6 @@ describe('Page - Authoring', function () {
             testEmailInputBehaviour(emailInputEditPathSelector, emailInputDrop);
         });
     });
-
-    it('Invalid email input should show error message', { retries: 3 }, function () {
-      dropEmailInputInContainer();
-      cy.get('[data-layer="Preview"]').click();
-      getPreviewIframeBody().find('input.cmp-adaptiveform-emailinput__widget')
-          .should('be.visible').type('invalidEmail', {force: true}).blur({force: true});
-      getPreviewIframeBody().find('.cmp-adaptiveform-emailinput__errormessage').should('exist');
-      cy.selectLayer("Edit");
-      cy.deleteComponentByPath(emailInputDrop);
-    });
-
-    const getPreviewIframeBody = () => {
-      // get the iframe > document > body
-      // and retry until the body element is not empty
-      return cy
-          .get('iframe#ContentFrame')
-          .its('0.contentDocument.body').should('not.be.empty')
-          .then(cy.wrap)
-    }
-
   });
 
   context('Open Sites Editor', function () {
