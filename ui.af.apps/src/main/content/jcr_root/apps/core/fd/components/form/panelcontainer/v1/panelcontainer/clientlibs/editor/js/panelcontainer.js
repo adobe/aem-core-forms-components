@@ -109,15 +109,13 @@
         }
 
         // checking for repeatability and bindRef of panel on dialog initialisation
-        if(isRepeatable() || ( bindRef !== null && bindRef.value.length > 0)) {
+        if(isRepeatable() || bindRef.value.length > 0) {
             makeWrapDataReadOnly(true);
         }
 
-        if(bindRef !== null) {
-            bindRef.addEventListener("change", function () {
-                makeWrapDataReadOnly(this.value.length > 0);
-            });
-        }
+        bindRef.addEventListener("change", function () {
+            makeWrapDataReadOnly(this.value.length > 0);
+        });
 
         /*minInputField.addEventListener("change", function () {
             makeWrapDataReadOnly(isRepeatable());
