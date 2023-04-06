@@ -24,14 +24,13 @@
 <div class="cmp-adaptiveform-dropdown"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.dropdown="com.adobe.cq.forms.core.components.models.form.DropDown"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-is="adaptiveFormDropDown"
-     id="${component.id}"
+     id="${dropdown.id}"
      data-cmp-visible="${dropdown.visible ? 'true' : 'false'}"
      data-cmp-enabled="${dropdown.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=dropdown.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
             aria-label="${dropdown.label.visible && dropdown.label.value}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
@@ -51,8 +50,8 @@
             </div>
         </div>
     </select>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=dropdown.id, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
 </div>

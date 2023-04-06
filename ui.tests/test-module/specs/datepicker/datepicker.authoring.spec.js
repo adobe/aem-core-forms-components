@@ -105,8 +105,10 @@ describe('Page - Authoring', function () {
             testDatePickerEditDialog(datePickerEditPathSelector, datePickerDrop);
         });
 
-        it('verify Basic tab in edit dialog of DatePicker', function () {
-            testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop);
+        it('verify Basic tab in edit dialog of DatePicker', { retries: 3 }, function () {
+            cy.cleanTest(datePickerDrop).then(function() {
+                testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop);
+            });
         });
 
         it('verify Validation tab in edit dialog of DatePicker', function () {

@@ -8,7 +8,7 @@
                     <teaser_1837085907
                         cq:styleIds="[1547060090076]"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="AEM Forms Container"
+                        jcr:title="Adaptive Form - Embed"
                         sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="true"

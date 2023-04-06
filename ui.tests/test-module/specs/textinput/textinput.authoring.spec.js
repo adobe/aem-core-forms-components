@@ -144,7 +144,7 @@ describe('Page - Authoring', function () {
     });
 
     // conditionally run the test on latest addon
-    if (cy.af.isLatestAddon()) {
+    //if (cy.af.isLatestAddon()) {
       it('Test z-index of Rule editor iframe', function () {
           dropTextInputInSites();
           cy.openSidePanelTab("Content Tree");
@@ -160,6 +160,6 @@ describe('Page - Authoring', function () {
           getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
           cy.deleteComponentByPath(textInputDrop);
       });
-    }
+    //}
   });
 });
