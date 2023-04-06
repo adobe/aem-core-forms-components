@@ -143,28 +143,8 @@ describe('Page - Authoring', function () {
 
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(checkBoxGroupDrop);
-    });
-
-    it('check rich text support for label', function(){
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get("div[name='richTextTitle']").should('not.be.visible');
-
-        // check rich text selector and see if RTE is visible.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
-        cy.get('.cq-dialog-submit').click();
-    });
-
-    it('check rich text inline editor is present', function(){
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']");
-        cy.get(".rte-toolbar").should('be.visible');
-        cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
-    });
-  });
+    })
+  })
 /*
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",

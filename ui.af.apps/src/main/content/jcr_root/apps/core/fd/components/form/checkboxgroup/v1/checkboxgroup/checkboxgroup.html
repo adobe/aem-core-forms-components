@@ -29,7 +29,7 @@
      data-cmp-visible="${checkboxgroup.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, labelRichText=checkboxgroup.label.richText, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
