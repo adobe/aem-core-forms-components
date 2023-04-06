@@ -21,8 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -46,9 +44,7 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.dam.api.Asset;
-import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -180,29 +176,5 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
             jsonMap = mapper.convertValue(formContainer, new TypeReference<Map<String, Object>>() {});
         }
         return jsonMap;
-    }
-
-    @Nullable
-    @Override
-    public String getGridClassNames() {
-        return null;
-    }
-
-    @Override
-    @Nonnull
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    public Map<String, String> getColumnClassNames() {
-        return Collections.emptyMap();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return 0;
-    }
-
-    @Override
-    @Nullable
-    public AllowedComponentsExporter getExportedAllowedComponents() {
-        return null;
     }
 }
