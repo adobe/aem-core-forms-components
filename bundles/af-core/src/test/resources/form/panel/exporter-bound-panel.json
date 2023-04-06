@@ -6,8 +6,8 @@
   "description": "dependent names description",
   "tooltip": "dependent names tooltip",
   "type": "object",
-  ":items": {
-    "textinput": {
+  "items":[
+    {
       "id": "textinput-49ec424aa1",
       "fieldType": "text-input",
       "name": "abc",
@@ -31,8 +31,7 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  },
-  ":itemsOrder" : ["textinput"],
+  ],
   "label": {
     "value": "dependent names"
   },

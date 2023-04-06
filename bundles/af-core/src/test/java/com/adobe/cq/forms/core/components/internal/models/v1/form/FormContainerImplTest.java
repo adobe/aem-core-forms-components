@@ -50,7 +50,6 @@ import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
 import static org.apache.jackrabbit.JcrConstants.NT_RESOURCE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -125,43 +124,6 @@ public class FormContainerImplTest {
     void testFormModel() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_WITH_DOCUMENT_PATH);
         assertEquals(((List) formContainer.getModel().get("items")).size(), 1);
-    }
-
-    @Test
-    void testGetThankYouMessage() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertNotNull(formContainer.getThankYouMessage());
-        assertEquals("message", formContainer.getThankYouMessage());
-    }
-
-    @Test
-    void testGetGridClassNames() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertNull(formContainer.getGridClassNames());
-    }
-
-    @Test
-    void testGetColumnClassNames() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertEquals(formContainer.getColumnClassNames().isEmpty(), true);
-    }
-
-    @Test
-    void testGetColumnCount() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertEquals(formContainer.getColumnCount(), 0);
-    }
-
-    @Test
-    void testGetAppliedCSSClass() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertNull(formContainer.getAppliedCssClasses());
-    }
-
-    @Test
-    void testGetExportedAllowedComponents() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertNull(formContainer.getExportedAllowedComponents());
     }
 
     private FormContainer getFormContainerUnderTest(String resourcePath) throws Exception {
