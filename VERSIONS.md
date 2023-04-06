@@ -4,7 +4,7 @@ See below for a full list of minimum system requirements for historical versions
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 |-----------------------| ------------------- | ---------------------------- | ----- | ------ |
-| 2.0.12                | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |
+| 2.0.14                | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |
 | 2.0.6                 | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |                      |                     |                              |       |        |
 | 2.0.4                 | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |
 | 2.0.2                 | 2.21.2              | Continual                    | 8, 11 | 3.3.9+ |
