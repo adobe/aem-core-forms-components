@@ -29,7 +29,7 @@
      data-cmp-visible="${dropdown.visible ? 'true' : 'false'}"
      data-cmp-enabled="${dropdown.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=dropdown.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, labelRichText=dropdown.label.richText, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=dropdown.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
             aria-label="${dropdown.label.visible && dropdown.label.value}"

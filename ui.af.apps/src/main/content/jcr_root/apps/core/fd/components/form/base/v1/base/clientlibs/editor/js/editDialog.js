@@ -25,10 +25,7 @@
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
-        BASE_TITLE = ".cmp-adaptiveform-base__title",
-        BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
-        BASE_WRAPPER_RICH_TEXT_TITLE = "input[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
-        BASE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
+        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
 
@@ -168,67 +165,13 @@
     }
 
     /**
-     * hides the RTE/plain text field on the basis of rich text checkbox and
-     * resolves it's value.
-     *
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     * @param isTitleRichText is rich text checkbox selected.
-     * @param isToggled is this function being called on toggle of rich text checkbox.
-     */
-    function resolveRichText(dialog, isTitleRichText, isToggled) {
-        var title = dialog.find(BASE_TITLE)[0],
-            richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
-            richTextTitleDiv = dialog.find("div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
-        if(isTitleRichText.checked){
-            hideGraniteComponent(title);
-            showGraniteComponent(richTextTitle);
-            copyTextValueToRte(title, richTextTitleDiv);
-        } else {
-            hideGraniteComponent(richTextTitle);
-            showGraniteComponent(title);
-            if(isToggled){
-                title.value = $('<div>').html(richTextTitleDiv.innerHTML).text();
-            }
-        }
-    }
-
-    function copyTextValueToRte (textElem, richTextElem) {
-        richTextElem.innerHTML = window.expeditor.Utils.encodeScriptableTags(textElem.value);
-    }
-
-    //Function to hide guide component
-    function hideGraniteComponent (elem) {
-        var parentTag = $(elem).closest("div"); // elem is not jQuery object
-        $(parentTag).attr("hidden", "");
-    }
-
-    //Function to show the coral 3 based granite component
-    function showGraniteComponent (elem) {
-        var parentTag = $(elem).closest("div");
-        if ($(parentTag).is("[hidden]")) {
-            //jquery based show
-            $(parentTag).removeAttr("hidden");
-        } else {
-            //coral3 api based show
-            parentTag.show();
-        }
-    }
-
-    function changeTextValue(textValue, richTextValue) {
-        if(textValue && richTextValue) {
-            textValue.value = window.expeditor.Utils.encodeScriptableTags(richTextValue.value);
-        }
-    }
-
-    /**
      * Initialise the conditional display of the various elements of the dialog.
      *
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function initialise(dialog) {
         dialog = $(dialog);
-        var baseRequired = dialog.find(BASE_REQUIRED)[0],
-            isTitleRichText = dialog.find(BASE_RICH_TEXT)[0];
+        var baseRequired = dialog.find(BASE_REQUIRED)[0];
         if (baseRequired) {
             handleRequired(dialog, baseRequired);
             baseRequired.on("change", function() {
@@ -240,12 +183,6 @@
         showHideDoRBindRefField(dialog);
         validateName();
         handleDialogSubmit(dialog);
-        if (isTitleRichText) {
-            resolveRichText(dialog, isTitleRichText, false);
-            isTitleRichText.on("change", function() {
-                resolveRichText(dialog, isTitleRichText, true);
-            });
-        }
     }
 
     channel.on("foundation-contentloaded", function(e) {
@@ -254,17 +191,6 @@
                 initialise(component);
             });
         }
-    });
-
-    /**
-     * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
-     */
-    channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
-        Coral.commons.ready(e.target, function() {
-            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
-                textValue = channel.find(BASE_TITLE)[0];
-            changeTextValue(textValue, richTextValue);
-        });
     });
 
 })(jQuery, Granite.author, jQuery(document), Coral);
