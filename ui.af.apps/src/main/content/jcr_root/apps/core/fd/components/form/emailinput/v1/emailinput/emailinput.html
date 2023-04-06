@@ -29,7 +29,7 @@
      data-cmp-enabled="${email.enabled ? 'true' : 'false'}"
      id="${email.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=email.id, labelValue=email.label.value, labelVisible=email.label.visible, labelRichText=email.label.richText, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=email.id, labelValue=email.label.value, labelVisible=email.label.visible, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
     <input title="${email.tooltipVisible ? '' : email.tooltipText}"
            class="cmp-adaptiveform-emailinput__widget"
            aria-label="${email.label.visible && email.label.value}"
