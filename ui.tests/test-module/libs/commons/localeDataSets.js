@@ -1,8 +1,8 @@
 const selectors = {
     ACCORDION: '.cmp-accordion > label',
-    BUTTON: 'span.cmp-adaptiveform-button__text',
+    BUTTON: '.cmp-adaptiveform-button__base_text',
     CHECK_BOX: '.cmp-adaptiveform-checkboxgroup > label',
-    CHECK_BOX_ITEM1: '.cmp-adaptiveform-checkboxgroup > div > div > label > span',
+    CHECK_BOX_ITEM1: '.cmp-adaptiveform-checkboxgroup-item',
     DATE_INPUT: '.cmp-adaptiveform-datepicker label',
     DROPDOWN: '.cmp-adaptiveform-dropdown label',
     EMAIL_INPUT: '.cmp-adaptiveform-emailinput__label',

@@ -30,7 +30,7 @@ describe('Verify constants are changing for each language', function () {
             }
             Object.entries(currLanguage.TRANSLATION).forEach(component => {
                 if(component[0] === 'CHECK_BOX_ITEM1' || component[0] === 'BUTTON') {
-                    cy.get(dataSet.selectors[component[0]]).eq(0).invoke('text').should('eq', component[1]);
+                    cy.get(dataSet.selectors[component[0]]).eq(0).invoke('text').should('contain', component[1]);
                 }
                 else {
                     cy.get(dataSet.selectors[component[0]]).invoke('text').should('eq', component[1]);
