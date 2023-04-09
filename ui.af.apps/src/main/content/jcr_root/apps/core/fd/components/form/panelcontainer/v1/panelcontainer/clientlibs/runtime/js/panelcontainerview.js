@@ -39,8 +39,9 @@
             return Panel.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
             this.setActive();
+            super.setFocus(id);
         }
 
         getWidget() {

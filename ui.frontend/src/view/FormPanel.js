@@ -44,6 +44,11 @@ export default class FormPanel extends FormFieldBase {
             instanceManager.addChild(this);
         }
     }
+    setFocus(id) {
+      if(this.parentView && this.parentView.fieldType !== 'form' && this.parentView.setFocus){
+        this.parentView.setFocus(this.getId());
+      }
+    }
 
     addChild(childView) {
         this.children.push(childView);
