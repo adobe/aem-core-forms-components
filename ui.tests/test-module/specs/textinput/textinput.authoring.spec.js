@@ -126,7 +126,9 @@ describe('Page - Authoring', function () {
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
         textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
+        textInputInsideSitesContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/container/textinput_demo",
         textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+        textInputInsideSitesContainerEditPathSelector = "[data-path='" + textInputInsideSitesContainerEditPath + "']",
         textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
     beforeEach(function () {
@@ -161,5 +163,21 @@ describe('Page - Authoring', function () {
           cy.deleteComponentByPath(textInputDrop);
       });
     //}
+
+    if (cy.af.isLatestAddon()) {
+      it('Test z-index of Rule editor iframe for components inside site container', function () {
+          cy.openSidePanelTab("Content Tree");
+          cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
+          cy.invokeEditableAction("[data-action='editexpression']");
+          cy.get("#af-rule-editor").should("be.visible");
+          cy.get("#af-rule-editor")
+              .invoke("css", "z-index")
+              .should("equal", '10');
+          getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+          getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+          cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
+          getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+      });
+    }
   });
 });
