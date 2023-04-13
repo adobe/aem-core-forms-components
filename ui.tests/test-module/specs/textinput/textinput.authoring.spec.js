@@ -178,6 +178,8 @@ describe('Page - Authoring', function () {
               .invoke("css", "z-index")
               .should("equal", '10');
           getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+          // check if navigation tree is showing the text input
+          getRuleEditorIframe().find("#objectNavigationTree " + textInputEditPathSelector).should("be.visible");
           getRuleEditorIframe().find("#create-rule-button").should("be.visible");
           cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
           getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
