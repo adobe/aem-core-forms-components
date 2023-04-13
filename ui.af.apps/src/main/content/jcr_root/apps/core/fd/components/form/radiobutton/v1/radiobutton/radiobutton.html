@@ -23,15 +23,14 @@
      data-sly-use.questionmark="${renderer.questionMarkPath}" />
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.radiobutton="com.adobe.cq.forms.core.components.models.form.RadioButton"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-radiobutton"
      data-cmp-is="adaptiveFormRadioButton"
      data-cmp-visible="${radioButton.visible ? 'true' : 'false'}"
      data-cmp-enabled="${radioButton.enabled ? 'true' : 'false'}"
-     id="${component.id}"
+     id="${radiobutton.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=radiobutton.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}">
       <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
           <div class="cmp-adaptiveform-radiobutton__option">
@@ -52,7 +51,7 @@
           </div>
       </div>
     </div>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=radioButton.tooltipVisible, shortDescription=radioButton.tooltip, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=radiobutton.id, shortDescriptionVisible=radioButton.tooltipVisible, shortDescription=radioButton.tooltip, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=radiobutton.id, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
 </div>
