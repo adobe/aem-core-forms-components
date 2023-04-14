@@ -35,6 +35,7 @@
         EMAIL_TOGGLE_SWITCH_SELECTOR = '.emailTemplateSwitch',
         EMAIL_TEMPLATE_FIELD_SELECTOR = '.emailTemplate',
         EMAIL_TEMPLATE_PATH_SELECTOR = '.externalTemplatePath',
+        GUIDE_CONTAINER_SELECTOR = "[data-cmp-is='adaptiveFormContainer']",
         REST_ENDPOINT = ".rest",
         FDM = ".fdm",
         EMAIL = ".email",
@@ -109,10 +110,6 @@
                 addFormParameter(afAssetPath + '/formmodel', schemaType);
                 addFormParameter(afAssetPath + '/schemaRef');
             }
-            if (schemaType != NONE) {
-                document.querySelector(FORM_MODEL_SELECTOR).disabled = true;
-                dialog.find(SCHEMA_TYPE)[0].removeAttribute("disabled");
-            }
             document.body.appendChild(formModelChangeConfirmationDialog);
             prefillSchema(schemaType, dialog);
         }
@@ -179,8 +176,13 @@
     }
 
     function getAfAssetMetadataPath() {
-        return window.guidelib.author.AuthorUtils.getGuideContainerPath().replace(FM_AF_ROOT, FM_DAM_ROOT).replace("/guideContainer", "/metadata");
+        return getGuideContainerPath().replace(FM_AF_ROOT, FM_DAM_ROOT).replace("/guideContainer", "/metadata");
     }
+
+    function getGuideContainerPath() {
+        var afWindow = (Granite.author ? Granite.author.ContentFrame.contentWindow : window);
+        return afWindow.$(GUIDE_CONTAINER_SELECTOR).data("cmp-path");
+    };
 
     function isForm(){
         return Granite.author.page.path.startsWith(FM_AF_ROOT);

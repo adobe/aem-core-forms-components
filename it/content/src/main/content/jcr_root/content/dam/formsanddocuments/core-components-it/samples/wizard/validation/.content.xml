@@ -18,6 +18,6 @@
                 dorType="none"
                 formmodel="none"
                 hasCustomThumbnail="{Boolean}false"
-                title="Adaptive Form V2 (IT)"/>
+                title="Validation"/>
     </jcr:content>
 </jcr:root>

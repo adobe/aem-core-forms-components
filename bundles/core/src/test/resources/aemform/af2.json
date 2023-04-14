@@ -18,7 +18,7 @@
     "cq:lastModifiedBy": "admin",
     "guideContainer": {
       "jcr:primaryType": "nt:unstructured",
-      "fd:version": "2.0",
+      "fd:version": "2.1",
       "sling:resourceType": "core/fd/components/form/container/v2/container",
       "dorType": "none",
       "themeRef": "/conf/global/frontend/deployments/red_theme/red_theme-0.0.2-1662093232-7cb0d8b",

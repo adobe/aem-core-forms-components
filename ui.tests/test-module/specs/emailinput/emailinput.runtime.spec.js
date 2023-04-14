@@ -76,9 +76,17 @@ describe("Form Runtime with Email Input", () => {
     it(" html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        const input = "value"
+        const input = "value@dns.com"
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input)
+        })
+    });
+
+    it(" Invalid email ID generates error message ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const input = "invalidEmail"
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('exist');
         })
     });
 
