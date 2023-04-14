@@ -17,15 +17,15 @@
 
     const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select', LIST: 'list', DATE: 'date', NON_INPUT: 'nonInputReadOnly'}
     const typeMap = {
-        'button': fieldTypes.TEXT,
+        'button': fieldTypes.NON_INPUT,
         'checkboxgroup': fieldTypes.SELECT,
         'datepicker': fieldTypes.TEXT,
         'dropdown': fieldTypes.SELECT,
         'emailinput': fieldTypes.TEXT,
         'numberinput': fieldTypes.TEXT,
         'radiobutton': fieldTypes.SELECT,
-        'reset': fieldTypes.TEXT,
-        'submit': fieldTypes.TEXT,
+        'reset': fieldTypes.NON_INPUT,
+        'submit': fieldTypes.NON_INPUT,
         'telephoneinput': fieldTypes.TEXT,
         'text': fieldTypes.NON_INPUT,
         'textbox': fieldTypes.TEXT,
@@ -33,6 +33,7 @@
         'title': fieldTypes.NON_INPUT,
         'image': fieldTypes.NON_INPUT
     }
+
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
@@ -103,7 +104,8 @@
                 }
 
                 if (!(keyword.length > 0) || isKeywordFound) {
-                    if ((!cannotBeReplacedWith.includes(componentType) && editableType != componentType)
+                    if ((c.componentConfig.group === 'Core Components Examples - Adaptive Form')
+                        && (!cannotBeReplacedWith.includes(componentType) && editableType != componentType)
                         && ((isContainerComponent && c.componentConfig.isContainer)
                             || (!isContainerComponent && typeMap[editableType] === typeMap[componentType]))) {
                         performReplace = true;
