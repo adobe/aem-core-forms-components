@@ -64,8 +64,9 @@ describe('component replace - Authoring', function () {
     const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop) {
 
         var textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
+            titlePath = "[value='"+afConstants.components.forms.resourceType.title+"']",
             submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']",
-            textInputTitle = 'Adaptive Form Text Box',
+            titleName = 'Adaptive Form Title',
 
             horizontalTabs = "[value='/apps/forms-components-examples/components/form/tabsontop']",
             accordion = "[value='/apps/forms-components-examples/components/form/accordion']",
@@ -79,14 +80,14 @@ describe('component replace - Authoring', function () {
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == buttonEditPathSelector) {
             cy.get(textInput)
-                .should("exist");
+                .should("not.exist");
             cy.get(submitButton)
                 .should("exist");
-            cy.get(textInput)
+            cy.get(titlePath)
                 .click();
-            cy.get('[title="Adaptive Form Text Box"]')
+            cy.get('[title="'+titleName+'"]')
                 .should('exist');
-            cy.deleteComponentByTitle(textInputTitle);
+            cy.deleteComponentByTitle(titleName);
             return;
         } else {
             cy.get(horizontalTabs)
@@ -107,7 +108,7 @@ describe('component replace - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('replace button with reset button', function () {
+        it('replace button with title', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
