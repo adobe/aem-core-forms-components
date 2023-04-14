@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
@@ -36,6 +37,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -56,6 +58,7 @@ public class FormContainerImplTest {
     private static final String BASE = "/form/formcontainer";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainer";
+    private static final String PATH_FORM_DATALAYER = CONTENT_ROOT + "/formcontainer-datalayer";
     private static final String PATH_FORM_WITH_DOCUMENT_PATH = CONTENT_ROOT + "/formcontainerWithDocumentPath";
     private static final String TEST_CONTENT_FORM_MODEL = "/test-content-model.json";
     private static final String FORM_MODEL = "/test-form-model.json";
@@ -140,5 +143,15 @@ public class FormContainerImplTest {
             JCR_PRIMARYTYPE, NT_RESOURCE,
             JCR_DATA, jsonStream,
             JCR_MIMETYPE, ContentType.APPLICATION_JSON.toString()));
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        FormContainer container = Utils.getComponentUnderTest(PATH_FORM_DATALAYER, FormContainer.class, context);
+        FieldUtils.writeField(container, "dataLayerEnabled", true, true);
+        ComponentData dataObject = container.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("L2NvbnRlbnQvZm9ybXMvYWYvYWYy");
+        assert (dataObject.getType()).equals("core/fd/components/form/container/v1/container");
     }
 }

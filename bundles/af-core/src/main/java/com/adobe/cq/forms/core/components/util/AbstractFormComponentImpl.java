@@ -40,8 +40,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.wcm.core.components.models.Component;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,6 +78,16 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @SlingObject
     private Resource resource;
 
+    /**
+     * Flag indicating if the data layer is enabled.
+     */
+    private Boolean dataLayerEnabled;
+
+    /**
+     * The data layer component data.
+     */
+    private FormComponentData componentData;
+
     private static final String STATUS_NONE = "none";
     private static final String STATUS_VALID = "valid";
     private static final String STATUS_INVALID = "invalid";
@@ -89,6 +105,30 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public void setI18n(@Nonnull I18n i18n) {
         this.i18n = i18n;
+    }
+
+    public BaseConstraint.Type getType() {
+        return null;
+    }
+
+    public Label getLabel() {
+        return null;
+    }
+
+    public String getDescription() {
+        return null;
+    }
+
+    public String getLinkUrl() {
+        return null;
+    }
+
+    public String getTitle() {
+        return null;
+    }
+
+    public String getText() {
+        return null;
     }
 
     /**
@@ -326,4 +366,41 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return "";
         }
     }
+
+    /**
+     * Override this method to provide a different data model for your component. This will be called by
+     * {@link AbstractComponentImpl#getData()} in case the datalayer is activated.
+     *
+     * @return The component data.
+     */
+    @NotNull
+    protected FormComponentData getComponentData() {
+        return new ComponentDataImpl(this, resource);
+    }
+
+    /**
+     * See {@link Component#getData()}
+     *
+     * @return The component data
+     */
+    @Override
+    @Nullable
+    public FormComponentData getData() {
+        if (componentData == null) {
+            if (this.dataLayerEnabled == null) {
+                if (this.getCurrentPage() != null) {
+                    // Check at page level to allow components embedded via containers in editable templates to inherit the setting
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
+                        .getContentResource());
+                } else {
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
+                }
+            }
+            if (this.dataLayerEnabled) {
+                componentData = getComponentData();
+            }
+        }
+        return componentData;
+    }
+
 }

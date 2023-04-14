@@ -64,5 +64,29 @@
       "label" : "{value : 'some label'}",
       "enabled" : "true()"
     }
+  },
+  "datepicker-datalayer": {
+    "id": "datepicker-0ac1fed1fe",
+    "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+    "fieldType": "date-input",
+    "description": "Date of Birth",
+    "name": "DoB",
+    "type": "string",
+    "label": {
+      "value": "DoB"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/datepicker"
+    },
+    "format": "date",
+    ":type": "forms-components-examples/components/form/datepicker"
   }
 }
