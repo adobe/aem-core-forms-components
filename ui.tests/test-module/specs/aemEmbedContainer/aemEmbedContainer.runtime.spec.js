@@ -15,31 +15,54 @@
  ******************************************************************************/
 describe("Sites with Aem Embed Container", () => {
 
-    const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainer.html";
+    context('aem embed container in iframe mode ', function () {
 
-    beforeEach(function () {
-        // this is done since cypress session results in 403 sometimes
-        cy.openPage(pagePath);
+        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontaineriframemode.html";
 
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openPage(pagePath);
+
+        })
+
+        const getIframeBody = () => {
+            // get the iframe > document > body
+            // and retry until the body element is not empty
+            return cy
+                .get('iframe')
+                .its('0.contentDocument.body').should('not.be.empty')
+                .then(cy.wrap)
+        }
+
+        it("test for iframe presence in for with data path as selected form", () => {
+            cy.get('.cmp-aemform__iframecontent').should('have.length', 1);
+            cy.get('.cmp-aemform__iframecontent').should('have.attr', "data-form-page-path", "/content/forms/af/core-components-it/samples/numberinput/basic");
+        })
+
+        it("test for aemembedcontainer presence inside iframe", () => {
+            getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
+            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+        })
     })
 
-    const getIframeBody = () => {
-        // get the iframe > document > body
-        // and retry until the body element is not empty
-        return cy
-            .get('iframe')
-            .its('0.contentDocument.body').should('not.be.empty')
-            .then(cy.wrap)
-    }
+    context('aem embed container in non iframe mode ', function () {
 
-    it("test for iframe presence in for with data path as selected form", () => {
-        cy.get('.cmp-aemform__iframecontent').should('have.length', 1);
-        cy.get('.cmp-aemform__iframecontent').should('have.attr', "data-form-page-path", "/content/forms/af/core-components-it/samples/numberinput/basic");
-    })
+        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainernoniframemode.html";
 
-    it.only("test for aemembedcontainer presence inside iframe", () => {
-        getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
-        getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openPage(pagePath);
+        })
+
+        it("test for iframe not present in form with data path as selected form", () => {
+            cy.get('.cmp-aemform__iframecontent').should('not.exist');
+        })
+
+        it("test for form presence", () => {
+            cy.get('.cmp-adaptiveform-container').should('have.length', 1);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+        })
+
     })
 
 })
