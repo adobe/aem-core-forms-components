@@ -361,25 +361,6 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./dorTemplateRef"/>
-                                            <dor-template-type
-                                                    granite:class="cmp-adaptiveform-container__dortemplatetype"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                    name="./fd:formtype"/>
-                                            <dorGenerateView
-                                                    granite:class="cmp-adaptiveform-container__dorgenerateview"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/container"/>
-                                            <dor-default-template
-                                                    granite:class="cmp-adaptiveform-container__dordefaulttemplate"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                    value="/libs/fd/af/dor/templates/defaultTemplate.xdp"/>
-                                            <dor-sling-resourceType
-                                                    granite:class="cmp-adaptiveform-container__dorslingresourcetype"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                    value="fd/af/authoring/components/dor/dorPropertiesTabs"/>
                                         </items>
                                     </column>
                                 </items>
