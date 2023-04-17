@@ -79,7 +79,7 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
-        return "0.11.0-Pre";
+        return "0.12.0";
     }
 
     /*
