@@ -17,7 +17,7 @@ describe("Sites with Aem Embed Container", () => {
 
     context('aem embed container in iframe mode ', function () {
 
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontaineriframemode.html";
+        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainer.html";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -43,26 +43,10 @@ describe("Sites with Aem Embed Container", () => {
             getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
             getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
         })
-    })
 
-    context('aem embed container in non iframe mode ', function () {
-
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainernoniframemode.html";
-
-        beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            cy.openPage(pagePath);
-        })
-
-        it("test for iframe not present in form with data path as selected form", () => {
-            cy.get('.cmp-aemform__iframecontent').should('not.exist');
-        })
-
-        it("test for form presence", () => {
+        it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 5);
         })
-
     })
-
 })
