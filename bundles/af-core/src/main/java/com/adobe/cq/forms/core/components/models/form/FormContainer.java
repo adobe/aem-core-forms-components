@@ -324,4 +324,37 @@ public interface FormContainer extends Container {
     @JsonIgnore
     default void setContextPath(String contextPath) {}
 
+    /**
+     * Returns the Document of Record Template configuration type
+     *
+     * @return dorType
+     * @since com.adobe.cq.forms.core.components.models.form 4.3.0
+     */
+    @JsonIgnore
+    default String getDorType() {
+        return "none";
+    }
+
+    /**
+     * Returns the Document of Record Template Reference
+     *
+     * @return template path
+     * @since com.adobe.cq.forms.core.components.models.form 4.3.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getDorTemplateRef() {
+        return null;
+    }
+
+    /**
+     * Returns true if DoR template reference is changed
+     *
+     * @return if dor template changed
+     * @since com.adobe.cq.forms.core.components.models.form 4.3.0
+     */
+    @JsonIgnore
+    default boolean isDorTemplateChanged() {
+        return false;
+    }
 }
