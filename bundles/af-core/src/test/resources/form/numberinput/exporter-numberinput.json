@@ -2,7 +2,7 @@
   "id": "numberinput-4b399a633a",
   "fieldType": "number-input",
   "name": "abc",
-  "type": "string",
+  "type": "number",
   "label": {
     "value": "def"
   },
