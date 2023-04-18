@@ -21,10 +21,32 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing Form Component replace behaviour in authoring
  */
 describe('component replace - Authoring', function () {
+    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly'}
+    const typeMap = {
+        "formbutton": fieldTypes.NON_INPUT,
+        "formcheckboxgroup": fieldTypes.SELECT,
+        "datepicker": fieldTypes.TEXT,
+        "formdropdown": fieldTypes.SELECT,
+        "formemailinput": fieldTypes.TEXT,
+        "formnumberinput": fieldTypes.TEXT,
+        "formradiobutton": fieldTypes.SELECT,
+        "formtelephoneinput": fieldTypes.TEXT,
+        "formtext": fieldTypes.NON_INPUT,
+        "formtextinput": fieldTypes.TEXT,
+        "title": fieldTypes.NON_INPUT,
+        "formimage": fieldTypes.NON_INPUT
+    }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
         buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
-        buttonDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop();
+        buttonDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+        checkboxEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/checkboxgroup",
+        checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
+        checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
+        dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
+        emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
+        emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
+        emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
 
     const fileInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/fileinput",
         fileInputEditPathSelector = "[data-path='" + fileInputEditPath + "']",
@@ -42,6 +64,12 @@ describe('component replace - Authoring', function () {
         switch (componentEditPathSelector) {
             case buttonEditPathSelector:
                 cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+                break;
+            case checkboxEditPathSelector:
+                cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form CheckBox Group", afConstants.components.forms.resourceType.formcheckboxgroup);
+                break;
+            case emailinputEditPathSelector:
+                cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email Input", afConstants.components.forms.resourceType.formemailinput);
                 break;
             case fileInputEditPathSelector:
                 cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form File Attachment", afConstants.components.forms.resourceType.formfileinput);
@@ -63,10 +91,9 @@ describe('component replace - Authoring', function () {
 
     const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop) {
 
-        var textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
-            titlePath = "[value='"+afConstants.components.forms.resourceType.title+"']",
-            submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']",
-            titleName = 'Adaptive Form Title',
+        var titleName = 'Adaptive Form Title',
+            telephoneInputName = 'Adaptive Form Telephone Input',
+            radioButtonName = 'Adaptive Form Radio Button',
 
             horizontalTabs = "[value='/apps/forms-components-examples/components/form/tabsontop']",
             accordion = "[value='/apps/forms-components-examples/components/form/accordion']",
@@ -78,18 +105,7 @@ describe('component replace - Authoring', function () {
         cy.invokeEditableAction("[data-action='replace']");
 
         // Check If Dialog Options Are Visible
-        if (componentEditPathSelector == buttonEditPathSelector) {
-            cy.get(textInput)
-                .should("not.exist");
-            cy.get(submitButton)
-                .should("exist");
-            cy.get(titlePath)
-                .click();
-            cy.get('[title="'+titleName+'"]')
-                .should('exist');
-            cy.deleteComponentByTitle(titleName);
-            return;
-        } else {
+        if (componentEditPathSelector == containerEditPathSelector) {
             cy.get(horizontalTabs)
                 .should("exist");
             cy.get(accordion)
@@ -98,8 +114,36 @@ describe('component replace - Authoring', function () {
                 .should("exist");
             cy.get(accordion)
                 .click();
+            cy.deleteComponentByPath(componentDrop);
+        } else {
+            var replacedComponentName, currentType, replacementComp;
+            switch (componentEditPathSelector) {
+                case buttonEditPathSelector:
+                    currentType = fieldTypes.NON_INPUT;
+                    replacementComp = "[value='" + afConstants.components.forms.resourceType.title + "']";
+                    replacedComponentName = titleName;
+                    break;
+                case checkboxEditPathSelector:
+                    currentType = fieldTypes.SELECT;
+                    replacementComp = "[value='" + afConstants.components.forms.resourceType.formradiobutton + "']";
+                    replacedComponentName = radioButtonName;
+                    break;
+                case emailinputEditPathSelector:
+                    currentType = fieldTypes.TEXT;
+                    replacementComp = "[value='" + afConstants.components.forms.resourceType.formtelephoneinput + "']";
+                    replacedComponentName = telephoneInputName;
+                    break;
+            }
+            for (var type in typeMap) {
+                if (typeMap[type] === currentType) {
+                    cy.get("[value='" + afConstants.components.forms.resourceType[type] + "']").should('exist');
+                } else {
+                    cy.get("[value='" + afConstants.components.forms.resourceType[type] + "']").should('not.exist');
+                }
+            }
+            cy.get(replacementComp).click();
+            cy.deleteComponentByTitle(replacedComponentName);
         }
-        cy.deleteComponentByPath(componentDrop);
     }
 
     context('Open Forms Editor', function () {
@@ -110,6 +154,14 @@ describe('component replace - Authoring', function () {
 
         it('replace button with title', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
+        })
+
+        it('replace checkbox with radio button', function () {
+            testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
+        })
+
+        it('replace email input with telephone input', function () {
+            testComponentReplaceBehaviour(emailinputEditPathSelector, emailinputDrop);
         })
 
         it('replace panel container with other container', function () {
