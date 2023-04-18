@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -51,6 +52,18 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         return enforceEnum;
     }
 
+    public String[] removeDuplicates(boolean flag, int length) {
+        String[] enumArray = this.enums;
+        String[] enumNamesArray = this.enumNames;
+        HashMap<String, String> map = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            map.put(enumArray[i], enumNamesArray[i]);
+        }
+
+        return (flag == true) ? map.keySet().toArray(new String[0]) : map.values().toArray(new String[0]);
+
+    }
+
     @Override
     public Object[] getEnums() {
         if (enums == null) {
@@ -60,14 +73,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            return ComponentUtils.coerce(type, enums);
+            String[] enumValue = removeDuplicates(true, enums.length);
+            return ComponentUtils.coerce(type, enumValue);
         }
     }
 
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            return Arrays.stream(enumNames)
+            String[] enumName = removeDuplicates(false, enumNames.length);
+            return Arrays.stream(enumName)
                 .map(p -> {
                     return this.translate("enumNames", p);
                 })
