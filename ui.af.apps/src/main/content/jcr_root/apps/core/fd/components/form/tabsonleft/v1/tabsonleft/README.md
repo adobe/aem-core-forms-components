@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Tabs (v1)
+Tabs on Left (v1)
 ====
 Adaptive Form Tabs component written in HTL.
 
@@ -26,7 +26,7 @@ Adaptive Form Tabs component written in HTL.
 * Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
-The Tabs component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
+The Tabs on Left component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
@@ -61,7 +61,7 @@ component. It should be added to a relevant site client library using the `embed
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the horizontal-tabs component in the form view:
-1. `data-cmp-is="adaptiveFormTabs"`
+1. `data-cmp-is="adaptiveFormTabsOnLeft"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 ### Enabling Editing Functionality
