@@ -100,7 +100,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.11.0</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -178,7 +178,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.11.0</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -246,7 +246,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.11.0</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -327,6 +327,9 @@
                                         <argument>mocha-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
                                         <argument>configFile=cypress.json</argument>
+                                        <argument>--env</argument>
+                                        <!-- value of forms.far is addon or addon-latest -->
+                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
