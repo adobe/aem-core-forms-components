@@ -16,7 +16,10 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -52,15 +55,27 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         return enforceEnum;
     }
 
-    public String[] removeDuplicates(boolean flag, int length) {
-        String[] enumArray = this.enums;
-        String[] enumNamesArray = this.enumNames;
-        HashMap<String, String> map = new HashMap<>();
-        for (int i = 0; i < length; i++) {
-            map.put(enumArray[i], enumNamesArray[i]);
-        }
+    /**
+     * Function to override the enum names on providing same enum values
+     *
+     * @return an empty hashmap
+     * {@code @if} either of the arrays is null or if they have different lengths
+     *
+     * {@code @else}
+     * @return map containing enum values and enum names as key-value pairs
+     */
+    public Map<Object, String> removeDuplicates() {
 
-        return (flag == true) ? map.keySet().toArray(new String[0]) : map.values().toArray(new String[0]);
+        Object[] enumArray = this.enums;
+        String[] enumNamesArray = this.enumNames;
+
+        if (enumArray == null || enumNamesArray == null || enumArray.length != enumNamesArray.length) {
+            return Collections.emptyMap();
+        }
+        Map<Object, String> map = IntStream.range(0, enumArray.length)
+            .boxed()
+            .collect(Collectors.toMap(i -> enumArray[i], i -> enumNamesArray[i]));
+        return map;
 
     }
 
@@ -73,7 +88,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            String[] enumValue = removeDuplicates(true, enums.length);
+            Map<Object, String> map = removeDuplicates();
+            String[] enumValue = map.keySet().toArray(new String[0]);
             return ComponentUtils.coerce(type, enumValue);
         }
     }
@@ -81,7 +97,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            String[] enumName = removeDuplicates(false, enumNames.length);
+            Map<Object, String> map = removeDuplicates();
+            String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {
                     return this.translate("enumNames", p);
