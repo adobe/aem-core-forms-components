@@ -163,7 +163,7 @@ jobs:
     executor: lighthouse-check/default
     steps:
       - lighthouse-check/audit:
-        urls: https://www.adobe.com
+        urls: https://www.adobe.com,https://www.merative.com/blog
 
 
 workflows:
