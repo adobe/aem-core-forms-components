@@ -21,7 +21,9 @@ const selectors = {
 
 const languages = [
     {
-        LANGUAGE: 'English', LOCALE: 'en', TRANSLATION: {
+        LANGUAGE: 'English',
+        LOCALE: 'en',
+        TRANSLATION: {
             ACCORDION: 'Accordion',
             BUTTON: 'Button',
             CHECK_BOX: 'Check Box Group',
@@ -40,6 +42,13 @@ const languages = [
             TEXT_INPUT: 'Text Input',
             TITLE: 'Title',
             WIZARD: 'wizard'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Press Enter to delete the file ",
+            "FileSizeGreater"       :       "File(s) {0} are greater than the expected size: {1}MB.",
+            "FileNameInvalid"       :       "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
+            "FileMimeTypeInvalid"   :       "File(s) {0} are unsupported file types",
+            "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form."
         }
     }, {
         LANGUAGE: 'German', LOCALE: 'de', TRANSLATION: {
@@ -61,6 +70,13 @@ const languages = [
             TEXT_INPUT: 'Texteingabe',
             TITLE: 'Titel',
             WIZARD: 'Zauberer'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Drücken Sie die Eingabetaste, um die Datei zu löschen ",
+            "FileSizeGreater"       :        "Dateien {0} übersteigen die erwartete Größe: {1}MB.",
+            "FileNameInvalid"       :       "Datei(en) {0} hat/haben ungültige Zeichen in ihrem Namen. Es werden nur alphanumerische Zeichen unterstützt",
+            "FileMimeTypeInvalid"   :       "Datei(en) {0} ist/sind nicht unterstützte(r) Dateityp(en)",
+            "InternalFormSubmissionError" :  "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten."
         }
     }, {
         LANGUAGE: 'Japanese', LOCALE: 'ja', TRANSLATION: {
@@ -82,6 +98,13 @@ const languages = [
             TEXT_INPUT: 'テキスト入力',
             TITLE: 'タイトル',
             WIZARD: '魔法使い'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "ファイルを削除するには Enter を押します ",
+            "FileSizeGreater"       :        "ファイル「{0}」は予期されたサイズを超えています :{1} MB。",
+            "FileNameInvalid"       :       "{0} ファイルの名前に無効な文字が含まれています。サポートされるのは英数字のみになります",
+            "FileMimeTypeInvalid"   :       "{0} ファイルの形式はサポートされていません",
+            "InternalFormSubmissionError" :  "フォームを送信中に内部エラーが発生しました。"
         }
     }, {
         LANGUAGE: 'Italian', LOCALE: 'it', TRANSLATION: {
@@ -103,6 +126,13 @@ const languages = [
             TEXT_INPUT: 'Immissione di testo',
             TITLE: 'Titolo',
             WIZARD: 'mago'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
+            "FileSizeGreater"       :        "I file {0} superano le dimensioni previste: {1} MB.",
+            "FileNameInvalid"       :       "I file {0} contengono caratteri non validi nel nome. Sono supportati solo caratteri alfanumerici",
+            "FileMimeTypeInvalid"   :       "I file {0} non sono tipi di file supportati",
+            "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
         }
     }, {
         LANGUAGE: 'French', LOCALE: 'fr', TRANSLATION: {
@@ -124,6 +154,13 @@ const languages = [
             TEXT_INPUT: 'Saisie de texte',
             TITLE: 'Titre',
             WIZARD: 'Sorcier'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
+            "FileSizeGreater"       :       "FLes fichiers {0} font plus que la taille attendue : {1} Mo.",
+            "FileNameInvalid"       :       "Le nom du ou des fichiers {0} comportent des caractères non valides. Seuls les caractères alphanumériques sont pris en charge",
+            "FileMimeTypeInvalid"   :       "Le ou les fichiers {0} sont des types de fichiers non pris en charge",
+            "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
         }
     }, {
         LANGUAGE: 'Spanish', LOCALE: 'es', TRANSLATION: {
@@ -145,6 +182,13 @@ const languages = [
             TEXT_INPUT: 'Entrada de texto',
             TITLE: 'Título',
             WIZARD: 'Hechicero'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Presione Intro para eliminar el archivo ",
+            "FileSizeGreater"       :        "FLos archivos {0} tienen un tamaño superior al esperado: {1}MB.",
+            "FileNameInvalid"       :       "El nombre de los archivos {0} contiene caracteres no válidos. Solo se admiten caracteres alfanuméricos",
+            "FileMimeTypeInvalid"   :       "Los tipos de archivo {0} no son compatibles",
+            "InternalFormSubmissionError" :  "Error interno al enviar el formulario."
         }
     }, {
         LANGUAGE: 'Korean', LOCALE: 'ko-kr', TRANSLATION: {
@@ -166,6 +210,13 @@ const languages = [
             TEXT_INPUT: '텍스트 입력',
             TITLE: '타이틀',
             WIZARD: '마법사'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Enter 키를 눌러 파일 삭제",
+            "FileSizeGreater"       :        "파일 {0}이(가) 예상 크기 {1}MB를 초과합니다.",
+            "FileNameInvalid"       :       "파일 {0}의 이름에 잘못된 문자가 포함되어 있습니다. 영숫자만 지원됩니다.",
+            "FileMimeTypeInvalid"   :       "파일 {0}은(는) 지원되지 않는 파일 유형입니다.",
+            "InternalFormSubmissionError" :  "양식을 제출하는 중 내부 오류가 발생했습니다."
         }
     }, {
         LANGUAGE: 'Chinese Traditional', LOCALE: 'zh-tw', TRANSLATION: {
@@ -187,6 +238,13 @@ const languages = [
             TEXT_INPUT: '文本輸入',
             TITLE: '標題',
             WIZARD: '巫師'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "按 Enter 以刪除檔案",
+            "FileSizeGreater"       :        "檔案 {0} 的大小比預期大: {1}MB。",
+            "FileNameInvalid"       :       "{0} 檔案名稱中包含無效字元。僅支援字母數字字元",
+            "FileMimeTypeInvalid"   :       "{0} 檔案的檔案類型不受支援",
+            "InternalFormSubmissionError" :  "提交表單時發生內部錯誤。"
         }
     },
     {
@@ -209,6 +267,13 @@ const languages = [
             TEXT_INPUT: '文本输入',
             TITLE: '标题',
             WIZARD: '巫师'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "按 Enter 可删除文件",
+            "FileSizeGreater"       :        "文件 {0} 大于预期大小: {1}MB。",
+            "FileNameInvalid"       :       "文件 {0} 的名称中包含无效字符。仅支持字母数字字符",
+            "FileMimeTypeInvalid"   :       "文件 {0} 的类型不受支持",
+            "InternalFormSubmissionError" :  "提交表单时遇到内部错误。"
         }
     }, {
         LANGUAGE: 'Portuguese', LOCALE: 'pt-br', TRANSLATION: {
@@ -230,6 +295,71 @@ const languages = [
             TEXT_INPUT: 'Entrada de texto',
             TITLE: 'Título',
             WIZARD: 'mago'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText"   :       "Pressione Enter para excluir o arquivo ",
+            "FileSizeGreater"       :        "Fos arquivos {0} são maiores do que o tamanho esperado: {1}MB.",
+            "FileNameInvalid"       :       "O(s) arquivo(s) {0} tem caracteres inválidos em seu nome. Somente caracteres alfanuméricos são suportados",
+            "FileMimeTypeInvalid"   :       "O(s) arquivo(s) {0} não é(são) suportado(s)",
+            "InternalFormSubmissionError" :  "Encontrou um erro interno ao enviar o formulário."
+        }
+    },
+    {
+        LANGUAGE: 'Russian - Custom Locale', LOCALE: 'ru-ru', TRANSLATION: {
+            ACCORDION: 'Аккордеон',
+            BUTTON: 'Пуговица',
+            CHECK_BOX: 'Группа флажков',
+            CHECK_BOX_ITEM1: 'Пункт 1',
+            DATE_INPUT: 'Ввод даты',
+            DROPDOWN: 'Выпадающий список',
+            EMAIL_INPUT: 'Ввод электронной почты',
+            FILE_ATTACHMENT: 'Вложенный файл',
+            FILE_ATTACHMENT_BUTTON: 'Прикреплять',
+            TABS_ON_TOP: 'Вкладки сверху',
+            NUMBER_INPUT: 'Ввод номера',
+            PANEL: 'Панель',
+            RADIO_BUTTON: 'Переключатель',
+            SUBMIT: 'Отправить',
+            TELEPHONE_INPUT: 'Телефонный вход',
+            TEXT_INPUT: 'Ввод текста',
+            TITLE: 'Титул',
+            WIZARD: 'колдун'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText" : "Нажмите Enter, чтобы удалить файл",
+            "FileSizeGreater" : "Файл(ы) {0} больше ожидаемого размера: {1}MB.",
+            "FileNameInvalid" : "Не прикрепляйте файлы, у которых имя файла начинается с (.), содержит \\ / : * ? \" < > | ; % $ или является зарезервированным ключевым словом, таким как nul, prn, con, lpt или com.",
+            "FileMimeTypeInvalid" : "Файл(ы) {0} имеют неподдерживаемый тип файла",
+            "InternalFormSubmissionError" : "При отправке формы произошла внутренняя ошибка."
+        }
+    },
+    {
+        LANGUAGE: 'Hindi - Custom Locale', LOCALE: 'hi', TRANSLATION: {
+            ACCORDION: 'अकॉर्डियन',
+            BUTTON: 'बटन',
+            CHECK_BOX: 'चेक बॉक्स समूह',
+            CHECK_BOX_ITEM1: 'आइटम 1',
+            DATE_INPUT: 'दिनांक इनपुट',
+            DROPDOWN: 'ड्रॉपडाउन',
+            EMAIL_INPUT: 'ईमेल इनपुट',
+            FILE_ATTACHMENT: 'फ़ाइल अनुलग्नक',
+            FILE_ATTACHMENT_BUTTON: 'चिपका',
+            TABS_ON_TOP: 'शीर्ष पर टैब',
+            NUMBER_INPUT: 'संख्या इनपुट',
+            PANEL: 'पैनल',
+            RADIO_BUTTON: 'रेडियो बटन',
+            SUBMIT: 'जमा करें',
+            TELEPHONE_INPUT: 'टेलीफ़ोन इनपुट',
+            TEXT_INPUT: 'पाठ इनपुट',
+            TITLE: 'उपाधि',
+            WIZARD: 'जादूगर'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText" : "फ़ाइल को हटाने के लिए एंटर दबाएं",
+            "FileSizeGreater" : "फ़ाइल(फ़ाइलें) {0} अपेक्षित आकार से अधिक हैं: {1}MB.",
+            "FileNameInvalid" : "फ़ाइल नाम (.) से शुरू होता है, \\ / : * ? \" < > | ; % $ को मद्देनजर न लें, या nul, prn, con, lpt, या com जैसे आपत्तिजनक शब्द हैं।",
+            "FileMimeTypeInvalid" : "फ़ाइल(फ़ाइलें) {0} असमर्थित फ़ाइल प्रकार हैं",
+            "InternalFormSubmissionError" : "फ़ॉर्म प्रस्तुत करते समय आंतरिक त्रुटि हुई है."
         }
     }
 ];
