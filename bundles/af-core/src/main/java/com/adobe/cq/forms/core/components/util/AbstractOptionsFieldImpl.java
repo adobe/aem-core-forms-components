@@ -59,9 +59,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
      * Function to override the enum names on providing same enum values
      *
      * @return an empty hashmap
-     * {@code @if} either of the arrays is null or if they have different lengths
+     *         {@code @if} either of the arrays is null or if they have different lengths
      *
-     * {@code @else}
+     *         {@code @else}
      * @return map containing enum values and enum names as key-value pairs
      */
     public Map<Object, String> removeDuplicates() {
