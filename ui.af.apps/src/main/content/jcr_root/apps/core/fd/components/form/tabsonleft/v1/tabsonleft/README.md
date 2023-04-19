@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Tabs on Left (v1)
+Vertical Tab (v1)
 ====
 Adaptive Form Tabs component written in HTL.
 
@@ -26,7 +26,7 @@ Adaptive Form Tabs component written in HTL.
 * Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
-The Tabs on Left component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
+The Vertical Tab component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Panel Container component and are expected to be available as `Resource` properties:
@@ -43,7 +43,7 @@ The following properties are written to JCR for this Accordion component and are
 
 ## BEM Description
 ```
-BLOCK cmp-verticaltabs
+BLOCK cmp-tabsonoeft
     ELEMENT cmp-tabsonleft__tablist
     ELEMENT cmp-tabsonleft__tab
         MOD cmp-tabsonleft__tab--active
