@@ -17,8 +17,8 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
@@ -73,8 +73,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             return Collections.emptyMap();
         }
         Map<Object, String> map = IntStream.range(0, enumArray.length)
-            .boxed()
-            .collect(Collectors.toMap(i -> enumArray[i], i -> enumNamesArray[i]));
+            .collect(HashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), Map::putAll);
+
         return map;
 
     }
