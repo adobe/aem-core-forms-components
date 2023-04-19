@@ -131,13 +131,15 @@
         markMinMaxDisabled(!isRepeat);
 
         // checking for repeatability and bindRef of panel on dialog initialisation
-        if(isRepeat || bindRef.value.length > 0) {
+        if(isRepeat || ( bindRef !== null && bindRef.value.length > 0)) {
             makeWrapDataReadOnly(true);
         }
 
-        bindRef.addEventListener("change", function () {
-            makeWrapDataReadOnly(this.value.length > 0);
-        });
+        if(bindRef !== null) {
+            bindRef.addEventListener("change", function () {
+                makeWrapDataReadOnly(this.value.length > 0);
+            });
+        }
 
         const repeatSwitch = dialogElement.querySelector(".cmp-adaptiveform-panelcontainer__repeatable coral-switch");
         repeatSwitch.addEventListener("change", function () {
