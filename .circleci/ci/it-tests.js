@@ -98,6 +98,10 @@ try {
             ci.sh(`mvn clean install -PautoInstallPackage`);
         });
 
+        ci.dir('it/config', () => {
+            ci.sh(`mvn clean install -PautoInstallPackage`);
+        });
+
         // start running the tests
         ci.dir('ui.tests', () => {
             // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
