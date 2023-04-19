@@ -73,10 +73,6 @@ jobs:
       - run:
           name: Build
           command: node .circleci/ci/build.js # this is important, since this is used during UI test run too
-      - run:
-          name: Run on build fail # this is done to solve "the archive file is corrupted and will be deleted"
-          command: node .circleci/ci/build.js
-          when: on_fail
       - save_cache:
           paths:
             - ~/.m2
@@ -116,10 +112,6 @@ jobs:
       - run:
           name: Build
           command: node .circleci/ci/build.js
-      - run:
-          name: Run on build fail # this is done to solve "the archive file is corrupted and will be deleted"
-          command: node .circleci/ci/build.js
-          when: on_fail
       - store_artifacts:
           path: test-results/junit
 
