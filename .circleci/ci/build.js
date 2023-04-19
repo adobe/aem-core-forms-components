@@ -16,6 +16,7 @@
 
 const ci = new (require('./ci.js'))();
 const path = require('path');
+const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 
 ci.context();
 
@@ -24,6 +25,8 @@ const configuration = ci.collectConfiguration();
 console.log(configuration);
 
 ci.stage('Build Project');
+// done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
+ci.sh(`rm -rf ${eirslettM2Repository}`);
 ci.sh('mvn -B clean install -Pcloud');
 
 ci.stage('Collect test results');
