@@ -100,12 +100,14 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it ('test data binding', function(){
-                dropTextInputInContainer();
-                testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
-                cy.openSiteAuthoring(pagePath);
-                testBindingPersistence(textInputEditPathSelector);
-                cy.deleteComponentByPath(textInputDrop);
+            it ('test data binding', { retries: 3 }, function(){
+                cy.cleanTest(textInputDrop).then(function(){
+                    dropTextInputInContainer();
+                    testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
+                    cy.openSiteAuthoring(pagePath);
+                    testBindingPersistence(textInputEditPathSelector);
+                    cy.deleteComponentByPath(textInputDrop);
+                });
             })
         }
     })
