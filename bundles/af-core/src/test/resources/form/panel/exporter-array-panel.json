@@ -7,8 +7,8 @@
   "repeatable": true,
   "minOccur":1,
   "maxOccur":10,
-  "items":[
-    {
+  ":items": {
+    "textinput": {
       "id": "textinput-9670d145f5",
       "fieldType": "text-input",
       "name": "abc",
@@ -32,7 +32,8 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
     "value": "dependent names"
   },
