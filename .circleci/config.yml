@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
   browser-tools: circleci/browser-tools@1.3.0
-#  lighthouse-check: foo-software/lighthouse-check@0.0.6
+  lighthouse-check: foo-software/lighthouse-check@0.0.6
 
 common:
   restore_cache: &restore_cache
@@ -160,23 +160,10 @@ jobs:
             rm -rf /home/circleci/.npmrc
 
   lighthouse_metrics:
-    docker:
-      - image: circleci/node:latest
+    executor: lighthouse-check/default
     steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Build the app
-          command: npm run build
-      - run:
-          name: Run Lighthouse
-          command: |
-            for URL in "https://www.google.com" "https://www.adobe.com"
-            do
-              npm run lighthouse -- --chrome-flags="--headless --no-sandbox" $URL
-            done
+      - lighthouse-check/audit:
+          urls: https://www.adobe.com,https://www.facebook.com
 
 
 workflows:
@@ -217,4 +204,5 @@ workflows:
           filters:
             tags:
               only: /.*/
+
 
