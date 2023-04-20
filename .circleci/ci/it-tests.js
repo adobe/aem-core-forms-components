@@ -25,6 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const classicFormAddonVersion = '6.0.930';
 
 try {
     ci.stage("Integration Tests");
@@ -36,7 +37,7 @@ try {
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
         // Download latest add-on release from artifactory
-        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=6.0.902 -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
         extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
