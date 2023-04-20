@@ -1,7 +1,7 @@
 {
   "Offer": {
     "type": "1 Check",
-    "amount": "78"
+    "amount": 78
   },
   "Customer": {
     "education": [{}]

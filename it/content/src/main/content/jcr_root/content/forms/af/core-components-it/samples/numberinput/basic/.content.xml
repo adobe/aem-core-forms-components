@@ -29,7 +29,7 @@
                         jcr:primaryType="nt:unstructured"/>
                 <fd:events
                         jcr:primaryType="nt:unstructured"
-                        change="[if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
+                        change="[if($field == 93\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 93\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 123\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == 123\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
             </numberinput1>
             <numberinput2
                     jcr:primaryType="nt:unstructured"

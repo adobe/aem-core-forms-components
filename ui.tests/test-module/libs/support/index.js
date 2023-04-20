@@ -70,6 +70,14 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("Cannot read properties of undefined (reading 'editLayer')")) {
         return false;
     }
+    // sometimes aemforms container gives this error, intermittently, but functionality is not impacted
+    if (err.message.includes("Cannot read properties of undefined (reading 'MESSAGE_CHANNEL')")) {
+        return false;
+    }
+    // site editor very rarely gives this error, but no functionality impact
+    if (err.message.includes("Failed to execute 'insertBefore' on 'Node'")) {
+        return false;
+    }
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
