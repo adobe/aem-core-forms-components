@@ -63,18 +63,19 @@ describe('Page/Form Authoring', function () {
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
         cy.get("[name='./actionType']").should("exist");
 
+        //support not present in 6.5 yet
         //select email submit action
-        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Send email').should('be.visible').click();
+        /*cy.get(".cmp-adaptiveform-container__submitaction button").click();
+        cy.get("coral-selectlist-item").contains('Send email').should('be.visible').click({force: true});
         cy.get("[name='./useExternalEmailTemplate']").should("exist");
         cy.get("[name='./templatePath']").should("exist");
 
         cy.get("[name='./useExternalEmailTemplate']").should("exist").first().click();
-        cy.get("[name='./template']").should("exist");
+        cy.get("[name='./template']").should("exist");*/
 
         //select rest endpoint submit action
-        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__submitaction button").click();
+        cy.get("coral-selectlist-item").contains('Submit to REST endpoint').click({force: true});
         cy.get("[name='./enableRestEndpointPost']").should("exist");
         cy.get("[name='./enableRestEndpointPost']").first().click();
         cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
