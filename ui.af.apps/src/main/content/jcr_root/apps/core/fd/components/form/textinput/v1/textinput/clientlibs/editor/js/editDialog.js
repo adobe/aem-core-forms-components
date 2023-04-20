@@ -27,47 +27,6 @@
         TEXTINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-
-    /**
-     * Toggles the visibility of the maxLength, minLength, placeholder field based on the checked state of
-     * the allowRichText checkbox
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function handleRichText(dialog) {
-        var component = dialog.find(TEXTINPUT_ALLOWRICHTEXT)[0];
-        var textInputMaxLength = dialog.find(TEXTINPUT_MAXLENGTH);
-        var textInputMinLength = dialog.find(TEXTINPUT_MINLENGTH);
-        var basePlaceHolder = dialog.find(BASE_PLACEHOLDER).parent('div');
-        var textInputValue = dialog.find(TEXTINPUT_VALUE);
-        var textInputRichTextValue = dialog.find(TEXTINPUT_RICHTEXTVALUE);
-        var listOfElements = [textInputMaxLength, textInputMinLength, basePlaceHolder, textInputValue];
-
-        var isNotChecked = function() {return !isChecked()};
-        var isChecked = function() {return component.checked};
-        var hideAndShowElements = function() {
-            // hide other elements
-            Utils.checkAndDisplay(listOfElements)(isNotChecked);
-            // show rich text
-            Utils.checkAndDisplay(textInputRichTextValue)(isChecked);
-        };
-        hideAndShowElements();
-        component.on("change", function() {
-            hideAndShowElements();
-        });
-        var changeFormFields = Utils.manipulateNameAndValue([textInputValue[0], textInputRichTextValue[0]]);
-        if (isChecked()) {
-            var richTextContainer = textInputRichTextValue.parent('.richtext-container');
-            var richTextEditable = richTextContainer.find(".cq-RichText-editable");
-            var filteredValue = Utils.encodeScriptableTags(textInputValue[0].value);
-            richTextEditable.empty().append(filteredValue);
-            changeFormFields(["./_plainTextValue@Delete", "./_value"], [null, filteredValue]);
-        } else {
-            //Removing html tags from content and setting it to default text field
-            var filteredValue =  $('<div>').html(textInputValue[0].value).text();
-            changeFormFields(["./_value", "./_richTextValue@Delete"], [filteredValue, null]);
-        }
-    }
-
     function handleValidationPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
     }
@@ -76,6 +35,6 @@
         Utils.handlePatternFormat(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleRichText,handleValidationPatternDropDown,handleValidationFormat);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat);
 
 })(jQuery);

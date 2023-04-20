@@ -23,6 +23,7 @@ Adaptive Form Tabs component written in HTL.
 * Allowed components can be configured through policy configuration.
 * Ability to force a single panel to be displayed.
 * First tab is selected by default.
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Tabs component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling model as its Use-object.
@@ -68,6 +69,13 @@ The following attributes must be added for the initialization of the horizontal-
 The following property is required in the proxy component to enable full editing functionality for the Panel Container:
 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Panel Container as a container component
+
+## Replace feature:
+We support replace feature that allows replacing accordion component to any of the below components:
+
+* Accordion
+* Panel
+* Wizard Layout
 
 ## Information
 * **Vendor**: Adobe

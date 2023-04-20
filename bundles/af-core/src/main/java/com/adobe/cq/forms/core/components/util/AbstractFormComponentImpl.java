@@ -30,7 +30,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
@@ -66,14 +65,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue
-    @Default(booleanValues = true)
-    protected boolean visible;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean visible;
 
     @SlingObject
     private Resource resource;
-
-    protected I18n i18n = null;
 
     private static final String STATUS_NONE = "none";
     private static final String STATUS_VALID = "valid";
@@ -130,7 +127,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public boolean isVisible() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public Boolean isVisible() {
         if (getEditMode()) {
             return true;
         }
@@ -155,6 +154,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
@@ -297,14 +297,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             .flatMap(this::sanitizeEvent)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return userEvents;
-    }
-
-    @Nullable
-    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
-        if (StringUtils.isBlank(propertyValue)) {
-            return null;
-        }
-        return ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
     }
 
     /**

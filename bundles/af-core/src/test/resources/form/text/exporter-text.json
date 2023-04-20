@@ -1,11 +1,8 @@
 {
   "id": "text-ac0bcff4f3",
-  "dataRef": "a.b",
-  "fieldType": "plain-text",
+ "fieldType": "plain-text",
+  "richText": false,
   "name": "abc",
-  "value": "<p>xyz</p>",
-  "visible": true,
-  "richText": true,
   ":type": "core/fd/components/form/text/v1/text",
   "properties": {
     "fd:path":"/content/text"

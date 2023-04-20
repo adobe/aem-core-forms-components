@@ -42,7 +42,52 @@ function externalize(url) {
     }
 }
 
+/**
+ * Validates if the given URL is correct
+ * @param url
+ * @returns {boolean}
+ */
+function validateURL(url) {
+    try {
+        const validatedUrl = new URL(url, window.location.href);
+        return (validatedUrl.protocol === 'http:' || validatedUrl.protocol === 'https:');
+    }
+    catch (err) {
+        return false;
+    }
+}
+
+
+/**
+ * Navigates to the URl mentioned. By specifying the location, you can set the name of the window you are going to open
+ * @param destinationURL   {string} URL complete URL. If you do not specify any URL in this function, it will open a new blank window
+ * @param destinationType {string} destinationType supports the following values, "_newwindow", "_blank", "_parent", "_self", "_top" or name of the window
+ * @returns newly opened window
+ */
+function navigateTo(destinationURL, destinationType) {
+    let param = null,
+        windowParam = window,
+        arg = null;
+    switch (destinationType){
+        case "_newwindow":
+            param = "_blank";
+            arg = "width=1000,height=800";
+            break;
+    }
+    if (!param) {
+        if (destinationType) {
+            param = destinationType;
+        } else {
+            param = "_blank";
+        }
+    }
+    if (validateURL(destinationURL)){
+        windowParam.open(externalize(destinationURL), param, arg);
+    }
+}
+
 export const customFunctions = {
     toObject,
-    externalize
-}
+    externalize,
+    navigateTo
+};

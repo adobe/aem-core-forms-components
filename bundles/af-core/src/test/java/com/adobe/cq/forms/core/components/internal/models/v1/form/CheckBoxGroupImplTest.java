@@ -83,11 +83,11 @@ public class CheckBoxGroupImplTest {
 
         Label labelMock = Mockito.mock(Label.class);
         Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
+        assertEquals(null, labelMock.isRichText());
         Mockito.when(labelMock.getValue()).thenCallRealMethod();
         assertEquals(null, labelMock.getValue());
         Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(null, labelMock.isVisible());
     }
 
     @Test
@@ -132,25 +132,25 @@ public class CheckBoxGroupImplTest {
         assertEquals(false, checkboxGroup.isVisible());
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, checkboxGroupMock.isVisible());
+        assertEquals(null, checkboxGroupMock.isVisible());
     }
 
     @Test
     void testIsEnabled() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertEquals(true, checkboxGroup.isEnabled());
+        assertEquals(false, checkboxGroup.isEnabled());
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, checkboxGroupMock.isEnabled());
+        assertEquals(null, checkboxGroupMock.isEnabled());
     }
 
     @Test
     void testIsReadOnly() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertEquals(false, checkboxGroup.isReadOnly());
+        assertEquals(true, checkboxGroup.isReadOnly());
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, checkboxGroupMock.isReadOnly());
+        assertEquals(null, checkboxGroupMock.isReadOnly());
     }
 
     @Test

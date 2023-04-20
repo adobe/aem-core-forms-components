@@ -1,0 +1,40 @@
+{
+  "id": "fileinput-87a9efb7f0",
+  "fieldType": "file-input",
+  "name": "abc",
+  "visible" : false,
+  "enabled": true,
+  "readOnly": false,
+  "required": true,
+  "label": {
+    "value": "def",
+    "visible": true
+  },
+  "screenReaderText":"'Custom screen reader text'",
+  "constraintMessages":{"type":"incorrect type"},
+  "type": "file",
+  "description" : "dummy",
+  "maxFileSize" : "4MB",
+  "tooltip": "test-short-description",
+  "accept": [
+    "audio/*",
+    "video/*",
+    "image/*"
+  ],
+  "dataRef":"a.b",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/fileinput-customized"
+  },
+  ":type": "core/fd/components/form/fileinput/v1/fileinput"
+}

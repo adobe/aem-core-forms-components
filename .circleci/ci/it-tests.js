@@ -23,6 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
+const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 
 try {
@@ -48,6 +49,15 @@ try {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
+    } else if (AEM === 'addon-latest') {
+        // Download latest add-on release from artifactory
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
+        extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+        if (PRERELEASE === 'true') {
+            // enable pre-release settings
+            preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+        }
     }
 
     // Start CQ
@@ -60,6 +70,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
@@ -100,7 +111,9 @@ try {
 
         // start running the tests
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true`);
+            // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
+            ci.sh(`rm -rf ${eirslettM2Repository}`);
+            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
     });
     }
 

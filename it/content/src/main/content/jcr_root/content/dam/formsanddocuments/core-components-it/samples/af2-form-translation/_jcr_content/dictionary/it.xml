@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="it"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content/dictionary">
+    <_x0039_af27084-4f67-4c78-ab77-138fdc467e56
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##5619"
+        sling:message="AF2-modulo-traduzione"/>
+    <_x0038_2218c21-1be6-4a6a-8e11-c87eaac14a17
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##accordion##jcr:title##257"
+        sling:message="Fisarmonica"/>
+    <c61fd220-9409-412d-a20a-2d87f1fa9181
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##button##jcr:title##7236"
+        sling:message="Bottone"/>
+    <_x0032_8217e8c-f2cf-4a9a-88d2-a4ac124239dc
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##jcr:title##3503"
+        sling:message="Gruppo di caselle di controllo"/>
+    <_x0038_c0d95e0-c20f-4948-8f28-e8b572c16efc
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##0"
+        sling:message="Articolo 1"/>
+    <_x0033_5cb4d62-0a0d-47e8-b199-eae166d18bf8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##1"
+        sling:message=" Articolo 2"/>
+    <_x0037_f3e7313-20a3-4c36-913b-7e8c075542c8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##datepicker##jcr:title##9506"
+        sling:message="Inserimento data"/>
+    <_x0030_d086d4c-f669-4c9b-8f20-0a8767de693a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##dropdown##jcr:title##4797"
+        sling:message="Menù a discesa"/>
+    <a88c5536-a62e-4feb-872e-cc7ce6f4713c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##emailinput##jcr:title##7492"
+        sling:message="Inserisci e-mail"/>
+    <_x0034_c305f93-931a-47cc-9895-f14739ac778b
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##jcr:title##6496"
+        sling:message="File allegato"/>
+    <_x0037_a57cdac-2e6f-4635-bf0c-e7ece47facce
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##buttonText##3328"
+        sling:message="Allegare"/>
+    <_x0038_5944db6-a279-40aa-ab1c-73e9e316b203
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##tabsontop##jcr:title##9454"
+        sling:message="Schede in alto"/>
+    <c4020039-4e73-4718-98cc-49d8ff48ad55
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##image##jcr:title##3969"
+        sling:message="Immagine"/>
+    <c3ff4432-8fe7-4333-bfc4-7fa2dc2a7290
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##numberinput##jcr:title##9936"
+        sling:message="Numero di input"/>
+    <dad4f5ce-2430-44e9-b129-f856c244757d
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##jcr:title##8236"
+        sling:message="Pannello"/>
+    <_x0031_aee11f1-568e-4279-b49a-29b66df731ef
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##jcr:title##6191"
+        sling:message="Pulsante di opzione"/>
+    <b3c5dc76-6bc9-41fc-a420-cc8965715f69
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##0"
+        sling:message="Articolo 1"/>
+    <_x0032_ed2f6a6-6103-432f-b5df-768a532b4e55
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##1"
+        sling:message="Articolo 2"/>
+    <_x0039_42ba5f8-b405-4cd9-8bda-12831602232c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##reset##jcr:title##3395"
+        sling:message="Resettare"/>
+    <_x0034_493b7e9-1d7e-495b-a9c4-150f07323394
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##4521"
+        sling:message="Invia"/>
+    <c639e358-ab2a-4f2d-99b0-0baff127c8e8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##telephoneinput##jcr:title##8743"
+        sling:message="Ingresso telefonico"/>
+    <_x0033_41dbbef-45aa-4103-91cb-fbc8680619dd
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##text##jcr:title##9404"
+        sling:message="Testo"/>
+    <_x0035_9b2e268-6be4-4c36-9446-4c244438ec89
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##6594"
+        sling:message="Immissione di testo"/>
+    <bd21e44f-9ab2-4933-9985-1d394d1cabd9
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##title##jcr:title##8175"
+        sling:message="Titolo"/>
+    <_x0035_dc6faac-66ca-4e13-b59e-6bfec526d19c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##wizard##jcr:title##299"
+        sling:message="mago"/>
+</jcr:root>

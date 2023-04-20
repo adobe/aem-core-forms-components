@@ -23,14 +23,13 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      class="cmp-adaptiveform-emailinput"
      data-cmp-is="adaptiveFormEmailInput"
      data-cmp-visible="${email.visible ? 'true' : 'false'}"
      data-cmp-enabled="${email.enabled ? 'true' : 'false'}"
-     id="${component.id}"
+     id="${email.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=component.id, labelValue=email.label.value, labelVisible=email.label.visible, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=email.id, labelValue=email.label.value, labelVisible=email.label.visible, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
     <input title="${email.tooltipVisible ? '' : email.tooltipText}"
            class="cmp-adaptiveform-emailinput__widget"
            aria-label="${email.label.visible && email.label.value}"
@@ -44,9 +43,9 @@
            placeholder="${email.placeHolder}"
            minlength="${email.minLength}"
            maxlength="${email.maxLength}"/>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=email.description, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=email.tooltipVisible, shortDescription=email.tooltip, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap>
+    <div data-sly-call="${questionMark.questionMark @componentId=email.id, longDescription=email.description, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=email.id, shortDescriptionVisible=email.tooltipVisible, shortDescription=email.tooltip, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=email.description, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=email.id, longDescription=email.description, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=email.id, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>
 </div>

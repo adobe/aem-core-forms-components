@@ -1,0 +1,17 @@
+{
+  "id": "image-ad1e095fba",
+  "fieldType": "image",
+  "name": "abc",
+  "value": "/content/image-customized.img.png",
+  "visible": false,
+  "altText": "abc",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/image-customized"
+  },
+  ":type": "core/fd/components/form/image/v1/image"
+}

@@ -213,5 +213,10 @@
             <type>zip</type>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>core-forms-components-examples-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

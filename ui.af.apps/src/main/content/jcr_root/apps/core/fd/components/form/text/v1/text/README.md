@@ -22,6 +22,7 @@ Text component written in HTL that provides a section of rich text.
 * In-place editing
 * Rich text editor
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Title component uses the `com.adobe.cq.forms.core.components.models.form` Sling model as its Use-object. The current implementation reads
@@ -48,6 +49,12 @@ component. It should be added to a relevant site client library using the `embed
 The following attributes must be added for the initialization of the text component in the form view:  
  1. `data-cmp-is="adaptiveFormText"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Image
+* Title
 
  
 ## Information

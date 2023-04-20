@@ -34,7 +34,7 @@
                   jcr:lastModifiedBy="admin"
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The Email Input component is a server side component written in HTL, allowing to create Adaptive Form Email Input fields"
+                  text="&lt;p>The Adaptive Form Email input Core Component is used to collect email addresses from users. It is typically represented as a text box and has pattern validations to accept only valid email addresses. The email input field can be further customized with additional attributes such as &quot;required&quot;, &quot;placeholder&quot;, and &quot;pattern&quot; to set validations for the input data.&lt;/p>"
                   textIsRich="true"/>
                 <teaser
                   cq:styleIds="[1550165685463]"
@@ -48,7 +48,8 @@
                   sling:resourceType="core-components-examples/components/teaser"
                   actionsEnabled="false"
                   descriptionFromPage="false"
-                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/dev/ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+                  fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/emailinput/v1/emailinput"
                   textIsRich="true"
                   titleFromPage="false"/>
                 <title_865328580
@@ -78,7 +79,7 @@
                   jcr:lastModifiedBy="admin"
                   jcr:primaryType="nt:unstructured"
                   sling:resourceType="core/wcm/components/text/v2/text"
-                  text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
+                  text="&lt;p>A simple Email Input.&lt;/p>"
                   textIsRich="true"/>
                 <demo
                   jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
@@ -100,7 +101,7 @@
                                 sling:resourceType="forms-components-examples/components/demo/component">
                                 <textinput_demo
                                   jcr:title="Email Input"
-                                  fieldType="text-input"
+                                  fieldType="email"
                                   jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
                                   jcr:createdBy="admin"
                                   jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"

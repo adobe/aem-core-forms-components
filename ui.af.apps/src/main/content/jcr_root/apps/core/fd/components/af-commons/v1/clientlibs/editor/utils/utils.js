@@ -263,6 +263,33 @@
             }
         }
 
+        static selectElement(tag, selectorValue, bStartsWith, bWithoutTypeHint) {
+            var $element = null;
+            if (bStartsWith) {
+                $element = $(tag + "[name^='" + selectorValue + "']");
+            } else {
+                $element = $(tag + "[name='" + selectorValue + "']");
+            }
+            if (bWithoutTypeHint) {
+                $element = $element.not("[name$='@TypeHint']");
+            }
+            return $element;
+        }
+
+        static showComponent(elem, parentWrapper) {
+            var parentTag = $(elem).closest(parentWrapper);
+            if ($(parentTag).is("[hidden]")) {
+                $(parentTag).removeAttr("hidden");
+            } else {
+                parentTag.show();
+            }
+        }
+
+        static hideComponent(elem, parentWrapper) {
+            var parentTag = $(elem).closest(parentWrapper);
+            $(parentTag).attr("hidden", "");
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

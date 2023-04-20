@@ -4,12 +4,22 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "name" : "abc",
     "jcr:title" : "def",
+    "fieldType": "text-input"
+  },
+  "textinput-customized" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
     "hideTitle" : false,
     "dorExclusion": true,
     "dorColspan": "4",
     "dorBindRef": "Text1",
     "description" : "dummy",
     "visible" : false,
+    "readOnly": false,
+    "enabled": true,
+    "required": true,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
@@ -46,6 +56,8 @@
     "jcr:title" : "def",
     "hideTitle" : false,
     "description" : "dummy",
+    "readOnly": false,
+    "enabled": true,
     "visible" : false
   },
   "textinput-format" : {
@@ -63,6 +75,8 @@
     "tooltip": "test-short-description",
     "default" : "abc",
     "fieldType": "text-input",
+    "readOnly": false,
+    "enabled": true,
     "format" : "email"
   }
 }
