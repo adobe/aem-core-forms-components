@@ -68,6 +68,8 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
@@ -89,19 +91,6 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
-        // install req collaterals for tests
-        ci.dir('it/core', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        ci.dir('it/apps', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        ci.dir('it/config', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
         // start running the tests
         ci.dir('ui.tests', () => {
             // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
