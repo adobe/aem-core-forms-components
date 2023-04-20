@@ -23,7 +23,6 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 
 try {
@@ -100,16 +99,22 @@ try {
 
         // start running the tests
         ci.dir('ui.tests', () => {
-            // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
-            ci.sh(`rm -rf ${eirslettM2Repository}`);
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
-    });
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
+            try {
+                ci.sh(command);
+            } catch (ex) {
+                console.log(ex);
+                // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
+                ci.stage('Retrying test run due to eirslett flaky ci issue');
+                ci.sh(command);
+            }
+        });
     }
 
     ci.dir(qpPath, () => {
         // Stop CQ
         ci.sh('./qp.sh -v stop --id author');
-});
+    });
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {
