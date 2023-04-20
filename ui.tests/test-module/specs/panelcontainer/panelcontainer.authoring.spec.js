@@ -92,8 +92,10 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(panelEditPath);
         });
 
-        it('open edit dialog of Panel', function () {
-            testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+        it('open edit dialog of Panel', { retries: 3 },function () {
+            cy.cleanTest(panelEditPath).then(function() {
+                testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+            });
         })
     })
 
