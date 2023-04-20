@@ -122,17 +122,6 @@ jobs:
       - store_artifacts:
           path: test-results/junit
 
-  cypress-chrome-cloudready-with-addon:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: large
-    working_directory: /home/circleci/build
-    <<: *cypress_test_steps
-
   cypress-chrome-655:
     executor: test_executor_655
     environment:
@@ -178,13 +167,6 @@ workflows:
             tags:
               only: /.*/
       - cypress-chrome-655:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
               only: /.*/
