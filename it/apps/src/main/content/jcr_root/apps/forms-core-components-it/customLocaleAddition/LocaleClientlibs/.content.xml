@@ -5,4 +5,4 @@
     cssProcessor="[default:none,min:none]"
     jsProcessor="[default:none,min:none]"
     categories="[core.forms.components.it.tests.customlocale]"
-    dependencies="[core.forms.components.runtime.base]"/>
+    embed="[core.forms.components.runtime.base]"/>
