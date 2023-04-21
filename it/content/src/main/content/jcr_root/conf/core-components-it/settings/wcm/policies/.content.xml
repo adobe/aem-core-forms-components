@@ -465,7 +465,7 @@
                     sling:resourceType="wcm/core/components/policy/policy"
                     ampMode="pairedAmp"
                     appResourcesClientlib="cmp-examples.site"
-                    clientlibs="[forms-it.base,core.forms.components.it.tests.customlocale]"
+                    clientlibs="[forms-it.base,forms-it.custom-locale]"
                     clientlibsAsync="true">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </default>

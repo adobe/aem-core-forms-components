@@ -17,13 +17,25 @@
 (function() {
     "use strict";
     async function onDocumentReady() {
-        function onInit(e) {
-            const formContainer =  e.detail;
-            const formLanguage = formContainer.getLang();
-            const aemLangUrl = `/etc.clientlibs/forms-core-components-it/customLocaleAddition/LocaleClientlibs/resources/i18n/${formLanguage}.json`;
-            FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
+        const initGuideBridge = function(evnt) {
+            let guideBridge = evnt.detail.guideBridge;
+            onInit(guideBridge);
+            window.removeEventListener("bridgeInitializeStart", initGuideBridge);
+        };
+        const onInit = function(gb) {
+            gb.connect(function(){
+                const formContainer =  gb.getFormModel();
+                const formLanguage = formContainer.lang;
+                const aemLangUrl = `/etc.clientlibs/forms-core-components-it/clientlibs/clientlib-it-custom-locale/resources/i18n/${formLanguage}.json`;
+                FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
+            });
         }
-        document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
+        if (window.guideBridge) {
+            let guideBridge = window.guideBridge;
+            onInit(guideBridge);
+        } else {
+            window.addEventListener("bridgeInitializeStart", initGuideBridge);
+        }
     }
 
     if (document.readyState !== "loading") {
