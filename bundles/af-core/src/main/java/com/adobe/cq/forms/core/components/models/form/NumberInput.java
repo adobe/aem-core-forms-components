@@ -33,4 +33,13 @@ public interface NumberInput extends Field, NumberConstraint {
     default String getEditFormat() {
         return null;
     }
+
+    /**
+     * @see BaseConstraint#getType()
+     * @since com.adobe.cq.wcm.core.components.models.form 4.4.0
+     */
+    @Override
+    default Type getType() {
+        return Type.NUMBER;
+    }
 }

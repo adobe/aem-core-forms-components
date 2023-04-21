@@ -33,6 +33,7 @@
       class="cmp-adaptiveform-button__widget"
       disabled="${!button.enabled}"
       title="${button.tooltipVisible ? '' :   button.tooltipText}"
+      data-cmp-data-layer="${button.data.json}"
       aria-label="${button.label.value}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
     <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text" data-richtext="${button.label.richText}">${button.label.value @ context = button.label.richText ? 'html' : 'text'}</span>

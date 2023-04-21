@@ -112,8 +112,10 @@
             }
             submitConfig.aemFormComponentPath = aemFormConfig.aemFormComponentPath;
             renderConfig.enableFocusOnFirstField = aemFormConfig.enableFocusOnFirstField;
-            guideBridge.registerConfig("submitConfig", submitConfig);
-            guideBridge.registerConfig("renderConfig", renderConfig);
+            if(!aemFormConfig.version.startsWith('2')){
+                guideBridge.registerConfig("submitConfig", submitConfig);
+                guideBridge.registerConfig("renderConfig", renderConfig);
+            }
         },
         initAEMForm = function (evnt) {
             guideBridge = evnt.detail.guideBridge;

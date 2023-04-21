@@ -47,6 +47,6 @@
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0"
   },
-  "adaptiveform": "0.11.0-Pre",
+  "adaptiveform": "0.12.0",
   ":type": "core/fd/components/form/container/v2/container"
 }

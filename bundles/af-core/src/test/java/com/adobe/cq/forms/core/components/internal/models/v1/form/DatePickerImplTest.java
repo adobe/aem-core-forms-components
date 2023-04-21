@@ -19,12 +19,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -43,6 +45,7 @@ public class DatePickerImplTest {
     private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
 
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
+    private static final String PATH_DATEPICKER_DATALAYER = CONTENT_ROOT + "/datepicker-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -268,5 +271,18 @@ public class DatePickerImplTest {
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isTooltipVisible()).thenCallRealMethod();
         assertEquals(false, datePickerMock.isTooltipVisible());
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DATALAYER, DatePicker.class, context);
+        FieldUtils.writeField(datePicker, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) datePicker.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("datepicker-0ac1fed1fe");
+        assert (dataObject.getType()).equals("core/fd/components/form/datepicker/v1/datepicker");
+        assert (dataObject.getTitle()).equals("DoB");
+        assert (dataObject.getFieldType()).equals("date-input");
+        assert (dataObject.getDescription()).equals("Date of Birth");
     }
 }

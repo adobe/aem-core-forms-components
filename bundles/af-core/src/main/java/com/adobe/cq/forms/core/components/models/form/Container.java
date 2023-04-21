@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
-import com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter;
+import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Container extends Base, BaseConstraint, ContainerExporter, ResponsiveGridExporter {
+public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     /**
      * Returns the list of items present inside the container as an array.
@@ -91,4 +91,32 @@ public interface Container extends Base, BaseConstraint, ContainerExporter, Resp
     default String getAppliedCssClasses() {
         return null;
     }
+
+    // the below mentioned interface methods are copied from ResponsiveGridExporter
+    // done because CM throws this, the product interface com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter
+    // annotated with @ProviderType should not be implemented by custom code.
+
+    /**
+     * @return The CSS class names to be applied to the current grid.
+     */
+    @Nullable
+    String getGridClassNames();
+
+    /**
+     * @return The CSS class names associated with each responsive grid column and listed by column name
+     */
+    @NotNull
+    Map<String, String> getColumnClassNames();
+
+    /**
+     * @return The number of columns available for direct children in the grid.
+     */
+    int getColumnCount();
+
+    /**
+     * @return Allowed Components object for the current grid.
+     */
+    @JsonProperty("allowedComponents")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    AllowedComponentsExporter getExportedAllowedComponents();
 }

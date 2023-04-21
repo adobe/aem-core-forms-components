@@ -1,7 +1,7 @@
 {
   "panelcontainer1675677605384": [{
     "textinput1675677621293": "Green",
-    "numberinput1675677627103": "70",
+    "numberinput1675677627103": 70,
     "panelcontainer1675683107466": [{
       "dropdown1675683126156": "yes"
     }, {
@@ -21,7 +21,7 @@
     }]
   }, {
     "textinput1675677621293": "Orange",
-    "numberinput1675677627103": "98",
+    "numberinput1675677627103": 98,
     "panelcontainer1675683107466": [{
       "dropdown1675683126156": "no"
     }, {

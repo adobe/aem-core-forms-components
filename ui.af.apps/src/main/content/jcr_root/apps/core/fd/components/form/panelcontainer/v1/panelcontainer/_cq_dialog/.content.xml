@@ -139,6 +139,56 @@
                             </columns>
                         </items>
                     </basic>
+                    <repeat
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Repeat Panel"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                            <items jcr:primaryType="nt:unstructured">
+                                <columns
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                        margin="{Boolean}true">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <column
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <repeatableText
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                        text="Use the make panel repeatable option to allow form users to dynamically add multiple panels to the form."/>
+                                                <repeatable
+                                                        jcr:primaryType="nt:unstructured"
+                                                        wrapperClass="cmp-adaptiveform-panelcontainer__repeatable"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                        name="./repeatable"
+                                                        fieldLabel="Make panel repeatable"
+                                                        checked="false"/>
+                                                <minOccur
+                                                        jcr:primaryType="nt:unstructured"
+                                                        wrapperClass="cmp-adaptiveform-panelcontainer__minOccur"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                        defaultValue="1"
+                                                        fieldLabel="Minimum repetitions"
+                                                        fieldDescription="Minimum number of times the panel appears on the form"
+                                                        min="0"
+                                                        name="./minOccur"/>
+                                                <maxOccur
+                                                        jcr:primaryType="nt:unstructured"
+                                                        wrapperClass="cmp-adaptiveform-panelcontainer__maxOccur"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                        emptyText="No Limit"
+                                                        fieldLabel="Maximum repetitions"
+                                                        fieldDescription="Maximum number of times the panel can appear on the form"
+                                                        min="1"
+                                                        name="./maxOccur"/>
+                                            </items>
+                                        </column>
+                                    </items>
+                                </columns>
+                            </items>
+                    </repeat>
                     <help
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"

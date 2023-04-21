@@ -21,6 +21,7 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -28,6 +29,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -41,6 +43,9 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     @Default(booleanValues = false)
     private boolean textIsRich;
 
+    @SlingObject
+    private Resource resource;
+
     @Override
     public String getValue() {
         return translate("value", value);
@@ -49,5 +54,11 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     @Override
     public boolean isRichText() {
         return textIsRich;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getText() {
+        return getValue();
     }
 }
