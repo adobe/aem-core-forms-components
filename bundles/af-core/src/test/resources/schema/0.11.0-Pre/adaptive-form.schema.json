@@ -817,6 +817,50 @@
         }
       }
     },
+    "Captcha": {
+      "title": "Captcha Component",
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "captcha"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "captcha"
+            ]
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "label",
+            "tooltip",
+            "description",
+            "fieldType",
+            "name",
+            "properties",
+            "required",
+            "type",
+            "validationExpression",
+            "id"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in Captcha"
+          }
+        }
+      }
+    },
     "Panel": {
       "if": {
         "type": "object",
@@ -1034,6 +1078,9 @@
             },
             {
               "$ref": "#/$defs/Image"
+            },
+            {
+              "$ref": "#/$defs/Captcha"
             },
             {
               "$ref": "#/$defs/CustomElement"
