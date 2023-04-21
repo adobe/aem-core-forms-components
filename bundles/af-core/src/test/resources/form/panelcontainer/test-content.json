@@ -93,5 +93,44 @@
       "fieldType" : "text-input",
       "visible" : false
     }
+  },
+  "panelcontainer-datalayer": {
+    "id": "panelcontainer-0749d1d943",
+    "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+    "fieldType": "panel",
+    "name": "Phone Number",
+    "description": "Enter your phone number",
+    "visible": true,
+    "enabled": true,
+    "readOnly": false,
+    "label": {
+      "value": "Phone Number"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false,
+        "dorExcludeTitle": false,
+        "dorExcludeDescription": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/accordion/item_2"
+    },
+    "columnClassNames": {
+      "numberinput": "aem-GridColumn aem-GridColumn--default--12"
+    },
+    "gridClassNames": "aem-Grid aem-Grid--12 aem-Grid--default--12",
+    "columnCount": 12,
+    ":itemsOrder": [
+      "numberinput"
+    ],
+    ":type": "forms-components-examples/components/form/panelcontainer",
+    "allowedComponents": {
+      "applicable": false,
+      "components": []
+    }
   }
 }

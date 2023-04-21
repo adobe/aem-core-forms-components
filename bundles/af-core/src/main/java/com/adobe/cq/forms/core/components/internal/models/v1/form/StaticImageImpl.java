@@ -34,6 +34,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.wcm.foundation.Image;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -56,6 +57,10 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String imageSrc;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
+    @org.jetbrains.annotations.Nullable
+    protected String description; // long description as per current spec
 
     /**
      * Returns the source where the image is present.
@@ -98,5 +103,21 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public String getDataRef() {
         return null;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getLinkUrl() {
+        try {
+            return getImageSrc();
+        } catch (RepositoryException | IOException e) {
+            return null;
+        }
     }
 }

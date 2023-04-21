@@ -28,6 +28,7 @@
      data-cmp-visible="${radioButton.visible ? 'true' : 'false'}"
      data-cmp-enabled="${radioButton.enabled ? 'true' : 'false'}"
      id="${radiobutton.id}"
+     data-cmp-data-layer="${radioButton.data.json}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=radiobutton.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
