@@ -61,8 +61,4 @@ export default class LanguageUtils {
         return translatedText;
     }
 
-    static isLanguageInitialised() {
-        // when form rendering in a locale is complete langData is not empty.
-        return Object.keys(this.#langData).length > 0;
-    }
 }

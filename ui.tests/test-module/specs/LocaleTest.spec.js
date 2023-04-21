@@ -20,10 +20,14 @@ const baseUrl = '/content/dam/formsanddocuments/core-components-it/samples/af2-f
     languageUrl = baseUrl + '&afAcceptLang=';
 
 const waitForLangDataToLoad= () => {
-    cy.window().then((win) => {
+    cy.document().then((doc) => {
         return new Cypress.Promise((resolve, reject) => {
+            let ready = false;
+            doc.addEventListener('AF_LanguageInitialised', () => {
+                ready = true;
+            });
             const isReady = () => {
-                if (win.FormView && win.FormView.LanguageUtils.isLanguageInitialised()) {
+                if (ready) {
                     return resolve()
                 }
                 setTimeout(isReady, 0)
@@ -31,7 +35,6 @@ const waitForLangDataToLoad= () => {
             isReady()
         })
     });
-
 };
 
 describe('Verify constants are changing for each language', function () {
