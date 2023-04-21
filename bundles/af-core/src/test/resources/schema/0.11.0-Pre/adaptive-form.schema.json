@@ -922,6 +922,8 @@
                 "events",
                 "fieldType",
                 "items",
+                ":items",
+                ":itemsOrder",
                 "label",
                 "name",
                 "properties",
@@ -946,7 +948,8 @@
               }
             },
             "required": [
-              "items"
+              ":items",
+              ":itemsOrder"
             ]
           }
         ]
@@ -1192,10 +1195,9 @@
       "title": "A user friendly one line title for the form"
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [
     "metadata",
-    "items",
     "adaptiveform",
     "fieldType"
   ]

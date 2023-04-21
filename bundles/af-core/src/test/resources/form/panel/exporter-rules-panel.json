@@ -4,16 +4,14 @@
   "tooltip":"dependent names tooltip",
   "fieldType":"panel",
   "name":"abc",
-  "items": [
-    {
+  ":items": {
+    "textinput" : {
       "id": "textinput-bec585e910",
       "fieldType": "text-input",
       "name": "abc",
       "description": "dummy",
       "type": "string",
-      "required": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -30,10 +28,9 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {

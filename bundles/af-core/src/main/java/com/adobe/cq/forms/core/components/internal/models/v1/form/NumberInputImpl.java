@@ -53,4 +53,14 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     public Long getExclusiveMinimum() {
         return exclusiveMinimum;
     }
+
+    @Override
+    public Type getType() {
+        Type superType = super.getType();
+        if (Type.STRING.equals(superType)) {
+            return Type.NUMBER;
+        } else {
+            return superType;
+        }
+    }
 }

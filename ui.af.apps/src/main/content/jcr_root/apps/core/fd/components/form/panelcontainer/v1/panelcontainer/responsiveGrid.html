@@ -20,7 +20,6 @@
          data-cmp-is="adaptiveFormPanel"
          data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
-         aria-labelby="${panel.id}-label"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
         <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-container'}" data-sly-unwrap></div>

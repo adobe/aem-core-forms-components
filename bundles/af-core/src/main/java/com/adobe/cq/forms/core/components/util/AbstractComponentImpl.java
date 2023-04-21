@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Calendar;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -29,13 +31,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
 
 // this class is copied from WCM, since for forms adapting via slingRequest is optional
@@ -84,6 +89,8 @@ public abstract class AbstractComponentImpl implements Component {
      */
     private String id;
 
+    protected I18n i18n = null;
+
     /**
      * Flag indicating if the data layer is enabled.
      */
@@ -110,6 +117,20 @@ public abstract class AbstractComponentImpl implements Component {
      */
     protected void setCurrentPage(Page currentPage) {
         this.currentPage = currentPage;
+    }
+
+    @PostConstruct
+    private void init() {
+        // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
+        if (currentPage != null && resource != null) {
+            if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
+                PageManager pageManager = currentPage.getPageManager();
+                Page resourcePage = pageManager.getContainingPage(resource);
+                if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
+                    setCurrentPage(resourcePage);
+                }
+            }
+        }
     }
 
     @NotNull
@@ -185,6 +206,14 @@ public abstract class AbstractComponentImpl implements Component {
                     .orElse(null)))
             .withType(() -> this.resource.getResourceType())
             .build();
+    }
+
+    @Nullable
+    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
+        if (StringUtils.isBlank(propertyValue)) {
+            return null;
+        }
+        return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
     }
 
 }

@@ -135,7 +135,9 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     }
 
     @Override
-    public boolean isRequired() {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public Boolean isRequired() {
         return required;
     }
 

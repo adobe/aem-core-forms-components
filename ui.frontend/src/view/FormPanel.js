@@ -26,7 +26,7 @@ export default class FormPanel extends FormFieldBase {
 
     instantiateInstanceManager() {
         return new InstanceManager({
-            "formContainer" : this.formContainer,
+            "formContainer": this.formContainer,
             "model": this._model.parent,
             "parentElement": this.element.parentElement.parentElement
         });
@@ -40,13 +40,21 @@ export default class FormPanel extends FormFieldBase {
                 instanceManager = this.instantiateInstanceManager();
                 this.formContainer.addInstanceManager(instanceManager);
             }
-            instanceManager.addChild(this);
             this.setInstanceManager(instanceManager);
+            instanceManager.addChild(this);
         }
     }
 
     addChild(childView) {
         this.children.push(childView);
+    }
+
+    getChild(id) {
+        for (let key in this.children) {
+            if (this.children[key].id === id) {
+                return this.children[key];
+            }
+        }
     }
 
     handleChildAddition(childView) {
@@ -84,6 +92,63 @@ export default class FormPanel extends FormFieldBase {
     updateValid(valid, state) {
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+    }
+
+    getChildViewByIndex(index) {
+        //everyLayout needs to implement this method
+    }
+
+    #getClosestFields(index) {
+        var result = {};
+        result["closestRepeatableFieldInstanceManagerIds"] = [];
+        for (let i = index - 1; i >= 0; i--) {
+            var fieldView = this.getChildViewByIndex(i);
+            if (fieldView.getInstanceManager() == null) {
+                result["closestNonRepeatableFieldId"] = fieldView.getId();
+                break;
+            } else {
+                result["closestRepeatableFieldInstanceManagerIds"].push(fieldView.getInstanceManager().getId());
+                if (fieldView.getInstanceManager().getModel().minOccur != 0) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    cacheClosestFieldsInView() {
+        for (let i = 0; i < this.children.length; i++) {
+            var fieldView = this.getChildViewByIndex(i);
+            if (fieldView.getInstanceManager() != null && fieldView.getInstanceManager().getModel().minOccur == 0) {
+                var instanceManagerId = fieldView.getInstanceManager().getId();
+                if (this._templateHTML[instanceManagerId] == null) {
+                    this._templateHTML[instanceManagerId] = {};
+                }
+                if (this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] == null &&
+                    this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] == null) {
+                    var result = this.#getClosestFields(i);
+                    this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'] = result["closestNonRepeatableFieldId"];
+                    this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'] = result["closestRepeatableFieldInstanceManagerIds"];
+                }
+            }
+        }
+    }
+
+    getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds) {
+        var resultIndex = -1;
+        for (let i = this.children.length - 1; i >= 0; i--) {
+            var fieldView = this.getChildViewByIndex(i);
+            if (closestNonRepeatableFieldId === fieldView.getId()) {
+                resultIndex = i;
+                break;
+            } else {
+                if (fieldView.getInstanceManager() != null && closestRepeatableFieldInstanceManagerIds.includes(fieldView.getInstanceManager().getId())) {
+                    resultIndex = i;
+                    break;
+                }
+            }
+        }
+        return resultIndex + 1;
     }
 
 }

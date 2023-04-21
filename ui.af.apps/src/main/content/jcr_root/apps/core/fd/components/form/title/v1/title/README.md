@@ -15,7 +15,8 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 Title
 ====
-Title component written in HTL, allowing to define a section heading.
+Title component written in HTL, allowing to define a section heading. \
+When this component is dropped in the editor, it's text value is initialized from the title of the form.
 
 ## Features
 
@@ -55,9 +56,7 @@ We support replace feature that allows replacing Reset Button component to any o
 * Reset Button
 * Submit Button
 * Telephone Input
-* Text
 * Text Box
-* Text Input
 
 ## BEM Description
 ```

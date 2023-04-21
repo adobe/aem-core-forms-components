@@ -27,83 +27,187 @@ describe("Form with Wizard Layout Container", () => {
     });
 
 
-    it("check If Two Tabs are present in the page",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").should('have.length',2);
-    }) ;
+    it("check If Two Tabs are present in the page", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").should('have.length', 2);
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").should('have.length', 2);
+    });
 
-    it("check If Two Components are present in the page",()=> {
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").should('have.length',2);
-    }) ;
+    it("check First tab is active", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+    });
 
-    it("check First tab is active",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-    }) ;
+    it("verify Next Navigation Button Functionality", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-    it("check First Component div is active",()=> {
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-    it("check If Navigation Buttons are present",()=> {
-        cy.get(".cmp-adaptiveform-wizard__previousNav").should('have.length',1);
-        cy.get(".cmp-adaptiveform-wizard__nextNav").should('have.length',1);
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-    it("verify Next Navigation Button Functionality",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+    });
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+    it("verify Prev Navigation Button Functionality", () => {
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-    }) ;
+        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
 
-    it("verify Prev Navigation Button Functionality",()=> {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force:true});
-
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force:true});
+        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class','cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class','cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class','cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class','cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-    }) ;
+    });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+});
+
+describe("Form with Wizard Layout Container With Validation", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/wizard/validation.html";
+    const bemBlock = 'cmp-adaptiveform-wizard';
+
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const getTabs = () => {
+        return cy.get(".cmp-adaptiveform-wizard__tab");
+    }
+
+    const getWizardPanels = () => {
+        return cy.get(".cmp-adaptiveform-wizard__wizardpanel");
+    }
+
+    const getTabAtIndex = (index) => {
+        return getTabs().eq(index);
+    }
+
+    const getWizardPanelAtIndex = (index) => {
+        return getWizardPanels().eq(index);
+    }
+
+    const getNextButton = () => {
+        return cy.get(".cmp-adaptiveform-wizard__nextNav");
+    }
+
+    const getPreviousButton = () => {
+        return cy.get(".cmp-adaptiveform-wizard__previousNav");
+    }
+
+    it("check if first tab validation is stopping from going to next tab", () => {
+        getTabs().should('have.length', 5);
+        getWizardPanels().should('have.length', 5);
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        getNextButton().click({force: true}).then(() => {
+            //still first tab should be active as validation errors are there
+            getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            //check for validation error's presence in all the applicable fields in panel
+            getWizardPanelAtIndex(0).get('.cmp-adaptiveform-numberinput__errormessage').should('have.text', 'required');
+            getWizardPanelAtIndex(0).get('.cmp-adaptiveform-datepicker__errormessage').should('have.text', 'hello, please put a date');
+        })
+    });
+
+    it("check that first tab validation is allowing to next step on entering required fields ", () => {
+        getTabs().should('have.length', 5);
+        getWizardPanels().should('have.length', 5);
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        getWizardPanelAtIndex(0).find('.cmp-adaptiveform-numberinput__widget').type('1').then(() => {
+            getWizardPanelAtIndex(0).find('.cmp-adaptiveform-datepicker__widget').clear().type('2020-10-10').blur().then(() => {
+                getNextButton().click({force: true}).then(() => {
+                    //0th index now shouldn't be active
+                    getTabAtIndex(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+                    getWizardPanelAtIndex(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    //1st index should be active
+                    getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                    getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    //check that if there is no validation then next tab navigation is working properly
+                    getNextButton().click({force: true}).then(() => {
+                        getTabAtIndex(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+                        getWizardPanelAtIndex(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                        getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                        getWizardPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    })
+                })
+            })
+        })
+    });
+
+    it("check that on  validation error previous tabs are accessible ", () => {
+        getWizardPanelAtIndex(0).find('.cmp-adaptiveform-numberinput__widget').type('1').then(() => {
+            getWizardPanelAtIndex(0).find('.cmp-adaptiveform-datepicker__widget').clear().type('2020-10-10').blur().then(() => {
+                getNextButton().click({force: true}).then(() => {
+                    //1st index should be active
+                    getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                    getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    getNextButton().click({force: true}).then(() => {
+                        //2nd index should be active
+                        getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                        getWizardPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                        getNextButton().click({force: true}).then(() => {
+                            //3rd index should be active
+                            getTabAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                            getWizardPanelAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                            getNextButton().click({force: true}).then(() => {
+                                // still 3rd index should be active as validation will fail for required field
+                                getTabAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                                getWizardPanelAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                                getPreviousButton().click({force: true}).then(() => {
+                                    //3rd index should be inactive now
+                                    getTabAtIndex(3).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+                                    getWizardPanelAtIndex(3).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                                    //now 2nd index should be active
+                                    getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                                    getWizardPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                                })
+
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    });
 });

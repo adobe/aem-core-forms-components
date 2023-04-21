@@ -1,21 +1,14 @@
 {
-  "id":"panelcontainer-94f9ea9e7d",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
-  "items":[
-    {
+  "id": "panelcontainer-94f9ea9e7d",
+  "fieldType": "panel",
+  "name": "abc",
+  ":items": {
+    "textinput" : {
       "id": "textinput-6c994d85b4",
       "fieldType": "text-input",
       "name": "abc",
-      "visible": false,
-      "description": "dummy",
       "type": "string",
-      "required": false,
       "label": {
-        "richText": false,
-        "visible": true,
         "value": "def"
       },
       "events": {
@@ -31,10 +24,9 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+   },
+  ":itemsOrder" : ["textinput"],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {
@@ -43,18 +35,10 @@
     ]
   },
   "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
     "fd:dor": {
-      "dorExclusion": true,
+      "dorExclusion": false,
       "dorExcludeTitle": false,
-      "dorExcludeDescription": false,
-      "breakBeforeText": "Following Previous",
-      "breakAfterText": "Continue Filling Parent",
-      "overflowText": "None",
-      "dorNumCols": "3",
-      "dorLayoutType": "columnar"
+      "dorExcludeDescription": false
     },
     "fd:path": "/content/panelcontainer"
   },

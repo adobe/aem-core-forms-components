@@ -26,14 +26,28 @@
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
+            const triggerEventOnGuideBridge = () => {
+                const eventPayload = {
+                    formId: this.getFormId(),
+                    formTitle: this.getFormTitle(),
+                };
+                window.guideBridge.trigger("submitStart", eventPayload, this.getPath());
+            }
             super(params);
             let self = this;
             this._model.subscribe((action) => {
+                triggerEventOnGuideBridge();
                 let state = action.target.getState();
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        window.location.href = body.redirectUrl;
+                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
+                        let redirectElement = document.querySelector('[name=":redirect"]');
+                        // check to prevent tampering of redirectURL from client
+                        if(redirectElement && redirectElement.value === body.redirectUrl) {
+                            redirectURL = body.redirectUrl;
+                        }
+                        window.location.href = redirectURL;
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");

@@ -1,5 +1,5 @@
 {
-  "image" : {
+ "image-customized" : {
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType": "core/fd/components/form/image/v1/image",
     "name" : "abc",
@@ -16,7 +16,7 @@
     "excludeFromDor": false,
     "fieldType": "image"
   },
-  "empty-image": {
+  "image": {
     "jcr:primaryType": "nt:unstructured",
     "jcr:createdBy": "admin",
     "jcr:title": "Image",

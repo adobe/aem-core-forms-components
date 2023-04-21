@@ -93,7 +93,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public String getButtonText() {
-        return buttonText;
+        return translate("buttonText", buttonText);
     }
 
     @Override
