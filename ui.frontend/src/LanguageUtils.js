@@ -32,6 +32,8 @@ export default class LanguageUtils {
             if(_langData) {
                 console.debug("fetched language data", _langData);
                 this.#langData[lang] = _langData;
+                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
+                document.dispatchEvent(event);
             }
         }
     }
@@ -59,8 +61,8 @@ export default class LanguageUtils {
         return translatedText;
     }
 
-    static isLangDataInitialised() {
-        // langData will contain the locale data of the locale in which the form is rendered
+    static isLanguageInitialised() {
+        // when form rendering in a locale is complete langData is not empty.
         return Object.keys(this.#langData).length > 0;
     }
 }

@@ -23,7 +23,7 @@ const waitForLangDataToLoad= () => {
     cy.window().then((win) => {
         return new Cypress.Promise((resolve, reject) => {
             const isReady = () => {
-                if (win.FormView && win.FormView.LanguageUtils.isLangDataInitialised()) {
+                if (win.FormView && win.FormView.LanguageUtils.isLanguageInitialised()) {
                     return resolve()
                 }
                 setTimeout(isReady, 0)

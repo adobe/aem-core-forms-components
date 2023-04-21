@@ -305,7 +305,7 @@ const languages = [
         }
     },
     {
-        LANGUAGE: 'Russian - Custom Locale', LOCALE: 'ru-ru', TRANSLATION: {
+        LANGUAGE: 'Russian - Custom Locale added via overlay', LOCALE: 'ru-ru', TRANSLATION: {
             ACCORDION: 'Аккордеон',
             BUTTON: 'Пуговица',
             CHECK_BOX: 'Группа флажков',
@@ -334,7 +334,7 @@ const languages = [
         }
     },
     {
-        LANGUAGE: 'Hindi - Custom Locale', LOCALE: 'hi', TRANSLATION: {
+        LANGUAGE: 'Hindi - Custom Locale added via clientlib', LOCALE: 'hi', TRANSLATION: {
             ACCORDION: 'अकॉर्डियन',
             BUTTON: 'बटन',
             CHECK_BOX: 'चेक बॉक्स समूह',

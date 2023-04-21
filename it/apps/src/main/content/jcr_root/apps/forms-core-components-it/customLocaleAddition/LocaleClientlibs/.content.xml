@@ -4,5 +4,5 @@
     allowProxy="{Boolean}true"
     cssProcessor="[default:none,min:none]"
     jsProcessor="[default:none,min:none]"
-    categories="[core.forms.components.runtime.all]"
-    embed="[core.forms.components.runtime.base]"/>
+    categories="[core.forms.components.it.tests.customlocale]"
+    dependencies="[core.forms.components.runtime.base]"/>

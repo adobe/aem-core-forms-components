@@ -75,6 +75,13 @@
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <validatorsSettings>
+                        <jackrabbit-filter>
+                            <options>
+                                <validRoots>/apps,/apps/core/fd/af-clientlibs/core-forms-components-runtime-all/resources</validRoots>
+                            </options>
+                        </jackrabbit-filter>
+                    </validatorsSettings>
                     <group>${vault.package.group}</group>
                     <packageType>application</packageType>
                     <dependencies>
