@@ -81,7 +81,6 @@
 
         var $searchComponent = null;
         var $clearButton = null;
-        var editablePath = editable.path;
 
         var dialog = new Coral.Dialog().set({
             closable: Coral.Dialog.closable.ON,
@@ -132,14 +131,13 @@
 
                 var cfg = component.componentConfig,
                     g,
-                    componentType = allowedCompFieldTypes[component.componentConfig.templatePath],
+                    componentType = allowedCompFieldTypes[compTemplatePath],
                     performReplace = false;
 
                 if (keyword.length > 0) {
                     var isKeywordFound = regExp.test(Granite.I18n.getVar(cfg.title));
                 }
 
-                // componentType = compTemplateJson.fieldType;
                 if (!(keyword.length > 0) || isKeywordFound) {
                     if ((!cannotBeReplacedWith.includes(componentType))
                         && typeMap[editableType] === typeMap[componentType]
