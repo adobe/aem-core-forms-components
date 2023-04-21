@@ -304,35 +304,35 @@ const languages = [
             "InternalFormSubmissionError" :  "Encontrou um erro interno ao enviar o formulário."
         }
     },
-    // {
-    //     LANGUAGE: 'Russian - Custom Locale added via overlay', LOCALE: 'ru-ru', TRANSLATION: {
-    //         ACCORDION: 'Аккордеон',
-    //         BUTTON: 'Пуговица',
-    //         CHECK_BOX: 'Группа флажков',
-    //         CHECK_BOX_ITEM1: 'Пункт 1',
-    //         DATE_INPUT: 'Ввод даты',
-    //         DROPDOWN: 'Выпадающий список',
-    //         EMAIL_INPUT: 'Ввод электронной почты',
-    //         FILE_ATTACHMENT: 'Вложенный файл',
-    //         FILE_ATTACHMENT_BUTTON: 'Прикреплять',
-    //         TABS_ON_TOP: 'Вкладки сверху',
-    //         NUMBER_INPUT: 'Ввод номера',
-    //         PANEL: 'Панель',
-    //         RADIO_BUTTON: 'Переключатель',
-    //         SUBMIT: 'Отправить',
-    //         TELEPHONE_INPUT: 'Телефонный вход',
-    //         TEXT_INPUT: 'Ввод текста',
-    //         TITLE: 'Титул',
-    //         WIZARD: 'колдун'
-    //     },
-    //     I18N_STRINGS: {
-    //         "FileCloseAccessText" : "Нажмите Enter, чтобы удалить файл",
-    //         "FileSizeGreater" : "Файл(ы) {0} больше ожидаемого размера: {1}MB.",
-    //         "FileNameInvalid" : "Не прикрепляйте файлы, у которых имя файла начинается с (.), содержит \\ / : * ? \" < > | ; % $ или является зарезервированным ключевым словом, таким как nul, prn, con, lpt или com.",
-    //         "FileMimeTypeInvalid" : "Файл(ы) {0} имеют неподдерживаемый тип файла",
-    //         "InternalFormSubmissionError" : "При отправке формы произошла внутренняя ошибка."
-    //     }
-    // },
+    {
+        LANGUAGE: 'Russian - Custom Locale added via overlay', LOCALE: 'ru-ru', TRANSLATION: {
+            ACCORDION: 'Аккордеон',
+            BUTTON: 'Пуговица',
+            CHECK_BOX: 'Группа флажков',
+            CHECK_BOX_ITEM1: 'Пункт 1',
+            DATE_INPUT: 'Ввод даты',
+            DROPDOWN: 'Выпадающий список',
+            EMAIL_INPUT: 'Ввод электронной почты',
+            FILE_ATTACHMENT: 'Вложенный файл',
+            FILE_ATTACHMENT_BUTTON: 'Прикреплять',
+            TABS_ON_TOP: 'Вкладки сверху',
+            NUMBER_INPUT: 'Ввод номера',
+            PANEL: 'Панель',
+            RADIO_BUTTON: 'Переключатель',
+            SUBMIT: 'Отправить',
+            TELEPHONE_INPUT: 'Телефонный вход',
+            TEXT_INPUT: 'Ввод текста',
+            TITLE: 'Титул',
+            WIZARD: 'колдун'
+        },
+        I18N_STRINGS: {
+            "FileCloseAccessText" : "Нажмите Enter, чтобы удалить файл",
+            "FileSizeGreater" : "Файл(ы) {0} больше ожидаемого размера: {1}MB.",
+            "FileNameInvalid" : "Не прикрепляйте файлы, у которых имя файла начинается с (.), содержит \\ / : * ? \" < > | ; % $ или является зарезервированным ключевым словом, таким как nul, prn, con, lpt или com.",
+            "FileMimeTypeInvalid" : "Файл(ы) {0} имеют неподдерживаемый тип файла",
+            "InternalFormSubmissionError" : "При отправке формы произошла внутренняя ошибка."
+        }
+    },
     {
         LANGUAGE: 'Hindi - Custom Locale added via clientlib', LOCALE: 'hi', TRANSLATION: {
             ACCORDION: 'अकॉर्डियन',
