@@ -76,6 +76,12 @@ public interface FormComponent extends Component {
         return Collections.emptyMap();
     }
 
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    default Map<String, Object> getRecaptchaProperties() {
+        return Collections.emptyMap();
+    }
+
     /**
      * Returns getPath of the form field
      *

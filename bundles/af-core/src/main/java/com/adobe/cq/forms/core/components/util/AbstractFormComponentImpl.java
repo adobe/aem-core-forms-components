@@ -158,6 +158,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
+    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     /**
      * Predicate to check if a map entry is non empty
@@ -177,6 +178,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         if (getDorProperties().size() > 0) {
             customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        if (getRecaptchaProperties().size() > 0) {
+            customProperties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
         }
         customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         Map<String, Object> rulesProperties = getRulesProperties();
