@@ -68,6 +68,7 @@ try {
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
