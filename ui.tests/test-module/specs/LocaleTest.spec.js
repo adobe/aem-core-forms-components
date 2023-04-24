@@ -21,11 +21,11 @@ const baseUrl = '/content/dam/formsanddocuments/core-components-it/samples/af2-f
 
 const waitForLangDataToLoad= () => {
     cy.document().then((doc) => {
+        let ready = false;
+        doc.addEventListener('AF_LanguageInitialised', () => {
+            ready = true;
+        });
         return new Cypress.Promise((resolve, reject) => {
-            let ready = false;
-            doc.addEventListener('AF_LanguageInitialised', () => {
-                ready = true;
-            });
             const isReady = () => {
                 if (ready) {
                     return resolve()
