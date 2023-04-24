@@ -45,36 +45,27 @@
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
-    const cannotBeReplacedWith = ['file-input'];
-
-    const irreplaceable = ['file-input'];
+    const cannotBeReplacedWith = ['file-input'],
+        irreplaceable = ['file-input'],
+        editableJsonPath = '.model.json',
+        componentJsonPath = '.json';
 
     const doReplace = window.CQ.FormsCoreComponents.editorhooks.doReplace;
     const allowedCompFieldTypes = window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes;
 
 
-    function getEditableType(editable) {
-        var result = $.ajax({
+    function getComponentType(componentPath, jsonPath) {
+        const result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize(editable.path + ".model.json"),
-            cache: false
-        });
-        return result.responseJSON.fieldType;
-    }
-
-    function getComponentType(compTemplatePath) {
-        var result = $.ajax({
-            type: 'GET',
-            async: false,
-            url: Granite.HTTP.externalize(compTemplatePath + ".json"),
+            url: Granite.HTTP.externalize(componentPath + jsonPath),
             cache: false
         });
         return result.responseJSON.fieldType;
     }
 
     window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
-        return !irreplaceable.includes(getEditableType(editable));
+        return !irreplaceable.includes(getComponentType(editable.path, editableJsonPath));
     }
 
     window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
@@ -102,7 +93,7 @@
             selectList;
 
         var filterComponent = function (allowedComponents) {
-            var editableType = getEditableType(editable);
+            var editableType = getComponentType(editable.path, editableJsonPath);
             var groups = {},
                 keyword = $searchComponent[0].value,
                 regExp = null;
@@ -126,7 +117,7 @@
                     return;
                 }
                 if (!allowedCompFieldTypes[compTemplatePath]) {
-                    allowedCompFieldTypes[compTemplatePath] = getComponentType(compTemplatePath);
+                    allowedCompFieldTypes[compTemplatePath] = getComponentType(compTemplatePath, componentJsonPath);
                 }
 
                 var cfg = component.componentConfig,
