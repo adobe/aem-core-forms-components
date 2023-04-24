@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,6 +53,10 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -75,6 +80,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Nullable
     protected Boolean visible;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean unboundFormElement;
+
     @SlingObject
     private Resource resource;
 
@@ -94,12 +103,17 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private static final String RULES_STATUS_PROP_NAME = "validationStatus";
 
+    private static final String NULL_DATA_REF = "null";
+
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
         fieldType = FieldType.fromString(fieldTypeJcr);
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
+        }
+        if (Boolean.TRUE.equals(unboundFormElement)) {
+            dataRef = NULL_DATA_REF;
         }
     }
 
@@ -348,6 +362,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonSerialize(using = CustomSerializer.class)
     public String getDataRef() {
         return dataRef;
     }
@@ -402,6 +417,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             }
         }
         return componentData;
+    }
+
+    public static class CustomSerializer extends JsonSerializer<String> {
+
+        @Override
+        public void serialize(String s, JsonGenerator jsonGenerator,
+            SerializerProvider serializerProvider) throws IOException {
+            if (NULL_DATA_REF.equals(s)) {
+                jsonGenerator.writeString((String) null);
+            } else {
+                jsonGenerator.writeString(s);
+            }
+        }
     }
 
 }
