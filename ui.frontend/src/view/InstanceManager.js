@@ -151,14 +151,32 @@ export default class InstanceManager {
     removeInstance(event, payload) {
         this.#dispatchModelEvent(event, "removeInstance", payload);
     }
+    #addRemoveInstance(id, eventName, index, event){
+      const model = this.formContainer.getModel(id);
+      const customEvent = new CustomEvent(eventName);
+      customEvent.payload = model.index + index;
+      model.parent.dispatch(customEvent);
+      event.stopPropagation();
+    }
 
     #registerInstanceHandlers(childView) {
-        //doesn't support repeatable panel inside repeatable panel
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {
-            this.addInstance(event)
+      // fix below line
+        const parentElement = typeof this?.repeatableParentView?.getRepeatableRootElement === "function" ? this.repeatableParentView.getRepeatableRootElement(childView) : childView.element.parentElement.parentElement.parentElement;//childView.element.parentElement;
+        Utils.registerClickHandler(parentElement, Constants.DATA_HOOK_ADD_INSTANCE, (event) => {
+            const id = event.currentTarget.getAttribute(Constants.DATA_HOOK_ADD_INSTANCE);
+            if(!id){
+              this.addInstance(event);
+            }else {
+              this.#addRemoveInstance(id, 'addInstance', 1, event);
+            }
         });
-        Utils.registerClickHandler(childView.element.parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {
-            this.removeInstance(event)
+        Utils.registerClickHandler(parentElement, Constants.DATA_HOOK_REMOVE_INSTANCE, (event) => {
+            const id = event.currentTarget.getAttribute(Constants.DATA_HOOK_REMOVE_INSTANCE);
+            if(!id){
+              this.removeInstance(event);
+            }else {
+              this.#addRemoveInstance(id, 'removeInstance', 0, event);
+            }
         });
     }
 
