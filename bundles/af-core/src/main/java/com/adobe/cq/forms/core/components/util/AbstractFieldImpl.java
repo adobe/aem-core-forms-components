@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -193,5 +194,15 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
             customDorProperties.put("dorBindRef", dorBindRef);
         }
         return customDorProperties;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getTitle() {
+        Label label = getLabel();
+        if (label != null) {
+            return label.getValue();
+        }
+        return null;
     }
 }
