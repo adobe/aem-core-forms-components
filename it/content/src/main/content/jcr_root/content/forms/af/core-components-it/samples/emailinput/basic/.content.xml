@@ -20,6 +20,8 @@
                 jcr:primaryType="nt:unstructured"
                 name="emailinput1"
                 jcr:title="Email Input 1"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                validatePictureClauseMessage="validation picture clause error message!"
                 sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput2
                     fieldType="email"
@@ -27,6 +29,8 @@
                     name="emailinput2"
                     jcr:title="Email Input 2"
                     visible="{Boolean}true"
+                    mandatoryMessage="custom mandatory message!"
+                    required="true"
                     enabled="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput3
