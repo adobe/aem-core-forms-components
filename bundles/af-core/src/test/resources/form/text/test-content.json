@@ -14,5 +14,22 @@
     "dataRef" : "a.b",
     "fieldType": "plain-text",
     "textIsRich": true
+  },
+  "text-datalayer" : {
+    "id": "text-cfbea91bba",
+    "sling:resourceType": "core/fd/components/form/text/v1/text",
+    "fieldType": "plain-text",
+    "name": "text1680491190398",
+    "value": "This is an AF",
+    "richText": true,
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/text"
+    },
+    ":type": "forms-components-examples/components/form/text"
   }
 }
