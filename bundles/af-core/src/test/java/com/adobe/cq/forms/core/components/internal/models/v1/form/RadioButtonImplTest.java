@@ -340,4 +340,11 @@ public class RadioButtonImplTest {
         assert (dataObject.getFieldType()).equals("radio-group");
         assert (dataObject.getDescription()).equals("Input gender");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
+        FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_DATALAYER));
+    }
 }

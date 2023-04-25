@@ -397,4 +397,11 @@ public class TextInputImplTest {
         assert (dataObject.getFieldType()).equals("text-input");
         assert (dataObject.getDescription()).equals("Enter Full Name");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
+        FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DATALAYER));
+    }
 }

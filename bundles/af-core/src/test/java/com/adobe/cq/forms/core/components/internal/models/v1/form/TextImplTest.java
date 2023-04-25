@@ -139,4 +139,11 @@ public class TextImplTest {
         assert (dataObject.getText()).equals("This is an AF");
         assert (dataObject.getFieldType()).equals("plain-text");
     }
+
+    @Test
+    void testJSONExportForDatalayer() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_DATALAYER, Text.class, context);
+        FieldUtils.writeField(text, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_DATALAYER));
+    }
 }

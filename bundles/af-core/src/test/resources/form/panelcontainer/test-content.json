@@ -103,6 +103,17 @@
     "visible": true,
     "enabled": true,
     "readOnly": false,
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "fieldType" : "text-input",
+      "description" : "dummy",
+      "required": "true",
+      "visible" : false
+    },
     "label": {
       "value": "Phone Number"
     },
@@ -125,7 +136,7 @@
     "gridClassNames": "aem-Grid aem-Grid--12 aem-Grid--default--12",
     "columnCount": 12,
     ":itemsOrder": [
-      "numberinput"
+      "textinput"
     ],
     ":type": "forms-components-examples/components/form/panelcontainer",
     "allowedComponents": {

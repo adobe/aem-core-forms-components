@@ -164,4 +164,12 @@ public class PanelContainerImplTest {
         assert (dataObject.getFieldType()).equals("panel");
         assert (dataObject.getDescription()).equals("Enter your phone number");
     }
+
+    @Test
+    void testJSONExportDatalayer() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_DATALAYER, Panel.class, context);
+        FieldUtils.writeField(panel, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL_DATALAYER));
+    }
+
 }

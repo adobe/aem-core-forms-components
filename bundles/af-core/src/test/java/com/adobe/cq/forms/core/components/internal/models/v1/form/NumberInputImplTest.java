@@ -329,4 +329,11 @@ public class NumberInputImplTest {
         assert (dataObject.getFieldType()).equals("number-input");
         assert (dataObject.getDescription()).equals("Enter your phone number.");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
+    }
 }
