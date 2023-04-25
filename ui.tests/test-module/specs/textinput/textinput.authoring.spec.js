@@ -55,9 +55,10 @@ describe('Page - Authoring', function () {
     .should("exist");
 
     // Checking some dynamic behaviours
-    cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal','block');
-    cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','block');
-    cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','block');
+    cy.get("[name='./allowRichText'][type=\"checkbox\"]").should("exist").check();
+    cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal','none');
+    cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal','none');
+    cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(textInputDrop);
   }
