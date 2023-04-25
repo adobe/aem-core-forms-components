@@ -1392,7 +1392,7 @@
         "metadata",
         ":items",
         ":itemsOrder",
-        "adaptiveForm",
+        "adaptiveform",
         "fieldType"
       ]
     }
