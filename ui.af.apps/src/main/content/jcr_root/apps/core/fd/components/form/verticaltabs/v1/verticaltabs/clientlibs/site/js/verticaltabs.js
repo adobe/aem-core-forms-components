@@ -30,15 +30,15 @@
         #_active;
         _templateHTML = {};
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormTabsOnLeft";
-        static bemBlock = "cmp-tabsonleft";
+        static IS = "adaptiveFormVerticalTabs";
+        static bemBlock = "cmp-verticaltabs";
         static #tabIdSuffix = "__tab";
         static #tabPanelIdSuffix = "__tabpanel";
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             active: {
-                tab: "cmp-tabsonleft__tab--active",
-                tabpanel: "cmp-tabsonleft__tabpanel--active"
+                tab: "cmp-verticaltabs__tab--active",
+                tabpanel: "cmp-verticaltabs__tabpanel--active"
             },
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
@@ -64,7 +64,7 @@
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
-                    if (message.data && message.data.type === "cmp-tabsonleft" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
+                    if (message.data && message.data.type === "cmp-verticaltabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
                             _self.#navigate(_self._elements["tab"][message.data.index].id);
                         }

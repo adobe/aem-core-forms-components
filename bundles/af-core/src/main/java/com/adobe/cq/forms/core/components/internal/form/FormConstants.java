@@ -79,7 +79,7 @@ public final class FormConstants {
 
     public static final String RT_FD_FORM_TABS_ON_TOP_V1 = RT_FD_FORM_PREFIX + "tabsontop/v1/tabsontop";
 
-    public static final String RT_FD_FORM_TABS_ON_LEFT_V1 = RT_FD_FORM_PREFIX + "tabsonleft/v1/tabsonleft";
+    public static final String RT_FD_FORM_TABS_ON_LEFT_V1 = RT_FD_FORM_PREFIX + "verticaltabs/v1/verticaltabs";
 
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";

@@ -43,25 +43,25 @@ The following properties are written to JCR for this Accordion component and are
 
 ## BEM Description
 ```
-BLOCK cmp-tabsonoeft
-    ELEMENT cmp-tabsonleft__tablist
-    ELEMENT cmp-tabsonleft__tab
-        MOD cmp-tabsonleft__tab--active
-    ELEMENT cmp-tabsonleft__title
-    ELEMENT cmp-tabsonleft__icon
-    ELEMENT cmp-tabsonleft__label
-    ELEMENT cmp-tabsonleft__shortdescription
-    ELEMENT cmp-tabsonleft__longdescription
-    ELEMENT cmp-tabsonleft__questionmark
+BLOCK cmp-verticaltabs
+    ELEMENT cmp-verticaltabs__tablist
+    ELEMENT cmp-verticaltabs__tab
+        MOD cmp-verticaltabs__tab--active
+    ELEMENT cmp-verticaltabs__title
+    ELEMENT cmp-verticaltabs__icon
+    ELEMENT cmp-verticaltabs__label
+    ELEMENT cmp-verticaltabs__shortdescription
+    ELEMENT cmp-verticaltabs__longdescription
+    ELEMENT cmp-verticaltabs__questionmark
 ```
 ## Client Libraries
-The component provides a `core.forms.components.tabsonleft.v1.runtime` client library category that contains a JavaScript
+The component provides a `core.forms.components.verticaltabs.v1.runtime` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.
 
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the horizontal-tabs component in the form view:
-1. `data-cmp-is="adaptiveFormTabsOnLeft"`
+1. `data-cmp-is="adaptiveFormVerticalTabs"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 ### Enabling Editing Functionality

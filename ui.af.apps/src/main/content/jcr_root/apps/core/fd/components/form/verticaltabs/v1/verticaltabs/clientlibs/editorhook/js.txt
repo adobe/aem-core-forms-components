@@ -16,4 +16,4 @@
 
 #base=js
 
-tabsonlefteditorhook.js
+verticaltabseditorhook.js
