@@ -20,6 +20,8 @@
                 jcr:primaryType="nt:unstructured"
                 name="emailinput1"
                 jcr:title="Email Input 1"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                validatePictureClauseMessage="validation picture clause error message!"
                 sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput2
                     fieldType="email"
@@ -42,8 +44,11 @@
               jcr:primaryType="nt:unstructured"
               jcr:title="Email Input With Tooltip, Description, Tooltip always visible"
               id="tooltip_scenario_test"
+              formatMessage="custom format error message!"
               description="This is long description"
               tooltip="This is short description"
+              mandatoryMessage="custom mandatory message!"
+              required="true"
               tooltipVisible="true"
               sling:resourceType="forms-components-examples/components/form/emailinput"/>
         </guideContainer>
