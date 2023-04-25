@@ -29,8 +29,6 @@
                     name="emailinput2"
                     jcr:title="Email Input 2"
                     visible="{Boolean}true"
-                    mandatoryMessage="custom mandatory message!"
-                    required="true"
                     enabled="{Boolean}false"
                     sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput3
@@ -46,8 +44,11 @@
               jcr:primaryType="nt:unstructured"
               jcr:title="Email Input With Tooltip, Description, Tooltip always visible"
               id="tooltip_scenario_test"
+              formatMessage="custom format error message!"
               description="This is long description"
               tooltip="This is short description"
+              mandatoryMessage="custom mandatory message!"
+              required="true"
               tooltipVisible="true"
               sling:resourceType="forms-components-examples/components/form/emailinput"/>
         </guideContainer>
