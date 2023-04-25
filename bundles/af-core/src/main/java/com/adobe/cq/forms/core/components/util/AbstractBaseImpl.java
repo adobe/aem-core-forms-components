@@ -460,15 +460,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     }
 
     @Override
-    public String getTitle() {
-        Label label = getLabel();
-        if (label != null) {
-            return label.getValue();
-        }
-        return null;
-    }
-
-    @Override
     @Nullable
     public String getValidationExpression() {
         return validationExpression;
