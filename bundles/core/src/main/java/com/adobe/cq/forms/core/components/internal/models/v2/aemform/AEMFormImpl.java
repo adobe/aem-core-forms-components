@@ -36,10 +36,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Model(
-        adaptables = SlingHttpServletRequest.class,
-        adapters = {AEMForm.class,
-                ComponentExporter.class},
-        resourceType = AEMFormImpl.RESOURCE_TYPE)
+    adaptables = SlingHttpServletRequest.class,
+    adapters = { AEMForm.class,
+        ComponentExporter.class },
+    resourceType = AEMFormImpl.RESOURCE_TYPE)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.models.v1.aemform.AEMFormImpl implements AEMForm {
     public static final String RESOURCE_TYPE = "core/fd/components/aemform/v2/aemform";
