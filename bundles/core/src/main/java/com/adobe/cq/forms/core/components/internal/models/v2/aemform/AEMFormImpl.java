@@ -15,9 +15,13 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.models.v2.HtmlPageItemImpl;
+import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
+import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
+import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
+import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -28,19 +32,14 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.models.v2.HtmlPageItemImpl;
-import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
-import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
-import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
-import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
+import java.util.LinkedList;
+import java.util.List;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
-    adapters = { AEMForm.class,
-        ComponentExporter.class },
-    resourceType = AEMFormImpl.RESOURCE_TYPE)
+        adaptables = SlingHttpServletRequest.class,
+        adapters = {AEMForm.class,
+                ComponentExporter.class},
+        resourceType = AEMFormImpl.RESOURCE_TYPE)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.models.v1.aemform.AEMFormImpl implements AEMForm {
     public static final String RESOURCE_TYPE = "core/fd/components/aemform/v2/aemform";
@@ -64,6 +63,7 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
                 }
             }
         }
+        int a = 1;
         return htmlPageItems;
     }
 }
