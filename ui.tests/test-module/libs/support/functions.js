@@ -22,11 +22,11 @@ cy.af = {
 
     isLatestAddon : () => {
         // if not defined always return true for local execution to pass
-        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "addon-latest";
+        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "classic" || Cypress.env("forms.far") === "addon-latest";
     },
 
     isReleasedAddon : () => {
         // if not defined always return true for local execution to pass
-        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "addon";
+        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "classic" || Cypress.env("forms.far") === "addon";
     }
 };
