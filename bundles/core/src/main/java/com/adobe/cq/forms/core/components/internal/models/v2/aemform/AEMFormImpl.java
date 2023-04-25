@@ -15,13 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.models.v2.HtmlPageItemImpl;
-import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
-import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
-import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
-import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -32,8 +28,13 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.models.v2.HtmlPageItemImpl;
+import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
+import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
+import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
+import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
