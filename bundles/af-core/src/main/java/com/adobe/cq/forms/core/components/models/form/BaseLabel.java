@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2023 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -16,24 +16,35 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.jetbrains.annotations.Nullable;
-import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Interface for a label
+ * Interface for a enum name
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
-@ConsumerType
-public interface Label extends BaseLabel {
+@ProviderType
+public interface BaseLabel {
 
     /**
-     * Returns {@code true} if label should be visible, otherwise {@code false}.
+     * Returns {@code true} if label is rich text, otherwise {@code false}.
      *
-     * @return {@code true} if label should be visible, otherwise {@code false}
+     * @return {@code true} if label is rich text, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
-    default Boolean isVisible() {
+    default Boolean isRichText() {
+        return null;
+    }
+
+    /**
+     * Returns the value of this label.
+     *
+     * @return the value of this label
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getValue() {
         return null;
     }
 

@@ -36,7 +36,7 @@
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkboxgroup__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                <label class="cmp-adaptiveform-checkboxgroup__label" aria-label="${checkboxgroup.enumNames[itemList.index].value}"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}">
                     <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox"
                            name="${checkboxgroup.name}"
@@ -44,7 +44,7 @@
                            checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                            disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                            aria-readonly="${checkboxgroup.readOnly ? 'true' : 'false'}"/>
-                    <span>${checkboxgroup.enumNames[itemList.index]}</span>
+                    <span>${checkboxgroup.enumNames[itemList.index].value @ context = checkboxgroup.enumNames[itemList.index].richText ? 'html' : 'text'}</span>
                 </label>
             </div>
         </div>

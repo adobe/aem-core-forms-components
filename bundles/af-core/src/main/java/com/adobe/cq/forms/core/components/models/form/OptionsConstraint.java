@@ -57,5 +57,5 @@ public interface OptionsConstraint {
      * @return the list of enum names
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    String[] getEnumNames();
+    BaseLabel[] getEnumNames();
 }
