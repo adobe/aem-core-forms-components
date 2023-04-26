@@ -23,40 +23,42 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
 
-    const dropTextInputInContainer = function() {
+    const dropTextInputInContainer = function () {
         const dataPath = "/content/forms/af/core-components-it/samples/databinding/basic/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-        cy.get('body').click( 0,0);
+        cy.get('body').click(0, 0);
     }
 
-    const dropTextInputInSites = function() {
+    const dropTextInputInSites = function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-        cy.get('body').click( 0,0);
+        cy.get('body').click(0, 0);
     }
 
-    const testDataBindingBehaviour = function(textInputEditPathSelector) {
+    const testDataBindingBehaviour = function (textInputEditPathSelector) {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
         cy.get("[name='./dataRef']")
             .should("exist")
             .scrollIntoView();
         cy.get("[name='./dataRef']").should("have.value", "");
+        cy.get("[name='./dataRef'] + .bindRefSelectorButtonGroup .bindRefSelectorButton").should('be.visible').click({force: true}).then(() => {
+            cy.get("coral-dialog.is-open coral-tree [data-value='$.firstName']")
+                .should("exist")
+                .should('be.visible')
+                .click({force: true});
+            cy.get(".tree-dialog-ok")
+                .should('be.visible')
+                .should("be.enabled")
+                .click();
+            cy.get("[name='./dataRef']").should("have.value", "$.firstName");
+            cy.get(".cq-dialog-submit").should('be.visible').click();
+        })
 
-        cy.get("[name='./dataRef'] + .bindRefSelectorButtonGroup .bindRefSelectorButton").click({force: true});
-        cy.get("coral-dialog.is-open coral-tree [data-value='$.firstName']")
-            .should("exist")
-            .click({force:true});
-        cy.get(".tree-dialog-ok")
-            .should("be.enabled")
-            .click();
-
-        cy.get("[name='./dataRef']").should("have.value", "$.firstName");
-        cy.get(".cq-dialog-submit").click();
     }
 
     const testBindingPersistence = (textInputEditPathSelector) => {
@@ -66,31 +68,31 @@ describe('Page - Authoring', function () {
             .should("exist")
             .scrollIntoView();
         cy.get("[name='./dataRef']").should("have.value", "$.firstName");
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
     }
 
     const configureDataModel = (formContainerEditPathSelector) => {
-         // click configure action on adaptive form container component
-         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
-         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
- 
-         //open data model tab
-         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
-         cy.get("[name='./schemaType']").should("exist");
- 
-         //select data model
-         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
-         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
-         cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
- 
-         //select json schema and save it
-         cy.get(".cmp-adaptiveform-container__schemaselectorcontainer").should("be.visible").click();
-         cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json']").contains('sample.schema.json').should('be.visible').click();
-         cy.get(".cq-dialog-submit").click();
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container' + '__editdialog').contains('Data Model').click({force: true});
+        cy.get("[name='./schemaType']").should("exist");
+
+        //select data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").should('be.visible').click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
+
+        //select json schema and save it
+        cy.get(".cmp-adaptiveform-container__schemaselectorcontainer").should("be.visible").click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json']").contains('sample.schema.json').should('be.visible').click();
+        cy.get(".cq-dialog-submit").should("be.visible").click();
     }
 
-    context('Open Forms Editor', function() {
-        const pagePath ="/content/forms/af/core-components-it/samples/databinding/basic",
+    context('Open Forms Editor', function () {
+        const pagePath = "/content/forms/af/core-components-it/samples/databinding/basic",
             textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
             textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
             textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
@@ -100,8 +102,8 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it ('test data binding', { retries: 3 }, function(){
-                cy.cleanTest(textInputDrop).then(function(){
+            it('test data binding', {retries: 3}, function () {
+                cy.cleanTest(textInputDrop).then(function () {
                     dropTextInputInContainer();
                     testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
                     cy.openSiteAuthoring(pagePath);
@@ -113,7 +115,7 @@ describe('Page - Authoring', function () {
     })
 
     context('Open Sites Editor', function () {
-        const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+        const pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
             formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer",
             formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
             textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
