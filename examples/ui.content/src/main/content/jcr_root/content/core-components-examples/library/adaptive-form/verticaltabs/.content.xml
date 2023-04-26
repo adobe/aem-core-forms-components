@@ -2,13 +2,13 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2020-07-15T13:25:39.732+02:00"
+        cq:lastModified="{Date}2023-04-26T14:19:08.468+05:30"
         cq:lastModifiedBy="admin"
         cq:tags="[]"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-        jcr:description="Tabs on top"
+        jcr:description="Vertical Tabs"
         jcr:primaryType="cq:PageContent"
-        jcr:title="Tabs on top"
+        jcr:title="Vertical Tabs"
         sling:resourceType="forms-components-examples/components/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -22,7 +22,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;h1>Tabs on Top&lt;sub>v1&lt;/sub>&lt;/h1>"
+                    text="&lt;h1>Vertical Tabs&lt;sub>v1&lt;/sub>&lt;/h1>"
                     textIsRich="true"/>
                 <text
                     cq:styleIds="[1544762734201]"
@@ -30,7 +30,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>A tabs-on-top layout in an Adaptive Form is a way to organize and group related fields and sections of a form into separate tabs. Each tab is represented by a tab label, typically located at the top of the form, and contains a specific set of form fields and sections. This layout allows users to easily navigate and access different sections of the form, making it more user-friendly and less overwhelming. It is generally used when the form contains a lot of fields and sections, and it is necessary to divide them into smaller, manageable chunks.&lt;/p>"
+                    text="&lt;p>A Vertical tabs layout in an Adaptive Form is a way to organize and group related fields and sections of a form into separate tabs. Each tab is represented by a tab label, typically located at the top of the form, and contains a specific set of form fields and sections. This layout allows users to easily navigate and access different sections of the form, making it more user-friendly and less overwhelming. It is generally used when the form contains a lot of fields and sections, and it is necessary to divide them into smaller, manageable chunks.&lt;/p>"
                     textIsRich="true"/>
                 <teaser
                     cq:styleIds="[1550165685463]"
@@ -67,7 +67,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>Tabs on Top with two panels representing a simple Contact Us Form&lt;/p>"
+                    text="&lt;p>Vertical Tabs with two panels representing a simple Contact Us Form&lt;/p>"
                     textIsRich="true"/>
                 <demo
                     jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
@@ -85,17 +85,14 @@
                             <container
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="forms-components-examples/components/demo/component">
-                                <tabsontop_demo
-                                    jcr:lastModified="{Date}2019-05-21T18:59:35.605+03:00"
+                                <verticaltabs
+                                    jcr:lastModified="{Date}2023-04-26T14:19:08.454+05:30"
                                     jcr:lastModifiedBy="admin"
                                     jcr:primaryType="nt:unstructured"
-                                    jcr:title="Tabs on Top"
-                                    sling:resourceType="forms-components-examples/components/form/tabsontop"
-                                    description="&lt;p>This is a long description.&lt;/p>"
+                                    jcr:title="Vertical Tab"
+                                    sling:resourceType="forms-components-examples/components/form/verticaltabs"
                                     fieldType="panel"
-                                    name="tabsontop_demo1675672899233"
-                                    tooltip="&lt;p>This is a short description.&lt;/p>"
-                                    tooltipVisible="true">
+                                    name="verticaltabs1682498948981">
                                     <panelcontainer
                                         cq:panelTitle="Request"
                                         jcr:lastModified="Wed Feb 01 2023 11:30:00 GMT+0000"
@@ -129,7 +126,7 @@
                                             typeIndex="0"
                                             visible="{Boolean}true">
                                             <fd:rules
-                                                fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.RequestType&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;RequestType&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Others&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.Others&quot;\,&quot;displayName&quot;:&quot;Others *&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Tabs on top/Request/Others */&quot;\,&quot;name&quot;:&quot;Others&quot;\,&quot;parent&quot;:&quot;$form.tabsontop1675249053865.RequestDetails&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'Others'\, dispatchEvent(Others\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                                                fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.RequestType&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;RequestType&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Others&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.tabsontop1675249053865.RequestDetails.Others&quot;\,&quot;displayName&quot;:&quot;Others *&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Vertical Tabs/Request/Others */&quot;\,&quot;name&quot;:&quot;Others&quot;\,&quot;parent&quot;:&quot;$form.tabsontop1675249053865.RequestDetails&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'Others'\, dispatchEvent(Others\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
                                                 jcr:primaryType="nt:unstructured"
                                                 validationStatus="valid"/>
                                             <fd:events
@@ -249,7 +246,7 @@
                                                 click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
                                         </submit>
                                     </panelcontainer_20874>
-                                </tabsontop_demo>
+                                </verticaltabs>
                             </container>
                         </guideContainer>
                     </component>

@@ -4,6 +4,11 @@
 .cmp-verticaltabs__label{
 
 }
+
+.cmp-verticaltabs__tabs-container {
+
+}
+
 .cmp-verticaltabs__tablist{
   float: left;
   list-style:none;

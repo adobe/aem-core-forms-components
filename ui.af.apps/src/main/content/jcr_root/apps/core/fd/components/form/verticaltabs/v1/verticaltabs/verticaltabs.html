@@ -31,7 +31,7 @@
      <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-
+<div class="cmp-verticaltabs__tabs-container">
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
      role="tablist"
