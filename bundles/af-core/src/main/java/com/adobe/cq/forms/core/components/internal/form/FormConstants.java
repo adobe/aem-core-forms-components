@@ -27,7 +27,6 @@ public final class FormConstants {
     public static final String ITEMS_PATH = "items";
     /** The prefixes for all core form related resource types */
 
-    public static final String CONF_REF = "cq:conf";
     public final static String RT_FD_FORM_PREFIX = "core/fd/components/form/";
 
     /** The resource type for form container v1 */
