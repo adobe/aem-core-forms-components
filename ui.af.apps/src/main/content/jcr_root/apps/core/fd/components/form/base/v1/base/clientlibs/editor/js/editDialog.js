@@ -28,7 +28,9 @@
         BASE_TITLE = ".cmp-adaptiveform-base__title",
         BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
         BASE_WRAPPER_RICH_TEXT_TITLE = "input[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
-        BASE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
+        BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
+        BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "input[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
+        BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__richTextOptions",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
 
@@ -192,6 +194,27 @@
         }
     }
 
+    function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
+        var enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
+            richTextEnumNames = dialog.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+            richTextEnumNamesDiv = dialog.find("div[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
+        if(areOptionsRichText != null && areOptionsRichText.checked){
+            for (var i = 0; i < richTextEnumNames.length; i++) {
+                hideGraniteComponent(enumNames[i]);
+                showGraniteComponent(richTextEnumNames[i]);
+                copyTextValueToRte(enumNames[i], richTextEnumNamesDiv[i]);
+            }
+        } else {
+            for (var i = 0; i < richTextEnumNames.length; i++) {
+                hideGraniteComponent(richTextEnumNames[i]);
+                showGraniteComponent(enumNames[i]);
+                if(isToggled){
+                    enumNames[i].value = $('<div>').html(richTextEnumNamesDiv[i].innerHTML).text();
+                }
+            }
+        }
+    }
+
     function copyTextValueToRte (textElem, richTextElem) {
         richTextElem.innerHTML = window.expeditor.Utils.encodeScriptableTags(textElem.value);
     }
@@ -228,7 +251,8 @@
     function initialise(dialog) {
         dialog = $(dialog);
         var baseRequired = dialog.find(BASE_REQUIRED)[0],
-            isTitleRichText = dialog.find(BASE_RICH_TEXT)[0];
+            isTitleRichText = dialog.find(BASE_IS_TITLE_RICH_TEXT)[0],
+            areOptionsRichText = dialog.find(BASE_ARE_OPTIONS_RICH_TEXT)[0];
         if (baseRequired) {
             handleRequired(dialog, baseRequired);
             baseRequired.on("change", function() {
@@ -246,6 +270,12 @@
                 resolveRichText(dialog, isTitleRichText, true);
             });
         }
+        if (areOptionsRichText) {
+            resolveRichTextOptions(dialog, areOptionsRichText, false);
+            areOptionsRichText.on("change", function() {
+                resolveRichTextOptions(dialog, areOptionsRichText, true);
+            });
+        }
     }
 
     channel.on("foundation-contentloaded", function(e) {
@@ -257,6 +287,20 @@
     });
 
     /**
+     * whenever RTE value of enumName is changed, we save it's value corresponding to text value field.
+     */
+    channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
+        Coral.commons.ready(e.target, function(component) {
+            var i = $(component.parentNode.parentNode.parentNode.parentNode.parentNode).index(),
+                richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+                textValue = channel.find(BASE_ENUMNAMES_VISIBLE);
+            if(textValue[i] && richTextValue[i]){
+                changeTextValue(textValue[i], richTextValue[i]);
+            }
+        });
+    });
+
+    /**
      * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
      */
     channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
@@ -264,6 +308,29 @@
             var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
                 textValue = channel.find(BASE_TITLE)[0];
             changeTextValue(textValue, richTextValue);
+        });
+    });
+
+    /**
+     * whenever we add a new option for enums,
+     * we want to hide it's RTE/plain text field on the basis rich text checkbox.
+     */
+    channel.on("click", "coral-multifield[data-granite-coral-multifield-name='./enum'] button[coral-multifield-add]", function (e) {
+        Coral.commons.ready(e.target, function() {
+            var areOptionsRichText = $(BASE_ARE_OPTIONS_RICH_TEXT)[0],
+                enumNames = $(BASE_ENUMNAMES_VISIBLE),
+                richTextEnumNames = $(BASE_WRAPPER_RICH_TEXT_ENUMNAMES);
+            if(areOptionsRichText != null && areOptionsRichText.checked){
+                for (var i = 0; i < richTextEnumNames.length; i++) {
+                    hideGraniteComponent(enumNames[i]);
+                    showGraniteComponent(richTextEnumNames[i]);
+                }
+            } else {
+                for (var i = 0; i < richTextEnumNames.length; i++) {
+                    hideGraniteComponent(richTextEnumNames[i]);
+                    showGraniteComponent(enumNames[i]);
+                }
+            }
         });
     });
 

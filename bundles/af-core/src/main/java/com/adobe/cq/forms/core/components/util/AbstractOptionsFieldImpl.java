@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.models.form.BaseLabel;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
@@ -46,6 +47,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Nullable
     private String[] enumNames;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "richTextOptions")
+    @Nullable
+    private boolean richTextOptions;
+
     @Override
     public boolean isEnforceEnum() {
         return enforceEnum;
@@ -65,13 +70,21 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public String[] getEnumNames() {
+    public BaseLabel[] getEnumNames() {
         if (enumNames != null) {
             return Arrays.stream(enumNames)
-                .map(p -> {
-                    return this.translate("enumNames", p);
+                .map(p -> new BaseLabel() {
+                    @Override
+                    public @Nullable Boolean isRichText() {
+                        return richTextOptions;
+                    }
+
+                    @Override
+                    public @Nullable String getValue() {
+                        return translate("enumNames", p);
+                    }
                 })
-                .toArray(String[]::new);
+                .toArray(BaseLabel[]::new);
         }
         return null;
     }
