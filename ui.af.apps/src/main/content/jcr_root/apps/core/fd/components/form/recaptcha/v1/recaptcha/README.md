@@ -39,8 +39,8 @@ The following properties are written to JCR for this Form Recaptcha component an
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./rcCloudServicePath` - defines the path of cloud configuration resource for reCAPTCHA
-10. `./rcSize` - defines the size attribute of Google reCAPTCHA
+9. `./configurationPath` - defines the path of cloud configuration resource for reCAPTCHA
+10. `./recaptchaSize` - defines the size attribute of Google reCAPTCHA
 
 ## Client Libraries
 The component provides a `core.forms.components.recaptcha.v1.runtime` client library category that contains the Javascript runtime for the component.

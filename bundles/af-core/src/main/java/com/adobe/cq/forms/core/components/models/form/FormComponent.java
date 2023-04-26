@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.adobe.aemds.guide.service.CloudConfigurationProviderException;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
@@ -77,8 +78,9 @@ public interface FormComponent extends Component {
     }
 
     @JsonView(Views.Author.class)
+    @JsonIgnore
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, Object> getRecaptchaProperties() {
+    default Map<String, Object> getRecaptchaProperties() throws CloudConfigurationProviderException {
         return Collections.emptyMap();
     }
 

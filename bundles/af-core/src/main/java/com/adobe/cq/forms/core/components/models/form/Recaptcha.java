@@ -15,11 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ConsumerType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Defines the form {@code reCaptcha} Sling Model used for the {@code /apps/core/fd/components/form/captcha/v1/captcha}
@@ -34,7 +30,7 @@ public interface Recaptcha extends Field {
         return null;
     }
 
-    default String getSize() {
+    default String getRecaptchaSize() {
         return "normal";
     }
 

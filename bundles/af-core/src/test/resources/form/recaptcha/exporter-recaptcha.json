@@ -1,0 +1,32 @@
+{
+  "recaptcha": {
+    "id": "recaptcha-4b672680a2",
+    "fieldType": "captcha",
+    "name": "test-recaptcha",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "configurationPath": "v2checkbox",
+    "label": {
+      "value": "CAPTCHA",
+      "visible": true
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:captcha": {
+        "siteKey": "test-sitekey",
+        "uri": "test-uri"
+      },
+      "fd:path": "/content/recaptcha"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    ":type": "forms-components-examples/components/form/recaptcha"
+  }
+}

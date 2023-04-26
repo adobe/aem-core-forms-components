@@ -64,9 +64,8 @@
                                     fieldDescription="Represent data-size attribute of Google reCAPTCHA (https://developers.google.com/recaptcha/docs/invisible)"
                                     fieldLabel="Type"
                                     sling:orderBefore="visible"
-                                    name="./size"
-                                    text="Captcha Size"
-                                    wrapperClass="cmp-adaptiveform-recaptcha__rcSize">
+                                    name="./recaptchaSize"
+                                    text="Captcha Size">
                                 <items jcr:primaryType="nt:unstructured">
                                     <normal
                                             jcr:primaryType="nt:unstructured"

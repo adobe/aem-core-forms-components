@@ -1,0 +1,19 @@
+{
+  "recaptcha": {
+    "id": "recaptcha-4b672680a2",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "CAPTCHA",
+    "enabled": true,
+    "rcSize": "compact",
+    "readOnly": false,
+    "mandatory": "true",
+    "name": "test-recaptcha",
+    "configurationPath": "v2checkbox",
+    "visible": true,
+    "hideTitle": "false",
+    "sling:resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",
+    "fieldType": "captcha",
+    "recaptchaSize": "compact"
+  }
+}

@@ -68,9 +68,9 @@ class RecaptchaWidget {
 
         var gparameters = {
             'sitekey': recaptchaConfigData.properties["fd:captcha"].siteKey,
-            'size': recaptchaConfigData.rcSize,
-            'theme': recaptchaConfigData.rcTheme || 'light',
-            'type': recaptchaConfigData.rcType || 'image',
+            'size': recaptchaConfigData.recaptchaSize,
+            'theme': recaptchaConfigData.theme || 'light',
+            'type': recaptchaConfigData.type || 'image',
             'callback': successCallback,
             'expired-callback': expiredCallback
         };

@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
+import com.adobe.aemds.guide.service.CloudConfigurationProviderException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -44,16 +45,18 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
     @Reference
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private ReCaptchaConfigurationModel reCaptchaConfiguration;
 
     @OSGiService
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "configurationPath")
     protected String configurationPath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "size")
-    protected String size;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "recaptchaSize")
+    protected String recaptchaSize;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
 
@@ -65,18 +68,17 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     }
 
     @Override
-    public String getSize() {
-        return size;
+    public String getRecaptchaSize() {
+        return recaptchaSize;
     }
 
     @Override
-    public Map<String, Object> getRecaptchaProperties() {
+    public Map<String, Object> getRecaptchaProperties() throws CloudConfigurationProviderException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String rcSiteKey = null;
-
-        String confPath = (String) this.getCurrentPage().getProperties().get(FormConstants.CONF_REF);
-        reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaConfiguration(configurationPath, confPath);
+        Resource resource = request.getResource();
+        reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
         rcSiteKey = reCaptchaConfiguration.siteKey();
 
         customCaptchaProperties.put("siteKey", rcSiteKey);
