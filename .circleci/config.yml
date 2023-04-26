@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
   browser-tools: circleci/browser-tools@1.3.0
-  lighthouse-check: foo-software/lighthouse-check@0.0.6
 
 common:
   restore_cache: &restore_cache
@@ -27,6 +26,9 @@ common:
       - *restore_cache
       - attach_workspace:
           at: /home/circleci/build
+      - run:
+          name: Install foo-software/lighthouse-check
+          command: npm install @foo-software/lighthouse-check@9 -g -p 8443
       - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
@@ -52,11 +54,15 @@ executors:
     docker:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
-    docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+    docker: #https://git.corp.adobe.com/CIF/circleci-aem/blob/master/.circleci/config.yml
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11 #Dockerfile.qp; EXPOSE 55555 55556
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:29112022-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:29112022-openjdk11 #Dockerfile.aem; EXPOSE 4502 3000
         <<: *docker_auth
+        # lighthouse --chrome-flags="--headless --disable-gpu" https://justinribeiro.com
+
+        #https://github.com/foo-software/lighthouse-check/blob/master/Dockerfile
+        #https://git.corp.adobe.com/mabecker/circleci-aem/blob/master/Dockerfile.aem
 
 jobs:
   build-java-11:
@@ -88,6 +94,7 @@ jobs:
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
+            - examples/core/target
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
@@ -159,13 +166,6 @@ jobs:
             rm -rf /home/circleci/.gnupg
             rm -rf /home/circleci/.npmrc
 
-  lighthouse_metrics:
-    executor: lighthouse-check/default
-    steps:
-      - lighthouse-check/audit:
-          urls: https://www.adobe.com,https://www.facebook.com
-
-
 workflows:
   version: 2
   build-and-release:
@@ -200,9 +200,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - lighthouse_metrics:
-          filters:
-            tags:
-              only: /.*/
-
-

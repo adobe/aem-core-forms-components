@@ -15,6 +15,9 @@
 'use strict';
 
 const ci = new (require('./ci.js'))();
+const e = require('child_process');
+const lighthouseCheck = require('@foo-software/lighthouse-check').lighthouseCheck;
+
 
 ci.context();
 
@@ -57,7 +60,7 @@ try {
     }
 
     // Start CQ
-    ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
+    ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
             --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
             ${extras} \
@@ -101,6 +104,34 @@ try {
             ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
     });
     }
+
+    // after test cases are run, we will check the lighthouse score ----
+    // inside integration tests;
+    // 4502 aem is open;;
+    // we can check lighthouse at http://localhost:4502
+
+    // primary container is: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11382-openjdk11 (base image is qp container)
+    // primary container exposed ports 4502, 3000  ---- aem up on 4502
+    // secondary container qp(docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11) , exposed ports 5555, 5556
+
+    // third container --
+    // run lighthouse on this;;;
+
+    (async () => {
+      const response = await lighthouseCheck({
+//       outputDirectory: '../artifacts',
+        urls: [
+          'https://google.com',
+          'https://adobe.com'
+        ]
+      });
+
+      console.log('response', response);
+    })();
+
+
+
+
 
     ci.dir(qpPath, () => {
         // Stop CQ
