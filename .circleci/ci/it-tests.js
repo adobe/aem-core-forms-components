@@ -16,8 +16,8 @@
 
 const ci = new (require('./ci.js'))();
 const e = require('child_process');
-const lighthouse =  require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
+//const lighthouse =  require('lighthouse');
+//const chromeLauncher = require('chrome-launcher');
 
 
 ci.context();
