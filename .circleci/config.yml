@@ -33,7 +33,7 @@ common:
           name: Install Chrome Launcher
           command: npm i chrome-launcher -g
       - run:
-          name: Install foo-software/lighthouse-check
+          name: Install lighthouse
           command: npm install lighthouse -g
       - run:
           name: UI tests

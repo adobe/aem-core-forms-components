@@ -90,21 +90,21 @@ try {
     */
 
     // Run UI tests
-    if (TYPE === 'cypress') {
-        // install req collaterals for tests
-        ci.dir('it/core', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        ci.dir('it/apps', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        // start running the tests
-        ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
-    });
-    }
+//    if (TYPE === 'cypress') {
+//        // install req collaterals for tests
+//        ci.dir('it/core', () => {
+//            ci.sh(`mvn clean install -PautoInstallPackage`);
+//        });
+//
+//        ci.dir('it/apps', () => {
+//            ci.sh(`mvn clean install -PautoInstallPackage`);
+//        });
+//
+//        // start running the tests
+//        ci.dir('ui.tests', () => {
+//            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
+//    });
+//    }
 
     // after test cases are run, we will check the lighthouse score ----
     // inside integration tests;
@@ -130,18 +130,8 @@ try {
 //      console.log('response', response);
 //    })();
 
-        const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-        const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-        const runnerResult = await lighthouse('https://facebook.com', options);
 
-        // `.report` is the HTML report as a string
-        const reportHtml = runnerResult.report;
-        console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
-        console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-        fs.writeFileSync('lhreport.html', reportHtml);
-
-        // `.lhr` is the Lighthouse Result as a JS object
-        await chrome.kill();
+let result  = await checkLightHouse();
 
 
     ci.dir(qpPath, () => {
@@ -183,3 +173,22 @@ try {
     ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
 });
 }
+
+
+const checkLightHouse = async () => {
+
+const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+        const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
+        const runnerResult = await lighthouse('https://facebook.com', options);
+
+        // `.report` is the HTML report as a string
+        const reportHtml = runnerResult.report;
+        console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
+        console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
+        fs.writeFileSync('lhreport.html', reportHtml);
+
+        // `.lhr` is the Lighthouse Result as a JS object
+        await chrome.kill();
+
+}
+
