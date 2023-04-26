@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="ru-ru"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content/dictionary">
+    <_x0036_af13a23-716b-45d2-9aa9-27bb7166df67
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##5619"
+        sling:message="af2-форма-перевод"/>
+    <a9733067-ff96-4a84-aa3f-2a5a0db10207
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##accordion##jcr:title##257"
+        sling:message="Аккордеон"/>
+    <_x0035_ff0ed1c-51f3-4292-ac69-c25012dbc0b6
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##button##jcr:title##7236"
+        sling:message="Пуговица"/>
+    <_x0032_7893b2f-e04f-4166-8727-a8aa1e804214
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##jcr:title##3503"
+        sling:message="Группа флажков"/>
+    <a3beb769-11cb-4ced-84b1-a2800e66cce3
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##0"
+        sling:message="Пункт 1"/>
+    <_x0035_f6dd6e8-c49b-4bae-b0b0-40bbb7166a57
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##1"
+        sling:message=" Пункт 2"/>
+    <_x0035_e7fe6b2-f92d-4e65-862c-a9428e1cf970
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##datepicker##jcr:title##9506"
+        sling:message="Ввод даты"/>
+    <ee465423-11e3-404f-ab11-21ff0b00a1ef
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##dropdown##jcr:title##4797"
+        sling:message="Выпадающий список"/>
+    <_x0036_c84fd48-9352-48fa-ab9d-56e0531a9433
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##emailinput##jcr:title##7492"
+        sling:message="Ввод электронной почты"/>
+    <_x0031_0824022-ecbb-4f44-a81d-f3515089cd3a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##jcr:title##6496"
+        sling:message="Вложенный файл"/>
+    <_x0038_2653acf-7e6e-4af0-83f4-6e860f3b45c5
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##buttonText##3328"
+        sling:message="Прикреплять"/>
+    <_x0038_816c9a6-2733-4496-a944-6e27b1b619dc
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##tabsontop##jcr:title##9454"
+        sling:message="Вкладки сверху"/>
+    <_x0030_20d59d5-c8c5-4b4f-bad8-644437ab1c91
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##image##jcr:title##3969"
+        sling:message="Образ"/>
+    <d8b469f5-3417-4822-8173-4929ea338b94
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##numberinput##jcr:title##9936"
+        sling:message="Ввод номера"/>
+    <_x0038_2a5e4f9-d358-46ab-b36b-63185d31339f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##jcr:title##8236"
+        sling:message="Панель"/>
+    <c39fd53c-1094-48b7-9fc7-bbf29b54f446
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##jcr:title##6191"
+        sling:message="Переключатель"/>
+    <_x0037_b7fb23e-ff90-4e49-b602-f0ae05262eac
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##0"
+        sling:message="Пункт 1"/>
+    <_x0035_df0fc0a-f4bd-4dcc-a358-1bf9df19f83a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##1"
+        sling:message="Пункт 2"/>
+    <a1f9f487-ebe9-45e8-8f10-df8ae003f1fe
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##reset##jcr:title##3395"
+        sling:message="Сброс"/>
+    <_x0039_1d1dc25-5e14-4405-a5ac-946660109e64
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##4521"
+        sling:message="Отправить"/>
+    <_x0038_5e3b6fe-3e00-4fa3-9c5e-2a102098c0ae
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##telephoneinput##jcr:title##8743"
+        sling:message="Телефонный вход"/>
+    <bf50d7f5-5b2b-4342-8112-c9eecaedad40
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##text##jcr:title##9404"
+        sling:message="СМС"/>
+    <_x0039_68be09b-9420-4f9e-8bbb-d1aa6cfefc6f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##6594"
+        sling:message="Ввод текста"/>
+    <b83a251e-3c6c-4395-ae97-9883089aadbe
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##title##jcr:title##8175"
+        sling:message="Титул"/>
+    <aedb204c-f683-4f85-a1a4-ba2ad8bfca36
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##wizard##jcr:title##299"
+        sling:message="колдун"/>
+</jcr:root>
