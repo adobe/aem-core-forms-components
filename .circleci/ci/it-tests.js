@@ -131,7 +131,11 @@ try {
 //    })();
 
 
-let result  = await checkLightHouse();
+let result =  checkLightHouse();
+
+setTimeout(() => {
+console.log("Done wating 1 min")
+}, 1000)
 
 
     ci.dir(qpPath, () => {
