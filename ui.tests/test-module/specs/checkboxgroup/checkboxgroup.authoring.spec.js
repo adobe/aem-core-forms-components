@@ -144,6 +144,22 @@ describe('Page - Authoring', function () {
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(checkBoxGroupDrop);
     })
+
+    it ('check for duplicate enum values', function() {
+            dropCheckBoxGroupInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').last().type('0');
+            cy.get('input[name="./enumNames"]').last().type('Item 3');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('#ContentFrame').then(($iframe) => {
+                const $body = $iframe.contents().find('body')
+                cy.wrap($body).find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
+            })
+            cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
+
   })
 /*
   context('Open Sites Editor', function () {

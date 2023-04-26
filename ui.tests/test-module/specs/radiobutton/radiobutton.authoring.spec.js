@@ -127,5 +127,22 @@ describe('Page - Authoring', function () {
       cy.get('.cq-dialog-cancel').click();
       cy.deleteComponentByPath(radioButtonDrop);
     })
+
+    it ('check for duplicate enum values', function() {
+        dropRadioButtonInGuideContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+        cy.get('input[name="./enum"]').last().type('0');
+        cy.get('input[name="./enumNames"]').last().type('Item 3');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('#ContentFrame').then(($iframe) => {
+            const $body = $iframe.contents().find('body')
+            cy.wrap($body).find('.cmp-adaptiveform-radiobutton__option').should('have.length', 2);
+        })
+        cy.deleteComponentByPath(radioButtonDrop);
+    });
+
+
   })
 });
