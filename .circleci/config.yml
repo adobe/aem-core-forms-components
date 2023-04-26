@@ -28,7 +28,7 @@ common:
           at: /home/circleci/build
       - run:
           name: Update permissions
-          command: sudo chown -R circleci /usr/local/lib/node_modules
+          command: sudo chown -R circleci /usr/local
       - run:
           name: Install Chrome Launcher
           command: npm i chrome-launcher -g
