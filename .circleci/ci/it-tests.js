@@ -16,7 +16,8 @@
 
 const ci = new (require('./ci.js'))();
 const e = require('child_process');
-const lighthouseCheck = require('@foo-software/lighthouse-check').lighthouseCheck;
+const lighthouse =  require('lighthouse');
+const chromeLauncher = require('chrome-launcher');
 
 
 ci.context();
@@ -117,20 +118,30 @@ try {
     // third container --
     // run lighthouse on this;;;
 
-    (async () => {
-      const response = await lighthouseCheck({
-//       outputDirectory: '../artifacts',
-        urls: [
-          'https://google.com',
-          'https://adobe.com'
-        ]
-      });
+//    (async () => {
+//      const response = await lighthouseCheck({
+////       outputDirectory: '../artifacts',
+//        urls: [
+//          'https://google.com',
+//          'https://adobe.com'
+//        ]
+//      });
+//
+//      console.log('response', response);
+//    })();
 
-      console.log('response', response);
-    })();
+        const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+        const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
+        const runnerResult = await lighthouse('https://facebook.com', options);
 
+        // `.report` is the HTML report as a string
+        const reportHtml = runnerResult.report;
+        console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
+        console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
+        fs.writeFileSync('lhreport.html', reportHtml);
 
-
+        // `.lhr` is the Lighthouse Result as a JS object
+        await chrome.kill();
 
 
     ci.dir(qpPath, () => {

@@ -27,8 +27,11 @@ common:
       - attach_workspace:
           at: /home/circleci/build
       - run:
+          name: Install Chrome Launcher
+          command: npm i chrome-launcher -g
+      - run:
           name: Install foo-software/lighthouse-check
-          command: npm install @foo-software/lighthouse-check@9 -g -p 8443
+          command: npm install lighthouse -g
       - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
