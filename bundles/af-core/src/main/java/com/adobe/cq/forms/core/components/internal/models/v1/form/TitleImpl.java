@@ -37,7 +37,6 @@ import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -98,12 +97,6 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
         String propertyName = JcrConstants.JCR_TITLE;
         String propertyValue = title;
         boolean editMode = true;
-        if (request != null) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
-        }
-        if (editMode) {
-            return propertyValue;
-        }
         if (StringUtils.isBlank(propertyValue)) {
             return null;
         }
