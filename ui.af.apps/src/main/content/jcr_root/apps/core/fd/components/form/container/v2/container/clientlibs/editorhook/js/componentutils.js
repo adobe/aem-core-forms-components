@@ -149,4 +149,6 @@
         return this;
     };
 
+    window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes = [];
+
 })(window, Granite.author, Coral, jQuery(document));
