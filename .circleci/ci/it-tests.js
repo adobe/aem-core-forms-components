@@ -179,13 +179,14 @@ try {
 
     setTimeout(() => {
         console.log("Done wating 3 min")
+        ci.dir(qpPath, () => {
+                // Stop CQ
+                ci.sh('./qp.sh -v stop --id author');
+            });
     }, 3000)
 
 
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-});
+
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {
