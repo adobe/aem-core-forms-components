@@ -191,13 +191,13 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - cypress-chrome-cloudready-with-latest-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
+#      - cypress-chrome-cloudready-with-latest-addon:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
       - release:
           requires:
             - build-java-11

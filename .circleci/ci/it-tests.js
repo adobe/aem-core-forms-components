@@ -16,8 +16,8 @@
 
 const ci = new (require('./ci.js'))();
 const e = require('child_process');
-//const lighthouse =  require('lighthouse');
-//const chromeLauncher = require('chrome-launcher');
+const lighthouse =  require('/usr/local/lib/node_modules/lighthouse');
+const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher');
 
 
 ci.context();
@@ -60,22 +60,22 @@ try {
         }
     }
 
-    // Start CQ
-    // Start CQ
-       ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
-               --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-               --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
-               ${extras} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
-               ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-               --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-               ${preleaseOpts}`);
+//    // Start CQ
+//    // Start CQ
+//       ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
+//               --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
+//               --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
+//               ${extras} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
+//               ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
+//               --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+//               ${preleaseOpts}`);
 });
 
     // Run integration tests
@@ -171,8 +171,8 @@ try {
     let result =  checkLightHouse();
 
     setTimeout(() => {
-        console.log("Done wating 1 min")
-    }, 1000)
+        console.log("Done wating 3 min")
+    }, 3000)
 
 
     ci.dir(qpPath, () => {
