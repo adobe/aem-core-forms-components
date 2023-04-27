@@ -27,6 +27,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,4 +73,13 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
         return readOnly;
     }
 
+    @Override
+    @JsonIgnore
+    public String getTitle() {
+        Label label = getLabel();
+        if (label != null) {
+            return label.getValue();
+        }
+        return null;
+    }
 }
