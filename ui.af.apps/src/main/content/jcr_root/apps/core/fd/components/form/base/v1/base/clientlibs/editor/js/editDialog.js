@@ -27,9 +27,9 @@
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
         BASE_TITLE = ".cmp-adaptiveform-base__title",
         BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
-        BASE_WRAPPER_RICH_TEXT_TITLE = "input[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
+        BASE_WRAPPER_RICH_TEXT_TITLE = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
         BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
-        BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "input[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
+        BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
         BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__richTextOptions",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
@@ -180,7 +180,7 @@
     function resolveRichText(dialog, isTitleRichText, isToggled) {
         var title = dialog.find(BASE_TITLE)[0],
             richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
-            richTextTitleDiv = dialog.find("div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
+            richTextTitleDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
         if(isTitleRichText.checked){
             hideGraniteComponent(title);
             showGraniteComponent(richTextTitle);
@@ -205,7 +205,7 @@
     function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
         var enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
             richTextEnumNames = dialog.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
-            richTextEnumNamesDiv = dialog.find("div[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
+            richTextEnumNamesDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
         if(areOptionsRichText != null && areOptionsRichText.checked){
             for (var i = 0; i < richTextEnumNames.length; i++) {
                 hideGraniteComponent(enumNames[i]);
@@ -297,7 +297,7 @@
     /**
      * whenever RTE value of enumName is changed, we save it's value corresponding to text value field.
      */
-    channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
+    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
         Coral.commons.ready(e.target, function() {
             var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
                 textValue = channel.find(BASE_ENUMNAMES_VISIBLE);
@@ -312,7 +312,7 @@
     /**
      * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
      */
-    channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
+    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
         Coral.commons.ready(e.target, function() {
             var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
                 textValue = channel.find(BASE_TITLE)[0];
