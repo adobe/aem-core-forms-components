@@ -53,6 +53,7 @@ public class TextInputImplTest {
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
+    private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -311,6 +312,12 @@ public class TextInputImplTest {
     void testJSONExport() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT));
+    }
+
+    @Test
+    void testJSONExportForUnboundFormElement() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_UNBOUNDFORMELEMENT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_UNBOUNDFORMELEMENT));
     }
 
     @Test
