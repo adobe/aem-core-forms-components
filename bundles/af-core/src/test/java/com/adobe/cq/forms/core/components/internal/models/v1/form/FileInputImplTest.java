@@ -386,4 +386,11 @@ public class FileInputImplTest {
         assert (dataObject.getFieldType()).equals("file-input");
         assert (dataObject.getDescription()).equals("Upload your CV");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
+        FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
+    }
 }

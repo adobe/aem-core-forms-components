@@ -389,4 +389,11 @@ public class DropDownImplTest {
         assert (dataObject.getFieldType()).equals("drop-down");
         assert (dataObject.getDescription()).equals("What is your favorite animal?");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_DATALAYER, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_DATALAYER));
+    }
 }
