@@ -297,7 +297,7 @@ export default class FormTabs extends FormPanel {
         var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
         beforeElement.after(navigationTabToBeRepeated);
       }
-      this.cacheElements(this._elements.self);
+      this.#cacheElements(this._elements.self);
       var repeatedTabPanel = this.#getTabPanelElementById(childView.id + this.#tabPanelIdSuffix);
       repeatedTabPanel.setAttribute("aria-labelledby", childView.id + this.#tabIdSuffix);
       this.#refreshActive();
@@ -314,7 +314,7 @@ export default class FormTabs extends FormPanel {
     tabNavElement.remove();
     tabPanelElement.remove();
     this.children.splice(this.children.indexOf(removedInstanceView), 1);
-    this.cacheElements(this._elements.self);
+    this.#cacheElements(this._elements.self);
     this.#_active = this.getActiveTabId(this._elements["tab"]);
     this.#refreshActive();
   }
@@ -383,7 +383,7 @@ export default class FormTabs extends FormPanel {
    */
   addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
     let elementToEnclose = this._templateHTML[instanceManager.getId()]['targetTabPanel'].cloneNode(false);
-    elementToEnclose.id = addedModel.id + Tabs.#tabPanelIdSuffix;
+    elementToEnclose.id = addedModel.id + this.#tabPanelIdSuffix;
     let result = this.#getBeforeViewElement(instanceManager, addedModel.index);
     let beforeViewElement = result.beforeViewElement;
     beforeViewElement.after(elementToEnclose);
