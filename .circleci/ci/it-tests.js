@@ -194,33 +194,33 @@ try {
     }
 
     // Create coverage reports
-    const createCoverageReport = () => {
-        // Executing the integration tests runs also executes unit tests and generates a Jacoco report for them. To
-        // strictly separate unit test from integration test coverage, we explicitly delete the unit test report first.
-        ci.sh('rm -rf target/site/jacoco');
-
-        // Download Jacoco file which is exposed by a webserver running inside the AEM container.
-        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/jacoco-it.exec');
-
-        // Generate new report
-        ci.sh(`mvn -B org.jacoco:jacoco-maven-plugin:${process.env.JACOCO_VERSION}:report -Djacoco.dataFile=jacoco-it.exec`);
-
-        // Upload report to codecov
-        ci.sh('curl -s https://codecov.io/bash | bash -s -- -c -F integration -f target/site/jacoco/jacoco.xml');
-    };
-
-    ci.dir('bundles/core', createCoverageReport);
-    ci.dir('examples/core', createCoverageReport);
+//    const createCoverageReport = () => {
+//        // Executing the integration tests runs also executes unit tests and generates a Jacoco report for them. To
+//        // strictly separate unit test from integration test coverage, we explicitly delete the unit test report first.
+//        ci.sh('rm -rf target/site/jacoco');
+//
+//        // Download Jacoco file which is exposed by a webserver running inside the AEM container.
+//        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/jacoco-it.exec');
+//
+//        // Generate new report
+//        ci.sh(`mvn -B org.jacoco:jacoco-maven-plugin:${process.env.JACOCO_VERSION}:report -Djacoco.dataFile=jacoco-it.exec`);
+//
+//        // Upload report to codecov
+//        ci.sh('curl -s https://codecov.io/bash | bash -s -- -c -F integration -f target/site/jacoco/jacoco.xml');
+//    };
+//
+//    ci.dir('bundles/core', createCoverageReport);
+//    ci.dir('examples/core', createCoverageReport);
 
 } finally { // Always download logs from AEM container
     ci.sh('mkdir logs');
-    ci.dir('logs', () => {
-        // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.
-        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/error.log');
-    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
-    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
-    ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
-});
+//    ci.dir('logs', () => {
+//        // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.
+//        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/error.log');
+//    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
+//    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
+//    ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
+//});
 }
 
 
