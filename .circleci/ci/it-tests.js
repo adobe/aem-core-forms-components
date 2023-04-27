@@ -25,7 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
-const classicFormAddonVersion = '6.0.930';
+const classicFormAddonVersion = '6.0.940';
 
 try {
     ci.stage("Integration Tests");
