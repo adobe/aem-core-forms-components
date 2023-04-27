@@ -32,6 +32,7 @@ try {
 } catch (ex) {
     console.log(ex);
     ci.stage('Retrying build due to eirslett flaky ci issue');
+    ci.sh(`rm -rf ${eirslettM2Repository}`);
     ci.sh('mvn -B clean install -Pcloud');
 }
 
