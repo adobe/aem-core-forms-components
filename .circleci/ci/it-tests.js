@@ -131,27 +131,37 @@ try {
 //
 //      console.log('response', response);
 //    })();
-ci.sh("pwd")
-ci.sh("ls")
+    ci.sh("pwd")
+    ci.sh("ls")
 
-const checkLightHouse = async () => {
-const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-        const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-        const runnerResult = await lighthouse('https://facebook.com', options);
-        // `.report` is the HTML report as a string
-        const reportHtml = runnerResult.report;
-        console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
-        console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-        fs.writeFileSync('lhreport.html', reportHtml);
-        // `.lhr` is the Lighthouse Result as a JS object
-        await chrome.kill();
-}
+    ci.dir(qpPath, () => { // home/circleci/cq
+         ci.sh("pwd")
+         ci.sh("ls")
+    })
 
-let result =  checkLightHouse();
+    ci.dir('/home/circleci', () => { // /home/circleci
+         ci.sh("pwd")
+         ci.sh("ls")
+    })
 
-setTimeout(() => {
-console.log("Done wating 1 min")
-}, 1000)
+    const checkLightHouse = async () => {
+    const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+            const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
+            const runnerResult = await lighthouse('https://facebook.com', options);
+            // `.report` is the HTML report as a string
+            const reportHtml = runnerResult.report;
+            console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
+            console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
+            fs.writeFileSync('lhreport.html', reportHtml);
+            // `.lhr` is the Lighthouse Result as a JS object
+            await chrome.kill();
+    }
+
+    let result =  checkLightHouse();
+
+    setTimeout(() => {
+        console.log("Done wating 1 min")
+    }, 1000)
 
 
     ci.dir(qpPath, () => {
