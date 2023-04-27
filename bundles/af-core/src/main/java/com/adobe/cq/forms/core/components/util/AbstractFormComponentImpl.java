@@ -362,7 +362,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    @JsonSerialize(using = CustomSerializer.class)
+    @JsonSerialize(using = DataRefSerializer.class)
     public String getDataRef() {
         return dataRef;
     }
@@ -419,7 +419,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return componentData;
     }
 
-    public static class CustomSerializer extends JsonSerializer<String> {
+    private static class DataRefSerializer extends JsonSerializer<String> {
 
         @Override
         public void serialize(String s, JsonGenerator jsonGenerator,
