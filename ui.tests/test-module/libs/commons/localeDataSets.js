@@ -15,7 +15,6 @@ const selectors = {
     SUBMIT: '.submit span',
     TELEPHONE_INPUT: 'div[class="cmp-adaptiveform-telephoneinput"] label',
     TEXT_INPUT: '.cmp-adaptiveform-textinput__label',
-    TITLE: '.cmp-title__text',
     WIZARD: '.cmp-adaptiveform-wizard__label'
 }
 
@@ -38,7 +37,6 @@ const languages = [
             SUBMIT: 'Submit',
             TELEPHONE_INPUT: 'Telephone Input',
             TEXT_INPUT: 'Text Input',
-            TITLE: 'Title',
             WIZARD: 'wizard'
         }
     }, {
@@ -59,7 +57,6 @@ const languages = [
             SUBMIT: 'Senden',
             TELEPHONE_INPUT: 'Telefoneingang',
             TEXT_INPUT: 'Texteingabe',
-            TITLE: 'Titel',
             WIZARD: 'Zauberer'
         }
     }, {
@@ -80,7 +77,6 @@ const languages = [
             SUBMIT: '送信',
             TELEPHONE_INPUT: '電話入力',
             TEXT_INPUT: 'テキスト入力',
-            TITLE: 'タイトル',
             WIZARD: '魔法使い'
         }
     }, {
@@ -101,7 +97,6 @@ const languages = [
             SUBMIT: 'Invia',
             TELEPHONE_INPUT: 'Ingresso telefonico',
             TEXT_INPUT: 'Immissione di testo',
-            TITLE: 'Titolo',
             WIZARD: 'mago'
         }
     }, {
@@ -122,7 +117,6 @@ const languages = [
             SUBMIT: 'Envoyer',
             TELEPHONE_INPUT: 'Entrée téléphonique',
             TEXT_INPUT: 'Saisie de texte',
-            TITLE: 'Titre',
             WIZARD: 'Sorcier'
         }
     }, {
@@ -143,7 +137,6 @@ const languages = [
             SUBMIT: 'Enviar',
             TELEPHONE_INPUT: 'Entrada telefónica',
             TEXT_INPUT: 'Entrada de texto',
-            TITLE: 'Título',
             WIZARD: 'Hechicero'
         }
     }, {
@@ -164,7 +157,6 @@ const languages = [
             SUBMIT: '전송',
             TELEPHONE_INPUT: '전화 입력',
             TEXT_INPUT: '텍스트 입력',
-            TITLE: '타이틀',
             WIZARD: '마법사'
         }
     }, {
@@ -185,7 +177,6 @@ const languages = [
             SUBMIT: '提交',
             TELEPHONE_INPUT: '電話輸入',
             TEXT_INPUT: '文本輸入',
-            TITLE: '標題',
             WIZARD: '巫師'
         }
     },
@@ -207,7 +198,6 @@ const languages = [
             SUBMIT: '提交',
             TELEPHONE_INPUT: '电话输入',
             TEXT_INPUT: '文本输入',
-            TITLE: '标题',
             WIZARD: '巫师'
         }
     }, {
@@ -228,7 +218,6 @@ const languages = [
             SUBMIT: 'Enviar',
             TELEPHONE_INPUT: 'Entrada por telefone',
             TEXT_INPUT: 'Entrada de texto',
-            TITLE: 'Título',
             WIZARD: 'mago'
         }
     }
