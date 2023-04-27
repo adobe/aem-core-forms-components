@@ -144,6 +144,11 @@ try {
          ci.sh("ls")
     })
 
+    ci.dir('/home/circleci/project', () => { // /home/circleci/project
+        ci.sh("pwd")
+        ci.sh("ls")
+    })
+
     ci.dir('/usr/local/lib/node_modules', () => {
         // print all node modules to check if lighthouse and chrome-launcher is there or not
         ci.sh("pwd")
