@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,7 @@ import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.RichText;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -282,7 +284,44 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
+        RichText richText1 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "m";
+            }
+        };
+        RichText richText2 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "f";
+            }
+        };
+        RichText richText3 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "o";
+            }
+        };
+        RichText[] richText = new RichText[] { richText1, richText2, richText3 };
+        for (int i = 0; i < checkboxGroup.getEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), checkboxGroup.getEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), checkboxGroup.getEnumNames()[i].isRichText());
+        }
     }
 
     @Test

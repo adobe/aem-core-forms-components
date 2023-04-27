@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,7 @@ import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.RichText;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -305,7 +307,33 @@ public class CheckBoxImplTest {
     @Test
     void testGetEnumNames() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
+        RichText richText1 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "yes";
+            }
+        };
+        RichText richText2 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "no";
+            }
+        };
+        RichText[] richText = new RichText[] { richText1, richText2 };
+        for (int i = 0; i < checkbox.getEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), checkbox.getEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), checkbox.getEnumNames()[i].isRichText());
+        }
     }
 
     @Test

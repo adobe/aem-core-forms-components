@@ -16,7 +16,16 @@
   },
   "enforceEnum":true,
   "enum" : [true, false],
-  "enumNames" : ["yes", "no"],
+  "enumNames": [
+    {
+      "richText": false,
+      "value": "yes"
+    },
+    {
+      "richText": false,
+      "value": "no"
+    }
+  ],
   "label": {
     "value": "def"
   },

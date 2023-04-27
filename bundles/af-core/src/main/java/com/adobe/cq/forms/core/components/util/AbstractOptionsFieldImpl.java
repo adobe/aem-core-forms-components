@@ -24,9 +24,9 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.forms.core.components.models.form.BaseLabel;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
+import com.adobe.cq.forms.core.components.models.form.RichText;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -70,10 +70,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public BaseLabel[] getEnumNames() {
+    public RichText[] getEnumNames() {
         if (enumNames != null) {
             return Arrays.stream(enumNames)
-                .map(p -> new BaseLabel() {
+                .map(p -> new RichText() {
                     @Override
                     public @Nullable Boolean isRichText() {
                         return richTextOptions;
@@ -84,7 +84,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                         return translate("enumNames", p);
                     }
                 })
-                .toArray(BaseLabel[]::new);
+                .toArray(RichText[]::new);
         }
         return null;
     }

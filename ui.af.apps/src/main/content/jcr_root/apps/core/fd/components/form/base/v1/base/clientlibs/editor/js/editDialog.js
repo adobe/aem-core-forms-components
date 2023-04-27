@@ -194,6 +194,14 @@
         }
     }
 
+    /**
+     * hides the RTE/plain text field on the basis of rich text checkbox and
+     * resolves it's value for enumNAmes/Options.
+     *
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     * @param areOptionsRichText is rich text checkbox selected.
+     * @param isToggled is this function being called on toggle of rich text checkbox.
+     */
     function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
         var enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
             richTextEnumNames = dialog.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
@@ -290,12 +298,13 @@
      * whenever RTE value of enumName is changed, we save it's value corresponding to text value field.
      */
     channel.on("change", "div[data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
-        Coral.commons.ready(e.target, function(component) {
-            var i = $(component.parentNode.parentNode.parentNode.parentNode.parentNode).index(),
-                richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+        Coral.commons.ready(e.target, function() {
+            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
                 textValue = channel.find(BASE_ENUMNAMES_VISIBLE);
-            if(textValue[i] && richTextValue[i]){
-                changeTextValue(textValue[i], richTextValue[i]);
+            for(var i=0; i<textValue.length; i++){
+                if(textValue[i] && richTextValue[i]){
+                    changeTextValue(textValue[i], richTextValue[i]);
+                }
             }
         });
     });

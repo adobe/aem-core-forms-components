@@ -55,7 +55,7 @@ public interface OptionsConstraint {
      * The length of enum and enumNames array must match
      *
      * @return the list of enum names
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @since com.adobe.cq.forms.core.components.models.form 5.0.0
      */
-    BaseLabel[] getEnumNames();
+    RichText[] getEnumNames();
 }

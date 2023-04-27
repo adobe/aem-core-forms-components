@@ -19,18 +19,18 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Interface for a enum name
+ * Interface to represent text as rich content
  *
- * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+ * @since com.adobe.cq.forms.core.components.models.form 5.0.0
  */
 @ProviderType
-public interface BaseLabel {
+public interface RichText {
 
     /**
-     * Returns {@code true} if label is rich text, otherwise {@code false}.
+     * Returns {@code true} if text is rich, otherwise {@code false}.
      *
-     * @return {@code true} if label is rich text, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @return {@code true} if text is rich, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 5.0.0
      */
     @Nullable
     default Boolean isRichText() {
@@ -38,10 +38,10 @@ public interface BaseLabel {
     }
 
     /**
-     * Returns the value of this label.
+     * Returns the rich text or plain text content.
      *
-     * @return the value of this label
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @return the content of this text
+     * @since com.adobe.cq.forms.core.components.models.form 5.0.0
      */
     @Nullable
     default String getValue() {

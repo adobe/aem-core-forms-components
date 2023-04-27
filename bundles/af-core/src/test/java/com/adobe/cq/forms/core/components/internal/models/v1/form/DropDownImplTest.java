@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -361,7 +362,44 @@ public class DropDownImplTest {
     @Test
     void testGetEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
-        assertArrayEquals(new String[] { "m", "f", "o" }, dropdown.getEnumNames());
+        RichText richText1 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "m";
+            }
+        };
+        RichText richText2 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "f";
+            }
+        };
+        RichText richText3 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "o";
+            }
+        };
+        RichText[] richText = new RichText[] { richText1, richText2, richText3 };
+        for (int i = 0; i < dropdown.getEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), dropdown.getEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), dropdown.getEnumNames()[i].isRichText());
+        }
     }
 
     @Test

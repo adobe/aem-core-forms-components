@@ -150,7 +150,14 @@
           "description": "The length of enum and enumNames array must match. In case the length of enum is greator, then those will be used as display text for the user. If the length of enumNames is greator, those will be discarded.",
           "type": "array",
           "items": {
-            "type": "string"
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "./adaptive-form-enum-name.schema.json"
+              }
+            ]
           }
         },
         "events": {
