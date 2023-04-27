@@ -29,5 +29,28 @@
     "maximum" : 2000000,
     "exclusiveMinimum" : 10002,
     "exclusiveMaximum" : 2000002
+  },
+  "numberinput-datalayer": {
+    "id": "numberinput-57e5de6073",
+    "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+    "fieldType": "number-input",
+    "description": "Enter your phone number.",
+    "name": "Phone Number",
+    "type": "string",
+    "label": {
+      "value": "Phone Number"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/accordion/item_2/numberinput"
+    },
+    ":type": "forms-components-examples/components/form/numberinput"
   }
 }

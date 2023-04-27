@@ -23,5 +23,24 @@
     "name": "emptyImage",
     "sling:resourceType": "core/fd/components/form/image/v1/image",
     "fieldType": "image"
+  },
+  "image-datalayer": {
+    "id": "image-d1298ac4bb",
+    "sling:resourceType": "core/fd/components/form/image/v1/image",
+    "fieldType": "image",
+    "name": "header image",
+    "description": "The header Image Description",
+    "value": "/content/forms/af/af2/jcr:content/guideContainer/image.img.png/1680246137403.png",
+    "visible": true,
+    "altText": "The header Image",
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/image"
+    },
+    ":type": "forms-components-examples/components/form/image"
   }
 }

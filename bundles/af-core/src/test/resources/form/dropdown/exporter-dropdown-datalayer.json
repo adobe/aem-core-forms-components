@@ -1,0 +1,42 @@
+{
+  "id": "dropdown-bb1c9e883e",
+  "fieldType": "drop-down",
+  "name": "Favorite Animal",
+  "visible": true,
+  "description": "What is your favorite animal?",
+  "type": "string",
+  "enabled": true,
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "Owl",
+    "Wolf"
+  ],
+  "label": {
+    "value": "Favorite Animal"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dropdown-datalayer"
+  },
+  "enum": [
+    "Owl",
+    "Wolf"
+  ],
+  ":type": "core/fd/components/form/dropdown/v1/dropdown",
+  "dataLayer": {
+    "dropdown-bb1c9e883e": {
+      "dc:title": "Favorite Animal",
+      "dc:description": "What is your favorite animal?",
+      "@type": "core/fd/components/form/dropdown/v1/dropdown",
+      "fieldType": "drop-down"
+    }
+  }
+}

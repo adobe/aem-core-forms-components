@@ -5,7 +5,7 @@
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
         cq:lastModified="{Date}2023-03-10T15:40:57.975+05:30"
         cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        cq:template="/conf/core-components-it/settings/wcm/templates/core-components-it-template"
         fd:translationIds="\{&quot;jcr:title&quot;:&quot;jcr:title##5619&quot;}"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
