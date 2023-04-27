@@ -144,6 +144,12 @@ try {
          ci.sh("ls")
     })
 
+    ci.dir('/usr/local/lib/node_modules', () => {
+        // print all node modules to check if lighthouse and chrome-launcher is there or not
+        ci.sh("pwd")
+        ci.sh("ls")
+    })
+
     const checkLightHouse = async () => {
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
