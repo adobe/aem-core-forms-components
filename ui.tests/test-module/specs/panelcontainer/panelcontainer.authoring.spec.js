@@ -95,6 +95,10 @@ describe('Page - Authoring', function () {
         it('open edit dialog of Panel', function () {
             testPanelBehaviour(panelContainerPathSelector, panelEditPath);
         })
+
+        it('Save panel as fragment via toolbar', function () {
+            testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+        })
     })
 
     context('Open Sites Editor', function () {
