@@ -6,18 +6,14 @@
 }
 
 .cmp-verticaltabs__tabs-container {
-
+  display: flex;
 }
 
 .cmp-verticaltabs__tablist{
-  float: left;
-  list-style:none;
-
+  width: 200px;
 }
 
 .cmp-verticaltabs__tab{
-  padding: 0.625rem;
-
 }
 
 .cmp-verticaltabs__tab.cmp-verticaltabs__tab--active{
@@ -25,10 +21,8 @@
 }
 
 .cmp-verticaltabs__tabpanel{
-  float: left;
-  width: 80%;
+  flex: 1;
   display: none;
-
 }
 
 .cmp-verticaltabs__tabpanel.cmp-verticaltabs__tabpanel--active{
