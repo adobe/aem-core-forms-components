@@ -253,6 +253,12 @@ public class FormContainerImplTest {
         assertNull(formContainer.getExportedAllowedComponents());
     }
 
+    @Test
+    void testGetParentPagePath() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(formContainer.getParentPagePath(), "/content/forms/af/demo");
+    }
+
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present

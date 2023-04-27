@@ -260,4 +260,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         }
         return customDorProperties;
     }
+
+    @Override
+    @JsonIgnore
+    public String getParentPagePath() {
+        String path = this.getPath();
+        if (!StringUtils.isEmpty(path)) {
+            return StringUtils.substringBefore(path, "/jcr:content/");
+        }
+        return StringUtils.EMPTY;
+    }
 }
