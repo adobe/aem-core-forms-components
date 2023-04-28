@@ -16,10 +16,10 @@
 
 const ci = new (require('./ci.js'))();
 const e = require('child_process');
-//const lighthouse =  require('/usr/local/lib/node_modules/lighthouse');
-//const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher');
-import lighthouse from 'lighthouse'
-import chromeLauncher from 'chrome-launcher'
+//const lighthouse =  require('/usr/local/lib/node_modules/lighthouse'); // gives error that lighthouse is a ES module, not a commonJS module, so can`t import with require
+//const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher'); //
+//import lighthouse from 'lighthouse'
+//import chromeLauncher from 'chrome-launcher' // gives error, cannot use import statement outside a module, sol: replace it with require
 
 
 ci.context();
@@ -158,6 +158,10 @@ try {
     })
 
     const checkLightHouse = async () => {
+
+    const lighthouse = await import('/usr/local/lib/node_modules/lighthouse')
+    const chromeLauncher = await import('/usr/local/lib/node_modules/chrome-launcher')
+
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
             const runnerResult = await lighthouse('https://facebook.com', options);
