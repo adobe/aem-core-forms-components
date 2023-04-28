@@ -180,6 +180,10 @@ try {
 
 
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+
+            console.log("chromeLauncher******", chromeLauncher)
+            console.log("lighthouse******", lighthouse)
+
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
             const runnerResult = await lighthouse('https://facebook.com', options);
             // `.report` is the HTML report as a string
