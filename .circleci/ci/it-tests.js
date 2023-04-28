@@ -185,7 +185,7 @@ try {
             console.log("lighthouse******", lighthouse)
             console.log("chrome********", chrome)
 
-            const options = {logLevel: 'info', output: 'html', port: chrome.port};
+            const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic YWRtaW46YWRtaW4=' }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
             const runnerResult = await lighthouse.default('http://localhost:4502/aem/start.html', options);
             // `.report` is the HTML report as a string
             const reportHtml = runnerResult.report;
