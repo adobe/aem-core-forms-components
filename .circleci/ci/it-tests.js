@@ -179,13 +179,14 @@ try {
       const chromeLauncher = await import('chrome-launcher')
 
 
-    const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
+            const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
 
             console.log("chromeLauncher******", chromeLauncher)
             console.log("lighthouse******", lighthouse)
+            console.log("chrome********", chrome)
 
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-            const runnerResult = await lighthouse('https://facebook.com', options);
+            const runnerResult = await lighthouse.default('https://facebook.com', options);
             // `.report` is the HTML report as a string
             const reportHtml = runnerResult.report;
             console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
