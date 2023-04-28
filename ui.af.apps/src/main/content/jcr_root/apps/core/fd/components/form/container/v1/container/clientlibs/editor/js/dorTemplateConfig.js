@@ -29,8 +29,8 @@
 
     var dorTemplateRef = null;
     var dorType;
-    var dorTemplateConfigApi = "/adobe/forms/af/author/dor/template";
-    var dorTemplateListingApi = "/adobe/forms/af/author/dor/templates"
+    var dorTemplateConfigApi = "/adobe/forms/author/af/dor/template";
+    var dorTemplateListingApi = "/adobe/forms/author/af/dor/templates"
 
     author.afUtils.initialiseDorTemplateConfig = function () {
         dorType = $(DOR_TYPE_SELECTED_SEL).val() || DOR_NONE;

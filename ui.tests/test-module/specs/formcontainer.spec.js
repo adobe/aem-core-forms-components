@@ -177,33 +177,33 @@ describe('Page/Form Authoring', function () {
                 cy.openAuthoring(pagePath);
             });
 
-            // it('open edit dialog of adaptive form container component', function () {
-            //     // click configure action on adaptive form container component
-            //     checkEditDialog(formContainerEditPathSelector);
-            //     cy.get('.cq-dialog-cancel').click();
-            // });
+            it('open edit dialog of adaptive form container component', function () {
+                // click configure action on adaptive form container component
+                checkEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            });
 
-            // it('open edit dialog, check and save a submit action', function() {
-            //     checkAndSaveSubmitAction(formContainerEditPathSelector);
-            // });
+            it('open edit dialog, check and save a submit action', function() {
+                checkAndSaveSubmitAction(formContainerEditPathSelector);
+            });
 
-            // it('open edit dialog, verify saved submit action', function() {
-            //     verifySavedSubmitAction(formContainerEditPathSelector);
-            //     cy.get('.cq-dialog-cancel').click();
-            // });
+            it('open edit dialog, verify saved submit action', function() {
+                verifySavedSubmitAction(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            });
 
-            // it('open and select data model in container edit dialog box', function () {
-            //     verifyOpenDataModel(formContainerEditPathSelector);
-            // });
+            it('open and select data model in container edit dialog box', function () {
+                verifyOpenDataModel(formContainerEditPathSelector);
+            });
 
-            // it('change data model in container edit dialog box', {retries: 3}, function () {
-            //     verifyChangeDataModel(formContainerEditPathSelector);
-            // });
+            it('change data model in container edit dialog box', {retries: 3}, function () {
+                verifyChangeDataModel(formContainerEditPathSelector);
+            });
 
-            // it ('check title in edit dialog', {retries: 3}, function() {
-            //     checkTitleInEditDialog(formContainerEditPathSelector);
-            //     cy.get('.cq-dialog-cancel').click();
-            // })
+            it ('check title in edit dialog', {retries: 3}, function() {
+                checkTitleInEditDialog(formContainerEditPathSelector);
+                cy.get('.cq-dialog-cancel').click();
+            })
 
             it('open and select DoR template tab in container edit dialog', function () {
                 verifyOpenDoRTemplate(formContainerEditPathSelector);
@@ -215,56 +215,56 @@ describe('Page/Form Authoring', function () {
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
-        // context("Open Sites Editor", function () {
-        //     // we can use these values to log in
-        //     const pagePath = "/content/core-components-examples/library/adaptive-form/container",
-        //         formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
-        //         formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
-        //         formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
-        //         beforeEach(function () {
-        //             // this is done since cypress session results in 403 sometimes
-        //             cy.openAuthoring(pagePath);
-        //         });
+        context("Open Sites Editor", function () {
+            // we can use these values to log in
+            const pagePath = "/content/core-components-examples/library/adaptive-form/container",
+                formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
+                formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
+                formContainerDropPath = pagePath + afConstants.RESPONSIVE_GRID_SUFFIX + "/" + afConstants.components.forms.resourceType.formcontainer.split("/").pop();
+                beforeEach(function () {
+                    // this is done since cypress session results in 403 sometimes
+                    cy.openAuthoring(pagePath);
+                });
 
-        //         it('insert adaptive form container component', { retries: 3 }, function () {
-        //             cy.cleanTest(formContainerDropPath).then(function() {
-        //                 const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-        //                     responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
-        //                 cy.selectLayer("Edit");
-        //                 // Add adaptibe form container component and delete it
-        //                 cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
-        //                 // once component is added, to remove the overlay from being active, we click on body
-        //                 cy.get('body').click(0, 0);
-        //                 cy.deleteComponentByPath(formContainerDropPath);
-        //             });
-        //         });
+                it('insert adaptive form container component', { retries: 3 }, function () {
+                    cy.cleanTest(formContainerDropPath).then(function() {
+                        const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
+                            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "'][title='Layout Container [Root]']";
+                        cy.selectLayer("Edit");
+                        // Add adaptibe form container component and delete it
+                        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Container", afConstants.components.forms.resourceType.formcontainer);
+                        // once component is added, to remove the overlay from being active, we click on body
+                        cy.get('body').click(0, 0);
+                        cy.deleteComponentByPath(formContainerDropPath);
+                    });
+                });
 
-        //         it('open edit dialog of adaptive form container component', function () {
-        //             checkEditDialog(formContainerEditPathSelector);
-        //             cy.get(sitesSelectors.confirmDialog.actions.first).click();
-        //         });
+                it('open edit dialog of adaptive form container component', function () {
+                    checkEditDialog(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                });
 
-        //         it('open edit dialog, check and save a submit action', function() {
-        //             checkAndSaveSubmitAction(formContainerEditPathSelector);
-        //         });
+                it('open edit dialog, check and save a submit action', function() {
+                    checkAndSaveSubmitAction(formContainerEditPathSelector);
+                });
 
-        //         it('open edit dialog, verify saved submit action', function() {
-        //             verifySavedSubmitAction(formContainerEditPathSelector);
-        //             cy.get(sitesSelectors.confirmDialog.actions.first).click();
-        //         });
+                it('open edit dialog, verify saved submit action', function() {
+                    verifySavedSubmitAction(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                });
 
-        //         it('open and select data model in container edit dialog box', function () {
-        //             verifyOpenDataModel(formContainerEditPathSelector);
-        //         });
+                it('open and select data model in container edit dialog box', function () {
+                    verifyOpenDataModel(formContainerEditPathSelector);
+                });
 
-        //         it('change data model in container edit dialog box', function () {
-        //             verifyChangeDataModel(formContainerEditPathSelector);
-        //         });
+                it('change data model in container edit dialog box', function () {
+                    verifyChangeDataModel(formContainerEditPathSelector);
+                });
 
-        //         it ('check title in edit dialog', function() {
-        //             checkEditDialog(formContainerEditPathSelector);
-        //             cy.get(sitesSelectors.confirmDialog.actions.first).click();
-        //         })
-        // });
+                it ('check title in edit dialog', function() {
+                    checkEditDialog(formContainerEditPathSelector);
+                    cy.get(sitesSelectors.confirmDialog.actions.first).click();
+                })
+        });
 
 });
