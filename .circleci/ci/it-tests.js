@@ -18,6 +18,8 @@ const ci = new (require('./ci.js'))();
 const e = require('child_process');
 //const lighthouse =  require('/usr/local/lib/node_modules/lighthouse');
 //const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher');
+import lighthouse from 'lighthouse'
+import chromeLauncher from 'chrome-launcher'
 
 
 ci.context();
@@ -155,7 +157,7 @@ try {
         ci.sh("ls")
     })
 
-    const checkLightHouse = async (lighthouse, chromeLauncher) => {
+    const checkLightHouse = async () => {
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
             const runnerResult = await lighthouse('https://facebook.com', options);
@@ -169,22 +171,14 @@ try {
     }
 
     const myFunc = async () => {
-      // Use dynamic import syntax to load the lighthouse module
-      const lighthouse = await import('/usr/local/lib/node_modules/lighthouse');
-      const chromeLauncher = await import('/usr/local/lib/node_modules/chrome-launcher');
-
-      await checkLightHouse(lighthouse, chromeLauncher)
+        console.log("calling lighthouse function!!!")
+        await checkLightHouse()
+         ci.dir(qpPath, () => {
+            // Stop CQ
+            ci.sh('./qp.sh -v stop --id author');
+         });
     }
     myFunc()
-
-    setTimeout(() => {
-        console.log("Done wating 3 min")
-        ci.dir(qpPath, () => {
-                // Stop CQ
-                ci.sh('./qp.sh -v stop --id author');
-            });
-    }, 3000)
-
 
 
 
