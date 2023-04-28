@@ -114,7 +114,8 @@ describe.only('Page - Authoring', function () {
             //Add 2 children in tabs on top component
             dropTextInputInTabComponent();
             dropDatePickerInTabComponent();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
+            cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/tabsontop/datepicker']").should('be.visible');
+	      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
             cy.invokeEditableAction("[data-action='PANEL_SELECT']");
             cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
             const datePickerPath = tabsPath + "/datepicker";
