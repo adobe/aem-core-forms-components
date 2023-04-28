@@ -18,6 +18,8 @@ const ci = new (require('./ci.js'))();
 const e = require('child_process');
 //const lighthouse =  require('/usr/local/lib/node_modules/lighthouse'); // gives error that lighthouse is a ES module, not a commonJS module, so can`t import with require
 //const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher'); //
+
+// https://app.circleci.com/pipelines/github/adobe/aem-core-forms-components/2782/workflows/11fafa11-eaaa-4353-9c9e-362e7ccf6142/jobs/9002
 //import lighthouse from 'lighthouse'
 //import chromeLauncher from 'chrome-launcher' // gives error, cannot use import statement outside a module, sol: replace it with require
 
@@ -136,12 +138,20 @@ try {
     ci.sh("pwd")
     ci.sh("ls")
 
-    ci.dir(qpPath, () => { // home/circleci/cq
+    /*
+      all		    examples		  parent      ui.frontend
+      bundles		    Guidelines.md	  pom.xml     ui.tests
+      CODE_OF_CONDUCT.md  it			  README.md   VERSIONS.md
+      configuration.json  LICENSE		  ui.af.apps
+      CONTRIBUTING.md     LICENSE.chromedriver  ui.apps
+      */
+
+    ci.dir(qpPath, () => { //forms-addon.far  qp.sh	quick-provider-6.4.6-jar-with-dependencies.jar
          ci.sh("pwd")
          ci.sh("ls")
     })
 
-    ci.dir('/home/circleci', () => { // /home/circleci
+    ci.dir('/home/circleci', () => { // build  cq  project
          ci.sh("pwd")
          ci.sh("ls")
     })
@@ -151,16 +161,20 @@ try {
         ci.sh("ls")
     })
 
-    ci.dir('/usr/local/lib/node_modules', () => {
+    ci.dir('/usr/local/lib/node_modules', () => { //  chrome-launcher  corepack  lighthouse  npm
         // print all node modules to check if lighthouse and chrome-launcher is there or not
         ci.sh("pwd")
         ci.sh("ls")
     })
 
     const checkLightHouse = async () => {
+    //https://app.circleci.com/pipelines/github/adobe/aem-core-forms-components/2786/workflows/fbde1f3d-b005-4251-b283-82db89df02e6/jobs/9023
+//    const lighthouse = await import('/usr/local/lib/node_modules/lighthouse') // Error [ERR_UNSUPPORTED_DIR_IMPORT]: Directory import '/usr/local/lib/node_modules/lighthouse' is not supported resolving ES modules imported from /home/circleci/build/.circleci/ci/it-tests.js
+//    const chromeLauncher = await import('/usr/local/lib/node_modules/chrome-launcher') // Error [ERR_UNSUPPORTED_DIR_IMPORT]: Directory import '/usr/local/lib/node_modules/lighthouse' is not supported resolving ES modules imported from /home/circleci/build/.circleci/ci/it-tests.js
 
-    const lighthouse = await import('/usr/local/lib/node_modules/lighthouse')
-    const chromeLauncher = await import('/usr/local/lib/node_modules/chrome-launcher')
+      const lighthouse = await import('lighthouse')
+      const chromeLauncher = await import('chrome-launcher')
+
 
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
             const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
