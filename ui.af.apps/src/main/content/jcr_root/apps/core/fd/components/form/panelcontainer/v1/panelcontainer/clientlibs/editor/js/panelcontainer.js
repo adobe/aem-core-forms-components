@@ -41,9 +41,10 @@
                 handlePolicyDialog(dialogContent);
             }
         }
-        // For handling the case when tabs,accordion and wizard inherit panel edit-dialog
+
         if($dialog[0]) {
-            handleWrapData($dialog[0]);
+            // repeatability, For handling the case when tabs,accordion and wizard inherit panel edit-dialog
+            handleRepeat($dialog[0]);
         }
     });
 
@@ -97,41 +98,55 @@
         }
     }
 
-    function handleWrapData(containerEditor) {
-        let bindRef = containerEditor.querySelector("input[name='./dataRef']");
-        let minInputField = containerEditor.querySelector("coral-numberinput[name='./minItems']");
-        let maxInputField = containerEditor.querySelector("coral-numberinput[name='./maxItems']");
 
-        function isRepeatable() {
-            // TODO: to update after repeatability approach gets finalised
-            //return minInputField.value.length > 0 && maxInputField.value.length > 0;
-            return false;
+    function handleRepeat(dialogElement) {
+        const isRepeatable = function() {
+                let repeat = dialogElement.querySelector("input[name='./repeatable']");
+                return repeat.checked;
+            };
+        const makeWrapDataReadOnly = function(status) {
+                let checkbox = dialogElement.querySelector(".cmp-adaptiveform-panel__wrapData");
+                if(checkbox) {
+                    checkbox.checked = status;
+                    checkbox.disabled = status;
+                }
+            };
+        const markMinMaxDisabled = function(status) {
+                let minRepeat = dialogElement.querySelector("coral-numberinput[name='./minOccur']");
+                let maxRepeat = dialogElement.querySelector("coral-numberinput[name='./maxOccur']");
+                if(minRepeat) {
+                    minRepeat.disabled = status;
+                }
+                if(maxRepeat) {
+                    maxRepeat.disabled = status;
+                }
+            };
+
+        const isRepeat = isRepeatable();
+        const bindRef = dialogElement.querySelector("input[name='./dataRef']");
+        const maxRepeat = dialogElement.querySelector("coral-numberinput[name='./maxOccur']");
+        if (maxRepeat.value == -1) {
+            maxRepeat.value = '';
         }
+        markMinMaxDisabled(!isRepeat);
 
         // checking for repeatability and bindRef of panel on dialog initialisation
-        if(isRepeatable() || bindRef.value.length > 0) {
+        if(isRepeat || ( bindRef !== null && bindRef.value.length > 0)) {
             makeWrapDataReadOnly(true);
         }
 
-        bindRef.addEventListener("change", function () {
-            makeWrapDataReadOnly(this.value.length > 0);
-        });
-
-        /*minInputField.addEventListener("change", function () {
-            makeWrapDataReadOnly(isRepeatable());
-        });
-
-        maxInputField.addEventListener("change", function () {
-            makeWrapDataReadOnly(isRepeatable());
-        });*/
-
-        function makeWrapDataReadOnly(status) {
-            let checkbox = containerEditor.querySelector(".cmp-adaptiveform-panel__wrapData");
-            if(checkbox) {
-                checkbox.checked = status;
-                checkbox.disabled = status;
-            }
+        if(bindRef !== null) {
+            bindRef.addEventListener("change", function () {
+                makeWrapDataReadOnly(this.value.length > 0);
+            });
         }
+
+        const repeatSwitch = dialogElement.querySelector(".cmp-adaptiveform-panelcontainer__repeatable coral-switch");
+        repeatSwitch.addEventListener("change", function () {
+            const isRepeat = isRepeatable();
+            makeWrapDataReadOnly(isRepeat);
+            markMinMaxDisabled(!isRepeat);
+        });
     }
 
 })(jQuery);

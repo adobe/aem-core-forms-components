@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -40,6 +42,7 @@ public class RadioButtonImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
     private static final String PATH_RADIOBUTTON = CONTENT_ROOT + "/radiobutton";
+    private static final String PATH_RADIOBUTTON_DATALAYER = CONTENT_ROOT + "/radiobutton-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -323,5 +326,25 @@ public class RadioButtonImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(RadioButton.class);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
+        FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) radioButton.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("radiobutton-bafbf1a102");
+        assert (dataObject.getType()).equals("core/fd/components/form/radiobutton/v1/radiobutton");
+        assert (dataObject.getTitle()).equals("Gender");
+        assert (dataObject.getFieldType()).equals("radio-group");
+        assert (dataObject.getDescription()).equals("Input gender");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
+        FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_DATALAYER));
     }
 }

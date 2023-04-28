@@ -33,9 +33,10 @@
       class="cmp-adaptiveform-button__widget"
       disabled="${!button.enabled}"
       title="${button.tooltipVisible ? '' :   button.tooltipText}"
+      data-cmp-data-layer="${button.data.json}"
       aria-label="${button.label.value}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
-    <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text cmp-adaptiveform-button__base_text">${button.label.value}</span>
+    <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text">${button.label.value}</span>
   </button>
   <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
   <div data-sly-call="${shortDescription.shortDescription @componentId=button.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap>

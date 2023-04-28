@@ -129,7 +129,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public String getAdaptiveFormVersion() {
-        return "0.11.0-Pre";
+        return "0.12.0";
     }
 
     @Override

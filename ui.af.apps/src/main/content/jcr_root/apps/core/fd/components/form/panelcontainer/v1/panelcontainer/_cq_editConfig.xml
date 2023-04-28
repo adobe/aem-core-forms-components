@@ -18,6 +18,7 @@
         <replace
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
+                icon="shuffle"
                 text="Replace"/>
     </cq:actionConfigs>
 </jcr:root>

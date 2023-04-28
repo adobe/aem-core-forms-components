@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-// todo: have to add rule events here
 public interface FormContainer extends Container {
 
     /**
@@ -79,7 +78,7 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
-        return "0.11.0-Pre";
+        return "0.12.0";
     }
 
     /*

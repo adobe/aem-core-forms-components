@@ -1,0 +1,18 @@
+{
+  "$id": "classpath:/schema/0.12.0/adaptive-form-aem-allowed-components.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Allowed Components object for the current panel.",
+  "description": "This is applicable only if the panel's layout is grid system. This property is useful if needs to show list of allowed components in the client while authoring the panel.",
+  "properties": {
+    "components": {
+      "type": "array",
+      "title": "List of simple objects representing all Allowed Components for the given panel"
+    },
+    "applicable": {
+      "type": "boolean",
+      "title": "Is the given panel contained by a page, with authored template structure and is the given panel set as editable (unlocked)",
+      "description": "true if the template has structure support and the panel is editable, false otherwise"
+    }
+  }
+}

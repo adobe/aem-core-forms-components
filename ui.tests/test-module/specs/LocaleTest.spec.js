@@ -19,14 +19,32 @@ const dataSet = require('../../test-module/libs/commons/localeDataSets');
 const baseUrl = '/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content?wcmmode=disabled',
     languageUrl = baseUrl + '&afAcceptLang=';
 
+const waitForLangDataToLoad= () => {
+    cy.document().then((doc) => {
+        let ready = false;
+        doc.addEventListener('AF_LanguageInitialised', () => {
+            ready = true;
+        });
+        return new Cypress.Promise((resolve, reject) => {
+            const isReady = () => {
+                if (ready) {
+                    return resolve()
+                }
+                setTimeout(isReady, 0)
+            };
+            isReady()
+        })
+    });
+};
+
 describe('Verify constants are changing for each language', function () {
     dataSet.languages.forEach(currLanguage => {
         it(currLanguage.LANGUAGE + " is loaded", function () {
-            var currentLang = currLanguage.LOCALE;
+            let currentLang = currLanguage.LOCALE;
             if (currentLang === 'en') {
-                cy.openPage(baseUrl)
+                cy.openPage(baseUrl).then(waitForLangDataToLoad);
             } else {
-                cy.openPage(languageUrl + currentLang);
+                cy.openPage(languageUrl + currentLang).then(waitForLangDataToLoad);
             }
             Object.entries(currLanguage.TRANSLATION).forEach(component => {
                 if(component[0] === 'CHECK_BOX_ITEM1' || component[0] === 'BUTTON') {
@@ -36,6 +54,12 @@ describe('Verify constants are changing for each language', function () {
                     cy.get(dataSet.selectors[component[0]]).invoke('text').should('eq', component[1]);
                 }
             })
+
+            for(const key in currLanguage.I18N_STRINGS) {
+                cy.window().then((win) => {
+                    expect(win.FormView.LanguageUtils.getTranslatedString(currLanguage.LOCALE, key)).to.be.eq(currLanguage.I18N_STRINGS[key]);
+                })
+            }
         });
     });
 });

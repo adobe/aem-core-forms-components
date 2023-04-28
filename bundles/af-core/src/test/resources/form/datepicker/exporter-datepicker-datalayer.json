@@ -1,0 +1,31 @@
+{
+  "id": "datepicker-0ac1fed1fe",
+  "fieldType": "date-input",
+  "name": "DoB",
+  "description": "Date of Birth",
+  "type": "string",
+  "label": {
+    "value": "DoB"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datepicker-datalayer"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker",
+  "dataLayer": {
+    "datepicker-0ac1fed1fe": {
+      "dc:title": "DoB",
+      "dc:description": "Date of Birth",
+      "@type": "core/fd/components/form/datepicker/v1/datepicker",
+      "fieldType": "date-input"
+    }
+  }
+}

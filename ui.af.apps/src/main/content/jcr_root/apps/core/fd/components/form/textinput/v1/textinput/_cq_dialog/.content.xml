@@ -215,7 +215,7 @@
                                                             granite:class="cmp-adaptiveform-textinput__validationpattern"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             fieldLabel="Type"
-                                                            name="./validatePictureClauseMessage">
+                                                            name="./validationPatternType">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"

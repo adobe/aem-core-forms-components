@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -45,11 +47,13 @@ public class TextInputImplTest {
     private static final String BASE = "/form/textinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXTINPUT = CONTENT_ROOT + "/textinput";
+    private static final String PATH_TEXTINPUT_DATALAYER = CONTENT_ROOT + "/textinput-datalayer";
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
+    private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -311,6 +315,12 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testJSONExportForUnboundFormElement() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_UNBOUNDFORMELEMENT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_UNBOUNDFORMELEMENT));
+    }
+
+    @Test
     void testJSONExportForCustomized() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CUSTOMIZED));
@@ -380,5 +390,25 @@ public class TextInputImplTest {
         TextInput textInput = context.currentResource().adaptTo(TextInput.class);
         String appliedCssClasses = textInput.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
+        FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) textInput.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("textinput-1c7bc238a6");
+        assert (dataObject.getType()).equals("core/fd/components/form/textinput/v1/textinput");
+        assert (dataObject.getTitle()).equals("Full Name");
+        assert (dataObject.getFieldType()).equals("text-input");
+        assert (dataObject.getDescription()).equals("Enter Full Name");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
+        FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DATALAYER));
     }
 }
