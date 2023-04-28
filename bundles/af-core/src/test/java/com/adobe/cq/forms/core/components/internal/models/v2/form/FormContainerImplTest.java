@@ -215,6 +215,20 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetDorType() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getDorType());
+        assertEquals("generate", formContainer.getDorType());
+    }
+
+    @Test
+    void testDorTemplateRef() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getDorTemplateRef());
+        assertEquals("xyz", formContainer.getDorTemplateRef());
+    }
+
+    @Test
     void testGetContextPath() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");

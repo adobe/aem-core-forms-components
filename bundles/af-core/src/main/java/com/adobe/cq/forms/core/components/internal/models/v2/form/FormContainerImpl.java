@@ -57,6 +57,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
+    private static final String DOR_TEMPLATE_CHANGED = "dorTemplateChanged";
 
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
@@ -95,6 +96,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String data;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private boolean dorTemplateChanged;
 
     @PostConstruct
     protected void initFormContainerModel() {
@@ -259,5 +263,23 @@ public class FormContainerImpl extends AbstractContainerImpl implements
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
         return customDorProperties;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getDorType() {
+        return dorType;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getDorTemplateRef() {
+        return dorTemplateRef;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isDorTemplateChanged() {
+        return dorTemplateChanged;
     }
 }
