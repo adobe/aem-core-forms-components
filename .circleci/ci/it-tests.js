@@ -185,13 +185,14 @@ try {
             console.log("lighthouse******", lighthouse)
             console.log("chrome********", chrome)
 
-            const options = {logLevel: 'info', output: 'html', onlyCategories: ['performance'], port: chrome.port};
-            const runnerResult = await lighthouse.default('https://facebook.com', options);
+            const options = {logLevel: 'info', output: 'html', port: chrome.port};
+            const runnerResult = await lighthouse.default('http://localhost:4502/aem/start.html', options);
             // `.report` is the HTML report as a string
             const reportHtml = runnerResult.report;
             console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
             console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-            fs.writeFileSync('lhreport.html', reportHtml);
+            console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
+             // fs.writeFileSync('lhreport.html', reportHtml);
             // `.lhr` is the Lighthouse Result as a JS object
             await chrome.kill();
     }
