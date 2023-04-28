@@ -172,7 +172,10 @@ try {
 //    const lighthouse = await import('/usr/local/lib/node_modules/lighthouse') // Error [ERR_UNSUPPORTED_DIR_IMPORT]: Directory import '/usr/local/lib/node_modules/lighthouse' is not supported resolving ES modules imported from /home/circleci/build/.circleci/ci/it-tests.js
 //    const chromeLauncher = await import('/usr/local/lib/node_modules/chrome-launcher') // Error [ERR_UNSUPPORTED_DIR_IMPORT]: Directory import '/usr/local/lib/node_modules/lighthouse' is not supported resolving ES modules imported from /home/circleci/build/.circleci/ci/it-tests.js
 
-      const lighthouse = await import('lighthouse')
+
+
+      // https://app.circleci.com/pipelines/github/adobe/aem-core-forms-components/2787/workflows/a45acdd7-3e32-4a6a-a167-fde102161020/jobs/9028
+      const lighthouse = await import('lighthouse') // Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'lighthouse' imported from /home/circleci/build/.circleci/ci/it-tests.js
       const chromeLauncher = await import('chrome-launcher')
 
 

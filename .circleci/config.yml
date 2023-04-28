@@ -31,10 +31,10 @@ common:
           command: sudo chown -R circleci /usr/local
       - run:
           name: Install Chrome Launcher
-          command: npm i chrome-launcher -g
+          command: npm i chrome-launcher
       - run:
           name: Install lighthouse
-          command: npm install lighthouse -g
+          command: npm install lighthouse
       - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
