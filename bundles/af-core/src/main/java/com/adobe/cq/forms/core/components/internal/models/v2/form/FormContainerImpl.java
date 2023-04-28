@@ -264,9 +264,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Override
     @JsonIgnore
     public String getParentPagePath() {
-        String path = this.getPath();
-        if (!StringUtils.isEmpty(path)) {
-            return StringUtils.substringBefore(path, "/jcr:content/");
+        if (resource != null) {
+            Resource parent = resource.getParent();
+            while (parent != null && !StringUtils.equals(parent.getResourceType(), "cq:Page")) {
+                parent = parent.getParent();
+            }
+            return parent != null ? parent.getPath() : StringUtils.EMPTY;
         }
         return StringUtils.EMPTY;
     }
