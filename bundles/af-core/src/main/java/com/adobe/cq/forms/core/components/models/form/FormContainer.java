@@ -327,7 +327,7 @@ public interface FormContainer extends Container {
      * Returns site page path if dropped in sites else the form page path.
      *
      * @return parent page path before jcr:content
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
     default String getParentPagePath() {

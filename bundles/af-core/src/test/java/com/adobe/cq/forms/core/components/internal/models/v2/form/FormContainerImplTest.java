@@ -254,9 +254,14 @@ public class FormContainerImplTest {
     }
 
     @Test
-    void testGetParentPagePath() throws Exception {
+    void testGetParentPagePathForForm() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals(formContainer.getParentPagePath(), "/content/forms/af/demo");
+    }
+    @Test
+    void testGetParentPagePathInSites() throws Exception {
+        FormContainer formContainerInSites = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
+        assertEquals(formContainerInSites.getParentPagePath(), SITES_PATH);
     }
 
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
