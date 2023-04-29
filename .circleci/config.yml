@@ -57,6 +57,11 @@ common:
               REPO_NAME=$CIRCLE_PROJECT_REPONAME
               PR_NUMBER=$CIRCLE_PR_NUMBER
               GITHUB_TOKEN=$GITHUB_TOKEN
+              
+              echo $CIRCLE_PROJECT_USERNAME
+              echo $CIRCLE_PROJECT_REPONAME
+              echo $CIRCLE_PR_NUMBER
+              echo $GITHUB_TOKEN
 
               COMMENT="| Performance | Accessibility | Best-Practices | SEO |\n| ------------------- | ------------------- | ------------------- | ------------------- |\n| 40 | 100 | 90 | 90 |"
               
