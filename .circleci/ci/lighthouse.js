@@ -27,7 +27,7 @@ const checkLightHouse = async () => {
     const reportHtml = runnerResult.report;
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-    fs.writeFileSync('LigthouseReport.html', reportHtml);
+
     if(isThresholdsPass(runnerResult.lhr.categories)){
         // update on github with the object.
     }
@@ -36,15 +36,18 @@ const checkLightHouse = async () => {
         fail("Lighthouse score for aem-core-forms-components, below the thresholds");
     }
 
+    fs.writeFileSync('LigthouseReport.html', reportHtml);
 
-//    COMMENT="| Performance | Accessibility | Best-Practices | SEO |\n| ------------------- | ------------------- | ------------------- | ------------------- |\n| 40 | 100 | 90 | 90 |"
-//
-//    curl -X POST \
-//          -H "Authorization: token ${GITHUB_TOKEN}" \
-//          -H "Content-Type: application/json" \
-//          -d "{\"body\":\"${COMMENT}\"}" \
-//          "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${PR_NUMBER}/comments"
+    console.log("repo owner from env variables", process.env.REPO_OWNER)
+    console.log("repo $REPO_NAME from env variables", process.env.REPO_NAME)
+    console.log("repo $PR_NUMBER from env variables", process.env.PR_NUMBER)
+    console.log("repo $GITHUB_TOKEN from env variables", process.env.GITHUB_TOKEN)
 
+
+
+//    postCommentToGitHub($REPO_OWNER, $REPO_NAME, $PR_NUMBER, commentText, $GITHUB_TOKEN)
+//              .then(comment => console.log('Comment posted:', comment))
+//              .catch(error => console.error('Failed to post comment:', error));
 
 
     console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
@@ -62,6 +65,27 @@ const isThresholdsPass = (resultCategories) => {
         return true
         }
         return false
+}
+
+const postCommentToGitHub = async (owner, repo, issueNumber, commentText, authToken) => {
+  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `token ${authToken}`
+    },
+    body: JSON.stringify({
+      body: commentText
+    })
+  });
+
+  if (!response.ok) {
+     throw new Error(`Failed to post comment: ${response.status} ${response.statusText}`);
+    console.log("Failed to post comment on github PR!")
+  }
+  const comment = await response.json();
+  return comment;
 }
 
 module.exports = { checkLightHouse }
