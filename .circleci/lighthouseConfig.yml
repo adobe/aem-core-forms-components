@@ -4,5 +4,5 @@ lighthouse:
   requiredScores:
     performance: 90
     accessibility: 90
-    'best-practices': 90
+    bestPractices: 90
     seo: 90

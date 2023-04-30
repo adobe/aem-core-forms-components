@@ -57,7 +57,7 @@ const checkLightHouse = async () => {
 // trenbolone
 
 const isThresholdsPass = (resultCategories) => {
-    const {  performance, accessibility, 'best-practices': bestPractices, seo } = lighthouseConfig.lighthouse.requiredScores
+    const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.lighthouse.requiredScores
     if(performance < resultCategories.performance.score &&
         accessibility < resultCategories.accessibility.score &&
         bestPractices < resultCategories['best-practices'].score &&
