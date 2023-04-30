@@ -1,9 +1,0 @@
-{
-  "url" : "http://localhost:4502/aem/start.html",
-  "requiredScores": {
-    "performance": 90,
-    "accessibility": 90,
-    "best-practices": 90,
-    "seo": 90
-  }
-}

@@ -16,6 +16,7 @@
 
 const ci = new (require('./ci.js'))();
 const e = require('child_process');
+const lighthouse = require('./lighthouse.js')
 //const lighthouse =  require('/usr/local/lib/node_modules/lighthouse'); // gives error that lighthouse is a ES module, not a commonJS module, so can`t import with require
 //const chromeLauncher = require('/usr/local/lib/node_modules/chrome-launcher'); //
 
@@ -112,29 +113,11 @@ try {
 //    });
 //    }
 
-    // after test cases are run, we will check the lighthouse score ----
-    // inside integration tests;
-    // 4502 aem is open;;
-    // we can check lighthouse at http://localhost:4502
-
     // primary container is: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11382-openjdk11 (base image is qp container)
     // primary container exposed ports 4502, 3000  ---- aem up on 4502
     // secondary container qp(docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11) , exposed ports 5555, 5556
 
-    // third container --
-    // run lighthouse on this;;;
 
-//    (async () => {
-//      const response = await lighthouseCheck({
-////       outputDirectory: '../artifacts',
-//        urls: [
-//          'https://google.com',
-//          'https://adobe.com'
-//        ]
-//      });
-//
-//      console.log('response', response);
-//    })();
     ci.sh("pwd")
     ci.sh("ls")
 
@@ -199,7 +182,7 @@ try {
 
     const myFunc = async () => {
         console.log("calling lighthouse function!!!")
-        await checkLightHouse()
+        await lighthouse.checkLightHouse()
          ci.dir(qpPath, () => {
             // Stop CQ
             ci.sh('./qp.sh -v stop --id author');
