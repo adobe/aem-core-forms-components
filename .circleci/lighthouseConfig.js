@@ -20,4 +20,4 @@ const lighthouseConfig = {
 
 }
 
-module.export = lighthouseConfig
+module.exports = lighthouseConfig

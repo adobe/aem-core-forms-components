@@ -22,8 +22,12 @@ const checkLightHouse = async () => {
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic YWRtaW46YWRtaW4=' }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
+    console.log(" lighthouseConfig --->>> ", lighthouseConfig)
+    console.log(" from env variables --->>> ", process.env)
+
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
     // `.report` is the HTML report as a string
+
     const reportHtml = runnerResult.report;
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
@@ -54,7 +58,6 @@ const checkLightHouse = async () => {
 //     `.lhr` is the Lighthouse Result as a JS object
     await chrome.kill();
 }
-// trenbolone
 
 const isThresholdsPass = (resultCategories) => {
     const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.requiredScores[0]
