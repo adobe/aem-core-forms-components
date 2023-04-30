@@ -47,30 +47,6 @@ common:
       - store_artifacts:
           path: logs
 
-  github_pr_comment_steps: &github_pr_comment_steps
-    steps:
-      - checkout
-      - run:
-            name: Post Comment on GitHub PR
-            command: |
-              REPO_OWNER=$CIRCLE_PROJECT_USERNAME
-              REPO_NAME=$CIRCLE_PROJECT_REPONAME
-              PR_NUMBER=$CIRCLE_PR_NUMBER
-              GITHUB_TOKEN=$GITHUB_TOKEN
-              
-              echo $CIRCLE_PROJECT_USERNAME
-              echo $CIRCLE_PROJECT_REPONAME
-              echo $CIRCLE_PR_NUMBER
-              echo $GITHUB_TOKEN
-
-              COMMENT="| Performance | Accessibility | Best-Practices | SEO |\n| ------------------- | ------------------- | ------------------- | ------------------- |\n| 40 | 100 | 90 | 90 |"
-              
-              curl -X POST \
-                  -H "Authorization: token ${GITHUB_TOKEN}" \
-                  -H "Content-Type: application/json" \
-                  -d "{\"body\":\"${COMMENT}\"}" \
-                  "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${PR_NUMBER}/comments"
-
   docker_auth: &docker_auth
     auth:
       username: $DOCKER_USER
@@ -177,11 +153,6 @@ jobs:
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
 
-  post-comment-on-github-pr:
-    executor: forms_executor_node
-    working_directory: /home/circleci/build
-    <<: *github_pr_comment_steps
-
   release:
     executor: forms_executor
     steps:
@@ -230,12 +201,6 @@ workflows:
 #          requires:
 #            - build-java-11
 #            - build-java-8
-      - post-comment-on-github-pr:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - cypress-chrome-cloudready-with-addon
 
       - release:
           requires:

@@ -27,12 +27,27 @@ const checkLightHouse = async () => {
     const reportHtml = runnerResult.report;
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
-    if(isThresholdsPass(runnerResult.lhr.categories)){
-        // fail the build, with reasoning
-         fail("Lighthouse score for aem-core-forms-components, below the thresholds");
-    }
-    console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
     fs.writeFileSync('LigthouseReport.html', reportHtml);
+    if(isThresholdsPass(runnerResult.lhr.categories)){
+
+    }
+    else{
+        // fail the build, with reasoning
+        fail("Lighthouse score for aem-core-forms-components, below the thresholds");
+    }
+
+
+//    COMMENT="| Performance | Accessibility | Best-Practices | SEO |\n| ------------------- | ------------------- | ------------------- | ------------------- |\n| 40 | 100 | 90 | 90 |"
+//
+//    curl -X POST \
+//          -H "Authorization: token ${GITHUB_TOKEN}" \
+//          -H "Content-Type: application/json" \
+//          -d "{\"body\":\"${COMMENT}\"}" \
+//          "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${PR_NUMBER}/comments"
+
+
+
+    console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
 //     `.lhr` is the Lighthouse Result as a JS object
     await chrome.kill();
 }
@@ -40,10 +55,10 @@ const checkLightHouse = async () => {
 
 const isThresholdsPass = (resultCategories) => {
     const {  performance, accessibility, 'best-practices': bestPractices, seo } = lighthouseConfig.lighthouse.requiredScores
-    if(performance > resultCategories.performance.score &&
-        accessibility > resultCategories.accessibility.score &&
-        bestPractices > resultCategories.['best-practices'].score &&
-        seo > resultCategories.seo.score){
+    if(performance < resultCategories.performance.score &&
+        accessibility < resultCategories.accessibility.score &&
+        bestPractices < resultCategories['best-practices'].score &&
+        seo < resultCategories.seo.score){
         return true
         }
         return false
