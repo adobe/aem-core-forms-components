@@ -29,7 +29,7 @@ const checkLightHouse = async () => {
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
     fs.writeFileSync('LigthouseReport.html', reportHtml);
     if(isThresholdsPass(runnerResult.lhr.categories)){
-
+        // update on github with the object.
     }
     else{
         // fail the build, with reasoning
