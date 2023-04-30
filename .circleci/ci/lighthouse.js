@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 const fs = require('fs');
-const lighthouseConfig = require("../lighthouseConfig.yml")
+const lighthouseConfig = require("../lighthouseConfig.js")
 //const { fail } = require('@circleci/circleci-javascript-sdk');
 
 
@@ -22,7 +22,7 @@ const checkLightHouse = async () => {
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic YWRtaW46YWRtaW4=' }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
-    const runnerResult = await lighthouse.default(lighthouseConfig.lighthouse.urls[0], options);
+    const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
     // `.report` is the HTML report as a string
     const reportHtml = runnerResult.report;
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
@@ -57,7 +57,7 @@ const checkLightHouse = async () => {
 // trenbolone
 
 const isThresholdsPass = (resultCategories) => {
-    const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.lighthouse.requiredScores
+    const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.requiredScores[0]
     if(performance < resultCategories.performance.score &&
         accessibility < resultCategories.accessibility.score &&
         bestPractices < resultCategories['best-practices'].score &&
