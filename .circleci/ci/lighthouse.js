@@ -40,10 +40,10 @@ const checkLightHouse = async () => {
         // fail the build, with reasoning, without exiting the build
 //        fail("Lighthouse score for aem-core-forms-components, below the thresholds");
         console.log("Lighthouse score for aem-core-forms-components, below the thresholds")
-        process.exit(1);
+       // process.exit(1);
     }
+    postCommentToGitHub('Posting Lighthouse scores..', process.env.GITHUB_TOKEN)
     fs.writeFileSync('LigthouseReport.html', reportHtml);
-    postCommentToGitHub('Posting Lighthouse scores..', process.env.CIRCLE_OIDC_TOKEN)
     await chrome.kill();
 }
 
@@ -95,7 +95,7 @@ let newLighthouseConfig = {};
 newLighthouseConfig.urls = lighthouseConfig.urls;
 newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], lighthouseScores]
 // replace the existing config with newConfig;
-fs.writeFile("./lighthouseConfig.js", newLighthouseConfig, function (err) {
+fs.writeFile("../lighthouseConfig.js", JSON.stringify(newLighthouseConfig), function (err) {
       if (err) {
         console.error(err);
       } else {

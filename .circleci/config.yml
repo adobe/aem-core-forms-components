@@ -133,6 +133,8 @@ jobs:
 
   cypress-chrome-cloudready-with-addon:
     executor: test_executor_cloudready
+    context:
+      - CIF GitHub
     environment:
       AEM: addon
       TYPE: cypress
