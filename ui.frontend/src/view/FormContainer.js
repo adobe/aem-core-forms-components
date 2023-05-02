@@ -103,9 +103,6 @@ export default class FormContainer {
         if (id) {
             let fieldView = this._fields[id];
             if (fieldView && fieldView.setFocus) {
-                if(this._fields[id].parentView && this._fields[id].parentView.fieldType !== 'form' && this._fields[id].parentView.setFocus){
-                  this._fields[id].parentView.setFocus(id);
-                }
                 fieldView.setFocus();
             } else {
                 // todo proper error handling, for AF 2.0 model exceptions as well

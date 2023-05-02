@@ -40,8 +40,8 @@
         }
 
         setFocus(id) {
-            this.setActive();
             super.setFocus(id);
+            this.setActive();
         }
 
         getWidget() {
