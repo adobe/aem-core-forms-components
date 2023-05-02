@@ -136,6 +136,7 @@
         }
 
         setFocus(id) {
+            super.setFocus(id);
             this.setActive();
             this.#collapseAllItems();
             const item = this.#getItemById(id + '-item');

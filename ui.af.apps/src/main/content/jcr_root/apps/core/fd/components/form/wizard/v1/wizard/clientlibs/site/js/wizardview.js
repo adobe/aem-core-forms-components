@@ -114,9 +114,10 @@
         }
 
         setFocus(id) {
+            super.setFocus(id);
             this.setActive();
             const index = this.#getTabIndexById(id + '_wizard-item-nav');
-            this.#navigate(index)
+            this.#navigate(index);
         }
 
         getWidget() {
