@@ -68,7 +68,7 @@ const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
     const options = {
       method: 'POST',
       headers: {
-        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Authorization': `${GITHUB_TOKEN}`,
         'User-Agent': 'CircleCI'
       }
     };
