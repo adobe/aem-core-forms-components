@@ -133,14 +133,11 @@ jobs:
 
   cypress-chrome-cloudready-with-addon:
     executor: test_executor_cloudready
-    context:
-      - CIF GitHub
     environment:
       AEM: addon
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
-      GITHUB_TOKEN: $GITHUB_TOKEN
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
