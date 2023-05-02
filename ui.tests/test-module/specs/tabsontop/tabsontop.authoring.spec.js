@@ -195,11 +195,11 @@ describe.only('Page - Authoring', function () {
         });
     });
 
-      it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
-          cy.cleanTest(panelContainerEditPath).then(function() {
-              testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
-          });
-      });
+    it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
+        cy.cleanTest(panelContainerEditPath).then(function() {
+            testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+        });
+    });
 
   });
 });
