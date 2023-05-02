@@ -14,6 +14,7 @@
 
 const fs = require('fs');
 const lighthouseConfig = require("../lighthouseConfig.js")
+const https = require('https');
 //const { fail } = require('@circleci/circleci-javascript-sdk');
 
 
@@ -33,29 +34,16 @@ const checkLightHouse = async () => {
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
     if(isThresholdsPass(runnerResult.lhr.categories)){
-        // update on github with the object.
+        // update on github with the object. --- writeObjLighthouseConfig() // file should be a string;
     }
     else{
-        // fail the build, with reasoning
+        // fail the build, with reasoning, without exiting the build
 //        fail("Lighthouse score for aem-core-forms-components, below the thresholds");
         console.log("Lighthouse score for aem-core-forms-components, below the thresholds")
+        process.exit(1);
     }
-
-    console.log("repo $GITHUB_TOKEN from env variables", process.env.GITHUB_TOKEN)
-
     fs.writeFileSync('LigthouseReport.html', reportHtml);
-
-//    postCommentToGitHub($REPO_OWNER, $REPO_NAME, $PR_NUMBER, commentText, $GITHUB_TOKEN)
-//              .then(comment => console.log('Comment posted:', comment))
-//              .catch(error => console.error('Failed to post comment:', error));
-
-
-    postCommentToGitHub(process.env.CIRCLE_PROJECT_USERNAME, process.env.CIRCLE_PROJECT_REPONAME, process.env.CIRCLE_PULL_REQUEST, 'Posting Lighthouse scores..', process.env.CIRCLE_OIDC_TOKEN)
-              .then(comment => console.log('Comment posted:', comment))
-              .catch(error => console.error('Failed to post comment:', error));
-
-    console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
-//     `.lhr` is the Lighthouse Result as a JS object
+    postCommentToGitHub('Posting Lighthouse scores..', process.env.CIRCLE_OIDC_TOKEN)
     await chrome.kill();
 }
 
@@ -70,28 +58,50 @@ const isThresholdsPass = (resultCategories) => {
         return false
 }
 
-//const postCommentToGitHub = async (owner, repo, issueNumber, commentText, authToken) => {
-const postCommentToGitHub = async(CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, commentText, CIRCLE_OIDC_TOKEN) => {
-//  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`;
-  const url = `https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_PULL_REQUEST}/comments`
-  console.log("URL TO POST A COMMENT ON GITHUB ----->>>>> ", url)
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Circle-Token': CIRCLE_OIDC_TOKEN
-    },
-    body: JSON.stringify({
-      body: commentText
-    })
-  });
+const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
 
-  if (!response.ok) {
-     throw new Error(`Failed to post comment: ${response.status} ${response.statusText}`);
-    console.log("Failed to post comment on github PR!")
-  }
-  const comment = await response.json();
-  return comment;
+    const prNumber = process.env.CIRCLE_PULL_REQUEST.split('/').pop();
+    const apiUrl = new URL(`https://api.github.com/repos/${process.env.CIRCLE_PROJECT_USERNAME}/${process.env.CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
+    const postData = JSON.stringify({body: commentText});
+
+    // Define the options for the HTTPS request
+    const options = {
+      method: 'POST',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'User-Agent': 'CircleCI'
+      }
+    };
+
+    // Send the HTTPS request to create the new comment on the pull request
+    const req = https.request(apiUrl, options, (res) => {
+      console.log(`Status: ${res.statusCode}`);
+      res.on('data', (d) => {
+        process.stdout.write(d);
+      });
+    });
+
+    req.on('error', (error) => {
+      console.error(error);
+    });
+
+    req.write(postData);
+    req.end();
+}
+
+const writeObjLighthouseConfig = (lighthouseConfig, lighthouseScores) => {
+let newLighthouseConfig = {};
+
+newLighthouseConfig.urls = lighthouseConfig.urls;
+newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], lighthouseScores]
+// replace the existing config with newConfig;
+fs.writeFile("./lighthouseConfig.js", newLighthouseConfig, function (err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File contents replaced successfully!");
+      }
+    });
 }
 
 module.exports = { checkLightHouse }
