@@ -70,6 +70,38 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(accordionDrop);
   }
 
+  const testSaveAsFragmentBehaviour = function(accordionEditPathSelector, accordionDrop, isSites) {
+    if (isSites) {
+      dropAccordionInSites();
+    } else {
+      dropAccordionInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionEditPathSelector);
+    cy.invokeEditableAction("[data-action='saveAsFragment']");
+    // Check If Dialog Options Are Visible
+    cy.get("[name='name']")
+        .should("exist");
+    cy.get("[name='title']")
+        .should("exist");
+    cy.get("[name='description']")
+        .should("exist");
+    cy.get("[name='tags']")
+        .should("exist");
+    cy.get("[name='targetPath']")
+        .should("exist");
+    cy.get("[name='formModel']")
+        .should("exist");
+    cy.get("[name='fragmentModelRoot']")
+        .should("exist");
+
+    // TODO: To Test done when fragment is created
+    // cy.get('.cq-dialog-submit').click();
+    // check if panel is replaced by fragment component and check for fragRef
+
+    cy.get('.cq-dialog-cancel').click();
+    cy.deleteComponentByPath(accordionDrop);
+  };
+
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         accordionEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/accordion",
@@ -105,6 +137,10 @@ describe('Page - Authoring', function () {
 
       cy.deleteComponentByPath(accordionEditPath);
     });
+
+    it ('open save as fragment dialog of Accordion', function(){
+      testSaveAsFragmentBehaviour(accordionPathSelector, accordionEditPath);
+    })
   })
 
   context('Open Sites Editor', function () {
@@ -131,6 +167,12 @@ describe('Page - Authoring', function () {
           testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
       });
     });
+
+    it('open save as fragment dialog of Accordion', { retries: 3 },function(){
+      cy.cleanTest(accordionEditPath).then(function() {
+        testSaveAsFragmentBehaviour(accordionEditPathSelector, accordionEditPath, true);
+      });
+    })
 
   });
 })

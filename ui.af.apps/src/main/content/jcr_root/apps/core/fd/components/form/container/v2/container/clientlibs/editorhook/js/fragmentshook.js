@@ -48,7 +48,7 @@
         return {
             src : fragmentCreation.getPath() + componentPath + '?resourceType=' + encodeURIComponent(FRAGMENT_CREATION_DIALOG_PATH),
             isFloating : false,
-            loadingMode : "sidePanel",
+            loadingMode : "auto",
             layout : "auto"
         };
     };
