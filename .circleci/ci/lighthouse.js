@@ -41,10 +41,6 @@ const checkLightHouse = async () => {
         console.log("Lighthouse score for aem-core-forms-components, below the thresholds")
     }
 
-
-    console.log("repo owner from env variables", process.env.REPO_OWNER)
-    console.log("repo $REPO_NAME from env variables", process.env.REPO_NAME)
-    console.log("repo $PR_NUMBER from env variables", process.env.PR_NUMBER)
     console.log("repo $GITHUB_TOKEN from env variables", process.env.GITHUB_TOKEN)
 
     fs.writeFileSync('LigthouseReport.html', reportHtml);
@@ -53,6 +49,10 @@ const checkLightHouse = async () => {
 //              .then(comment => console.log('Comment posted:', comment))
 //              .catch(error => console.error('Failed to post comment:', error));
 
+
+    postCommentToGitHub(process.env.CIRCLE_PROJECT_USERNAME, process.env.CIRCLE_PROJECT_REPONAME, process.env.CIRCLE_PULL_REQUEST, 'Posting Lighthouse scores..', process.env.CIRCLE_OIDC_TOKEN)
+              .then(comment => console.log('Comment posted:', comment))
+              .catch(error => console.error('Failed to post comment:', error));
 
     console.log('.lhr` is the Lighthouse Result as a JS object', runnerResult.lhr)
 //     `.lhr` is the Lighthouse Result as a JS object
@@ -70,13 +70,16 @@ const isThresholdsPass = (resultCategories) => {
         return false
 }
 
-const postCommentToGitHub = async (owner, repo, issueNumber, commentText, authToken) => {
-  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`;
+//const postCommentToGitHub = async (owner, repo, issueNumber, commentText, authToken) => {
+const postCommentToGitHub = async(CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, commentText, CIRCLE_OIDC_TOKEN) => {
+//  const url = `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}/comments`;
+  const url = `https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_PULL_REQUEST}/comments`
+  console.log("URL TO POST A COMMENT ON GITHUB ----->>>>> ", url)
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `token ${authToken}`
+      'Circle-Token': CIRCLE_OIDC_TOKEN
     },
     body: JSON.stringify({
       body: commentText

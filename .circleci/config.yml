@@ -138,6 +138,7 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
+      GITHUB_TOKEN: $GITHUB_TOKEN
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
