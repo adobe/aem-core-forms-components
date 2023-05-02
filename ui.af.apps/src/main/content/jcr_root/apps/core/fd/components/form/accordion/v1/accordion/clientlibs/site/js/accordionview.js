@@ -135,8 +135,23 @@
             return this.element.querySelector(Accordion.selectors.qm);
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            this.#collapseAllItems();
+            const item = this.#getItemById(id + '-item');
+            this.#expandItem(item)
+        }
+
+        #collapseAllItems(){
+          var items = this.#getCachedItems();
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    if (this.#isItemExpanded(items[i])) {
+                      this.#collapseItem(items[i])
+                    }
+                }
+            }
         }
 
         /**
