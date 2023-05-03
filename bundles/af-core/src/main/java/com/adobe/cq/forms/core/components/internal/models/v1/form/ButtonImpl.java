@@ -26,10 +26,14 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Button;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
@@ -58,6 +62,9 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "buttonType")
     @Default(values = "button")
     protected String buttonType;
+
+    @SlingObject
+    private Resource resource;
 
     @Override
     public String getValue() {
@@ -105,5 +112,11 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
             properties.put("fd:buttonType", buttonType);
         }
         return properties;
+    }
+
+    @Override
+    @NotNull
+    protected FormComponentData getComponentData() {
+        return new ComponentDataImpl(this, resource);
     }
 }

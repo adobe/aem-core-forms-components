@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -54,6 +56,7 @@ public class FileInputImplTest {
     private static final String PATH_FILEINPUT_CUSTOMIZED = CONTENT_ROOT + "/fileinput-customized";
 
     private static final String PATH_FILEINPUT = CONTENT_ROOT + "/fileinput";
+    private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -369,5 +372,25 @@ public class FileInputImplTest {
         FileInput fileInput = request.adaptTo(FileInput.class);
         String appliedCssClasses = fileInput.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
+        FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) fileInput.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("fileinput-90881b3d31");
+        assert (dataObject.getType()).equals("core/fd/components/form/fileinput/v1/fileinput");
+        assert (dataObject.getTitle()).equals("CV");
+        assert (dataObject.getFieldType()).equals("file-input");
+        assert (dataObject.getDescription()).equals("Upload your CV");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
+        FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
     }
 }

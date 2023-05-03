@@ -1,0 +1,30 @@
+{
+  "id": "numberinput-57e5de6073",
+  "fieldType": "number-input",
+  "name": "Phone Number",
+  "description": "Enter your phone number.",
+  "type": "number",
+  "label": {
+    "value": "Phone Number"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/numberinput-datalayer"
+  },
+  ":type": "core/fd/components/form/numberinput/v1/numberinput",
+  "dataLayer": {
+    "numberinput-57e5de6073": {
+      "dc:title": "Phone Number",
+      "dc:description": "Enter your phone number.",
+      "@type": "core/fd/components/form/numberinput/v1/numberinput",
+      "fieldType": "number-input"
+    }
+  }
+}
