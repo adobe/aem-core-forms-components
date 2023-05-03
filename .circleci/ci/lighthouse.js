@@ -107,6 +107,8 @@ fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, nu
       }
     });
 }
+// login to https://github.com/adobe/aem-core-forms-components/tree/lighthouse-circleci/.circleci/ci
+// write a file here
 
 
 module.exports = { checkLightHouse }
