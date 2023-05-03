@@ -13,7 +13,7 @@
  ******************************************************************************/
 
 const fs = require('fs');
-ßconst https = require('https');
+const https = require('https');
 //const { fail } = require('@circleci/circleci-javascript-sdk');
 
 
@@ -94,10 +94,10 @@ const writeObjLighthouseConfig = (lighthouseConfig, resultCategories) => {
 let newLighthouseConfig = {};
 
 newLighthouseConfig.urls = lighthouseConfig.urls;
-// decide which one should come first!
 newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {performance: resultCategories.performance.score, accessibility: resultCategories.accessibility.score,
                                                                             bestPractices: resultCategories['best-practices'].score, seo: resultCategories.seo.score}]
-// replace the existing config with newConfig;
+
+// write changes in the git file;
 
 fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
       if (err) {
@@ -107,5 +107,6 @@ fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, nu
       }
     });
 }
+
 
 module.exports = { checkLightHouse }
