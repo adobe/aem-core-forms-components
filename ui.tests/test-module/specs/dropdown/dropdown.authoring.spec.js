@@ -137,7 +137,9 @@ describe('Page - Authoring', function () {
                         const $body = $iframe.contents().find('body')
                         cy.wrap($body).find('.cmp-adaptiveform-dropdown__option').should('have.length', 2);
                     })
-                    cy.deleteComponentByPath(dropdown);
+                    cy.wait(2000).then(() => {
+                        cy.deleteComponentByPath(dropdown);
+                    })
         });
     })
 
