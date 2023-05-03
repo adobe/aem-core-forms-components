@@ -1,11 +1,40 @@
 {
-  "id":"panel-81f441fcab",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
+  "id": "panel-81f441fcab",
+  "fieldType": "panel",
+  "name": "abc",
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
+  "label": {
+    "value": "dependent names"
+  },
+  "events": {
+    "change": [
+      "some expression 2"
+    ],
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "rules": {
+    "visible": "some expression"
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/rules-panel"
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":type": "core/fd/components/form/panel/v1/panel",
   ":items": {
-    "textinput" : {
+    "textinput": {
       "id": "textinput-bec585e910",
       "fieldType": "text-input",
       "name": "abc",
@@ -28,27 +57,5 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  },
-  ":itemsOrder" : ["textinput"],
-  "label": {
-    "value": "dependent names"
-  },
-  "events": {
-    "change": [
-      "some expression 2"
-    ],
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "rules": {
-    "visible": "some expression"
-  },
-  "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
-    "fd:path": "/content/rules-panel"
-  },
-  ":type": "core/fd/components/form/panel/v1/panel"
+  }
 }

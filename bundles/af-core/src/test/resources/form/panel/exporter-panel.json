@@ -1,9 +1,29 @@
 {
-  "id":"panel-d29e24f4ca",
-  "fieldType":"panel",
-  "name":"abc",
+  "id": "panel-d29e24f4ca",
+  "fieldType": "panel",
+  "name": "abc",
+  "label": {
+    "value": "dependent names"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/panel"
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":type": "core/fd/components/form/panel/v1/panel",
   ":items": {
-    "textinput" : {
+    "textinput": {
       "id": "textinput-3a2afcbdfd",
       "fieldType": "text-input",
       "name": "abc",
@@ -24,18 +44,5 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-    },
-  ":itemsOrder" : ["textinput"],
-  "label": {
-    "value": "dependent names"
-  },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "properties": {
-    "fd:path": "/content/panel"
-  },
-  ":type": "core/fd/components/form/panel/v1/panel"
+  }
 }
