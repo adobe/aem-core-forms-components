@@ -51,7 +51,7 @@ describe('Page - Authoring', function () {
                 .should("exist")
                 .should('be.visible')
                 .click({force: true});
-            cy.get(".tree-dialog-ok")
+            cy.get(".selected-schema").next("div").contains('button:nth-child(2)', 'Select')
                 .should('be.visible')
                 .should("be.enabled")
                 .click();
