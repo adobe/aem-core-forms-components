@@ -1,0 +1,21 @@
+{
+
+    "urls": [
+      "http://localhost:4502/aem/start.html"
+    ],
+    "requiredScores": [
+      {
+        "performance": 10,
+        "accessibility": 10,
+        "bestPractices": 10,
+        "seo": 10
+      },
+      {
+        "performance": 15,
+        "accessibility": 15,
+        "bestPractices": 15,
+        "seo": 15
+      }
+    ]
+
+}
