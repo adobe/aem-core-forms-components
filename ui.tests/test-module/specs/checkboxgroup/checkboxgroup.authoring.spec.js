@@ -156,8 +156,10 @@ describe('Page - Authoring', function () {
             cy.get('#ContentFrame').then(($iframe) => {
                 const $body = $iframe.contents().find('body')
                 cy.wrap($body).find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
+                })
+            cy.wait(2000).then(() => {
+                cy.deleteComponentByPath(checkBoxGroupDrop);
             })
-            cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
   })

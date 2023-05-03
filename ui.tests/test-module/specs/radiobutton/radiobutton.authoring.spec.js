@@ -133,14 +133,16 @@ describe('Page - Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
-        cy.get('input[name="./enum"]').last().type('0');
-        cy.get('input[name="./enumNames"]').last().type('Item 3');
+        cy.get('input[name="./enum"]').last().type("0");
+        cy.get('input[name="./enumNames"]').last().type("Item 3");
         cy.get('.cq-dialog-submit').click();
         cy.get('#ContentFrame').then(($iframe) => {
             const $body = $iframe.contents().find('body')
             cy.wrap($body).find('.cmp-adaptiveform-radiobutton__option').should('have.length', 2);
         })
-        cy.deleteComponentByPath(radioButtonDrop);
+        cy.wait(2000).then(() => {
+            cy.deleteComponentByPath(radioButtonDrop);
+        })
     });
 
 
