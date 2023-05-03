@@ -13,8 +13,7 @@
  ******************************************************************************/
 
 const fs = require('fs');
-//const lighthouseConfig = require("../lighthouseConfig.js")
-const https = require('https');
+ßconst https = require('https');
 //const { fail } = require('@circleci/circleci-javascript-sdk');
 
 
@@ -23,10 +22,9 @@ const checkLightHouse = async () => {
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic YWRtaW46YWRtaW4=' }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
-//    console.log(" lighthouseConfig --->>> ", lighthouseConfig)
     console.log(" from env variables --->>> ", process.env)
 
-    const lighthouseConfig = JSON.parse(fs.readFileSync('../lighthouseConfig.json'))
+    const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConfig.json'))
 
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
@@ -37,13 +35,12 @@ const checkLightHouse = async () => {
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
     if(isThresholdsPass(runnerResult.lhr.categories, lighthouseConfig)){
-        // update on github with the object. --- writeObjLighthouseConfig() // file should be a string;
         writeObjLighthouseConfig(lighthouseConfig, runnerResult.lhr.categories)
     }
     else{
         // fail the build, with reasoning, without exiting the build
 //        fail("Lighthouse score for aem-core-forms-components, below the thresholds");
-        console.log("Lighthouse score for aem-core-forms-components, below the thresholds")
+        console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
        // process.exit(1);
     }
     postCommentToGitHub('Posting Lighthouse scores..', process.env.GITHUB_TOKEN)
@@ -93,14 +90,16 @@ const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
     req.end();
 }
 
-const writeObjLighthouseConfig = (lighthouseConfig, lighthouseScoresCategories) => {
+const writeObjLighthouseConfig = (lighthouseConfig, resultCategories) => {
 let newLighthouseConfig = {};
 
 newLighthouseConfig.urls = lighthouseConfig.urls;
-newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {}]
+// decide which one should come first!
+newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {performance: resultCategories.performance.score, accessibility: resultCategories.accessibility.score,
+                                                                            bestPractices: resultCategories['best-practices'].score, seo: resultCategories.seo.score}]
 // replace the existing config with newConfig;
 
-fs.writeFile("../lighthouseConfig.json", JSON.stringify(newLighthouseConfig), function (err) {
+fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
       if (err) {
         console.error(err);
       } else {
