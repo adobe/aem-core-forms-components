@@ -21,7 +21,7 @@ const checkLightHouse = async () => {
     const lighthouse = await import('lighthouse')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic YWRtaW46YWRtaW4=' }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
+    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
     console.log(" from env variables --->>> ", process.env)
 
     const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConfig.json'))
