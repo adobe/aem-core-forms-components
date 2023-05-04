@@ -118,3 +118,51 @@
      cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
    })
 });
+
+describe("Form with Tabsontop Layout Container with focus", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focus.html";
+  let formContainer = null;
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  });
+
+  const tabSelector = 'ol li';
+  const tab1 = () => {
+    return cy.get(tabSelector).first();
+  }
+  const tab2 = () => {
+    return cy.get(tabSelector).last();
+  }
+
+  it("check if first tab activated if focus call from other tab", () => {
+    const [id, fieldView] = Object.entries(formContainer._fields)[0];
+    // panel 1 active
+    tab1().should('have.class', 'cmp-tabs__tab--active');
+    tab1().should('have.attr', 'aria-selected', 'true');
+    tab2().should('have.attr', 'aria-selected', 'false');
+
+    tab2().click().then(() => {
+      // panel 2 active
+      tab2().should('have.class', 'cmp-tabs__tab--active');
+      tab2().should('have.attr', 'aria-selected', 'true');
+      tab1().should('have.attr', 'aria-selected', 'false');
+
+      cy.get(tabSelector).then(() => {
+        formContainer.setFocus(id);
+        cy.get(tabSelector).then(() => {
+          // panel 1 active
+          tab1().should('have.class', 'cmp-tabs__tab--active');
+          tab1().should('have.attr', 'aria-selected', 'true');
+          tab2().should('have.attr', 'aria-selected', 'false');
+        });
+      });
+    });
+
+  });
+
+
+});

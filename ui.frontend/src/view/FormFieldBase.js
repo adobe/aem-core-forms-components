@@ -107,7 +107,11 @@ export default class FormFieldBase extends FormField {
     /**
      * Sets the focus on component's widget.
      */
-    setFocus() {
+    setFocus(id) {
+        const fieldType = this.parentView?.getModel()?.fieldType;
+        if (fieldType !== 'form' && this.parentView.setFocus) {
+          this.parentView.setFocus(id);
+        }
         this.widget.focus();
     }
 
@@ -169,10 +173,12 @@ export default class FormFieldBase extends FormField {
         const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
+        const fieldId = this._model.id;
         const eventPayload = {
             formId,
             formTitle,
             fieldName,
+            fieldId,
             panelName
         };
         const formContainerPath = this.formContainer.getPath();

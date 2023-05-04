@@ -42,6 +42,8 @@ import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataIm
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.osgi.util.function.Function;
 
@@ -259,6 +261,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return customDorProperties;
     }
 
+
     @JsonIgnore
     public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
         return traverseChild(this, callBack);
@@ -274,6 +277,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         return result;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getParentPagePath() {
+        if (resource != null) {
+            PageManager pm = resource.getResourceResolver().adaptTo(PageManager.class);
+            if (pm != null) {
+                Page page = pm.getContainingPage(resource);
+                return page != null ? page.getPath() : StringUtils.EMPTY;
+            }
+        }
+        return StringUtils.EMPTY;
     }
 
 }

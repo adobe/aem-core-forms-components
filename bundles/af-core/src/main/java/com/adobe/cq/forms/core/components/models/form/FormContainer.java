@@ -328,4 +328,16 @@ public interface FormContainer extends Container {
     default Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
         return null;
     }
+
+    /**
+     * Returns site page path if dropped in sites else the form page path.
+     *
+     * @return parent page path before jcr:content
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default String getParentPagePath() {
+        return null;
+    }
+
 }
