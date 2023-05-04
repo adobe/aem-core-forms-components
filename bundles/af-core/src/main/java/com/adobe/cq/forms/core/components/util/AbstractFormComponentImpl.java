@@ -39,7 +39,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.service.CloudConfigurationProviderException;
+import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -184,7 +184,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             if (getRecaptchaProperties().size() > 0) {
                 customProperties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
             }
-        } catch (CloudConfigurationProviderException e) {
+        } catch (GuideException e) {
             throw new RuntimeException(e);
         }
         customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());

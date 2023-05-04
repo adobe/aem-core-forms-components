@@ -17,6 +17,9 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Defines the form {@code reCaptcha} Sling Model used for the {@code /apps/core/fd/components/form/captcha/v1/captcha}
  * component.
@@ -32,6 +35,11 @@ public interface Recaptcha extends Field {
 
     default String getRecaptchaSize() {
         return "normal";
+    }
+
+    @JsonIgnore
+    default ReCaptchaConfigurationModel getReCaptchaConfiguration() {
+        return null;
     }
 
 }

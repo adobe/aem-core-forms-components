@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
+import org.osgi.util.function.Function;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
@@ -323,4 +324,8 @@ public interface FormContainer extends Container {
     @JsonIgnore
     default void setContextPath(String contextPath) {}
 
+    @JsonIgnore
+    default Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
+        return null;
+    }
 }
