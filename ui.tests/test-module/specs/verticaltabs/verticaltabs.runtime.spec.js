@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- describe("Form with Panel Container", () => {
+ describe("Form with Vertical Tabs Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/verticaltabs/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
