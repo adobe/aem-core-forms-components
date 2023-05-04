@@ -1,0 +1,60 @@
+{
+  "$id": "classpath:/schema/0.12.0/adaptive-form-data-layer.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "@id": {
+      "type": "string",
+      "title": "Id of the form element"
+    },
+    "@type": {
+      "type": "string",
+      "title": "Type of the form element used in the data layer"
+    },
+    "repo:modifyDate": {
+      "type": "string",
+      "title": "Last modified date using ISO 8601 standard"
+    },
+    "parentId": {
+      "type": "string",
+      "title": "Parent id of the form element"
+    },
+    "dc:title": {
+      "type": "string",
+      "title": "Label of the form element used in the data layer"
+    },
+    "dc:description": {
+      "type": "string",
+      "title": "Description of the form element used in the data layer"
+    },
+    "xdm:text": {
+      "type": "string",
+      "title": "Text of the form element used in the data layer"
+    },
+    "xdm:linkURL": {
+      "type": "string",
+      "title": "Link URL of the form element used in the data layer"
+    },
+    "fieldType": {
+      "title": "Type of widget to show to the user for capturing the data",
+      "enum": [
+        "text-input",
+        "number-input",
+        "date-input",
+        "file-input",
+        "multiline-input",
+        "drop-down",
+        "radio-group",
+        "checkbox-group",
+        "checkbox",
+        "switch",
+        "plain-text",
+        "button",
+        "panel",
+        "image",
+        "email",
+        "captcha"
+      ]
+    }
+  }
+}

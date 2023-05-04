@@ -7,14 +7,12 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "number[]",
-  "required": false,
-  "enabled": true,
+  "required": true,
   "minItems": 1,
   "maxItems": 2,
   "constraintMessages": {
     "type": "incorrect type"
   },
-  "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
     "m",
@@ -26,8 +24,7 @@
     1
   ],
   "label": {
-    "richText": false,
-    "visible": true,
+    "visible": false,
     "value": "def"
   },
   "screenReaderText": "'Custom screen reader text'",

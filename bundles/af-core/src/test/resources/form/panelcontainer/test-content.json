@@ -4,12 +4,30 @@
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "jcr:title": "dependent names",
+    "fieldType" : "panel",
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "fieldType" : "text-input"
+    }
+  },
+  "panelcontainer-customized": {
+    "name" : "abc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
+    "jcr:title": "dependent names",
     "description" : "dependent names description",
     "tooltip" : "dependent names tooltip",
     "fieldType" : "panel",
     "dorExclusion" : true,
     "dorExcludeTitle" : false,
     "dorExcludeDescription" : false,
+    "visible": false,
+    "enabled": false,
+    "required": true,
+    "readOnly": true,
     "breakBeforeText": "Following Previous",
     "breakAfterText": "Continue Filling Parent",
     "overflowText": "None",
@@ -42,6 +60,7 @@
       "hideTitle" : false,
       "fieldType" : "text-input",
       "description" : "dummy",
+      "required": "true",
       "visible" : false
     },
     "fd:rules" : {

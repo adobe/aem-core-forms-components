@@ -34,6 +34,7 @@ import static org.mockito.Mockito.mock;
 public class TextImplTest {
     private static final String BASE = "/form/text";
     private static final String CONTENT_ROOT = "/content";
+    private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -45,7 +46,7 @@ public class TextImplTest {
 
     @Test
     void testExportedType() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals(FormConstants.RT_FD_FORM_TEXT_DRAW_V1, text.getExportedType());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getExportedType()).thenCallRealMethod();
@@ -54,13 +55,13 @@ public class TextImplTest {
 
     @Test
     void testFieldType() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals(FieldType.PLAIN_TEXT.getValue(), text.getFieldType());
     }
 
     @Test
     void testGetName() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals("abc", text.getName());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getName()).thenCallRealMethod();
@@ -69,7 +70,7 @@ public class TextImplTest {
 
     @Test
     void testGetValue() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals("<p>xyz</p>", text.getValue());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getValue()).thenCallRealMethod();
@@ -78,7 +79,7 @@ public class TextImplTest {
 
     @Test
     void testIsRichText() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals(true, text.isRichText());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isRichText()).thenCallRealMethod();
@@ -87,7 +88,7 @@ public class TextImplTest {
 
     @Test
     void testGetDataRef() {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals("a.b", text.getDataRef());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getDataRef()).thenCallRealMethod();
@@ -97,15 +98,30 @@ public class TextImplTest {
     @Test
     void testIsVisible() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        assertEquals(null, text.isVisible());
+        Text textMock = Mockito.mock(Text.class);
+        Mockito.when(textMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, textMock.isVisible());
+    }
+
+    @Test
+    void testIsVisibleForCustomized() {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         assertEquals(true, text.isVisible());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, textMock.isVisible());
+        assertEquals(null, textMock.isVisible());
     }
 
     @Test
     void testJSONExport() throws Exception {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT));
+    }
+
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
+        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_CUSTOMIZED));
     }
 }

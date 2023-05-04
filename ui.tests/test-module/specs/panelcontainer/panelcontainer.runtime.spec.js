@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe( "Form Runtime with Panel Container", () => {
+describe( "Form Runtime with Panel Container - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
-    const childBemBlock = 'cmp-adaptiveform-datepicker';
     const bemBlock = 'cmp-container';
     let formContainer = null;
 
@@ -26,35 +25,59 @@ describe( "Form Runtime with Panel Container", () => {
         });
     });
 
-    const checkHTML = (id, state, view, count) => {
-        const visible = state.visible;
+    const checkHTML = (id, model, view) => {
+        const visible = model.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const checkView = () => {
-            expect(view.children.length, "panel has children equal to count").to.equal(count);
-            return cy.get(`#${id}`);
-        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
             .should('eq', visible.toString());
         cy.get(`#${id}`)
             .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
-        expect(state.items.length, "model has children equal to count").to.equal(count);
+            .should('eq', model.enabled.toString());
+        expect(model.items.length, " model and view children should have equal count ").to.equal(view.children.length);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
     const checkInstanceHTML = (instanceManager, count) => {
-        expect(instanceManager.children.length, "instance manager has children equal to count").to.equal(count);
-        expect(instanceManager.getModel().items.length, "model has items equal to count").to.equal(count);
+        expect(instanceManager.children.length, " instance manager view has children equal to count ").to.equal(count);
+        expect(instanceManager.getModel().items.length, " instance manager model has items equal to count ").to.equal(count);
         const checkChild = (childView) => {
-            checkHTML(childView.getId(), childView.getModel().getState(), childView, 1);
+            checkHTML(childView.getId(), childView.getModel(), childView);
         }
         instanceManager.children.forEach(checkChild);
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
 
-    const checkAddRemoveInstance = (instanceManager, count, isAdd) => {
+    const checkInstance = (instancesModel,formContainer,index) => {
+        const allFields = formContainer.getAllFields();
+        const modelId = instancesModel[index].id;
+        const parentView=allFields[instancesModel[index].id];
+        const textInputId = instancesModel[index].items[0].id;
+        const textInputView = allFields[instancesModel[index].items[0].id];
+        const numberInputId = instancesModel[index].items[1].id;
+        const numberInputView = allFields[instancesModel[index].items[1].id];
+        const parentLabelClass = parentView.getLabel().className;
+        const parentTooltipClass = parentView.getTooltipDiv().className;
+        const parentDescriptionClass = parentView.getDescription().className;
+        const textInputLabelClass = textInputView.getLabel().className;
+        const textInputErrorClass = textInputView.getErrorDiv().className;
+        const numberInputLabelClass = numberInputView.getLabel().className;
+        const numberInputErrorClass = numberInputView.getErrorDiv().className;
+        cy.get(`#${modelId}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
+        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
+        cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
+    };
+
+    const checkAddRemoveInstance = (instanceManager, count, isAdd, childCount) => {
         const EVENT_NAME = isAdd ? "AF_PanelInstanceAdded" : "AF_PanelInstanceRemoved";
         let innerResolution = undefined;
         const innerPromise = new Cypress.Promise((resolve, reject) => {innerResolution = resolve;});
@@ -75,7 +98,7 @@ describe( "Form Runtime with Panel Container", () => {
                 instanceManager.removeInstance();
             }
             promise.then(() => {
-                const e = checkInstanceHTML(instanceManager, count);
+                const e = checkInstanceHTML(instanceManager, count, childCount);
                 innerResolution(e);
             });
         });
@@ -160,7 +183,171 @@ describe( "Form Runtime with Panel Container", () => {
         });
     });
 
+    it(" min occur of model should be reflected in html, and view child should be established ", () => {
+        const instancManagerModel = formContainer._model.items[6];
+        const instancesModel = instancManagerModel.items;
+        const allFields = formContainer.getAllFields();
+        const instanceManagerView = allFields[instancManagerModel.id];
+        const instancesView = instanceManagerView.children;
+
+        checkInstance(instancesModel,formContainer, 0).then(() => {
+            // check for all four instances in HTML as per min occur
+            checkInstance(instancesModel,formContainer, 1).then(() => {
+                checkInstance(instancesModel,formContainer, 2).then(() => {
+                    checkInstance(instancesModel,formContainer, 3).then(() => {
+                        for (let i = 0; i < instancesModel.length; i++) {
+                            const modelId = instancesModel[i].id;
+                            const textInputId = instancesModel[i].items[0].id;
+                            const numberInputId = instancesModel[i].items[1].id;
+                            expect(instancesView[i].getId(), " Panel view Id to be equal for same index panel model Id ").to.equal(modelId);
+                            expect(allFields[textInputId].getId(), " Text input box view with corresponding model Id exists  ").to.equal(textInputId);
+                            expect(instancesView[i].children[0].getId(), " Text input box view Id inside repeatable panel to be equal to its model  ").to.equal(textInputId);
+                            expect(allFields[numberInputId].getId(), " Number input box view with corresponding model Id exists  ").to.equal(numberInputId);
+                            expect(instancesView[i].children[1].getId(), " Number input box view Id inside repeatable panel to be equal to its model  ").to.equal(numberInputId);
+                            expect(instancesView[i].children.length, " Number of children inside repeatable panel view should be equal to its child models  ").to.equal(instancesModel[i].items.length);
+                        }
+                        expect(instancesView.length, " Number of instances view to equal Number of instances model ").to.equal(instancesModel.length);
+                        checkInstanceHTML(instanceManagerView, 4)
+                            .then(() => {
+                                checkAddRemoveInstance(instanceManagerView, 5, true)
+                                    .then(() => {
+                                        checkAddRemoveInstance(instanceManagerView, 4)
+                                            .then(() => {
+                                                //min is 4, can't go below this
+                                                checkAddRemoveInstance(instanceManagerView, 4);
+                                            });
+                                    });
+                            });
+                    });
+                });
+            });
+        });
+    });
+
     it("should toggle description and tooltip", () => {
-        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test', 'panel short', 'panel long');
+        const panelId = formContainer._model.items[0].items[0].id;
+        cy.toggleDescriptionTooltip(bemBlock, panelId, 'panel short', 'panel long');
     })
+
+    it("disabled panel's children are also disabled ", () => {
+        const disabledPanelElemId = formContainer._model.items[1].id;
+        cy.get(`#${disabledPanelElemId}`).should('have.attr',"data-cmp-enabled","false");
+        cy.get(`#${disabledPanelElemId}`).should('have.length',1);
+        cy.get(`#${disabledPanelElemId}`).should('have.class','cmp-container');
+        cy.get(`#${disabledPanelElemId}`).find("[data-cmp-is='adaptiveFormNumberInput'][data-cmp-enabled='false']").should("exist");
+
+
+    });
+
+    it("readOnly panel's children are also readOnly ", () => {
+        const readOnlyPanelElemId = formContainer._model.items[2].id;
+        cy.get(`#${readOnlyPanelElemId}`).should('have.length',1);
+        cy.get(`#${readOnlyPanelElemId}`).should('have.attr','data-cmp-is','adaptiveFormPanel');
+        cy.get(`#${readOnlyPanelElemId}`).should('have.class','cmp-container');
+        cy.get(`#${readOnlyPanelElemId}`).find(".cmp-adaptiveform-numberinput__widget").should('have.attr',"readonly");
+    });
+
+    it("enable panel's child when panel and child is disabled  ", () => {
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
+        cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"false");
+        cy.get(`#${textInputOfFormElemId} input`).type('a').blur().then(()=>{
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr','data-cmp-enabled',"true");
+        });
+    });
+
+    it("enable panel and check that child behaved properly",()=>{
+        const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
+        const textInputOfPanelId=formContainer._model.items[4].items[1].id;
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("b").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
+            cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'true');
+        });
+    });
+
+    it("make readonly panel not readonly and check that child behaved properly",()=>{
+        const numberInputOfPanelId=formContainer._model.items[5].items[0].id;
+        const textInputOfPanelId=formContainer._model.items[5].items[1].id;
+        const textInputOfFormElemId=formContainer._model.items[3].id;
+        cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
+            .type("c").blur().then(() => {
+            cy.get(`#${numberInputOfPanelId}`).find('.cmp-adaptiveform-numberinput__widget').should('not.have.attr', 'readonly');
+            cy.get(`#${textInputOfPanelId}`).find('.cmp-adaptiveform-textinput__widget').should('have.attr', 'readonly');
+        });
+    });
 })
+
+describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
+    const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/repeatability-tests/basic.html";
+    let formContainer = null;
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const zip = (a, b) => a.map((k, i) => [k, b[i]]); // same as python's zip function
+
+    // List of IDs that need to be ignored during duplicate test
+    const exceptionIDsList  = ["emptyValue"] // dropdown has a hardcoded id="emptyValue" in all of its first <option> instances
+    //accordion components needs to be added once repeatability is implemented in them
+    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormTelephoneInput", "adaptiveFormText", "adaptiveFormImage", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTabs", "adaptiveFormButton","adaptiveFormWizard"];
+    //const components = ["adaptiveFormButton"]
+    const repeatabilityCount = 2;
+
+    const checkNonDuplicateIDs = (root, instance) => {
+        if(root?.id !== '' && !(exceptionIDsList.includes(root.id))) {
+            expect(root?.id).to.not.equal(instance?.id, `Ids generated should be different`) // redundant but good for debugging as this will show up in the UI
+            return root?.id !== instance?.id;
+        }
+        return true;
+    };
+
+    const testNonDuplicateIDs = (root, instance) => {
+        expect(root?.children.length).to.equal(instance?.children.length, `The number of children for this component must be the same as the repeated instance`) // redundant but will make debugging easier later on
+        if (root?.children.length !== instance?.children.length)
+            return false;
+
+        if(!checkNonDuplicateIDs(root, instance))
+            return false;
+
+        for(let [rootChild, instanceChild] of zip([...root.children], [...instance.children])) {
+            if(!checkNonDuplicateIDs(rootChild, instanceChild))
+                return false;
+
+            // Check for nested elements
+            if(rootChild.children.length > 0 && instanceChild.children.length > 0) {
+                for (let [rootGrandchild, instanceGrandChild] of zip([...rootChild.children], [...instanceChild.children]))
+                    if(!testNonDuplicateIDs(rootGrandchild, instanceGrandChild))
+                        return false;
+            }
+        }
+        return true;
+    };
+
+    const numberOfComponentsUsed = (component) => {
+        if(component === "adaptiveFormButton")
+            return 5;
+        return 1;
+    };
+
+    components.forEach((coreComponent) => {
+        it(`Check if ${coreComponent}'s repeated instances have non duplicate IDs`,() => {
+            // Check duplicate IDs
+            cy.get(`[data-cmp-is="${coreComponent}"]`).then((instances) => {
+                instances = [...instances]; // Convert into normal Array to use things like .forEach()
+                expect(instances.length).to.equal(repeatabilityCount * numberOfComponentsUsed(coreComponent), `Repeatability check for ${coreComponent}`); // Repeatability check
+                const root = instances[0]; // main component
+
+                // Compare IDs of main component with all its repeated instances
+                instances.slice(1).forEach((instance) => expect(testNonDuplicateIDs(root, instance), `${coreComponent} repeated instance IDs must not match`).to.be.true);
+            });
+        });
+    });
+});

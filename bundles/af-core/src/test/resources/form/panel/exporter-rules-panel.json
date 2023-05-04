@@ -1,24 +1,17 @@
 {
-  "id": "panel-81f441fcab",
-  "fieldType": "panel",
-  "name": "abc",
-  "visible": true,
-  "description": "dependent names description",
-  "tooltip": "dependent names tooltip",
-  "enabled": true,
-  "items": [
-    {
+  "id":"panel-81f441fcab",
+  "description":"dependent names description",
+  "tooltip":"dependent names tooltip",
+  "fieldType":"panel",
+  "name":"abc",
+  ":items": {
+    "textinput" : {
       "id": "textinput-bec585e910",
       "fieldType": "text-input",
       "name": "abc",
-      "visible": false,
       "description": "dummy",
       "type": "string",
-      "required": false,
-      "enabled": true,
-      "readOnly": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -35,10 +28,9 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
+  },
+  ":itemsOrder" : ["textinput"],
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {

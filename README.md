@@ -19,7 +19,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Page Authoring Components
 
--   [AEM Forms Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
+-   [Adaptive Form - Embed](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
 
 ### Adaptive Form
 
@@ -50,9 +50,11 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
+
 | Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
 |-----------------------|---------------------|---------| ----- | ------ | 
 | 1.1.12                | 2.21.2              | 6.5.16+ | 8, 11 | 3.3.9+ |
+
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 

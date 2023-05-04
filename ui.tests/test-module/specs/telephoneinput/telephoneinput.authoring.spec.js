@@ -69,10 +69,12 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it ('open edit dialog of TelephoneInput', function(){
-      testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
+    it ('open edit dialog of TelephoneInput', { retries: 3 }, function(){
+        cy.cleanTest(telephoneInputDrop).then(function() {
+            testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
+        });
     })
-  })
+  });
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/telephoneinput",
@@ -83,8 +85,6 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(telephoneInputDrop);
     });
 
     it('insert aem forms TelephoneInput', function () {
@@ -93,7 +93,9 @@ describe('Page - Authoring', function () {
     });
 
     it('open edit dialog of aem forms TelephoneInput', { retries: 3 }, function() {
-      testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
+      cy.cleanTest(telephoneInputDrop).then(function(){
+          testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
+      });
     });
 
   });

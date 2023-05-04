@@ -84,6 +84,14 @@ export default class FormField {
     }
 
     /**
+     * Update the HTML, with respective model
+     * It is for the markup that is generated on the client-side (eg: repeatable panel)
+     */
+    syncMarkupWithModel() {
+        throw "method not implemented";
+    }
+
+    /**
      * toggles the html element based on the property. If the property is false, then adds the data-attribute and
      * css class
      * @param property

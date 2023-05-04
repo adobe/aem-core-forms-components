@@ -23,7 +23,9 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
+const eirslettM2Repository = '/home/circleci/.m2/repository/com/github/eirslett';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const classicFormAddonVersion = '6.0.948';
 
 try {
     ci.stage("Integration Tests");
@@ -35,7 +37,7 @@ try {
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
         // Download latest add-on release from artifactory
-        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=6.0.902 -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
         extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
@@ -43,6 +45,15 @@ try {
         // Download the forms Add-On
         ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
         extras = '--install-file forms-addon.far';
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+        if (PRERELEASE === 'true') {
+            // enable pre-release settings
+            preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+        }
+    } else if (AEM === 'addon-latest') {
+        // Download latest add-on release from artifactory
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
+        extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
@@ -57,9 +68,11 @@ try {
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
@@ -100,7 +113,9 @@ try {
 
         // start running the tests
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true`);
+            // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
+            ci.sh(`rm -rf ${eirslettM2Repository}`);
+            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
     });
     }
 

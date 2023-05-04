@@ -50,6 +50,7 @@ public class CheckBoxImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_CHECKBOX = CONTENT_ROOT + "/checkbox";
 
+    private static final String PATH_CHECKBOX_CUSTOMIZED = CONTENT_ROOT + "/checkbox-customized";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -82,11 +83,11 @@ public class CheckBoxImplTest {
 
         Label labelMock = Mockito.mock(Label.class);
         Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
+        assertEquals(null, labelMock.isRichText());
         Mockito.when(labelMock.getValue()).thenCallRealMethod();
         assertEquals(null, labelMock.getValue());
         Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(null, labelMock.isVisible());
     }
 
     @Test
@@ -128,28 +129,73 @@ public class CheckBoxImplTest {
     @Test
     void testIsVisible() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertEquals(null, checkbox.isVisible());
+        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
+        Mockito.when(checkboxMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, checkboxMock.isVisible());
+    }
+
+    @Test
+    void testIsVisibleForCustomizedCheckbox() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_CUSTOMIZED);
         assertEquals(false, checkbox.isVisible());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, checkboxMock.isVisible());
+        assertEquals(null, checkboxMock.isVisible());
     }
 
     @Test
     void testIsEnabled() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(true, checkbox.isEnabled());
+        assertEquals(null, checkbox.isEnabled());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isEnabled()).thenCallRealMethod();
-        assertEquals(true, checkboxMock.isEnabled());
+        assertEquals(null, checkboxMock.isEnabled());
+    }
+
+    @Test
+    void testIsEnabledForCustomizedCheckbox() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_CUSTOMIZED);
+        assertEquals(false, checkbox.isEnabled());
+        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
+        Mockito.when(checkboxMock.isEnabled()).thenCallRealMethod();
+        assertEquals(null, checkboxMock.isEnabled());
     }
 
     @Test
     void testIsReadOnly() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(false, checkbox.isReadOnly());
+        assertEquals(null, checkbox.isReadOnly());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isReadOnly()).thenCallRealMethod();
-        assertEquals(false, checkboxMock.isReadOnly());
+        assertEquals(null, checkboxMock.isReadOnly());
+    }
+
+    @Test
+    void testIsReadOnlyForCustomizedCheckBox() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_CUSTOMIZED);
+        assertEquals(true, checkbox.isReadOnly());
+        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
+        Mockito.when(checkboxMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(null, checkboxMock.isReadOnly());
+    }
+
+    @Test
+    void testIsRequired() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertEquals(null, checkbox.isRequired());
+        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
+        Mockito.when(checkboxMock.isRequired()).thenCallRealMethod();
+        assertEquals(null, checkboxMock.isRequired());
+    }
+
+    @Test
+    void testIsRequiredForCustomizedCheckbox() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_CUSTOMIZED);
+        assertEquals(true, checkbox.isRequired());
+        CheckBox checkboxMock = Mockito.mock(CheckBox.class);
+        Mockito.when(checkboxMock.isRequired()).thenCallRealMethod();
+        assertEquals(null, checkboxMock.isRequired());
     }
 
     @Test
@@ -211,6 +257,12 @@ public class CheckBoxImplTest {
     void testJSONExport() throws Exception {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX));
+    }
+
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_CUSTOMIZED);
+        Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_CUSTOMIZED));
     }
 
     @Test

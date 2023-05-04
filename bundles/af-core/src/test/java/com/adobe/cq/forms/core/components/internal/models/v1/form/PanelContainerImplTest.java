@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,7 @@ public class PanelContainerImplTest {
     private static final String BASE = "/form/panelcontainer";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PANEL = CONTENT_ROOT + "/panelcontainer";
+    private static final String PATH_PANEL_CUSTOMIZED = CONTENT_ROOT + "/panelcontainer-customized";
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panelcontainer";
     private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panelcontainer";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -79,7 +81,7 @@ public class PanelContainerImplTest {
 
     @Test
     void testExportedType() throws Exception {
-        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
         assertEquals(FormConstants.RT_FD_FORM_PANEL_CONTAINER_V1, panel.getExportedType());
         Panel panelMock = Mockito.mock(Panel.class);
         Mockito.when(panelMock.getExportedType()).thenCallRealMethod();
@@ -88,20 +90,38 @@ public class PanelContainerImplTest {
 
     @Test
     void testGetId() throws Exception {
-        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
         assertNotNull(panel.getId());
     }
 
     @Test
     void testGetName() throws Exception {
-        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
         assertEquals("abc", panel.getName());
+    }
+
+    @Test
+    void testGetReadOnly() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        request.setPathInfo("abc");
+        request.setAttribute("WCMMode", "EDIT");
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
+        assertEquals(true, panel.isReadOnly());
+        Panel panelMock = Mockito.mock(Panel.class);
+        Mockito.when(panelMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(null, panelMock.isReadOnly());
     }
 
     @Test
     void testJSONExport() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL));
+    }
+
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL_CUSTOMIZED));
     }
 
     @Test
@@ -118,7 +138,7 @@ public class PanelContainerImplTest {
 
     @Test
     void testGetDorProperties() throws Exception {
-        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_CUSTOMIZED, Panel.class, context);
         assertEquals(true, panel.getDorProperties().get("dorExclusion"));
         assertEquals(false, panel.getDorProperties().get("dorExcludeTitle"));
         assertEquals(false, panel.getDorProperties().get("dorExcludeDescription"));

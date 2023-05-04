@@ -23,6 +23,7 @@ Adaptive Form Telephone input field component written in HTL.
   * telephone
 * Custom constraint messages for the above types
 * Styles
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Telephone component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
@@ -45,6 +46,18 @@ It should be added to a relevant site client library using the `embed` property.
 
 It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Date Picker
+* Email Input
+* Number Input
+* Reset Button
+* Submit Button
+* Text Box
+* Text Input
 
 ## BEM Description
 ```

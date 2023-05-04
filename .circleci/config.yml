@@ -55,13 +55,13 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:29112022-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11382-openjdk11
         <<: *docker_auth
   test_executor_655:
       docker:
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
           <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.16-load10-openjdk11
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.17-load7-openjdk11
           <<: *docker_auth
 
 jobs:
@@ -94,6 +94,7 @@ jobs:
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
+            - examples/core/target
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
@@ -120,17 +121,6 @@ jobs:
           command: node .circleci/ci/build.js
       - store_artifacts:
           path: test-results/junit
-
-  cypress-chrome-cloudready-with-addon:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: large
-    working_directory: /home/circleci/build
-    <<: *cypress_test_steps
 
   cypress-chrome-655:
     executor: test_executor_655

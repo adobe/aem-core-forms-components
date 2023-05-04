@@ -12,7 +12,8 @@
     governing permissions and limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- ====================================================================== -->
     <!-- P A R E N T  P R O J E C T  D E S C R I P T I O N                      -->
@@ -55,7 +56,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jacoco.data.file>${project.build.directory}/jacoco.exec</jacoco.data.file>
         <formatter.config>./eclipse-formatter.xml</formatter.config>
-        <baseline.skip>false</baseline.skip>
+        <baseline.skip>true</baseline.skip>
         <main.basedir>${project.basedir}/../../parent</main.basedir>
     </properties>
 
@@ -492,7 +493,6 @@
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
-
 
 
         <!-- Testing dependencies -->

@@ -100,21 +100,20 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
-      // conditionally clean the test, when there are retries
-      cy.cleanTest(checkBoxGroupDrop);
     });
 
     it('insert CheckBoxGroup in form container', function () {
-      dropCheckBoxGroupInContainer();
-      cy.deleteComponentByPath(checkBoxGroupDrop);
+        dropCheckBoxGroupInContainer();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
     it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
-      testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+        });
     });
 
     it ('check value type validations', function() {
-
       // For Number Type
       dropCheckBoxGroupInContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);

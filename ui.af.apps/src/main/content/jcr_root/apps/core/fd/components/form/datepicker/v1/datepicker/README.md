@@ -21,6 +21,7 @@ Adaptive Form Date Picker field component written in HTL.
 
 * Provides the following type of input:
   * date
+* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
 The Form Date Picker component uses the `com.adobe.cq.forms.core.components.models.form.DatePicker` Sling Model for its Use-object.
@@ -61,6 +62,18 @@ BLOCK cmp-adaptiveform-datepicker
 The following attributes must be added for the initialization of the date-picker component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+## Replace feature:
+We support replace feature that allows replacing Reset Button component to any of the below components:
+
+* Button
+* Email Input
+* Number Input
+* Reset Button
+* Submit Button
+* Telephone Input
+* Text Box
+* Text Input
  
  
 ## Information

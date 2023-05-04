@@ -878,9 +878,12 @@
                 "events",
                 "fieldType",
                 "items",
+                ":items",
+                ":itemsOrder",
                 "label",
                 "name",
                 "properties",
+                "readOnly",
                 "rules",
                 "screenReaderText",
                 "tooltip",
@@ -901,7 +904,8 @@
               }
             },
             "required": [
-              "items"
+              ":items",
+              ":itemsOrder"
             ]
           }
         ]
@@ -1144,10 +1148,9 @@
       "title": "A user friendly one line title for the form"
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": [
     "metadata",
-    "items",
     "adaptiveform",
     "fieldType"
   ]

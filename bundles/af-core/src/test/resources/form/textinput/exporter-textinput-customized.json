@@ -1,0 +1,39 @@
+{
+  "id": "textinput-96ac11b5e6",
+  "dataRef": "a.b",
+  "fieldType": "text-input",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": false,
+  "default": "abc",
+  "label": {
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": true,
+      "dorColspan": "4",
+      "dorBindRef": "Text1"
+    },
+    "fd:path": "/content/textinput-customized"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}

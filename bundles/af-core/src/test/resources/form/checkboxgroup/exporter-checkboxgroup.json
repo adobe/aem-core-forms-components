@@ -7,14 +7,13 @@
   "description": "dummy",
   "tooltip": "test-short-description",
   "type": "number[]",
-  "required": false,
-  "enabled": true,
+  "enabled": false,
   "minItems": 1,
   "maxItems": 2,
   "constraintMessages": {
     "type": "incorrect type"
   },
-  "readOnly": false,
+  "readOnly": true,
   "enforceEnum": true,
   "enumNames": [
     "m",
@@ -26,7 +25,6 @@
     1
   ],
   "label": {
-    "richText": false,
     "visible": true,
     "value": "def"
   },
