@@ -55,6 +55,7 @@ class RecaptchaWidget {
         };
 
         var expiredCallback = function() {
+            element.removeAttribute("af-grecaptcha-response");
             grecaptcha.reset(widgetId);
         };
 

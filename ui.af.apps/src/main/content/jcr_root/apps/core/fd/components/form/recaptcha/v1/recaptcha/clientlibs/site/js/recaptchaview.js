@@ -68,17 +68,6 @@
 
         }
 
-        updateValue(value) {
-            if (this.widgetObject == null) {
-                this.initializeWidget();
-            }
-            if (this.widgetObject) {
-                this.widgetObject.setValue(value);
-            } else {
-                super.updateValue(value);
-            }
-        }
-
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
