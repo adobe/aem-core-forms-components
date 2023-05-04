@@ -34,12 +34,11 @@ The following properties are written to JCR for this Accordion component and are
 
 1. `./jcr:title` - defines the label to use for this panel
 2. `./name` - defines the name of the panel, which will be submitted with the form data
-3. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
-4. `./bindref` - defines the data binding, and how data will be sent
-5. `./visible` - defines initial state of panel visibility
-6. `./enabled` - defines initial state of panel if its enabled or not
-7. `./tooltip` - defines tooltip on panel title
-8. `./description` - defines a help message that can be rendered in the field as a hint for the user
+3. `./bindref` - defines the data binding, and how data will be sent
+4. `./visible` - defines initial state of panel visibility
+5. `./enabled` - defines initial state of panel if its enabled or not
+6. `./tooltip` - defines tooltip on panel title
+7. `./description` - defines a help message that can be rendered in the field as a hint for the user
 
 ## BEM Description
 ```
@@ -75,6 +74,7 @@ We support replace feature that allows replacing accordion component to any of t
 * Accordion
 * Panel
 * Wizard Layout
+* Tabs on top
 
 ## Information
 * **Vendor**: Adobe

@@ -6,11 +6,9 @@
 }
 
 .cmp-verticaltabs__tabs-container {
-  display: flex;
 }
 
 .cmp-verticaltabs__tablist{
-  width: 200px;
 }
 
 .cmp-verticaltabs__tab{
@@ -21,7 +19,6 @@
 }
 
 .cmp-verticaltabs__tabpanel{
-  flex: 1;
   display: none;
 }
 
