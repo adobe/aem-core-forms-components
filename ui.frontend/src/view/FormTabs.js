@@ -85,7 +85,7 @@ export default class FormTabs extends FormPanel {
         var _self = this;
         (function (index) {
           tabs[index].addEventListener("click", function (event) {
-            _self.#navigateAndFocusTab(tabs[index].id);
+            _self.navigateAndFocusTab(tabs[index].id);
           });
         }(i));
         tabs[i].addEventListener("keydown", function (event) {
@@ -145,23 +145,23 @@ export default class FormTabs extends FormPanel {
       case FormTabs.keyCodes.ARROW_UP:
         event.preventDefault();
         if (index > 0) {
-          this.#navigateAndFocusTab(tabs[index - 1].id);
+          this.navigateAndFocusTab(tabs[index - 1].id);
         }
         break;
       case FormTabs.keyCodes.ARROW_RIGHT:
       case FormTabs.keyCodes.ARROW_DOWN:
         event.preventDefault();
         if (index < lastIndex) {
-          this.#navigateAndFocusTab(tabs[index + 1].id);
+          this.navigateAndFocusTab(tabs[index + 1].id);
         }
         break;
       case FormTabs.keyCodes.HOME:
         event.preventDefault();
-        this.#navigateAndFocusTab(tabs[0].id);
+        this.navigateAndFocusTab(tabs[0].id);
         break;
       case FormTabs.keyCodes.END:
         event.preventDefault();
-        this.#navigateAndFocusTab(tabs[lastIndex].id);
+        this.navigateAndFocusTab(tabs[lastIndex].id);
         break;
       default:
         return;
@@ -186,7 +186,7 @@ export default class FormTabs extends FormPanel {
    * @private
    * @param {Number} index The index of the item to navigate to
    */
-  #navigateAndFocusTab(tabId) {
+  navigateAndFocusTab(tabId) {
     this.navigate(tabId);
     this.focusWithoutScroll(this.#getTabNavElementById(tabId));
   }
@@ -302,7 +302,7 @@ export default class FormTabs extends FormPanel {
       repeatedTabPanel.setAttribute("aria-labelledby", childView.id + this.#tabIdSuffix);
       this.#refreshActive();
       this.#bindEventsToTab(navigationTabToBeRepeated.id);
-      this.#navigateAndFocusTab(navigationTabToBeRepeated.id);
+      this.navigateAndFocusTab(navigationTabToBeRepeated.id);
     }
   }
 
@@ -356,7 +356,7 @@ export default class FormTabs extends FormPanel {
     var tabs = this.#getCachedTabs();
     var index = this.#getTabIndexById(tabId);
     tabs[index].addEventListener("click", function (event) {
-      _self.#navigateAndFocusTab(tabId);
+      _self.navigateAndFocusTab(tabId);
     });
     tabs[index].addEventListener("keydown", function (event) {
       _self.#onKeyDown(event);
