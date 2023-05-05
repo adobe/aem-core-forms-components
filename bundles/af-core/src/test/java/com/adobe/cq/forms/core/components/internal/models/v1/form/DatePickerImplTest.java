@@ -285,4 +285,11 @@ public class DatePickerImplTest {
         assert (dataObject.getFieldType()).equals("date-input");
         assert (dataObject.getDescription()).equals("Date of Birth");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DATALAYER, DatePicker.class, context);
+        FieldUtils.writeField(datePicker, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_DATALAYER));
+    }
 }

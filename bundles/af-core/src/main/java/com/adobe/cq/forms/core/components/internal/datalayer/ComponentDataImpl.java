@@ -25,7 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.models.v2.form.FormContainerImpl;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -83,22 +85,44 @@ public class ComponentDataImpl implements FormComponentData {
 
     @Override
     public String getText() {
-        return getComponentAsFormComponent() == null ? null : getComponentAsFormComponent().getText();
+        AbstractFormComponentImpl formComponent = getComponentAsFormComponent();
+        if (formComponent != null) {
+            return formComponent.getText();
+        }
+        return null;
     }
 
     @Override
     public String getLinkUrl() {
-        return getComponentAsFormComponent() == null ? null : getComponentAsFormComponent().getLinkUrl();
+        AbstractFormComponentImpl formComponent = getComponentAsFormComponent();
+        if (formComponent != null) {
+            return formComponent.getLinkUrl();
+        }
+        return null;
     }
 
     @Override
     public String getTitle() {
-        return getComponentAsFormComponent() == null ? null : getComponentAsFormComponent().getTitle();
+        if (component instanceof FormContainerImpl) {
+            return ((FormContainerImpl) component).getTitle();
+        }
+        AbstractFormComponentImpl formComponent = getComponentAsFormComponent();
+        if (formComponent != null) {
+            Label label = formComponent.getLabel();
+            if (label != null) {
+                return label.getValue();
+            }
+        }
+        return null;
     }
 
     @Override
     public String getDescription() {
-        return getComponentAsFormComponent() == null ? null : getComponentAsFormComponent().getDescription();
+        AbstractFormComponentImpl formComponent = getComponentAsFormComponent();
+        if (formComponent != null) {
+            return formComponent.getDescription();
+        }
+        return null;
     }
 
     @Override
@@ -107,7 +131,11 @@ public class ComponentDataImpl implements FormComponentData {
     }
 
     public String getFieldType() {
-        return getComponentAsFormComponent() == null ? null : getComponentAsFormComponent().getFieldType();
+        AbstractFormComponentImpl formComponent = getComponentAsFormComponent();
+        if (formComponent != null) {
+            return formComponent.getFieldType();
+        }
+        return null;
     }
 
     @Override

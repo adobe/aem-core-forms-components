@@ -39,7 +39,8 @@
             return Panel.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
         }
 

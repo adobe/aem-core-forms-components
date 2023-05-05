@@ -53,6 +53,7 @@ public class TextInputImplTest {
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
 
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
+    private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -314,6 +315,12 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testJSONExportForUnboundFormElement() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_UNBOUNDFORMELEMENT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_UNBOUNDFORMELEMENT));
+    }
+
+    @Test
     void testJSONExportForCustomized() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CUSTOMIZED));
@@ -396,5 +403,12 @@ public class TextInputImplTest {
         assert (dataObject.getTitle()).equals("Full Name");
         assert (dataObject.getFieldType()).equals("text-input");
         assert (dataObject.getDescription()).equals("Enter Full Name");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
+        FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DATALAYER));
     }
 }

@@ -1,0 +1,22 @@
+{
+  "id": "textinput-1d0eb5bdc9",
+  "dataRef": null,
+  "fieldType": "text-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/textinput_unboundFormElement"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}

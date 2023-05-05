@@ -60,8 +60,10 @@
             return Tabs.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            this.#navigateAndFocusTab(id + '__tab');
         }
 
         getWidget() {

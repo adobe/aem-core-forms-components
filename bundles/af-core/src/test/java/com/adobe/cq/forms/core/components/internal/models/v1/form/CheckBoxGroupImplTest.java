@@ -334,4 +334,11 @@ public class CheckBoxGroupImplTest {
         assert (dataObject.getFieldType()).equals("checkbox-group");
         assert (dataObject.getDescription()).equals("Select all that apply");
     }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
+    }
 }

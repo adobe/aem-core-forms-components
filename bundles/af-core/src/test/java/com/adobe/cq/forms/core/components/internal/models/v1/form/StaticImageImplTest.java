@@ -192,4 +192,11 @@ public class StaticImageImplTest {
         assert (dataObject.getType()).equals("core/fd/components/form/image/v1/image");
         assert (dataObject.getDescription()).equals("The header Image Description");
     }
+
+    @Test
+    void testJSONExportForDatalayer() throws Exception {
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_DATALAYER, StaticImage.class, context);
+        FieldUtils.writeField(image, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_DATALAYER));
+    }
 }
