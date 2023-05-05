@@ -117,6 +117,31 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(dropdown);
         })
+
+        it ('check for duplicate enum values', function() {
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(0).invoke('val','0');
+            cy.get('input[name="./enumNames"]').eq(0).invoke('val','Item 1');
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(1).invoke('val','1');
+            cy.get('input[name="./enumNames"]').eq(1).invoke('val','Item 2');
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(2).invoke('val','0');
+            cy.get('input[name="./enumNames"]').eq(2).invoke('val','Item 3');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('#ContentFrame').then(($iframe) => {
+                const $body = $iframe.contents().find('body')
+                cy.wrap($body).find('.cmp-adaptiveform-dropdown__option').should('have.length', 2);
+            })
+            cy.wait(2000).then(() => {
+                cy.deleteComponentByPath(dropdown);
+            })
+        });
+
+
     })
 
     context('Open Sites Editor', function () {
