@@ -29,6 +29,13 @@ common:
       - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
+      - run:
+          name: Install Axe accessibility testing library
+          command: npm install axe-core --save-dev
+      - run:
+          name: Run Axe accessibility tests
+          command: |
+            npx axe ui.frontend/src/**/*.{html,js};
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts

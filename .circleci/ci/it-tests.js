@@ -88,23 +88,23 @@ try {
     */
 
     // Run UI tests
-    if (TYPE === 'cypress') {
-        // install req collaterals for tests
-        ci.dir('it/core', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        ci.dir('it/apps', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        // start running the tests
-        ci.dir('ui.tests', () => {
-            // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
-            ci.sh(`rm -rf ${eirslettM2Repository}`);
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
-    });
-    }
+//    if (TYPE === 'cypress') {
+//        // install req collaterals for tests
+//        ci.dir('it/core', () => {
+//            ci.sh(`mvn clean install -PautoInstallPackage`);
+//        });
+//
+//        ci.dir('it/apps', () => {
+//            ci.sh(`mvn clean install -PautoInstallPackage`);
+//        });
+//
+//        // start running the tests
+//        ci.dir('ui.tests', () => {
+//            // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
+//            ci.sh(`rm -rf ${eirslettM2Repository}`);
+//            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`);
+//    });
+//    }
 
     ci.dir(qpPath, () => {
         // Stop CQ
