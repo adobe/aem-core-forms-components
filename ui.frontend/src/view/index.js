@@ -17,4 +17,5 @@ import FormContainer from "./FormContainer.js";
 import FormField from "./FormField.js";
 import FormFieldBase from "./FormFieldBase.js";
 import FormPanel from "./FormPanel.js";
-export {FormField, FormContainer, FormFieldBase, FormPanel}
+import FormTabs from "./FormTabs";
+export {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs}

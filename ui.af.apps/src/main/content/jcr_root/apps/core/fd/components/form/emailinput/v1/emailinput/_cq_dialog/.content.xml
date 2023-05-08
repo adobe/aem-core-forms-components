@@ -103,7 +103,12 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldLabel="Error Message"
-                                                            name="./validatePatternMessage"/>
+                                                            name="./validatePictureClauseMessage"/>
+                                                    <formatMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                            name="./formatMessage@ValueFrom"
+                                                            value="./validatePictureClauseMessage"/>
                                                 </items>
                                             </validationPatternGroup>
                                         </items>

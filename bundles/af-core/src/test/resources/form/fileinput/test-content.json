@@ -51,5 +51,35 @@
     "maxItems" : 2,
     "maxFileSize" : "4GB",
     "accept" : ["text/*", "application/pdf"]
+  },
+  "fileinput-datalayer": {
+    "id": "fileinput-90881b3d31",
+    "sling:resourceType": "core/fd/components/form/fileinput/v1/fileinput",
+    "fieldType": "file-input",
+    "description": "Upload your CV",
+    "name": "CV",
+    "type": "file",
+    "accept": [
+      "audio/*",
+      " video/*",
+      " image/*",
+      " text/*",
+      " application/pdf"
+    ],
+    "label": {
+      "value": "CV"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/fileinput"
+    },
+    ":type": "forms-components-examples/components/form/fileinput"
   }
 }

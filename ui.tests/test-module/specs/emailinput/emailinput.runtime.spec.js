@@ -90,6 +90,39 @@ describe("Form Runtime with Email Input", () => {
         })
     });
 
+    it("mandatory message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[3]
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        })
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'custom mandatory message!');
+    });
+
+    it("validation picture clause message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${id}`).find("input").type("ares@a").blur();
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        });
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'validation picture clause error message!');
+    });
+
+    it("custom format message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[3];
+        cy.get(`#${id}`).find("input").type("ares").blur();
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        });
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'custom format error message!');
+    });
+
+
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })

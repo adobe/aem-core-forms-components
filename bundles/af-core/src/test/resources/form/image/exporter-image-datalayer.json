@@ -1,0 +1,23 @@
+{
+  "id": "image-d1298ac4bb",
+  "fieldType": "image",
+  "name": "header image",
+  "visible": true,
+  "altText": "The header Image",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/image-datalayer"
+  },
+  ":type": "core/fd/components/form/image/v1/image",
+  "dataLayer": {
+    "image-d1298ac4bb": {
+      "dc:description": "The header Image Description",
+      "@type": "core/fd/components/form/image/v1/image",
+      "fieldType": "image"
+    }
+  }
+}
