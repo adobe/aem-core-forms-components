@@ -211,3 +211,53 @@ describe("Form with Wizard Layout Container With Validation", () => {
         })
     });
 });
+
+describe("Form with Wizard Layout Container with focus", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/wizard/focus.html";
+  const bemBlock = 'cmp-adaptiveform-wizard';
+
+  let formContainer = null;
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  });
+
+
+  it("check If Two Tabs are present in the page", () => {
+      cy.get(".cmp-adaptiveform-wizard__tab").should('have.length', 2);
+      cy.get(".cmp-adaptiveform-wizard__wizardpanel").should('have.length', 2);
+  });
+
+  it("check if first tab activated if focus call from other tab", () => {
+    const [id, fieldView] = Object.entries(formContainer._fields)[0];
+
+    // panel 1 active
+    cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+    cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+    cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+    cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+
+    cy.get(".cmp-adaptiveform-wizard__nextNav").click({ force: true }).then(() => {
+      // panel 2 active
+      cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+      cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+      cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+      cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+
+      cy.get(".cmp-adaptiveform-wizard__wizardpanel").then(()=>{
+        formContainer.setFocus(id);
+        cy.get(".cmp-adaptiveform-wizard__tab").then(()=>{
+          // panel 1 active
+          cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+          cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+          cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+          cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        });
+      });
+    });
+  });
+
+});

@@ -1,0 +1,45 @@
+{
+  "id": "checkboxgroup-40e63c6f46",
+  "fieldType": "checkbox-group",
+  "name": "Personality",
+  "visible": true,
+  "description": "Select all that apply",
+  "type": "number[]",
+  "enabled": true,
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "Cat Person",
+    "Dog Person"
+  ],
+  "label": {
+    "value": "Personality"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/checkboxgroup-datalayer"
+  },
+  "enum": [
+    0,
+    1
+  ],
+  ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+  "dataLayer": {
+    "checkboxgroup-40e63c6f46": {
+      "dc:description": "Select all that apply",
+      "dc:title": "Personality",
+      "@type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+      "fieldType": "checkbox-group"
+    }
+  }
+}

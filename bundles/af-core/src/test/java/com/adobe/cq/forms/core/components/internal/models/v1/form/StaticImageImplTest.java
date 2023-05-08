@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import com.day.cq.wcm.foundation.Image;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -47,6 +49,7 @@ public class StaticImageImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_IMAGE_CUSTOMIZED = CONTENT_ROOT + "/image-customized";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
+    private static final String PATH_IMAGE_DATALAYER = CONTENT_ROOT + "/image-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -177,5 +180,23 @@ public class StaticImageImplTest {
     void testJSONExportForCustomized() throws Exception {
         StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_CUSTOMIZED, StaticImage.class, context);
         Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_CUSTOMIZED));
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException, RepositoryException, IOException {
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_DATALAYER, StaticImage.class, context);
+        FieldUtils.writeField(image, "dataLayerEnabled", true, true);
+        ComponentData dataObject = image.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("image-d1298ac4bb");
+        assert (dataObject.getType()).equals("core/fd/components/form/image/v1/image");
+        assert (dataObject.getDescription()).equals("The header Image Description");
+    }
+
+    @Test
+    void testJSONExportForDatalayer() throws Exception {
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_DATALAYER, StaticImage.class, context);
+        FieldUtils.writeField(image, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_DATALAYER));
     }
 }
