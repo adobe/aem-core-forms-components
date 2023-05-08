@@ -137,7 +137,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(numberInputDrop);
         });
 
-        it.only('open edit dialog of aem forms NumberInput', {retries: 0}, function () {
+        it('open edit dialog of aem forms NumberInput', {retries: 3}, function () {
             cy.cleanTest(numberInputDrop).then(function () {
                 dropNumberInputInSites();
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
@@ -152,9 +152,8 @@ describe('Page - Authoring', function () {
                     cy.get("[name='./exclusiveMinimum']").should("exist");
                     cy.get("[name='./maximum']").should("exist");
                     cy.get("[name='./exclusiveMaximum']").should("exist");
-                    cy.get('.cq-dialog-cancel').should('be.visible');
                     cy.get('.cq-dialog-submit').should('be.visible');
-                    cy.get('.cq-dialog-cancel').click({force: true}).then(() => {
+                    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
                         cy.deleteComponentByPath(numberInputDrop);
                     })
                 })

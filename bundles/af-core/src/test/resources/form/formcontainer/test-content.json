@@ -36,5 +36,14 @@
     "formModelDocumentPath" : "/content/dam/sample.json",
     "action": "/a/b",
     "dataUrl": "/c/d"
+  },
+  "formcontainer-datalayer": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/container/v1/container",
+    "thankyouPage": "/a/b/c",
+    "thankyouMessage": "message",
+    "action": "/a/b",
+    "dataUrl": "/c/d",
+    "id": "L2NvbnRlbnQvZm9ybXMvYWYvYWYy"
   }
 }

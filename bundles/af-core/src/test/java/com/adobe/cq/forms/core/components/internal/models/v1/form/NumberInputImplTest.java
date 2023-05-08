@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
@@ -49,6 +51,7 @@ public class NumberInputImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
+    private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -312,5 +315,25 @@ public class NumberInputImplTest {
         NumberInput numberInput = request.adaptTo(NumberInput.class);
         String appliedCssClasses = numberInput.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) numberInput.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("numberinput-57e5de6073");
+        assert (dataObject.getType()).equals("core/fd/components/form/numberinput/v1/numberinput");
+        assert (dataObject.getTitle()).equals("Phone Number");
+        assert (dataObject.getFieldType()).equals("number-input");
+        assert (dataObject.getDescription()).equals("Enter your phone number.");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
     }
 }

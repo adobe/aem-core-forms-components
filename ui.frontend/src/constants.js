@@ -68,6 +68,21 @@ export const Constants = {
     PANEL_INSTANCE_REMOVED : "AF_PanelInstanceRemoved",
 
     /**
+     * @summary Form event to be triggered when the clientlibs for the locale passed has finished loading
+     *
+     * @name  AF_LanguageInitialised
+     * @event
+     * @property {object} event
+     * @property {object} event.detail the locale that has loaded
+     * @example
+     * document.on("AF_LanguageInitialised" , function(event) {
+     *      var locale = event.detail;
+     *      ...
+     * }
+     */
+    FORM_LANGUAGE_INITIALIZED: "AF_LanguageInitialised",
+
+    /**
      * data attribute to store the form container path. In HTML it will be namespaced
      * data-{NS}-{ComponentClass}-adaptiveformcontainerPath
      */

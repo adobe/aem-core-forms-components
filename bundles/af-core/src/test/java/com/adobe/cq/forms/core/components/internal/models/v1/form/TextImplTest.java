@@ -15,12 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -36,6 +38,7 @@ public class TextImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
+    private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -123,5 +126,24 @@ public class TextImplTest {
     void testJSONExportForCustomized() throws Exception {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_CUSTOMIZED));
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_DATALAYER, Text.class, context);
+        FieldUtils.writeField(text, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) text.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("text-cfbea91bba");
+        assert (dataObject.getType()).equals("core/fd/components/form/text/v1/text");
+        assert (dataObject.getText()).equals("This is an AF");
+        assert (dataObject.getFieldType()).equals("plain-text");
+    }
+
+    @Test
+    void testJSONExportForDatalayer() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_DATALAYER, Text.class, context);
+        FieldUtils.writeField(text, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_DATALAYER));
     }
 }

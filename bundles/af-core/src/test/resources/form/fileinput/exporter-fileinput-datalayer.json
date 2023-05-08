@@ -1,0 +1,37 @@
+{
+  "id": "fileinput-90881b3d31",
+  "fieldType": "file-input",
+  "name": "CV",
+  "description": "Upload your CV",
+  "type": "file",
+  "accept": [
+    "audio/*",
+    " video/*",
+    " image/*",
+    " text/*",
+    " application/pdf"
+  ],
+  "label": {
+    "value": "CV"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/fileinput-datalayer"
+  },
+  ":type": "core/fd/components/form/fileinput/v1/fileinput",
+  "dataLayer": {
+    "fileinput-90881b3d31": {
+      "dc:title": "CV",
+      "dc:description": "Upload your CV",
+      "@type": "core/fd/components/form/fileinput/v1/fileinput",
+      "fieldType": "file-input"
+    }
+  }
+}

@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -46,6 +48,7 @@ public class PanelContainerImplTest {
     private static final String BASE = "/form/panelcontainer";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PANEL = CONTENT_ROOT + "/panelcontainer";
+    private static final String PATH_PANEL_DATALAYER = CONTENT_ROOT + "/panelcontainer-datalayer";
     private static final String PATH_PANEL_CUSTOMIZED = CONTENT_ROOT + "/panelcontainer-customized";
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panelcontainer";
     private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panelcontainer";
@@ -148,4 +151,25 @@ public class PanelContainerImplTest {
         assertEquals("columnar", panel.getDorProperties().get("dorLayoutType"));
         assertEquals("3", panel.getDorProperties().get("dorNumCols"));
     }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_DATALAYER, Panel.class, context);
+        FieldUtils.writeField(panel, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) panel.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("panelcontainer-0749d1d943");
+        assert (dataObject.getType()).equals("core/fd/components/form/panelcontainer/v1/panelcontainer");
+        assert (dataObject.getTitle()).equals("Phone Number");
+        assert (dataObject.getFieldType()).equals("panel");
+        assert (dataObject.getDescription()).equals("Enter your phone number");
+    }
+
+    @Test
+    void testJSONExportDatalayer() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_DATALAYER, Panel.class, context);
+        FieldUtils.writeField(panel, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL_DATALAYER));
+    }
+
 }

@@ -1,0 +1,45 @@
+{
+  "id": "radiobutton-bafbf1a102",
+  "fieldType": "radio-group",
+  "name": "Gender",
+  "visible": true,
+  "description": "Input gender",
+  "type": "string",
+  "enabled": true,
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "Male",
+    "Female"
+  ],
+  "label": {
+    "value": "Gender"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/radiobutton-datalayer"
+  },
+  "enum": [
+    "0",
+    "1"
+  ],
+  ":type": "core/fd/components/form/radiobutton/v1/radiobutton",
+  "dataLayer": {
+    "radiobutton-bafbf1a102": {
+      "dc:title": "Gender",
+      "dc:description": "Input gender",
+      "@type": "core/fd/components/form/radiobutton/v1/radiobutton",
+      "fieldType": "radio-group"
+    }
+  }
+}
