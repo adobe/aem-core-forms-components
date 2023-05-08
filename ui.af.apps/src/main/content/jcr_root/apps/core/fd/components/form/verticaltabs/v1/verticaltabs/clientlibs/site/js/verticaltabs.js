@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,26 @@
 
 (function () {
 
-    class Tabs extends FormView.FormTabs {
+    class VerticalTabs extends FormView.FormTabs {
         _templateHTML = {};
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormTabs";
-        static bemBlock = "cmp-tabs";
+        static IS = "adaptiveFormVerticalTabs";
+        static bemBlock = "cmp-verticaltabs";
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             active: {
-                tab: "cmp-tabs__tab--active",
-                tabpanel: "cmp-tabs__tabpanel--active"
+                tab: "cmp-verticaltabs__tab--active",
+                tabpanel: "cmp-verticaltabs__tabpanel--active"
             },
-            label: `.${Tabs.bemBlock}__label`,
-            description: `.${Tabs.bemBlock}__longdescription`,
-            qm: `.${Tabs.bemBlock}__questionmark`,
-            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
-            olTabList: `.${Tabs.bemBlock}__tablist`
+            label: `.${VerticalTabs.bemBlock}__label`,
+            description: `.${VerticalTabs.bemBlock}__longdescription`,
+            qm: `.${VerticalTabs.bemBlock}__questionmark`,
+            tooltipDiv: `.${VerticalTabs.bemBlock}__shortdescription`,
+            olTabList: `.${VerticalTabs.bemBlock}__tablist`
         };
 
         constructor(params) {
-            super(params, Tabs.NS, Tabs.IS, Tabs.selectors);
+            super(params, VerticalTabs.NS, VerticalTabs.IS, VerticalTabs.selectors);
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
                  * Editor message handling:
@@ -46,7 +46,7 @@
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
-                    if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
+                    if (message.data && message.data.type === "cmp-verticaltabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
                             _self.navigate(_self._elements["tab"][message.data.index].id);
                         }
@@ -55,9 +55,8 @@
             }
         }
 
-
         getClass() {
-            return Tabs.IS;
+            return VerticalTabs.IS;
         }
 
         setFocus(id) {
@@ -67,32 +66,32 @@
         }
 
         getWidget() {
-            return this.element.querySelector(Tabs.selectors.widget);
+            return this.element.querySelector(VerticalTabs.selectors.widget);
         }
 
         getDescription() {
-            return this.element.querySelector(Tabs.selectors.description);
+            return this.element.querySelector(VerticalTabs.selectors.description);
         }
 
         getLabel() {
-            return this.element.querySelector(Tabs.selectors.label);
+            return this.element.querySelector(VerticalTabs.selectors.label);
         }
 
         getErrorDiv() {
-            return this.element.querySelector(Tabs.selectors.errorDiv);
+            return this.element.querySelector(VerticalTabs.selectors.errorDiv);
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(Tabs.selectors.tooltipDiv);
+            return this.element.querySelector(VerticalTabs.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return this.element.querySelector(Tabs.selectors.qm);
+            return this.element.querySelector(VerticalTabs.selectors.qm);
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new Tabs({element, formContainer})
-    }, Tabs.selectors.self);
+        return new VerticalTabs({element, formContainer})
+    }, VerticalTabs.selectors.self);
 
 }());
