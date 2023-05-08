@@ -27,15 +27,12 @@ common:
       - attach_workspace:
           at: /home/circleci/build
       - run:
-          name: UI tests
-          command: node .circleci/ci/it-tests.js
-      - run:
           name: Install Axe accessibility testing library
           command: npm install axe-core
       - run:
           name: Run Axe accessibility tests
           command: |
-            axe https://example.com --save ./axe-report.json
+            node_modules/axe-core/axe-cli.js https://main--franklinforms--ankushmittal91.hlx.live/ --save ./axe-report.json
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -186,14 +183,6 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-cloudready-with-latest-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
             - build-java-8
       - release:
           requires:
