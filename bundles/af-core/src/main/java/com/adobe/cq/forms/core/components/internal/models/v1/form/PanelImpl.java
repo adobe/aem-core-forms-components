@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -23,6 +26,7 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -41,6 +45,43 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PanelImpl extends AbstractContainerImpl implements Panel {
+
+    private static String DOR_EXCLUDE_TITLE = "dorExcludeTitle";
+    private static String DOR_EXCLUSION = "dorExclusion";
+    private static String DOR_EXCLUDE_DESCRIPTION = "dorExcludeDescription";
+    private static String BREAK_BEFORE_TEXT = "breakBeforeText";
+    private static String BREAK_AFTER_TEXT = "breakAfterText";
+    private static String OVERFLOW_TEXT = "overflowText";
+    private static String DOR_NUM_COLS = "dorNumCols";
+    private static String DOR_LAYOUT_TYPE = "dorLayoutType";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExcludeTitle;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected boolean dorExcludeDescription;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String breakBeforeText;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String breakAfterText;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String overflowText;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorNumCols;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String dorLayoutType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "wrapData")
     @JsonIgnore
@@ -70,6 +111,34 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Nullable
     public Boolean isReadOnly() {
         return readOnly;
+    }
+
+    @Override
+    @JsonIgnore
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+
+        customDorProperties.put(DOR_EXCLUSION, dorExclusion);
+        customDorProperties.put(DOR_EXCLUDE_TITLE, dorExcludeTitle);
+        customDorProperties.put(DOR_EXCLUDE_DESCRIPTION, dorExcludeDescription);
+
+        if (breakBeforeText != null) {
+            customDorProperties.put(BREAK_BEFORE_TEXT, breakBeforeText);
+        }
+        if (breakAfterText != null) {
+            customDorProperties.put(BREAK_AFTER_TEXT, breakAfterText);
+        }
+        if (overflowText != null) {
+            customDorProperties.put(OVERFLOW_TEXT, overflowText);
+        }
+        if (dorNumCols != null) {
+            customDorProperties.put(DOR_NUM_COLS, dorNumCols);
+        }
+        if (dorLayoutType != null) {
+            customDorProperties.put(DOR_LAYOUT_TYPE, dorLayoutType);
+        }
+        return customDorProperties;
     }
 
 }
