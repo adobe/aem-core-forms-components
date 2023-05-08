@@ -17,7 +17,7 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     cq:icon="article"
     cq:isContainer="{Boolean}true"
-    jcr:description="Adaptive Form Vertical Tab Container component, used to group other components and apply a common style or layout."
+    jcr:description="Adaptive Form Vertical Tabs Container component, used to group other components and apply a common style or layout."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Vertical Tabs (v1)"
     sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
