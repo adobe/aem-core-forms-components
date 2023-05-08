@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -29,13 +30,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
-import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -54,6 +49,8 @@ public class CheckBoxGroupImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_CHECKBOX_GROUP = CONTENT_ROOT + "/checkboxgroup";
     private static final String PATH_CHECKBOX_GROUP_DATALAYER = CONTENT_ROOT + "/checkboxgroup-datalayer";
+
+    private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/checkboxgroup-duplicate-enum";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -256,6 +253,16 @@ public class CheckBoxGroupImplTest {
     }
 
     @Test
+    void testDuplicateEnum() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put(0L, "Item 1");
+        map.put(1L, "Item 2");
+        map.put(0L, "Item 3");
+        assertArrayEquals(map.keySet().toArray(new Object[0]), checkboxGroup.getEnums());
+    }
+
+    @Test
     void testEnforceEnum() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         assertEquals(true, checkboxGroup.isEnforceEnum());
@@ -283,6 +290,16 @@ public class CheckBoxGroupImplTest {
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
+    }
+
+    @Test
+    void testGetEnumNamesWithDuplicateEnumValues() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", " Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), checkboxGroup.getEnumNames());
     }
 
     @Test

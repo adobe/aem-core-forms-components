@@ -64,7 +64,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
      *         {@code @else}
      * @return map containing enum values and enum names as key-value pairs
      */
-    public Map<Object, String> removeDuplicates() {
+    private Map<Object, String> removeDuplicates() {
 
         Object[] enumArray = this.enums;
         String[] enumNamesArray = this.enumNames;
