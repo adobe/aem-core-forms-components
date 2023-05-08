@@ -31,11 +31,11 @@ common:
           command: node .circleci/ci/it-tests.js
       - run:
           name: Install Axe accessibility testing library
-          command: npm install axe-core --save-dev
+          command: npm install axe-core
       - run:
           name: Run Axe accessibility tests
           command: |
-            npx axe ui.frontend/src/**/*.{html,js};
+            axe https://example.com --save ./axe-report.json
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -44,6 +44,9 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
+      - store_artifacts:
+          path: ./axe-report.json
+          destination: axe-report.json
 
   docker_auth: &docker_auth
     auth:
