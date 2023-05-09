@@ -25,7 +25,7 @@ const checkLightHouse = async () => {
     console.log(" from env variables --->>> ", process.env)
 
     const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConfig.json'))
-
+    console.log("lighthouseConfig -->> ", lighthouseConfig)
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
     // `.report` is the HTML report as a string
