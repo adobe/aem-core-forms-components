@@ -1,0 +1,64 @@
+{
+  "id": "panelcontainer-0749d1d943",
+  "fieldType": "panel",
+  "name": "Phone Number",
+  "visible": true,
+  "description": "Enter your phone number",
+  "enabled": true,
+  "readOnly": false,
+  "label": {
+    "value": "Phone Number"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/panelcontainer-datalayer"
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":items": {
+    "textinput": {
+      "id": "textinput-7774e718b6",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "required": true,
+      "label": {
+        "visible": true,
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/panelcontainer-datalayer/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  },
+  ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+  "dataLayer": {
+    "panelcontainer-0749d1d943": {
+      "dc:description": "Enter your phone number",
+      "dc:title": "Phone Number",
+      "@type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+      "fieldType": "panel"
+    }
+  }
+}

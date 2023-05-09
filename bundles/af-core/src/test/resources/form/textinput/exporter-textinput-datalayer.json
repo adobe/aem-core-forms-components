@@ -1,0 +1,38 @@
+{
+  "id": "textinput-1c7bc238a6",
+  "fieldType": "text-input",
+  "name": "Full Name",
+  "visible": true,
+  "description": "Enter Full Name",
+  "tooltip": "Full Name",
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "readOnly": false,
+  "label": {
+    "value": "Full Name"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/textinput-datalayer"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput",
+  "dataLayer": {
+    "textinput-1c7bc238a6": {
+      "dc:title": "Full Name",
+      "dc:description": "Enter Full Name",
+      "@type": "core/fd/components/form/textinput/v1/textinput",
+      "fieldType": "text-input"
+    }
+  }
+}

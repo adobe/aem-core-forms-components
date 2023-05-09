@@ -162,3 +162,51 @@ describe("Form with Accordion Container", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 })
+
+describe("Form with Accordion Layout Container with focus", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/accordion/focus.html";
+  let formContainer = null
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  });
+
+  it("check if first tab activated if focus call from other tab", () => {
+    const [id, fieldView] = Object.entries(formContainer._fields)[0];
+    const firstChildComponentId = formContainer._model.items[0].items[0].id;
+    const firstChildComponentButtonId = firstChildComponentId + "-button";
+    const firstChildComponentPanelId = firstChildComponentId + "-panel";
+
+    const secondChildComponentId = formContainer._model.items[0].items[1].id;
+    const secondChildComponentButtonId = secondChildComponentId + "-button";
+    const secondChildComponentPanelId = secondChildComponentId + "-panel";
+
+    // panel 1 active
+    cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+    cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+    cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+    cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+    cy.get(`#${secondChildComponentButtonId}`).click({ force: true }).then(() => {
+      // panel 2 active
+      cy.get(`#${secondChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+      cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+      cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+      cy.get(`#${firstChildComponentButtonId}`).then(() => {
+        formContainer.setFocus(id);
+        cy.get(`#${firstChildComponentButtonId}`).then(() => {
+          // panel 1 active
+          cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+          cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+          cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+          cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+        });
+      });
+    });
+  });
+});

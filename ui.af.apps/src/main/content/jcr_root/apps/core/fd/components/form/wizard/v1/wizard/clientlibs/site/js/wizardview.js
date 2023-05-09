@@ -113,8 +113,11 @@
             return Wizard.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            const index = this.#getTabIndexById(id + '_wizard-item-nav');
+            this.#navigate(index);
         }
 
         getWidget() {

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="hi"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content/dictionary">
+    <_x0032_17a2d70-9c31-4dbc-9db0-4eac9811b9d8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##5619"
+        sling:message="af2-form-translation"/>
+    <_x0034_2e52ad6-d98c-4b26-868d-e402bd9c94b7
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##accordion##jcr:title##257"
+        sling:message="अकॉर्डियन"/>
+    <bb93fef4-6cf8-484b-b8f9-f59785033e6b
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##button##jcr:title##7236"
+        sling:message="बटन"/>
+    <d7c6bcd8-8b60-495e-b559-1179e8ee327f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##jcr:title##3503"
+        sling:message="चेक बॉक्स समूह"/>
+    <_x0031_9cd3d33-91e9-4a8b-8162-565dbca7b6ec
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##0"
+        sling:message="आइटम 1"/>
+    <_x0038_32f725f-26df-49b4-9688-b909889a61b6
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup##enumNames##4110##1"
+        sling:message=" आइटम 2"/>
+    <_x0030_c2d50a5-3b7e-4fe9-b5d4-7a11c2d35552
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##datepicker##jcr:title##9506"
+        sling:message="दिनांक इनपुट"/>
+    <f7b73f9f-355d-48f0-81c5-422b222c51a5
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##dropdown##jcr:title##4797"
+        sling:message="ड्रॉपडाउन"/>
+    <_x0034_1c80468-b9a6-4026-8b1e-74f834f8e3c8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##emailinput##jcr:title##7492"
+        sling:message="ईमेल इनपुट"/>
+    <aa3bb68f-6965-4736-bccc-98f471df90b9
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##jcr:title##6496"
+        sling:message="फ़ाइल अनुलग्नक"/>
+    <_x0034_ecf1d72-01bd-4c7b-a20d-fe4f04f37889
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##fileinput##buttonText##3328"
+        sling:message="चिपका"/>
+    <c8db0e77-f29e-490b-83ac-9cf277bf154d
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##tabsontop##jcr:title##9454"
+        sling:message="शीर्ष पर टैब"/>
+    <e7c4809c-30f9-44c1-8698-218057507f48
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##image##jcr:title##3969"
+        sling:message="प्रतिबिंब"/>
+    <b497f291-c35a-4bab-83f7-dd06f7fb5f83
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##numberinput##jcr:title##9936"
+        sling:message="संख्या इनपुट"/>
+    <_x0039_0b2ec04-306b-4b27-b1aa-30fabddc2a7c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##jcr:title##8236"
+        sling:message="पैनल"/>
+    <_x0038_3a0a593-ebaf-4903-aaca-ac282b89fa7f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##jcr:title##6191"
+        sling:message="रेडियो बटन"/>
+    <_x0035_bd8152b-2962-49a7-b901-596aaeb300c5
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##0"
+        sling:message="आइटम 1"/>
+    <_x0033_0958bf3-69b0-46dc-ac6f-a264d5c1e106
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##radiobutton##enumNames##1697##1"
+        sling:message="आइटम 2"/>
+    <c087ac82-62a8-4819-a01b-436ccbddee7d
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##reset##jcr:title##3395"
+        sling:message="रीसेट"/>
+    <e9387f2d-8ec2-404a-a12e-274c3ff45a83
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##4521"
+        sling:message="जमा करें"/>
+    <cbf365d6-bb86-47a9-8d21-458a17a22236
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##telephoneinput##jcr:title##8743"
+        sling:message="टेलीफ़ोन इनपुट"/>
+    <_x0035_a34925f-d3e4-46f2-b9ae-2606acfe2aab
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##text##jcr:title##9404"
+        sling:message="टेक्स्ट"/>
+    <_x0035_ba2ea76-4daf-4a3e-8db6-cf3ca4f35bf9
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##6594"
+        sling:message="पाठ इनपुट"/>
+    <_x0032_6d509b9-9156-4d50-be0b-a6914b23bd23
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##title##jcr:title##8175"
+        sling:message="उपाधि"/>
+    <c4b44594-8895-44a5-a0ae-7fbbc7478dc8
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##wizard##jcr:title##299"
+        sling:message="जादूगर"/>
+</jcr:root>

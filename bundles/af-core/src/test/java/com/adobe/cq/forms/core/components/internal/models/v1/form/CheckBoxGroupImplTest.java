@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +27,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
@@ -50,6 +53,7 @@ public class CheckBoxGroupImplTest {
     private static final String BASE = "/form/checkboxgroup";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_CHECKBOX_GROUP = CONTENT_ROOT + "/checkboxgroup";
+    private static final String PATH_CHECKBOX_GROUP_DATALAYER = CONTENT_ROOT + "/checkboxgroup-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -316,5 +320,25 @@ public class CheckBoxGroupImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(CheckBoxGroup.class);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) checkBox.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("checkboxgroup-40e63c6f46");
+        assert (dataObject.getType()).equals("core/fd/components/form/checkboxgroup/v1/checkboxgroup");
+        assert (dataObject.getTitle()).equals("Personality");
+        assert (dataObject.getFieldType()).equals("checkbox-group");
+        assert (dataObject.getDescription()).equals("Select all that apply");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
     }
 }
