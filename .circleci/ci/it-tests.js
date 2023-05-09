@@ -85,6 +85,7 @@ try {
         // restart the AEM insatnce
         ci.sh(`./qp.sh stop --id author`);
         ci.sh(`./qp.sh start --id author`);
+        ci.sh(`sleep 3m`);
     }
 });
 
