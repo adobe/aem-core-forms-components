@@ -311,7 +311,6 @@ const languages = [
             SUBMIT: 'Отправить',
             TELEPHONE_INPUT: 'Телефонный вход',
             TEXT_INPUT: 'Ввод текста',
-            TITLE: 'Титул',
             WIZARD: 'колдун'
         },
         I18N_STRINGS: {
@@ -340,7 +339,6 @@ const languages = [
             SUBMIT: 'जमा करें',
             TELEPHONE_INPUT: 'टेलीफ़ोन इनपुट',
             TEXT_INPUT: 'पाठ इनपुट',
-            TITLE: 'उपाधि',
             WIZARD: 'जादूगर'
         },
         I18N_STRINGS: {
