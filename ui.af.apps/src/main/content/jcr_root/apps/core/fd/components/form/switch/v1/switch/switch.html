@@ -37,12 +37,13 @@
         <div data-sly-call="${label.label @componentId=widgetId, labelValue=switch.label.value, labelVisible=switch.label.visible, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
     </div>
 
-    <label class="cmp-adaptiveform-switch__label-on">${switch.onValue}</label>
+    <span class="cmp-adaptiveform-switch__widget-off">${switch.enumNames[0]}</span>
     <label class="cmp-adaptiveform-switch__widget">
-        <input class="cmp-adaptiveform-switch__widget-checkbox" type="checkbox">
-        <div class="slider round"></div>
+        <input class="cmp-adaptiveform-switch__widget-checkbox"
+               type="checkbox">
+        <div class="cmp-adaptiveform-switch__widget-slider"></div>
     </label>
-    <label class="cmp-adaptiveform-switch__label-on">${switch.offValue}</label>
+    <span class="cmp-adaptiveform-switch__widget-on">${switch.enumNames[1]}</span>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=switch.id, shortDescriptionVisible=switch.tooltipVisible, shortDescription=switch.tooltip, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap>
     </div>
