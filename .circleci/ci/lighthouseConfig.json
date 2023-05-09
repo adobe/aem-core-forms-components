@@ -4,7 +4,7 @@
     ],
     "requiredScores": [
         {
-            "performance": 42,
+            "performance": 60,
             "accessibility": 80,
             "bestPractices": 90,
             "seo": 100
