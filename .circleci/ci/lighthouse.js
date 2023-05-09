@@ -34,35 +34,51 @@ const checkLightHouse = async () => {
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
-    if(isThresholdsPass(runnerResult.lhr.categories, lighthouseConfig)){
-        writeObjLighthouseConfig(lighthouseConfig, runnerResult.lhr.categories)
-    }
-    else{
-        // fail the build, with reasoning, without exiting the build
-//        fail("Lighthouse score for aem-core-forms-components, below the thresholds");
-        console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
-       // process.exit(1);
-    }
-    postCommentToGitHub('Posting Lighthouse scores..', process.env.GITHUB_TOKEN)
+    //postCommentToGitHub('Posting Lighthouse scores..', process.env.GITHUB_TOKEN)
     fs.writeFileSync('LigthouseReport.html', reportHtml);
+
+    const thresholdResults = checkThresholds(runnerResult.lhr.categories, lighthouseConfig)
+    console.log("thresholdResults -->>>> ", thresholdResults)
+    if(!thresholdResults.isThresholdPass){
+        console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
+        process.exit(1);
+    }
+    else if(thresholdResults.updateLighthouseConfig && process.env.CIRCLE_BRANCH == 'master'){ // only execute if branch name is 'master'
+        writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
+    }
     await chrome.kill();
 }
 
-const isThresholdsPass = (resultCategories, lighthouseConfig) => {
+const checkThresholds = (resultCategories, lighthouseConfig) => {
     const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.requiredScores[0]
-    if(performance < resultCategories.performance.score &&
-        accessibility < resultCategories.accessibility.score &&
-        bestPractices < resultCategories['best-practices'].score &&
-        seo < resultCategories.seo.score){
-        return true
+    const margin = lighthouseConfig.margin
+    const thresholdResults = {
+        isThresholdPass: false,
+        updateLighthouseConfig: false
+    }
+    if(performance*(1-margin) > resultCategories.performance.score ||
+        accessibility*(1-margin) > resultCategories.accessibility.score ||
+        bestPractices*(1-margin) > resultCategories['best-practices'].score ||
+        seo*(1-margin) > resultCategories.seo.score){
+            thresholdResults.isThresholdPass = true
         }
-        return false
+
+    if(performance < resultCategories.performance.score &&
+        accessibility > resultCategories.accessibility.score &&
+        bestPractices > resultCategories['best-practices'].score &&
+        seo > resultCategories.seo.score){
+            thresholdResults.updateLighthouseConfig = true
+        }
+
+        return thresholdResults
+
 }
 
 const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
 
-    const prNumber = process.env.CIRCLE_PULL_REQUEST.split('/').pop();
-    const apiUrl = new URL(`https://api.github.com/repos/${process.env.CIRCLE_PROJECT_USERNAME}/${process.env.CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
+    const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST } = process.env
+    const prNumber = CIRCLE_PULL_REQUEST.split('/').pop();
+    const apiUrl = new URL(`https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
     const postData = JSON.stringify({body: commentText});
 
     // Define the options for the HTTPS request
@@ -90,13 +106,19 @@ const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
     req.end();
 }
 
-const writeObjLighthouseConfig = (lighthouseConfig, resultCategories) => {
-let newLighthouseConfig = {};
+const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
 
-newLighthouseConfig.urls = lighthouseConfig.urls;
-newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {performance: resultCategories.performance.score, accessibility: resultCategories.accessibility.score,
-                                                                            bestPractices: resultCategories['best-practices'].score, seo: resultCategories.seo.score}]
+const {performanceResult, accessibilityResult, bestPracticesResult, seoResult} = {performanceResult: resultCategories.performance.score, accessibility: resultCategories.accessibility.score,
+                                                                                   bestPracticesResult: resultCategories['best-practices'].score, seoResult: resultCategories.seo.score}
+let newLighthouseConfig = lighthouseConfig;
 
+if(performanceResult > lighthouseConfig.requiredScores[1].performance && accessibilityResult > lighthouseConfig.requiredScores[1].accessibility &&
+bestPracticesResult > lighthouseConfig.requiredScores[1].bestPractices && seoResult > lighthouseConfig.requiredScores[1].seo){
+    newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {performance: performanceResult, accessibility: accessibilityResult, bestPractices: bestPracticesResult, seo: seoResult}]
+}
+else{
+    newLighthouseConfig.requiredScores = [{performance: performanceResult, accessibility: accessibilityResult, bestPractices: bestPracticesResult, seo: seoResult}, lighthouseConfig.requiredScores[1]]
+}
 // write changes in the git file;
 
 fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
@@ -107,8 +129,6 @@ fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, nu
       }
     });
 }
-// login to https://github.com/adobe/aem-core-forms-components/tree/lighthouse-circleci/.circleci/ci
-// write a file here
 
 
 module.exports = { checkLightHouse }
