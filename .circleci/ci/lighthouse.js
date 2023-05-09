@@ -120,6 +120,7 @@ else{
     newLighthouseConfig.requiredScores = [{performance: performanceResult, accessibility: accessibilityResult, bestPractices: bestPracticesResult, seo: seoResult}, lighthouseConfig.requiredScores[1]]
 }
 // write changes in the git file;
+console.log("newLighthouseConfig -->> ", newLighthouseConfig)
 
 fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
       if (err) {
