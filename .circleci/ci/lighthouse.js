@@ -24,7 +24,7 @@ const checkLightHouse = async () => {
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
     console.log(" from env variables --->>> ", process.env)
 
-    const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConfig.json'))
+    const lighthouseConfig = JSON.parse(fs.readFileSync('./lighthouseConfig.json'))
     console.log("lighthouseConfig -->> ", lighthouseConfig)
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
