@@ -24,7 +24,7 @@ const checkLightHouse = async () => {
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
     console.log(" from env variables --->>> ", process.env)
 
-    const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConfig.json'))
+    const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConf.json'))
     console.log("lighthouseConfig -->> ", lighthouseConfig)
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
@@ -122,7 +122,7 @@ else{
 // write changes in the git file;
 console.log("newLighthouseConfig -->> ", newLighthouseConfig)
 
-fs.writeFileSync("lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
+fs.writeFileSync("lighthouseConf.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
       if (err) {
         console.error(err);
       } else {
