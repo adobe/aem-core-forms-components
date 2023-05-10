@@ -24,7 +24,7 @@ const checkLightHouse = async () => {
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
     console.log(" from env variables --->>> ", process.env)
 
-    const lighthouseConfig = JSON.parse(fs.readFileSync('lighthouseConf.json'))
+    const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConf.json'))
     console.log("lighthouseConfig -->> ", lighthouseConfig)
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
@@ -34,7 +34,7 @@ const checkLightHouse = async () => {
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
-    //postCommentToGitHub('Posting Lighthouse scores..', process.env.GITHUB_TOKEN)
+    //postCommentToGitHub(getCommentText(runnerResult.lhr.categories), process.env.GITHUB_TOKEN)
     fs.writeFileSync('LigthouseReport.html', reportHtml);
 
     const thresholdResults = checkThresholds(runnerResult.lhr.categories, lighthouseConfig)
@@ -47,6 +47,11 @@ const checkLightHouse = async () => {
         writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
     }
     await chrome.kill();
+}
+
+const getCommentText = (resultCategories) => {
+  const commentText = `### Lighthouse scores\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score}      |       ${resultCategories.accessibility.score}       |       ${resultCategories['best-practices'].score}       |  ${resultCategories.seo.score} |`
+  return commentText
 }
 
 const checkThresholds = (resultCategories, lighthouseConfig) => {
