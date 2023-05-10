@@ -297,7 +297,7 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS);
         Map<Object, String> map = new HashMap<>();
         map.put("0", "Item 1");
-        map.put("1", " Item 2");
+        map.put("1", "Item 2");
         map.put("0", "Item 3");
         assertArrayEquals(map.values().toArray(new String[0]), checkboxGroup.getEnumNames());
     }

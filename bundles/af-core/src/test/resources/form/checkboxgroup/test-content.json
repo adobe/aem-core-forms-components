@@ -96,8 +96,9 @@
     "readOnly": false,
     "enforceEnum": true,
     "enumNames": [
-      "Item 3",
-      " Item 2"
+      "Item 1",
+      "Item 2",
+      "Item 3"
     ],
     "label": {
       "visible": true,
@@ -119,7 +120,8 @@
     },
     "enum": [
       0,
-      1
+      1,
+      0
     ],
     ":type": "forms-components-examples/components/form/checkboxgroup"
   }
