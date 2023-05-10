@@ -35,9 +35,7 @@ class NumericInputWidget {
     }
     //TODO: to support writing in different locales \d should be replaced by [0-9] for different locales
     #matchArray ={
-        "integer":"^[+-]?{digits}*$",
-        "decimal":"^[+-]?{digits}{leading}({decimal}{digits}{fraction})?$",
-        "float":"^[+-]?{digits}*({decimal}{digits}*)?$"
+        "integer":"^[+-]?{digits}*$"
     }
     #regex=null
     #processedValue=null
@@ -59,9 +57,9 @@ class NumericInputWidget {
         this.#model = model;
         // initialize options for backward compatibility
         this.#options = Object.assign({}, this.#defaultOptions, this.#model._jsonModel);
-        let matchStr =  this.#matchArray[this.#options.dataType];
+        var matchStr =  this.#matchArray[this.#options.type];
         if(matchStr) {
-            let ld = this.#options.leadDigits,
+            var ld = this.#options.leadDigits,
                 fd = this.#options.fracDigits,
                 ldstr = ld && ld !== -1 ? "{0,"+ld+"}"
                     : "*",
