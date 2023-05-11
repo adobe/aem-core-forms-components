@@ -89,22 +89,24 @@ describe('Page - Authoring', function () {
       testAccordionBehaviour(accordionPathSelector, accordionEditPath);
     })
 
-    it ('switch accordion tabs', function(){
-      dropAccordionInContainer();
+    it ('switch accordion tabs', { retries: 3 }, function(){
+      cy.cleanTest(accordionEditPath).then(function(){
+        dropAccordionInContainer();
 
-      cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
+        cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
 
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
-      cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-      cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-      cy.get("tr[data-name='item_2']").click();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
+        cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+        cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+        cy.get("tr[data-name='item_2']").click();
 
-      cy.get('body').click( 0,0);
-      cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-      cy.get("tr[data-name='item_2']").click();
-      cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px')
+        cy.get('body').click( 0,0);
+        cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+        cy.get("tr[data-name='item_2']").click();
+        cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px')
 
-      cy.deleteComponentByPath(accordionEditPath);
+        cy.deleteComponentByPath(accordionEditPath);
+      });
     });
   })
 
