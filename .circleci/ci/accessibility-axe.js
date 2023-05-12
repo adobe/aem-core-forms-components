@@ -32,9 +32,10 @@ const calculateAccessibility = async () => {
                // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
                results.violations.filter(voilation => voilation.impact === 'critical' || voilation.impact === 'serious' || voilation.impact === 'moderate').forEach(voilation => {
                     // if branch 'master' -- raise a JIRA;
-                    if(process.env.CIRCLE_BRANCH == 'master')
-                        await raiseJiraIssue(createJiraFeilds(voilation));
-
+//                    if(process.env.CIRCLE_BRANCH == 'master'){
+                        let jiraFeilds = createJiraFeilds(voilation)
+                         await raiseJiraIssue(jiraFeilds);
+//                    }
                     process.exit(1); // fail pipeline
                })
                console.log(results.violations);
