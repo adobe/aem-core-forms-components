@@ -30,10 +30,10 @@ const calculateAccessibility = async () => {
 
             if (results.violations.length > 0) {
                // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
-               results.violations.filter(voilation => voilation.impact === 'critical' || voilation.impact === 'serious' || voilation.impact === 'moderate').forEach(voilation => {
+               results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
                     // if branch 'master' -- raise a JIRA;
 //                    if(process.env.CIRCLE_BRANCH == 'master'){
-                        let jiraFeilds = createJiraFeilds(voilation)
+                        let jiraFeilds = createJiraFeilds(violation)
                          await raiseJiraIssue(jiraFeilds);
 //                    }
                     process.exit(1); // fail pipeline
@@ -57,7 +57,7 @@ const calculateAccessibility = async () => {
 }
 
 
-const createJiraFeilds = (voilation) => {
+const createJiraFeilds = (violation) => {
 const PROJECT_KEY = "FORMS"
 const ISSUE_TYPE = "Bug"
 const PRIORITY = "Blocker"
@@ -66,7 +66,7 @@ const COMPONENT = "Core Components"
     return {
         projectKey: PROJECT_KEY,
         summary: 'AEM-Forms-Core-Component-Pipeline-Failed Accessibility Issue',
-        description: voilation.description,
+        description: violation.description,
         issueType: ISSUE_TYPE,
         priority: PRIORITY,
         assignee: 'prateekawast',
