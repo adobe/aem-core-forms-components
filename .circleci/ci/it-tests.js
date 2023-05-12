@@ -15,6 +15,8 @@
 'use strict';
 
 const ci = new (require('./ci.js'))();
+const AxeBuilder = require('@axe-core/webdriverjs');
+const WebDriver = require('selenium-webdriver');
 
 ci.context();
 
@@ -73,6 +75,21 @@ try {
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 });
+
+    // Run accessibility tests;
+    const doAsyncTasks = async () => {
+        const driver = new WebDriver.Builder().forBrowser('chrome').build();
+        driver.get('https://main--franklinforms--ankushmittal91.hlx.live/').then(() => {
+          new AxeBuilder(driver).analyze((err, results) => {
+            if (err) {
+              // Handle error somehow
+            }
+            console.log(results.violations);
+          });
+        });
+    }
+
+    doAsyncTasks()
 
     // Run integration tests
     /*

@@ -19,20 +19,22 @@ common:
       - browser-tools/install-chromedriver
       - run:
           command: |
-              google-chrome --version
-              chromedriver --version
-              which google-chrome
+            google-chrome --version
+            chromedriver --version
+            which google-chrome
           name: Check browser installed
       - *restore_cache
       - attach_workspace:
           at: /home/circleci/build
       - run:
-          name: Install Axe accessibility testing library
-          command: npm install axe-core
+          name: Install Web Driver
+          command: npm i selenium-webdriver
       - run:
-          name: Run Axe accessibility tests
-          command: |
-            node_modules/axe-core/axe-cli.js https://main--franklinforms--ankushmittal91.hlx.live/ --save ./axe-report.json
+          name: Install AXE Core/Webdriver
+          command: npm i @axe-core/webdriverjs
+      - run:
+          name: UI tests
+          command: node .circleci/ci/it-tests.js
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -41,9 +43,6 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
-      - store_artifacts:
-          path: ./axe-report.json
-          destination: axe-report.json
 
   docker_auth: &docker_auth
     auth:
@@ -71,7 +70,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: 
+          keys:
             - maven-repo-v1-{{ checksum "pom.xml" }}
             - maven-repo-v1-
       - run:
@@ -143,7 +142,7 @@ jobs:
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
- 
+
   release:
     executor: forms_executor
     steps:
@@ -183,6 +182,14 @@ workflows:
             tags:
               only: /.*/
           requires:
+            - build-java-11
+            - build-java-8
+      - cypress-chrome-cloudready-with-latest-addon:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
             - build-java-8
       - release:
           requires:
