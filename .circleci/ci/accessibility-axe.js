@@ -36,7 +36,9 @@ const calculateAccessibility = async () => {
                         let jiraFeilds = createJiraFeilds(violation)
                          await raiseJiraIssue(jiraFeilds);
 //                    }
+                    console.log("Error: Accessibility violations found, please refer the report to fix the same!")
                     process.exit(1); // fail pipeline
+
                })
                console.log(results.violations);
             }
@@ -70,7 +72,7 @@ const COMPONENT = "Core Components"
         issueType: ISSUE_TYPE,
         priority: PRIORITY,
         assignee: 'prateekawast',
-        component: COMPONENT
+        component: COMPONENT,
         customFields: {
                         "customfield_27200": {
                           "value": "No",
