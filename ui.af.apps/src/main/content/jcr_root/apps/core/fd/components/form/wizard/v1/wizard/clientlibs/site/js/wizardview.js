@@ -36,6 +36,8 @@
         static bemBlock = "cmp-adaptiveform-wizard";
         static #tabIdSuffix = "_wizard-item-nav";
         static #wizardPanelIdSuffix = "__wizardpanel";
+        static maxEnabledTab = 0;
+        static minEnabledTab = 0;
 
         static selectors = {
             self: "[data-" + Wizard.NS + '-is="' + Wizard.IS + '"]',
@@ -49,7 +51,9 @@
             widget: `.${Wizard.bemBlock}__widget`,
             tooltipDiv: `.${Wizard.bemBlock}__shortdescription`,
             previousButton: `.${Wizard.bemBlock}__previousNav`,
+            previousButtonHidden: "cmp-adaptiveform-wizard__previousNav__hidden",
             nextButton: `.${Wizard.bemBlock}__nextNav`,
+            nextButtonHidden: "cmp-adaptiveform-wizard__nextNav__hidden",
             olTabList: `.${Wizard.bemBlock}__tabList`
         };
 
@@ -57,10 +61,12 @@
             super(params);
             const {element} = params;
             this.#cacheElements(element);
-
             this.#setActive(this.#getCachedTabs())
             this.#_active = this.#getActiveIndex(this.#getCachedTabs());
+            this.setNavigableRange();
+            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
             this.#refreshActive();
+
             this.#bindEvents();
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
@@ -262,6 +268,7 @@
                     }
                 }
             }
+            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
 
         /**
@@ -289,6 +296,7 @@
                     this.#navigateAndFocusTab(activeIndex + 1);
                 }
             }
+            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
 
         #navigateToPreviousTab() {
@@ -297,6 +305,58 @@
             if (tabs && activeIndex > 0) {
                 this.#navigateAndFocusTab(activeIndex - 1);
             }
+            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+        }
+
+        /**
+         * Navigates to the tab at the provided index
+         *
+         * @private
+         * @param {Number} index The index of the tab to navigate to
+         */
+        hideUnhideNavButtons(activeTabIndex, tabsLength) {
+            if(tabsLength === 0 || this.maxEnabledTab === this.minEnabledTab) {
+                this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
+                this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
+            }
+
+            if(activeTabIndex === 0 || activeTabIndex <= this.minEnabledTab) {
+                this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
+            }
+            if(activeTabIndex === tabsLength-1 || activeTabIndex === this.maxEnabledTab) {
+                this.getNextButtonDiv().classList.add(Wizard.selectors.nextButtonHidden);
+            }
+
+            if(tabsLength > 1 && activeTabIndex > 0 && activeTabIndex > this.minEnabledTab) {
+                this.getPreviousButtonDiv().classList.remove(Wizard.selectors.previousButtonHidden);
+            }
+
+            if(activeTabIndex < tabsLength-1) {
+                this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
+            }
+        }
+
+        setNavigableRange() {
+            let wizardPanels = this.#getCachedWizardPanels();
+            for (let i = 0; i < wizardPanels.length; i++) {
+                if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                    this.minEnabledTab = i+1;
+                } else {
+                    break;
+                }
+            }
+            for (let i = wizardPanels.length - 1; i >= 0; i--) {
+                if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                    this.maxEnabledTab = i-1;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        childComponentEnabled(wizardTab) {
+            return (wizardTab.children[0].getAttribute('data-cmp-enabled') === 'true' &&
+            wizardTab.children[0].getAttribute('data-cmp-visible') === 'true')
         }
 
 
