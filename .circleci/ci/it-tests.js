@@ -15,8 +15,7 @@
 'use strict';
 
 const ci = new (require('./ci.js'))();
-const AxeBuilder = require('@axe-core/webdriverjs');
-const WebDriver = require('selenium-webdriver');
+const accessibilityAXE = require('./accessibility-axe.js')
 
 ci.context();
 
@@ -78,14 +77,11 @@ try {
 
     // Run accessibility tests;
     const doAsyncTasks = async () => {
-        const driver = new WebDriver.Builder().forBrowser('chrome').build();
-        driver.get('https://main--franklinforms--ankushmittal91.hlx.live/').then(() => {
-          new AxeBuilder(driver).analyze((err, results) => {
-            if (err) {
-              // Handle error somehow
-            }
-            console.log(results.violations);
-          });
+        await accessibilityAXE.calculateAccessibility()
+
+        ci.dir(qpPath, () => {
+                // Stop CQ
+                ci.sh('./qp.sh -v stop --id author');
         });
     }
 
@@ -123,10 +119,7 @@ try {
 //    });
 //    }
 
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-});
+
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {

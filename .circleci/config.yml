@@ -33,6 +33,9 @@ common:
           name: Install AXE Core/Webdriver
           command: npm i @axe-core/webdriverjs
       - run:
+          name: Install AXE HTML Reporter
+          command: npm i axe-html-reporter
+      - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
       - store_test_results:
