@@ -22,7 +22,7 @@ const http = require('http');
 const calculateAccessibility = async () => {
 
     const driver = new WebDriver.Builder().forBrowser('chrome').build();
-    driver.get('http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled').then(() => {
+    driver.get('https://www.jaguar.in/index.html').then(() => {
         new AxeBuilder(driver)
           .analyze()
           .then(results => {
