@@ -70,8 +70,19 @@ const COMPONENT = "Core Components"
         priority: PRIORITY,
         assignee: 'prateekawast',
         component: COMPONENT
-        customFields: {'customfield_27200': {'value': 'No','id': '61901', 'disabled': false}, // Globalization
-                    'customfield_25700': {'value': 'Internal Customer','id': '161408', 'disabled': false}}
+        customFields: {
+                        "customfield_27200": {
+                          "value": "No",
+                          "id": "61901",
+                          "disabled": false
+                        },
+                        "customfield_25700": {
+                          "value": "Internal Customer",
+                          "id": "161408",
+                          "disabled": false
+                        }
+                      }
+
     }
 }
 
