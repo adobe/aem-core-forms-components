@@ -34,6 +34,9 @@ const checkLightHouse = async () => {
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
 //    console.log('Performance score was', runnerResult.lhr.categories.performance.score * 100);
 
+    console.log("Comment to be sent --> --> ")
+    console.log(getCommentText(runnerResult.lhr.categories))
+
     //postCommentToGitHub(getCommentText(runnerResult.lhr.categories), process.env.GITHUB_TOKEN)
     fs.writeFileSync('LigthouseReport.html', reportHtml);
 
@@ -61,10 +64,10 @@ const checkThresholds = (resultCategories, lighthouseConfig) => {
         isThresholdPass: false,
         updateLighthouseConfig: false
     }
-    if(performance*(1-margin) > resultCategories.performance.score ||
-        accessibility*(1-margin) > resultCategories.accessibility.score ||
-        bestPractices*(1-margin) > resultCategories['best-practices'].score ||
-        seo*(1-margin) > resultCategories.seo.score){
+    if(performance*(1-margin) < resultCategories.performance.score &&
+        accessibility*(1-margin) < resultCategories.accessibility.score &&
+        bestPractices*(1-margin) < resultCategories['best-practices'].score &&
+        seo*(1-margin) < resultCategories.seo.score){
             thresholdResults.isThresholdPass = true
         }
 

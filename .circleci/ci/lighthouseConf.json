@@ -4,16 +4,16 @@
     ],
     "requiredScores": [
         {
-            "performance": 60,
-            "accessibility": 80,
-            "bestPractices": 90,
+            "performance": 100,
+            "accessibility": 100,
+            "bestPractices": 100,
             "seo": 100
         },
         {
-            "performance": 25,
-            "accessibility": 15,
-            "bestPractices": 15,
-            "seo": 15
+            "performance": 100,
+            "accessibility": 99,
+            "bestPractices": 100,
+            "seo": 100
         }
     ],
     "margin": 0.1
