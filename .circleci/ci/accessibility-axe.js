@@ -22,7 +22,7 @@ const http = require('http');
 const calculateAccessibility = async () => {
 
     const driver = new WebDriver.Builder().forBrowser('chrome').build();
-    driver.get('https://main--franklinforms--ankushmittal91.hlx.live/').then(() => {
+    driver.get('http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled').then(() => {
         new AxeBuilder(driver)
           .analyze()
           .then(results => {
@@ -33,7 +33,7 @@ const calculateAccessibility = async () => {
                results.violations.filter(voilation => voilation.impact === 'critical' || voilation.impact === 'serious' || voilation.impact === 'moderate').forEach(voilation => {
                     // if branch 'master' -- raise a JIRA;
                     if(process.env.CIRCLE_BRANCH == 'master')
-                        raiseJiraIssue(createJiraFeilds(voilation));
+                        await raiseJiraIssue(createJiraFeilds(voilation));
 
                     process.exit(1); // fail pipeline
                })
@@ -75,7 +75,7 @@ const COMPONENT = "Core Components"
     }
 }
 
-const raiseJiraIssue = (issueFields) => {
+const raiseJiraIssue = async (issueFields) => {
 
 const { projectKey, summary, description, issueType, priority, assignee, component, customFields } = issueFields;
 
