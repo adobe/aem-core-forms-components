@@ -24,7 +24,7 @@ const calculateAccessibility = async () => {
     const driver = new WebDriver.Builder().forBrowser('chrome').build();
 
     try {
-        await driver.get('https://www.jaguar.in/index.html');
+        await driver.get('http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled');
         const axeBuilder = new AxeBuilder(driver);
         const results = await axeBuilder.analyze();
 
