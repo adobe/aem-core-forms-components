@@ -16,7 +16,7 @@ const fs = require('fs');
 const AxeBuilder = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
 const { createHtmlReport } = require('axe-html-reporter');
-const http = require('http');
+const https = require('http');
 
 
 const calculateAccessibility = async () => {
