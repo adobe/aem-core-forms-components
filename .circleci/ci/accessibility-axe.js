@@ -22,7 +22,7 @@ const https = require('http');
 const calculateAccessibility = async () => {
 
     const driver = new WebDriver.Builder().forBrowser('chrome').build();
-    driver.get('https://www.jaguar.in/index.html').then(() => {
+    driver.get('http://localhost:4502/aem/start.html').then(() => {
         new AxeBuilder(driver)
           .analyze()
           .then(results => {
