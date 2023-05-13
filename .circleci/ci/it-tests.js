@@ -77,6 +77,7 @@ try {
 
     // Run accessibility tests;
     const doAsyncTasks = async () => {
+        console.log("calling calculateAccessibility function!!!")
         await accessibilityAXE.calculateAccessibility()
 
         ci.dir(qpPath, () => {

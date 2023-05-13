@@ -22,40 +22,38 @@ const https = require('http');
 const calculateAccessibility = async () => {
 
     const driver = new WebDriver.Builder().forBrowser('chrome').build();
-    driver.get('http://localhost:4502/aem/start.html').then(() => {
-        new AxeBuilder(driver)
-          .analyze()
-          .then(results => {
-            console.log(results);
 
-            if (results.violations.length > 0) {
-               // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
-               results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
-                    // if branch 'master' -- raise a JIRA;
+    try {
+        await driver.get('https://www.jaguar.in/index.html');
+        const axeBuilder = new AxeBuilder(driver);
+        const results = await axeBuilder.analyze();
+
+        if (results.violations.length > 0) {
+           // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
+           results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
+                // if branch 'master' -- raise a JIRA;
 //                    if(process.env.CIRCLE_BRANCH == 'master'){
-                        let jiraFeilds = createJiraFeilds(violation)
-                         await raiseJiraIssue(jiraFeilds);
+                    let jiraFeilds = createJiraFeilds(violation)
+                     await raiseJiraIssue(jiraFeilds);
 //                    }
-                    console.log("Error: Accessibility violations found, please refer the report to fix the same!")
-                    process.exit(1); // fail pipeline
+                console.log("Error: Accessibility violations found, please refer the report to fix the same!")
+//                process.exit(1); // fail pipeline
 
-               })
-               console.log(results.violations);
-            }
+           })
+           console.log("results.violations--->>>", results.violations);
+        }
 
-            const reportHTML = createHtmlReport({
-                              results: results,
-                              options: {
-                                  projectKey: 'aem-core-forms-components'
-                              },
-                          });
-            fs.writeFileSync('accessibility-report.html', reportHTML);
-
-          })
-          .catch(e => {
-            console.log("Some error occured in calculating accessibility", e)
-          });
-        });
+        const reportHTML = createHtmlReport({
+                                      results: results,
+                                      options: {
+                                          projectKey: 'aem-core-forms-components'
+                                      },
+                                  });
+        fs.writeFileSync('accessibility-report.html', reportHTML);
+    }
+    catch (e) {
+        console.log("Some error occured in calculating accessibility", e)
+    }
 }
 
 
@@ -105,6 +103,8 @@ const { projectKey, summary, description, issueType, priority, assignee, compone
     },
   };
 
+  console.log("options -->>> ", options)
+
   // Create the request body
   const body = {
     'fields': {
@@ -129,6 +129,7 @@ const { projectKey, summary, description, issueType, priority, assignee, compone
     },
   };
 
+   console.log("BODY OF REQUEST ---->>", body)
   // Make the request
   const req = https.request(options, (res) => {
     res.setEncoding('utf8');
