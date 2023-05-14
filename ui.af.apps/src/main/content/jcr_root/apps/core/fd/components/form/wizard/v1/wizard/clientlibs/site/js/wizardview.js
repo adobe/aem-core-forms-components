@@ -36,8 +36,8 @@
         static bemBlock = "cmp-adaptiveform-wizard";
         static #tabIdSuffix = "_wizard-item-nav";
         static #wizardPanelIdSuffix = "__wizardpanel";
-        static maxEnabledTab = 0;
-        static minEnabledTab = 0;
+        maxEnabledTab = 0;
+        minEnabledTab = 0;
 
         static selectors = {
             self: "[data-" + Wizard.NS + '-is="' + Wizard.IS + '"]',
@@ -63,7 +63,7 @@
             this.#cacheElements(element);
             this.#setActive(this.#getCachedTabs())
             this.#_active = this.#getActiveIndex(this.#getCachedTabs());
-            this.setNavigableRange();
+            this.setNavigationRange();
             this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
             this.#refreshActive();
 
@@ -315,28 +315,28 @@
          * @param {Number} index The index of the tab to navigate to
          */
         hideUnhideNavButtons(activeTabIndex, tabsLength) {
-            if(tabsLength === 0 || this.maxEnabledTab === this.minEnabledTab) {
+            if(tabsLength === 0 || this.maxEnabledTab <= this.minEnabledTab) {
                 this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
                 this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
             }
 
-            if(activeTabIndex === 0 || activeTabIndex <= this.minEnabledTab) {
+            if(activeTabIndex <= this.minEnabledTab) {
                 this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
             }
-            if(activeTabIndex === tabsLength-1 || activeTabIndex === this.maxEnabledTab) {
+            if(activeTabIndex === this.maxEnabledTab) {
                 this.getNextButtonDiv().classList.add(Wizard.selectors.nextButtonHidden);
             }
 
-            if(tabsLength > 1 && activeTabIndex > 0 && activeTabIndex > this.minEnabledTab) {
+            if(tabsLength > 1 && activeTabIndex > this.minEnabledTab) {
                 this.getPreviousButtonDiv().classList.remove(Wizard.selectors.previousButtonHidden);
             }
 
-            if(activeTabIndex < tabsLength-1) {
+            if(activeTabIndex < this.maxEnabledTab) {
                 this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
             }
         }
 
-        setNavigableRange() {
+        setNavigationRange() {
             let wizardPanels = this.#getCachedWizardPanels();
             for (let i = 0; i < wizardPanels.length; i++) {
                 if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
@@ -347,11 +347,13 @@
             }
             for (let i = wizardPanels.length - 1; i >= 0; i--) {
                 if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
-                    this.maxEnabledTab = i-1;
+                    this.maxEnabledTab = i;
                 } else {
                     break;
                 }
             }
+            this.minEnabledTab = Math.max(0, this.minEnabledTab);
+            this.maxEnabledTab = Math.min(this.#getCachedTabs().length-1, this.maxEnabledTab);
         }
 
         childComponentEnabled(wizardTab) {
@@ -440,6 +442,7 @@
                 repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
                 this.#refreshActive();
                 this.#getTabIndexById()
+                // todo: this makes the wizard to select last repeatable component's last tab selected and needs to be fixed
                 this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
             }
         }
