@@ -46,6 +46,9 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
+      - store_artifacts:
+          path: /home/circleci/build/artifacts
+          destination: accessibilityReport.html
 
   docker_auth: &docker_auth
     auth:
@@ -105,9 +108,6 @@ jobs:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
           path: bundles/core/target/surefire-reports
-      - store_artifacts:
-          path: /home/circleci/build/artifacts
-          destination: accessibilityReport.html
       - codecov/upload:
           conf: .circleci/codecov.yml
           flags: unittests
