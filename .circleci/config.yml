@@ -27,8 +27,32 @@ common:
       - attach_workspace:
           at: /home/circleci/build
       - run:
+          name: Install Chrome Launcher
+          command: npm install chrome-launcher
+      - run:
+          name: Install lighthouse
+          command: npm install lighthouse
+      - run:
+          name: Install Web Driver
+          command: npm install selenium-webdriver
+      - run:
+          name: Install AXE Core/Webdriver
+          command: npm install @axe-core/webdriverjs
+      - run:
+          name: Install AXE HTML Reporter
+          command: npm install axe-html-reporter
+      - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
+      - run:
+          name: Calculate lighthouse Scores
+          command: node .circleci/ci/lighthouse.js
+      - run:
+          name: Check Accessibility
+          command: node .circleci/ci/accessibility-axe.js
+      - run:
+          name: Stop CQ
+          command: node .circleci/ci/stop-cq.js
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -37,6 +61,8 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
+      - store_artifacts:
+          path: artifacts
 
   docker_auth: &docker_auth
     auth:
