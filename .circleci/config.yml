@@ -47,8 +47,7 @@ common:
       - store_artifacts:
           path: logs
       - store_artifacts:
-          path: /home/circleci/build/artifacts
-          destination: accessibilityReport.html
+          path: artifacts
 
   docker_auth: &docker_auth
     auth:

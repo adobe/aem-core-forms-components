@@ -30,28 +30,28 @@ const calculateAccessibility = async () => {
 
         console.log("AXE results ---", results)
 
+        const reportHTML = createHtmlReport({
+                                              results: results,
+                                              options: {
+                                                  projectKey: 'aem-core-forms-components'
+                                              },
+                                          });
+        fs.writeFileSync('accessibility-report.html', reportHTML);
+
         if (results.violations.length > 0) {
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
                 // if branch 'master' -- raise a JIRA;
-//                    if(process.env.CIRCLE_BRANCH == 'master'){
-                    let jiraFeilds = createJiraFeilds(violation)
-                     await raiseJiraIssue(jiraFeilds);
-//                    }
+                    if(process.env.CIRCLE_BRANCH == 'master'){
+                        let jiraFeilds = createJiraFeilds(violation)
+                         await raiseJiraIssue(jiraFeilds);
+                    }
                 console.log("Error: Accessibility violations found, please refer the report to fix the same!")
-//                process.exit(1); // fail pipeline
+                process.exit(1); // fail pipeline
 
            })
            console.log("results.violations--->>>", results.violations);
         }
-
-        const reportHTML = createHtmlReport({
-                                      results: results,
-                                      options: {
-                                          projectKey: 'aem-core-forms-components'
-                                      },
-                                  });
-        fs.writeFileSync('accessibility-report.html', reportHTML);
     }
     catch (e) {
         console.log("Some error occured in calculating accessibility", e)
