@@ -15,13 +15,19 @@
 const fs = require('fs');
 const AxeBuilder = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const { createHtmlReport } = require('axe-html-reporter');
 const https = require('http');
 
 
 const calculateAccessibility = async () => {
 
-    const driver = new WebDriver.Builder().forBrowser('chrome').build();
+    const options = new chrome.Options();
+     options.setAuthenticationCredentials({
+        username: 'admin',
+        password: 'admin'
+      });
+    const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
 
     try {
         await driver.get('http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled');
@@ -41,12 +47,8 @@ const calculateAccessibility = async () => {
         if (results.violations.length > 0) {
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
-                // if branch 'master' -- raise a JIRA;
-                    if(process.env.CIRCLE_BRANCH == 'master'){
-                        let jiraFeilds = createJiraFeilds(violation)
-                         await raiseJiraIssue(jiraFeilds);
-                    }
-                console.log("Error: Accessibility violations found, please refer the report to fix the same!")
+
+                console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
                 process.exit(1); // fail pipeline
 
            })
