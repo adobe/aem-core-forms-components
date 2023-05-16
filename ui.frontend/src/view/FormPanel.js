@@ -44,11 +44,12 @@ export default class FormPanel extends FormFieldBase {
             instanceManager.addChild(this);
         }
     }
+
     setFocus(id) {
-      const fieldType = this.parentView?.getModel()?.fieldType;
-      if(fieldType !== 'form' && this.parentView.setFocus){
-        this.parentView.setFocus(this.getId());
-      }
+        const fieldType = this.parentView?.getModel()?.fieldType;
+        if (fieldType !== 'form' && this.parentView.setFocus) {
+            this.parentView.setFocus(this.getId());
+        }
     }
 
     addChild(childView) {
@@ -155,6 +156,56 @@ export default class FormPanel extends FormFieldBase {
             }
         }
         return resultIndex + 1;
+    }
+
+    updateChildVisibility(visible, state) {
+        // implement in individual layouts
+    }
+
+    handleHiddenChildrenVisibility() {
+        for (let i = 0; i < this.children.length; i++) {
+            let isVisible = this.children[i].element.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+            if (isVisible === 'false') {
+                this.updateChildVisibility(false, this.children[i].getModel().getState());
+            }
+        }
+    }
+
+    findFirstVisibleChild(children) {
+        for (let i = 0; i < children.length; i++) {
+            let isVisible = children[i].getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+            if (isVisible != 'false') {
+                return children[i];
+            }
+        }
+    }
+
+    updateVisibilityOfNavigationElement(navigationTabElement, visible) {
+        if (navigationTabElement) {
+            if (visible === false) {
+                navigationTabElement.setAttribute(Constants.ARIA_HIDDEN, true);
+            } else {
+                navigationTabElement.removeAttribute(Constants.ARIA_HIDDEN);
+            }
+            navigationTabElement.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
+        }
+    }
+
+    subscribe() {
+        super.subscribe();
+        const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
+        this._model.subscribe((action) => {
+            let state = action.target.getState();
+            const changes = action.payload.changes;
+            changes.forEach(change => {
+                const fn = changeHandlerName(change.propertyName);
+                if (typeof this[fn] === "function") {
+                    this[fn](change.currentValue, state);
+                } else {
+                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
+                }
+            })
+        }, 'childChanged');
     }
 
 }
