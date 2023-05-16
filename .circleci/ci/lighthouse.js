@@ -1,15 +1,17 @@
 /*******************************************************************************
+ * Copyright 2023 Adobe
  *
- *    Copyright 2021 Adobe. All rights reserved.
- *    This file is licensed to you under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License. You may obtain a copy
- *    of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *    Unless required by applicable law or agreed to in writing, software distributed under
- *    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- *    OF ANY KIND, either express or implied. See the License for the specific language
- *    governing permissions and limitations under the License.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  ******************************************************************************/
 
 const fs = require('fs');
@@ -33,6 +35,7 @@ const checkLightHouse = async () => {
     console.log(getCommentText(runnerResult.lhr.categories))
 
     //postCommentToGitHub(getCommentText(runnerResult.lhr.categories), process.env.GITHUB_TOKEN)
+    ci.sh('mkdir artifacts');
     ci.dir("artifacts", () => {
            fs.writeFileSync('LigthouseReport.html', reportHtml);
         });
@@ -42,7 +45,7 @@ const checkLightHouse = async () => {
     console.log("thresholdResults -->>>> ", thresholdResults)
     if(!thresholdResults.isThresholdPass){
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
-//        process.exit(1);
+        process.exit(1);
     }
     else if(thresholdResults.updateLighthouseConfig && process.env.CIRCLE_BRANCH == 'master'){ // only execute if branch name is 'master'
         writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
@@ -51,7 +54,7 @@ const checkLightHouse = async () => {
 }
 
 const getCommentText = (resultCategories) => {
-  const commentText = `### Lighthouse scores\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score}      |       ${resultCategories.accessibility.score}       |       ${resultCategories['best-practices'].score}       |  ${resultCategories.seo.score} |`
+  const commentText = `### Lighthouse scores\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score*100}      |       ${resultCategories.accessibility.score*100}       |       ${resultCategories['best-practices'].score*100}       |  ${resultCategories.seo.score*100} |`
   return commentText
 }
 
@@ -62,17 +65,17 @@ const checkThresholds = (resultCategories, lighthouseConfig) => {
         isThresholdPass: false,
         updateLighthouseConfig: false
     }
-    if(performance*(1-margin) < resultCategories.performance.score &&
-        accessibility*(1-margin) < resultCategories.accessibility.score &&
-        bestPractices*(1-margin) < resultCategories['best-practices'].score &&
-        seo*(1-margin) < resultCategories.seo.score){
+    if(performance*(1-margin) < resultCategories.performance.score*100 &&
+        accessibility*(1-margin) < resultCategories.accessibility.score*100 &&
+        bestPractices*(1-margin) < resultCategories['best-practices'].score*100 &&
+        seo*(1-margin) < resultCategories.seo.score*100){
             thresholdResults.isThresholdPass = true
         }
 
-    if(performance < resultCategories.performance.score &&
-        accessibility > resultCategories.accessibility.score &&
-        bestPractices > resultCategories['best-practices'].score &&
-        seo > resultCategories.seo.score){
+    if(performance < resultCategories.performance.score*100 &&
+        accessibility > resultCategories.accessibility.score*100 &&
+        bestPractices > resultCategories['best-practices'].score*100 &&
+        seo > resultCategories.seo.score*100){
             thresholdResults.updateLighthouseConfig = true
         }
 
@@ -114,26 +117,44 @@ const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
 
 const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
 
-const {performanceResult, accessibilityResult, bestPracticesResult, seoResult} = {performanceResult: resultCategories.performance.score, accessibility: resultCategories.accessibility.score,
-                                                                                   bestPracticesResult: resultCategories['best-practices'].score, seoResult: resultCategories.seo.score}
-let newLighthouseConfig = lighthouseConfig;
+    const {
+        performanceResult,
+        accessibilityResult,
+        bestPracticesResult,
+        seoResult
+    } = {
+        performanceResult: resultCategories.performance.score,
+        accessibility: resultCategories.accessibility.score,
+        bestPracticesResult: resultCategories['best-practices'].score,
+        seoResult: resultCategories.seo.score
+    }
+    let newLighthouseConfig = lighthouseConfig;
 
-if(performanceResult > lighthouseConfig.requiredScores[1].performance && accessibilityResult > lighthouseConfig.requiredScores[1].accessibility &&
-bestPracticesResult > lighthouseConfig.requiredScores[1].bestPractices && seoResult > lighthouseConfig.requiredScores[1].seo){
-    newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {performance: performanceResult, accessibility: accessibilityResult, bestPractices: bestPracticesResult, seo: seoResult}]
-}
-else{
-    newLighthouseConfig.requiredScores = [{performance: performanceResult, accessibility: accessibilityResult, bestPractices: bestPracticesResult, seo: seoResult}, lighthouseConfig.requiredScores[1]]
-}
-// write changes in the git file;
-console.log("newLighthouseConfig -->> ", newLighthouseConfig)
+    if (performanceResult > lighthouseConfig.requiredScores[1].performance && accessibilityResult > lighthouseConfig.requiredScores[1].accessibility &&
+        bestPracticesResult > lighthouseConfig.requiredScores[1].bestPractices && seoResult > lighthouseConfig.requiredScores[1].seo) {
+        newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {
+            performance: performanceResult,
+            accessibility: accessibilityResult,
+            bestPractices: bestPracticesResult,
+            seo: seoResult
+        }]
+    } else {
+        newLighthouseConfig.requiredScores = [{
+            performance: performanceResult,
+            accessibility: accessibilityResult,
+            bestPractices: bestPracticesResult,
+            seo: seoResult
+        }, lighthouseConfig.requiredScores[1]]
+    }
+    // write changes in the git file;
+    console.log("newLighthouseConfig -->> ", newLighthouseConfig)
 
-fs.writeFileSync("lighthouseConf.json", JSON.stringify(newLighthouseConfig, null, 4), function (err) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File contents replaced successfully!");
-      }
+    fs.writeFileSync("lighthouseConf.json", JSON.stringify(newLighthouseConfig, null, 4), function(err) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log("File contents replaced successfully!");
+        }
     });
 }
 
