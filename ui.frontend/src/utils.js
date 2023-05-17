@@ -232,10 +232,10 @@ export default class Utils {
 
     /**
      * Registers custom functions from clientlibs
-     * @param formPath
+     * @param formId
      */
-    static async registerCustomFunctions(formPath) {
-        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formPath);
+    static async registerCustomFunctions(formId) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
         if (funcConfig && funcConfig.customFunction){
             const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
                 if (window[func.id]) {
