@@ -3,5 +3,4 @@
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
     <rep:policy/>
-    <core-components-it-template/>
 </jcr:root>

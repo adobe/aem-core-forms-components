@@ -34,6 +34,7 @@ var formsConstants = {
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
                 "tabsontop": "/apps/forms-components-examples/components/form/tabsontop",
+                "verticaltabs":"/apps/forms-components-examples/components/form/verticaltabs",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
                 "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
