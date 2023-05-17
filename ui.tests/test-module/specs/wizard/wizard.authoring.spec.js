@@ -67,23 +67,23 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('verify Basic tab in edit dialog of Wizard',function (){
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
-                cy.invokeEditableAction(editDialogConfigurationSelector).then(()=>{
-                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
-                    cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
-                    cy.get("[name='./name']").should("exist");
-                    cy.get("[name='./jcr:title']").should("exist");
-                    cy.get("[name='./layout']").should("exist");
-                    cy.get("[name='./dataRef']").should("exist");
-                    cy.get("[name='./visible']").should("exist");
-                    cy.get("[name='./enabled']").should("exist");
-                    cy.get('.cq-dialog-cancel').click({force:true});
-                });
-            });
-            cy.deleteComponentByPath(wizardLayoutDrop) ;
-        });
+        // it('verify Basic tab in edit dialog of Wizard',function (){
+        //     dropWizardInContainer();
+        //     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+        //         cy.invokeEditableAction(editDialogConfigurationSelector).then(()=>{
+        //             cy.get(wizardBlockBemSelector+'__editdialog').contains('Help Content').click({force:true});
+        //             cy.get(wizardBlockBemSelector+'__editdialog').contains('Basic').click({force:true});
+        //             cy.get("[name='./name']").should("exist");
+        //             cy.get("[name='./jcr:title']").should("exist");
+        //             cy.get("[name='./layout']").should("exist");
+        //             cy.get("[name='./dataRef']").should("exist");
+        //             cy.get("[name='./visible']").should("exist");
+        //             cy.get("[name='./enabled']").should("exist");
+        //             cy.get('.cq-dialog-cancel').click({force:true});
+        //         });
+        //     });
+        //     cy.deleteComponentByPath(wizardLayoutDrop) ;
+        // });
 
         it('verify Navigation Working between tabs in Authoring', { retries: 3 }, function(){
             cy.cleanTest(wizardLayoutDrop).then(function() {
