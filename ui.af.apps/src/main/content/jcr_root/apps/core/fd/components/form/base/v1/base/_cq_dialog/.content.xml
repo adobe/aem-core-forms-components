@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title=""
     sling:resourceType="cq/gui/components/authoring/dialog">
@@ -581,11 +581,12 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <customPropertiesOptions jcr:primaryType="nt:unstructured"
                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                                 fieldDescription="Provide the name (key) and value of the custom property"
-                                                                 fieldLabel="Custom Properties">
+                                                                 fieldDescription="Custom Properties are key-value pairs that will be visible in the headless rendition of the form"
+                                                                 fieldLabel="Custom Properties"
+                                                                 composite="true">
                                                         <field jcr:primaryType="nt:unstructured"
                                                                sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                               name="./customProperties">
+                                                               name="./fd:customProperties">
                                                             <items jcr:primaryType="nt:unstructured">
                                                                 <customKey jcr:primaryType="nt:unstructured"
                                                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -602,9 +603,9 @@
                                                                            fieldLabel="Type"
                                                                            fieldDescription="Specify the data type of the value of the custom property">
                                                                     <items jcr:primaryType="nt:unstructured">
-                                                                        <String jcr:primaryType="nt:unstructured" text="String" value="0"/>
-                                                                        <Boolean jcr:primaryType="nt:unstructured" text="Boolean" value="1"/>
-                                                                        <Number jcr:primaryType="nt:unstructured" text="Number" value="2"/>
+                                                                        <String jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                                                                        <Boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean"/>
+                                                                        <Number jcr:primaryType="nt:unstructured" text="Number" value="number"/>
                                                                     </items>
                                                                 </customValueType>
                                                                 <customValue

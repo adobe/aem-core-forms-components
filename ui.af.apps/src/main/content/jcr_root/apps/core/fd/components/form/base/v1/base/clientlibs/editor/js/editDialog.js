@@ -177,19 +177,7 @@
             if (dropdownSaveValue && dropdownSaveValue.length > 0) {
                 selectedValue = dropdownSaveValue[0].selectedItem ? dropdownSaveValue[0].selectedItem.value : '';
             }
-            var dataType = '';
-            switch (selectedValue) {
-                case '0':
-                    dataType = 'string';
-                    break;
-                case '1':
-                    dataType = 'boolean';
-                    break;
-                case '2':
-                    dataType = 'number';
-                    break;
-            }
-            return dataType;
+            return selectedValue;
         }
     );
 
