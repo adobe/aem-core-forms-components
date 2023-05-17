@@ -214,7 +214,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
         return traverseChild(this, callBack);
     }
 
-    Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack) throws Exception {
+    private Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack) throws Exception {
         Map<String, String> result = null;
         for (Object component : container.getItems()) {
             if (component instanceof Container) {
