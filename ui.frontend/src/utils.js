@@ -18,7 +18,6 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
-
 export default class Utils {
     static #contextPath = "";
     static #fieldCreatorSets = [];
@@ -232,6 +231,23 @@ export default class Utils {
     }
 
     /**
+     * Registers custom functions from clientlibs
+     * @param formPath
+     */
+    static async registerCustomFunctions(formPath) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formPath);
+        if (funcConfig && funcConfig.customFunction){
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
      *
      * @param createFormContainer
      * @param formContainerSelector
@@ -250,6 +266,7 @@ export default class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path);
                 console.debug("fetched model json", _formJson);
+                await this.registerCustomFunctions(_formJson.id);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};

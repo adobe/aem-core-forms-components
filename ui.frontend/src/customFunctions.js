@@ -86,8 +86,36 @@ function navigateTo(destinationURL, destinationType) {
     }
 }
 
+/**
+ * Default Error handler for invoke service rule
+ * @name defaultErrorHandler Default Error Handler Function
+ * @errorHandler
+ */
+function defaultErrorHandler(response, headers, globals) {
+    if(response && response.validationErrors) {
+        response.validationErrors?.forEach(function (violation) {
+            if (violation.details && (violation.fieldName || violation.dataRef)) {
+                if (violation.fieldName) {
+                    globals.form.visit(function callback(f) {
+                        if (f.qualifiedName === violation.fieldName) {
+                            f.markAsInvalid(violation.details.join("\n"));
+                        }
+                    });
+                } else if (violation.dataRef) {
+                    globals.form.visit(function callback(f) {
+                        if (f.dataRef === violation.dataRef) {
+                            f.markAsInvalid(violation.details.join("\n"));
+                        }
+                    });
+                }
+            }
+        });
+    }
+}
+
 export const customFunctions = {
     toObject,
     externalize,
-    navigateTo
+    navigateTo,
+    defaultErrorHandler
 };
