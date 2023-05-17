@@ -60,8 +60,8 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "configurationPath")
-    protected String configurationPath;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "rcCloudServicePath")
+    protected String rcCloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "recaptchaSize")
     protected String recaptchaSize;
@@ -71,8 +71,8 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
 
     @Override
-    public String getConfigurationPath() {
-        return configurationPath;
+    public String getrcCloudServicePath() {
+        return rcCloudServicePath;
     }
 
     @Override
@@ -86,27 +86,15 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null;
         resource = resourceResolver.getResource(this.getPath());
-        if(resource != null) {
+        if (resource != null) {
             reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            siteKey = reCaptchaConfiguration.siteKey();
+            if(reCaptchaConfiguration != null) {
+                siteKey = reCaptchaConfiguration.siteKey();
+            }
         }
         customCaptchaProperties.put("siteKey", siteKey);
         customCaptchaProperties.put("uri", RECAPTCHA_DEFAULT_URL);
         return customCaptchaProperties;
     }
 
-    @Override
-    public ReCaptchaConfigurationModel getReCaptchaConfiguration() throws GuideException {
-        if (reCaptchaConfiguration != null) {
-            return reCaptchaConfiguration;
-        } else {
-            resource = resourceResolver.getResource(this.getPath());
-            if(resource != null) {
-                return cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            } else
-                return null;
-        }
-    }
-
 }
-

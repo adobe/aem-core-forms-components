@@ -7,7 +7,7 @@
     "type": "string",
     "enabled": true,
     "readOnly": false,
-    "configurationPath": "v2checkbox",
+    "rcCloudServicePath": "v2checkbox",
     "label": {
       "value": "CAPTCHA",
       "visible": true

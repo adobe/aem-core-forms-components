@@ -34,6 +34,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osgi.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,8 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
@@ -205,4 +208,22 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     public AllowedComponentsExporter getExportedAllowedComponents() {
         return null;
     }
+
+    @JsonIgnore
+    public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
+        return traverseChild(this, callBack);
+    }
+
+    Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack) throws Exception {
+        Map<String, String> result = null;
+        for (Object component : container.getItems()) {
+            if (component instanceof Container) {
+                result = traverseChild((Container) component, callBack);
+            } else {
+                result = callBack.apply((FormComponent) component);
+            }
+        }
+        return result;
+    }
+
 }

@@ -22,7 +22,7 @@ import org.mockito.Mockito;
 
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
-import com.adobe.aemds.guide.service.CloudConfigurationProviderException;
+import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
@@ -43,7 +43,7 @@ public class RecaptchaImplTest {
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
-    void setUp() throws CloudConfigurationProviderException {
+    void setUp() throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
 
         CloudConfigurationProvider cloudConfigurationProvider = Mockito.mock(CloudConfigurationProvider.class);
@@ -91,7 +91,7 @@ public class RecaptchaImplTest {
     @Test
     void testGetConfigurationPath() {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        assertEquals("v2checkbox", recaptcha.getConfigurationPath());
+        assertEquals("v2checkbox", recaptcha.getrcCloudServicePath());
         Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
@@ -120,7 +120,7 @@ public class RecaptchaImplTest {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
         try {
             assertEquals("test-sitekey", recaptcha.getRecaptchaProperties().get("siteKey"));
-        } catch (CloudConfigurationProviderException e) {
+        } catch (GuideException e) {
             throw new RuntimeException(e);
         }
         assertFalse(recaptcha.getProperties().isEmpty());

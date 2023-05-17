@@ -9,7 +9,7 @@
     "readOnly": false,
     "mandatory": "true",
     "name": "test-recaptcha",
-    "configurationPath": "v2checkbox",
+    "rcCloudServicePath": "v2checkbox",
     "visible": true,
     "hideTitle": "false",
     "sling:resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",

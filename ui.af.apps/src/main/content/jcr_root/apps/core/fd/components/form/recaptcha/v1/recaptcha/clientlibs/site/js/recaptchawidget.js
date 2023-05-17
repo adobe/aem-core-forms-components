@@ -17,6 +17,7 @@
 /**
  * This class is responsible for interacting with the recaptcha widget. It displays Google reCAPTCHA challenge.
  */
+
 class RecaptchaWidget {
     #widget = null
     #model = null // passed by reference
@@ -48,6 +49,16 @@ class RecaptchaWidget {
         var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
         var widgetId;
         var url = recaptchaConfigData.properties["fd:captcha"].uri;
+        if(recaptchaConfigData.recaptchaSize == "invisible") {
+            gcontainer.classList.add('g-recaptcha-invisible');
+        }
+         if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
+                     guideBridge.getFormModel().subscribe(async (action)=>{
+                     if (action.type === 'validate') {
+                        await this.recaptchaInvisibleValidate();
+                     }
+                 	}, 'validate');
+             	}
 
         var successCallback = function(response) {
             element.setAttribute("af-grecaptcha-response", response);
@@ -89,4 +100,9 @@ class RecaptchaWidget {
     util = function(response) {
         this.#model.value = (response);
     }
+
+    recaptchaInvisibleValidate = function() {
+        return grecaptcha.execute();
+    }
+
 }
