@@ -80,7 +80,6 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         return recaptchaSize;
     }
 
-    @Override
     public Map<String, Object> getRecaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
@@ -95,6 +94,19 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         customCaptchaProperties.put("siteKey", siteKey);
         customCaptchaProperties.put("uri", RECAPTCHA_DEFAULT_URL);
         return customCaptchaProperties;
+    }
+
+    @Override
+    public Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        try {
+            if (getRecaptchaProperties().size() > 0) {
+                properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
+            }
+        } catch (GuideException e) {
+            throw new RuntimeException(e);
+        }
+        return properties;
     }
 
 }

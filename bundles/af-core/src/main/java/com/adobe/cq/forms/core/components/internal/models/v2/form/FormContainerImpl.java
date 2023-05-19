@@ -261,7 +261,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return customDorProperties;
     }
 
-
     @JsonIgnore
     public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
         return traverseChild(this, callBack);

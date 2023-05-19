@@ -119,7 +119,7 @@ public class RecaptchaImplTest {
     void testGetProperties() {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
         try {
-            assertEquals("test-sitekey", recaptcha.getRecaptchaProperties().get("siteKey"));
+            assertEquals("test-sitekey", recaptcha.getProperties().get("siteKey"));
         } catch (GuideException e) {
             throw new RuntimeException(e);
         }

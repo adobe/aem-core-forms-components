@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
@@ -77,12 +76,12 @@ public interface FormComponent extends Component {
         return Collections.emptyMap();
     }
 
-    @JsonView(Views.Author.class)
-    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, Object> getRecaptchaProperties() throws GuideException {
-        return Collections.emptyMap();
-    }
+    // @JsonView(Views.Author.class)
+    // @JsonIgnore
+    // @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    // default Map<String, Object> getRecaptchaProperties() throws GuideException {
+    // return Collections.emptyMap();
+    // }
 
     /**
      * Returns getPath of the form field
