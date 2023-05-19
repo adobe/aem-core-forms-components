@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,21 @@ describe("Disable Form Test", () => {
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
-        })
+        });
+
     });
-    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTelephoneInput"];
+    const components = ["adaptiveFormTextInput", "adaptiveFormNumberInput", "adaptiveFormDropDown", "adaptiveFormDatePicker", "adaptiveFormEmailInput", "adaptiveFormCheckBoxGroup", "adaptiveFormRadioButton", "adaptiveFormFileInput", "adaptiveFormTelephoneInput", "adaptiveFormButton"];
 
     it(`Check for disable functionality`,() => {
         // disable form
         cy.window().then($window => {
-            $window.guideBridge.disableForm();
+            if($window && $window.guideBridge) {
+                $window.guideBridge.connect(() => {
+                    $window.guideBridge.disableForm();
+                });
+            }
         });
+
         // check if form components are disabled
         components.forEach((coreComponent) => {
             cy.get(`[data-cmp-is="${coreComponent}"]`)
