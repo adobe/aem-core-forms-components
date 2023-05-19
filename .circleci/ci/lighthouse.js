@@ -124,7 +124,7 @@ const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
         seoResult
     } = {
         performanceResult: resultCategories.performance.score,
-        accessibility: resultCategories.accessibility.score,
+        accessibilityResult: resultCategories.accessibility.score,
         bestPracticesResult: resultCategories['best-practices'].score,
         seoResult: resultCategories.seo.score
     }
