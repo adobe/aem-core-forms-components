@@ -88,7 +88,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null) {
             reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            if(reCaptchaConfiguration != null) {
+            if (reCaptchaConfiguration != null) {
                 siteKey = reCaptchaConfiguration.siteKey();
             }
         }

@@ -53,9 +53,13 @@ class RecaptchaWidget {
             gcontainer.classList.add('g-recaptcha-invisible');
         }
          if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
-                     guideBridge.getFormModel().subscribe(async (action)=>{
+                     guideBridge.getFormModel().subscribe( (action)=>{
                      if (action.type === 'validate') {
-                        await this.recaptchaInvisibleValidate();
+                        return new Promise((resolve)=>{
+                            this.recaptchaInvisibleValidate()
+                                .then(() => resolve())
+                                .catch(() => resolve());
+                        });
                      }
                  	}, 'validate');
              	}
