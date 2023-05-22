@@ -16,8 +16,10 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -40,6 +43,9 @@ public class RadioButtonImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
     private static final String PATH_RADIOBUTTON = CONTENT_ROOT + "/radiobutton";
+    private static final String PATH_RADIOBUTTON_DATALAYER = CONTENT_ROOT + "/radiobutton-datalayer";
+
+    private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -264,6 +270,16 @@ public class RadioButtonImplTest {
     }
 
     @Test
+    void testDuplicateEnum() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.keySet().toArray(new Object[0]), radioButton.getEnums());
+    }
+
+    @Test
     void testEnforceEnum() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
         assertEquals(true, radioButton.isEnforceEnum());
@@ -291,6 +307,16 @@ public class RadioButtonImplTest {
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
         assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
+    }
+
+    @Test
+    void testGetEnumNamesWithDuplicateEnumValues() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), radioButton.getEnumNames());
     }
 
     @Test
@@ -323,5 +349,25 @@ public class RadioButtonImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(RadioButton.class);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
+        FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) radioButton.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("radiobutton-bafbf1a102");
+        assert (dataObject.getType()).equals("core/fd/components/form/radiobutton/v1/radiobutton");
+        assert (dataObject.getTitle()).equals("Gender");
+        assert (dataObject.getFieldType()).equals("radio-group");
+        assert (dataObject.getDescription()).equals("Input gender");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
+        FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_DATALAYER));
     }
 }

@@ -12,7 +12,8 @@
     governing permissions and limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -75,6 +76,15 @@
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
+                    <validatorsSettings>
+                        <jackrabbit-filter>
+                            <options>
+                                <validRoots>
+                                    /apps,/apps/core/fd/af-clientlibs/core-forms-components-runtime-all/resources
+                                </validRoots>
+                            </options>
+                        </jackrabbit-filter>
+                    </validatorsSettings>
                     <group>${vault.package.group}</group>
                     <packageType>application</packageType>
                     <dependencies>
@@ -82,6 +92,11 @@
                             <group>adobe/cq60</group>
                             <name>core.wcm.components.examples.ui.apps</name>
                             <version>${core.wcm.components.library.version}</version>
+                        </dependency>
+                        <dependency>
+                            <group>${vault.package.group}</group>
+                            <name>core-forms-components-af-apps</name>
+                            <version>${project.version}</version>
                         </dependency>
                         <dependency>
                             <group>${vault.package.group}</group>

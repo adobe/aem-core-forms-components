@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-23T12:32:39.753+05:30"
+            cq:lastModified="{Date}2023-05-03T11:33:58.406+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -136,6 +136,23 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </checkboxgroup5>
+            <checkboxgroup
+                    jcr:lastModified="{Date}2023-05-03T11:33:58.397+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 6"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    enabled="{Boolean}true"
+                    enum="[0,1,0]"
+                    enumNames="[Item 1, Item 2,Item 3]"
+                    fieldType="checkbox-group"
+                    hideTitle="false"
+                    name="checkboxgroup1683093797337"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number[]"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

@@ -16,6 +16,10 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -51,6 +55,30 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         return enforceEnum;
     }
 
+    /**
+     * Function to override the enum names on providing same enum values
+     *
+     * @return an empty hashmap
+     *         {@code @if} either of the arrays is null or if they have different lengths
+     *
+     *         {@code @else}
+     * @return map containing enum values and enum names as key-value pairs
+     */
+    private Map<Object, String> removeDuplicates() {
+
+        Object[] enumArray = this.enums;
+        String[] enumNamesArray = this.enumNames;
+
+        if (enumArray == null || enumNamesArray == null || enumArray.length != enumNamesArray.length) {
+            return Collections.emptyMap();
+        }
+        Map<Object, String> map = IntStream.range(0, enumArray.length)
+            .collect(HashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), Map::putAll);
+
+        return map;
+
+    }
+
     @Override
     public Object[] getEnums() {
         if (enums == null) {
@@ -60,14 +88,18 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            return ComponentUtils.coerce(type, enums);
+            Map<Object, String> map = removeDuplicates();
+            String[] enumValue = map.keySet().toArray(new String[0]);
+            return ComponentUtils.coerce(type, enumValue);
         }
     }
 
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            return Arrays.stream(enumNames)
+            Map<Object, String> map = removeDuplicates();
+            String[] enumName = map.values().toArray(new String[0]);
+            return Arrays.stream(enumName)
                 .map(p -> {
                     return this.translate("enumNames", p);
                 })

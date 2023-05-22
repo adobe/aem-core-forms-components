@@ -47,5 +47,82 @@
       "click": "e1",
       "custom_event" : "e2"
     }
+  },
+  "checkboxgroup-datalayer": {
+    "id": "checkboxgroup-40e63c6f46",
+    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "fieldType": "checkbox-group",
+    "name": "Personality",
+    "visible": true,
+    "description": "Select all that apply",
+    "type": "number[]",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Cat Person",
+      "Dog Person"
+    ],
+    "label": {
+      "value": "Personality"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/accordion/item_1/checkboxgroup"
+    },
+    "enum": [
+      0,
+      1
+    ],
+    ":type": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-duplicate-enum": {
+    "id": "checkboxgroup-9d6c474801",
+    "fieldType": "checkbox-group",
+    "name": "checkboxgroup1683093797337",
+    "visible": true,
+    "type": "number[]",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Item 1",
+      "Item 2",
+      "Item 3"
+    ],
+    "label": {
+      "visible": true,
+      "value": "Check Box Group 6"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/checkboxgroup/basic/jcr:content/guideContainer/checkboxgroup"
+    },
+    "enum": [
+      0,
+      1,
+      0
+    ],
+    ":type": "forms-components-examples/components/form/checkboxgroup"
   }
 }

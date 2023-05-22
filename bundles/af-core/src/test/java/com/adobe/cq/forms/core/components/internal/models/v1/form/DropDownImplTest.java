@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint.Type;
@@ -52,6 +54,9 @@ public class DropDownImplTest {
     private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
+    private static final String PATH_DROPDOWN_DATALAYER = CONTENT_ROOT + "/dropdown-datalayer";
+
+    private static final String PATH_DROPDOWN_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/dropdown-duplicate-enum";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -311,6 +316,16 @@ public class DropDownImplTest {
     }
 
     @Test
+    void testDuplicateEnum() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITH_DUPLICATE_ENUMS, DropDown.class, context);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.keySet().toArray(new Object[0]), dropdown.getEnums());
+    }
+
+    @Test
     void testGetType() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
         assertEquals(BaseConstraint.Type.NUMBER, dropdown.getType());
@@ -363,6 +378,16 @@ public class DropDownImplTest {
     }
 
     @Test
+    void testGetEnumNamesWithDuplicateEnumValues() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITH_DUPLICATE_ENUMS, DropDown.class, context);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), dropdown.getEnumNames());
+    }
+
+    @Test
     void testStyleSystemClasses() {
         ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
         Resource resource = spy(context.resourceResolver().getResource(PATH_DROPDOWN_1));
@@ -373,5 +398,25 @@ public class DropDownImplTest {
         DropDown dropdown = request.adaptTo(DropDown.class);
         String appliedCssClasses = dropdown.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_DATALAYER, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) dropdown.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("dropdown-bb1c9e883e");
+        assert (dataObject.getType()).equals("core/fd/components/form/dropdown/v1/dropdown");
+        assert (dataObject.getTitle()).equals("Favorite Animal");
+        assert (dataObject.getFieldType()).equals("drop-down");
+        assert (dataObject.getDescription()).equals("What is your favorite animal?");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_DATALAYER, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_DATALAYER));
     }
 }

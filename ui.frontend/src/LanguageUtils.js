@@ -29,8 +29,12 @@ export default class LanguageUtils {
         if (!(lang in this.#langData))
         {
             const _langData = await HTTPAPILayer.getJson(url);
-            console.debug("fetched language data", _langData);
-            this.#langData[lang] = _langData;
+            if(_langData) {
+                console.debug("fetched language data", _langData);
+                this.#langData[lang] = _langData;
+                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
+                document.dispatchEvent(event);
+            }
         }
     }
 
@@ -56,4 +60,5 @@ export default class LanguageUtils {
         }
         return translatedText;
     }
+
 }

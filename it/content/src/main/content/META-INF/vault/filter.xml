@@ -4,4 +4,5 @@
     <filter root="/content/forms/sites" mode="update"/>
     <filter root="/content/dam/formsanddocuments/core-components-it" mode="update"/>
     <filter root="/conf/core-components-it" mode="update"/>
+    <filter root="/conf/datalayerContainer" mode="update"/>
 </workspaceFilter>
