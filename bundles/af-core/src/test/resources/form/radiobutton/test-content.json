@@ -96,5 +96,42 @@
       "1"
     ],
     ":type": "forms-components-examples/components/form/radiobutton"
+  },
+  "radiobutton-duplicate-enum": {
+    "id": "dropdown-076f3bd737",
+    "fieldType": "drop-down",
+    "name": "dropdown_17244019561683095189486",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Item 1",
+      "Item 2",
+      "Item 3"
+    ],
+    "default": "0",
+    "label": {
+      "visible": true,
+      "value": "Dropdown 7"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/dropdown/basic/jcr:content/guideContainer/dropdown_1724401956"
+    },
+    "enum": [
+      "0",
+      "1",
+      "0"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
   }
 }

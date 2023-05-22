@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -54,6 +55,8 @@ public class DropDownImplTest {
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
     private static final String PATH_DROPDOWN_DATALAYER = CONTENT_ROOT + "/dropdown-datalayer";
+
+    private static final String PATH_DROPDOWN_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/dropdown-duplicate-enum";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -313,6 +316,16 @@ public class DropDownImplTest {
     }
 
     @Test
+    void testDuplicateEnum() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITH_DUPLICATE_ENUMS, DropDown.class, context);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.keySet().toArray(new Object[0]), dropdown.getEnums());
+    }
+
+    @Test
     void testGetType() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
         assertEquals(BaseConstraint.Type.NUMBER, dropdown.getType());
@@ -362,6 +375,16 @@ public class DropDownImplTest {
     void testGetEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
         assertArrayEquals(new String[] { "m", "f", "o" }, dropdown.getEnumNames());
+    }
+
+    @Test
+    void testGetEnumNamesWithDuplicateEnumValues() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITH_DUPLICATE_ENUMS, DropDown.class, context);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), dropdown.getEnumNames());
     }
 
     @Test
