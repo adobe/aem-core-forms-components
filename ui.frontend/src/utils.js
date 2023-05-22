@@ -244,6 +244,8 @@ export default class Utils {
                 return accumulator;
             }, {});
             FunctionRuntime.registerFunctions(funcObj);
+        } else {
+            console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         }
     }
 

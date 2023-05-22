@@ -87,8 +87,11 @@ function navigateTo(destinationURL, destinationType) {
 }
 
 /**
- * Default Error handler for invoke service rule
+ * Default Error handler for invoke service api
  * @name defaultErrorHandler Default Error Handler Function
+ * @param response response body of the invoke service api
+ * @param headers response headers of the invoke service api
+ * @param globals object containing form instance and invoke method to call other custom functions
  * @errorHandler
  */
 function defaultErrorHandler(response, headers, globals) {

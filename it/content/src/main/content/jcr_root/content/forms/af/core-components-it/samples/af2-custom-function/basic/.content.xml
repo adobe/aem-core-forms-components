@@ -15,6 +15,7 @@
         <guideContainer
                 fd:version="2.1"
                 fieldType="form"
+                clientLibRef="customFunctionCategory"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container">
             <textinput
