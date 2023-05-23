@@ -191,21 +191,4 @@ export default class FormPanel extends FormFieldBase {
         }
     }
 
-    subscribe() {
-        super.subscribe();
-        const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
-        this._model.subscribe((action) => {
-            let state = action.target.getState();
-            const changes = action.payload.changes;
-            changes.forEach(change => {
-                const fn = changeHandlerName(change.propertyName);
-                if (typeof this[fn] === "function") {
-                    this[fn](change.currentValue, state);
-                } else {
-                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
-                }
-            })
-        }, 'childChanged');
-    }
-
 }
