@@ -64,7 +64,7 @@
 
             updateValue(value) {
                 // html sets undefined value as undefined string in input value, hence this check is added
-                let actualValue = typeof value === "undefined" ? null :  value;
+                let actualValue = typeof value === "undefined" ? "" :  value;
 
                 // since there is no widget for textview, the innerHTML is being changed
                 this.element.children[0].innerHTML = actualValue;
