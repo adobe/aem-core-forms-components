@@ -70,6 +70,15 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(dropdown);
     }
 
+    const getPreviewIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+      }
+
     context('Open Forms Editor', function() {
         const pagePath = "/content/forms/af/core-components-it/blank",
             dropDownEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/dropdown",
@@ -117,6 +126,29 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(dropdown);
         })
+
+        it ('check for duplicate enum values', function() {
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(0).invoke('val','0');
+            cy.get('input[name="./enumNames"]').eq(0).invoke('val','Item 1');
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(1).invoke('val','1');
+            cy.get('input[name="./enumNames"]').eq(1).invoke('val','Item 2');
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+            cy.get('input[name="./enum"]').eq(2).invoke('val','0');
+            cy.get('input[name="./enumNames"]').eq(2).invoke('val','Item 3');
+            cy.get('.cq-dialog-submit').click().then(() => {
+                cy.get('.cq-dialog-submit').should('not.exist')
+            });
+            getPreviewIframeBody().find('.cmp-adaptiveform-dropdown__option').should('have.length',2);
+            getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 3');
+            getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 2');
+            getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 1').should('not.exist');
+            cy.deleteComponentByPath(dropdown);
+        });
     })
 
     context('Open Sites Editor', function () {
