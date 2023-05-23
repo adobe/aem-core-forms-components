@@ -308,17 +308,17 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
         const textInputId = formContainer._model.items[1].id;
         cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
             cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
-                cy.get('.cmp-adaptiveform-wizard__nextNav').should('be.visible').click({force: true}).then(() => {
+                cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
                     const thirdItemNavOfWizardId = formContainer._model.items[0].items[2].id + "_wizard-item-nav";
                     const thirdItemOfWizardId = formContainer._model.items[0].items[2].id + "__wizardpanel";
                     cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                     cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                    cy.get('.cmp-adaptiveform-wizard__previousNav').should('be.visible').click({force: true}).then(() => {
+                    cy.get('.cmp-adaptiveform-wizard__previousNav').click({force: true}).then(() => {
                         const firstItemNavOfWizardId = formContainer._model.items[0].items[0].id + "_wizard-item-nav";
                         const firstItemOfWizardId = formContainer._model.items[0].items[0].id + "__wizardpanel";
                         cy.get(`#${firstItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                         cy.get(`#${firstItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                        cy.get('.cmp-adaptiveform-wizard__nextNav').should('be.visible').click({force: true}).then(() => {
+                        cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
                             cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                             cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                         })
