@@ -25,7 +25,8 @@
 <div class="cmp-aemform__content"
      data-sly-test.af="${form.isAdaptiveForm || form.isMCDocument }"
      data-form-page-path="${form.formEditPagePath}"
-     data-sly-use.guideConstants="com.adobe.aemds.guide.utils.GuideConstants">
+     data-sly-use.guideConstants="com.adobe.aemds.guide.utils.GuideConstants"
+     data-iframe-height>
     <sly data-sly-call="${clientLib.css @ categories=['guide.core.common']}"/>
     <sly data-sly-test.isParentWCMModeDisabled="${wcmmode.disabled}"/>
     <sly data-sly-test.isWCMModePreview="${wcmmode.preview}"/>
