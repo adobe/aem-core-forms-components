@@ -121,7 +121,7 @@ public class FormStructureParserImplTest {
 
     @Test
     public void containsFormContainer_should_return_true() {
-        String path = FORM_CONTAINER_PATH;
+        String path = JCR_CONTENT_PATH;
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         boolean result = formStructureParser.containsFormContainer();
         assertTrue(result);
