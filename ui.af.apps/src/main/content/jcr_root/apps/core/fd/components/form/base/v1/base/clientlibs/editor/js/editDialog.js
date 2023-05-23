@@ -31,6 +31,7 @@
         BASE_CUSTOMPROPERTY_KEY = ".cmp-adaptiveform-base__customKey",
         BASE_CUSTOMPROPERTY_VALUETYPE = ".cmp-adaptiveform-base__customValueType",
         BASE_CUSTOMPROPERTY_VALUE = ".cmp-adaptiveform-base__customValue",
+        BASE_CUSTOMPROPERTY_OBJECT = ".cmp-adaptiveform-base__customPropertiesObject",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -165,7 +166,12 @@
                     visibleEnumNames[i].value = enums[i].value;
                 }
             }
+
+            var x = dialog.find(BASE_CUSTOMPROPERTY_OBJECT);
+            x.val("{reujgherwjngfjlrs:oruhsgerughir}")
+            console.log(x)
         }
+
     }
 
     var registerCustomPropertiesDialogValidator = Utils.registerDialogDataTypeValidators(
