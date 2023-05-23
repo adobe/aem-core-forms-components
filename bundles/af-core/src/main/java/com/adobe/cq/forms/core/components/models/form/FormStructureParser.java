@@ -37,4 +37,9 @@ public interface FormStructureParser {
      */
     String getClientLibRefFromFormContainer();
 
+    /**
+     *
+     * @return true if this resource contains a form container
+     */
+    Boolean containsFormContainer();
 }
