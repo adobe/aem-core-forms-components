@@ -21,7 +21,7 @@
             "currentVersion" : "AEM Forms",
             "copyright" : "Copyright &copy; 1982-2023 Adobe Systems Inc. All rights reserved."
         },
-        "systemName" : "Adaptive Forms",
+        "systemName" : "Adaptive Forms (Core Components)",
         "footer" : "Copyright &copy; 1982-2023 Adobe Systems Inc. All rights reserved.",
         "includeDate" : false,
         "theme" : "cosmo",
