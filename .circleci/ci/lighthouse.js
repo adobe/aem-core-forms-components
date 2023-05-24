@@ -23,7 +23,7 @@ const checkLightHouse = async () => {
     const lighthouse = await import('lighthouse')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
+    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from(process.env.LOCAL_USERNAME + ':' + process.env.LOCAL_PASSWORD).toString('base64') }};
 
     const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
 
@@ -47,7 +47,7 @@ const checkLightHouse = async () => {
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
         process.exit(1);
     }
-    else if(thresholdResults.updateLighthouseConfig && process.env.CIRCLE_BRANCH == 'master'){ // only execute if branch name is 'master'
+    else if(thresholdResults.updateLighthouseConfig && ['master', 'dev'].includes(process.env.CIRCLE_BRANCH)){ // only execute if branch name is 'master'
         writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
     }
     await chrome.kill();
