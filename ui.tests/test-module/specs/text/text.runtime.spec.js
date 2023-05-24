@@ -89,7 +89,6 @@
 
         cy.get('.cmp-adaptiveform-textinput__widget').clear()
             .type('Change me').blur();
-        debugger;
         cy.get('[data-cmp-is="adaptiveFormText"]').contains("CHANGED");
     })
 
