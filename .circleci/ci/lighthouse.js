@@ -15,7 +15,6 @@
  ******************************************************************************/
 
 const fs = require('fs');
-const https = require('https');
 const ci = new (require('./ci.js'))();
 
 
@@ -23,7 +22,7 @@ const checkLightHouse = async () => {
     const lighthouse = await import('lighthouse')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') }};  // YWRtaW46YWRtaW4= -- base64 encoded, admin:admin
+    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from(process.env.LOCAL_USERNAME + ':' + process.env.LOCAL_PASSWORD).toString('base64') }};
 
     const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
 
@@ -34,7 +33,7 @@ const checkLightHouse = async () => {
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
     console.log(getCommentText(runnerResult.lhr.categories))
 
-    //postCommentToGitHub(getCommentText(runnerResult.lhr.categories), process.env.GITHUB_TOKEN)
+    //ci.postCommentToGitHubFromCI(getCommentText(runnerResult.lhr.categories))
     ci.sh('mkdir artifacts');
     ci.dir("artifacts", () => {
            fs.writeFileSync('LigthouseReport.html', reportHtml);
@@ -45,9 +44,10 @@ const checkLightHouse = async () => {
     console.log("thresholdResults -->>>> ", thresholdResults)
     if(!thresholdResults.isThresholdPass){
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
+        //ci.postCommentToGitHubFromCI("Error: Lighthouse score for aem-core-forms-components, below the thresholds, check reports under artifacts in CircleCI")
         process.exit(1);
     }
-    else if(thresholdResults.updateLighthouseConfig && process.env.CIRCLE_BRANCH == 'master'){ // only execute if branch name is 'master'
+    else if(thresholdResults.updateLighthouseConfig && ['master', 'dev', 'release/650'].includes(process.env.CIRCLE_BRANCH)){ // only execute if branch name is 'master'
         writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
     }
     await chrome.kill();
@@ -73,46 +73,14 @@ const checkThresholds = (resultCategories, lighthouseConfig) => {
         }
 
     if(performance < resultCategories.performance.score*100 &&
-        accessibility > resultCategories.accessibility.score*100 &&
-        bestPractices > resultCategories['best-practices'].score*100 &&
-        seo > resultCategories.seo.score*100){
+        accessibility < resultCategories.accessibility.score*100 &&
+        bestPractices < resultCategories['best-practices'].score*100 &&
+        seo < resultCategories.seo.score*100){
             thresholdResults.updateLighthouseConfig = true
         }
 
         return thresholdResults
 
-}
-
-const postCommentToGitHub = (commentText, GITHUB_TOKEN) => {
-
-    const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST } = process.env
-    const prNumber = CIRCLE_PULL_REQUEST.split('/').pop();
-    const apiUrl = new URL(`https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
-    const postData = JSON.stringify({body: commentText});
-
-    // Define the options for the HTTPS request
-    const options = {
-      method: 'POST',
-      headers: {
-        'Authorization': `${GITHUB_TOKEN}`,
-        'User-Agent': 'CircleCI'
-      }
-    };
-
-    // Send the HTTPS request to create the new comment on the pull request
-    const req = https.request(apiUrl, options, (res) => {
-      console.log(`Status: ${res.statusCode}`);
-      res.on('data', (d) => {
-        process.stdout.write(d);
-      });
-    });
-
-    req.on('error', (error) => {
-      console.error(error);
-    });
-
-    req.write(postData);
-    req.end();
 }
 
 const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
@@ -123,10 +91,10 @@ const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
         bestPracticesResult,
         seoResult
     } = {
-        performanceResult: resultCategories.performance.score,
-        accessibilityResult: resultCategories.accessibility.score,
-        bestPracticesResult: resultCategories['best-practices'].score,
-        seoResult: resultCategories.seo.score
+        performanceResult: resultCategories.performance.score*100,
+        accessibilityResult: resultCategories.accessibility.score*100,
+        bestPracticesResult: resultCategories['best-practices'].score*100,
+        seoResult: resultCategories.seo.score*100
     }
     let newLighthouseConfig = lighthouseConfig;
 
@@ -146,16 +114,15 @@ const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
             seo: seoResult
         }, lighthouseConfig.requiredScores[1]]
     }
-    // write changes in the git file;
-    console.log("newLighthouseConfig -->> ", newLighthouseConfig)
 
-    fs.writeFileSync("lighthouseConf.json", JSON.stringify(newLighthouseConfig, null, 4), function(err) {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log("File contents replaced successfully!");
-        }
-    });
+    console.log("newLighthouseConfig -->> ", newLighthouseConfig)
+    fs.writeFileSync("/home/circleci/build/.circleci/ci/lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4));
+    // update to git;
+    ci.sh(`git add /home/circleci/build/.circleci/ci/lighthouseConfig.json`);
+    ci.sh('git status');
+    ci.sh(`git commit -m "@trivial - Update Lighthouse Config"`);
+    ci.sh(`git push --set-upstream --force origin ${process.env.CIRCLE_BRANCH}`);
+    console.log("Successfully updated lighthouseConfig.json")
 }
 
 checkLightHouse()

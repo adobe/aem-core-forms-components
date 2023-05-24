@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 const fs = require('fs');
+const ci = new (require('./ci.js'))();
 const AxeBuilder = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
@@ -27,16 +28,18 @@ const calculateAccessibility = async () => {
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
 
     try {
-        await driver.get('http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled');
+        await driver.get(process.env.ACCESSIBILITY_COLLATERAL_URL);
 
-        await new Promise((resolve) => setTimeout(resolve, 4000));
+        await driver.wait(async () => {
+          const readyState = await driver.executeScript('return document.readyState');
+          return readyState === 'complete';
+        });
 //        await driver.findElement(WebDriver.By.xpath("//button[@aria-expanded='false']/coral-accordion-item-label[contains(text(),'Sign in locally')]")).click();
         const usernameInput = await driver.findElement(WebDriver.By.id('username'));
-        await usernameInput.sendKeys('admin');
+        await usernameInput.sendKeys(process.env.LOCAL_USERNAME);
         const passwordInput = await driver.findElement(WebDriver.By.id('password'));
-        await passwordInput.sendKeys('admin');
+        await passwordInput.sendKeys(process.env.LOCAL_PASSWORD);
         await driver.findElement(WebDriver.By.id('submit-button')).click();
-        await new Promise((resolve) => setTimeout(resolve, 4000));
         await driver.wait(async () => {
           const readyState = await driver.executeScript('return document.readyState');
           return readyState === 'complete';
@@ -57,6 +60,8 @@ const calculateAccessibility = async () => {
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
                 console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
+                 // post a comment on github!
+                 //ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!")
                  process.exit(1); // fail pipeline
            })
            console.log("results.violations--->>>", results.violations);
