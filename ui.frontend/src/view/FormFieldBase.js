@@ -35,10 +35,11 @@ export default class FormFieldBase extends FormField {
     ELEMENT_HELP_SHOWN = "elementHelpShown";
 
     ELEMENT_ERROR_SHOWN = "elementErrorShown";
+
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
-     * @returns
+     * @returns html element corresponding to widget
      */
     getWidget() {
         throw "method not implemented";
@@ -46,7 +47,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the description of the field
-     * @returns
+     * @returns html element corresponding to description
      */
     getDescription() {
         throw "method not implemented";
@@ -54,7 +55,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the label of the field
-     * @returns
+     * @returns html element corresponding to label
      */
     getLabel() {
         throw "method not implemented";
@@ -62,7 +63,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the error on the field
-     * @returns
+     * @returns html element corresponding to error
      */
     getErrorDiv() {
         throw "method not implemented";
@@ -70,6 +71,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementation should return the tooltip / short description div
+     * @returns html element corresponding to tooltip
      */
     getTooltipDiv() {
         throw "method not implemented";
@@ -77,6 +79,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * Implementation should return the questionMark div
+     * @returns html element corresponding to question mark
      */
     getQuestionMarkDiv() {
         throw "method not implemented";

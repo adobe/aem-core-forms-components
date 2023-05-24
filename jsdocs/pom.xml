@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+
+    Copyright 2023 Adobe. All rights reserved.
+    This file is licensed to you under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License. You may obtain a copy
+    of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under
+    the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+    OF ANY KIND, either express or implied. See the License for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ====================================================================== -->
+    <!-- P A R E N T  P R O J E C T  D E S C R I P T I O N                      -->
+    <!-- ====================================================================== -->
+    <parent>
+        <groupId>com.adobe.aem</groupId>
+        <artifactId>core-forms-components-parent</artifactId>
+        <version>2.0.100-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
+    </parent>
+
+    <!-- ====================================================================== -->
+    <!-- P R O J E C T  D E S C R I P T I O N                                   -->
+    <!-- ====================================================================== -->
+    <artifactId>core-forms-components-af-jsapi</artifactId>
+
+    <name>AEM Forms Core Components - JavaScript API reference</name>
+    <description>JavaScript API reference for AEM Forms - AF Core Components</description>
+    <url>https://github.com/adobe/aem-core-forms-components</url>
+
+    <scm>
+        <connection>scm:git:https://github.com/adobe/aem-core-forms-components</connection>
+        <developerConnection>scm:git:git@github.com:adobe/aem-core-forms-components.git</developerConnection>
+        <url>https://github.com/adobe/aem-core-forms-components</url>
+        <tag>HEAD</tag>
+    </scm>
+    <organization>
+        <name>Adobe</name>
+        <url>https://www.adobe.com</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <profiles>
+        <profile>
+            <id>Windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <script.file>jsdoc.cmd</script.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>unix</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <script.file>jsdoc</script.file>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <!-- Plugin to install npm artifacts -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.12.1</version>
+                <configuration>
+                    <nodeVersion>v18.9.0</nodeVersion>
+                    <npmVersion>8.19.1</npmVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/node_modules/ink-docstrap/template/static/styles/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/resources/css/</directory>
+                                    <includes>
+                                        <include>site.cosmo.css</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>run-exec-generate-jsdocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>${project.basedir}/node_modules/.bin/${script.file}</executable>
+                    <commandlineArgs>-c jsdoc.conf.json</commandlineArgs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>generate-jsdocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                            </archive>
+                            <classesDirectory>${project.build.directory}/jsapi</classesDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
