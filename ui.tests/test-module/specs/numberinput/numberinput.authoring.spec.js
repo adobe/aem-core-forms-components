@@ -125,7 +125,8 @@ describe('Page - Authoring', function () {
             numberInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/numberinput",
             numberInputEditPathSelector = "[data-path='" + numberInputEditPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
-            numberInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formnumberinput.split("/").pop();
+            numberInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formnumberinput.split("/").pop(),
+            editDialogSelector = "[action='" + numberInputDrop + "']";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -153,7 +154,7 @@ describe('Page - Authoring', function () {
                     cy.get("[name='./maximum']").should("exist");
                     cy.get("[name='./exclusiveMaximum']").should("exist");
                     cy.get('.cq-dialog-submit').should('be.visible');
-                    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
+                    cy.get(`${editDialogSelector} .cq-dialog-cancel`).should('be.visible').click({force: true}).then(() => {
                         cy.deleteComponentByPath(numberInputDrop);
                     })
                 })
