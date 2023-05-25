@@ -338,6 +338,7 @@
 
         setNavigationRange() {
             let wizardPanels = this.#getCachedWizardPanels();
+            this.maxEnabledTab = wizardPanels.length-1;
             for (let i = 0; i < wizardPanels.length; i++) {
                 if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
                     this.minEnabledTab = i+1;
