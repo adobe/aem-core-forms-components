@@ -1,0 +1,42 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_",
+        "include": ["./../ui.frontend/src",
+            "./../ui.af.apps/src/main/content/jcr_root/apps/core/fd/components",
+            "./resources/copyright/README.md"
+        ]
+    },
+    "plugins": ["plugins/markdown", "plugins/underscore"],
+    "templates": {
+        "cleverLinks" : false,
+        "monospaceLinks" : false,
+        "default" : {
+            "outputSourceFiles" : false
+        },
+        "extendedDefault" : {
+            "currentVersion" : "AEM Forms",
+            "copyright" : "Copyright &copy; 1982-2023 Adobe Systems Inc. All rights reserved."
+        },
+        "systemName" : "Adaptive Forms (Core Components)",
+        "footer" : "Copyright &copy; 1982-2023 Adobe Systems Inc. All rights reserved.",
+        "includeDate" : false,
+        "theme" : "cosmo",
+        "collapseSymbols" : false,
+        "linenums" : false,
+        "outputSourceFiles" : false,
+        "outputSourcePath" : false,
+        "sort" : "since",
+        "inverseNav" : true
+    },
+    "opts": {
+        "template" : "./node_modules/ink-docstrap/template/",
+        "encoding": "utf8",
+        "destination": "./target/jsapi",
+        "recurse": true,
+        "mainpagetitle" : "JavaScript API reference for Adaptive Forms"
+    }
+}
