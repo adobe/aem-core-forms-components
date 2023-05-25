@@ -74,7 +74,7 @@
         })
     });
 
-    it.only('test the rules editor', () => {
+    it('test the rules editor', () => {
         cy.get('.cmp-adaptiveform-textinput__widget')
           .type('Hide me');
         cy.get('.cmp-adaptiveform-textinput')
