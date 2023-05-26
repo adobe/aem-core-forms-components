@@ -68,6 +68,7 @@
             super.setFocus(id);
             this.setActive();
             this.navigateAndFocusTab(id + '__tab');
+            window.scrollTo(0, 0);
         }
 
         getWidget() {

@@ -73,6 +73,13 @@ export default class FormTabs extends FormPanel {
     }
   }
 
+  updateVisible(visible) {
+    super.updateVisible(visible);
+    if(visible){
+      window.scrollTo(0, 0);
+    }
+  }
+
   /**
    * Binds Tabs event handling
    *
