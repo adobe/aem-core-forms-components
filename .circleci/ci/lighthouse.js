@@ -73,9 +73,9 @@ const checkThresholds = (resultCategories, lighthouseConfig) => {
         }
 
     if(performance < resultCategories.performance.score*100 &&
-        accessibility > resultCategories.accessibility.score*100 &&
-        bestPractices > resultCategories['best-practices'].score*100 &&
-        seo > resultCategories.seo.score*100){
+        accessibility < resultCategories.accessibility.score*100 &&
+        bestPractices < resultCategories['best-practices'].score*100 &&
+        seo < resultCategories.seo.score*100){
             thresholdResults.updateLighthouseConfig = true
         }
 
