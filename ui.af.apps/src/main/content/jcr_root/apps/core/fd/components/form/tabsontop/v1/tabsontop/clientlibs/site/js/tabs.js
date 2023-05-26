@@ -31,7 +31,9 @@
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
             tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
-            olTabList: `.${Tabs.bemBlock}__tablist`
+            olTabList: `.${Tabs.bemBlock}__tablist`,
+            tab: `.${Tabs.bemBlock}__tab`,
+            hamburgerButton: `.${Tabs.bemBlock}__hamburger-button`
         };
 
         constructor(params) {
@@ -53,6 +55,7 @@
                     }
                 });
             }
+            this.attacheEvent();
         }
 
 
@@ -88,6 +91,36 @@
 
         getQuestionMarkDiv() {
             return this.element.querySelector(Tabs.selectors.qm);
+        }
+
+        getOlTabList() {
+          return this.element.querySelector(Tabs.selectors.olTabList);
+        }
+
+        getTabs() {
+          return this.element.querySelectorAll(Tabs.selectors.tab);
+        }
+
+        getHamburgerButton() {
+          return this.element.querySelector(Tabs.selectors.hamburgerButton);
+        }
+
+        attacheEvent(){
+          this.getHamburgerButton().addEventListener('click', (e) => {
+            const element = this.getOlTabList();
+            if(element){
+              element.classList.toggle("cmp-tabs__show");
+            }
+          });
+          const tabs = this.getTabs() || [];
+          tabs.forEach(tab=>{
+            tab.addEventListener('click', (e) => {
+              const element = this.getOlTabList();
+              if(element){
+                element.classList.remove("cmp-tabs__show");
+              }
+            })
+          })
         }
     }
 
