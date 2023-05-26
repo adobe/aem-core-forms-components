@@ -17,8 +17,8 @@
     "use strict";
 
     let EDIT_DIALOG = ".cmp-adaptiveform-aemform__editdialog",
-        THEME_REF_DROPDOWN = ".cmp-aemform--editor-themeref",
-        FORM_REF = ".cmp-aemform--editor-formref [name='./formRef'] coral-tag",
+        THEME_REF_DROPDOWN = ".cmp-adaptiveform-aemform__themeref",
+        FORM_REF = ".cmp-adaptiveform-aemform__formref [name='./formRef'] coral-tag",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function isCoreComponentForm(url) {
@@ -29,12 +29,15 @@
             cache: false,
             dataType: "json"
         });
-        let version = result?.responseJSON?.['jcr:content']?.guideContainer?.['fd:version'];
-        return version?.startsWith('2');
+        let version = "";
+        if(result.status == 200  && result.responseJSON) {
+            version = result.responseJSON['jcr:content'].guideContainer['fd:version']
+        }
+        return version.startsWith('2');
     }
 
     function invokeWhenFormPathChanged(dialog) {
-        $(document).on('change', '.cmp-aemform--editor-formref', () => {
+        $(document).on('change', '.cmp-adaptiveform-aemform__formref', () => {
             hideThemeDropdownForV2(dialog);
         });
     }
@@ -42,8 +45,7 @@
     function hideThemeDropdownForV2(dialog) {
         let themeRefDropdown = dialog.find(THEME_REF_DROPDOWN),
             formRef = dialog.find(FORM_REF)[0];
-        let url = formRef?.value?.replace('dam/formsanddocuments','forms/af');
-
+        let url = formRef ? formRef.value.replace('dam/formsanddocuments','forms/af'): "";
         if(themeRefDropdown && isCoreComponentForm(url)) {
             themeRefDropdown.hide();
         } else {
