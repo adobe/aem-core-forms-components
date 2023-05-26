@@ -17,10 +17,12 @@ package com.adobe.cq.forms.core.components.util;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.i18n.I18n;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class LabelImpl implements Label {
 
@@ -45,8 +47,10 @@ public class LabelImpl implements Label {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public boolean isRichText() {
-        return properties.get(PN_IS_TITLE_RICH_TEXT, false);
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Boolean isRichText() {
+        return properties.get(PN_IS_TITLE_RICH_TEXT, Boolean.class);
     }
 
     /**
@@ -56,8 +60,14 @@ public class LabelImpl implements Label {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    public boolean isVisible() {
-        return !(properties.get(PN_HIDE_TITLE, false));
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Boolean isVisible() {
+        Boolean hideTitle = properties.get(PN_HIDE_TITLE, Boolean.class);
+        if (hideTitle != null) {
+            return !hideTitle;
+        }
+        return null;
     }
 
     /**

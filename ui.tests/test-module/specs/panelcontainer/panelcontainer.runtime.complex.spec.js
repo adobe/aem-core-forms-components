@@ -73,7 +73,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
 
     const fillInput = (fieldModel, fillValue) => {
         cy.get(`#${fieldModel.id}`).find("input").type(fillValue).blur().then(x => {
-            expect(fieldModel.getState().value).to.equal(fillValue.toString());
+            expect(fieldModel.getState().value.toString()).to.equal(fillValue.toString());
         });
     };
 
@@ -628,7 +628,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
 
                                     //check data
                                     cy.getFormData().then((result) => {
-                                        cy.fixture('panelcontainer/afterResetBank.json').then((outputData) => {
+                                        cy.fixture('panelcontainer/initialResetBank.json').then((outputData) => {
                                             expect(result.data.data).to.equal(JSON.stringify(outputData));
                                         });
                                     });
@@ -636,6 +636,40 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                             });
                         });
                     });
+                });
+            });
+        });
+    });
+
+    it("Repeatable with prefill data removing repeatable instance.", () => {
+        const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/prefillrepeatability.html";
+        cy.previewFormWithPanel(pagePath).then(p => {
+            formContainer = p;
+            const outerPanel = formContainer._model.items[0];
+            cy.get(`#${outerPanel.id}`).then((outerPanelElement) => {
+                expect(outerPanelElement[0], "Outer panel should be defined").not.be.null;
+            });
+
+            cy.get(`#${outerPanel.items[0].id}`).then((textBoxElement) => {
+                expect(textBoxElement[0], "Text box inside Outer Panel will be defined").not.be.null;
+            });
+
+            const instanceManager = outerPanel.items[1];
+            //Instance Manager doesn't have presence in HTML
+            cy.get(`#${instanceManager.id}`).should('not.exist');
+
+            expect(instanceManager.items.length, " Repeatable panel has zero instances ").to.equal(0);
+
+            //Repeatable panel should not be present as it has zero instances
+            cy.get(`#${outerPanel.id} .panelcontainer`).should('not.exist');
+
+            const allFields = formContainer.getAllFields();
+            const instanceManagerView = allFields[instanceManager.id];
+            //Now check, that you can add and remove instances post this
+            checkAddRemoveInstance(instanceManagerView, 1, true).then(() => {
+                cy.get(`#${outerPanel.id} .panelcontainer`).should('exist');
+                checkAddRemoveInstance(instanceManagerView, 0).then(() => {
+                    checkAddRemoveInstance(instanceManagerView, 1, true);
                 });
             });
         });

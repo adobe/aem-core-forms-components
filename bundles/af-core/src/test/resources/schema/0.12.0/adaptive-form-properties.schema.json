@@ -1,0 +1,303 @@
+{
+  "$id": "classpath:/schema/0.12.0/adaptive-form-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "$defs": {
+    "SingleEventHandler": {
+      "type": "string",
+      "format": "json-formula"
+    },
+    "EventHandler": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SingleEventHandler"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SingleEventHandler"
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "./adaptive-form-aem-responsive-grid-properties.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        ":type": {
+          "type": "string",
+          "title": "A hint to the rendering engine for rendering custom components."
+        },
+        "altText": {
+          "title": "For images an alternate string to be displayed in case image cannot be shown",
+          "type": "string"
+        },
+        "autocomplete": {
+          "title": "Provide assistance to the end users to autocomplete values saved during previous form filling sessions",
+          "type": "string"
+        },
+        "constraintMessages": {
+          "title": "An object containing the custom error messages to be shown to the end user on different constraint validation",
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "type",
+              "required",
+              "minimum",
+              "maximum",
+              "minLength",
+              "maxLength",
+              "step",
+              "format",
+              "pattern",
+              "minItems",
+              "maxItems",
+              "maxOccur",
+              "minOccur",
+              "maxFileSize",
+              "accept",
+              "uniqueItems",
+              "enforceEnum",
+              "validationExpression"
+            ],
+            "errorMessage": "${0} is not a valid constraintMessage"
+          }
+        },
+        "dataFormat": {
+          "type": "string",
+          "title": "The format in which the value will be exported or submitted. Applicable for date and number types."
+        },
+        "dataRef": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "The jsonpath of the data instance that is mapped to the field's value.",
+          "description": "It will be defined relative to the parent's dataRef property except for the two conditions. * null signifying don't save the data of this field or panel. * jsonpath begining with \"$.\" signifying that the jsonpath is not relative to the parent's dataRef property.\nIf the parent's dataRef is set to \"none\", then it will be relative to the"
+        },
+        "default": {
+          "title": "The value of the field when no value is provided by the end user or data model.",
+          "description": "The type of this property should match the value of the `type` property defined in the Field. If not, then a type coercion will be tried and if that fails, the value will be set to null.",
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            }
+          ]
+        },
+        "description": {
+          "type": "string",
+          "title": "Extra description to be shown to the user to aid in form filling experience. It can be rich text. Can be used as help text for a field or a top level description for a Panel"
+        },
+        "displayFormat": {
+          "type": "string",
+          "title": "The format in which the value will be displayed to the user on screen in the field.",
+          "description": "The format in which the value will be displayed to the user on screen in the field. Applicable for date and number types. For example when using a currency field, the currency sign should be shown to the user."
+        },
+        "editFormat": {
+          "type": "string",
+          "title": "The format in which the value will be edited by the user.",
+          "description": "The format in which the value will be edited by the user. Applicable for date and number types. For instance users in Germany would want to interchange decimal (.) and comma (,) when entering numerical values."
+        },
+        "emptyValue": {
+          "type": [
+            "string"
+          ],
+          "title": "The value when user has not entered any value in the field",
+          "description": "Determines what value should be saved when user has not entered any value in the field. Can be one of\n   * null\n   * undefined\n   * \"\" (empty string) (only valid for dataType = string)",
+          "enum": [
+            "null",
+            "undefined",
+            ""
+          ]
+        },
+        "enabled": {
+          "type": "boolean",
+          "title": "whether the field is enabled and takes part in rules, events etc. A disabled field can have calculations and custom events"
+        },
+        "enum": {
+          "title": "A list of options to put restrictions on the possible values of the field",
+          "description": "The type of values in the enum array must match the value of the `type` property defined in the field. For array type fields, the type of element in the In case the `type` property is not defined, then the type of elements in the enum becomes the value of the `type` property. If the value of the `type` property doesn't match with the type of values in the `enum` array, then a type coercion will be made to match the `type` property. If the coercion is not possible, then the value will be set to null",
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "boolean",
+              "number"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "enumNames": {
+          "title": "A user friendly text to display for the possible options to be shown to the end user.",
+          "description": "The length of enum and enumNames array must match. In case the length of enum is greator, then those will be used as display text for the user. If the length of enumNames is greator, those will be discarded.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "events": {
+          "$ref": "./adaptive-form-events.schema.json"
+        },
+        "fieldType": {
+          "title": "Type of widget to show to the user for capturing the data",
+          "description": "It must be one of the types from the list * text-input * number-input * date-input * file-input * drop-down * radio-group * plain-text * checkbox * button * plain-text * panel * multiline-input * panel * image * email * captcha",
+          "enum": [
+            "text-input",
+            "number-input",
+            "date-input",
+            "file-input",
+            "multiline-input",
+            "drop-down",
+            "radio-group",
+            "checkbox-group",
+            "checkbox",
+            "switch",
+            "plain-text",
+            "button",
+            "panel",
+            "image",
+            "email",
+            "captcha"
+          ]
+        },
+        "label": {
+          "$ref": "./adaptive-form-label.schema.json"
+        },
+        "dataLayer": {
+          "$ref": "./adaptive-form-data-layer.schema.json"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the element. It is also the key in the JSON data, if dataRef is not defined explicitly, that the form produces. If two fields/panels under a same panel have the same name, their values will be same"
+        },
+        "placeholder": {
+          "type": "string",
+          "title": "The placeholder to show on the widget."
+        },
+        "properties": {
+          "title": "An object containing custom properties that can be modified via rules as well.",
+          "type": "object"
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "whether the field should be readOnly to author or not",
+          "description": "Determines how an element is treated: 'readOnly=true' means it cannot be modified by user. It will participate in all the events."
+        },
+        "richText": {
+          "type": "boolean",
+          "description": "whether the content of the text to be treated as rich text or not"
+        },
+        "rules": {
+          "type": "object",
+          "title": "Rules that modify the property of the object dynamically",
+          "description": "An author can dynamically change any property that is defined in the spec as modifiable. The rules are evaluated whenever the dependency changes. Apart from properties defined on the field, rules can have an extra key `value` which auto computes the value of the field",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "propertyNames": {
+            "not": {
+              "enum": [
+                "name",
+                "default",
+                "type",
+                "fieldType",
+                "items",
+                "displayFormat",
+                "editFormat",
+                "rules",
+                "events",
+                "props"
+              ]
+            }
+          },
+          "examples": [
+            {
+              "rules": {
+                "required": "$form.maritalStatus.value == 'married'"
+              }
+            },
+            {
+              "lastName": {
+                "name": "lastName",
+                "rules": {
+                  "value": "$form.firstName.value & ' ' & $form.lastName.value"
+                }
+              }
+            }
+          ]
+        },
+        "screenReaderText": {
+          "type": "string",
+          "title": "a string to indicate the text to be read by screen readers"
+        },
+        "tooltip": {
+          "type": "string",
+          "title": "Tooltip of the form element"
+        },
+        "visible": {
+          "type": "boolean",
+          "title": "whether the field should be visible to author or not"
+        },
+        "id": {
+          "type": "string",
+          "title": "unique identifier for a form element"
+        },
+        "items": {
+          "title": "Fields/Panels inside a Panel",
+          "description": "If the Fields inside a panel are repeatable then the items should be an array containing only 1 field",
+          "type": "array",
+          "errorMessage": {
+            "oneOf": "Items must be an array with atleast 1 field"
+          }
+        },
+        "repeatable": {
+          "type": "boolean",
+          "title": "whether the field/panel should be repeatable or not",
+          "description": "If the property is present on a field, then the data would be generated as an array depending upon the type property on the field and if the property is present on a panel then the data would be an array of object/array depending upon the value of the type property. If the type is object, then items must have a name property. If type is array, then name property in the items would be ignored."
+        },
+        ":items": {
+          "title": "Fields/Panels inside a Panel",
+          "description": "If the Fields inside a panel are repeatable then the items should be an array containing only 1 field",
+          "type": "object",
+          "errorMessage": {
+            "oneOf": "Items must be an object with atleast 1 field"
+          }
+        },
+        ":itemsOrder": {
+          "title": "Order of Fields/Panels inside a Panel",
+          "description": "Order of items in the object specified by :items",
+          "type": "array",
+          "errorMessage": {
+            "oneOf": "Items Order must be an array with atleast 1 field"
+          },
+          "examples": [
+            {
+              ":itemsOrder": [
+                "firstName",
+                "lastName"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

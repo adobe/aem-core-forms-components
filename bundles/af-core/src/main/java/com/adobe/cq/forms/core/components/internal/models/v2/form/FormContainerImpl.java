@@ -44,6 +44,8 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -117,7 +119,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     @Nullable
     @JsonIgnore
     public String getThankYouMessage() {
-        return thankYouMessage;
+        return translate("thankYouMessage", thankYouMessage);
     }
 
     @Override
@@ -129,7 +131,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
 
     @Override
     public String getAdaptiveFormVersion() {
-        return "0.11.0-Pre";
+        return "0.12.0";
     }
 
     @Override
@@ -259,5 +261,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
         return customDorProperties;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getParentPagePath() {
+        if (resource != null) {
+            PageManager pm = resource.getResourceResolver().adaptTo(PageManager.class);
+            if (pm != null) {
+                Page page = pm.getContainingPage(resource);
+                return page != null ? page.getPath() : StringUtils.EMPTY;
+            }
+        }
+        return StringUtils.EMPTY;
     }
 }

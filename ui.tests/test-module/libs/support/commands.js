@@ -193,7 +193,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')){
-                        cy.get(selector).click({force: true});
+                        cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
                         cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click
@@ -300,11 +300,15 @@ Cypress.Commands.add("previewForm", (formPath, options={}) => {
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
-    cy.get("body").then($body => {
-        const selector12 =  "[data-path='" + editPath + "']";
-        if ($body.find(selector12).length > 0) {
-            cy.deleteComponentByPath(editPath);
-        }
+    return cy.get("body").then($body => {
+        return new Cypress.Promise((resolve, reject) => {
+            // do something custom here
+            const selector12 =  "[data-path='" + editPath + "']";
+            if ($body.find(selector12).length > 0) {
+                cy.deleteComponentByPath(editPath);
+            }
+            resolve(editPath);
+        });
     });
 })
 

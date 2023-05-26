@@ -6,17 +6,38 @@
   "description": "dependent names description",
   "tooltip": "dependent names tooltip",
   "type": "object",
-  "items":[
-    {
+  "label": {
+    "value": "dependent names"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/bound-panel"
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":type": "core/fd/components/form/panel/v1/panel",
+  ":items": {
+    "textinput": {
       "id": "textinput-49ec424aa1",
       "fieldType": "text-input",
       "name": "abc",
       "visible": false,
       "description": "dummy",
       "type": "string",
-      "required": false,
       "label": {
-        "richText": false,
         "visible": true,
         "value": "def"
       },
@@ -33,22 +54,5 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  ],
-  "label": {
-    "richText": false,
-    "visible": true,
-    "value": "dependent names"
-  },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "properties": {
-    "afs:layout": {
-      "tooltipVisible": false
-    },
-    "fd:path": "/content/bound-panel"
-  },
-  ":type": "core/fd/components/form/panel/v1/panel"
+  }
 }

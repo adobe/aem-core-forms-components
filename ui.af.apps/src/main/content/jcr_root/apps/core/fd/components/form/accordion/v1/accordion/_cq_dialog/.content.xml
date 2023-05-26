@@ -34,6 +34,56 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
+                    <repeat
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Repeat Accordion"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <repeatableText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                    text="Use the make accordion repeatable option to allow form users to dynamically add multiple panels to the form."/>
+                                            <repeatable
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__repeatable"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                    name="./repeatable"
+                                                    fieldLabel="Make accordion repeatable"
+                                                    checked="false"/>
+                                            <minOccur
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__minOccur"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue="1"
+                                                    fieldLabel="Minimum repetitions"
+                                                    fieldDescription="Minimum number of times the accordion appears on the form"
+                                                    min="0"
+                                                    name="./minOccur"/>
+                                            <maxOccur
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__maxOccur"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    emptyText="No Limit"
+                                                    fieldLabel="Maximum repetitions"
+                                                    fieldDescription="Maximum number of times the accordion can appear on the form"
+                                                    min="1"
+                                                    name="./maxOccur"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </repeat>
                     <containerItems
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Items"
@@ -47,18 +97,31 @@
                         jcr:title="Accessibility"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
-                            <assistPriority
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/include"
-                                path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/assistPriority"/>
-                            <customText
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/include"
-                                path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/customText"/>
-                            <roleAttribute
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                granite:hide="{Boolean}true"/>
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <assistPriority
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/columns/items/column/items/assistPriority"/>
+                                            <customText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                    path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility/items/columns/items/column/items/customText"/>
+                                            <roleAttribute
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    granite:hide="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
                         </items>
                     </accessibility>
                     <dor

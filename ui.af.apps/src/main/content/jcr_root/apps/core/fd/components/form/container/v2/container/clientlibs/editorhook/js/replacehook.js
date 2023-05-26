@@ -13,44 +13,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+'use strict';
 (function (window, author, Coral, channel) {
 
-    const fieldTypes = {BINARY: 'binary', TEXT: 'text', SELECT: 'select', LIST: 'list', DATE: 'date'}
+    const fieldTypes = {
+        BINARY: 'binary',
+        TEXT: 'text',
+        SELECT: 'select',
+        LIST: 'list',
+        DATE: 'date',
+        NON_INPUT: 'nonInputReadOnly',
+        CONTAINER: 'container'
+    }
     const typeMap = {
-        'button': fieldTypes.TEXT,
-        'checkboxgroup': fieldTypes.LIST,
-        'datepicker': fieldTypes.TEXT,
-        'dropdown': fieldTypes.SELECT,
-        'emailinput': fieldTypes.TEXT,
-        'numberinput': fieldTypes.TEXT,
-        'radiobutton': fieldTypes.SELECT,
-        'reset': fieldTypes.TEXT,
-        'submit': fieldTypes.TEXT,
-        'telephoneinput': fieldTypes.TEXT,
-        'text': fieldTypes.TEXT,
-        'textbox': fieldTypes.TEXT,
-        'textinput': fieldTypes.TEXT,
-        'title': fieldTypes.TEXT
+        'button': fieldTypes.NON_INPUT,
+        'checkbox-group': fieldTypes.SELECT,
+        'date-input': fieldTypes.TEXT,
+        'drop-down': fieldTypes.SELECT,
+        'email': fieldTypes.TEXT,
+        'number-input': fieldTypes.TEXT,
+        'radio-group': fieldTypes.SELECT,
+        'reset': fieldTypes.NON_INPUT,
+        'submit': fieldTypes.NON_INPUT,
+        'text-input': fieldTypes.TEXT,
+        'plain-text': fieldTypes.NON_INPUT,
+        'title': fieldTypes.NON_INPUT,
+        'image': fieldTypes.NON_INPUT,
+        'panel': fieldTypes.CONTAINER
     }
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
-    const cannotBeReplacedWith = ['fileinput', 'image'];
-
-    const irreplaceable = ['fileinput', 'checkboxgroup', 'image'];
+    const cannotBeReplacedWith = ['file-input'],
+        irreplaceable = ['file-input'],
+        editableJsonPath = '.model.json',
+        componentJsonPath = '.json';
 
     const doReplace = window.CQ.FormsCoreComponents.editorhooks.doReplace;
+    const allowedCompFieldTypes = window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes;
+
+
+    function getComponentType(componentPath, jsonPath) {
+        const result = $.ajax({
+            type: 'GET',
+            async: false,
+            url: Granite.HTTP.externalize(componentPath + jsonPath),
+            cache: false
+        });
+        return result.responseJSON.fieldType;
+    }
 
     window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
-        return !irreplaceable.includes(editable.getResourceTypeName());
+        return !irreplaceable.includes(getComponentType(editable.path, editableJsonPath));
     }
 
     window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
 
         var $searchComponent = null;
         var $clearButton = null;
-        var isContainerComponent = editable.config.isContainer;
 
         var dialog = new Coral.Dialog().set({
             closable: Coral.Dialog.closable.ON,
@@ -71,9 +92,8 @@
             allowedComponents = author.components.computeAllowedComponents(parent, author.pageDesign),
             selectList;
 
-        var editableType = editable.getResourceTypeName();
-
         var filterComponent = function (allowedComponents) {
+            var editableType = getComponentType(editable.path, editableJsonPath);
             var groups = {},
                 keyword = $searchComponent[0].value,
                 regExp = null;
@@ -91,10 +111,18 @@
             }
 
             // adding components that can be replaced by current component
-            components.forEach(function (c) {
-                var cfg = c.componentConfig,
+            components.forEach(component => {
+                var compTemplatePath = component.componentConfig.templatePath;
+                if (!compTemplatePath) {
+                    return;
+                }
+                if (!allowedCompFieldTypes[compTemplatePath]) {
+                    allowedCompFieldTypes[compTemplatePath] = getComponentType(compTemplatePath, componentJsonPath);
+                }
+
+                var cfg = component.componentConfig,
                     g,
-                    componentType = cfg.cellNames[0],
+                    componentType = allowedCompFieldTypes[compTemplatePath],
                     performReplace = false;
 
                 if (keyword.length > 0) {
@@ -102,15 +130,15 @@
                 }
 
                 if (!(keyword.length > 0) || isKeywordFound) {
-                    if ((!cannotBeReplacedWith.includes(componentType) && editableType != componentType)
-                        && ((isContainerComponent && c.componentConfig.isContainer)
-                            || (!isContainerComponent && typeMap[editableType] === typeMap[componentType]))) {
+                    if ((!cannotBeReplacedWith.includes(componentType))
+                        && typeMap[editableType] === typeMap[componentType]
+                        && editable.getResourceTypeName() != getComponentResourceType(component)) {
                         performReplace = true;
                     }
 
                     if (performReplace) {
-                        if (allowedComponents.indexOf(c.componentConfig.path) > -1 || allowedComponents.indexOf("group:" + c.getGroup()) > -1) {
-                            g = c.getGroup();
+                        if (allowedComponents.indexOf(component.componentConfig.path) > -1 || allowedComponents.indexOf("group:" + component.getGroup()) > -1) {
+                            g = component.getGroup();
 
                             var group = document.createElement('coral-selectlist-group');
                             group.label = Granite.I18n.getVar(g);
@@ -131,6 +159,11 @@
                 selectList.append(groups[g]);
             });
         };
+
+        var getComponentResourceType = function (component) {
+            var p = component.componentConfig.resourceType.split("/");
+            return p[p.length - 1]
+        }
 
         var bindEventToReplaceComponentDialog = function (allowedComponents, editable) {
             $searchComponent.off("keydown.replaceComponent.coral-search");

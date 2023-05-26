@@ -14,24 +14,13 @@
  * limitations under the License.
  ******************************************************************************/
 
-(function() {
+(function () {
 
-    var keyCodes = {
-        END: 35,
-        HOME: 36,
-        ARROW_LEFT: 37,
-        ARROW_UP: 38,
-        ARROW_RIGHT: 39,
-        ARROW_DOWN: 40
-    };
-
-
-    class Tabs extends FormView.FormPanel {
-
+    class Tabs extends FormView.FormTabs {
+        _templateHTML = {};
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormTabs";
         static bemBlock = "cmp-tabs";
-
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             active: {
@@ -41,17 +30,12 @@
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
-            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`
+            tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
+            olTabList: `.${Tabs.bemBlock}__tablist`
         };
 
         constructor(params) {
-            super(params);
-            const {element} = params;
-            this.#cacheElements(element);
-            this.#cacheTabPanelElementIds();
-            this._active = this.getActiveIndex(this._elements["tab"]);
-            this.#refreshActive();
-            this.#bindEvents();
+            super(params, Tabs.NS, Tabs.IS, Tabs.selectors);
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
                  * Editor message handling:
@@ -61,67 +45,25 @@
                  */
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
-                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function(message) {
+                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
-                            _self.#navigate(message.data.index);
+                            _self.navigate(_self._elements["tab"][message.data.index].id);
                         }
                     }
                 });
             }
         }
 
-        /**
-         * Caches the Tabs elements as defined via the {@code data-tabs-hook="ELEMENT_NAME"} markup API
-         *
-         * @private
-         * @param {HTMLElement} wrapper The Tabs wrapper element
-         */
-        #cacheElements(wrapper) {
-            this._elements = {};
-            this._elements.self = wrapper;
-            var hooks = this._elements.self.querySelectorAll("[data-" + Tabs.NS + "-hook-" + Tabs.IS + "]");
-
-            for (var i = 0; i < hooks.length; i++) {
-                var hook = hooks[i];
-                if (hook.closest("[data-cmp-is="+Tabs.IS+"]") === this._elements.self) { // only process own tab elements
-                   var key = hook.dataset[Tabs.NS + "Hook" + "Adaptiveformtabs"];
-                    if (this._elements[key]) {
-                        if (!Array.isArray(this._elements[key])) {
-                            var tmp = this._elements[key];
-                            this._elements[key] = [tmp];
-                        }
-                        this._elements[key].push(hook);
-                    } else {
-                        this._elements[key] = hook;
-                    }
-                }
-            }
-        }
-
-        #cacheTabPanelElementIds() {
-            var tabpanels = this._elements["tabpanel"];
-            this._elements["tabPanelElementId"]={};
-            if (tabpanels) {
-                if (Array.isArray(tabpanels)) {
-                    for (var i = 0; i < tabpanels.length; i++) {
-                        this._elements["tabPanelElementId"][i] = tabpanels[i].querySelectorAll(
-                            '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                    }
-                } else {
-                    // only one tab
-                    this._elements["tabPanelElementId"][0] = tabpanels.querySelectorAll(
-                        '[data-cmp-adaptiveformcontainer-path="' + this.options['adaptiveformcontainerPath'] + '"]')[0].id;
-                }
-            }
-        }
 
         getClass() {
             return Tabs.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            this.navigateAndFocusTab(id + '__tab');
         }
 
         getWidget() {
@@ -129,7 +71,7 @@
         }
 
         getDescription() {
-          return this.element.querySelector(Tabs.selectors.description);
+            return this.element.querySelector(Tabs.selectors.description);
         }
 
         getLabel() {
@@ -141,200 +83,16 @@
         }
 
         getTooltipDiv() {
-          return this.element.querySelector(Tabs.selectors.tooltipDiv);
+            return this.element.querySelector(Tabs.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
             return this.element.querySelector(Tabs.selectors.qm);
-        }
-
-        #syncTabLabels(){
-            var tabs = this._elements["tab"];
-            if (tabs) {
-                if(Array.isArray(tabs)){
-                    for (var i = 0; i < tabs.length; i++) {
-                        tabs[i].id = this._elements["tabPanelElementId"][i] + "__tab";
-                        tabs[i].setAttribute("aria-controls", this._elements["tabPanelElementId"][i] + "__tabpanel");
-                    }
-                }else{
-                    tabs.id = this._elements["tabPanelElementId"][0] + "__tab";
-                    tabs.setAttribute("aria-controls", this._elements["tabPanelElementId"][0] + "__tabpanel");
-                }
-            }
-        }
-
-        #syncTabPanels(){
-            var tabPanels = this._elements["tabpanel"];
-            if(tabPanels) {
-                if(Array.isArray(tabPanels)) {
-                    for (var i = 0; i < tabPanels.length; i++) {
-                        tabPanels[i].id = this._elements["tabPanelElementId"][i] + "__tabpanel";
-                        tabPanels[i].setAttribute("aria-labelledby", this._elements["tabPanelElementId"][i] + "__tab");
-                    }
-                }else{
-                    tabPanels.id = this._elements["tabPanelElementId"][0] + "__tabpanel";
-                    tabPanels.setAttribute("aria-labelledby", this._elements["tabPanelElementId"][0] + "__tab");
-                }
-            }
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncTabLabels();
-            this.#syncTabPanels();
-        }
-
-        /**
-         * Binds Tabs event handling
-         *
-         * @private
-         */
-        #bindEvents() {
-            var tabs = this._elements["tab"];
-            if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
-                    var _self = this;
-                    (function(index){
-                        tabs[index].addEventListener("click", function(event) {
-                            _self.#navigateAndFocusTab(index);
-                        });
-                    }(i));
-                    
-                    tabs[i].addEventListener("keydown", function(event) {
-                        _self.#onKeyDown(event);
-                    });
-                };
-            }
-        }
-
-         /**
-         * Returns the index of the active tab, if no tab is active returns 0
-         *
-         * @param {Array} tabs Tab elements
-         * @returns {Number} Index of the active tab, 0 if none is active
-         */
-        getActiveIndex(tabs) {
-            if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
-                    if (tabs[i].classList.contains(Tabs.selectors.active.tab)) {
-                        return i;
-                    }
-                }
-            }
-            return 0;
-        }
-
-         /**
-         * Handles tab keydown events
-         *
-         * @private
-         * @param {Object} event The keydown event
-         */
-        #onKeyDown(event) {
-            var index = this._active;
-
-            var lastIndex = this._elements["tab"].length - 1;
-
-            switch (event.keyCode) {
-                case keyCodes.ARROW_LEFT:
-                case keyCodes.ARROW_UP:
-                    event.preventDefault();
-                    if (index > 0) {
-                        this.#navigateAndFocusTab(index - 1);
-                    }
-                    break;
-                case keyCodes.ARROW_RIGHT:
-                case keyCodes.ARROW_DOWN:
-                    event.preventDefault();
-                    if (index < lastIndex) {
-                        this.#navigateAndFocusTab(index + 1);
-                    }
-                    break;
-                case keyCodes.HOME:
-                    event.preventDefault();
-                    this.#navigateAndFocusTab(0);
-                    break;
-                case keyCodes.END:
-                    event.preventDefault();
-                    this.#navigateAndFocusTab(lastIndex);
-                    break;
-                default:
-                    return;
-            }
-        }
-
-         /**
-         * Refreshes the tab markup based on the current {@code Tabs#_active} index
-         *
-         * @private
-         */
-        #refreshActive() {
-            var tabpanels = this._elements["tabpanel"];
-            var tabs = this._elements["tab"];
-
-            if (tabpanels) {
-                if (Array.isArray(tabpanels)) {
-                    for (var i = 0; i < tabpanels.length; i++) {
-                        if (i === parseInt(this._active)) {
-                            tabpanels[i].classList.add(Tabs.selectors.active.tabpanel);
-                            tabpanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
-                            tabs[i].classList.add(Tabs.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
-                        } else {
-                            tabpanels[i].classList.remove(Tabs.selectors.active.tabpanel);
-                            tabpanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
-                            tabs[i].classList.remove(Tabs.selectors.active.tab);
-                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
-                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
-                        }
-                    }
-                } else {
-                    // only one tab
-                    tabpanels.classList.add(Tabs.selectors.active.tabpanel);
-                    tabs.classList.add(Tabs.selectors.active.tab);
-                }
-            }
-        }
-
-        /**
-         * Focuses the element and prevents scrolling the element into view
-         *
-         * @param {HTMLElement} element Element to focus
-         */
-        focusWithoutScroll(element) {
-            var x = window.scrollX || window.pageXOffset;
-            var y = window.scrollY || window.pageYOffset;
-            element.focus();
-            window.scrollTo(x, y);
-        }
-
-        /**
-         * Navigates to the tab at the provided index
-         *
-         * @private
-         * @param {Number} index The index of the tab to navigate to
-         */
-        #navigate(index) {
-            this._active = index;
-            this.#refreshActive();
-        }
-
-        /**
-         * Navigates to the item at the provided index and ensures the active tab gains focus
-         *
-         * @private
-         * @param {Number} index The index of the item to navigate to
-         */
-        #navigateAndFocusTab(index) {
-            var exActive = this._active;
-            this.#navigate(index);
-            this.focusWithoutScroll(this._elements["tab"][index]);
         }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Tabs({element, formContainer})
     }, Tabs.selectors.self);
-    
+
 }());

@@ -116,6 +116,14 @@ export default class FormContainer {
         }
     }
 
+    getFormId() {
+        return this._model._jsonModel.id;
+    }
+
+    getFormTitle() {
+        return this._model._jsonModel.title;
+    }
+
     getPath() {
         return this._path;
     }

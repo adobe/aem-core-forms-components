@@ -16,11 +16,17 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
@@ -34,6 +40,9 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
+import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
@@ -54,6 +63,14 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     protected Map<String, ? extends ComponentExporter> itemModels;
 
     protected List<Resource> filteredChildComponents;
+
+    /**
+     * The name of the child resources in the order they are to be exported.
+     */
+    private String[] exportedItemsOrder;
+
+    @Nullable
+    protected ResponsiveGrid resGrid = null;
 
     @Override
     public Boolean isRepeatable() {
@@ -80,16 +97,40 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return maxItems;
     }
 
+    @PostConstruct
+    protected void initBaseModel() {
+        super.initBaseModel();
+        // initialize responsive grid for all containers, this is used in SPA editor
+        // added composition check, since we don't have special container for responsive grid
+        if (request != null && resource.isResourceType("wcm/foundation/components/responsivegrid")) {
+            resGrid = request.adaptTo(ResponsiveGrid.class);
+        }
+    }
+
     @Override
     public List<? extends ComponentExporter> getItems() {
         if (childrenModels == null) {
-            childrenModels = getChildrenModels(request, ComponentExporter.class);
+            childrenModels = new ArrayList<>(getChildrenModels(request, ComponentExporter.class).values());
         }
         return childrenModels;
     }
 
-    protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
-        List<T> models = new ArrayList<>();
+    @NotNull
+    @Override
+    public String[] getExportedItemsOrder() {
+        if (exportedItemsOrder == null) {
+            Map<String, ? extends ComponentExporter> models = getExportedItems();
+            if (!models.isEmpty()) {
+                exportedItemsOrder = models.keySet().toArray(ArrayUtils.EMPTY_STRING_ARRAY);
+            } else {
+                exportedItemsOrder = ArrayUtils.EMPTY_STRING_ARRAY;
+            }
+        }
+        return Arrays.copyOf(exportedItemsOrder, exportedItemsOrder.length);
+    }
+
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+        Map<String, T> models = new LinkedHashMap<>();
         List<Resource> filteredChildrenResources = getFilteredChildrenResources();
         for (Resource child : filteredChildrenResources) {
             T model = null;
@@ -103,7 +144,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                 }
             }
             if (model != null) {
-                models.add(model);
+                models.put(child.getName(), model);
             }
         }
         return models;
@@ -112,7 +153,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @Override
     public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
         if (itemModels == null) {
-            itemModels = getItemModels(request, ComponentExporter.class);
+            itemModels = getChildrenModels(request, ComponentExporter.class);
         }
         return itemModels;
     }
@@ -129,15 +170,39 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return filteredChildComponents;
     }
 
-    protected Map<String, ComponentExporter> getItemModels(@NotNull final SlingHttpServletRequest request,
-        @NotNull final Class<ComponentExporter> modelClass) {
-        Map<String, ComponentExporter> models = new LinkedHashMap<>();
-        getFilteredChildrenResources().forEach(child -> {
-            ComponentExporter model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
-            if (model != null) {
-                models.put(child.getPath(), model);
-            }
-        });
-        return models;
+    @Nullable
+    @Override
+    public String getGridClassNames() {
+        if (resGrid != null) {
+            return resGrid.getGridClassNames();
+        }
+        return null;
+    }
+
+    @Nonnull
+    @Override
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public Map<String, String> getColumnClassNames() {
+        if (resGrid != null) {
+            return resGrid.getColumnClassNames();
+        }
+        return Collections.emptyMap();
+    }
+
+    @Override
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public int getColumnCount() {
+        if (resGrid != null) {
+            return resGrid.getColumnCount();
+        }
+        return 0;
+    }
+
+    @Override
+    public AllowedComponentsExporter getExportedAllowedComponents() {
+        if (resGrid != null) {
+            return resGrid.getExportedAllowedComponents();
+        }
+        return null;
     }
 }

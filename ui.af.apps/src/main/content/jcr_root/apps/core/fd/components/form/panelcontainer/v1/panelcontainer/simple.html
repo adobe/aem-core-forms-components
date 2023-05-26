@@ -19,10 +19,10 @@
          data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
          id="${panel.id}"
          data-cmp-is="adaptiveFormPanel"
+         data-cmp-data-layer="${panel.data.json}"
          data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
          class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
-         aria-labelby="${panel.id}-label"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
         <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-container'}" data-sly-unwrap></div>

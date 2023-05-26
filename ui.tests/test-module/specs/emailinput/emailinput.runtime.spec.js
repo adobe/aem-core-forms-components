@@ -76,11 +76,52 @@ describe("Form Runtime with Email Input", () => {
     it(" html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        const input = "value"
+        const input = "value@dns.com"
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input)
         })
     });
+
+    it(" Invalid email ID generates error message ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const input = "invalidEmail"
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('exist');
+        })
+    });
+
+    it("mandatory message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[3]
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        })
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'custom mandatory message!');
+    });
+
+    it("validation picture clause message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${id}`).find("input").type("ares@a").blur();
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        });
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'validation picture clause error message!');
+    });
+
+    it("custom format message set by user is displayed", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[3];
+        cy.get(`#${id}`).find("input").type("ares").blur();
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                $window.guideBridge.validate();
+            }
+        });
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'custom format error message!');
+    });
+
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');

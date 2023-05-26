@@ -189,4 +189,14 @@ describe("Form with Dropdown", () => {
             cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"")
         })
     })
+
+    it("should update enum values on providing duplicate enums", () => {
+
+        const [dropdown7, dropdown7FieldView] = Object.entries(formContainer._fields)[8];
+        cy.get(`#${dropdown7}`).find(".cmp-adaptiveform-dropdown__option").should('have.length', 2);
+        cy.get(`#${dropdown7}`).find(".cmp-adaptiveform-dropdown__option").contains('Item 3');
+        cy.get(`#${dropdown7}`).find(".cmp-adaptiveform-dropdown__option").contains('Item 2');
+        cy.get(`#${dropdown7}`).find(".cmp-adaptiveform-dropdown__option").contains('Item 1').should('not.exist');
+
+    })
 })

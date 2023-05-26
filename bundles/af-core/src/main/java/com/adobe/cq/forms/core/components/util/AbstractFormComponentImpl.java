@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +31,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
@@ -41,12 +41,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.wcm.core.components.models.Component;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -70,16 +80,30 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Nullable
     protected Boolean visible;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean unboundFormElement;
+
     @SlingObject
     private Resource resource;
 
-    protected I18n i18n = null;
+    /**
+     * Flag indicating if the data layer is enabled.
+     */
+    private Boolean dataLayerEnabled;
+
+    /**
+     * The data layer component data.
+     */
+    private FormComponentData componentData;
 
     private static final String STATUS_NONE = "none";
     private static final String STATUS_VALID = "valid";
     private static final String STATUS_INVALID = "invalid";
 
     private static final String RULES_STATUS_PROP_NAME = "validationStatus";
+
+    private static final String NULL_DATA_REF = "null";
 
     @PostConstruct
     protected void initBaseModel() {
@@ -88,10 +112,37 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
+        if (Boolean.TRUE.equals(unboundFormElement)) {
+            dataRef = NULL_DATA_REF;
+        }
     }
 
     public void setI18n(@Nonnull I18n i18n) {
         this.i18n = i18n;
+    }
+
+    public BaseConstraint.Type getType() {
+        return null;
+    }
+
+    public Label getLabel() {
+        return null;
+    }
+
+    public String getDescription() {
+        return null;
+    }
+
+    public String getLinkUrl() {
+        return null;
+    }
+
+    public String getTitle() {
+        return null;
+    }
+
+    public String getText() {
+        return null;
     }
 
     /**
@@ -157,6 +208,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
@@ -301,14 +353,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return userEvents;
     }
 
-    @Nullable
-    protected String translate(@NotNull String propertyName, @Nullable String propertyValue) {
-        if (StringUtils.isBlank(propertyValue)) {
-            return null;
-        }
-        return ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
-    }
-
     /**
      * Returns the reference to the data model
      *
@@ -318,6 +362,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonSerialize(using = DataRefSerializer.class)
     public String getDataRef() {
         return dataRef;
     }
@@ -337,4 +382,54 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return "";
         }
     }
+
+    /**
+     * Override this method to provide a different data model for your component. This will be called by
+     * {@link AbstractComponentImpl#getData()} in case the datalayer is activated.
+     *
+     * @return The component data.
+     */
+    @NotNull
+    protected FormComponentData getComponentData() {
+        return new ComponentDataImpl(this, resource);
+    }
+
+    /**
+     * See {@link Component#getData()}
+     *
+     * @return The component data
+     */
+    @Override
+    @Nullable
+    public FormComponentData getData() {
+        if (componentData == null) {
+            if (this.dataLayerEnabled == null) {
+                if (this.getCurrentPage() != null) {
+                    // Check at page level to allow components embedded via containers in editable templates to inherit the setting
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
+                        .getContentResource());
+                } else {
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
+                }
+            }
+            if (this.dataLayerEnabled) {
+                componentData = getComponentData();
+            }
+        }
+        return componentData;
+    }
+
+    private static class DataRefSerializer extends JsonSerializer<String> {
+
+        @Override
+        public void serialize(String s, JsonGenerator jsonGenerator,
+            SerializerProvider serializerProvider) throws IOException {
+            if (NULL_DATA_REF.equals(s)) {
+                jsonGenerator.writeString((String) null);
+            } else {
+                jsonGenerator.writeString(s);
+            }
+        }
+    }
+
 }

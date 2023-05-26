@@ -5,7 +5,7 @@
             cq:deviceGroups="[mobile/groups/responsive]"
             cq:lastModified="{Date}2023-01-30T15:58:14.444+05:30"
             cq:lastModifiedBy="admin"
-            cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
@@ -29,7 +29,7 @@
                         jcr:primaryType="nt:unstructured"/>
                 <fd:events
                         jcr:primaryType="nt:unstructured"
-                        change="[if($field == '93'\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '93'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == '123'\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
+                        change="[if($field == 93\, dispatchEvent(numberinput2\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 93\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 123\, dispatchEvent(numberinput4\, 'custom:setProperty'\, {enabled : false()})\, {}),if($field == 123\, dispatchEvent(numberinput3\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
             </numberinput1>
             <numberinput2
                     jcr:primaryType="nt:unstructured"
