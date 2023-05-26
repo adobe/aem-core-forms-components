@@ -44,11 +44,12 @@ export default class FormPanel extends FormFieldBase {
             instanceManager.addChild(this);
         }
     }
+
     setFocus(id) {
-      const fieldType = this.parentView?.getModel()?.fieldType;
-      if(fieldType !== 'form' && this.parentView.setFocus){
-        this.parentView.setFocus(this.getId());
-      }
+        const fieldType = this.parentView?.getModel()?.fieldType;
+        if (fieldType !== 'form' && this.parentView.setFocus) {
+            this.parentView.setFocus(this.getId());
+        }
     }
 
     addChild(childView) {
@@ -155,6 +156,39 @@ export default class FormPanel extends FormFieldBase {
             }
         }
         return resultIndex + 1;
+    }
+
+    updateChildVisibility(visible, state) {
+        // implement in individual layouts
+    }
+
+    handleHiddenChildrenVisibility() {
+        for (let i = 0; i < this.children.length; i++) {
+            let isVisible = this.children[i].element.getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+            if (isVisible === 'false') {
+                this.updateChildVisibility(false, this.children[i].getModel().getState());
+            }
+        }
+    }
+
+    findFirstVisibleChild(children) {
+        for (let i = 0; i < children.length; i++) {
+            let isVisible = children[i].getAttribute(Constants.DATA_ATTRIBUTE_VISIBLE);
+            if (isVisible != 'false') {
+                return children[i];
+            }
+        }
+    }
+
+    updateVisibilityOfNavigationElement(navigationTabElement, visible) {
+        if (navigationTabElement) {
+            if (visible === false) {
+                navigationTabElement.setAttribute(Constants.ARIA_HIDDEN, true);
+            } else {
+                navigationTabElement.removeAttribute(Constants.ARIA_HIDDEN);
+            }
+            navigationTabElement.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
+        }
     }
 
 }

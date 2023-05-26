@@ -93,14 +93,7 @@ try {
         // start running the tests
         ci.dir('ui.tests', () => {
             const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
-            try {
-                ci.sh(command);
-            } catch (ex) {
-                console.log(ex);
-                // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
-                ci.stage('Retrying test run due to eirslett flaky ci issue');
-                ci.sh(command);
-            }
+            ci.sh(command);
         });
     }
 

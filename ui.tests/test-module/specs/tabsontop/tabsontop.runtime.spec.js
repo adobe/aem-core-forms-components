@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- describe("Form with Panel Container", () => {
+describe("Form with Panel Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
@@ -87,82 +87,125 @@
     }
     it("switch tab in runtime", () => {
         tab2().click();
-        tab2().should('have.class','cmp-tabs__tab--active');
-        tab2().should('have.attr','aria-selected','true');
-        tab1().should('have.attr','aria-selected','false');
+        tab2().should('have.class', 'cmp-tabs__tab--active');
+        tab2().should('have.attr', 'aria-selected', 'true');
+        tab1().should('have.attr', 'aria-selected', 'false');
         tab1().click();
-        tab1().should('have.class','cmp-tabs__tab--active');
-        tab1().should('have.attr','aria-selected','true');
-        tab2().should('have.attr','aria-selected','false');
+        tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.attr', 'aria-selected', 'true');
+        tab2().should('have.attr', 'aria-selected', 'false');
     });
 
     it("switch tab in runtime using keyboard", () => {
         tab1().click();
-        tab1().trigger('keydown',{
+        tab1().trigger('keydown', {
             keyCode: 40
         });
-        
-        tab2().should('have.class','cmp-tabs__tab--active');
-        tab2().should('have.attr','aria-selected','true');
-        tab1().should('have.attr','aria-selected','false');
 
-        tab2().trigger('keydown',{
+        tab2().should('have.class', 'cmp-tabs__tab--active');
+        tab2().should('have.attr', 'aria-selected', 'true');
+        tab1().should('have.attr', 'aria-selected', 'false');
+
+        tab2().trigger('keydown', {
             keyCode: 38
         });
-        tab1().should('have.class','cmp-tabs__tab--active');
-        tab1().should('have.attr','aria-selected','true');
-        tab2().should('have.attr','aria-selected','false');
+        tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.attr', 'aria-selected', 'true');
+        tab2().should('have.attr', 'aria-selected', 'false');
     });
 
-   it("should toggle description and tooltip", () => {
-     cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
-   })
+    it("should toggle description and tooltip", () => {
+        cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+    })
 });
 
 describe("Form with Tabsontop Layout Container with focus", () => {
 
-  const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focus.html";
-  let formContainer = null;
+    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focus.html";
+    let formContainer = null;
 
-  beforeEach(() => {
-    cy.previewForm(pagePath).then(p => {
-      formContainer = p;
-    })
-  });
-
-  const tabSelector = 'ol li';
-  const tab1 = () => {
-    return cy.get(tabSelector).first();
-  }
-  const tab2 = () => {
-    return cy.get(tabSelector).last();
-  }
-
-  it("check if first tab activated if focus call from other tab", () => {
-    const [id, fieldView] = Object.entries(formContainer._fields)[0];
-    // panel 1 active
-    tab1().should('have.class', 'cmp-tabs__tab--active');
-    tab1().should('have.attr', 'aria-selected', 'true');
-    tab2().should('have.attr', 'aria-selected', 'false');
-
-    tab2().click().then(() => {
-      // panel 2 active
-      tab2().should('have.class', 'cmp-tabs__tab--active');
-      tab2().should('have.attr', 'aria-selected', 'true');
-      tab1().should('have.attr', 'aria-selected', 'false');
-
-      cy.get(tabSelector).then(() => {
-        formContainer.setFocus(id);
-        cy.get(tabSelector).then(() => {
-          // panel 1 active
-          tab1().should('have.class', 'cmp-tabs__tab--active');
-          tab1().should('have.attr', 'aria-selected', 'true');
-          tab2().should('have.attr', 'aria-selected', 'false');
-        });
-      });
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
     });
 
-  });
+    const tabSelector = 'ol li';
+    const tab1 = () => {
+        return cy.get(tabSelector).first();
+    }
+    const tab2 = () => {
+        return cy.get(tabSelector).last();
+    }
+
+    it("check if first tab activated if focus call from other tab", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        // panel 1 active
+        tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.attr', 'aria-selected', 'true');
+        tab2().should('have.attr', 'aria-selected', 'false');
+
+        tab2().click().then(() => {
+            // panel 2 active
+            tab2().should('have.class', 'cmp-tabs__tab--active');
+            tab2().should('have.attr', 'aria-selected', 'true');
+            tab1().should('have.attr', 'aria-selected', 'false');
+
+            cy.get(tabSelector).then(() => {
+                formContainer.setFocus(id);
+                cy.get(tabSelector).then(() => {
+                    // panel 1 active
+                    tab1().should('have.class', 'cmp-tabs__tab--active');
+                    tab1().should('have.attr', 'aria-selected', 'true');
+                    tab2().should('have.attr', 'aria-selected', 'false');
+                });
+            });
+        });
+
+    });
 
 
+});
+describe("Form with TabsOnTop Layout Container with Hidden Children", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/visibility.html";
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("check if first tab is hidden on page load honoring jcr and second tab is active", () => {
+
+        const firstItemNavOfTabId = formContainer._model.items[0].items[0].id + "__tab";
+        const firstItemOfTabId = formContainer._model.items[0].items[0].id + "__tabpanel";
+        const secondItemNavOfTabId = formContainer._model.items[0].items[1].id + "__tab";
+        const secondItemOfTabId = formContainer._model.items[0].items[1].id + "__tabpanel";
+
+        cy.get(`#${firstItemNavOfTabId}`).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(`#${firstItemOfTabId}`).should('have.attr', 'aria-hidden', 'true');
+        cy.get(`#${secondItemNavOfTabId}`).should('have.class', 'cmp-tabs__tab--active');
+        cy.get(`#${secondItemOfTabId}`).should('have.class', 'cmp-tabs__tabpanel--active');
+    });
+
+    it("check if rule is working to hide child", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const secondItemNavOfTabId = formContainer._model.items[0].items[1].id + "__tab";
+        const secondItemOfTabId = formContainer._model.items[0].items[1].id + "__tabpanel";
+        //check initial state
+        cy.get(`#${secondItemNavOfTabId}`).should('have.class', 'cmp-tabs__tab--active');
+        cy.get(`#${secondItemOfTabId}`).should('have.class', 'cmp-tabs__tabpanel--active');
+
+        const textInputId = formContainer._model.items[1].id;
+        cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
+            cy.get(`#${secondItemNavOfTabId}`).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+            cy.get(`#${secondItemOfTabId}`).should('not.have.class', 'cmp-tabs__tabpanel--active');
+            const thirdItemNavOfTabId = formContainer._model.items[0].items[2].id + "__tab";
+            const thirdItemOfTabId = formContainer._model.items[0].items[2].id + "__tabpanel";
+            cy.get(`#${thirdItemNavOfTabId}`).should('have.class', 'cmp-tabs__tab--active');
+            cy.get(`#${thirdItemOfTabId}`).should('have.class', 'cmp-tabs__tabpanel--active');
+        })
+    });
 });

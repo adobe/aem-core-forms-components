@@ -118,6 +118,7 @@ jobs:
             - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
+            - jsdocs/target
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -162,6 +163,30 @@ jobs:
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
+
+  jsdocs-deploy:
+    docker:
+      - image: node:8.10.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/build
+      - run:
+          # since js docs can have folders with "_" prefix
+          name: Disable jekyll builds
+          command: touch jsdocs/target/jsapi/.nojekyll
+      - run:
+          name: Install and configure dependencies
+          command: |
+            npm install -g --silent gh-pages@2.0.1
+            git config user.email "ci-build@aemforms"
+            git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
+      - run:
+          name: Deploy jsdocs to gh-pages branch
+          command: gh-pages --dotfiles --message "[skip ci] jsdoc updates" --dist jsdocs/target/jsapi/
  
   release:
     executor: forms_executor
@@ -212,6 +237,14 @@ workflows:
             - build-java-11
             - build-java-8
       - release:
+          requires:
+            - build-java-11
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+      - jsdocs-deploy:
           requires:
             - build-java-11
           filters:
