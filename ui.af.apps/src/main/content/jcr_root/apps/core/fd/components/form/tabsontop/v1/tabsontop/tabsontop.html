@@ -32,6 +32,7 @@
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
 
+<button class="cmp-tabs__hamburger-button" type="button"></button>
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
      role="tablist"
@@ -47,7 +48,6 @@
          tabindex="${isActive ? '0' : '-1'}"
          data-cmp-hook-adaptiveFormTabs="tab">${tab.title}</li>
  </ol>
-<button class="cmp-tabs__hamburger-button" type="button"></button>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"
       id="${item.id}__tabpanel"
