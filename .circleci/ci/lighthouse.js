@@ -47,7 +47,7 @@ const checkLightHouse = async () => {
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
         process.exit(1);
     }
-    else if(thresholdResults.updateLighthouseConfig && ['master', 'dev'].includes(process.env.CIRCLE_BRANCH)){ // only execute if branch name is 'master'
+    else if(thresholdResults.updateLighthouseConfig){ // only execute if branch name is 'master'
         writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
     }
     await chrome.kill();
@@ -149,13 +149,14 @@ const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
     // write changes in the git file;
     console.log("newLighthouseConfig -->> ", newLighthouseConfig)
 
-    fs.writeFileSync("lighthouseConf.json", JSON.stringify(newLighthouseConfig, null, 4), function(err) {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log("File contents replaced successfully!");
-        }
-    });
+    fs.writeFileSync("/home/circleci/build/.circleci/ci/lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4));
+    // update to git;
+    ci.sh(`git add /home/circleci/build/.circleci/ci/lighthouseConfig.json`);
+    ci.sh('git status');
+    ci.sh(`git commit -m "releng - Update Lighthouse Config"`);
+    ci.sh(`git push --set-upstream --force origin ${process.env.CIRCLE_BRANCH}`);
+
+    console.log("SUCCESSFULLY UPDATED THE lighthouseConfig.json")
 }
 
 checkLightHouse()

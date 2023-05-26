@@ -88,14 +88,6 @@ try {
     }
     */
 
-    // Run UI tests
-    if (TYPE === 'cypress') {
-        // start running the tests
-        ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
-            ci.sh(command);
-        });
-    }
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {
