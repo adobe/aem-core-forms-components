@@ -236,6 +236,7 @@ export default class Utils {
      */
     static async registerCustomFunctions(formId) {
         const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         if (funcConfig && funcConfig.customFunction){
             const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
                 if (window[func.id]) {
@@ -244,8 +245,6 @@ export default class Utils {
                 return accumulator;
             }, {});
             FunctionRuntime.registerFunctions(funcObj);
-        } else {
-            console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         }
     }
 

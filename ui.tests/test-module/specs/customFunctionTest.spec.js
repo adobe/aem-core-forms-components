@@ -49,4 +49,11 @@ describe('Form with custom functions configured in client lib', () => {
             expect(func).to.not.be.undefined;
         })
     })
+
+    it("should have set textinput value based on custom function rule", () => {
+        // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${textbox1}`).find("input").should('have.value', "test")
+    })
 })
