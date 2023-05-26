@@ -47,6 +47,7 @@
          tabindex="${isActive ? '0' : '-1'}"
          data-cmp-hook-adaptiveFormTabs="tab">${tab.title}</li>
  </ol>
+<button class="cmp-tabs__hamburger-button" type="button"></button>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"
       id="${item.id}__tabpanel"
