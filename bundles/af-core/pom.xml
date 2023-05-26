@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>2.0.100-SNAPSHOT</version>
+        <version>2.0.17-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -457,12 +457,6 @@
 
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
-        <!--
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-sdk-api</artifactId>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
