@@ -77,6 +77,9 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String CUSTOM_FORMAT_VALUE = "customFormatValue";
     private static final String NN_DIALOG = "cq:dialog";
 
+    private static final String CUSTOM_PROPERTY_NAME = "customPropertyName";
+    private static final String CUSTOM_PROPERTY_VALUE = "customPropertyValue";
+
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
      *
@@ -85,7 +88,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
         PREFILL_ACTION("prefillServiceProvider"),
-        FORMATTERS("formatters");
+        FORMATTERS("formatters"),
+        CUSTOM_PROPERTIES("customProperties");
 
         private String value;
 
@@ -153,9 +157,10 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
+            ContentPolicy policy = null;
             switch (type) {
                 case FORMATTERS:
-                    ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
+                    policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
                         resourceResolver);
                     resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
                     if (policy != null) {
@@ -192,6 +197,17 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
+                    break;
+                case CUSTOM_PROPERTIES:
+                    policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
+                        resourceResolver);
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
+                    if (policy != null) {
+                        Map<String, String> customPropertiesMap = this.getCustomPropertiesFromPolicy(policy, resourceResolver);
+                        for (Map.Entry<String, String> entry : customPropertiesMap.entrySet()) {
+                            resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+                        }
+                    }
                     break;
             }
         }
@@ -243,5 +259,33 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             }
         }
         return resources;
+    }
+
+    private Map<String, String> getCustomPropertiesFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
+        Resource policyResource = resourceResolver.resolve(policy.getPath());
+        Map<String, String> customPropertiesMap = new HashMap<>();
+        List<Resource> customPropertiesResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false)
+            .collect(Collectors.toList());
+
+        customPropertiesResourceList.forEach((customPropertiesResource) -> {
+            customPropertiesResource.getChildren().forEach(customProperties -> {
+                String customPropertyName = "";
+                String customPropertyValue = "";
+                for (Map.Entry<String, Object> entry : customProperties.getValueMap().entrySet()) {
+                    if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
+                        customPropertyName = entry.getValue().toString();
+                    } else if (entry.getKey().equals(CUSTOM_PROPERTY_VALUE)) {
+                        customPropertyValue = entry.getValue().toString();
+                    }
+                }
+                if (!customPropertyName.isEmpty()) {
+                    if (customPropertyValue.isEmpty()) {
+                        customPropertyValue = null;
+                    }
+                    customPropertiesMap.put(customPropertyName, customPropertyValue);
+                }
+            });
+        });
+        return customPropertiesMap;
     }
 }
