@@ -4,10 +4,10 @@
     ],
     "requiredScores": [
         {
-            "performance": 50,
-            "accessibility": 50,
-            "bestPractices": 50,
-            "seo": 50
+            "performance": 89,
+            "accessibility": 93,
+            "bestPractices": 92,
+            "seo": 71
         },
         {
             "performance": 85,
