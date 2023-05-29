@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,7 @@ describe("Render form", () => {
         cy.previewForm(pagePath);
         // important: For this to work in local cloud ready SDK, restart is required
         // intercepting render call and returning with open api
-        //const req = interceptPromise("GET", '**/guideContainer.model.json');
         cy.getFromDefinitionUsingOpenAPI("/content/forms/af/core-components-it/samples/actions/submit/basic").then(function({body}){
-            //req.resolve(body);
             cy.intercept("GET",  '**/guideContainer.model.json', req => {
                 req.continue((res) => {
                     res.body = body.afModelDefinition;
