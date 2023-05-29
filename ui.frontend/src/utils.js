@@ -232,6 +232,24 @@ export default class Utils {
     }
 
     /**
+     * Registers custom functions from clientlibs
+     * @param formId
+     */
+    static async registerCustomFunctions(formId) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
      *
      * @param createFormContainer
      * @param formContainerSelector
@@ -250,6 +268,7 @@ export default class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path);
                 console.debug("fetched model json", _formJson);
+                await this.registerCustomFunctions(_formJson.id);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
