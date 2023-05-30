@@ -84,8 +84,4 @@ export default class HTTPAPILayer {
             xhr.send();
         });
     }
-
-    static async getCustomFunctionConfig(formId) {
-        return await this.getJson(Constants.API_PATH_PREFIX + "/customfunctions/" + formId);
-    }
 }
