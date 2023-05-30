@@ -47,7 +47,6 @@ describe('Form with custom functions configured in client lib', () => {
             cy.window().then(win => {
                 func = win.FormView.FunctionRuntime.customFunctions.testFunction1;
                 expect(func).to.not.be.null;
-                ``
                 expect(func).to.not.be.undefined;
             })
         })
