@@ -29,22 +29,28 @@
      data-cmp-enabled="${radioButton.enabled ? 'true' : 'false'}"
      id="${radiobutton.id}"
      data-cmp-data-layer="${radioButton.data.json}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=radiobutton.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     role="radiogroup"
+     aria-labelledby="${radiobutton.id}_labelid"
+     >
+    <!-- <div data-sly-call="${label.label @componentId=radiobutton.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div> -->
+    <div id="${radiobutton.id}_labelid" class="cmp-adaptiveform-radiobutton__label">${radioButton.label.value}</div>
     <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}">
       <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
           <div class="cmp-adaptiveform-radiobutton__option">
               <label class="cmp-adaptiveform-radiobutton__option__label"
                     title="${radioButton.tooltipVisible ? '' : radioButton.tooltipText}"
-                    aria-label="${radioButton.enumNames[itemList.index]}">
+                    for="${radioButton.id}${'_'}${itemList.index}__widget"
+                    >
                   <input type="radio"
                         name="${radioButton.name}"
+                        id="${radioButton.id}${'_'}${itemList.index}__widget"
                         class="cmp-adaptiveform-radiobutton__option__widget"
                         value="${item.toString}"
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
-                        aria-readonly="${radioButton.readOnly ? 'true' : 'false'}"/>
+                        />
                   <span>${radioButton.enumNames[itemList.index]}</span>
               </label>
           </div>

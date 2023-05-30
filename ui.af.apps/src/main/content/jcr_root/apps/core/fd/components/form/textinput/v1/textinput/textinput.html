@@ -32,7 +32,6 @@
     <div data-sly-call="${label.label @componentId=text.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               title="${text.tooltipVisible ? '' : text.tooltipText}"
-              aria-label="${text.label.visible && text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
               data-cmp-data-layer="${text.data.json}"

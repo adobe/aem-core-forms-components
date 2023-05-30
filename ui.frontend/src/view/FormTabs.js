@@ -270,7 +270,7 @@ export default class FormTabs extends FormPanel {
       for (var i = 0; i < tabPanels.length; i++) {
         var childViewId = tabPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
         tabPanels[i].id = childViewId + this.#tabPanelIdSuffix;
-        tabPanels[i].setAttribute("aria-labelledby", childViewId + this.#tabIdSuffix);
+        // tabPanels[i].setAttribute("aria-labelledby", childViewId + this.#tabIdSuffix);
       }
     }
   }

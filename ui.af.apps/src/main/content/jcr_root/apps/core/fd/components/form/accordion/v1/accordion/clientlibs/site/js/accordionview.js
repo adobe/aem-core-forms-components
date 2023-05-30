@@ -517,7 +517,7 @@
             accordionButton.id = childViewId + Accordion.idSuffixes.button;
             accordionPanelDiv.id = childViewId + Accordion.idSuffixes.panel;
             accordionButton.setAttribute("aria-controls", childViewId + Accordion.idSuffixes.panel);
-            accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
+            // accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
         }
 
         #cacheTemplateHTML(childView) {
