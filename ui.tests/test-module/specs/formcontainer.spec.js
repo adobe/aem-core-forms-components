@@ -231,5 +231,4 @@ describe('Page/Form Authoring', function () {
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
         });
-
 });
