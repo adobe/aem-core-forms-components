@@ -54,6 +54,19 @@
                 <span class="cmp-accordion__title">${accordion.exportedItems[item].label.value}</span>
                 <span class="cmp-accordion__icon"></span>
             </button>
+            <div 
+              data-sly-test="${accordion.exportedItems[item].repeatable}" 
+              class="cmp-accordion__repeatable-buttons"
+              data-cmp-hook-adaptiveFormAccordion="repeatableButton">
+              <button 
+                class="cmp-accordion__add-button"
+                data-cmp-hook-add-instance="${accordion.exportedItems[item].id}"
+                type="button"></button>
+              <button 
+                class="cmp-accordion__remove-button"
+                data-cmp-hook-remove-instance="${accordion.exportedItems[item].id}"
+                type="button"></button>
+            </div>
         </h3>
         <div data-sly-resource="${item @ decorationTagName='div'}"
              data-cmp-hook-adaptiveFormAccordion="panel"

@@ -157,4 +157,8 @@ export default class FormPanel extends FormFieldBase {
         return resultIndex + 1;
     }
 
+    getRepeatableRootElement(childView){
+      return childView.element.parentElement;
+    }
+
 }

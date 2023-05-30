@@ -19,6 +19,7 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormAccordion";
+        static DATA_ATTRIBUTE_VISIBLE = FormView.Constants.DATA_ATTRIBUTE_VISIBLE;
         static bemBlock = 'cmp-accordion'
         _templateHTML = {};
         static selectors = {
@@ -436,6 +437,7 @@
                     result.parentElement.append(accordionItemDivToBeRepeated);
                 }
             }
+            this.#showHideRepeatableButtons(instanceManager);
         }
 
         handleChildAddition(childView) {
@@ -444,6 +446,7 @@
             this.#bindEventsToAddedChild(childView.id);
             this.#expandItem(addedItemDiv);
             this.#collapseAllOtherItems(addedItemDiv.id);
+            this.#showHideRepeatableButtons(childView.getInstanceManager());
         }
 
         handleChildRemoval(removedInstanceView) {
@@ -458,6 +461,7 @@
                 this.#expandItem(firstItem);
                 this.#collapseAllOtherItems(firstItem.id);
             }
+            this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager())
         }
 
         syncMarkupWithModel() {
@@ -518,6 +522,15 @@
             accordionPanelDiv.id = childViewId + Accordion.idSuffixes.panel;
             accordionButton.setAttribute("aria-controls", childViewId + Accordion.idSuffixes.panel);
             // accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
+
+            var accordionAdd = accordionItemDiv.querySelector(".cmp-accordion__add-button");
+            if(accordionAdd){
+              accordionAdd.setAttribute('data-cmp-hook-add-instance', childViewId);
+            }
+            var accordionRemove = accordionItemDiv.querySelector(".cmp-accordion__remove-button");
+            if(accordionRemove){
+              accordionRemove.setAttribute('data-cmp-hook-remove-instance', childViewId);
+            }
         }
 
         #cacheTemplateHTML(childView) {
@@ -618,6 +631,19 @@
          */
         #convertToPanelId(idToConvert) {
             return idToConvert.substring(0, idToConvert.lastIndexOf("-")) + Accordion.idSuffixes.panel;
+        }
+        
+        getRepeatableRootElement(childView){
+          return childView.element.closest('.cmp-accordion__item');
+        }
+        #showHideRepeatableButtons(instanceManager){
+          const {_model: {minOccur, maxOccur, items = [] } = {}, children} = instanceManager;
+          children.forEach(({element})=>{
+            const addButtonElement = element?.closest('.cmp-accordion__item')?.querySelector('[data-cmp-hook-add-instance]');
+            const removeButtonElement = element?.closest('.cmp-accordion__item')?.querySelector('[data-cmp-hook-remove-instance]');
+            addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
+            removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
+          });
         }
     }
 
