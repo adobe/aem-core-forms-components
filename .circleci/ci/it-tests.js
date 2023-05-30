@@ -73,6 +73,14 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
+
+    // restart the AEM insatnce
+    // some problem with latest aem quickstart
+    if (AEM === 'addon' || AEM === 'addon-latest') {
+        // restart the AEM insatnce
+        ci.sh(`./qp.sh stop --id author`);
+        ci.sh(`./qp.sh start --id author`);
+    }
 });
 
     // Run integration tests
