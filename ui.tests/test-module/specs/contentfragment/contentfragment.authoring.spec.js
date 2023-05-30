@@ -65,7 +65,7 @@ describe('Content Fragment - Authoring', function () {
             .should("exist");
 
         cy.get("[name='./fragmentPath'] input[role='combobox']").should("exist").clear()
-            .type("/content/dam/wknd/library/sample-assets/adobe-headquarters").blur().then(x => {
+            .type("/content/dam/wknd/library/sample-assets/adobe-headquarters", { delay: 0 }).click().then(x => {
             cy.get('.cq-dialog-submit').click().then(y => {
                 cy.get('.cq-dialog-submit').should('not.exist').then(z => {
                     cy.deleteComponentByPath(cfDrop);
@@ -91,7 +91,7 @@ describe('Content Fragment - Authoring', function () {
             .should("exist");
 
         cy.get("[name='./fragmentVariationPath'] input[role='combobox']").should("exist").clear()
-            .type("/content/experience-fragments/test-experience-fragment/master").blur();
+            .type("/content/experience-fragments/test-experience-fragment/master", { delay: 0 }).click();
         cy.get("._coral-Menu-itemLabel:contains(/content/experience-fragments/test-experience-fragment/master)").should("be.visible").click();
         cy.get('.cq-dialog-submit').click().then(y => {
             cy.get('.cq-dialog-submit').should('not.exist').then(z => {
