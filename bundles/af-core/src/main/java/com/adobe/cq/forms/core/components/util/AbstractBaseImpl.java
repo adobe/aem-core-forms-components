@@ -38,6 +38,7 @@ import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -114,10 +115,19 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected Integer maxItems;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "cq:panelTitle")
+    protected String panelTitle;
+
     /** End **/
 
     @SlingObject
     private Resource resource;
+
+    @JsonProperty("cq:panelTitle")
+    @Nullable
+    public String getPanelTitle() {
+        return panelTitle;
+    }
 
     /**
      * Holds the constraint messages
