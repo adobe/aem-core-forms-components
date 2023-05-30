@@ -66,6 +66,22 @@
         setModel(model) {
             super.setModel(model);
             this.getWidget().addEventListener("click", () => {
+
+            if(this._model.properties["fd:buttonType"] === 'submit') {
+             var guideContainer = window.document.getElementsByClassName("cmp-adaptiveform-container");
+             var ele =document.createElement("div");
+             ele.setAttribute("id", "loadingPage");
+             ele.classList.add("guideLoading", "guideMessage");
+             window.document.body.classList.add("af-freezeBody");
+             var ele2 =document.createElement("h1");
+             ele2.setAttribute("class","loadingHeader");
+             ele2.innerHTML= "submitting form for signing";
+             ele.append(ele2);
+             guideContainer[0].classList.add("loadingClass");
+
+             guideContainer[0].append(ele);
+
+            }
                 this._model.dispatch(new FormView.Actions.Click())
             });
         }

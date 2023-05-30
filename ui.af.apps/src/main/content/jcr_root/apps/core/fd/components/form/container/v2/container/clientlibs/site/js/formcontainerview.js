@@ -41,13 +41,24 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
+                     var guideContainer = window.document.getElementsByClassName("cmp-adaptiveform-container");
+                     guideContainer[0].getElementsByClassName("guideLoading")[0].style.display = "none";
+                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
+                        let thankYouMessage = document.createElement("div");
+                        thankYouMessage.setAttribute("class", "tyMessage");
+                        thankYouMessage.innerHTML = 'Thank for submission';
+                        formContainerElement.replaceWith(thankYouMessage);
+
+
+                        let redirectURL = body.redirectUrl;
                         let redirectElement = document.querySelector('[name=":redirect"]');
                         // check to prevent tampering of redirectURL from client
                         if(redirectElement && redirectElement.value === body.redirectUrl) {
                             redirectURL = body.redirectUrl;
                         }
-                        window.location.href = redirectURL;
+                        setTimeout(()=>{
+                            window.location.href = redirectURL;
+                        }, 1000);
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
