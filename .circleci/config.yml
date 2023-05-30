@@ -217,7 +217,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
       - jsdocs-deploy:
           requires:
             - build-java-11
