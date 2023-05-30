@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
-    jcr:primaryType="sling:Folder"/>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured">
+    <fd jcr:primaryType="nt:unstructured">
+        <af-clientlibs jcr:primaryType="nt:unstructured">
+            <core-forms-components-runtime-all jcr:primaryType="nt:unstructured">
+                <resources jcr:primaryType="nt:unstructured">
+                    <i18n jcr:primaryType="nt:unstructured">
+                        <ru-ru.json/>
+                    </i18n>
+                </resources>
+            </core-forms-components-runtime-all>
+        </af-clientlibs>
+    </fd>
+</jcr:root>
