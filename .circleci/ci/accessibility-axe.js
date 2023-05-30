@@ -57,6 +57,7 @@ const calculateAccessibility = async () => {
         fs.writeFileSync('accessibility-report.html', reportHTML);
 
         if (results.violations.length > 0) {
+            getAccessibilityViolationsTable(results.violations)
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
                 console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
@@ -70,6 +71,24 @@ const calculateAccessibility = async () => {
     catch (e) {
         console.log("Some error occured in calculating accessibility", e)
     }
+}
+
+const getAccessibilityViolationsTable = (violations) => {
+const printRow = (id, description, impact) => {
+  console.log(`| ${id + ' '.repeat(20 - id.length)}  | ${description + ' '.repeat(100 - description.length)} | ${impact + ' '.repeat(20 - impact.length)} |`);
+}
+const printDashedLine = () => {
+  console.log(`| ${'-'.repeat(22)}|${'-'.repeat(102)}|${'-'.repeat(22)}|`);
+}
+
+console.log("\n\n### Accessibility Violations Found\n")
+printDashedLine();
+printRow('Id', 'Description', 'Impact');
+printDashedLine();
+violations.forEach(violation => {
+    printRow(violation.id, violation.description , violation.impact);
+    printDashedLine();
+})
 }
 
 calculateAccessibility()
