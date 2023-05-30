@@ -97,7 +97,7 @@ describe.only('Page - Authoring', function () {
       cy.deleteComponentByPath(tabsPath);
     });
 
-      // todo: flaky
+
     it('drop element in tabs on top', { retries: 3 }, function () {
         cy.cleanTest(tabsPath).then(function(){
             dropTabsInContainer();

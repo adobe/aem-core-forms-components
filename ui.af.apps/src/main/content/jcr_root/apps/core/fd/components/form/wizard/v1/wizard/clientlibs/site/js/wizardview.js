@@ -38,6 +38,7 @@
         static #wizardPanelIdSuffix = "__wizardpanel";
         maxEnabledTab = 0;
         minEnabledTab = 0;
+        static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
 
         static selectors = {
             self: "[data-" + Wizard.NS + '-is="' + Wizard.IS + '"]',
@@ -64,7 +65,7 @@
             this.#setActive(this.#getCachedTabs())
             this.#_active = this.#getActiveIndex(this.#getCachedTabs());
             this.setNavigationRange();
-            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
             this.#refreshActive();
 
             this.#bindEvents();
@@ -268,7 +269,7 @@
                     }
                 }
             }
-            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
 
         /**
@@ -292,47 +293,54 @@
             var validationErrorList = activeChildView.getModel().validate();
             if (validationErrorList === undefined || validationErrorList.length == 0) {
                 var tabs = this.#getCachedTabs();
-                if (tabs && activeIndex < tabs.length - 1) {
-                    this.#navigateAndFocusTab(activeIndex + 1);
+                var nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
+                if (tabs && nextVisibleIndex >= 0) {
+                    this.#navigateAndFocusTab(nextVisibleIndex);
                 }
             }
-            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
+
 
         #navigateToPreviousTab() {
             var activeIndex = this.#_active;
             var tabs = this.#getCachedTabs();
-            if (tabs && activeIndex > 0) {
-                this.#navigateAndFocusTab(activeIndex - 1);
+            var lastVisibleIndex = this.#findLastVisibleChildIndex(activeIndex);
+            if (tabs && lastVisibleIndex >= 0) {
+                this.#navigateAndFocusTab(lastVisibleIndex);
             }
-            this.hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
 
         /**
-         * Navigates to the tab at the provided index
+         * Hides or shows next or and previous navigation buttons
          *
          * @private
          * @param {Number} index The index of the tab to navigate to
+         * @param {Number} total number of tabs
          */
-        hideUnhideNavButtons(activeTabIndex, tabsLength) {
+        #hideUnhideNavButtons(activeTabIndex, tabsLength) {
+            let nextVisible = this.#findNextVisibleChildIndex(activeTabIndex);
+            let previousVisible = this.#findLastVisibleChildIndex(activeTabIndex);
+
             if(tabsLength === 0 || this.maxEnabledTab <= this.minEnabledTab) {
-                this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
-                this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
+                this.getPreviousButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
+                this.getNextButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
             }
 
-            if(activeTabIndex <= this.minEnabledTab) {
-                this.getPreviousButtonDiv().classList.add(Wizard.selectors.previousButtonHidden);
+            if(activeTabIndex <= this.minEnabledTab || previousVisible === -1) {
+                this.getPreviousButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
             }
-            if(activeTabIndex === this.maxEnabledTab) {
-                this.getNextButtonDiv().classList.add(Wizard.selectors.nextButtonHidden);
+            if(activeTabIndex === this.maxEnabledTab || nextVisible === -1) {
+                this.getNextButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
             }
 
             if(tabsLength > 1 && activeTabIndex > this.minEnabledTab) {
-                this.getPreviousButtonDiv().classList.remove(Wizard.selectors.previousButtonHidden);
+                this.getPreviousButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"true");
             }
 
-            if(activeTabIndex < this.maxEnabledTab) {
-                this.getNextButtonDiv().classList.remove(Wizard.selectors.nextButtonHidden);
+            if(activeTabIndex < this.maxEnabledTab && nextVisible > -1) {
+                this.getNextButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"true");
             }
         }
 
@@ -360,6 +368,28 @@
         childComponentEnabled(wizardTab) {
             return (wizardTab.children[0].getAttribute('data-cmp-enabled') === 'true' &&
             wizardTab.children[0].getAttribute('data-cmp-visible') === 'true')
+        }
+
+        #findNextVisibleChildIndex(currentIndex) {
+            var tabs = this.#getCachedTabs();
+            for (var i = currentIndex + 1; i < tabs.length; i++) {
+                let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
+                if (isVisible === null || isVisible === 'true') {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        #findLastVisibleChildIndex(currentIndex) {
+            var tabs = this.#getCachedTabs();
+            for (var i = currentIndex - 1; i >= 0; i--) {
+                let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
+                if (isVisible === null || isVisible === 'true') {
+                    return i;
+                }
+            }
+            return -1;
         }
 
 
@@ -467,6 +497,7 @@
             //when all children are available in view
             if (this.getModel()._children.length === this.children.length) {
                 this.cacheClosestFieldsInView();
+                this.handleHiddenChildrenVisibility();
             }
         }
 
@@ -565,6 +596,18 @@
                 result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
             }
             return result;
+        }
+
+        updateChildVisibility(visible, state) {
+            this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
+            var activeTabNavElement = this.#getCachedTabs()[this.#_active];
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            if (!visible && activeTabNavElement.id === state.id + Wizard.#tabIdSuffix) {
+                let child = this.findFirstVisibleChild(this.#getCachedTabs());
+                if (child) {
+                    this.#navigateAndFocusTab(this.#getTabIndexById(child.id));
+                }
+            }
         }
     }
 
