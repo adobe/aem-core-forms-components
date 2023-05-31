@@ -335,7 +335,7 @@
                 this.getNextButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
             }
 
-            if(tabsLength > 1 && activeTabIndex > this.minEnabledTab) {
+            if(tabsLength > 1 && activeTabIndex > this.minEnabledTab && previousVisible > -1) {
                 this.getPreviousButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"true");
             }
 
