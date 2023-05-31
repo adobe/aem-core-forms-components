@@ -33,7 +33,7 @@ const checkLightHouse = async () => {
     console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
     console.log(getCommentText(runnerResult.lhr.categories))
 
-    //ci.postCommentToGitHubFromCI(getCommentText(runnerResult.lhr.categories))
+    await ci.postCommentToGitHubFromCI(getCommentText(runnerResult.lhr.categories))
     ci.sh('mkdir artifacts');
     ci.dir("artifacts", () => {
            fs.writeFileSync('LigthouseReport.html', reportHtml);
@@ -44,7 +44,7 @@ const checkLightHouse = async () => {
     console.log("thresholdResults -->>>> ", thresholdResults)
     if(!thresholdResults.isThresholdPass){
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
-        //ci.postCommentToGitHubFromCI("Error: Lighthouse score for aem-core-forms-components, below the thresholds, check reports under artifacts in CircleCI")
+        await ci.postCommentToGitHubFromCI("Error: Lighthouse score for aem-core-forms-components, below the thresholds, check reports under artifacts in CircleCI")
         process.exit(1);
     }
     else if(thresholdResults.updateLighthouseConfig && ['master', 'dev', 'release/650'].includes(process.env.CIRCLE_BRANCH)){ // only execute if branch name is 'master'

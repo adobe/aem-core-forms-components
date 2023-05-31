@@ -180,9 +180,12 @@ module.exports = class CI {
         return output;
     }
 
-    postCommentToGitHubFromCI(commentText){
+    async postCommentToGitHubFromCI(commentText){
 
         const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, GITHUB_TOKEN } = process.env
+        console.log("process.env -->>>> ", process.env)
+        if(!CIRCLE_PULL_REQUEST) // its not a PULL request
+        return
         const prNumber = CIRCLE_PULL_REQUEST.split('/').pop();
         const apiUrl = new URL(`https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
         const postData = JSON.stringify({body: commentText});
@@ -191,7 +194,7 @@ module.exports = class CI {
         const options = {
           method: 'POST',
           headers: {
-            'Authorization': `${GITHUB_TOKEN}`,
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
             'User-Agent': 'CircleCI'
           }
         };

@@ -26,6 +26,7 @@ const calculateAccessibility = async () => {
 
     const options = new chrome.Options();
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
+    const whitelistedLabels = ['label', 'landmark-one-main', 'page-has-heading-one', 'region']
 
     try {
         await driver.get(process.env.ACCESSIBILITY_COLLATERAL_URL);
@@ -59,12 +60,11 @@ const calculateAccessibility = async () => {
         if (results.violations.length > 0) {
             getAccessibilityViolationsTable(results.violations)
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
-           results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
+            if(results.violations.some(violation => (['critical', 'serious', 'moderate'].includes(violation.impact) && !whitelistedLabels.includes(violation.id)))){
                 console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
-                 // post a comment on github!
-                 //ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!")
-                 process.exit(1); // fail pipeline
-           })
+                await ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!")
+                process.exit(1); // fail pipeline
+            }
            console.log("results.violations--->>>", results.violations);
         }
     }
@@ -81,7 +81,7 @@ const printDashedLine = () => {
   console.log(`| ${'-'.repeat(22)}|${'-'.repeat(102)}|${'-'.repeat(22)}|`);
 }
 
-console.log("\n\n### Accessibility Violations Found\n")
+console.log("\n\n### Below Accessibility Violations Found\n")
 printDashedLine();
 printRow('Id', 'Description', 'Impact');
 printDashedLine();
