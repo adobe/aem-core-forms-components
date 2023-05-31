@@ -19,6 +19,10 @@ const ci = new (require('./ci.js'))();
 
 
 const checkLightHouse = async () => {
+
+    const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
+    const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
+
     const lighthouse = await import('lighthouse')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
@@ -30,7 +34,7 @@ const checkLightHouse = async () => {
         Authorization:
           "Basic " +
           Buffer.from(
-            process.env.LOCAL_USERNAME + ":" + process.env.LOCAL_PASSWORD
+            aemUsername + ":" + aemPassword
           ).toString("base64"),
       },
     };

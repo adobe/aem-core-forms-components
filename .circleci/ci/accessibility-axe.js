@@ -27,6 +27,9 @@ const calculateAccessibility = async () => {
     const options = new chrome.Options();
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
     const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
+    const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
+    const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
+
 
     try {
         await driver.get(ACCESSIBILITY_COLLATERAL_URL);
@@ -37,9 +40,9 @@ const calculateAccessibility = async () => {
         });
 //        await driver.findElement(WebDriver.By.xpath("//button[@aria-expanded='false']/coral-accordion-item-label[contains(text(),'Sign in locally')]")).click();
         const usernameInput = await driver.findElement(WebDriver.By.id('username'));
-        await usernameInput.sendKeys(process.env.LOCAL_USERNAME);
+        await usernameInput.sendKeys(aemUsername);
         const passwordInput = await driver.findElement(WebDriver.By.id('password'));
-        await passwordInput.sendKeys(process.env.LOCAL_PASSWORD);
+        await passwordInput.sendKeys(aemPassword);
         await driver.findElement(WebDriver.By.id('submit-button')).click();
         await driver.wait(async () => {
           const readyState = await driver.executeScript('return document.readyState');
