@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form Fragment"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.fragment.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_textinput_v1"
+    trackingFeature="core-components:adaptiveform-fragment:v1">
+    <content
+        granite:class="cmp-adaptiveform-fragment__editdialog"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic jcr:primaryType="nt:unstructured">
+                         <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <fragRef
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Fragment reference"
+                                                    name="./fragRef"
+                                                    sling:orderBefore="bindref"
+                                                    required="{Boolean}true"/>
+                                            <placeholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <unboundFormElement
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                         </items>
+                    </basic>
+                    <validation
+                            jcr:primaryType="nt:unstructured"
+                            sling:hideResource="{Boolean}true"/>
+                    <repeat
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Repeat Fragment"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <repeatableText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                    text="Use the make fragment repeatable option to allow form users to dynamically add multiple panels to the form."/>
+                                            <repeatable
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__repeatable"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                    name="./repeatable"
+                                                    fieldLabel="Make fragment repeatable"
+                                                    checked="false"/>
+                                            <minOccur
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__minOccur"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue="1"
+                                                    fieldLabel="Minimum repetitions"
+                                                    fieldDescription="Minimum number of times the fragment appears on the form"
+                                                    min="0"
+                                                    name="./minOccur"/>
+                                            <maxOccur
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-panelcontainer__maxOccur"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    emptyText="No Limit"
+                                                    fieldLabel="Maximum repetitions"
+                                                    fieldDescription="Maximum number of times the fragment can appear on the form"
+                                                    min="1"
+                                                    name="./maxOccur"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </repeat>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/help"/>
+                    <accessibility
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/accessibility"/>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
