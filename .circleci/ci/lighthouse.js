@@ -22,8 +22,18 @@ const checkLightHouse = async () => {
     const lighthouse = await import('lighthouse')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-    const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from(process.env.LOCAL_USERNAME + ':' + process.env.LOCAL_PASSWORD).toString('base64') }};
-
+    const options = {
+      logLevel: "info",
+      output: "html",
+      port: chrome.port,
+      extraHeaders: {
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            process.env.LOCAL_USERNAME + ":" + process.env.LOCAL_PASSWORD
+          ).toString("base64"),
+      },
+    };
     const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
 
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
@@ -59,70 +69,88 @@ const getCommentText = (resultCategories) => {
 }
 
 const checkThresholds = (resultCategories, lighthouseConfig) => {
-    const {  performance, accessibility, bestPractices, seo } = lighthouseConfig.requiredScores[0]
-    const margin = lighthouseConfig.margin
-    const thresholdResults = {
-        isThresholdPass: false,
-        updateLighthouseConfig: false
-    }
-    if(performance*(1-margin) < resultCategories.performance.score*100 &&
-        accessibility*(1-margin) < resultCategories.accessibility.score*100 &&
-        bestPractices*(1-margin) < resultCategories['best-practices'].score*100 &&
-        seo*(1-margin) < resultCategories.seo.score*100){
-            thresholdResults.isThresholdPass = true
-        }
+  const { performance, accessibility, bestPractices, seo } =
+    lighthouseConfig.requiredScores[0];
+  const margin = lighthouseConfig.margin;
+  const thresholdResults = {
+    isThresholdPass: false,
+    updateLighthouseConfig: false,
+  };
+  if (
+    performance * (1 - margin) < resultCategories.performance.score * 100 &&
+    accessibility * (1 - margin) < resultCategories.accessibility.score * 100 &&
+    bestPractices * (1 - margin) <
+      resultCategories["best-practices"].score * 100 &&
+    seo * (1 - margin) < resultCategories.seo.score * 100
+  ) {
+    thresholdResults.isThresholdPass = true;
+  }
 
-    if(performance < resultCategories.performance.score*100 &&
-        accessibility < resultCategories.accessibility.score*100 &&
-        bestPractices < resultCategories['best-practices'].score*100 &&
-        seo < resultCategories.seo.score*100){
-            thresholdResults.updateLighthouseConfig = true
-        }
+  if (
+    performance < resultCategories.performance.score * 100 &&
+    accessibility < resultCategories.accessibility.score * 100 &&
+    bestPractices < resultCategories["best-practices"].score * 100 &&
+    seo < resultCategories.seo.score * 100
+  ) {
+    thresholdResults.updateLighthouseConfig = true;
+  }
 
-        return thresholdResults
-
-}
+  return thresholdResults;
+};
 
 const writeObjLighthouseConfig = (resultCategories, lighthouseConfig) => {
+  const {
+    performanceResult,
+    accessibilityResult,
+    bestPracticesResult,
+    seoResult,
+  } = {
+    performanceResult: resultCategories.performance.score * 100,
+    accessibilityResult: resultCategories.accessibility.score * 100,
+    bestPracticesResult: resultCategories["best-practices"].score * 100,
+    seoResult: resultCategories.seo.score * 100,
+  };
+  let newLighthouseConfig = lighthouseConfig;
 
-    const {
-        performanceResult,
-        accessibilityResult,
-        bestPracticesResult,
-        seoResult
-    } = {
-        performanceResult: resultCategories.performance.score*100,
-        accessibilityResult: resultCategories.accessibility.score*100,
-        bestPracticesResult: resultCategories['best-practices'].score*100,
-        seoResult: resultCategories.seo.score*100
-    }
-    let newLighthouseConfig = lighthouseConfig;
+  if (
+    performanceResult > lighthouseConfig.requiredScores[1].performance &&
+    accessibilityResult > lighthouseConfig.requiredScores[1].accessibility &&
+    bestPracticesResult > lighthouseConfig.requiredScores[1].bestPractices &&
+    seoResult > lighthouseConfig.requiredScores[1].seo
+  ) {
+    newLighthouseConfig.requiredScores = [
+      lighthouseConfig.requiredScores[1],
+      {
+        performance: performanceResult,
+        accessibility: accessibilityResult,
+        bestPractices: bestPracticesResult,
+        seo: seoResult,
+      },
+    ];
+  } else {
+    newLighthouseConfig.requiredScores = [
+      {
+        performance: performanceResult,
+        accessibility: accessibilityResult,
+        bestPractices: bestPracticesResult,
+        seo: seoResult,
+      },
+      lighthouseConfig.requiredScores[1],
+    ];
+  }
 
-    if (performanceResult > lighthouseConfig.requiredScores[1].performance && accessibilityResult > lighthouseConfig.requiredScores[1].accessibility &&
-        bestPracticesResult > lighthouseConfig.requiredScores[1].bestPractices && seoResult > lighthouseConfig.requiredScores[1].seo) {
-        newLighthouseConfig.requiredScores = [lighthouseConfig.requiredScores[1], {
-            performance: performanceResult,
-            accessibility: accessibilityResult,
-            bestPractices: bestPracticesResult,
-            seo: seoResult
-        }]
-    } else {
-        newLighthouseConfig.requiredScores = [{
-            performance: performanceResult,
-            accessibility: accessibilityResult,
-            bestPractices: bestPracticesResult,
-            seo: seoResult
-        }, lighthouseConfig.requiredScores[1]]
-    }
+  console.log("newLighthouseConfig -->> ", newLighthouseConfig);
+  fs.writeFileSync(
+    "/home/circleci/build/.circleci/ci/lighthouseConfig.json",
+    JSON.stringify(newLighthouseConfig, null, 4)
+  );
+  // update to git;
+  ci.sh(`git add /home/circleci/build/.circleci/ci/lighthouseConfig.json`);
+  ci.sh("git status");
+  ci.sh(`git commit -m "@trivial - Update Lighthouse Config"`);
+  ci.sh(`git push --set-upstream --force origin ${process.env.CIRCLE_BRANCH}`);
+  console.log("Successfully updated lighthouseConfig.json");
+};
 
-    console.log("newLighthouseConfig -->> ", newLighthouseConfig)
-    fs.writeFileSync("/home/circleci/build/.circleci/ci/lighthouseConfig.json", JSON.stringify(newLighthouseConfig, null, 4));
-    // update to git;
-    ci.sh(`git add /home/circleci/build/.circleci/ci/lighthouseConfig.json`);
-    ci.sh('git status');
-    ci.sh(`git commit -m "@trivial - Update Lighthouse Config"`);
-    ci.sh(`git push --set-upstream --force origin ${process.env.CIRCLE_BRANCH}`);
-    console.log("Successfully updated lighthouseConfig.json")
-}
 
 checkLightHouse()

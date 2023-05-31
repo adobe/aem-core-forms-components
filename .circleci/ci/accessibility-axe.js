@@ -26,9 +26,10 @@ const calculateAccessibility = async () => {
 
     const options = new chrome.Options();
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
+    const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
 
     try {
-        await driver.get(process.env.ACCESSIBILITY_COLLATERAL_URL);
+        await driver.get(ACCESSIBILITY_COLLATERAL_URL);
 
         await driver.wait(async () => {
           const readyState = await driver.executeScript('return document.readyState');
@@ -49,11 +50,11 @@ const calculateAccessibility = async () => {
         const axeBuilder = new AxeBuilder(driver);
         const results = await axeBuilder.analyze();
         const reportHTML = createHtmlReport({
-                                              results: results,
-                                              options: {
-                                                  projectKey: 'aem-core-forms-components'
-                                              },
-                                          });
+          results: results,
+          options: {
+            projectKey: "aem-core-forms-components",
+          },
+        });
         fs.writeFileSync('accessibility-report.html', reportHTML);
 
         if (results.violations.length > 0) {
@@ -61,7 +62,6 @@ const calculateAccessibility = async () => {
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            results.violations.filter(violation => ['critical', 'serious', 'moderate'].includes(violation.impact)).forEach(async violation => {
                 console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
-                 // post a comment on github!
                  //ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!")
                  process.exit(1); // fail pipeline
            })
@@ -74,21 +74,25 @@ const calculateAccessibility = async () => {
 }
 
 const getAccessibilityViolationsTable = (violations) => {
-const printRow = (id, description, impact) => {
-  console.log(`| ${id + ' '.repeat(20 - id.length)}  | ${description + ' '.repeat(100 - description.length)} | ${impact + ' '.repeat(20 - impact.length)} |`);
-}
-const printDashedLine = () => {
-  console.log(`| ${'-'.repeat(22)}|${'-'.repeat(102)}|${'-'.repeat(22)}|`);
-}
+  const printRow = (id, description, impact) => {
+    console.log(
+      `| ${id + " ".repeat(20 - id.length)}  | ${
+        description + " ".repeat(100 - description.length)
+      } | ${impact + " ".repeat(20 - impact.length)} |`
+    );
+  };
+  const printDashedLine = () => {
+    console.log(`| ${"-".repeat(22)}|${"-".repeat(102)}|${"-".repeat(22)}|`);
+  };
 
-console.log("\n\n### Accessibility Violations Found\n")
-printDashedLine();
-printRow('Id', 'Description', 'Impact');
-printDashedLine();
-violations.forEach(violation => {
-    printRow(violation.id, violation.description , violation.impact);
+  console.log("\n\n### Accessibility Violations Found\n");
+  printDashedLine();
+  printRow("Id", "Description", "Impact");
+  printDashedLine();
+  violations.forEach((violation) => {
+    printRow(violation.id, violation.description, violation.impact);
     printDashedLine();
-})
-}
+  });
+};
 
 calculateAccessibility()
