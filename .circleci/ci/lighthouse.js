@@ -16,6 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
+const lighthouseConfig = require('./lighthouseConfig.json')
 
 
 const checkLightHouse = async () => {
@@ -24,8 +25,7 @@ const checkLightHouse = async () => {
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {logLevel: 'info', output: 'html', port: chrome.port, extraHeaders: { Authorization: 'Basic ' + Buffer.from(process.env.LOCAL_USERNAME + ':' + process.env.LOCAL_PASSWORD).toString('base64') }};
 
-    const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
-
+    console.log("LIGHTHOUSE CONFIG --->>>>>>", lighthouseConfig)
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
     // `.report` is the HTML report as a string
 
