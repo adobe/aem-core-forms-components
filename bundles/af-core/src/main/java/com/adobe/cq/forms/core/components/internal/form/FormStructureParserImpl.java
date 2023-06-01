@@ -43,6 +43,26 @@ public class FormStructureParserImpl implements FormStructureParser {
         return getPropertyFromFormContainer(resource, FormContainer.PN_CLIENT_LIB_REF);
     }
 
+    @Override
+    public Boolean containsFormContainer() {
+        return containsFormContainer(resource);
+    }
+
+    private Boolean containsFormContainer(Resource resource) {
+        if (resource == null) {
+            return false;
+        }
+        if (ComponentUtils.isAFContainer(resource)) {
+            return true;
+        }
+        for (Resource child : resource.getChildren()) {
+            if (containsFormContainer(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private String getPropertyFromFormContainer(@Nullable Resource resource, @NotNull String propertyName) {
         if (resource == null) {
             return null;

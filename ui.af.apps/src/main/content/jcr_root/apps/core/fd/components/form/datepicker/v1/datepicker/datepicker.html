@@ -28,7 +28,7 @@
      data-cmp-enabled="${datePicker.enabled ? 'true' : 'false'}"
      id="${datePicker.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-     <div data-sly-call="${label.label @componentId=datePicker.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}"></div>
+     <div data-sly-call="${label.label @componentId=datePicker.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
      <div data-sly-call="${questionMark.questionMark @componentId=datePicker.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}"></div>
      <input type="date"
             name="${datePicker.name}"
