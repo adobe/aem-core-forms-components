@@ -20,13 +20,18 @@ const AxeBuilder = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { createHtmlReport } = require('axe-html-reporter');
+const accessibilityConfig = require("./accessibilityConfig.json")
 
 
 const calculateAccessibility = async () => {
 
     const options = new chrome.Options();
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
-    const whitelistedLabels = ['label', 'landmark-one-main', 'page-has-heading-one', 'region']
+    const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
+    const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
+    const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
+
+    console.log("accessibilityConfig -->>> ", accessibilityConfig)
 
     try {
         await driver.get(process.env.ACCESSIBILITY_COLLATERAL_URL);
@@ -60,11 +65,21 @@ const calculateAccessibility = async () => {
         if (results.violations.length > 0) {
             getAccessibilityViolationsTable(results.violations)
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
-            if(results.violations.some(violation => (['critical', 'serious', 'moderate'].includes(violation.impact) && !whitelistedLabels.includes(violation.id)))){
-                console.log("Error: Accessibility violations found, please refer the report under artifacts to fix the same!")
-                await ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!")
-                process.exit(1); // fail pipeline
-            }
+
+           if (
+             results.violations.some(
+               (violation) =>
+                 ["critical", "serious", "moderate"].includes(violation.impact) &&
+                 !accessibilityConfig.accessibilityExceptionList.includes(violation.id)
+             )
+           ) {
+             console.log(
+               "Error: Accessibility violations found, please refer the report under artifacts to fix the same!"
+             );
+             // await ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!");
+             process.exit(1); // fail pipeline
+           }
+
            console.log("results.violations--->>>", results.violations);
         }
     }

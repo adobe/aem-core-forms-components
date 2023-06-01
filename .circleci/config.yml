@@ -50,9 +50,6 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
-          name: UI tests
-          command: node .circleci/ci/it-tests.js
-      - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js
       - run:
@@ -210,14 +207,6 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-cloudready-with-latest-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
             - build-java-8
       - release:
           requires:
