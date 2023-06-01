@@ -86,39 +86,8 @@ function navigateTo(destinationURL, destinationType) {
     }
 }
 
-/**
- * Default Error handler for invoke service api
- * @name defaultErrorHandler Default Error Handler Function
- * @param response response body of the invoke service api
- * @param headers response headers of the invoke service api
- * @param globals object containing form instance and invoke method to call other custom functions
- * @errorHandler
- */
-function defaultErrorHandler(response, headers, globals) {
-    if(response && response.validationErrors) {
-        response.validationErrors?.forEach(function (violation) {
-            if (violation.details) {
-                if (violation.fieldName) {
-                    globals.form.visit(function callback(f) {
-                        if (f.qualifiedName === violation.fieldName) {
-                            f.markAsInvalid(violation.details.join("\n"));
-                        }
-                    });
-                } else if (violation.dataRef) {
-                    globals.form.visit(function callback(f) {
-                        if (f.dataRef === violation.dataRef) {
-                            f.markAsInvalid(violation.details.join("\n"));
-                        }
-                    });
-                }
-            }
-        });
-    }
-}
-
 export const customFunctions = {
     toObject,
     externalize,
-    navigateTo,
-    defaultErrorHandler
+    navigateTo
 };

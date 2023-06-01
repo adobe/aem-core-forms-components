@@ -99,7 +99,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        if (cy.af.isLatestAddon()) {
+        //if (cy.af.isLatestAddon()) {
             it ('test data binding', { retries: 3 }, function(){
                 cy.cleanTest(textInputDrop).then(function(){
                     dropTextInputInContainer();
@@ -109,7 +109,7 @@ describe('Page - Authoring', function () {
                     cy.deleteComponentByPath(textInputDrop);
                 });
             })
-        }
+        //}
     })
 
     context('Open Sites Editor', function () {
@@ -125,7 +125,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        if (cy.af.isLatestAddon()) {
+        //if (cy.af.isLatestAddon()) {
             it('test data binding', function () {
                 configureDataModel(formContainerEditPathSelector);
                 dropTextInputInSites();
@@ -134,6 +134,6 @@ describe('Page - Authoring', function () {
                 testBindingPersistence(textInputEditPathSelector);
                 cy.deleteComponentByPath(textInputDrop);
             });
-        }
+        //}
     });
 });

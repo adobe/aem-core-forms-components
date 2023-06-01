@@ -17,7 +17,7 @@ describe("Render form", () => {
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html";
     let formContainer = null;
 
-    if (cy.af.isLatestAddon()) {
+    //if (cy.af.isLatestAddon()) {
         it("using open api to list/render form", () => {
             cy.previewForm(pagePath);
             // important: For this to work in local cloud ready SDK, restart is required
@@ -34,5 +34,5 @@ describe("Render form", () => {
                 });
             });
         }) 
-    }
+    //}
 });
