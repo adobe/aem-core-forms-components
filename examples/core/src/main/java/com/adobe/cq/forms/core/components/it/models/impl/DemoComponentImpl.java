@@ -23,8 +23,13 @@ import com.adobe.cq.wcm.core.components.models.Container;
 import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -39,7 +44,7 @@ import org.jetbrains.annotations.Nullable;
 @Model(
     adaptables = { SlingHttpServletRequest.class },
     adapters = { ComponentExporter.class },
-    resourceType = { "forms-components-examples/components/demo/component" })
+    resourceType = {"forms-components-examples/components/demo/component", "forms-components-examples/components/demo"})
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
@@ -56,17 +61,32 @@ public class DemoComponentImpl extends AbstractComponentImpl implements Containe
   @OSGiService
   private ModelFactory modelFactory;
 
-  private List<? extends ComponentExporter> childrenModels;
+  private Map<String, ? extends ComponentExporter> childrenModels;
+  private String[] exportedItemsOrder;
 
-  public @NotNull List<ListItem> getItems() {
+  public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
     if (childrenModels == null) {
       childrenModels = getChildrenModels(request, ComponentExporter.class);
     }
-    return (List<ListItem>) childrenModels;
+    return childrenModels;
   }
 
-  protected <T> List<T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
-    List<T> models = new ArrayList<>();
+  @NotNull
+  @Override
+  public String[] getExportedItemsOrder() {
+    if (exportedItemsOrder == null) {
+      Map<String, ? extends ComponentExporter> models = getExportedItems();
+      if (!models.isEmpty()) {
+        exportedItemsOrder = models.keySet().toArray(ArrayUtils.EMPTY_STRING_ARRAY);
+      } else {
+        exportedItemsOrder = ArrayUtils.EMPTY_STRING_ARRAY;
+      }
+    }
+    return Arrays.copyOf(exportedItemsOrder,exportedItemsOrder.length);
+  }
+
+  protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    Map<String, T> models = new LinkedHashMap<>();
     List<Resource> filteredChildrenResources = getFilteredChildrenResources();
     for (Resource child : filteredChildrenResources) {
       T model;
@@ -76,7 +96,7 @@ public class DemoComponentImpl extends AbstractComponentImpl implements Containe
         model = child.adaptTo(modelClass);
       }
       if (model != null) {
-        models.add(model);
+        models.put(child.getName(), model);
       }
     }
     return models;
