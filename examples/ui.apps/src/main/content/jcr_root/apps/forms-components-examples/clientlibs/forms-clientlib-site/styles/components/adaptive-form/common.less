@@ -147,3 +147,27 @@
     .widgetMixin();
   }
 }
+.verticalTabsTabPanel() {
+  flex: 1;
+  padding: 16px 56px;
+  background: @wizard-bg-color;
+  border: 1px solid @very-light-gray;
+}
+
+.verticalTabsTabList(){
+  width: 150px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.verticalTabsTab(){
+  color: @light-gray;
+  padding: 12px 4px 12px 32px;
+  background: #f1f1f1;
+  border: 1px solid @very-light-gray;
+  border-right: none;
+  &:hover{
+    background: url(./resources/tick_hover.svg) 0.5rem 50% / 0.8125rem no-repeat,@very-light-gray;
+    background-size: 12px;
+  }
+}

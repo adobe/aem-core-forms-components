@@ -26,12 +26,12 @@
 // Be sure to run the aem server
 // before running the tests below.
 
-const commons = require('../libs/commons/commons'),
-      sitesSelectors = require('../libs/commons/sitesSelectors'),
-      sitesConstants = require('../libs/commons/sitesConstants'),
-      guideSelectors = require('../libs/commons/guideSelectors'),
-      wizardSelectors = require('../libs/commons/wizardSelectors'),
-      afConstants = require('../libs/commons/formsConstants');
+const commons = require('../../libs/commons/commons'),
+      sitesSelectors = require('../../libs/commons/sitesSelectors'),
+      sitesConstants = require('../../libs/commons/sitesConstants'),
+      guideSelectors = require('../../libs/commons/guideSelectors'),
+      wizardSelectors = require('../../libs/commons/wizardSelectors'),
+      afConstants = require('../../libs/commons/formsConstants');
 
 // we can use these values to log in
 const   pagePath = "/content/core-components-examples/library/core-content/aemform",
@@ -80,6 +80,18 @@ describe('Page - Authoring', function () {
                 cy.get("[name='./enableFocusOnFirstField'").should("be.checked");
                 // check if by default iframe is not selected
                 cy.get("[name='./useiframe'").should("be.checked");
+                cy.get(sitesSelectors.confirmDialog.actions.first).click();
+            });
+        });
+
+        it('Hide theme dropdown for v2 forms - Embed component', { retries: 3 }, function() {
+            cy.cleanTest(aemFormContainerDropPath).then(function(){
+                // click configure action on Adaptive Form - Embed component
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']");
+                cy.get("[name='./formRef'] > div > div > input").should("be.visible").clear().type("/content/dam/formsanddocuments/core-components-it/blank").blur(); // adding a v2 form path
+                cy.get("._coral-Menu-itemLabel:contains(/content/dam/formsanddocuments/core-components-it/blank)").should("be.visible").click(); // clicking on the displayed option
+                cy.get(".cmp-adaptiveform-aemform__themeref").should("not.be.visible"); // the themeref dropdown must be hidden
                 cy.get(sitesSelectors.confirmDialog.actions.first).click();
             });
         });
