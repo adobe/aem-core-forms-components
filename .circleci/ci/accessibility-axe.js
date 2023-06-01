@@ -20,6 +20,7 @@ const AxeBuilder = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { createHtmlReport } = require('axe-html-reporter');
+const accessibilityConfig = require("./accessibilityConfig.json")
 
 
 const calculateAccessibility = async () => {
@@ -29,7 +30,6 @@ const calculateAccessibility = async () => {
     const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
     const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
     const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
-    const whitelistedLabels = ['label', 'landmark-one-main', 'page-has-heading-one', 'region']
 
 
     try {
@@ -68,7 +68,7 @@ const calculateAccessibility = async () => {
              results.violations.some(
                (violation) =>
                  ["critical", "serious", "moderate"].includes(violation.impact) &&
-                 !whitelistedLabels.includes(violation.id)
+                 !accessibilityConfig.accessibilityExceptionList.includes(violation.id)
              )
            ) {
              console.log(
