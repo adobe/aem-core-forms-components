@@ -438,6 +438,7 @@
                     result.parentElement.append(accordionItemDivToBeRepeated);
                 }
             }
+            return accordionItemDivToBeRepeated;
         }
 
         handleChildAddition(childView) {
