@@ -39,12 +39,14 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
     });
 
-    it("verify Next Navigation Button Functionality", () => {
+    it("verify Next and Previous Navigation Button Functionality", () => {
         cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__previousNav").should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false')
+        cy.get(".cmp-adaptiveform-wizard__nextNav").should('exist');
 
         cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
 
@@ -53,42 +55,8 @@ describe("Form with Wizard Layout Container", () => {
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
-
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-    });
-
-    it("verify Prev Navigation Button Functionality", () => {
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
-
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
-
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
-
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
-
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-        cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
-
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-        cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
+        cy.get(".cmp-adaptiveform-wizard__previousNav").should('exist');
+        cy.get(".cmp-adaptiveform-wizard__nextNav").should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false')
     });
 
     it("should toggle description and tooltip", () => {
@@ -304,6 +272,24 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
         })
     });
 
+    it("check if rule is working to hide child", () => {
+        const secondItemNavOfWizardId = formContainer._model.items[0].items[1].id + "_wizard-item-nav";
+        const secondItemOfWizardId = formContainer._model.items[0].items[1].id + "__wizardpanel";
+        //check initial state
+        cy.get(`#${secondItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(`#${secondItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+
+        const textInputId = formContainer._model.items[1].id;
+        cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
+            cy.get(`#${secondItemNavOfWizardId}`).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+            cy.get(`#${secondItemOfWizardId}`).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            const thirdItemNavOfWizardId = formContainer._model.items[0].items[2].id + "_wizard-item-nav";
+            const thirdItemOfWizardId = formContainer._model.items[0].items[2].id + "__wizardpanel";
+            cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        })
+    });
+
     it("check if navigation is working after hide child", () => {
         const textInputId = formContainer._model.items[1].id;
         cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
@@ -327,4 +313,21 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
             })
         })
     });
+
+    // it("rule based visibility of tabs is toggles visibility of nav buttons", () => {
+    //     const textInputId = formContainer._model.items[1].id;
+    //     const firstItemNavOfWizardId = formContainer._model.items[0].items[0].id + "_wizard-item-nav",
+    //         firstItemOfWizardId = formContainer._model.items[0].items[0].id + "__wizardpanel";
+    //
+    //     const previousNavButtonSelector = '.cmp-adaptiveform-wizard__previousNav',
+    //         nextNavButtonSelector = '.cmp-adaptiveform-wizard__nextNav';
+    //
+    //
+    //     cy.get(".cmp-adaptiveform-wizard__previousNav").should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false')
+    //
+    //     cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
+    //         cy.get(previousNavButtonSelector).should('be.visible');
+    //         cy.get(previousNavButtonSelector).click({force: true});
+    //     });
+    // });
 });
