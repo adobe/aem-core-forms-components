@@ -17,6 +17,7 @@
 const e = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 module.exports = class CI {
 
@@ -177,6 +178,38 @@ module.exports = class CI {
         output += path.resolve(module.path, 'target', filename);
 
         return output;
+    }
+
+    postCommentToGitHubFromCI(commentText){
+
+        const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, GITHUB_TOKEN } = process.env
+        const prNumber = CIRCLE_PULL_REQUEST.split('/').pop();
+        const apiUrl = new URL(`https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${prNumber}/comments`);
+        const postData = JSON.stringify({body: commentText});
+
+        // Define the options for the HTTPS request
+        const options = {
+          method: 'POST',
+          headers: {
+            'Authorization': `${GITHUB_TOKEN}`,
+            'User-Agent': 'CircleCI'
+          }
+        };
+
+        // Send the HTTPS request to create the new comment on the pull request
+        const req = https.request(apiUrl, options, (res) => {
+          console.log(`Status: ${res.statusCode}`);
+          res.on('data', (d) => {
+            process.stdout.write(d);
+          });
+        });
+
+        req.on('error', (error) => {
+          console.error(error);
+        });
+
+        req.write(postData);
+        req.end();
     }
 
 };

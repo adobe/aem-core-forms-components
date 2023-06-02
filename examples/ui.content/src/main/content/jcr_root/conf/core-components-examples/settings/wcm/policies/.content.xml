@@ -142,7 +142,7 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="formcontainer-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
-                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Core Components Examples]">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>

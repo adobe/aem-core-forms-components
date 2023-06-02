@@ -212,7 +212,7 @@ export default class Utils {
 
     /**
      * API to get the context path
-     * @returns {*}
+     * @returns context path of the system
      */
     static getContextPath() {
         return Utils.#contextPath;
