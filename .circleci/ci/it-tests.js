@@ -99,11 +99,6 @@ try {
         });
     }
 
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-    });
-
     // No coverage for UI tests
     if (TYPE === 'cypress') {
         return;

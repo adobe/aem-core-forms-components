@@ -520,6 +520,7 @@
             let beforeViewElement = result.beforeViewElement;
             beforeViewElement.after(elementToEnclose);
             elementToEnclose.append(htmlElement.querySelector('#' + addedModel.id));
+            return elementToEnclose;
         }
 
         #cacheTemplateHTML(childView) {

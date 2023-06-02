@@ -389,6 +389,7 @@ export default class FormTabs extends FormPanel {
         let beforeViewElement = result.beforeViewElement;
         beforeViewElement.after(elementToEnclose);
         elementToEnclose.append(htmlElement);
+        return elementToEnclose;
     }
 
     #getBeforeViewElement(instanceManager, instanceIndex) {

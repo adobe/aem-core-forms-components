@@ -292,11 +292,16 @@ Cypress.Commands.add("getFormData", () => {
 });
 
 
-Cypress.Commands.add("getFromDefinitionUsingOpenAPI", formPath => {
-    return cy.request("GET", "/adobe/forms/af/listforms").then(({ body }) => {
+Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({ body }) => {
         // We need its ID to continue nesting below it
-        const {id} = body.items.find(collection => collection.path === formPath);
-        return cy.request("GET", `/adobe/forms/af/${id}`);
+        let retVal = body.items.find(collection => collection.path === formPath);
+        if (retVal) {
+            return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+        } else {
+            console.log("fetching the list of forms again");
+            return cy.getFromDefinitionUsingOpenAPI(formPath, offset + limit, limit);
+        }
     });
 });
 
