@@ -295,18 +295,18 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
         cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
             cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
                 cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
-                    const thirdItemNavOfWizardId = formContainer._model.items[0].items[2].id + "_wizard-item-nav";
-                    const thirdItemOfWizardId = formContainer._model.items[0].items[2].id + "__wizardpanel";
-                    cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-                    cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    const fourthItemNavOfWizardId = formContainer._model.items[0].items[3].id + "_wizard-item-nav";
+                    const fourthItemOfWizardId = formContainer._model.items[0].items[3].id + "__wizardpanel";
+                    cy.get(`#${fourthItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                    cy.get(`#${fourthItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                     cy.get('.cmp-adaptiveform-wizard__previousNav').click({force: true}).then(() => {
-                        const firstItemNavOfWizardId = formContainer._model.items[0].items[0].id + "_wizard-item-nav";
-                        const firstItemOfWizardId = formContainer._model.items[0].items[0].id + "__wizardpanel";
-                        cy.get(`#${firstItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-                        cy.get(`#${firstItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                        const thirdItemNavOfWizardId = formContainer._model.items[0].items[2].id + "_wizard-item-nav";
+                        const thirdItemOfWizardId = formContainer._model.items[0].items[2].id + "__wizardpanel";
+                        cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                        cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                         cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
-                            cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
-                            cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                            cy.get(`#${fourthItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                            cy.get(`#${fourthItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                         })
                     })
                 })
@@ -314,20 +314,36 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
         })
     });
 
-    // it("rule based visibility of tabs is toggles visibility of nav buttons", () => {
-    //     const textInputId = formContainer._model.items[1].id;
-    //     const firstItemNavOfWizardId = formContainer._model.items[0].items[0].id + "_wizard-item-nav",
-    //         firstItemOfWizardId = formContainer._model.items[0].items[0].id + "__wizardpanel";
-    //
-    //     const previousNavButtonSelector = '.cmp-adaptiveform-wizard__previousNav',
-    //         nextNavButtonSelector = '.cmp-adaptiveform-wizard__nextNav';
-    //
-    //
-    //     cy.get(".cmp-adaptiveform-wizard__previousNav").should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false')
-    //
-    //     cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
-    //         cy.get(previousNavButtonSelector).should('be.visible');
-    //         cy.get(previousNavButtonSelector).click({force: true});
-    //     });
-    // });
+    it("rule based visibility of tabs is toggles visibility of nav buttons", () => {
+        const textInputId = formContainer._model.items[1].id;
+        const wizardItems = formContainer._model.items[0].items;
+
+        const firstItemNavOfWizardId = wizardItems[0].id + "_wizard-item-nav",
+            firstItemOfWizardId = wizardItems[0].id + "__wizardpanel",
+            secondItemNavOfWizardId = wizardItems[1].id + "_wizard-item-nav",
+            secondItemOfWizardId = wizardItems[1].id + "__wizardpanel";
+
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav';
+
+        cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
+        cy.get(`#${secondItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        cy.get(`#${secondItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(previousNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).should('exist');
+
+        cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
+            cy.get(`#${secondItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
+            cy.get(`#${secondItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
+            cy.get(previousNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+
+            cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
+                cy.get(previousNavButton).should('exist');
+
+
+
+            })
+        })
+    });
 });

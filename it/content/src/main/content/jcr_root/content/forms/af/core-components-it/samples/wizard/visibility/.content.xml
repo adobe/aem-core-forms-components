@@ -51,6 +51,22 @@
                     sling:resourceType="forms-components-examples/components/form/datepicker"
                     fieldType="date-input"
                     name="datepicker1684218307463"/>
+                <dropdown
+                        jcr:lastModified="{Date}2022-10-31T21:42:35.588+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Dropdown "
+                        sling:resourceType="forms-components-examples/components/form/dropdown"
+                        default="[b]"
+                        enabled="{Boolean}true"
+                        enum="[a,b,c]"
+                        enumNames="[apple,banana,cauliflower]"
+                        fieldType="drop-down"
+                        mandatoryMessage="This dropdown is required!"
+                        name="dropdown_ss"
+                        type="string"
+                        typeIndex="0"
+                        visible="{Boolean}true"/>
                 <textinput
                     jcr:lastModified="{Date}2023-05-16T11:55:28.526+05:30"
                     jcr:lastModifiedBy="admin"
