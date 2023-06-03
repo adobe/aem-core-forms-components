@@ -21,11 +21,11 @@
     const FIELD_TYPE = 'fieldType';
     const PARENT_ID = 'parentId';
     
-    let dataLayer;
-    let formTitle, fieldTitle, fieldType, panelTitle;
+    let dataLayer, bridge;
+    let containerState = {};
     let startTime = (new Date()).getTime();
 
-    const FASTTRACK_ANALYTICS_EVENT = "FormFastTrackAnalyticsEvent";
+    const FASTTRACK_ANALYTICS_EVENT = "FormEvent";
     const FormEvents = {
         RENDER: "Form renditions",
         SUBMIT: "Form submissions",
@@ -40,10 +40,10 @@
         return dataLayerContent.component[fieldId];
     }
     
-    const getFieldPanelTitle = (fieldData, dataLayerContent) => {
+    const getFieldPanelTitle = (fieldData, dataLayerContent, formContainerID) => {
         if(fieldData !== undefined){
             if(dataLayerContent.component[fieldData[PARENT_ID]] === undefined) {
-                return dataLayerContent.page[fieldData[PARENT_ID]][DC_TITLE];
+                return containerState[formContainerID].formTitle;
             }
             return dataLayerContent.component[fieldData[PARENT_ID]][DC_TITLE] ;
         } else {
@@ -51,75 +51,120 @@
         }
     }
 
-    const getEventInfo = (_eventTitle, _formTitle, _fieldId, dataLayerContent) => {
+    const getEventInfo = (_eventTitle, _formTitle, _fieldId, dataLayerContent, formContainerID) => {
         // global variables to be used in abandon event which can be triggered anytime
         const fieldData = getCurrentFieldData(_fieldId, dataLayerContent);
-        formTitle = _formTitle;
-        fieldTitle = fieldData ? fieldData[DC_TITLE] : fieldTitle;
-        fieldType = fieldData ? fieldData[FIELD_TYPE] : fieldType;
-        panelTitle = getFieldPanelTitle(fieldData, dataLayerContent);
+        containerState[formContainerID].formTitle = _formTitle;
+        containerState[formContainerID].fieldTitle = fieldData ? fieldData[DC_TITLE] : containerState[formContainerID].fieldTitle;
+        containerState[formContainerID].fieldType = fieldData ? fieldData[FIELD_TYPE] : containerState[formContainerID].fieldType;
+        containerState[formContainerID].panelTitle = getFieldPanelTitle(fieldData, dataLayerContent, formContainerID);
         return {
-            formTitle,
-            fieldTitle,
-            fieldType,
-            panelTitle,
-            eventName: _eventTitle
+            target: _fieldId,
+            originalTarget: _fieldId,
+            type: _eventTitle,
+            payload: {
+                formTitle: containerState[formContainerID].formTitle,
+                fieldTitle: containerState[formContainerID].fieldTitle,
+                fieldType: containerState[formContainerID].fieldType,
+                panelTitle: containerState[formContainerID].panelTitle,
+                formPath: containerState[formContainerID].formPath,
+            }
         }
     }
 
-    const registerGuideBridgeEvents = (bridge) => {
+    const registerGuideBridgeEvents = (e) => {
+        const formContainerPath = e.detail.getPath();
+        containerState[formContainerPath] = { 
+            submitted: false,
+            formPath: formContainerPath
+        }
+
         bridge.connect(()=>{
             const dataLayerContent = dataLayer.getState();
-            formTitle = bridge.getFormModel().title;
+            containerState[formContainerPath].formTitle = bridge.getFormModel().title;
 
             dataLayer.push({
                 event: FASTTRACK_ANALYTICS_EVENT,
                 eventInfo: {
-                    formTitle: formTitle,
-                    eventName: FormEvents.RENDER
+                    type: FormEvents.RENDER,
+                    payload: {
+                        formTitle: containerState[formContainerPath].formTitle,
+                        formPath: containerState[formContainerPath].formPath,
+                    }
                 }
             });
 
-            bridge.on('elementFocusChanged', function(event){
+            function onElementFocusChanged(event){
                 let fieldData = getCurrentFieldData(event.detail.fieldId, dataLayerContent);
                 if(fieldData[FIELD_TYPE] === 'button'){
                     return;
                 }
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.FIELD, formTitle, event.detail.fieldId, dataLayerContent)
+                    eventInfo: getEventInfo(FormEvents.FIELD, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
                 });
-            });
+            }
 
-            bridge.on('elementHelpShown', function(event){
+            function onElementHelpShown(event){
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.HELP, event.detail.formTitle, event.detail.fieldId, dataLayerContent)
+                    eventInfo: getEventInfo(FormEvents.HELP, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
                 });
-            });
+            }
 
-            bridge.on('elementErrorShown', function(event){
+            function onElementErrorShown(event){
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.ERROR, event.detail.formTitle, event.detail.fieldId, dataLayerContent)
+                    eventInfo: getEventInfo(FormEvents.ERROR, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
                 });
-            });
+            }
 
-            bridge.on('submitStart', function(event){
-                let eventInfo = {
-                    eventName : FormEvents.SUBMIT,
-                    fieldTitle,
-                    fieldType,
-                    panelTitle,
-                    formTitle
+            function onSubmitStart(event){
+                containerState[formContainerPath].submitted = true;
+                dataLayer.push({
+                    event: FASTTRACK_ANALYTICS_EVENT,
+                    eventInfo: {
+                        type: FormEvents.SUBMIT,
+                        target: event.detail.fieldId,
+                        originalTarget: event.detail.fieldId,
+                        payload: {
+                            fieldTitle: containerState[formContainerPath].fieldTitle,
+                            fieldType: containerState[formContainerPath].fieldType,
+                            panelTitle: containerState[formContainerPath].panelTitle,
+                            formTitle : containerState[formContainerPath].formTitle,
+                            formPath : containerState[formContainerPath].formPath,
+                            timeSpentOnForm : ((new Date()).getTime() - startTime) / 1000
+                        }
+                    }
+                });
+            }
+
+            function onBeforeunload(){
+                if(!containerState[formContainerPath].submitted){
+                    dataLayer.push({
+                        event: FASTTRACK_ANALYTICS_EVENT,
+                        eventInfo: {
+                            type: FormEvents.ABANDON,
+                            payload: {
+                                fieldTitle: containerState[formContainerPath].fieldTitle,
+                                fieldType: containerState[formContainerPath].fieldType,
+                                panelTitle: containerState[formContainerPath].panelTitle,
+                                formTitle: containerState[formContainerPath].formTitle,
+                                formPath: containerState[formContainerPath].formPath,
+                                timeSpentOnForm : ((new Date()).getTime() - startTime)/1000
+                            }
+                        }
+                    });
                 }
-                eventInfo.timeSpentOnForm = ((new Date()).getTime() - startTime) / 1000;
-                dataLayer.push({
-                    event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: eventInfo
-                });
-            });
-        });
+            }
+
+            bridge.on('elementFocusChanged', onElementFocusChanged);
+            bridge.on('elementHelpShown', onElementHelpShown);
+            bridge.on('elementErrorShown', onElementErrorShown);
+            bridge.on('submitStart', onSubmitStart);
+            window.addEventListener('beforeunload', onBeforeunload );
+            
+        }, null, formContainerPath);
     }
 
 
@@ -129,27 +174,13 @@
 
         if (dataLayerEnabled) {
             if(window.guideBridge !== undefined){
-                registerGuideBridgeEvents(window.guideBridge);
+                bridge = window.guideBridge;
             } else {
                 window.addEventListener("bridgeInitializeStart", (event)=>{
-                    registerGuideBridgeEvents(event.detail.guideBridge);
+                    bridge = event.detail.guideBridge;
                 });
             }
-
-            window.addEventListener('beforeunload', function(){
-                let eventInfo = {
-                    eventName : FormEvents.ABANDON, 
-                    fieldTitle, 
-                    fieldType, 
-                    panelTitle, 
-                    formTitle
-                }
-                eventInfo.timeSpentOnForm = ((new Date()).getTime() - startTime)/1000;
-                dataLayer.push({
-                    event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: eventInfo
-                });
-            });
+            document.addEventListener("AF_FormContainerInitialised", registerGuideBridgeEvents);
         }
     }
 

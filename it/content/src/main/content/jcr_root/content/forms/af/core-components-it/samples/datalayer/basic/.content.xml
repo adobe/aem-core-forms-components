@@ -16,6 +16,7 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container"
             dorType="none"
+            title="datalayerform"
             fieldType="form">
             <textinput
                 jcr:primaryType="nt:unstructured"
