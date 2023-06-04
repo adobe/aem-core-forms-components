@@ -73,7 +73,7 @@
     "name": "DoB",
     "type": "string",
     "label": {
-      "value": "DoB"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [
