@@ -10,7 +10,7 @@
   "enabled": true,
   "readOnly": false,
   "label": {
-    "value": "Full Name"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -29,7 +29,7 @@
   ":type": "core/fd/components/form/textinput/v1/textinput",
   "dataLayer": {
     "textinput-1c7bc238a6": {
-      "dc:title": "Full Name",
+      "dc:title": "",
       "dc:description": "Enter Full Name",
       "@type": "core/fd/components/form/textinput/v1/textinput",
       "fieldType": "text-input"

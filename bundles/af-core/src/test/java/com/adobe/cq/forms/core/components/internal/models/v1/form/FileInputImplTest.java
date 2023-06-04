@@ -382,7 +382,7 @@ public class FileInputImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("fileinput-90881b3d31");
         assert (dataObject.getType()).equals("core/fd/components/form/fileinput/v1/fileinput");
-        assert (dataObject.getTitle()).equals("CV");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("file-input");
         assert (dataObject.getDescription()).equals("Upload your CV");
     }

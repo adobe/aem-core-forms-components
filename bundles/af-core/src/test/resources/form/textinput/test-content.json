@@ -93,7 +93,7 @@
     "readOnly": false,
     "autoComplete": "off",
     "label": {
-      "value": "Full Name"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

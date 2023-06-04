@@ -83,7 +83,7 @@
       "Wolf"
     ],
     "label": {
-      "value": "Favorite Animal"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

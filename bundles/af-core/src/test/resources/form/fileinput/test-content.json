@@ -57,7 +57,7 @@
     "sling:resourceType": "core/fd/components/form/fileinput/v1/fileinput",
     "fieldType": "file-input",
     "description": "Upload your CV",
-    "name": "CV",
+    "name": "",
     "type": "file",
     "accept": [
       "audio/*",
@@ -67,7 +67,7 @@
       " application/pdf"
     ],
     "label": {
-      "value": "CV"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

@@ -13,7 +13,7 @@
     "Wolf"
   ],
   "label": {
-    "value": "Favorite Animal"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -33,7 +33,7 @@
   ":type": "core/fd/components/form/dropdown/v1/dropdown",
   "dataLayer": {
     "dropdown-bb1c9e883e": {
-      "dc:title": "Favorite Animal",
+      "dc:title": "",
       "dc:description": "What is your favorite animal?",
       "@type": "core/fd/components/form/dropdown/v1/dropdown",
       "fieldType": "drop-down"

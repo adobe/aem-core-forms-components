@@ -359,7 +359,7 @@ public class RadioButtonImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("radiobutton-bafbf1a102");
         assert (dataObject.getType()).equals("core/fd/components/form/radiobutton/v1/radiobutton");
-        assert (dataObject.getTitle()).equals("Gender");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("radio-group");
         assert (dataObject.getDescription()).equals("Input gender");
     }

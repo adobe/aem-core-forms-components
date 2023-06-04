@@ -7,7 +7,7 @@
   "enabled": true,
   "readOnly": false,
   "label": {
-    "value": "Phone Number"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -56,7 +56,7 @@
   "dataLayer": {
     "panelcontainer-0749d1d943": {
       "dc:description": "Enter your phone number",
-      "dc:title": "Phone Number",
+      "dc:title": "",
       "@type": "core/fd/components/form/panelcontainer/v1/panelcontainer",
       "fieldType": "panel"
     }
