@@ -162,11 +162,9 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options={}) => {
-    if (!options.noLogin) {
-        const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-        cy.visit(baseUrl);
-        cy.login(baseUrl);
-    }
+    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl);
+    cy.login(baseUrl);
     cy.visit(pagePath, options);
 });
 
@@ -292,21 +290,6 @@ Cypress.Commands.add("getFormData", () => {
     });
 });
 
-
-Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
-    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({ body }) => {
-        // We need its ID to continue nesting below it
-        let retVal = body.items.find(collection => collection.path === formPath);
-        if (retVal) {
-            return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
-        } else {
-            console.log("fetching the list of forms again");
-            return cy.getFromDefinitionUsingOpenAPI(formPath, offset + limit, limit);
-        }
-    });
-});
-
-
 Cypress.Commands.add("previewForm", (formPath, options={}) => {
     let pagePath = `${formPath}?wcmmode=disabled`;
     if(options?.params) {
@@ -315,7 +298,6 @@ Cypress.Commands.add("previewForm", (formPath, options={}) => {
     }
     return cy.openPage(pagePath, options).then(waitForFormInit)
 })
-
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any

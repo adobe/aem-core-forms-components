@@ -35,11 +35,10 @@ export default class FormFieldBase extends FormField {
     ELEMENT_HELP_SHOWN = "elementHelpShown";
 
     ELEMENT_ERROR_SHOWN = "elementErrorShown";
-
     /**
      * implementations should return the widget element that is used to capture the value from the user
      * It will be a input/textarea element
-     * @returns html element corresponding to widget
+     * @returns
      */
     getWidget() {
         throw "method not implemented";
@@ -47,7 +46,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the description of the field
-     * @returns html element corresponding to description
+     * @returns
      */
     getDescription() {
         throw "method not implemented";
@@ -55,7 +54,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the label of the field
-     * @returns html element corresponding to label
+     * @returns
      */
     getLabel() {
         throw "method not implemented";
@@ -63,7 +62,7 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementations should return the element used to show the error on the field
-     * @returns html element corresponding to error
+     * @returns
      */
     getErrorDiv() {
         throw "method not implemented";
@@ -71,7 +70,6 @@ export default class FormFieldBase extends FormField {
 
     /**
      * implementation should return the tooltip / short description div
-     * @returns html element corresponding to tooltip
      */
     getTooltipDiv() {
         throw "method not implemented";
@@ -79,7 +77,6 @@ export default class FormFieldBase extends FormField {
 
     /**
      * Implementation should return the questionMark div
-     * @returns html element corresponding to question mark
      */
     getQuestionMarkDiv() {
         throw "method not implemented";
@@ -104,7 +101,7 @@ export default class FormFieldBase extends FormField {
     }
 
     syncMarkupWithModel() {
-        this.#syncLabel()
+       this.#syncLabel()
     }
 
     /**
@@ -113,7 +110,7 @@ export default class FormFieldBase extends FormField {
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+          this.parentView.setFocus(id);
         }
         this.widget.focus();
     }
@@ -154,9 +151,7 @@ export default class FormFieldBase extends FormField {
     #addOnHelpIconClickEventListener() {
         const questionMarkDiv = this.qm;
         if (questionMarkDiv) {
-            questionMarkDiv.addEventListener('click', () => {
-                this.#triggerEventOnGuideBridge(this.ELEMENT_HELP_SHOWN)
-            })
+            questionMarkDiv.addEventListener('click', () => {this.#triggerEventOnGuideBridge(this.ELEMENT_HELP_SHOWN)})
         }
     }
 
@@ -165,20 +160,16 @@ export default class FormFieldBase extends FormField {
         if (widget) {
             if (widget.length && widget.length > 1) {
                 for (let opt of widget) {
-                    opt.onfocus = () => {
-                        this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)
-                    };
+                    opt.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
                 }
             } else {
-                widget.onfocus = () => {
-                    this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)
-                };
+                widget.onfocus = () => {this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)};
             }
         }
     }
 
     #triggerEventOnGuideBridge(eventType) {
-        const formId = this.formContainer.getFormId();
+        const formId =  this.formContainer.getFormId();
         const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
@@ -229,12 +220,9 @@ export default class FormFieldBase extends FormField {
      * updates html based on visible state
      * @param visible
      */
-    updateVisible(visible, state) {
+    updateVisible(visible) {
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, visible);
-        if (this.parentView != undefined && this.parentView.getModel().fieldType === 'panel') {
-            this.parentView.updateChildVisibility(visible, state);
-        }
     }
 
     /**
@@ -265,7 +253,7 @@ export default class FormFieldBase extends FormField {
         if (this.widget) {
             this.toggle(readOnly, "readonly");
             if (readOnly === true) {
-                this.widget.setAttribute("readonly", "readonly");
+                this.widget.setAttribute("readonly","readonly");
             } else {
                 this.widget.removeAttribute("readonly");
             }
@@ -292,11 +280,11 @@ export default class FormFieldBase extends FormField {
      */
     updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.errorMessage;
-            if (state.valid === false && !state.errorMessage) {
-                this.errorDiv.innerHTML = 'There is an error in the field';
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
-            }
+          this.errorDiv.innerHTML = state.errorMessage;
+          if (state.valid === false && !state.errorMessage) {
+            this.errorDiv.innerHTML = 'There is an error in the field';
+            this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
+          }
         }
     }
 
@@ -306,7 +294,7 @@ export default class FormFieldBase extends FormField {
      */
     updateValue(value) {
         // html sets undefined value as undefined string in input value, hence this check is added
-        let widgetValue = typeof value === "undefined" ? null : value;
+        let widgetValue = typeof value === "undefined" ? null :  value;
         if (this.widget) {
             this.widget.value = widgetValue;
             this.updateEmptyStatus();
@@ -317,7 +305,7 @@ export default class FormFieldBase extends FormField {
      * updates the html class based on the existence of a value in a field
      */
     updateEmptyStatus() {
-        if (!this.getWidget())
+        if(!this.getWidget())
             return;
 
         const updateModifierClass = (widget, newValue) => {
@@ -330,7 +318,7 @@ export default class FormFieldBase extends FormField {
         };
 
         // radiobutton, checkbox, datefield(AFv1, not datepicker), etc. have multiple widgets in the form of a NodeList
-        if (this.widget instanceof NodeList) {
+        if(this.widget instanceof NodeList) {
             this.widget.forEach((widget) => updateModifierClass(widget, (widget.type === "radio" || widget.type === "checkbox") ? widget.checked : widget.value))
         } else {
             updateModifierClass(this.widget, this.widget.value)

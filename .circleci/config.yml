@@ -27,41 +27,9 @@ common:
       - attach_workspace:
           at: /home/circleci/build
       - run:
-          name: Configure GIT
-          command: |
-            git config user.email "ci-build@aemforms"
-            git config user.name "ci-build"
-      - add_ssh_keys:
-          fingerprints:
-            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
-      - run:
-          name: Install Chrome Launcher
-          command: npm install chrome-launcher
-      - run:
-          name: Install lighthouse
-          command: npm install lighthouse
-      - run:
-          name: Install Web Driver
-          command: npm install selenium-webdriver
-      - run:
-          name: Install AXE Core/Webdriver
-          command: npm install @axe-core/webdriverjs
-      - run:
-          name: Install AXE HTML Reporter
-          command: npm install axe-html-reporter
-      - run:
           name: UI tests
           no_output_timeout: 30m
           command: node .circleci/ci/it-tests.js
-      - run:
-          name: Calculate lighthouse Scores
-          command: node .circleci/ci/lighthouse.js
-      - run:
-          name: Check Accessibility
-          command: node .circleci/ci/accessibility-axe.js
-      - run:
-          name: Stop CQ
-          command: node .circleci/ci/stop-cq.js
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -70,8 +38,6 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
-      - store_artifacts:
-          path: artifacts
 
   docker_auth: &docker_auth
     auth:
@@ -89,7 +55,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11983-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11382-openjdk11
         <<: *docker_auth
   test_executor_655:
       docker:
@@ -133,7 +99,6 @@ jobs:
             - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
-            - jsdocs/target
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -166,30 +131,6 @@ jobs:
     resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
-
-  jsdocs-deploy:
-    docker:
-      - image: node:8.10.0
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /home/circleci/build
-      - run:
-          # since js docs can have folders with "_" prefix
-          name: Disable jekyll builds
-          command: touch jsdocs/target/jsapi/.nojekyll
-      - run:
-          name: Install and configure dependencies
-          command: |
-            npm install -g --silent gh-pages@2.0.1
-            git config user.email "ci-build@aemforms"
-            git config user.name "ci-build"
-      - add_ssh_keys:
-          fingerprints:
-            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
-      - run:
-          name: Deploy jsdocs to gh-pages branch
-          command: gh-pages --dotfiles --message "[skip ci] jsdoc updates" --dist jsdocs/target/jsapi/
  
   release:
     executor: forms_executor
@@ -233,14 +174,6 @@ workflows:
             - build-java-11
             - build-java-8
       - release:
-          requires:
-            - build-java-11
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - jsdocs-deploy:
           requires:
             - build-java-11
           filters:
