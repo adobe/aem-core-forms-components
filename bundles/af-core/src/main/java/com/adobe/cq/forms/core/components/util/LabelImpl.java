@@ -80,7 +80,11 @@ public class LabelImpl implements Label {
     public String getValue() {
         if (properties.containsKey(PN_TITLE))
             return ComponentUtils.translate(properties.get(PN_TITLE, this.defaultTitle), PN_TITLE, properties, i18n);
+<<<<<<< HEAD
         else
             return ComponentUtils.translate(properties.get(PN_TITLE, ""), PN_TITLE, properties, i18n);
+=======
+        return ComponentUtils.translate(properties.get(PN_TITLE, ""), PN_TITLE, properties, i18n);
+>>>>>>> d88bad03cdcee433fe9c4e956c6f67db8631d9ba
     }
 }
