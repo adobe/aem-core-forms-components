@@ -92,11 +92,6 @@
                         </dependency>
                         <dependency>
                             <group>${vault.package.group}</group>
-                            <name>core-forms-components-af-apps</name>
-                            <version>${project.version}</version>
-                        </dependency>
-                        <dependency>
-                            <group>${vault.package.group}</group>
                             <name>core-forms-components-apps</name>
                             <version>${project.version}</version>
                         </dependency>
