@@ -566,6 +566,10 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Advanced"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <granite:rendercondition
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType=""
+                                path="${requestPathInfo.suffix}"/>
                         <items jcr:primaryType="nt:unstructured">
                             <columns
                                     jcr:primaryType="nt:unstructured"
@@ -594,11 +598,14 @@
                                                     <additionalCustomPropertiesCheck
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            granite:class="cmp-adaptiveform-base__additionalCustomPropertiesCheck"
                                                             text="Additional Custom Properties"
                                                             name="./additionalCustomPropertiesCheck"/>
                                                     <additionalCustomProperties
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            granite:class="cmp-adaptiveform-base__additionalCustomPropertiesField"
+                                                            hidden="true"
                                                             fieldDescription=""
                                                             fieldLabel="Custom Properties"
                                                             composite="true"

@@ -290,6 +290,18 @@
             $(parentTag).attr("hidden", "");
         }
 
+        static toggleComponentVisibility(dialog, togglerClass, displayElementClass) {
+            const toggler = dialog.find(togglerClass)[0];
+            const displayElement = dialog.find(displayElementClass);
+            const displayElementParentDiv = displayElement.closest("div");
+            if(toggler.checked) {
+                displayElementParentDiv.removeAttr("hidden");
+            }
+            else {
+                displayElementParentDiv.attr("hidden", true);
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

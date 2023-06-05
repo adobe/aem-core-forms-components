@@ -28,10 +28,8 @@
         BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
-        BASE_CUSTOMPROPERTY_KEY = ".cmp-adaptiveform-base__customKey",
-        BASE_CUSTOMPROPERTY_VALUETYPE = ".cmp-adaptiveform-base__customValueType",
-        BASE_CUSTOMPROPERTY_VALUE = ".cmp-adaptiveform-base__customValue",
-        BASE_CUSTOMPROPERTY_OBJECT = ".cmp-adaptiveform-base__customPropertiesObject",
+        BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base__additionalCustomPropertiesCheck",
+        BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -167,25 +165,15 @@
                 }
             }
 
-            var x = dialog.find(BASE_CUSTOMPROPERTY_OBJECT);
-            x.val("{reujgherwjngfjlrs:oruhsgerughir}")
-            console.log(x)
+
         }
 
     }
 
-    var registerCustomPropertiesDialogValidator = Utils.registerDialogDataTypeValidators(
-        BASE_CUSTOMPROPERTY_VALUETYPE,
-        BASE_CUSTOMPROPERTY_VALUE,
-        function (dialog) {
-            var selectedValue = '';
-            var dropdownSaveValue = dialog.find(BASE_CUSTOMPROPERTY_VALUETYPE);
-            if (dropdownSaveValue && dropdownSaveValue.length > 0) {
-                selectedValue = dropdownSaveValue[0].selectedItem ? dropdownSaveValue[0].selectedItem.value : '';
-            }
-            return selectedValue;
-        }
-    );
+    function advancedTab(dialog) {
+        const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
+        additionalCustomPropertiesCheck.on("change", () => Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD));
+    }
 
     /**
      * Initialise the conditional display of the various elements of the dialog.
@@ -204,9 +192,9 @@
         handleAssistPriority(dialog);
         prefillEnumNames(dialog);
         showHideDoRBindRefField(dialog);
+        advancedTab(dialog);
         validateName();
         handleDialogSubmit(dialog);
-        registerCustomPropertiesDialogValidator(dialog);
     }
 
     channel.on("foundation-contentloaded", function(e) {
