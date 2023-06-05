@@ -8,6 +8,7 @@
     helpPath="https://helpx.adobe.com/aem-forms/6-4/embed-adaptive-form-aem-sites.html">
     <content
         jcr:primaryType="nt:unstructured"
+        granite:class="cmp-adaptiveform-aemform__editdialog"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <columns
@@ -26,6 +27,7 @@
                                         id="adaptiveFormContainer"/>
                                 <items jcr:primaryType="nt:unstructured">
                                     <form_ref
+                                            granite:class="cmp-adaptiveform-aemform__formref"
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="fd/af/granite/components/formpicker"
                                             fieldLabel="Asset Path"
@@ -184,6 +186,7 @@
                             <themeRef
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    wrapperClass ="cmp-adaptiveform-aemform__themeref"
                                     disabled="false"
                                     emptyOption="false"
                                     fieldLabel="Theme"

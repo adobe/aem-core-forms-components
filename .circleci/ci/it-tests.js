@@ -24,7 +24,7 @@ console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
-const classicFormAddonVersion = '6.0.948';
+const classicFormAddonVersion = '6.0.968';
 
 try {
     ci.stage("Integration Tests");
@@ -63,7 +63,9 @@ try {
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-            --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
@@ -109,11 +111,6 @@ try {
                 ci.sh(command);
         });
     }
-
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-    });
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {
