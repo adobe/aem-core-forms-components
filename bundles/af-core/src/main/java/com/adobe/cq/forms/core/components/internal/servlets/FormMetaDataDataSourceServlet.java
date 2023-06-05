@@ -56,6 +56,8 @@ import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.foundation.forms.FormsManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component(
     service = { Servlet.class },
@@ -77,7 +79,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String CUSTOM_FORMAT_VALUE = "customFormatValue";
     private static final String NN_DIALOG = "cq:dialog";
 
-    private static final String CUSTOM_PROPERTY_NAME = "customPropertyName";
+    private static final String CUSTOM_PROPERTY_NAME = "customPropertyGroupName";
     private static final String CUSTOM_PROPERTY_VALUE = "customPropertyValue";
 
     /**
@@ -268,21 +270,34 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             .collect(Collectors.toList());
 
         customPropertiesResourceList.forEach((customPropertiesResource) -> {
-            customPropertiesResource.getChildren().forEach(customProperties -> {
-                String customPropertyName = "";
-                String customPropertyValue = "";
-                for (Map.Entry<String, Object> entry : customProperties.getValueMap().entrySet()) {
+            customPropertiesResource.getChildren().forEach((customPropertiesGroup) -> {
+                String groupName = "", stringifiedJsonPairs = "";
+                Map<String, Object> keyValuePairs = new HashMap<>();
+                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
                     if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
-                        customPropertyName = entry.getValue().toString();
-                    } else if (entry.getKey().equals(CUSTOM_PROPERTY_VALUE)) {
-                        customPropertyValue = entry.getValue().toString();
+                        groupName = entry.getValue().toString();
+                        customPropertiesGroup.getChild("keyValuePairs").listChildren().forEachRemaining((x) -> {
+                            String key = "", value = "";
+                            for (Map.Entry<String, Object> pair : x.getValueMap().entrySet()) {
+                                if (pair.getKey().equals("key")) {
+                                    key = pair.getValue().toString();
+                                }
+                                if (pair.getKey().equals("value")) {
+                                    value = pair.getValue().toString();
+                                }
+                            }
+                            keyValuePairs.put(key, value);
+                        });
                     }
                 }
-                if (!customPropertyName.isEmpty()) {
-                    if (customPropertyValue.isEmpty()) {
-                        customPropertyValue = null;
+                if (!keyValuePairs.isEmpty()) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        stringifiedJsonPairs = mapper.writeValueAsString(keyValuePairs);
+                        customPropertiesMap.put(groupName, stringifiedJsonPairs);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
-                    customPropertiesMap.put(customPropertyName, customPropertyValue);
                 }
             });
         });

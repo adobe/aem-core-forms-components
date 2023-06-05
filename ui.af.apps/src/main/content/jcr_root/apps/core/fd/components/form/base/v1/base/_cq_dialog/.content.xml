@@ -583,6 +583,7 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             granite:class="cmp-adaptiveform-base__customPropertyType"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            multiple="true"
                                                             fieldLabel="Custom Property Type"
                                                             name="./customPropertyType">
                                                         <datasource
@@ -590,6 +591,38 @@
                                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
                                                                 type="customProperties"/>
                                                     </customPropertyType>
+                                                    <additionalCustomPropertiesCheck
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            text="Additional Custom Properties"
+                                                            name="./additionalCustomPropertiesCheck"/>
+                                                    <additionalCustomProperties
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldDescription=""
+                                                            fieldLabel="Custom Properties"
+                                                            composite="true"
+                                                            name="./additionalCustomProperties">
+                                                        <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType = "granite/ui/components/coral/foundation/container"
+                                                                name = "./additionalCustomProperties">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <customPropertyKey
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        fieldDescription=""
+                                                                        fieldLabel="Custom Property Name"
+                                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                                        name = "customPropertyName"/>
+                                                                <customPropertyExpression
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        fieldDescription=""
+                                                                        fieldLabel="Custom Property Value"
+                                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
+                                                                        name = "customPropertyValue"/>
+                                                            </items>
+                                                        </field>
+                                                    </additionalCustomProperties>
                                                 </items>
                                             </customProperties>
                                         </items>
