@@ -1,0 +1,14 @@
+{
+  "name": "af.jsapi",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "ink-docstrap": "^1.1.4",
+    "jscs": "^2.11.0",
+    "jsdoc": "^4.0.0",
+    "taffydb": "^2.7.3"
+  }
+}

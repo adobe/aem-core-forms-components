@@ -23,23 +23,23 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
 
-    const dropTextInputInContainer = function () {
+    const dropTextInputInContainer = function() {
         const dataPath = "/content/forms/af/core-components-it/samples/databinding/basic/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-        cy.get('body').click(0, 0);
+        cy.get('body').click( 0,0);
     }
 
-    const dropTextInputInSites = function () {
+    const dropTextInputInSites = function() {
         const dataPath = "/content/core-components-examples/library/adaptive-form/textinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-        cy.get('body').click(0, 0);
+        cy.get('body').click( 0,0);
     }
 
-    const testDataBindingBehaviour = function (textInputEditPathSelector) {
+    const testDataBindingBehaviour = function(textInputEditPathSelector) {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
         cy.get("[name='./dataRef']")
@@ -91,8 +91,8 @@ describe('Page - Authoring', function () {
         cy.get(".cq-dialog-submit").should("be.visible").click();
     }
 
-    context('Open Forms Editor', function () {
-        const pagePath = "/content/forms/af/core-components-it/samples/databinding/basic",
+    context('Open Forms Editor', function() {
+        const pagePath ="/content/forms/af/core-components-it/samples/databinding/basic",
             textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
             textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
             textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
@@ -101,9 +101,9 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        if (cy.af.isLatestAddon()) {
-            it('test data binding', {retries: 3}, function () {
-                cy.cleanTest(textInputDrop).then(function () {
+        //if (cy.af.isLatestAddon()) {
+            it ('test data binding', { retries: 3 }, function(){
+                cy.cleanTest(textInputDrop).then(function(){
                     dropTextInputInContainer();
                     testDataBindingBehaviour(textInputEditPathSelector, textInputDrop);
                     cy.openSiteAuthoring(pagePath);
@@ -111,11 +111,11 @@ describe('Page - Authoring', function () {
                     cy.deleteComponentByPath(textInputDrop);
                 });
             })
-        }
+        //}
     })
 
     context('Open Sites Editor', function () {
-        const pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+        const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
             formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer",
             formContainerEditPathSelector = "[data-path='" + formContainerEditPath + "']",
             textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
@@ -127,7 +127,7 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        if (cy.af.isLatestAddon()) {
+        //if (cy.af.isLatestAddon()) {
             it('test data binding', function () {
                 configureDataModel(formContainerEditPathSelector);
                 dropTextInputInSites();
@@ -136,6 +136,6 @@ describe('Page - Authoring', function () {
                 testBindingPersistence(textInputEditPathSelector);
                 cy.deleteComponentByPath(textInputDrop);
             });
-        }
+        //}
     });
 });

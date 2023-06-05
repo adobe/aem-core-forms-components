@@ -28,6 +28,7 @@
      data-sly-use.checkboxgroup="com.adobe.cq.forms.core.components.models.form.CheckBoxGroup"
      data-cmp-visible="${checkboxgroup.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
+     data-cmp-required="${checkboxgroup.required ? 'true': 'false'}"
      data-cmp-data-layer="${checkboxgroup.data.json}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
