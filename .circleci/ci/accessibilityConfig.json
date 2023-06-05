@@ -1,8 +1,0 @@
-{
-  "accessibilityExceptionList": [
-    "label",
-    "landmark-one-main",
-    "page-has-heading-one",
-    "region"
-  ]
-}

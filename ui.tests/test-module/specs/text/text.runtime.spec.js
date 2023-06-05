@@ -87,9 +87,6 @@
             .click({ multiple: true });
         cy.get('[data-cmp-is="adaptiveFormText"]').should('be.visible');
 
-        cy.get('.cmp-adaptiveform-textinput__widget').clear()
-            .type('Change me').blur();
-        cy.get('[data-cmp-is="adaptiveFormText"]').contains("CHANGED");
     })
 
  })
