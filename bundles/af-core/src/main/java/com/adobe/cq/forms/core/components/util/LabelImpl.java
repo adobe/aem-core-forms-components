@@ -78,6 +78,10 @@ public class LabelImpl implements Label {
      */
     @Override
     public String getValue() {
-        return ComponentUtils.translate(properties.get(PN_TITLE, this.defaultTitle), PN_TITLE, properties, i18n);
+        if (properties.containsKey(PN_TITLE))
+            return ComponentUtils.translate(properties.get(PN_TITLE, this.defaultTitle), PN_TITLE, properties, i18n);
+        else
+            return ComponentUtils.translate(properties.get(PN_TITLE, ""), PN_TITLE, properties, i18n);
+
     }
 }

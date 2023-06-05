@@ -347,7 +347,7 @@ public class CheckBoxGroupImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("checkboxgroup-40e63c6f46");
         assert (dataObject.getType()).equals("core/fd/components/form/checkboxgroup/v1/checkboxgroup");
-        assert (dataObject.getTitle()).equals("Personality");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("checkbox-group");
         assert (dataObject.getDescription()).equals("Select all that apply");
     }

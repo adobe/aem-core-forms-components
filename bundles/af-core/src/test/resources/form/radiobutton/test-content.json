@@ -75,7 +75,7 @@
       "Female"
     ],
     "label": {
-      "value": "Gender"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

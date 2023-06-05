@@ -1,7 +1,7 @@
 {
   "id": "fileinput-90881b3d31",
   "fieldType": "file-input",
-  "name": "CV",
+  "name": "",
   "description": "Upload your CV",
   "type": "file",
   "accept": [
@@ -12,7 +12,7 @@
     " application/pdf"
   ],
   "label": {
-    "value": "CV"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -28,7 +28,7 @@
   ":type": "core/fd/components/form/fileinput/v1/fileinput",
   "dataLayer": {
     "fileinput-90881b3d31": {
-      "dc:title": "CV",
+      "dc:title": "",
       "dc:description": "Upload your CV",
       "@type": "core/fd/components/form/fileinput/v1/fileinput",
       "fieldType": "file-input"

@@ -115,7 +115,7 @@
       "visible" : false
     },
     "label": {
-      "value": "Phone Number"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

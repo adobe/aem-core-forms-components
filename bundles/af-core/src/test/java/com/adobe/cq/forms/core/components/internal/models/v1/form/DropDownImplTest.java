@@ -408,7 +408,7 @@ public class DropDownImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("dropdown-bb1c9e883e");
         assert (dataObject.getType()).equals("core/fd/components/form/dropdown/v1/dropdown");
-        assert (dataObject.getTitle()).equals("Favorite Animal");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("drop-down");
         assert (dataObject.getDescription()).equals("What is your favorite animal?");
     }

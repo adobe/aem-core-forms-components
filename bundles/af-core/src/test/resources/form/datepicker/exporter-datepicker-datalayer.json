@@ -5,7 +5,7 @@
   "description": "Date of Birth",
   "type": "string",
   "label": {
-    "value": "DoB"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -22,7 +22,7 @@
   ":type": "core/fd/components/form/datepicker/v1/datepicker",
   "dataLayer": {
     "datepicker-0ac1fed1fe": {
-      "dc:title": "DoB",
+      "dc:title": "",
       "dc:description": "Date of Birth",
       "@type": "core/fd/components/form/datepicker/v1/datepicker",
       "fieldType": "date-input"

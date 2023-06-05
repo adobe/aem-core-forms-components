@@ -160,7 +160,7 @@ public class PanelContainerImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("panelcontainer-0749d1d943");
         assert (dataObject.getType()).equals("core/fd/components/form/panelcontainer/v1/panelcontainer");
-        assert (dataObject.getTitle()).equals("Phone Number");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("panel");
         assert (dataObject.getDescription()).equals("Enter your phone number");
     }
