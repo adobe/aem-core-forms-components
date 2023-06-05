@@ -126,7 +126,7 @@ jobs:
             - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
-            - jsdocs/target
+            - jsdocs/target/jsapi
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -244,7 +244,7 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - release:
+      - jsdocs-deploy:
           requires:
             - build-java-11
           filters:
@@ -252,9 +252,10 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - jsdocs-deploy:
+      - release:
           requires:
             - build-java-11
+            - jsdocs-deploy
           filters:
             branches:
               ignore: /.*/
