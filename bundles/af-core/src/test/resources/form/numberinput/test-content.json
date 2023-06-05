@@ -38,7 +38,7 @@
     "name": "Phone Number",
     "type": "string",
     "label": {
-      "value": "Phone Number"
+      "value": ""
     },
     "events": {
       "custom:setProperty": [

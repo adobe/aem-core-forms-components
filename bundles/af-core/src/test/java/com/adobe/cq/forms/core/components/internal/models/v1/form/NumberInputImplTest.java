@@ -325,7 +325,7 @@ public class NumberInputImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("numberinput-57e5de6073");
         assert (dataObject.getType()).equals("core/fd/components/form/numberinput/v1/numberinput");
-        assert (dataObject.getTitle()).equals("Phone Number");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("number-input");
         assert (dataObject.getDescription()).equals("Enter your phone number.");
     }

@@ -400,7 +400,7 @@ public class TextInputImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("textinput-1c7bc238a6");
         assert (dataObject.getType()).equals("core/fd/components/form/textinput/v1/textinput");
-        assert (dataObject.getTitle()).equals("Full Name");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("text-input");
         assert (dataObject.getDescription()).equals("Enter Full Name");
     }

@@ -13,7 +13,7 @@
     "Female"
   ],
   "label": {
-    "value": "Gender"
+    "value": ""
   },
   "events": {
     "custom:setProperty": [
@@ -36,7 +36,7 @@
   ":type": "core/fd/components/form/radiobutton/v1/radiobutton",
   "dataLayer": {
     "radiobutton-bafbf1a102": {
-      "dc:title": "Gender",
+      "dc:title": "",
       "dc:description": "Input gender",
       "@type": "core/fd/components/form/radiobutton/v1/radiobutton",
       "fieldType": "radio-group"

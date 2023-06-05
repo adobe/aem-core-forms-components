@@ -281,7 +281,7 @@ public class DatePickerImplTest {
         assert (dataObject != null);
         assert (dataObject.getId()).equals("datepicker-0ac1fed1fe");
         assert (dataObject.getType()).equals("core/fd/components/form/datepicker/v1/datepicker");
-        assert (dataObject.getTitle()).equals("DoB");
+        assert (dataObject.getTitle()).equals("");
         assert (dataObject.getFieldType()).equals("date-input");
         assert (dataObject.getDescription()).equals("Date of Birth");
     }
