@@ -585,11 +585,10 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <customPropertyType
                                                             jcr:primaryType="nt:unstructured"
-                                                            granite:class="cmp-adaptiveform-base__customPropertyType"
+                                                            granite:class="cmp-adaptiveform-base__customProperty"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             multiple="true"
-                                                            fieldLabel="Custom Property Type"
-                                                            name="./customPropertyType">
+                                                            fieldLabel="Custom Property Type">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
@@ -630,6 +629,11 @@
                                                             </items>
                                                         </field>
                                                     </additionalCustomProperties>
+                                                    <combinedCustomProperties
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                            granite:class="cmp-adaptiveform-base__combinedCustomProperties"
+                                                            name="./fd:customProperties"/>
                                                 </items>
                                             </customProperties>
                                         </items>

@@ -30,6 +30,8 @@
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base__additionalCustomPropertiesCheck",
         BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
+        BASE_CUSTOMPROPERTIES_SELECT = ".cmp-adaptiveform-base__customProperty",
+        BASE_CUSTOMPROPERTIES_COMBINED = ".cmp-adaptiveform-base__combinedCustomProperties",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -154,7 +156,11 @@
 
     function handleDialogSubmit(dialog){
         var submitButton=dialog.find(".cq-dialog-submit")[0];
-        submitButton.addEventListener("click",_manageDialogSubmit);
+        submitButton.addEventListener("click", () => {
+            _manageDialogSubmit();
+            _manageCustomProperties();
+        });
+
         function _manageDialogSubmit(){
             var enums = dialog.find(BASE_ENUM);
             var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
@@ -164,8 +170,16 @@
                     visibleEnumNames[i].value = enums[i].value;
                 }
             }
+        }
 
-
+        function _manageCustomProperties() {
+            const selectedProperties = dialog.find(BASE_CUSTOMPROPERTIES_SELECT)[0];
+            const fdCustomProperties = dialog.find(BASE_CUSTOMPROPERTIES_COMBINED)[0];
+            let allKeyValuePairs= {};
+            selectedProperties.values.forEach((groupKeyValuePairs) => {
+                Object.assign(allKeyValuePairs, JSON.parse(groupKeyValuePairs))
+            })
+            fdCustomProperties.value = JSON.stringify(allKeyValuePairs);
         }
 
     }
@@ -173,6 +187,7 @@
     function advancedTab(dialog) {
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
         additionalCustomPropertiesCheck.on("change", () => Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD));
+
     }
 
     /**
