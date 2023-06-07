@@ -215,11 +215,11 @@
 
         /**
          * Register foundation.validator for DataType Validation of Options fields like Dropdown, Checkbox etc.
+         * Should return one of string|number|boolean, validation will pass if any other type is returned.
          * @param defaultTypeSelector Selector for default value field
          * @param enumSelector Selector for enum values field
          * @param getSelectedDataType Function to return the selected data-type in the dialog.
-         * Should return one of string|number|boolean, validation will pass if any other type is returned.
-         * @returns {(function(*): void)|*} Function that will register data type validator
+         * @returns Function that will register data type validator
          */
         static registerDialogDataTypeValidators(defaultTypeSelector, enumSelector, getSelectedDataType) {
             return function (dialog) {
