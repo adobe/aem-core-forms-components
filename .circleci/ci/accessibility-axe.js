@@ -69,12 +69,13 @@ const calculateAccessibility = async () => {
                (violation) =>
                  ["critical", "serious", "moderate"].includes(violation.impact) &&
                  !accessibilityConfig.accessibilityExceptionList.includes(violation.id)
-             )
+             ) &&
+             process.env.AEM === "addon"
            ) {
              console.log(
                "Error: Accessibility violations found, please refer the report under artifacts to fix the same!"
              );
-             // await ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!");
+             await ci.postCommentToGitHubFromCI("Error: Accessibility violations found, please refer the report under artifacts, inside circleCI PR, to fix the same!");
              process.exit(1); // fail pipeline
            }
 
