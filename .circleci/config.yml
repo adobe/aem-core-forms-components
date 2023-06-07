@@ -198,6 +198,7 @@ jobs:
  
   release:
     executor: forms_executor
+    working_directory: /home/circleci/build
     steps:
       - checkout
       - restore_cache:
