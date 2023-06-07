@@ -191,7 +191,7 @@ jobs:
             git config user.name "ci-build"
       - add_ssh_keys:
           fingerprints:
-            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
+            - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
       - run:
           name: Deploy jsdocs to gh-pages branch
           command: gh-pages --dotfiles --message "[skip ci] jsdoc updates" --dist jsdocs/target/jsapi/
