@@ -88,7 +88,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11983-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12142-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -126,7 +126,7 @@ jobs:
             - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
-            - jsdocs/target
+            - jsdocs/target/jsapi
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -217,6 +217,34 @@ jobs:
             mvn -B -s /home/circleci/project/.circleci/settings.xml clean deploy -P release-sign-artifacts,cloud,adobe-public -Dskip-it
             rm -rf /home/circleci/.gnupg
             rm -rf /home/circleci/.npmrc
+      - run:
+          name: Update github with release notes and upload released artifacts
+          command: |
+            # Extract tag from CIRCLE_TAG environment variable
+            TAG=${CIRCLE_TAG}
+
+            # Create the release using GitHub API
+            RESPONSE=$(curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "tag_name": "'"$TAG"'",
+                "name": "'"$TAG"'",
+                "body": "Release notes for version '"$TAG"'"
+              }' \
+              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
+
+            # Get the upload URL from the response
+            UPLOAD_URL=$(echo "$RESPONSE" | jq -r '.upload_url' | sed -e 's/{.*}//')
+
+            # Upload release artifacts
+            for ARTIFACT in ./all/target/*.zip; do
+              curl -X POST \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @"$ARTIFACT" \
+                "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
+            done
 
 workflows:
   version: 2
@@ -244,7 +272,7 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - release:
+      - jsdocs-deploy:
           requires:
             - build-java-11
           filters:
@@ -252,9 +280,10 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - jsdocs-deploy:
+      - release:
           requires:
             - build-java-11
+            - jsdocs-deploy
           filters:
             branches:
               ignore: /.*/
