@@ -18,6 +18,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Email Input field"
     sling:resourceType="cq/gui/components/authoring/dialog"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_email_v1"
     trackingFeature="core-components:adaptiveform-emailinput:v1">
     <content
         granite:class="cmp-adaptiveform-emailinput__editdialog"
