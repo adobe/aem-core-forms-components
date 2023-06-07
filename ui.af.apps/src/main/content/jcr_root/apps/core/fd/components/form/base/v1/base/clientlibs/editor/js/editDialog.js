@@ -32,6 +32,8 @@
         BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
         BASE_CUSTOMPROPERTIES_SELECT = ".cmp-adaptiveform-base__customProperty",
         BASE_CUSTOMPROPERTIES_COMBINED = ".cmp-adaptiveform-base__combinedCustomProperties",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base__additionalCustomPropertyKeys",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base__additionalCustomPropertyValues",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -175,17 +177,28 @@
         function _manageCustomProperties() {
             const selectedProperties = dialog.find(BASE_CUSTOMPROPERTIES_SELECT)[0];
             const fdCustomProperties = dialog.find(BASE_CUSTOMPROPERTIES_COMBINED)[0];
+            const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK);
             let allKeyValuePairs= {};
             selectedProperties.values.forEach((groupKeyValuePairs) => {
                 Object.assign(allKeyValuePairs, JSON.parse(groupKeyValuePairs))
             })
+
+            if(additionalCustomPropertiesCheck) {
+                const additionalKeys = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS);
+                const additionalValues = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES);
+                const additionalCustomProperties = {};
+                for (let i = 0; i < additionalKeys.length; i++) {
+                    additionalCustomProperties[additionalKeys[i].value] = additionalValues[i].value;
+                }
+                Object.assign(allKeyValuePairs, additionalCustomProperties);
+            }
             fdCustomProperties.value = JSON.stringify(allKeyValuePairs);
         }
-
     }
 
     function advancedTab(dialog) {
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
+        Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
         additionalCustomPropertiesCheck.on("change", () => Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD));
 
     }

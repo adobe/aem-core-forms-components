@@ -588,7 +588,9 @@
                                                             granite:class="cmp-adaptiveform-base__customProperty"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             multiple="true"
-                                                            fieldLabel="Custom Property Type">
+                                                            fieldLabel="Custom Property Type"
+                                                            name="./customPropertySelect"
+                                                            typeHint="string[]">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="core/fd/components/form/container/v1/datasource"
@@ -598,17 +600,22 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                             granite:class="cmp-adaptiveform-base__additionalCustomPropertiesCheck"
+                                                            uncheckedValue="false"
+                                                            value="true"
                                                             text="Additional Custom Properties"
                                                             name="./additionalCustomPropertiesCheck"/>
+                                                    <additionalCustomPropertiesCheck-typeHint
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                            name="./additionalCustomPropertiesCheck@TypeHint"
+                                                            value="Boolean"/>
                                                     <additionalCustomProperties
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                             granite:class="cmp-adaptiveform-base__additionalCustomPropertiesField"
-                                                            hidden="true"
                                                             fieldDescription=""
                                                             fieldLabel="Custom Properties"
-                                                            composite="true"
-                                                            name="./additionalCustomProperties">
+                                                            composite="true">
                                                         <field
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType = "granite/ui/components/coral/foundation/container"
@@ -616,15 +623,17 @@
                                                             <items jcr:primaryType="nt:unstructured">
                                                                 <customPropertyKey
                                                                         jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        granite:class="cmp-adaptiveform-base__additionalCustomPropertyKeys"
                                                                         fieldDescription=""
                                                                         fieldLabel="Custom Property Name"
-                                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
                                                                         name = "customPropertyName"/>
-                                                                <customPropertyExpression
+                                                                <customPropertyValue
                                                                         jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        granite:class="cmp-adaptiveform-base__additionalCustomPropertyValues"
                                                                         fieldDescription=""
                                                                         fieldLabel="Custom Property Value"
-                                                                        sling:resourceType = "granite/ui/components/coral/foundation/form/textfield"
                                                                         name = "customPropertyValue"/>
                                                             </items>
                                                         </field>
