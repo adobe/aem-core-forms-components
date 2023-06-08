@@ -657,13 +657,13 @@
             }
         }
         getRepeatableRootElement(childView){
-          return childView.element.closest('.cmp-accordion__item');
+          return this.element.querySelector('#'+childView.id+'-item');
         }
         #showHideRepeatableButtons(instanceManager){
           const {_model: {minOccur, maxOccur, items = [] } = {}, children} = instanceManager;
-          children.forEach(({element})=>{
-            const addButtonElement = element?.closest('.cmp-accordion__item')?.querySelector('[data-cmp-hook-add-instance]');
-            const removeButtonElement = element?.closest('.cmp-accordion__item')?.querySelector('[data-cmp-hook-remove-instance]');
+          children.forEach(child=>{
+            const addButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-add-instance]');
+            const removeButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-remove-instance]');
             addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
             removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
           });
