@@ -352,6 +352,10 @@ export default class FormFieldBase extends FormField {
             }
         }
     }
+    
+    updateActiveChild(activeChild) {
+      this.formContainer.setFocus(activeChild?._activeChild?.id || activeChild?.id);
+    }
 
     /**
      * updates the html state based on description state of the field
