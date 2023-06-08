@@ -30,14 +30,13 @@
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base__additionalCustomPropertiesCheck",
         BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
-        BASE_CUSTOMPROPERTIES_SELECT = ".cmp-adaptiveform-base__customProperty",
-        BASE_CUSTOMPROPERTIES_COMBINED = ".cmp-adaptiveform-base__combinedCustomProperties",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_COMBINED = ".cmp-adaptiveform-base__combinedAdditionalCustomProperties",
         BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base__additionalCustomPropertyKeys",
         BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base__additionalCustomPropertyValues",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
-        /**
+    /**
      * Toggles the display of the given element based on the actual and the expected values.
      * If the actualValue is equal to the expectedValue, then the element is shown,
      * otherwise the element is hidden.
@@ -109,8 +108,8 @@
     }
 
     var getFormPath = function(contentPath) {
-            return contentPath.replace(Granite.HTTP.getContextPath(), "");
-        }
+        return contentPath.replace(Granite.HTTP.getContextPath(), "");
+    }
 
     function handleAssistPriority(dialog) {
         var baseAssistPriority = dialog.find(BASE_ASSISTPRIORITY)[0];
@@ -122,7 +121,7 @@
                     baseAssistPriority.value)
             });
             checkAndDisplay(baseAssistPriorityCustomText,
-            "custom",
+                "custom",
                 baseAssistPriority.value)
         }
     }
@@ -175,31 +174,46 @@
         }
 
         function _manageCustomProperties() {
-            const selectedProperties = dialog.find(BASE_CUSTOMPROPERTIES_SELECT)[0];
-            const fdCustomProperties = dialog.find(BASE_CUSTOMPROPERTIES_COMBINED)[0];
-            const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK);
-            let allKeyValuePairs= {};
-            selectedProperties.values.forEach((groupKeyValuePairs) => {
-                Object.assign(allKeyValuePairs, JSON.parse(groupKeyValuePairs))
-            })
+            const additionalCustomProperties = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_COMBINED)[0];
+            const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
+            const pairs = {};
 
-            if(additionalCustomPropertiesCheck) {
+            const cleanOldValues = () => {
+                const multifield = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
+                multifield.children().toArray().forEach((element) => {
+                    if(element.classList.contains('_coral-Multifield-item'))
+                        element.remove();
+                })
+            };
+
+            if(additionalCustomPropertiesCheck.checked) {
                 const additionalKeys = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS);
                 const additionalValues = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES);
-                const additionalCustomProperties = {};
                 for (let i = 0; i < additionalKeys.length; i++) {
-                    additionalCustomProperties[additionalKeys[i].value] = additionalValues[i].value;
+                    if(additionalKeys[i].value !== "") {
+                        pairs[additionalKeys[i].value] = additionalValues[i].value;
+                    }
                 }
-                Object.assign(allKeyValuePairs, additionalCustomProperties);
+                if(Object.keys(pairs).length > 0) {
+                    additionalCustomProperties.value = JSON.stringify(pairs);
+                }
+            } else {
+                cleanOldValues();
+                additionalCustomProperties.value = '';
             }
-            fdCustomProperties.value = JSON.stringify(allKeyValuePairs);
         }
     }
 
     function advancedTab(dialog) {
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
+
+        // set the initial state
         Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
-        additionalCustomPropertiesCheck.on("change", () => Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD));
+        additionalCustomPropertiesCheck.on("change", () => {
+            Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
+        });
+
+
 
     }
 

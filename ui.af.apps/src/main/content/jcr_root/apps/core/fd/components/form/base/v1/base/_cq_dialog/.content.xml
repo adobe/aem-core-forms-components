@@ -589,7 +589,7 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             multiple="true"
                                                             fieldLabel="Custom Property Type"
-                                                            name="./customPropertySelect"
+                                                            name="./fd:customPropertySelect"
                                                             typeHint="string[]">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
@@ -600,7 +600,6 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                             granite:class="cmp-adaptiveform-base__additionalCustomPropertiesCheck"
-                                                            uncheckedValue="false"
                                                             value="true"
                                                             text="Additional Custom Properties"
                                                             name="./additionalCustomPropertiesCheck"/>
@@ -638,11 +637,11 @@
                                                             </items>
                                                         </field>
                                                     </additionalCustomProperties>
-                                                    <combinedCustomProperties
+                                                    <combinedAdditionalCustomPropertiesJSON
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                            granite:class="cmp-adaptiveform-base__combinedCustomProperties"
-                                                            name="./fd:customProperties"/>
+                                                            granite:class="cmp-adaptiveform-base__combinedAdditionalCustomProperties"
+                                                            name="./fd:additionalCustomProperties"/>
                                                 </items>
                                             </customProperties>
                                         </items>

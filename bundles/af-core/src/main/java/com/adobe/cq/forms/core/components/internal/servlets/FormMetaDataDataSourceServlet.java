@@ -56,8 +56,6 @@ import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.foundation.forms.FormsManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component(
     service = { Servlet.class },
@@ -203,11 +201,10 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case CUSTOM_PROPERTIES:
                     policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
                         resourceResolver);
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
                     if (policy != null) {
-                        Map<String, String> customPropertiesMap = this.getCustomPropertiesFromPolicy(policy, resourceResolver);
-                        for (Map.Entry<String, String> entry : customPropertiesMap.entrySet()) {
-                            resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+                        List<String> customPropertyGroups = this.getCustomPropertyGroupsFromPolicy(policy, resourceResolver);
+                        for (String groupName : customPropertyGroups) {
+                            resources.add(getResourceForDropdownDisplay(resourceResolver, groupName, groupName));
                         }
                     }
                     break;
@@ -263,44 +260,22 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         return resources;
     }
 
-    private Map<String, String> getCustomPropertiesFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
+    private List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
         Resource policyResource = resourceResolver.resolve(policy.getPath());
-        Map<String, String> customPropertiesMap = new HashMap<>();
+        List<String> groupNames = new ArrayList<>();
         List<Resource> customPropertiesResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false)
             .collect(Collectors.toList());
 
         customPropertiesResourceList.forEach((customPropertiesResource) -> {
             customPropertiesResource.getChildren().forEach((customPropertiesGroup) -> {
-                String groupName = "", stringifiedJsonPairs = "";
-                Map<String, Object> keyValuePairs = new HashMap<>();
                 for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
                     if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
-                        groupName = entry.getValue().toString();
-                        customPropertiesGroup.getChild("keyValuePairs").listChildren().forEachRemaining((x) -> {
-                            String key = "", value = "";
-                            for (Map.Entry<String, Object> pair : x.getValueMap().entrySet()) {
-                                if (pair.getKey().equals("key")) {
-                                    key = pair.getValue().toString();
-                                }
-                                if (pair.getKey().equals("value")) {
-                                    value = pair.getValue().toString();
-                                }
-                            }
-                            keyValuePairs.put(key, value);
-                        });
+                        groupNames.add(entry.getValue().toString());
                     }
                 }
-                if (!keyValuePairs.isEmpty()) {
-                    ObjectMapper mapper = new ObjectMapper();
-                    try {
-                        stringifiedJsonPairs = mapper.writeValueAsString(keyValuePairs);
-                        customPropertiesMap.put(groupName, stringifiedJsonPairs);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                }
+
             });
         });
-        return customPropertiesMap;
+        return groupNames;
     }
 }
