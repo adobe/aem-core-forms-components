@@ -71,6 +71,7 @@
     "id": "dropdown-bb1c9e883e",
     "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
     "fieldType": "drop-down",
+    "jcr:title" : "Favorite Animal",
     "name": "Favorite Animal",
     "description": "What is your favorite animal?",
     "visible": true,

@@ -83,6 +83,7 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "id": "textinput-1c7bc238a6",
     "fieldType": "text-input",
+    "jcr:title" : "Full Name",
     "name": "Full Name",
     "visible": true,
     "description": "Enter Full Name",

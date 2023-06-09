@@ -35,6 +35,7 @@
     "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
     "fieldType": "number-input",
     "description": "Enter your phone number.",
+    "jcr:title" : "Phone Number",
     "name": "Phone Number",
     "type": "string",
     "label": {

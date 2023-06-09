@@ -98,6 +98,7 @@
     "id": "panelcontainer-0749d1d943",
     "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "fieldType": "panel",
+    "jcr:title": "Phone Number",
     "name": "Phone Number",
     "description": "Enter your phone number",
     "visible": true,
