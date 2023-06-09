@@ -219,10 +219,70 @@ jobs:
             rm -rf /home/circleci/.gnupg
             rm -rf /home/circleci/.npmrc
       - run:
+          name: Retrieve Last Released Tag
+          command: |
+            # Retrieve the branch name
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+            # Find the last two tags on the branch
+            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
+
+            # Extract the last tag and previous tag from the output
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | head -n 1 | sed "s/tag: refs\/tags\///")
+            PREVIOUS_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
+
+            # If there is no previous release, use an empty string
+            if [[ -z "$PREVIOUS_TAG" ]]; then
+              PREVIOUS_TAG=""
+            fi
+
+            # Store the previous tag as an environment variable
+            echo "PREVIOUS_TAG=${PREVIOUS_TAG}" >> $BASH_ENV
+            source $BASH_ENV
+      - run:
           name: Update github with release notes and upload released artifacts
           command: |
             # Extract tag from CIRCLE_TAG environment variable
             TAG=${CIRCLE_TAG}
+
+            # Execute a Git command to retrieve commit messages between the previous tag and the current tag
+            GIT_LOG_OUTPUT=$(git log --pretty=format:"%h %s" ${PREVIOUS_TAG}..${TAG})
+
+            # Split the output into individual commit lines
+            COMMIT_LINES=(${GIT_LOG_OUTPUT//$'\n'/ })
+
+            # Extract relevant information from commit messages
+            FEATURES=()
+            BUG_FIXES=()
+            IMPROVEMENTS=()
+
+            for COMMIT_LINE in "${COMMIT_LINES[@]}"
+            do
+              # Extract commit hash and message
+              COMMIT_HASH=${COMMIT_LINE%% *}
+              COMMIT_MESSAGE=${COMMIT_LINE#* }
+
+              # Identify commit type based on convention
+              if [[ "$COMMIT_MESSAGE" == feature:* ]]; then
+                FEATURES+=("${COMMIT_MESSAGE#*: }")
+              elif [[ "$COMMIT_MESSAGE" == fix:* ]]; then
+                BUG_FIXES+=("${COMMIT_MESSAGE#*: }")
+              elif [[ "$COMMIT_MESSAGE" == improvement:* ]]; then
+                IMPROVEMENTS+=("${COMMIT_MESSAGE#*: }")
+              fi
+            done
+
+            # Define the release note template
+            RELEASE_NOTE_TEMPLATE="## Release Notes - ${CIRCLE_TAG}
+
+            ### New Features
+            - ${FEATURES[*]}
+
+            ### Bug Fixes
+            - ${BUG_FIXES[*]}
+
+            ### Improvements
+            - ${IMPROVEMENTS[*]}"
 
             # Create the release using GitHub API
             RESPONSE=$(curl -s -X POST \
@@ -231,20 +291,34 @@ jobs:
               -d '{
                 "tag_name": "'"$TAG"'",
                 "name": "'"$TAG"'",
-                "body": "Release notes for version '"$TAG"'"
+                "body": "'"$RELEASE_NOTE_TEMPLATE"'"
               }' \
               "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
 
             # Get the upload URL from the response
             UPLOAD_URL=$(echo "$RESPONSE" | jq -r '.upload_url' | sed -e 's/{.*}//')
 
-            # Upload release artifacts
-            for ARTIFACT in ./all/target/*.zip; do
-              curl -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary @"$ARTIFACT" \
-                "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
+            # Define the file patterns or specific files for artifacts
+            ARTIFACTS=(
+              "./all/target/*.zip"
+               # Add more artifacts as needed
+            )
+
+            # Loop through each artifact and upload it
+            for ARTIFACT_PATTERN in "${ARTIFACTS[@]}"
+            do
+              # Retrieve the list of matching artifacts
+              ARTIFACTS_LIST=($ARTIFACT_PATTERN)
+
+              # Upload each artifact
+              for ARTIFACT in "${ARTIFACTS_LIST[@]}"
+              do
+                curl -X POST \
+                  -H "Authorization: token $GITHUB_TOKEN" \
+                  -H "Content-Type: application/octet-stream" \
+                  --data-binary @"$ARTIFACT" \
+                  "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
+              done
             done
 
 workflows:
