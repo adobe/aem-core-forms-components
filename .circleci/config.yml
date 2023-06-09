@@ -246,7 +246,7 @@ jobs:
             TAG=${CIRCLE_TAG}
 
             # Execute a Git command to retrieve commit messages between the previous tag and the current tag
-            GIT_LOG_OUTPUT=$(git log --pretty=format:"%h %s" ${PREVIOUS_TAG}..${TAG})
+            GIT_LOG_OUTPUT=$(git log --pretty=format:"%h %s" ${PREVIOUS_TAG}...${TAG})
 
             # Split the output into individual commit lines
             COMMIT_LINES=(${GIT_LOG_OUTPUT//$'\n'/ })
@@ -273,7 +273,7 @@ jobs:
             done
 
             # Define the release note template
-            RELEASE_NOTE_TEMPLATE="## Release Notes - ${CIRCLE_TAG}
+            RELEASE_NOTES="## Release Notes - ${CIRCLE_TAG}
 
             ### New Features
             - ${FEATURES[*]}
@@ -291,7 +291,7 @@ jobs:
               -d '{
                 "tag_name": "'"$TAG"'",
                 "name": "'"$TAG"'",
-                "body": "'"$RELEASE_NOTE_TEMPLATE"'"
+                "body": "'"$RELEASE_NOTES"'"
               }' \
               "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
 
