@@ -30,7 +30,7 @@ class RecaptchaWidget {
         this.#model = model;
         this.#widget = document.createElement("div");
         this.#widget.classList.add("cmp-adaptiveform-recaptcha__widget");
-        this.#lang = view.formContainer.getModel()._jsonModel.lang;
+        this.#lang = view.formContainer.getModel().lang;
 
         //Always inserting it in body
         document.body.appendChild(this.#widget);

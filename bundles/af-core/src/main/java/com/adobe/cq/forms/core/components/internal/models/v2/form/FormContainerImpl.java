@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -263,18 +264,25 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @JsonIgnore
     public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
-        return traverseChild(this, callBack);
+        Map<String, String> initialResult = new HashMap<>();
+        return traverseChild(this, callBack, initialResult);
     }
 
-    private Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack) throws Exception {
-        Map<String, String> result = null;
+    private Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack,
+        Map<String, String> previousData) throws Exception {
+        Map<String, String> result = new HashMap<>(previousData);
+
         for (Object component : container.getItems()) {
             if (component instanceof Container) {
-                result = traverseChild((Container) component, callBack);
+                result = traverseChild((Container) component, callBack, result);
             } else {
-                result = callBack.apply((FormComponent) component);
+                Map<String, String> currentData = callBack.apply((FormComponent) component);
+                if (currentData != null) {
+                    result.putAll(currentData);
+                }
             }
         }
+
         return result;
     }
 

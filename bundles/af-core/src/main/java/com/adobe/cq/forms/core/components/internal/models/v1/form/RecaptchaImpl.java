@@ -70,6 +70,10 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
 
+    private static final String RECAPTCHA_SITE_KEY = "siteKey";
+
+    private static final String RECAPTCHA_URI = "uri";
+
     @Override
     public String getrcCloudServicePath() {
         return rcCloudServicePath;
@@ -80,6 +84,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         return recaptchaSize;
     }
 
+    // @JsonIgnore
     public Map<String, Object> getRecaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
@@ -91,8 +96,8 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
                 siteKey = reCaptchaConfiguration.siteKey();
             }
         }
-        customCaptchaProperties.put("siteKey", siteKey);
-        customCaptchaProperties.put("uri", RECAPTCHA_DEFAULT_URL);
+        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         return customCaptchaProperties;
     }
 
