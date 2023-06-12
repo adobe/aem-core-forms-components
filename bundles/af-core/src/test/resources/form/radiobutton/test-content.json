@@ -64,6 +64,7 @@
     "sling:resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
     "fieldType": "radio-group",
     "name": "Gender",
+    "jcr:title": "Gender",
     "description": "Input gender",
     "visible": true,
     "type": "string",

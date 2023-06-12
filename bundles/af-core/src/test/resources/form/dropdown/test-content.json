@@ -72,6 +72,7 @@
     "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
     "fieldType": "drop-down",
     "name": "Favorite Animal",
+    "jcr:title" : "Favorite Animal",
     "description": "What is your favorite animal?",
     "visible": true,
     "type": "string",
