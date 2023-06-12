@@ -38,6 +38,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Recaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -84,7 +85,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         return recaptchaSize;
     }
 
-    // @JsonIgnore
+    @JsonIgnore
     public Map<String, Object> getRecaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
