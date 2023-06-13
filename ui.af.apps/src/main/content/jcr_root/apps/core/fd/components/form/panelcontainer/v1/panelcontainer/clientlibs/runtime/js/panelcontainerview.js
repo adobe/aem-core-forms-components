@@ -104,8 +104,8 @@
                 } else {
                     result.parentElement.insertBefore(htmlElement, result.parentElement.firstElementChild);
                 }
-
             }
+            return htmlElement;
         }
 
         handleChildRemoval(removedInstanceView) {
