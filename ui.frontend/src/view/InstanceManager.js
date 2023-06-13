@@ -195,6 +195,9 @@ export default class InstanceManager {
         this.updateCloneIds(htmlElement, 'temp_0', addedModel);
         if (this.repeatableParentView && (typeof this.repeatableParentView.addRepeatableMarkup === "function")) {
             htmlElement = this.repeatableParentView.addRepeatableMarkup(this, addedModel, htmlElement);
+            htmlElement.querySelectorAll('[data-event-registered]').forEach(button=>{
+              button.removeAttribute('data-event-registered');
+            });
         } else {
             // this is required if repeatableParentView is the formContainer.
             //no child exist in the view
