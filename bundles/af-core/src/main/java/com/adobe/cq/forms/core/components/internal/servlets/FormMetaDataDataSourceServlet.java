@@ -78,7 +78,6 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String NN_DIALOG = "cq:dialog";
 
     private static final String CUSTOM_PROPERTY_NAME = "customPropertyGroupName";
-    private static final String CUSTOM_PROPERTY_VALUE = "customPropertyValue";
 
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}

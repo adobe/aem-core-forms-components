@@ -301,6 +301,18 @@
             }
         }
 
+        /*
+        * This function is used to overcome the inability of Granite UI's multifield component to prefill its values in dialogs
+        */
+        static prefillMultifieldValues(dialog, visibleFieldSelector, hiddenFieldSelector) {
+            const visibleFields = dialog.find(visibleFieldSelector);
+            const hiddenFields = dialog.find(hiddenFieldSelector);
+            for (let i = 0; i < hiddenFields.length; i++) {
+                visibleFields[i].value = hiddenFields[i].value;
+                hiddenFields[i].remove();
+            }
+        }
+
     }
 
 })(jQuery, jQuery(document), Coral);

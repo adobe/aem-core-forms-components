@@ -30,9 +30,10 @@
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base__additionalCustomPropertiesCheck",
         BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_COMBINED = ".cmp-adaptiveform-base__combinedAdditionalCustomProperties",
         BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base__additionalCustomPropertyKeys",
         BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base__additionalCustomPropertyValues",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN =".cmp-adaptiveform-base__additionalCustomPropertyValuesHidden",
+
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -158,11 +159,11 @@
     function handleDialogSubmit(dialog){
         var submitButton=dialog.find(".cq-dialog-submit")[0];
         submitButton.addEventListener("click", () => {
-            _manageDialogSubmit();
+            _manageEmptyEnumNames();
             _manageCustomProperties();
         });
 
-        function _manageDialogSubmit(){
+        function _manageEmptyEnumNames(){
             var enums = dialog.find(BASE_ENUM);
             var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
 
@@ -174,9 +175,7 @@
         }
 
         function _manageCustomProperties() {
-            const additionalCustomProperties = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_COMBINED)[0];
             const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
-            const pairs = {};
 
             const cleanOldValues = () => {
                 const multifield = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
@@ -186,20 +185,8 @@
                 })
             };
 
-            if(additionalCustomPropertiesCheck.checked) {
-                const additionalKeys = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS);
-                const additionalValues = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES);
-                for (let i = 0; i < additionalKeys.length; i++) {
-                    if(additionalKeys[i].value !== "") {
-                        pairs[additionalKeys[i].value] = additionalValues[i].value;
-                    }
-                }
-                if(Object.keys(pairs).length > 0) {
-                    additionalCustomProperties.value = JSON.stringify(pairs);
-                }
-            } else {
+            if(!additionalCustomPropertiesCheck.checked) {
                 cleanOldValues();
-                additionalCustomProperties.value = '';
             }
         }
     }
@@ -209,12 +196,14 @@
 
         // set the initial state
         Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
+
+        if(additionalCustomPropertiesCheck.checked) {
+            Utils.prefillMultifieldValues(dialog, BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES, BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN);
+        }
+
         additionalCustomPropertiesCheck.on("change", () => {
             Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
         });
-
-
-
     }
 
     /**
@@ -232,7 +221,7 @@
             });
         }
         handleAssistPriority(dialog);
-        prefillEnumNames(dialog);
+        Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
         advancedTab(dialog);
         validateName();
