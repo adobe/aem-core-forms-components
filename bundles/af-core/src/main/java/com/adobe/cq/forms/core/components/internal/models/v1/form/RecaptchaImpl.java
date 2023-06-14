@@ -31,8 +31,6 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
-import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -53,14 +51,6 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private ResourceResolver resourceResolver;
 
     private Resource resource;
-
-    @Reference
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ReCaptchaConfigurationModel reCaptchaConfiguration;
-
-    @OSGiService
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Named("rcCloudServicePath")
@@ -95,10 +85,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         String siteKey = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null) {
-            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            if (reCaptchaConfiguration != null) {
-                siteKey = reCaptchaConfiguration.siteKey();
-            }
+            //todo: Add cloud configuration provider service
         }
         customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
         customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);

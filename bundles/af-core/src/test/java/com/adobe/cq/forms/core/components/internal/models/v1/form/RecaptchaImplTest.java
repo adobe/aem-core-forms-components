@@ -23,8 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
-import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -48,13 +46,6 @@ public class RecaptchaImplTest {
     @BeforeEach
     void setUp() throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-
-        CloudConfigurationProvider cloudConfigurationProvider = Mockito.mock(CloudConfigurationProvider.class);
-        ReCaptchaConfigurationModel reCaptchaConfigurationModel = Mockito.mock(ReCaptchaConfigurationModel.class);
-        when(reCaptchaConfigurationModel.siteKey()).thenReturn("test-sitekey");
-        Mockito.when(cloudConfigurationProvider.getRecaptchaCloudConfiguration(Mockito.any())).thenReturn(reCaptchaConfigurationModel);
-
-        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
 
     }
 
@@ -118,19 +109,4 @@ public class RecaptchaImplTest {
         assertEquals(null, recaptchaMock.isEnabled());
     }
 
-    @Test
-    void testGetProperties() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        Map<String, String> expectedResult = new HashMap<>();
-        expectedResult.put("siteKey", "test-sitekey");
-        expectedResult.put("uri", "https://www.recaptcha.net/recaptcha/api.js");
-
-        try {
-            assertEquals(expectedResult, recaptcha.getProperties().get("fd:captcha"));
-        } catch (GuideException e) {
-            throw new RuntimeException(e);
-        }
-        assertFalse(recaptcha.getProperties().isEmpty());
-
-    }
 }

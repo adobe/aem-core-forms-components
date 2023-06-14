@@ -49,20 +49,11 @@ class RecaptchaWidget {
         var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
         var widgetId;
         var url = recaptchaConfigData.properties["fd:captcha"].uri;
-        if(recaptchaConfigData.recaptchaSize == "invisible") {
+        if(recaptchaConfigData.size == "invisible") {
             gcontainer.classList.add('g-recaptcha-invisible');
         }
-         if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
-                     guideBridge.getFormModel().subscribe( (action)=>{
-                     if (action.type === 'validate') {
-                        return new Promise((resolve)=>{
-                            this.recaptchaInvisibleValidate()
-                                .then(() => resolve())
-                                .catch(() => resolve());
-                        });
-                     }
-                 	}, 'validate');
-             	}
+
+        //todo : Add validation for recaptcha invisible
 
         var successCallback = function(response) {
             element.setAttribute("af-grecaptcha-response", response);
@@ -84,7 +75,7 @@ class RecaptchaWidget {
         };
 
         var gparameters = {
-            'sitekey': recaptchaConfigData.properties["fd:captcha"].siteKey,
+            'sitekey': recaptchaConfigData.properties["fd:captcha"].siteKey || null,
             'size': recaptchaConfigData.size,
             'theme': recaptchaConfigData.theme || 'light',
             'type': recaptchaConfigData.type || 'image',
