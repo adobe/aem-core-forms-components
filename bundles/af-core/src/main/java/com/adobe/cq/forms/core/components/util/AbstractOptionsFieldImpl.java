@@ -15,10 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
@@ -64,16 +61,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
      *         {@code @else}
      * @return map containing enum values and enum names as key-value pairs
      */
-    private Map<Object, String> removeDuplicates() {
+    private LinkedHashMap<Object, String> removeDuplicates() {
 
         Object[] enumArray = this.enums;
         String[] enumNamesArray = this.enumNames;
 
         if (enumArray == null || enumNamesArray == null || enumArray.length != enumNamesArray.length) {
-            return Collections.emptyMap();
+            return new LinkedHashMap<>(Collections.emptyMap());
         }
-        Map<Object, String> map = IntStream.range(0, enumArray.length)
-            .collect(HashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), Map::putAll);
+        LinkedHashMap<Object, String> map = IntStream.range(0, enumArray.length)
+            .collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), LinkedHashMap::putAll);
 
         return map;
 
@@ -88,7 +85,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            Map<Object, String> map = removeDuplicates();
+            LinkedHashMap<Object, String> map = removeDuplicates();
             String[] enumValue = map.keySet().toArray(new String[0]);
             return ComponentUtils.coerce(type, enumValue);
         }
@@ -97,7 +94,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            Map<Object, String> map = removeDuplicates();
+            LinkedHashMap<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {

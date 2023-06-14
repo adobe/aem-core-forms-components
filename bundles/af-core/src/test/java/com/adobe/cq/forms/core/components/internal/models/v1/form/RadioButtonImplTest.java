@@ -15,9 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
@@ -46,6 +44,7 @@ public class RadioButtonImplTest {
     private static final String PATH_RADIOBUTTON_DATALAYER = CONTENT_ROOT + "/radiobutton-datalayer";
 
     private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
+    private static final String PATH_RADIOBUTTON_FOR_INSERTION_ORDER = CONTENT_ROOT + "/radiobutton-insertion-order";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -369,5 +368,21 @@ public class RadioButtonImplTest {
         RadioButton radioButton = Utils.getComponentUnderTest(PATH_RADIOBUTTON_DATALAYER, RadioButton.class, context);
         FieldUtils.writeField(radioButton, "dataLayerEnabled", true, true);
         Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_DATALAYER));
+    }
+
+    @Test
+    void testInsertionOrderForEnums() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_FOR_INSERTION_ORDER);
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+            "15", "16", "17", "18", "19", "20"));
+        assertArrayEquals(set.toArray(new Object[0]), radioButton.getEnums());
+    }
+
+    @Test
+    void testInsertionOrderForEnumNames() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_FOR_INSERTION_ORDER);
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
+        assertArrayEquals(set.toArray(new String[0]), radioButton.getEnumNames());
     }
 }
