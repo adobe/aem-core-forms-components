@@ -139,7 +139,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      */
     @Override
     public Label getLabel() {
-        return new LabelImpl(resource, getName(), i18n);
+        return new LabelImpl(resource, "", i18n);
     }
 
     @Override
