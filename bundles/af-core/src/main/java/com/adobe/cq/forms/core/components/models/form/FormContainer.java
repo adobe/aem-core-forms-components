@@ -325,7 +325,7 @@ public interface FormContainer extends Container {
     default void setContextPath(String contextPath) {}
 
     @JsonIgnore
-    default Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
+    default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
         return null;
     }
 

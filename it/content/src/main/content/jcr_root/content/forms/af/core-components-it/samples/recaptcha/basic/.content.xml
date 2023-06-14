@@ -10,7 +10,7 @@
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="basic"
-            sling:configRef="/conf/forms/core-components-it/samples/recaptcha/basic/"
+            sling:configRef="/conf/global"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
@@ -27,14 +27,14 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="CAPTCHA"
-                    sling:resourceType="forms-components-examples/components/form/recaptcha"
+                    sling:resourceType="/apps/forms-core-components-it/form/recaptcha"
                     enabled="{Boolean}true"
                     fieldType="captcha"
                     hideTitle="false"
                     name="recaptcha-test"
-                    rcCloudServicePath="test-capcha"
+                    cloudServicePath="test-captcha"
                     readOnly="{Boolean}false"
-                    recaptchaSize="normal"
+                    size="normal"
                     visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>

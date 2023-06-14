@@ -21,13 +21,16 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing Recaptcha with Sites Editor
  */
 describe('Page - Authoring', function () {
+
+    const formrecaptcha = "/apps/forms-core-components-it/form/recaptcha";
+
     // we can use these values to log in
 
     const dropRecaptchaInContainer = function () {
         const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form reCAPTCHA", afConstants.components.forms.resourceType.formrecaptcha);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form reCAPTCHA", formrecaptcha);
         cy.get('body').click(0, 0);
     }
 
@@ -35,7 +38,7 @@ describe('Page - Authoring', function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/recaptcha/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form reCAPTCHA", afConstants.components.forms.resourceType.formrecaptcha);
+        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form reCAPTCHA", formrecaptcha);
         cy.get('body').click(0, 0);
     }
 
@@ -68,7 +71,7 @@ describe('Page - Authoring', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             recaptchaEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/recaptcha",
             recaptchaEditPathSelector = "[data-path='" + recaptchaEditPath + "']",
-            recaptchaDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formrecaptcha.split("/").pop();
+            recaptchaDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + formrecaptcha.split("/").pop();
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
@@ -90,7 +93,7 @@ describe('Page - Authoring', function () {
         const pagePath = "/content/core-components-examples/library/adaptive-form/recaptcha",
             recaptchaEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/recaptcha",
             recaptchaEditPathSelector = "[data-path='" + recaptchaEditPath + "']",
-            recaptchaDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formrecaptcha.split("/").pop();
+            recaptchaDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + formrecaptcha.split("/").pop();
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes

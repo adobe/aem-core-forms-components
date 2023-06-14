@@ -19,7 +19,7 @@ describe("Form Runtime with Recaptcha Input", () => {
     const bemBlock = 'cmp-adaptiveform-recaptcha'
     const IS = "adaptiveFormRecaptcha"
     const selectors = {
-        checkboxgroup : `[data-cmp-is="${IS}"]`
+        recaptcha : `[data-cmp-is="${IS}"]`
     }
 
     let formContainer = null
@@ -59,7 +59,6 @@ describe("Form Runtime with Recaptcha Input", () => {
     it(" model's changes are reflected in the html ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        console.log("----------id----------", id)
         cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
 
         checkHTML(model.id, model.getState()).then(() => {

@@ -108,7 +108,7 @@
                                     jcr:lastModifiedBy="admin"
                                     jcr:primaryType="nt:unstructured"
                                     description="&lt;p>This is a long description.&lt;/p>"
-                                    sling:resourceType="forms-components-examples/components/form/recaptcha"/>
+                                    sling:resourceType="/apps/forms-core-components-it/form/recaptcha"/>
                               </container>
                         </guideContainer>
                     </component>

@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,6 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +41,6 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Container;
-import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
@@ -210,28 +206,28 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
         return null;
     }
 
-    @JsonIgnore
-    public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
-        Map<String, String> initialResult = new HashMap<>();
-        return traverseChild(this, callBack, initialResult);
-    }
-
-    private Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack,
-        Map<String, String> previousData) throws Exception {
-        Map<String, String> result = new HashMap<>(previousData);
-
-        for (Object component : container.getItems()) {
-            if (component instanceof Container) {
-                result = traverseChild((Container) component, callBack, result);
-            } else {
-                Map<String, String> currentData = callBack.apply((FormComponent) component);
-                if (currentData != null) {
-                    result.putAll(currentData);
-                }
-            }
-        }
-
-        return result;
-    }
+    // @JsonIgnore
+    // public Map<String, String> visit(Function<FormComponent, Map<String, String>> callBack) throws Exception {
+    // Map<String, String> initialResult = new HashMap<>();
+    // return traverseChild(this, callBack, initialResult);
+    // }
+    //
+    // private Map<String, String> traverseChild(Container container, Function<FormComponent, Map<String, String>> callBack,
+    // Map<String, String> previousData) throws Exception {
+    // Map<String, String> result = new HashMap<>(previousData);
+    //
+    // for (Object component : container.getItems()) {
+    // if (component instanceof Container) {
+    // result = traverseChild((Container) component, callBack, result);
+    // } else {
+    // Map<String, String> currentData = callBack.apply((FormComponent) component);
+    // if (currentData != null) {
+    // result.putAll(currentData);
+    // }
+    // }
+    // }
+    //
+    // return result;
+    // }
 
 }

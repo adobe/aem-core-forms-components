@@ -26,11 +26,11 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface Recaptcha extends Field {
 
-    default String getrcCloudServicePath() {
+    default String getCloudServicePath() {
         return null;
     }
 
-    default String getRecaptchaSize() {
+    default String getSize() {
         return "normal";
     }
 

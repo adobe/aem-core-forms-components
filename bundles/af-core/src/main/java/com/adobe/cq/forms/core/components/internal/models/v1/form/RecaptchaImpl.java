@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -61,11 +62,13 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "rcCloudServicePath")
-    protected String rcCloudServicePath;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Named("rcCloudServicePath")
+    protected String cloudServicePath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "recaptchaSize")
-    protected String recaptchaSize;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Named("recaptchaSize")
+    protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
 
@@ -76,13 +79,13 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private static final String RECAPTCHA_URI = "uri";
 
     @Override
-    public String getrcCloudServicePath() {
-        return rcCloudServicePath;
+    public String getCloudServicePath() {
+        return cloudServicePath;
     }
 
     @Override
-    public String getRecaptchaSize() {
-        return recaptchaSize;
+    public String getSize() {
+        return size;
     }
 
     @JsonIgnore

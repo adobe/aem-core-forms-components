@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,7 +85,7 @@ public class RecaptchaImplTest {
     @Test
     void testGetRecaptchaSize() {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        assertEquals("compact", recaptcha.getRecaptchaSize());
+        assertEquals("compact", recaptcha.getSize());
         Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
@@ -91,7 +94,7 @@ public class RecaptchaImplTest {
     @Test
     void testGetConfigurationPath() {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        assertEquals("v2checkbox", recaptcha.getrcCloudServicePath());
+        assertEquals("v2checkbox", recaptcha.getCloudServicePath());
         Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
@@ -118,8 +121,12 @@ public class RecaptchaImplTest {
     @Test
     void testGetProperties() {
         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Map<String, String> expectedResult = new HashMap<>();
+        expectedResult.put("siteKey", "test-sitekey");
+        expectedResult.put("uri", "https://www.recaptcha.net/recaptcha/api.js");
+
         try {
-            assertEquals("test-sitekey", recaptcha.getProperties().get("siteKey"));
+            assertEquals(expectedResult, recaptcha.getProperties().get("fd:captcha"));
         } catch (GuideException e) {
             throw new RuntimeException(e);
         }
