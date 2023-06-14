@@ -6,7 +6,7 @@
     "fieldType" : "panel",
     "label": {
       "visible": true,
-      "value": "\n"
+      "value": ""
     },
     "checkboxgroup1" : {
       "jcr:primaryType": "nt:unstructured",
@@ -14,7 +14,7 @@
       "name" : "checkboxgroup1686209791237",
       "fieldType" : "checkbox-group",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "datepicker1": {
@@ -23,7 +23,7 @@
       "name" : "datepicker1686209801377",
       "fieldType" : "date-input",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "dropdown1": {
@@ -32,7 +32,7 @@
       "name" : "dropdown1686209805456",
       "fieldType" : "drop-down",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "fileinput1": {
@@ -41,7 +41,7 @@
       "name" : "fileinput1686209827629",
       "fieldType" : "file-input",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "numberinput1": {
@@ -50,7 +50,7 @@
       "name" : "numberinput1686209832358",
       "fieldType" : "number-input",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "radiobutton1": {
@@ -59,7 +59,7 @@
       "name" : "radiobutton1686209837040",
       "fieldType" : "radio-group",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     },
     "textinput1": {
@@ -68,7 +68,7 @@
       "name" : "textinput1686209857790",
       "fieldType" : "text-input",
       "label": {
-        "value": "\n"
+        "value": ""
       }
     }
   },

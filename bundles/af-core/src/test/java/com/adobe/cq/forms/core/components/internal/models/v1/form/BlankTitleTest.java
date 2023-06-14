@@ -80,10 +80,10 @@ public class BlankTitleTest {
     @Test
     void testComponentsWithBlankTitle() {
         Panel panel = Utils.getComponentUnderTest(PANEL_PATH_FOR_BLANK_TITLE, Panel.class, context);
-        assertEquals("\n", panel.getLabel().getValue());
+        assertEquals("", panel.getLabel().getValue());
         for (ComponentExporter items : panel.getItems()) {
             AbstractBaseImpl item = (AbstractBaseImpl) items;
-            assertEquals("\n", item.getLabel().getValue());
+            assertEquals("", item.getLabel().getValue());
         }
     }
 

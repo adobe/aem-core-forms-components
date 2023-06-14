@@ -31,10 +31,12 @@ public class LabelImpl implements Label {
     private static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
 
     private ValueMap properties;
+    private String defaultTitle;
     private I18n i18n;
 
-    public LabelImpl(Resource field, I18n i18n) {
+    public LabelImpl(Resource field, String defaultTitle, I18n i18n) {
         this.properties = field.getValueMap();
+        this.defaultTitle = defaultTitle;
         this.i18n = i18n;
     }
 
@@ -76,6 +78,6 @@ public class LabelImpl implements Label {
      */
     @Override
     public String getValue() {
-        return ComponentUtils.translate(properties.get(PN_TITLE, "\n"), PN_TITLE, properties, i18n);
+        return ComponentUtils.translate(properties.get(PN_TITLE, this.defaultTitle), PN_TITLE, properties, i18n);
     }
 }
