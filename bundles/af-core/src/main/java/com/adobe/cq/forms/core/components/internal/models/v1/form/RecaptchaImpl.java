@@ -27,9 +27,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.osgi.service.component.annotations.Reference;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
@@ -69,11 +67,13 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private static final String RECAPTCHA_URI = "uri";
 
     @Override
+    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
     @Override
+    @JsonIgnore
     public String getSize() {
         return size;
     }
@@ -85,10 +85,8 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         String siteKey = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null) {
-            //todo: Add cloud configuration provider service
+            // todo: Add cloud configuration provider service
         }
-        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
-        customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         return customCaptchaProperties;
     }
 
@@ -96,7 +94,8 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         try {
-            if (getRecaptchaProperties().size() > 0) {
+            Map<String, Object> customCaptchaProperties = getRecaptchaProperties();
+            if (customCaptchaProperties != null && customCaptchaProperties.size() > 0) {
                 properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
             }
         } catch (GuideException e) {

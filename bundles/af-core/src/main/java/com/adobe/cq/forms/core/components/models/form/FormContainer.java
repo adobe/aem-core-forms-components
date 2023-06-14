@@ -17,10 +17,10 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
-import org.osgi.util.function.Function;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
