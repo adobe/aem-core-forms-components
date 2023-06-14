@@ -66,14 +66,14 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
     private static final String RECAPTCHA_URI = "uri";
 
-    @Override
     @JsonIgnore
+    @Override
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
-    @Override
     @JsonIgnore
+    @Override
     public String getSize() {
         return size;
     }
