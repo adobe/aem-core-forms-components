@@ -14,8 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 (function (window, ns, Coral, channel) {
-    const FRAGMENT_CREATION_DIALOG_PATH = "core/fd/components/form/panelcontainer/v1/panelcontainer/cq:fragmentCreationDialog.html";
-
+    const FRAGMENT_CREATION_DIALOG_PATH = "core/fd/components/form/panelcontainer/v1/panelcontainer/fragmentCreationDialog.html";
 
     /* Check if fieldType = panel field is present on this component**/
     window.CQ.FormsCoreComponents.editorhooks.isFieldTypePanel = function(editable) {
