@@ -73,10 +73,6 @@
                             jcr:primaryType="nt:unstructured"
                             text="none"
                             value="none"/>
-                    <xmlschema
-                            jcr:primaryType="nt:unstructured"
-                            text="xmlschema"
-                            value="xmlschema"/>
                     <jsonschema
                             jcr:primaryType="nt:unstructured"
                             text="jsonschema"

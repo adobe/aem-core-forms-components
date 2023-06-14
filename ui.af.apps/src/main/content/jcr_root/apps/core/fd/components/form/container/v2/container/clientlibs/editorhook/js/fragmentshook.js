@@ -16,19 +16,10 @@
 (function (window, ns, Coral, channel) {
     const FRAGMENT_CREATION_DIALOG_PATH = "core/fd/components/form/panelcontainer/v1/panelcontainer/cq:fragmentCreationDialog.html";
 
-    function getGuideContainerProperties(editablePath) {
-        const result = $.ajax({
-            type: 'GET',
-            async: false,
-            url: Granite.HTTP.externalize( editablePath + ".0.json"),
-            cache: false
-        });
-        return result.responseText;
-    }
 
     /* Check if fieldType = panel field is present on this component**/
     window.CQ.FormsCoreComponents.editorhooks.isFieldTypePanel = function(editable) {
-        const guideContainer = getGuideContainerProperties(editable.path);
+        const guideContainer = window.CQ.FormsCoreComponents.editorhooks.getGuideContainerProperties(editable.path);
         let fieldType;
         if (guideContainer != null && guideContainer != "") {
             const properties = JSON.parse(guideContainer);
@@ -53,6 +44,7 @@
         };
     };
 
+    // TODO: Fragment creation API
     const fragmentCreationDialogDef = (componentPath) =>  {
         return {
             getConfig : function getConfig() {
