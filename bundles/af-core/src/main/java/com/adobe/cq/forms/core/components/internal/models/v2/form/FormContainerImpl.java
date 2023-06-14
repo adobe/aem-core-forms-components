@@ -30,7 +30,7 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.util.function.Function;
+import java.util.function.Function;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
