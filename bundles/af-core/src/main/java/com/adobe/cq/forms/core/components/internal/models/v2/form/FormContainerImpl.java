@@ -269,14 +269,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     private <FormComponent, R> R traverseChild(Container container, Function<FormComponent, R> callBack) throws Exception {
 
-        for (Object component : container.getItems()) {
+        R result = null;
+        for (ComponentExporter component : container.getItems()) {
             if (component instanceof Container) {
-                traverseChild((Container) component, callBack);
+                result = traverseChild((Container) component, callBack);
             } else {
-                return callBack.apply((FormComponent) component);
+                result = callBack.apply((FormComponent) component);
             }
         }
-        return null;
+        return result;
     }
 
     @Override
