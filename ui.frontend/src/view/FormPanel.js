@@ -56,6 +56,19 @@ export default class FormPanel extends FormFieldBase {
         this.children.push(childView);
     }
 
+    getCountOfAllChildrenInModel() {
+        var countOfChildren = 0;
+        for (let key in this.getModel()._children) {
+            var child = this.getModel()._children[key];
+            if (child.minOccur != undefined && child.maxOccur != undefined && child._children != undefined) {
+                countOfChildren += child._children.length;
+            } else {
+                countOfChildren += 1;
+            }
+        }
+        return countOfChildren;
+    }
+
     getChild(id) {
         for (let key in this.children) {
             if (this.children[key].id === id) {

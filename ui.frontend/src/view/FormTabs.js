@@ -322,7 +322,7 @@ export default class FormTabs extends FormPanel {
     addChild(childView) {
         super.addChild(childView);
         this.#cacheTemplateHTML(childView);
-        if (this.getModel()._children.length === this.children.length) {
+        if (this.getCountOfAllChildrenInModel() === this.children.length) {
             this.cacheClosestFieldsInView();
             this.handleHiddenChildrenVisibility();
         }

@@ -427,7 +427,7 @@
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
             //when all children are available in view
-            if (this.getModel()._children.length === this.children.length) {
+            if (this.getCountOfAllChildrenInModel() === this.children.length) {
                 this.cacheClosestFieldsInView();
                 this.handleHiddenChildrenVisibility();
             }
