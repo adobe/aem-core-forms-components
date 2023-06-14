@@ -36,6 +36,7 @@
         static bemBlock = "cmp-adaptiveform-wizard";
         static #tabIdSuffix = "_wizard-item-nav";
         static #wizardPanelIdSuffix = "__wizardpanel";
+        static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
 
         static selectors = {
             self: "[data-" + Wizard.NS + '-is="' + Wizard.IS + '"]',
@@ -113,8 +114,11 @@
             return Wizard.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            const index = this.#getTabIndexById(id + '_wizard-item-nav');
+            this.#navigate(index);
         }
 
         getWidget() {
@@ -282,18 +286,43 @@
             var validationErrorList = activeChildView.getModel().validate();
             if (validationErrorList === undefined || validationErrorList.length == 0) {
                 var tabs = this.#getCachedTabs();
-                if (tabs && activeIndex < tabs.length - 1) {
-                    this.#navigateAndFocusTab(activeIndex + 1);
+                var nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
+                if (tabs && nextVisibleIndex >= 0) {
+                    this.#navigateAndFocusTab(nextVisibleIndex);
                 }
             }
         }
 
+
         #navigateToPreviousTab() {
             var activeIndex = this.#_active;
             var tabs = this.#getCachedTabs();
-            if (tabs && activeIndex > 0) {
-                this.#navigateAndFocusTab(activeIndex - 1);
+            var lastVisibleIndex = this.#findLastVisibleChildIndex(activeIndex);
+            if (tabs && lastVisibleIndex >= 0) {
+                this.#navigateAndFocusTab(lastVisibleIndex);
             }
+        }
+
+        #findNextVisibleChildIndex(currentIndex) {
+            var tabs = this.#getCachedTabs();
+            for (var i = currentIndex + 1; i < tabs.length; i++) {
+                let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
+                if (isVisible === null || isVisible === 'true') {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        #findLastVisibleChildIndex(currentIndex) {
+            var tabs = this.#getCachedTabs();
+            for (var i = currentIndex - 1; i >= 0; i--) {
+                let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
+                if (isVisible === null || isVisible === 'true') {
+                    return i;
+                }
+            }
+            return -1;
         }
 
 
@@ -400,6 +429,7 @@
             //when all children are available in view
             if (this.getModel()._children.length === this.children.length) {
                 this.cacheClosestFieldsInView();
+                this.handleHiddenChildrenVisibility();
             }
         }
 
@@ -422,6 +452,7 @@
             let beforeViewElement = result.beforeViewElement;
             beforeViewElement.after(elementToEnclose);
             elementToEnclose.append(htmlElement.querySelector('#' + addedModel.id));
+            return elementToEnclose;
         }
 
         #cacheTemplateHTML(childView) {
@@ -498,6 +529,17 @@
                 result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
             }
             return result;
+        }
+
+        updateChildVisibility(visible, state) {
+            this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
+            var activeTabNavElement = this.#getCachedTabs()[this.#_active];
+            if (!visible && activeTabNavElement.id === state.id + Wizard.#tabIdSuffix) {
+                let child = this.findFirstVisibleChild(this.#getCachedTabs());
+                if (child) {
+                    this.#navigateAndFocusTab(this.#getTabIndexById(child.id));
+                }
+            }
         }
     }
 

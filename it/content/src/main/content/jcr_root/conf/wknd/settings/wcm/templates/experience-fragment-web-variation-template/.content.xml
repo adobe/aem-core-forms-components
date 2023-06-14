@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:lastModified="{Date}2023-05-24T16:12:27.292+05:30"
+        cq:lastModifiedBy="admin"
+        cq:templateType="/conf/wknd/settings/wcm/template-types/empty-experience-fragment"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Experience Fragment Web Variation Template"
+        status="enabled"/>
+</jcr:root>

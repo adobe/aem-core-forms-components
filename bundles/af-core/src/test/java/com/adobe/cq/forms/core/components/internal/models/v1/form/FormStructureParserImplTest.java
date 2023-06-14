@@ -119,6 +119,22 @@ public class FormStructureParserImplTest {
         assertNull(formStructureParser.getClientLibRefFromFormContainer());
     }
 
+    @Test
+    public void containsFormContainer_should_return_true() {
+        String path = JCR_CONTENT_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        boolean result = formStructureParser.containsFormContainer();
+        assertTrue(result);
+    }
+
+    @Test
+    public void containsFormContainer_should_return_false() {
+        String path = FORM_CONTAINER_PATH + "/container1";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        boolean result = formStructureParser.containsFormContainer();
+        assertFalse(result);
+    }
+
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();

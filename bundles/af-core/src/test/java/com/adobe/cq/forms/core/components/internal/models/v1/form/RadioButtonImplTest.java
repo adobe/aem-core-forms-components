@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -43,6 +44,8 @@ public class RadioButtonImplTest {
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
     private static final String PATH_RADIOBUTTON = CONTENT_ROOT + "/radiobutton";
     private static final String PATH_RADIOBUTTON_DATALAYER = CONTENT_ROOT + "/radiobutton-datalayer";
+
+    private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -267,6 +270,16 @@ public class RadioButtonImplTest {
     }
 
     @Test
+    void testDuplicateEnum() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.keySet().toArray(new Object[0]), radioButton.getEnums());
+    }
+
+    @Test
     void testEnforceEnum() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
         assertEquals(true, radioButton.isEnforceEnum());
@@ -294,6 +307,16 @@ public class RadioButtonImplTest {
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
         assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
+    }
+
+    @Test
+    void testGetEnumNamesWithDuplicateEnumValues() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS);
+        Map<Object, String> map = new HashMap<>();
+        map.put("0", "Item 1");
+        map.put("1", "Item 2");
+        map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), radioButton.getEnumNames());
     }
 
     @Test

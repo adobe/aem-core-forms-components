@@ -34,6 +34,7 @@ var formsConstants = {
                 "footer": "/apps/forms-components-examples/components/form/footer",
                 "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
                 "tabsontop": "/apps/forms-components-examples/components/form/tabsontop",
+                "verticaltabs":"/apps/forms-components-examples/components/form/verticaltabs",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
                 "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
@@ -43,6 +44,10 @@ var formsConstants = {
                 "wizard": "/apps/forms-components-examples/components/form/wizard",
                 "title": "/apps/forms-components-examples/components/form/title"
             }
+        },
+        resourceType : {
+            "contentfragment": "/apps/core-components-examples/components/contentfragment",
+            "experiencefragment": "/apps/core-components-examples/components/experiencefragment"
         }
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",

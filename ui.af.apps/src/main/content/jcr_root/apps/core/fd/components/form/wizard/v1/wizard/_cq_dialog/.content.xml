@@ -35,9 +35,8 @@
                 <items jcr:primaryType="nt:unstructured">
                     <basic
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Basic"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        path="/libs/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic"/>
                     <repeat
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Repeat Wizard"
@@ -88,6 +87,30 @@
                             </columns>
                         </items>
                     </repeat>
+                    <containerItems
+                      jcr:primaryType="nt:unstructured"
+                      jcr:title="Items"
+                      sling:resourceType="granite/ui/components/coral/foundation/container"
+                      margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                              margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <containerItems
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="core/wcm/components/commons/editor/dialog/childreneditor/v1/childreneditor"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </containerItems>
                     <help
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"

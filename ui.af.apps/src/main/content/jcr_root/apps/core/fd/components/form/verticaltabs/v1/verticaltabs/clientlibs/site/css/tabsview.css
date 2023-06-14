@@ -1,0 +1,36 @@
+.cmp-verticaltabs{
+
+}
+.cmp-verticaltabs__label{
+
+}
+
+.cmp-verticaltabs__tabs-container {
+}
+
+.cmp-verticaltabs__tablist{
+}
+
+.cmp-verticaltabs__tab{
+}
+
+.cmp-verticaltabs__tab.cmp-verticaltabs__tab--active{
+
+}
+
+.cmp-verticaltabs__tabpanel{
+  display: none;
+}
+
+.cmp-verticaltabs__tabpanel.cmp-verticaltabs__tabpanel--active{
+  display: block;
+}
+.cmp-verticaltabs__longdescription {
+
+}
+.cmp-verticaltabs__shortdescription {
+
+}
+.cmp-verticaltabs__questionmark{
+
+}

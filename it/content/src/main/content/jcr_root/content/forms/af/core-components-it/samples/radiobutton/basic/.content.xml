@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-20T12:24:58.431+05:30"
+            cq:lastModified="{Date}2023-05-02T17:00:53.318+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -154,6 +154,23 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </radiobutton_1637724387>
+            <radiobutton_1717618709
+                    jcr:lastModified="{Date}2023-05-02T17:00:53.312+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Radio Button 7"
+                    sling:resourceType="forms-components-examples/components/form/radiobutton"
+                    enabled="{Boolean}true"
+                    enum="[0,1,0]"
+                    enumNames="[Item 1,Item 2,Item 3]"
+                    fieldType="radio-group"
+                    hideTitle="false"
+                    name="radiobutton_17176187091683027029232"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

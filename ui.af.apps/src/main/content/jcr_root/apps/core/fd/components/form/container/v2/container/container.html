@@ -23,6 +23,7 @@
       data-cmp-context-path="${request.contextPath}"
       data-cmp-path="${resource.path}"
       class="cmp-adaptiveform-container cmp-container">
+
     <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
          data-sly-use.allowedTemplate="allowedcomponents.html"
          data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>

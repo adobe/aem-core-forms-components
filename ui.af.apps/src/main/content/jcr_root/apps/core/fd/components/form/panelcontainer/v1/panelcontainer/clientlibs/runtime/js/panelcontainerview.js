@@ -39,7 +39,8 @@
             return Panel.IS;
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
         }
 
@@ -103,8 +104,8 @@
                 } else {
                     result.parentElement.insertBefore(htmlElement, result.parentElement.firstElementChild);
                 }
-
             }
+            return htmlElement;
         }
 
         handleChildRemoval(removedInstanceView) {

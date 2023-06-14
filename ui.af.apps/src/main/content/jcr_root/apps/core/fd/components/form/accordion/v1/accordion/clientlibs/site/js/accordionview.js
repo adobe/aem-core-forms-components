@@ -19,7 +19,8 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormAccordion";
-        static bemBlock = 'cmp-accordion'
+        static bemBlock = 'cmp-accordion';
+        static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
         _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
@@ -135,8 +136,23 @@
             return this.element.querySelector(Accordion.selectors.qm);
         }
 
-        setFocus() {
+        setFocus(id) {
+            super.setFocus(id);
             this.setActive();
+            this.#collapseAllItems();
+            const item = this.#getItemById(id + '-item');
+            this.#expandItem(item)
+        }
+
+        #collapseAllItems() {
+            var items = this.#getCachedItems();
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    if (this.#isItemExpanded(items[i])) {
+                        this.#collapseItem(items[i])
+                    }
+                }
+            }
         }
 
         /**
@@ -399,6 +415,7 @@
             this.#cacheTemplateHTML(childView);
             if (this.getModel()._children.length === this.children.length) {
                 this.cacheClosestFieldsInView();
+                this.handleHiddenChildrenVisibility();
             }
         }
 
@@ -421,6 +438,7 @@
                     result.parentElement.append(accordionItemDivToBeRepeated);
                 }
             }
+            return accordionItemDivToBeRepeated;
         }
 
         handleChildAddition(childView) {
@@ -603,6 +621,22 @@
          */
         #convertToPanelId(idToConvert) {
             return idToConvert.substring(0, idToConvert.lastIndexOf("-")) + Accordion.idSuffixes.panel;
+        }
+
+        updateChildVisibility(visible, state) {
+            this.updateVisibilityOfNavigationElement(this.#getItemById(state.id + Accordion.idSuffixes.item), visible);
+            if (!visible) {
+                var expandedItems = this.#getExpandedItems();
+                for (let i = 0; i < expandedItems.length; i++) {
+                    if (expandedItems[i].getAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE) === 'false') {
+                        this.#collapseItem(expandedItems[i]);
+                    }
+                }
+                let child = this.findFirstVisibleChild(this.#getCachedItems());
+                if (child) {
+                    this.#expandItem(child);
+                }
+            }
         }
     }
 
