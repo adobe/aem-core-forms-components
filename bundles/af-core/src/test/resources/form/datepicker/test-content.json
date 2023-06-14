@@ -70,6 +70,7 @@
     "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
     "fieldType": "date-input",
     "description": "Date of Birth",
+    "jcr:title" : "DoB",
     "name": "DoB",
     "type": "string",
     "label": {
