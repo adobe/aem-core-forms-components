@@ -15,9 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
-import java.util.function.Function;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
 
