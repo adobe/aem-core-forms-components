@@ -293,7 +293,7 @@
         static toggleComponentVisibility(dialog, togglerClass, displayElementClass) {
             const toggler = dialog.find(togglerClass)[0];
             const displayElement = dialog.find(displayElementClass);
-            if(toggler.checked) {
+            if(toggler?.checked) {
                 this.showComponent(displayElement, "div");
             }
             else {

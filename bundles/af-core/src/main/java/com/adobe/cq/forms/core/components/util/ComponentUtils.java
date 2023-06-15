@@ -16,11 +16,9 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
@@ -35,6 +33,7 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_NAME;
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
 /**
@@ -165,4 +164,25 @@ public class ComponentUtils {
         return policy;
     }
 
+    public static List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
+        if (policy == null) {
+            return new ArrayList<>();
+        }
+        Resource policyResource = resourceResolver.resolve(policy.getPath());
+        List<String> groupNames = new ArrayList<>();
+        List<Resource> customPropertiesResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false)
+            .collect(Collectors.toList());
+
+        customPropertiesResourceList.forEach((customPropertiesResource) -> {
+            customPropertiesResource.getChildren().forEach((customPropertiesGroup) -> {
+                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
+                    if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
+                        groupNames.add(entry.getValue().toString());
+                    }
+                }
+
+            });
+        });
+        return groupNames;
+    }
 }

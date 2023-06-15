@@ -77,8 +77,6 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private static final String CUSTOM_FORMAT_VALUE = "customFormatValue";
     private static final String NN_DIALOG = "cq:dialog";
 
-    private static final String CUSTOM_PROPERTY_NAME = "customPropertyGroupName";
-
     /**
      * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
      *
@@ -201,7 +199,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                     policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
                         resourceResolver);
                     if (policy != null) {
-                        List<String> customPropertyGroups = this.getCustomPropertyGroupsFromPolicy(policy, resourceResolver);
+                        List<String> customPropertyGroups = ComponentUtils.getCustomPropertyGroupsFromPolicy(policy, resourceResolver);
                         for (String groupName : customPropertyGroups) {
                             resources.add(getResourceForDropdownDisplay(resourceResolver, groupName, groupName));
                         }
@@ -257,24 +255,5 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             }
         }
         return resources;
-    }
-
-    private List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
-        Resource policyResource = resourceResolver.resolve(policy.getPath());
-        List<String> groupNames = new ArrayList<>();
-        List<Resource> customPropertiesResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false)
-            .collect(Collectors.toList());
-
-        customPropertiesResourceList.forEach((customPropertiesResource) -> {
-            customPropertiesResource.getChildren().forEach((customPropertiesGroup) -> {
-                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                    if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
-                        groupNames.add(entry.getValue().toString());
-                    }
-                }
-
-            });
-        });
-        return groupNames;
     }
 }
