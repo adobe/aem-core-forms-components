@@ -405,8 +405,11 @@
                 var repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
                 repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
                 this.#refreshActive();
-                this.#getTabIndexById()
-                this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
+                this.#getTabIndexById();
+                if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
+                    this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
+                }
+
             }
         }
 

@@ -38,5 +38,22 @@ describe("Min Occur Repeatability Tests in Tabs on Top", () => {
         }
     })
 
+    it("With min occur, focus should remain at first element", () => {
+        cy.get(".cmp-tabs__tab").should('have.length', 6).then(() => {
+            cy.get(".cmp-tabs__tab").eq(0).should('have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(0).should('have.class', 'cmp-tabs__tabpanel--active');
+            cy.get(".cmp-tabs__tab").eq(1).should('not.have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(1).should('not.have.class', 'cmp-tabs__tabpanel--active');
+            cy.get(".cmp-tabs__tab").eq(2).should('not.have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(2).should('not.have.class', 'cmp-tabs__tabpanel--active');
+            cy.get(".cmp-tabs__tab").eq(3).should('not.have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(3).should('not.have.class', 'cmp-tabs__tabpanel--active');
+            cy.get(".cmp-tabs__tab").eq(4).should('not.have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(4).should('not.have.class', 'cmp-tabs__tabpanel--active');
+            cy.get(".cmp-tabs__tab").eq(5).should('not.have.class', 'cmp-tabs__tab--active');
+            cy.get(".cmp-tabs__tabpanel").eq(5).should('not.have.class', 'cmp-tabs__tabpanel--active');
+        })
+    })
+
     //TODO Add setfocus test minoccur case
 })
