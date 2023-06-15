@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
-import com.google.common.base.Preconditions;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -67,12 +66,14 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     private Map<Object, String> removeDuplicates() {
 
         Object[] enumArray = this.enums;
-        Preconditions.checkNotNull(enumArray, "Variable must not be null");
         String[] enumNamesArray = this.enumNames;
-        Preconditions.checkNotNull(enumNamesArray, "Variable must not be null");
 
-        LinkedHashMap<Object, String> map = IntStream.range(0, enumArray.length)
-            .collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), LinkedHashMap::putAll);
+        LinkedHashMap<Object, String> map = new LinkedHashMap<>();
+
+        if (enumArray != null && enumNamesArray != null && enumArray.length == enumNamesArray.length) {
+            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]),
+                LinkedHashMap::putAll);
+        }
 
         return map;
 
