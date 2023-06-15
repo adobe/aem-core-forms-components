@@ -1,7 +1,7 @@
 {
   "Offer": {
     "type": "1 Check",
-    "amount": "101"
+    "amount": 101
   },
   "PersonalLoan": {
     "witness": [{

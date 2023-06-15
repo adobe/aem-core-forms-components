@@ -22,15 +22,16 @@
         var onScriptLoad = function (evnt) {
             var formApp = evnt.detail.formApp;
             formApp.initializeAEMForm({
-                "form" : "${form.isFormSelected @ context='scriptString'}",
-                "submitType" : "${form.submitType @ context='scriptString'}",
-                "thankyouConfig" : "${form.thankyouConfig  @ context='scriptString'}",
+                "form": "${form.isFormSelected @ context='scriptString'}",
+                "submitType": "${form.submitType @ context='scriptString'}",
+                "thankyouConfig": "${form.thankyouConfig  @ context='scriptString'}",
                 "thankyouMessage": "${form.thankyouMessage  @ context='scriptString'}",
-                "thankyouPage" : "${form.thankyouPage  @ context='scriptString'}",
-                "useIframe" : "${form.useIframe @ context='scriptString'}",
-                "height" : "${form.height @ context='scriptString'}",
-                "aemFormComponentPath" : "${resource.path @ context='scriptString'}",
-                "enableFocusOnFirstField" : "${form.enableFocusOnFirstField @ context='scriptString'}"
+                "thankyouPage": "${form.thankyouPage  @ context='scriptString'}",
+                "useIframe": "${form.useIframe @ context='scriptString'}",
+                "height": "${form.height @ context='scriptString'}",
+                "aemFormComponentPath": "${resource.path @ context='scriptString'}",
+                "enableFocusOnFirstField": "${form.enableFocusOnFirstField @ context='scriptString'}",
+                "version": "${form.formVersion @ context='scriptString'}"
             });
             //remove the event listener after completion
             window.removeEventListener("aemform-onscript-load", onScriptLoad);
@@ -41,7 +42,7 @@
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
-        <iframe class="cmp-aemform__iframecontent"
+    <iframe class="cmp-aemform__iframecontent"
             src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
             stye="width:100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>

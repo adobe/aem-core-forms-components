@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum FieldType {
     TEXT_INPUT("text-input"),
+    EMAIL("email"),
+    CAPTCHA("captcha"),
     MULTILINE_INPUT("multiline-input"),
     NUMBER_INPUT("number-input"),
     DATE_INPUT("date-input"),

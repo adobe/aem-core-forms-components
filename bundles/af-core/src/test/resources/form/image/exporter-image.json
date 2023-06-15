@@ -1,10 +1,7 @@
 {
   "id": "image-7cfd7f1fe4",
   "fieldType": "image",
-  "name": "abc",
-  "value": "/content/image.img.png",
-  "visible": false,
-  "altText": "abc",
+  "name": "emptyImage",
   "events": {
     "custom:setProperty": [
       "$event.payload"

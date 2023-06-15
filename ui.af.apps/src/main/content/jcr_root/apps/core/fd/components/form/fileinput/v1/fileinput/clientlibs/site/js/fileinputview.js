@@ -94,7 +94,7 @@
             let widgetElement = this.getWidget ? this.getWidget() : null;
             if (widgetElement) {
                 widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for',this.getId());
+                this.#getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
             }
 
         }

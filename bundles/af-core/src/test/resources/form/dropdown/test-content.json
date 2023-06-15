@@ -4,11 +4,21 @@
     "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
     "name" : "abc",
     "jcr:title" : "def",
+    "fieldType": "drop-down",
+    "enum" : [0, 1, 2],
+    "enumNames" : ["m", "f", "o"]
+  },
+  "dropdown-1" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "name" : "abc",
+    "jcr:title" : "def",
     "hideTitle" : false,
     "description" : "dummy",
     "visible" : false,
     "readOnly": false,
     "enabled": true,
+    "required": false,
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
@@ -24,7 +34,7 @@
     "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
     "name" : "abc",
     "jcr:title" : "def",
-    "hideTitle" : false,
+    "hideTitle" : true,
     "description" : "dummy",
     "visible" : false,
     "assistPriority" : "custom",
@@ -39,7 +49,8 @@
     "enum" : [0, 1, 2],
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
-    "maxItems" : 2
+    "maxItems" : 2,
+    "required": true
   },
   "dropdown2" : {
     "jcr:primaryType": "nt:unstructured",
@@ -55,5 +66,78 @@
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
     "maxItems" : 2
+  },
+  "dropdown-datalayer": {
+    "id": "dropdown-bb1c9e883e",
+    "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
+    "fieldType": "drop-down",
+    "name": "Favorite Animal",
+    "jcr:title" : "Favorite Animal",
+    "description": "What is your favorite animal?",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Owl",
+      "Wolf"
+    ],
+    "label": {
+      "value": "Favorite Animal"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/dropdown"
+    },
+    "enum": [
+      "Owl",
+      "Wolf"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-duplicate-enum": {
+    "id": "dropdown-076f3bd737",
+    "fieldType": "drop-down",
+    "name": "dropdown_17244019561683095189486",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Item 1",
+      "Item 2",
+      "Item 3"
+    ],
+    "default": "0",
+    "label": {
+      "visible": true,
+      "value": "Dropdown 7"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/dropdown/basic/jcr:content/guideContainer/dropdown_1724401956"
+    },
+    "enum": [
+      "0",
+      "1",
+      "0"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
   }
 }

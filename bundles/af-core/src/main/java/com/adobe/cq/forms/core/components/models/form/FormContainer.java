@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -32,7 +33,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-// todo: have to add rule events here
 public interface FormContainer extends Container {
 
     /**
@@ -79,7 +79,7 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
-        return "0.11.0-Pre";
+        return "0.12.0";
     }
 
     /*
@@ -323,5 +323,21 @@ public interface FormContainer extends Container {
      */
     @JsonIgnore
     default void setContextPath(String contextPath) {}
+
+    @JsonIgnore
+    default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
+        return null;
+    }
+
+    /**
+     * Returns site page path if dropped in sites else the form page path.
+     *
+     * @return parent page path before jcr:content
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonIgnore
+    default String getParentPagePath() {
+        return null;
+    }
 
 }

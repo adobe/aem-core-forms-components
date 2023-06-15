@@ -33,6 +33,7 @@
                 jcr:primaryType="nt:unstructured"
                 condition="CQ.FormsCoreComponents.editorhooks.isReplaceable"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
+                icon="shuffle"
                 text="Replace"/>
     </cq:actionConfigs>
 </jcr:root>

@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
- const sitesSelectors = require('../../libs/commons/sitesSelectors'),
-     afConstants = require('../../libs/commons/formsConstants');
+const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    afConstants = require('../../libs/commons/formsConstants');
 
 describe('Page - Authoring', function () {
 
@@ -43,9 +43,12 @@ describe('Page - Authoring', function () {
             dropDatePickerInContainer();
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(datePickerDrop);
+        cy.invokeEditableAction("[data-action='CONFIGURE']").then(() => {
+            cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                cy.deleteComponentByPath(datePickerDrop);
+            });
+        })
+
     }
 
     const testDatePickerBasicTab = function (datePickerEditPathSelector, datePickerDrop, isSites) {
@@ -75,13 +78,15 @@ describe('Page - Authoring', function () {
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get(bemEditDialog).contains('Validation').click({force:true});
-        cy.get("[name='./minimumDate']").should("exist");
-        cy.get("[name='./minimumMessage']").should("exist");
-        cy.get("[name='./maximumDate']").should("exist");
-        cy.get("[name='./maximumMessage']").should("exist");
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(datePickerDrop);
+        cy.get(bemEditDialog).contains('Validation').click().then(() => {
+            cy.get("[name='./minimumDate']").should("exist");
+            cy.get("[name='./minimumMessage']").should("exist");
+            cy.get("[name='./maximumDate']").should("exist");
+            cy.get("[name='./maximumMessage']").should("exist");
+            cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                cy.deleteComponentByPath(datePickerDrop);
+            })
+        });
     }
 
     context('Open Forms Editor', function () {
@@ -91,8 +96,8 @@ describe('Page - Authoring', function () {
             datePickerDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.datepicker.split("/").pop();
 
         beforeEach(function () {
-          // this is done since cypress session results in 403 sometimes
-          cy.openAuthoring(pagePath);
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
         });
 
 
@@ -105,8 +110,10 @@ describe('Page - Authoring', function () {
             testDatePickerEditDialog(datePickerEditPathSelector, datePickerDrop);
         });
 
-        it('verify Basic tab in edit dialog of DatePicker', function () {
-            testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop);
+        it('verify Basic tab in edit dialog of DatePicker', {retries: 3}, function () {
+            cy.cleanTest(datePickerDrop).then(function () {
+                testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop);
+            });
         });
 
         it('verify Validation tab in edit dialog of DatePicker', function () {
@@ -115,33 +122,33 @@ describe('Page - Authoring', function () {
 
     });
 
- context('Open Sites Editor', function () {
-     const   pagePath = "/content/core-components-examples/library/adaptive-form/datepicker",
-         datePickerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/datepicker",
-         datePickerEditPathSelector = "[data-path='" + datePickerEditPath + "']",
-         datePickerDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.datepicker.split("/").pop();
+    context('Open Sites Editor', function () {
+        const pagePath = "/content/core-components-examples/library/adaptive-form/datepicker",
+            datePickerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/datepicker",
+            datePickerEditPathSelector = "[data-path='" + datePickerEditPath + "']",
+            datePickerDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.datepicker.split("/").pop();
 
-     beforeEach(function () {
-       // this is done since cypress session results in 403 sometimes
-       cy.openAuthoring(pagePath);
-     });
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
 
-     it('checking add and delete in form container', function () {
-         dropDatePickerInSites();
-         cy.deleteComponentByPath(datePickerDrop);
-     });
+        it('checking add and delete in form container', function () {
+            dropDatePickerInSites();
+            cy.deleteComponentByPath(datePickerDrop);
+        });
 
-     it ('open edit dialog of DatePicker', function(){
-         testDatePickerEditDialog(datePickerEditPathSelector, datePickerDrop, true);
-     });
+        it('open edit dialog of DatePicker', function () {
+            testDatePickerEditDialog(datePickerEditPathSelector, datePickerDrop, true);
+        });
 
-     it('verify Basic tab in edit dialog of DatePicker', function () {
-         testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop, true);
-     });
+        it('verify Basic tab in edit dialog of DatePicker', function () {
+            testDatePickerBasicTab(datePickerEditPathSelector, datePickerDrop, true);
+        });
 
-     it('verify Validation tab in edit dialog of DatePicker', function () {
-         testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop, true);
-     });
+        it('verify Validation tab in edit dialog of DatePicker', function () {
+            testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop, true);
+        });
 
- });
+    });
 });

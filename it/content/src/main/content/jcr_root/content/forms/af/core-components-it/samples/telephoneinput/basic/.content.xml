@@ -5,7 +5,7 @@
         cq:deviceGroups="[mobile/groups/responsive]"
         cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
         cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-it/settings/wcm/templates/af-blank-v2"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="Adaptive Form V2 (IT)"
@@ -20,6 +20,8 @@
                 jcr:primaryType="nt:unstructured"
                 name="telephoneinput1"
                 jcr:title="Telephone Input 1"
+                pattern="^[0-9]{10}$"
+                validatePictureClauseMessage="validation picture clause error message!"
                 sling:resourceType="forms-components-examples/components/form/telephoneinput"/>
             <telephoneinput2
                     fieldType="text-input"
@@ -28,6 +30,8 @@
                     jcr:title="Telephone Input 2"
                     visible="{Boolean}true"
                     enabled="{Boolean}false"
+                    required="true"
+                    mandatoryMessage="custom mandatory message!"
                     sling:resourceType="forms-components-examples/components/form/telephoneinput"/>
             <telephoneinput3
                     fieldType="text-input"

@@ -95,8 +95,9 @@ public interface BaseConstraint {
      * @return {@code true} if field is required, otherwise {@code false}
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    default boolean isRequired() {
-        return false;
+    @Nullable
+    default Boolean isRequired() {
+        return null;
     }
 
     /**

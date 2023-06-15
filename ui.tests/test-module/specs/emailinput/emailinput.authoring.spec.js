@@ -69,10 +69,12 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(emailInputDrop);
     });
 
-    it ('open edit dialog of EmailInput', function(){
-      testEmailInputBehaviour(emailInputEditPathSelector, emailInputDrop);
-    })
-  })
+    it ('open edit dialog of EmailInput', { retries: 3 }, function(){
+        cy.cleanTest(emailInputDrop).then(function() {
+            testEmailInputBehaviour(emailInputEditPathSelector, emailInputDrop);
+        });
+    });
+  });
 
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/emailinput",

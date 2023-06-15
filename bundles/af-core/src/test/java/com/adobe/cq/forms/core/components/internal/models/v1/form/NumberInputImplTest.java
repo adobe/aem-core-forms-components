@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
@@ -47,7 +49,9 @@ import static org.mockito.Mockito.spy;
 public class NumberInputImplTest {
     private static final String BASE = "/form/numberinput";
     private static final String CONTENT_ROOT = "/content";
+    private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
+    private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -58,7 +62,7 @@ public class NumberInputImplTest {
 
     @Test
     void testExportedType() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(FormConstants.RT_FD_FORM_NUMBER_INPUT_V1, numberInput.getExportedType());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getExportedType()).thenCallRealMethod();
@@ -67,13 +71,13 @@ public class NumberInputImplTest {
 
     @Test
     void testFieldType() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
 
     @Test
     void testGetLabel() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("def", numberInput.getLabel().getValue());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getLabel()).thenCallRealMethod();
@@ -81,16 +85,16 @@ public class NumberInputImplTest {
 
         Label labelMock = Mockito.mock(Label.class);
         Mockito.when(labelMock.isRichText()).thenCallRealMethod();
-        assertEquals(false, labelMock.isRichText());
+        assertEquals(null, labelMock.isRichText());
         Mockito.when(labelMock.getValue()).thenCallRealMethod();
         assertEquals(null, labelMock.getValue());
         Mockito.when(labelMock.isVisible()).thenCallRealMethod();
-        assertEquals(true, labelMock.isVisible());
+        assertEquals(null, labelMock.isVisible());
     }
 
     @Test
     void testGetName() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("abc", numberInput.getName());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getName()).thenCallRealMethod();
@@ -99,7 +103,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetDataRef() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("a.b", numberInput.getDataRef());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDataRef()).thenCallRealMethod();
@@ -108,7 +112,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetDescription() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("dummy", numberInput.getDescription());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDescription()).thenCallRealMethod();
@@ -117,7 +121,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetScreenReaderText() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("'Custom screen reader text'", numberInput.getScreenReaderText());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getScreenReaderText()).thenCallRealMethod();
@@ -125,8 +129,8 @@ public class NumberInputImplTest {
     }
 
     @Test
-    void testIsVisible() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+    void testIsVisibleForCustomized() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(false, numberInput.isVisible());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isVisible()).thenCallRealMethod();
@@ -134,8 +138,17 @@ public class NumberInputImplTest {
     }
 
     @Test
-    void testIsEnabled() {
+    void testIsVisible() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        assertEquals(null, numberInput.isVisible());
+        NumberInput numberInputMock = Mockito.mock(NumberInput.class);
+        Mockito.when(numberInputMock.isVisible()).thenCallRealMethod();
+        assertEquals(null, numberInputMock.isVisible());
+    }
+
+    @Test
+    void testIsEnabledForCustomized() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(true, numberInput.isEnabled());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isEnabled()).thenCallRealMethod();
@@ -143,8 +156,17 @@ public class NumberInputImplTest {
     }
 
     @Test
-    void testIsReadOnly() {
+    void testIsEnabled() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        assertEquals(null, numberInput.isEnabled());
+        NumberInput numberInputMock = Mockito.mock(NumberInput.class);
+        Mockito.when(numberInputMock.isEnabled()).thenCallRealMethod();
+        assertEquals(null, numberInputMock.isEnabled());
+    }
+
+    @Test
+    void testIsReadOnlyForCustomized() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(false, numberInput.isReadOnly());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isReadOnly()).thenCallRealMethod();
@@ -152,8 +174,17 @@ public class NumberInputImplTest {
     }
 
     @Test
-    void testGetPlaceHolder() {
+    void testIsReadOnly() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        assertEquals(null, numberInput.isReadOnly());
+        NumberInput numberInputMock = Mockito.mock(NumberInput.class);
+        Mockito.when(numberInputMock.isReadOnly()).thenCallRealMethod();
+        assertEquals(null, numberInputMock.isReadOnly());
+    }
+
+    @Test
+    void testGetPlaceHolder() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(null, numberInput.getPlaceHolder());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getPlaceHolder()).thenCallRealMethod();
@@ -162,7 +193,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetDisplayFormat() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(null, numberInput.getDisplayFormat());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDisplayFormat()).thenCallRealMethod();
@@ -171,7 +202,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetEditFormat() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(null, numberInput.getEditFormat());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getEditFormat()).thenCallRealMethod();
@@ -180,7 +211,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetDataFormat() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(null, numberInput.getDataFormat());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDataFormat()).thenCallRealMethod();
@@ -189,7 +220,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetTooltip() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals("test-short-description", numberInput.getTooltip());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getTooltip()).thenCallRealMethod();
@@ -198,12 +229,18 @@ public class NumberInputImplTest {
 
     @Test
     void testGetConstraintMessages() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         Map<ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
         assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), numberInputMock.getConstraintMessages());
+    }
+
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_CUSTOMIZED));
     }
 
     @Test
@@ -214,7 +251,7 @@ public class NumberInputImplTest {
 
     @Test
     void testGetProperties() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         Map<String, Object> properties = numberInput.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "afs:layout"
@@ -245,32 +282,32 @@ public class NumberInputImplTest {
 
     @Test
     void testGetMinimum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(10000L, numberInput.getMinimum().longValue());
     }
 
     @Test
     void testGetMaximum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(2000000, numberInput.getMaximum().longValue());
     }
 
     @Test
     void testGetExclusiveMinimum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
     }
 
     @Test
     void testGetExclusiveMaximum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
     }
 
     @Test
     void testStyleSystemClasses() {
         ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
-        Resource resource = spy(context.resourceResolver().getResource(PATH_NUMBER_INPUT));
+        Resource resource = spy(context.resourceResolver().getResource(PATH_NUMBER_INPUT_CUSTOMIZED));
         Mockito.doReturn(componentStyleInfoMock).when(resource).adaptTo(ComponentStyleInfo.class);
         MockSlingHttpServletRequest request = context.request();
         request.setResource(resource);
@@ -278,5 +315,25 @@ public class NumberInputImplTest {
         NumberInput numberInput = request.adaptTo(NumberInput.class);
         String appliedCssClasses = numberInput.getAppliedCssClasses();
         assertEquals("mystyle", appliedCssClasses);
+    }
+
+    @Test
+    void testDataLayerProperties() throws IllegalAccessException {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) numberInput.getData();
+        assert (dataObject != null);
+        assert (dataObject.getId()).equals("numberinput-57e5de6073");
+        assert (dataObject.getType()).equals("core/fd/components/form/numberinput/v1/numberinput");
+        assert (dataObject.getTitle()).equals("Phone Number");
+        assert (dataObject.getFieldType()).equals("number-input");
+        assert (dataObject.getDescription()).equals("Enter your phone number.");
+    }
+
+    @Test
+    void testJSONExportDataLayer() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DATALAYER, NumberInput.class, context);
+        FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
     }
 }

@@ -17,7 +17,6 @@ npm install
 ```
 
 
-
 * AEM instance (example: `http://localhost:4502`)
 
   > For local testing we suggest to use the [AEM as a Cloud Service SDK](https://docs.adobe.com/content/help/en/experience-manager-cloud-service/implementing/developing/aem-as-a-cloud-service-sdk.html)

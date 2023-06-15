@@ -59,13 +59,18 @@ try {
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-            --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
@@ -87,25 +92,12 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
-        // install req collaterals for tests
-        ci.dir('it/core', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
-        ci.dir('it/apps', () => {
-            ci.sh(`mvn clean install -PautoInstallPackage`);
-        });
-
         // start running the tests
         ci.dir('ui.tests', () => {
-            ci.sh(`mvn verify -U -B -Pcypress-ci -DENV_CI=true`);
-    });
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
+            ci.sh(command);
+        });
     }
-
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-});
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {

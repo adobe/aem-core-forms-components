@@ -1,39 +1,10 @@
 {
-  "id":"panel-81f441fcab",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
-  "items": [
-    {
-      "id": "textinput-bec585e910",
-      "fieldType": "text-input",
-      "name": "abc",
-      "description": "dummy",
-      "type": "string",
-      "required": false,
-      "label": {
-        "richText": false,
-        "visible": true,
-        "value": "def"
-      },
-      "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
-      },
-      "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
-        "fd:path": "/content/rules-panel/textinput"
-      },
-      ":type": "core/fd/components/form/textinput/v1/textinput"
-    }
-  ],
+  "id": "panel-81f441fcab",
+  "fieldType": "panel",
+  "name": "abc",
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
   "label": {
-    "richText": false,
-    "visible": true,
     "value": "dependent names"
   },
   "events": {
@@ -51,7 +22,40 @@
     "afs:layout": {
       "tooltipVisible": false
     },
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
     "fd:path": "/content/rules-panel"
   },
-  ":type": "core/fd/components/form/panel/v1/panel"
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":type": "core/fd/components/form/panel/v1/panel",
+  ":items": {
+    "textinput": {
+      "id": "textinput-bec585e910",
+      "fieldType": "text-input",
+      "name": "abc",
+      "description": "dummy",
+      "type": "string",
+      "label": {
+        "visible": true,
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/rules-panel/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  }
 }

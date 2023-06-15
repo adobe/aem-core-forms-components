@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="dam:Asset">
+    <jcr:content
+        cq:conf="\0"
+        jcr:lastModified="{Date}2023-03-10T15:40:57.975+05:30"
+        jcr:primaryType="dam:AssetContent"
+        sling:resourceType="fd/fm/af/render"
+        guide="1"
+        type="guide">
+        <dictionary jcr:primaryType="nt:unstructured">
+            <de/>
+            <es/>
+            <zh-tw/>
+            <ja/>
+            <ko-kr/>
+            <pt-br/>
+            <zh-cn/>
+            <fr/>
+            <it/>
+            <ru-ru/>
+            <hi/>
+        </dictionary>
+        <metadata
+            fd:version="2.1"
+            jcr:language="en"
+            jcr:primaryType="nt:unstructured"
+            xmp:CreatorTool="AEM Forms"
+            allowedRenderFormat="HTML"
+            author="admin"
+            formmodel="none"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="af2-form-translation"/>
+    </jcr:content>
+</jcr:root>
