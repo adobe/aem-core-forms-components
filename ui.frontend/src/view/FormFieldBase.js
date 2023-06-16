@@ -293,9 +293,12 @@ export default class FormFieldBase extends FormField {
     updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
             this.errorDiv.innerHTML = state.errorMessage;
-            if (state.valid === false && !state.errorMessage) {
-                this.errorDiv.innerHTML = 'There is an error in the field';
+            if (state.valid === false) {
                 this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
+                // if there is no error message in model, set a default error in the view
+                if (!state.errorMessage) {
+                    this.errorDiv.innerHTML = 'There is an error in the field';
+                }
             }
         }
     }
