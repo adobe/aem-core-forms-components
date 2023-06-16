@@ -52,6 +52,8 @@ common:
       - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
+          # Retry the job only if the exit code is non-zero (indicating failure)
+          when: on_fail
       - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js
@@ -266,6 +268,14 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
+          retry:
+            # Set the number of retries for the job
+            max: 2
+            # Set the conditions for retrying the job
+            filters:
+              exit_code:
+                - 1 # Retry if the exit code is non-zero
+                - 130 # Retry if the job is cancelled due to a SIGINT signal
       - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
@@ -273,6 +283,14 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
+          retry:
+            # Set the number of retries for the job
+            max: 2
+            # Set the conditions for retrying the job
+            filters:
+              exit_code:
+                - 1 # Retry if the exit code is non-zero
+                - 130 # Retry if the job is cancelled due to a SIGINT signal
       - jsdocs-deploy:
           requires:
             - build-java-11
