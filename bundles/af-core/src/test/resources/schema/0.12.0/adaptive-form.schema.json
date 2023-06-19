@@ -1074,7 +1074,13 @@
             "validationExpression",
             "id",
             "appliedCssClassNames",
-            "dataLayer"
+            "dataLayer",
+            "type",
+            "constraintMessages",
+            "visible",
+            "enabled",
+            "readOnly",
+            "events"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in Captcha"
