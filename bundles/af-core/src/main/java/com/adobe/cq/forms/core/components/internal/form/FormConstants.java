@@ -100,4 +100,6 @@ public final class FormConstants {
     public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 
     public static final String FORM_FIELD_TYPE = "form";
+
+    public static final String FRAGMENT_FIELD_TYPE = "fragment";
 }
