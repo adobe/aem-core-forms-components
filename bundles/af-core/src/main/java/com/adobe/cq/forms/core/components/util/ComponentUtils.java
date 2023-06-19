@@ -33,7 +33,7 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_NAME;
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_GROUP_NAME;
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
 /**
@@ -170,19 +170,64 @@ public class ComponentUtils {
         }
         Resource policyResource = resourceResolver.resolve(policy.getPath());
         List<String> groupNames = new ArrayList<>();
-        List<Resource> customPropertiesResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false)
-            .collect(Collectors.toList());
+        List<Resource> customPropertiesGroupsList;
 
-        customPropertiesResourceList.forEach((customPropertiesResource) -> {
-            customPropertiesResource.getChildren().forEach((customPropertiesGroup) -> {
-                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                    if (entry.getKey().equals(CUSTOM_PROPERTY_NAME)) {
-                        groupNames.add(entry.getValue().toString());
-                    }
+        Resource customPropertiesResource = policyResource.getChild("customProperties");
+        if (customPropertiesResource != null) {
+            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
+                .spliterator(), false).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
+        customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
+            for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
+                if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME)) {
+                    groupNames.add(entry.getValue().toString());
                 }
-
-            });
+            }
         });
+
         return groupNames;
+    }
+
+    public static Map<String, String> getCustomPropertyPairsFromPolicy(Set<String> groupNames, Resource policyResource) {
+        Map<String, String> keyValuePairs = new HashMap<>();
+        List<Resource> customPropertiesGroupsList;
+        Resource customPropertiesResource = policyResource.getChild("customProperties");
+        if (customPropertiesResource != null) {
+            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
+                .spliterator(), false)
+                .collect(Collectors.toList());
+        } else {
+            return new HashMap<>();
+        }
+        customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
+            for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
+                if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
+                    customPropertiesGroup.getChild("keyValuePairs").getChildren().forEach((keyValueNode) -> {
+                        String key = "", value = "";
+                        for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
+                            if (property.getKey().equals("key")) {
+                                Object keyObject = property.getValue();
+                                if (keyObject != null) {
+                                    key = keyObject.toString();
+                                }
+                            }
+                            if (property.getKey().equals("value")) {
+                                Object valueObject = property.getValue();
+                                if (valueObject != null) {
+                                    value = valueObject.toString();
+                                }
+                            }
+                        }
+                        if (!key.isEmpty()) {
+                            keyValuePairs.put(key, value);
+                        }
+                    });
+                }
+            }
+        });
+
+        return keyValuePairs;
     }
 }

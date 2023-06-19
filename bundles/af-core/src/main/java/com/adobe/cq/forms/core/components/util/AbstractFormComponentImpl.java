@@ -16,13 +16,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -53,12 +47,15 @@ import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
+import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_JCR_NAME;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -245,6 +242,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (rulesProperties.size() > 0) {
             customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
+        Map<String, String> templatePolicyCustomProperties = getTemplatePolicyCustomProperties();
+        if (templatePolicyCustomProperties.size() > 0) {
+            for (Map.Entry<String, String> entry : templatePolicyCustomProperties.entrySet()) {
+                customProperties.put(entry.getKey(), entry.getValue());
+            }
+        }
+
         return customProperties;
     }
 
@@ -282,6 +286,25 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
         }
         return customRulesProperties;
+    }
+
+    @JsonIgnore
+    public Map<String, String> getTemplatePolicyCustomProperties() {
+        Set<String> groupNames = new LinkedHashSet<>();
+        Map<String, String> keyValuePairs = new HashMap<>();
+        for (Map.Entry<String, Object> entry : resource.getValueMap().entrySet()) {
+            if (entry.getKey().equals(CUSTOM_PROPERTY_JCR_NAME)) {
+                groupNames.add(entry.getValue().toString());
+            }
+        }
+        ContentPolicy policy = com.adobe.cq.forms.core.components.util.ComponentUtils.getPolicy(resource.getPath(), resource
+            .getResourceResolver());
+        if (policy != null) {
+            Resource policyResource = resource.getResourceResolver().resolve(policy.getPath());
+            keyValuePairs = com.adobe.cq.forms.core.components.util.ComponentUtils.getCustomPropertyPairsFromPolicy(
+                groupNames, policyResource);
+        }
+        return keyValuePairs;
     }
 
     /***
