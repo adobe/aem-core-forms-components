@@ -25,10 +25,11 @@
      id="${file.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.file="com.adobe.cq.forms.core.components.models.form.FileInput"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[file.id, 'widget']}"
      data-cmp-visible="${file.visible ? 'true' : 'false'}"
      data-cmp-enabled="${file.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </br>
     <label data-sly-test="${file.buttonText}" for="${file.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
@@ -42,6 +43,8 @@
            accept="${file.accept}"
            id="${file.id}_widget"
            type="file"
+           aria-label="${file.label.visible ? '' : file.label.value}"
+           id="${file.label.visible ? widgetId : ''}"
            data-cmp-data-layer="${file.data.json}"
     />
     <ul class="cmp-adaptiveform-fileinput__filelist"></ul>

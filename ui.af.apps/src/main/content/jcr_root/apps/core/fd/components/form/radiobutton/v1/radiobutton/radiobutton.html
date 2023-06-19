@@ -30,8 +30,11 @@
      data-cmp-required="${radioButton.required ? 'true': 'false'}"
      id="${radiobutton.id}"
      data-cmp-data-layer="${radioButton.data.json}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=radiobutton.id, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[radiobutton.id, 'widget']}"
+     aria-labelledby="${radiobutton.label.visible ? widgetId : ''}"
+     role="radiogroup">
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton', withId=true}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}">
       <div data-sly-list="${radioButton.enums}" data-sly-unwrap>

@@ -21,7 +21,8 @@
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
-     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[text.id, 'widget']}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      class="cmp-adaptiveform-textinput"
      data-cmp-is="adaptiveFormTextInput"
@@ -29,10 +30,11 @@
      data-cmp-enabled="${text.enabled ? 'true' : 'false'}"
      id="${text.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=text.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               title="${text.tooltipVisible ? '' : text.tooltipText}"
-              aria-label="${text.label.visible && text.label.value}"
+              aria-label="${text.label.visible ? '' : text.label.value}"
+              id="${text.label.visible ? widgetId : ''}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
               data-cmp-data-layer="${text.data.json}"
@@ -45,7 +47,8 @@
     <input data-sly-test="${!useTextarea}"
            title="${text.tooltipVisible ? '' : text.tooltipText}"
            class="cmp-adaptiveform-textinput__widget"
-           aria-label="${text.label.visible && text.label.value}"
+           aria-label="${text.label.visible ? '' : text.label.value}"
+           id="${text.label.visible ? widgetId : ''}"
            type="text"
            name="${text.name}"
            data-cmp-data-layer="${text.data.json}"
