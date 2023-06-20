@@ -326,7 +326,7 @@ describe('visibility of navigation buttons', function () {
         cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
         cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
 
-        cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('a').blur().then(() => {
+        cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
             // check if first is not hidden and prev is visible
             cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'true');
             cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
@@ -338,7 +338,7 @@ describe('visibility of navigation buttons', function () {
             cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
 
             // check if active tab changes if current active is invisible
-            cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
+            cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').clear().focus().type('b').blur().then(() => {
                 cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
                 cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
                 cy.get(`#${secondItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
