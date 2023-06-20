@@ -313,7 +313,7 @@
         }
 
         /**
-         * Hides or shows next or and previous navigation buttons
+         * Hides or shows, next and previous navigation buttons
          *
          * @private
          * @param {Number} index The index of the tab to navigate to
@@ -349,14 +349,14 @@
             this.maxEnabledTab = wizardPanels.length-1;
             this.minEnabledTab = 0;
             for (let i = 0; i < wizardPanels.length; i++) {
-                if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
                     this.minEnabledTab = i+1;
                 } else {
                     break;
                 }
             }
             for (let i = wizardPanels.length - 1; i >= 0; i--) {
-                if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
                     this.maxEnabledTab = i;
                 } else {
                     break;
@@ -366,9 +366,8 @@
             this.maxEnabledTab = Math.min(this.#getCachedTabs().length-1, this.maxEnabledTab);
         }
 
-        childComponentEnabled(wizardTab) {
-            return (wizardTab.children[0].getAttribute('data-cmp-enabled') === 'true' &&
-            wizardTab.children[0].getAttribute('data-cmp-visible') === 'true')
+        #childComponentEnabled(wizardTab) {
+            return wizardTab.children[0].getAttribute('data-cmp-visible') === 'true';
         }
 
         #findNextVisibleChildIndex(currentIndex) {
@@ -501,6 +500,8 @@
                 this.cacheClosestFieldsInView();
                 this.handleHiddenChildrenVisibility();
             }
+            this.#setNavigationRange();
+            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
         }
 
         getChildViewByIndex(index) {
