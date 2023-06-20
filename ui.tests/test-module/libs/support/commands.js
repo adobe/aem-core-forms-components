@@ -340,7 +340,6 @@ Cypress.Commands.add("cleanTitleTest", (editPath) => {
             const selector12 = "div[data-path^='" + editPath + "']";
             if ($body.find(selector12).length > 0) {
                 $body.find(selector12).each(($index, $titleComponent) => {
-                    cy.log($titleComponent.dataset.path);
                     cy.deleteComponentByPath($titleComponent.dataset.path);
                 })
             }
