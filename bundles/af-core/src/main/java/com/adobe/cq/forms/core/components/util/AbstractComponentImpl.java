@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
@@ -137,7 +138,8 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            this.id = ComponentUtils.getId(this.resource, this.currentPage, null, this.componentContext);
+            String resourceCallerPath = (String) request.getAttribute(FormConstants.RESOURCE_CALLER_PATH);
+            this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
     }

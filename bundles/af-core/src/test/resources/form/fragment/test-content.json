@@ -1,0 +1,36 @@
+{
+  "fragment": {
+    "jcr:primaryType": "nt:unstructured",
+    "wrapData": true,
+    "jcr:title": "Fragment",
+    "minOccur": "0",
+    "jcr:lastModifiedBy": "admin",
+    "name": "fragment-123",
+    "maxOccur": "4",
+    "jcr:lastModified": "Fri Jun 02 2023 12:34:24 GMT+0530",
+    "repeatable": true,
+    "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
+    "fieldType": "panel",
+    "fragmentPath": "/content/affragment/guideContainer"
+  },
+  "affragment": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "AF Fragment (v2)",
+    "guideContainer": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "fd:version": "2.1",
+      "title": "AF Fragment (v2)",
+      "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+      "fieldType": "form",
+      "dorType": "none",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Text Input",
+        "name": "fragmenttextinput",
+        "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+        "fieldType": "text-input"
+      }
+    }
+  }
+}

@@ -41,7 +41,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                     fieldLabel="Fragment reference"
-                                                    name="./fragRef"
+                                                    name="./fragmentPath"
                                                     sling:orderBefore="bindref"
                                                     required="{Boolean}true"/>
                                             <placeholder

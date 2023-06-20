@@ -15,8 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,9 +28,13 @@ import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
-    adaptables = Resource.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = FormStructureParser.class)
 public class FormStructureParserImpl implements FormStructureParser {
+
+    @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private SlingHttpServletRequest request;
 
     @SlingObject
     private Resource resource;
@@ -85,6 +91,9 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     private String getFormContainerPath(Resource resource) {
+        if (request != null && request.getAttribute("formContainerPath") != null) {
+            return (String) request.getAttribute("formContainerPath");
+        }
         if (resource == null) {
             return null;
         }

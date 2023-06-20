@@ -1,0 +1,54 @@
+{
+  "id": "fragment-b6e9b38d43",
+  "fieldType": "panel",
+  "name": "fragment-123",
+  "type": "object",
+  "repeatable": true,
+  "minOccur": 0,
+  "maxOccur": 4,
+  "fragmentPath": "/content/affragment/guideContainer",
+  "fragmentTitle": "AF Fragment (v2)",
+  "label": {
+    "value": "Fragment"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/fragment"
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":items": {
+    "textinput": {
+      "id": "textinput-77a9cb9b7e",
+      "fieldType": "text-input",
+      "name": "fragmenttextinput",
+      "type": "string",
+      "label": {
+        "value": "Text Input"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/affragment/guideContainer/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  },
+  ":type": "core/fd/components/form/fragment/v1/fragment"
+}

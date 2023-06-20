@@ -38,6 +38,7 @@ import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
@@ -51,7 +52,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
-    resourceType = { FormContainerImpl.RESOURCE_TYPE })
+    resourceType = { FormContainerImpl.RESOURCE_TYPE, FormConstants.RT_FD_FRAGMENT_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractContainerImpl implements
     FormContainer {
@@ -102,6 +103,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements
     protected void initFormContainerModel() {
         if (request != null) {
             contextPath = request.getContextPath();
+            request.setAttribute("formContainerPath", this.getPath());
         }
     }
 

@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class Fragment extends FormView.FormFieldBase {
+    class Fragment extends FormView.FormPanel {
 
         static NS = FormView.Constants.NS;
         /**
@@ -64,24 +64,10 @@
         getQuestionMarkDiv() {
             return this.element.querySelector(Fragment.selectors.qm);
         }
-
-        setModel(model) {
-            super.setModel(model);
-            if (this.widget.value !== '') {
-                this._model.value = this.widget.value;
-            }
-            this.widget.addEventListener('blur', (e) => {
-                this._model.value = e.target.value;
-                this.setInactive();
-            });
-            this.widget.addEventListener('focus', (e) => {
-                this.setActive();
-            });
-        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TextInput({element, formContainer})
-    }, TextInput.selectors.self);
+        return new Fragment({element, formContainer})
+    }, Fragment.selectors.self);
 
 })();

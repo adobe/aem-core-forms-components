@@ -38,3 +38,37 @@ textarea.cmp-adaptiveform-fragment__widget {
 .cmp-adaptiveform-fragment__questionmark {
 
 }
+
+.cmp-adaptiveform-fragment__placeholderContainer {
+    border-opacity: .1;
+    border-width: 1px;
+    padding: 15px;
+    font-family: Adobe Clean;
+    font-weight: normal;
+    font-size: 13px;
+    text-align: left;
+    color: #969696;
+    border-color: rgba(0,0,0,0.15);
+    border-radius: 4px;
+    background: linear-gradient(180deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05),rgba(0,0,0,0.05)),
+                linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05),rgba(0,0,0,0.05));
+}
+
+.cmp-adaptiveform-fragment__placeholderContainer hr {
+    width: auto;
+    height: 1px;
+    background-color: #000;
+    opacity: .25;
+    margin: 15px 0;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.15);
+}
+
+.cmp-adaptiveform-fragment__fragmentTitle {
+    text-align: left;
+    color: #4b4b4b;
+    background-image: url("/libs/core/fd/components/form/fragment/v1/fragment/clientlibs/site/resources/fragmentPlaceholderIcon.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}

@@ -58,7 +58,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @SlingObject
     protected Resource resource;
 
-    private List<? extends ComponentExporter> childrenModels;
+    protected List<? extends ComponentExporter> childrenModels;
 
     protected Map<String, ? extends ComponentExporter> itemModels;
 
@@ -158,7 +158,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return itemModels;
     }
 
-    private List<Resource> getFilteredChildrenResources() {
+    protected List<Resource> getFilteredChildrenResources() {
         if (filteredChildComponents == null) {
             filteredChildComponents = new LinkedList<>();
             for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {

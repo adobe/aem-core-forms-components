@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.List;
+
+import org.apache.sling.api.resource.Resource;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
@@ -31,5 +34,13 @@ public interface Fragment extends Panel {
      * @return {@code fragRef}
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
-    String getFragRef();
+    String getFragmentPath();
+
+    /**
+     * List of children of fragment container
+     * 
+     * @return
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    List<Resource> getFragmentChildren();
 }

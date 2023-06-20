@@ -17,8 +17,6 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-fragment__editdialog",
-        BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
-        FRAGMENT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-fragment__value",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     Utils.initializeEditDialog(EDIT_DIALOG)();
