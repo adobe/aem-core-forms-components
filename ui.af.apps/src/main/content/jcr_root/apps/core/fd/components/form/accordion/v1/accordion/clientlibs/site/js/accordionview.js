@@ -664,8 +664,12 @@
           children.forEach(child=>{
             const addButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-add-instance]');
             const removeButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-remove-instance]');
-            addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
-            removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
+            if(addButtonElement){
+              addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
+            }
+            if(removeButtonElement){
+              removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
+            }
           });
         }
     }
