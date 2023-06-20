@@ -19,23 +19,23 @@ const sitesSelectors = require("../../libs/commons/sitesSelectors");
 
 
 describe('Page - Authoring', function () {
-    const dropTitleInContainer = function() {
+    const dropTitleInContainer = function () {
         const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title", afConstants.components.forms.resourceType.title);
-        cy.get('body').click( 0,0);
+        cy.get('body').click(0, 0);
     }
 
-    const dropTitleInSites = function() {
+    const dropTitleInSites = function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/title/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Title", afConstants.components.forms.resourceType.title);
-        cy.get('body').click( 0,0);
+        cy.get('body').click(0, 0);
     }
 
-    const testTitleEditDialog = function(titleEditPathSelector, titleDrop, isSites) {
+    const testTitleEditDialog = function (titleEditPathSelector, titleDrop, isSites) {
         if (isSites) {
             dropTitleInSites();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
@@ -48,10 +48,10 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get('.cq-dialog-cancel').click();
             cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
-            .invoke('attr', 'data-path')
-            .then(dataPath => {
-                cy.deleteComponentByPath(dataPath);
-            })
+                .invoke('attr', 'data-path')
+                .then(dataPath => {
+                    cy.deleteComponentByPath(dataPath);
+                })
         }
 
     }
@@ -69,25 +69,27 @@ describe('Page - Authoring', function () {
         });
 
         it('insert Title in form container', function () {
-            dropTitleInContainer();
-            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
-            .invoke('attr', 'data-path')
-            .then(dataPath => {
-                const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_', '');
-                const _titleDrop = titleDrop + id;
-                cy.deleteComponentByPath(dataPath);
+            cy.cleanTitleTest(titleEditPath).then(() => {
+                dropTitleInContainer();
+                cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+                    .invoke('attr', 'data-path')
+                    .then(dataPath => {
+                        const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_', '');
+                        const _titleDrop = titleDrop + id;
+                        cy.deleteComponentByPath(dataPath);
+                    })
+            });
+        });
+
+        it('check edit dialog availability of Title', function () {
+            cy.cleanTitleTest(titleEditPath + "_").then(() => {
+                testTitleEditDialog(titleEditPathSelector, titleDrop, false);
             })
         });
-
-        it ('check edit dialog availability of Title', function(){
-            testTitleEditDialog(titleEditPathSelector,titleDrop, false
-            );
-        });
-
     });
 
     context('Open Sites Editor', function () {
-        const   pagePath = "/content/core-components-examples/library/adaptive-form/title",
+        const pagePath = "/content/core-components-examples/library/adaptive-form/title",
             titleEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/title",
             titleEditPathSelector = "[data-path='" + titleEditPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
@@ -103,8 +105,8 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(titleDrop);
         });
 
-        it ('check edit dialog availability of Title', function(){
-           testTitleEditDialog(titleEditPathSelector,titleDrop, true);
+        it('check edit dialog availability of Title', function () {
+            testTitleEditDialog(titleEditPathSelector, titleDrop, true);
         });
 
     });
