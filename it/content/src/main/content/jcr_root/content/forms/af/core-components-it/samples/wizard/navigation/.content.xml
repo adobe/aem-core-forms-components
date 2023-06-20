@@ -45,6 +45,14 @@
                         type="number"
                         unboundFormElement="{Boolean}false"
                         visible="{Boolean}false"/>
+                <datepicker
+                        jcr:lastModified="{Date}2023-05-16T11:55:07.316+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        fieldType="date-input"
+                        name="datepicker1684218307463"/>
                 <dropdown
                         jcr:lastModified="{Date}2022-10-31T21:42:35.588+05:30"
                         jcr:lastModifiedBy="admin"

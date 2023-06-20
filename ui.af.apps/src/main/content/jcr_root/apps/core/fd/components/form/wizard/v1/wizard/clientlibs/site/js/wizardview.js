@@ -64,7 +64,7 @@
             this.#cacheElements(element);
             this.#setActive(this.#getCachedTabs())
             this.#_active = this.#getActiveIndex(this.#getCachedTabs());
-            this.setNavigationRange();
+            this.#setNavigationRange();
             this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
             this.#refreshActive();
 
@@ -344,9 +344,10 @@
             }
         }
 
-        setNavigationRange() {
+        #setNavigationRange() {
             let wizardPanels = this.#getCachedWizardPanels();
             this.maxEnabledTab = wizardPanels.length-1;
+            this.minEnabledTab = 0;
             for (let i = 0; i < wizardPanels.length; i++) {
                 if(!this.childComponentEnabled(this.#getCachedWizardPanels()[i])) {
                     this.minEnabledTab = i+1;
@@ -603,6 +604,7 @@
         updateChildVisibility(visible, state) {
             this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
             var activeTabNavElement = this.#getCachedTabs()[this.#_active];
+            this.#setNavigationRange();
             this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
             if (!visible && activeTabNavElement.id === state.id + Wizard.#tabIdSuffix) {
                 let child = this.findFirstVisibleChild(this.#getCachedTabs());
