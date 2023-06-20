@@ -344,10 +344,25 @@ describe('visibility of navigation buttons', function () {
                 cy.get(`#${secondItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                 cy.get(`#${secondItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                 cy.get(previousNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
-                cy.get(nextNavButton).click();
+                cy.get(nextNavButton).click({force: true});
+                cy.get(nextNavButton).click({force: true});
 
                 // now check if next button is invisible after reaching last tab
-                cy.get(nextNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+                cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+
+                // check if active tab changes if current active is invisible
+                cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').clear().focus().type('c').blur().then(() => {
+                    cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
+                    cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
+                    cy.get(`#${secondItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+                    cy.get(`#${secondItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+                    cy.get(previousNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+                    cy.get(nextNavButton).click({force: true});
+
+                    // now check if next button is invisible after reaching last visible tab
+                    cy.get(nextNavButton).should('not.be.visible').should('have.attr', 'data-cmp-visible', 'false');
+                    cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                });
             });
         })
     });
