@@ -149,10 +149,10 @@ class DatePickerWidget {
         this.#model = model;
         this.#lang = view.formContainer.getModel()._jsonModel.lang;
         let editValFn = (value) => {
-            return this.#formatDate(value, model.editFormat);
+            return model.editValue;
         };
         let displayValueFn = (value) => {
-            return this.#formatDate(value, model.displayFormat);
+            return model.displayValue;
         };
         this.#options = Object.assign({editValue:editValFn, displayValue:displayValueFn}, this.#defaultOptions, this.#model._jsonModel);
         this.#localizeDateElements(this.#options);
@@ -169,13 +169,6 @@ class DatePickerWidget {
         this.#attachField(view.getWidget(), this.#options);
     }
 
-    #formatDate(value, format) {
-        let dateValue = new Date(value);
-        if (!isNaN(dateValue)) {
-            return FormView.Formatters.formatDate(new Date(value), this.#lang, format);
-        }
-        return null;
-    }
 
     #initialiseCalenderElement() {
         let self = this,
@@ -1062,7 +1055,7 @@ class DatePickerWidget {
         if (this.#curInstance != null) {
             this.#curInstance.$field.value = this.#curInstance.displayValue(this.toString()) || value;
         } else {
-            this.#widget.value = this.#formatDate(value, this.#model.displayFormat) || value;
+            this.#widget.value = this.#model.displayValue || value;
         }
     }
 
@@ -1088,7 +1081,7 @@ class DatePickerWidget {
             this.#curInstance.selectedDate = value;
             this.#curInstance.$field.value = this.#curInstance.editValue(this.toString()) || value;
         } else {
-            this.#widget.value = this.#formatDate(value, this.#model.editFormat) || value;
+            this.#widget.value = this.#model.editValue || value;
         }
     }
 

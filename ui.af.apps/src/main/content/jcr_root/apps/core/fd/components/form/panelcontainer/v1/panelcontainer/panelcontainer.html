@@ -14,7 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-<sly data-sly-use.container="com.adobe.cq.wcm.core.components.models.LayoutContainer"
+<div data-sly-use.container="com.adobe.cq.wcm.core.components.models.LayoutContainer"
      data-sly-use.panel="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.renderer="${'panelcontainer.js'}"
      data-sly-use.label="${renderer.labelPath}"
@@ -27,4 +27,4 @@
     <sly data-sly-test.simple="${!responsive}"
          data-sly-use.simpleTemplate="simple.html"
          data-sly-call="${simpleTemplate.simple @ container=container, panel=panel, label=label, shortDescription=shortDescription, longDescription=longDescription, questionMark=questionMark}"></sly>
-</sly>
+</div>

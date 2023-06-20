@@ -141,7 +141,7 @@ describe("Form with Radio Button Input", () => {
 
         cy.get(`#${radioButton5}`).find("input").check(["1"]).then(x => {
             cy.get(`#${radioButton6}`).find("input").check(["0"])
-            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "There is an error in the field")
+            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "Please enter a valid value.")
 
             cy.get(`#${radioButton6}`).find("input").check(["1"])
             cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "")

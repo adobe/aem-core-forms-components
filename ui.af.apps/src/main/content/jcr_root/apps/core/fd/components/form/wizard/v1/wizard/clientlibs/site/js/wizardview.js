@@ -472,9 +472,10 @@
                 var repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
                 repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
                 this.#refreshActive();
-                this.#getTabIndexById()
-                // todo: this makes the wizard to select last repeatable component's last tab selected and needs to be fixed
-                this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
+                this.#getTabIndexById();
+                if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
+                    this.#navigateAndFocusTab(this.#getTabIndexById(navigationTabToBeRepeated.id));
+                }
             }
         }
 
@@ -495,7 +496,7 @@
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
             //when all children are available in view
-            if (this.getModel()._children.length === this.children.length) {
+            if (this.getCountOfAllChildrenInModel() === this.children.length) {
                 this.cacheClosestFieldsInView();
                 this.handleHiddenChildrenVisibility();
             }

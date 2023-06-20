@@ -68,4 +68,23 @@ describe('Form with Data Layer', () => {
             expect(dataLayer.component[componentID]['parentId']).to.be.eq(pageID);
         });
     });
+
+    it('datalayer should have event data', () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
+        cy.window().then(function(win) {
+            const dataLayer = win.adobeDataLayer;
+            expect(dataLayer).to.exist;
+            const lastEvent = dataLayer[dataLayer.length -1];
+            expect(lastEvent).to.exist;
+            expect(lastEvent['event']).to.be.eq('FormEvent');
+            expect(lastEvent['eventInfo']['type']).to.be.eq("Validation errors");
+            expect(lastEvent['eventInfo']['target']).to.be.eq("textinput-f653ef81f1");
+            expect(lastEvent['eventInfo']['originalTarget']).to.be.eq("textinput-f653ef81f1");
+            expect(lastEvent['eventInfo']['payload']['formTitle']).to.be.eq("datalayerform");
+            expect(lastEvent['eventInfo']['payload']['fieldTitle']).to.be.eq("Text Input 1");
+            expect(lastEvent['eventInfo']['payload']['panelTitle']).to.be.eq("datalayerform");
+            expect(lastEvent['eventInfo']['payload']['fieldType']).to.be.eq("text-input");
+        });
+    });
 });
