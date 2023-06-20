@@ -77,5 +77,4 @@ describe("Min Occur Repeatability Tests in Accordion", () => {
         })
     })
 
-    //TODO Add setfocus test minoccur case
 })

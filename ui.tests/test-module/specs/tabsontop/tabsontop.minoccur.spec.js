@@ -54,6 +54,4 @@ describe("Min Occur Repeatability Tests in Tabs on Top", () => {
             cy.get(".cmp-tabs__tabpanel").eq(5).should('not.have.class', 'cmp-tabs__tabpanel--active');
         })
     })
-
-    //TODO Add setfocus test minoccur case
 })

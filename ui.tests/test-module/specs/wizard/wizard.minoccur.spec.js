@@ -55,7 +55,6 @@ describe("Min Occur Repeatability Tests in Wizard", () => {
         })
     })
 
-    //TODO Add setfocus test minoccur case
 })
 
 describe("Form with Wizard Layout Container with repeatable panel with minOccur", () => {
