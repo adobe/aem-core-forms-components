@@ -5,7 +5,7 @@
     jcr:title=" Blank AF Fragment (Core Component)"
     allowedPaths="[/content/forms/af(/.*)?]">
     <jcr:content
-        cq:designPath="forms-components-examples/components/designs/fragment"
+        cq:designPath="/apps/settings/wcm/designs/fragment"
         cq:deviceGroups="mobile/groups/responsive"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="forms-components-examples/components/fragmentPage"
