@@ -61,7 +61,8 @@ export default class FormPanel extends FormFieldBase {
         for (let key in this.getModel()._children) {
             var child = this.getModel()._children[key];
             if (child.minOccur != undefined && child.maxOccur != undefined && child._children != undefined) {
-                countOfChildren += child._children.length;
+                //(child._children.length == 0) this can happen in cases of prefill or removeInstance onLoad via rules
+                countOfChildren += (child._children.length == 0) ? 1 : child._children.length;
             } else {
                 countOfChildren += 1;
             }
