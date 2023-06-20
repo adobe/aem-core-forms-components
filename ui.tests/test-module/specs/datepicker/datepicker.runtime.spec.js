@@ -123,7 +123,7 @@ describe("Form Runtime with Date Picker", () => {
         const correctInput = "2023-01-01";
 
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Please enter a valid value.")
         })
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -154,7 +154,7 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker5}`).find("input").should('have.attr',"type", "text");
         cy.get(`#${datePicker5}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Specify the value in allowed format : date.")
         })
 
         cy.get(`#${datePicker5}`).find("input").clear().type(correctInput).blur().then(x => {

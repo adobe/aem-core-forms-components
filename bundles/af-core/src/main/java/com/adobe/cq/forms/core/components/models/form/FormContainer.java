@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -322,6 +323,11 @@ public interface FormContainer extends Container {
      */
     @JsonIgnore
     default void setContextPath(String contextPath) {}
+
+    @JsonIgnore
+    default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
+        return null;
+    }
 
     /**
      * Returns site page path if dropped in sites else the form page path.

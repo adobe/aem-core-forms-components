@@ -15,9 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
@@ -51,6 +54,7 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP_DATALAYER = CONTENT_ROOT + "/checkboxgroup-datalayer";
 
     private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/checkboxgroup-duplicate-enum";
+    private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -357,5 +361,21 @@ public class CheckBoxGroupImplTest {
         CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
+    }
+
+    @Test
+    void testInsertionOrderForEnums() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
+        Set<Object> set = new LinkedHashSet<>(Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L,
+            15L, 16L, 17L, 18L, 19L, 20L));
+        assertArrayEquals(set.toArray(new Object[0]), checkboxGroup.getEnums());
+    }
+
+    @Test
+    void testInsertionOrderForEnumNames() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
+        assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
     }
 }

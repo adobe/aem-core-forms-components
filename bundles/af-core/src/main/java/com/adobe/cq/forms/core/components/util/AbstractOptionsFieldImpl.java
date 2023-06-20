@@ -16,8 +16,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -69,11 +68,12 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         Object[] enumArray = this.enums;
         String[] enumNamesArray = this.enumNames;
 
-        if (enumArray == null || enumNamesArray == null || enumArray.length != enumNamesArray.length) {
-            return Collections.emptyMap();
+        LinkedHashMap<Object, String> map = new LinkedHashMap<>();
+
+        if (enumArray != null && enumNamesArray != null && enumArray.length == enumNamesArray.length) {
+            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]),
+                LinkedHashMap::putAll);
         }
-        Map<Object, String> map = IntStream.range(0, enumArray.length)
-            .collect(HashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]), Map::putAll);
 
         return map;
 
