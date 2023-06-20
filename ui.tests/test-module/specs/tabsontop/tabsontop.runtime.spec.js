@@ -220,7 +220,7 @@ describe("setFocus of tabs using rules", () => {
       })
   });
 
-  const tabSelector = 'ol li';
+  const tabSelector = '.cmp-tabs__tablist .cmp-tabs__tab';
   const tab1 = () => {
       return cy.get(tabSelector).first();
   }
