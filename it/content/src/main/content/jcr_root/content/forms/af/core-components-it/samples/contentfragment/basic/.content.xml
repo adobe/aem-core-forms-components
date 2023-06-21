@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2023-05-25T17:02:28.006+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="basic"
+        sling:configRef="/conf/forms/core-components-it/samples/contentfragment/basic/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="basic">
+            <contentfragment
+                jcr:lastModified="{Date}2023-05-25T17:02:27.991+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="core-components-examples/components/contentfragment"
+                displayMode="multi"
+                fragmentPath="/content/dam/wknd/library/sample-assets/adobe-headquarters"
+                paragraphScope="all"
+                text="Adobe Headquarters Title Adobe Headquarters Street Address 345 Park Avenue City San Jose Postal Code 95110-2704 Country USA Region wknd:region/north-america"
+                variationName="master"/>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

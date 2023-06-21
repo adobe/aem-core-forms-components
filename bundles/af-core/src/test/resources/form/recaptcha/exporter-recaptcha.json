@@ -1,0 +1,25 @@
+{
+    "id": "recaptcha-4b672680a2",
+    "fieldType": "captcha",
+    "name": "test-recaptcha",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/recaptcha"
+    },
+    "label": {
+      "value": "CAPTCHA",
+      "visible": true
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
+}

@@ -125,7 +125,7 @@ describe("Form Runtime with Text Input", () => {
 
 
         cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please enter a valid value.")
         })
 
         cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {

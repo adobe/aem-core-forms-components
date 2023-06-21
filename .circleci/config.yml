@@ -27,8 +27,40 @@ common:
       - attach_workspace:
           at: /home/circleci/build
       - run:
+          name: Configure GIT
+          command: |
+            git config user.email "ci-build@aemforms"
+            git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
+      - run:
+          name: Install Chrome Launcher
+          command: npm install chrome-launcher
+      - run:
+          name: Install lighthouse
+          command: npm install lighthouse
+      - run:
+          name: Install Web Driver
+          command: npm install selenium-webdriver
+      - run:
+          name: Install AXE Core/Webdriver
+          command: npm install @axe-core/webdriverjs
+      - run:
+          name: Install AXE HTML Reporter
+          command: npm install axe-html-reporter
+      - run:
           name: UI tests
           command: node .circleci/ci/it-tests.js
+      - run:
+          name: Calculate lighthouse Scores
+          command: node .circleci/ci/lighthouse.js
+      - run:
+          name: Check Accessibility
+          command: node .circleci/ci/accessibility-axe.js
+      - run:
+          name: Stop CQ
+          command: node .circleci/ci/stop-cq.js
       - store_test_results:
           path: ui.tests/test-module/target/reports
       # Save test results as artifacts
@@ -37,6 +69,8 @@ common:
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
+      - store_artifacts:
+          path: artifacts
 
   docker_auth: &docker_auth
     auth:
@@ -54,7 +88,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:11382-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12142-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -64,7 +98,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: 
+          keys:
             - maven-repo-v1-{{ checksum "pom.xml" }}
             - maven-repo-v1-
       - run:
@@ -92,7 +126,7 @@ jobs:
             - it/apps/target/*.zip
             - it/content/target/*.zip
             - it/config/target/*.zip
-            - jsdocs/target
+            - jsdocs/target/jsapi
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -157,11 +191,11 @@ jobs:
             git config user.name "ci-build"
       - add_ssh_keys:
           fingerprints:
-            - "cc:0f:09:fc:97:72:c5:12:2e:fb:ea:a0:a2:39:3c:64"
+            - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
       - run:
           name: Deploy jsdocs to gh-pages branch
           command: gh-pages --dotfiles --message "[skip ci] jsdoc updates" --dist jsdocs/target/jsapi/
- 
+
   release:
     executor: forms_executor
     steps:
@@ -183,6 +217,34 @@ jobs:
             mvn -B -s /home/circleci/project/.circleci/settings.xml clean deploy -P release-sign-artifacts,cloud,adobe-public -Dskip-it
             rm -rf /home/circleci/.gnupg
             rm -rf /home/circleci/.npmrc
+      - run:
+          name: Update github with release notes and upload released artifacts
+          command: |
+            # Extract tag from CIRCLE_TAG environment variable
+            TAG=${CIRCLE_TAG}
+
+            # Create the release using GitHub API
+            RESPONSE=$(curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "tag_name": "'"$TAG"'",
+                "name": "'"$TAG"'",
+                "body": "Release notes for version '"$TAG"'"
+              }' \
+              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
+
+            # Get the upload URL from the response
+            UPLOAD_URL=$(echo "$RESPONSE" | jq -r '.upload_url' | sed -e 's/{.*}//')
+
+            # Upload release artifacts
+            for ARTIFACT in ./all/target/*.zip; do
+              curl -X POST \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @"$ARTIFACT" \
+                "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
+            done
 
 workflows:
   version: 2
@@ -210,7 +272,7 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - release:
+      - jsdocs-deploy:
           requires:
             - build-java-11
           filters:
@@ -218,9 +280,10 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - jsdocs-deploy:
+      - release:
           requires:
             - build-java-11
+            - jsdocs-deploy
           filters:
             branches:
               ignore: /.*/

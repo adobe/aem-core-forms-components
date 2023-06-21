@@ -20,5 +20,5 @@
     jcr:description="Adaptive Form Vertical Tabs Container component, used to group other components and apply a common style or layout."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Vertical Tabs (v1)"
-    sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+    sling:resourceSuperType="core/wcm/components/panelcontainer/v1/panelcontainer"
     componentGroup=".core-adaptiveform"/>
