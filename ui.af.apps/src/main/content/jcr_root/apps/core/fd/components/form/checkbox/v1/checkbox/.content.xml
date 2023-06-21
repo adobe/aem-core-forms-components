@@ -5,4 +5,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Check Box (v1)"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
-    componentGroup="Core Components Examples - Adaptive Form"/>
+    componentGroup=".core-adaptiveform"/>

@@ -69,11 +69,6 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     }
 
     @Override
-    public boolean isEnforceEnum() {
-        return false;
-    }
-
-    @Override
     public Object[] getEnums() {
         if (enums == null) {
             return null;
