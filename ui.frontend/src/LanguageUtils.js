@@ -16,6 +16,7 @@
 
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
+import {setCustomDefaultConstraintTypeMessages} from "@aemforms/af-core";
 
 export default class LanguageUtils {
     static #langData = {};
@@ -32,6 +33,7 @@ export default class LanguageUtils {
             if(_langData) {
                 console.debug("fetched language data", _langData);
                 this.#langData[lang] = _langData;
+                setCustomDefaultConstraintTypeMessages(_langData);
                 const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
                 document.dispatchEvent(event);
             }
