@@ -354,6 +354,7 @@ describe('visibility of navigation buttons', function () {
             wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
             wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
 
+        // check if first tab is hidden and second tab is active, previous nav button is hidden and next button is visible
         cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
         cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
         cy.get(`#${secondItemNavOfWizardId}`).should('have.class', wizardTabActive);
@@ -361,13 +362,13 @@ describe('visibility of navigation buttons', function () {
         cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
         cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
 
+        // check if first is unhided honouring rule and previous nav button is visible
         cy.get(`#${textInputId}`).find(driverTextInput).focus().clear().type('a').blur().then(() => {
-            // check if first is not hidden and prev is visible
             cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'true');
             cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
             cy.get(previousNavButton).click({force: true});
 
-            // check if prev is not visible now and active is first
+            // check when first tab is active, prev nav button is not visible now
             cy.get(`#${firstItemNavOfWizardId}`).should('have.class', wizardTabActive);
             cy.get(`#${firstItemOfWizardId}`).should('have.class', wizardPanelActive);
             cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
@@ -380,27 +381,17 @@ describe('visibility of navigation buttons', function () {
                 cy.get(`#${secondItemOfWizardId}`).should('have.class', wizardPanelActive);
                 cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
                 cy.get(nextNavButton).click({force: true});
-                cy.get(nextNavButton).click({force: true});
 
-                // now check if next button is invisible after reaching last tab
+                // check if next button is invisible after reaching last tab
                 cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
 
-                // check if active tab changes if current active is invisible
+                // check if last hidden tab gets active honouring rule, next nav button is visible
                 cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('c').blur().then(() => {
                     cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
                     cy.get(nextNavButton).click({force: true});
+
+                    // check if reaching last tab, next nav button is invisible
                     cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-                    // cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('d').blur().then(() => {
-                    //     const thirdItemNavOfWizardId = wizardItems[2].id + "_wizard-item-nav",
-                    //         thirdItemOfWizardId = wizardItems[2].id + "__wizardpanel",
-                    //         fourthItemNavOfWizardId = wizardItems[3].id + "_wizard-item-nav",
-                    //         fourthItemOfWizardId = wizardItems[3].id + "__wizardpanel";
-                    //     cy.get(`#${fourthItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
-                    //     cy.get(`#${fourthItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
-                    //     cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', wizardTabActive);
-                    //     cy.get(`#${thirdItemOfWizardId}`).should('have.class', wizardPanelActive);
-                    //     cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-                    // });
                 });
             });
         });
