@@ -10,8 +10,8 @@
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
-            jcr:title="visibilityInWizard"
-            sling:configRef="/conf/forms/visibilityinwizard/"
+            jcr:title="visibilityOfNavigationButtons"
+            sling:configRef="/conf/forms/visibilityOfNavigationButtons/"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
@@ -21,7 +21,7 @@
                 fieldType="form"
                 thankYouOption="page"
                 themeRef="/libs/fd/af/themes/canvas"
-                title="visibilityInWizard">
+                title="visibilityOfNavigationButtons">
             <wizard
                     jcr:lastModified="{Date}2023-05-16T11:54:59.352+05:30"
                     jcr:lastModifiedBy="admin"
