@@ -65,7 +65,7 @@
             this.#setActive(this.#getCachedTabs())
             this.#_active = this.#getActiveIndex(this.#getCachedTabs());
             this.#setNavigationRange();
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
             this.#refreshActive();
 
             this.#bindEvents();
@@ -269,7 +269,7 @@
                     }
                 }
             }
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
         }
 
         /**
@@ -298,7 +298,7 @@
                     this.#navigateAndFocusTab(nextVisibleIndex);
                 }
             }
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
         }
 
 
@@ -309,7 +309,7 @@
             if (tabs && lastVisibleIndex >= 0) {
                 this.#navigateAndFocusTab(lastVisibleIndex);
             }
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
         }
 
         /**
@@ -319,7 +319,9 @@
          * @param {Number} index The index of the tab to navigate to
          * @param {Number} total number of tabs
          */
-        #hideUnhideNavButtons(activeTabIndex, tabsLength) {
+        #hideUnhideNavButtons(activeTabIndex) {
+            let tabsLength = this.#getCachedTabs() ? this.#getCachedTabs().length : 0;
+
             let nextVisible = this.#findNextVisibleChildIndex(activeTabIndex);
             let previousVisible = this.#findLastVisibleChildIndex(activeTabIndex);
 
@@ -346,24 +348,26 @@
 
         #setNavigationRange() {
             let wizardPanels = this.#getCachedWizardPanels();
-            this.maxEnabledTab = wizardPanels.length-1;
-            this.minEnabledTab = 0;
-            for (let i = 0; i < wizardPanels.length; i++) {
-                if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
-                    this.minEnabledTab = i+1;
-                } else {
-                    break;
+            if(wizardPanels) {
+                this.maxEnabledTab = wizardPanels.length-1;
+                this.minEnabledTab = 0;
+                for (let i = 0; i < wizardPanels.length; i++) {
+                    if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                        this.minEnabledTab = i+1;
+                    } else {
+                        break;
+                    }
                 }
-            }
-            for (let i = wizardPanels.length - 1; i >= 0; i--) {
-                if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
-                    this.maxEnabledTab = i;
-                } else {
-                    break;
+                for (let i = wizardPanels.length - 1; i >= 0; i--) {
+                    if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                        this.maxEnabledTab = i;
+                    } else {
+                        break;
+                    }
                 }
+                this.minEnabledTab = Math.max(0, this.minEnabledTab);
+                this.maxEnabledTab = Math.min(this.#getCachedTabs().length-1, this.maxEnabledTab);
             }
-            this.minEnabledTab = Math.max(0, this.minEnabledTab);
-            this.maxEnabledTab = Math.min(this.#getCachedTabs().length-1, this.maxEnabledTab);
         }
 
         #childComponentEnabled(wizardTab) {
@@ -372,7 +376,8 @@
 
         #findNextVisibleChildIndex(currentIndex) {
             var tabs = this.#getCachedTabs();
-            for (var i = currentIndex + 1; i < tabs.length; i++) {
+            let tabsLength = tabs? tabs.length : 0;
+            for (var i = currentIndex + 1; i < tabsLength; i++) {
                 let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
                 if (isVisible === null || isVisible === 'true') {
                     return i;
@@ -383,10 +388,12 @@
 
         #findLastVisibleChildIndex(currentIndex) {
             var tabs = this.#getCachedTabs();
-            for (var i = currentIndex - 1; i >= 0; i--) {
-                let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
-                if (isVisible === null || isVisible === 'true') {
-                    return i;
+            if(tabs) {
+                for (var i = currentIndex - 1; i >= 0; i--) {
+                    let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
+                    if (isVisible === null || isVisible === 'true') {
+                        return i;
+                    }
                 }
             }
             return -1;
@@ -501,7 +508,7 @@
                 this.handleHiddenChildrenVisibility();
             }
             this.#setNavigationRange();
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
         }
 
         getChildViewByIndex(index) {
@@ -606,7 +613,7 @@
             this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
             var activeTabNavElement = this.#getCachedTabs()[this.#_active];
             this.#setNavigationRange();
-            this.#hideUnhideNavButtons(this.#_active, this.#getCachedTabs().length);
+            this.#hideUnhideNavButtons(this.#_active);
             if (!visible && activeTabNavElement.id === state.id + Wizard.#tabIdSuffix) {
                 let child = this.findFirstVisibleChild(this.#getCachedTabs());
                 if (child) {
