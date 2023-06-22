@@ -47,7 +47,7 @@
                 var _self = this;
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-verticaltabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
-                        if (message.data.operation === "navigate") {
+                        if (message.data.operation === "navigate" && _self._elements["tab"][message.data.index] != undefined) {
                             _self.navigate(_self._elements["tab"][message.data.index].id);
                         }
                     }

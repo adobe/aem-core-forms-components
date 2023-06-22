@@ -57,65 +57,73 @@ describe('Page - Authoring', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Help Content').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Accessibility').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click({force: true});
-            cy.get("[name='./name']").should("exist");
-            cy.get("[name='./jcr:title']").should("exist");
-            cy.get("[name='./hideTitle']").should("exist");
-            cy.get("[name='./placeholder']").should("exist");
-            cy.get("[name='./type']").should("exist");
-            cy.get("[name='./default']").should("exist");
-            cy.get("[name='./minimum']").should("exist");
-            cy.get("[name='./exclusiveMinimum']").should("exist");
-            cy.get("[name='./maximum']").should("exist");
-            cy.get("[name='./exclusiveMaximum']").should("exist");
-            cy.get('.cq-dialog-cancel').should('be.visible');
-            cy.get('.cq-dialog-submit').should('be.visible');
-            cy.get('.cq-dialog-cancel').click({force: true});
-            cy.deleteComponentByPath(numberInputDrop);
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                cy.get(numberInputBlockBemSelector + '__editdialog').contains('Help Content').click().then(() => {
+                    cy.get(numberInputBlockBemSelector + '__editdialog').contains('Accessibility').click().then(() => {
+                        cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click().then(() => {
+                            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
+                                cy.get("[name='./name']").should("exist");
+                                cy.get("[name='./jcr:title']").should("exist");
+                                cy.get("[name='./hideTitle']").should("exist");
+                                cy.get("[name='./placeholder']").should("exist");
+                                cy.get("[name='./type']").should("exist");
+                                cy.get("[name='./default']").should("exist");
+                                cy.get("[name='./minimum']").should("exist");
+                                cy.get("[name='./exclusiveMinimum']").should("exist");
+                                cy.get("[name='./maximum']").should("exist");
+                                cy.get("[name='./exclusiveMaximum']").should("exist");
+                                cy.get('.cq-dialog-submit').should('be.visible');
+                                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                                    cy.deleteComponentByPath(numberInputDrop);
+                                });
+                            })
+                        });
+                    })
+                })
+            });
         });
 
         it(' type dropdown in Basic tab in edit dialog of NumberInput', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click({force: true});
-            cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Number of digits before the decimal separator (1234.000)');
-            cy.get(numberInputBlockBemSelector + '__fracdigits').parent().children('label').contains('Number of digits after the decimal separator (1234.000)');
-            cy.get(numberInputBlockBemSelector + "__type").children('._coral-Dropdown-trigger').click();
-            cy.get("._coral-Menu-itemLabel").contains('Decimal').should('be.visible');
-            cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click();
-            cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Maximum Number of Digits');
-            cy.get('.cq-dialog-cancel').click({force: true});
-            cy.deleteComponentByPath(numberInputDrop);
-        });
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
+                    cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Number of digits before the decimal separator (1234.000)');
+                    cy.get(numberInputBlockBemSelector + '__fracdigits').parent().children('label').contains('Number of digits after the decimal separator (1234.000)');
+                    cy.get(numberInputBlockBemSelector + "__type").children('._coral-Dropdown-trigger').click();
+                    cy.get("._coral-Menu-itemLabel").contains('Decimal').should('be.visible');
+                    cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click();
+                    cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Maximum Number of Digits');
+                    cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                        cy.deleteComponentByPath(numberInputDrop);
+                    })
+                });
+            });
+        })
 
         it('verify editFormat Value Getting saved correctly', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click({force: true});
-            cy.wait(1000).then(() => {
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click().then(() => {
                 cy.get(numberInputBlockBemSelector + '__leaddigits').clear();
                 cy.get(numberInputBlockBemSelector + '__leaddigits').type(4);
                 cy.get(numberInputBlockBemSelector + '__fracdigits').clear();
                 cy.get(numberInputBlockBemSelector + '__fracdigits').type(4);
-                cy.get('.cq-dialog-submit').click();
-                cy.wait(1000).then(() => {
-                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
-                    cy.invokeEditableAction(editDialogConfigurationSelector);
-                    cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click({force: true});
-                    cy.get(numberInputBlockBemSelector + '__leaddigits').should('have.value', 4);
-                    cy.get(numberInputBlockBemSelector + '__fracdigits').should('have.value', 4);
-                    cy.wait(1000).then(() => {
-                        cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
-                        cy.deleteComponentByPath(numberInputDrop);
-                    });
-                });
+                cy.get('.cq-dialog-submit').should('be.visible').click().then(() => {
+                    cy.get('.cq-dialog-submit').should('not.exist').then(() => {
+                        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+                        cy.invokeEditableAction(editDialogConfigurationSelector).then(() => {
+                            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click();
+                            cy.get(numberInputBlockBemSelector + '__leaddigits').should('have.value', 4);
+                            cy.get(numberInputBlockBemSelector + '__fracdigits').should('have.value', 4);
+                            cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                                cy.deleteComponentByPath(numberInputDrop);
+                            })
+                        })
+                    })
+                })
             });
         })
     });
@@ -153,7 +161,7 @@ describe('Page - Authoring', function () {
                     cy.get("[name='./maximum']").should("exist");
                     cy.get("[name='./exclusiveMaximum']").should("exist");
                     cy.get('.cq-dialog-submit').should('be.visible');
-                    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
+                    cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
                         cy.deleteComponentByPath(numberInputDrop);
                     })
                 })

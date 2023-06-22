@@ -1,0 +1,157 @@
+{
+  "panelcontainer1": {
+    "name" : "panelcontainer1686209930397",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType" : "forms-components-examples/components/form/panelcontainer",
+    "fieldType" : "panel",
+    "label": {
+      "visible": true,
+      "value": ""
+    },
+    "checkboxgroup1" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "forms-components-examples/components/form/checkboxgroup",
+      "name" : "checkboxgroup1686209791237",
+      "fieldType" : "checkbox-group",
+      "label": {
+        "value": ""
+      }
+    },
+    "datepicker1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/datepicker",
+      "name" : "datepicker1686209801377",
+      "fieldType" : "date-input",
+      "label": {
+        "value": ""
+      }
+    },
+    "dropdown1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/dropdown",
+      "name" : "dropdown1686209805456",
+      "fieldType" : "drop-down",
+      "label": {
+        "value": ""
+      }
+    },
+    "fileinput1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/fileinput",
+      "name" : "fileinput1686209827629",
+      "fieldType" : "file-input",
+      "label": {
+        "value": ""
+      }
+    },
+    "numberinput1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/numberinput",
+      "name" : "numberinput1686209832358",
+      "fieldType" : "number-input",
+      "label": {
+        "value": ""
+      }
+    },
+    "radiobutton1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/radiobutton",
+      "name" : "radiobutton1686209837040",
+      "fieldType" : "radio-group",
+      "label": {
+        "value": ""
+      }
+    },
+    "textinput1": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType" : "forms-components-examples/components/form/textinput",
+      "name" : "textinput1686209857790",
+      "fieldType" : "text-input",
+      "label": {
+        "value": ""
+      }
+    }
+  },
+
+  "panelcontainer2" : {
+    "name" : "panelcontainer1686248539157",
+    "jcr:title": "Panel Custom Title",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType" : "forms-components-examples/components/form/panelcontainer",
+    "fieldType" : "panel",
+    "label": {
+      "visible": true,
+      "value": "Panel Custom Title"
+    },
+    "checkboxgroup2" : {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Check Box Group Custom Title",
+      "sling:resourceType"    : "forms-components-examples/components/form/checkboxgroup",
+      "name" : "checkboxgroup1686248442596",
+      "fieldType" : "checkbox-group",
+      "label": {
+        "value": "Check Box Group Custom Title"
+      }
+    },
+    "datepicker2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Date Input Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/datepicker",
+      "name" : "datepicker1686248451620",
+      "fieldType" : "date-input",
+      "label": {
+        "value": "Date Input Custom Title"
+      }
+    },
+    "dropdown2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Dropdown Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/dropdown",
+      "name" : "dropdown1686248460870",
+      "fieldType" : "drop-down",
+      "label": {
+        "value": "Dropdown Custom Title"
+      }
+    },
+    "fileinput2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "File Attachment Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/fileinput",
+      "name" : "fileinput1686248467746",
+      "fieldType" : "file-input",
+      "label": {
+        "value": "File Attachment Custom Title"
+      }
+    },
+    "numberinput2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Number Input Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/numberinput",
+      "name" : "numberinput1686248474194",
+      "fieldType" : "number-input",
+      "label": {
+        "value": "Number Input Custom Title"
+      }
+    },
+    "radiobutton2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Radio Button Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/radiobutton",
+      "name" : "radiobutton1686248480062",
+      "fieldType" : "radio-group",
+      "label": {
+        "value": "Radio Button Custom Title"
+      }
+    },
+    "textinput2": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Text Input Custom Title",
+      "sling:resourceType" : "forms-components-examples/components/form/textinput",
+      "name" : "textinput1686248485781",
+      "fieldType" : "text-input",
+      "label": {
+        "value": "Text Input Custom Title"
+      }
+    }
+  }
+}

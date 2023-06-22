@@ -84,6 +84,7 @@
     "id": "textinput-1c7bc238a6",
     "fieldType": "text-input",
     "name": "Full Name",
+    "jcr:title" : "Full Name",
     "visible": true,
     "description": "Enter Full Name",
     "tooltip": "Full Name",

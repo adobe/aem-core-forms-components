@@ -300,9 +300,14 @@ export default class FormTabs extends FormPanel {
             this.#cacheElements(this._elements.self);
             var repeatedTabPanel = this.#getTabPanelElementById(childView.id + this.#tabPanelIdSuffix);
             repeatedTabPanel.setAttribute("aria-labelledby", childView.id + this.#tabIdSuffix);
-            this.#refreshActive();
             this.#bindEventsToTab(navigationTabToBeRepeated.id);
-            this.navigateAndFocusTab(navigationTabToBeRepeated.id);
+            this.#refreshActive();
+            if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
+                this.navigateAndFocusTab(navigationTabToBeRepeated.id);
+            } else {
+                //this will run at initial loading of runtime and keep the first tab active
+                this.navigateAndFocusTab(this.findFirstVisibleChild(this.#getCachedTabs()).id);
+            }
         }
     }
 
@@ -322,7 +327,7 @@ export default class FormTabs extends FormPanel {
     addChild(childView) {
         super.addChild(childView);
         this.#cacheTemplateHTML(childView);
-        if (this.getModel()._children.length === this.children.length) {
+        if (this.getCountOfAllChildrenInModel() === this.children.length) {
             this.cacheClosestFieldsInView();
             this.handleHiddenChildrenVisibility();
         }
@@ -389,6 +394,7 @@ export default class FormTabs extends FormPanel {
         let beforeViewElement = result.beforeViewElement;
         beforeViewElement.after(elementToEnclose);
         elementToEnclose.append(htmlElement);
+        return elementToEnclose;
     }
 
     #getBeforeViewElement(instanceManager, instanceIndex) {

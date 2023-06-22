@@ -99,9 +99,17 @@ public class FragmentImplTest {
         assertEquals("fragment-123", fragment.getName());
     }
 
+    @Test
+    void testFragmentChildren() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        assertEquals(1, fragment.getFragmentChildren().size());
+        assertEquals("textinput", fragment.getFragmentChildren().get(0).getName());
+    }
+
     // @Test
     // void testJSONExport() throws Exception {
     // Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
     // Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
     // }
+
 }

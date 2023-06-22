@@ -35,6 +35,7 @@ import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -44,7 +45,6 @@ import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -54,6 +54,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FragmentImpl extends PanelImpl implements Fragment {
+
+    public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -75,7 +77,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (fragmentPath != null && GuideWCMUtils.isForms(fragmentPath)) {
             String fragmentRef = fragmentPath;
             if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
-                fragmentRef = fragmentPath.replace("/content/dam/formsanddocuments", "/content/forms/af");
+                fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
             }
             fragmentContainer = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
         } else {
@@ -89,7 +91,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
     }
 
-    @JsonInclude
+    @JsonIgnore
     public String getFragmentPath() {
         return fragmentPath;
     }
@@ -191,5 +193,12 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             titleList.add(vm.get("jcr:title", StringUtils.EMPTY));
         }
         return titleList;
+    }
+
+    @Override
+    public Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
+        return properties;
     }
 }

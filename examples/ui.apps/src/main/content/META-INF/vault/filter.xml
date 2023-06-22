@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/apps/forms-components-examples"/>
+    <filter root="/apps/settings" mode="merge"/>
+    <filter root="/apps/settings/wcm" mode="merge"/>
+    <filter root="/apps/settings/wcm/designs" mode="merge"/>
+    <filter root="/apps/settings/wcm/designs/fragment" />
 </workspaceFilter>

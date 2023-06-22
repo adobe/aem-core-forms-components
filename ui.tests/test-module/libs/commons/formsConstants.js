@@ -45,6 +45,10 @@ var formsConstants = {
                 "title": "/apps/forms-components-examples/components/form/title",
                 "fragment": "/apps/forms-components-examples/components/form/fragment"
             }
+        },
+        resourceType : {
+            "contentfragment": "/apps/core-components-examples/components/contentfragment",
+            "experiencefragment": "/apps/core-components-examples/components/experiencefragment"
         }
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
