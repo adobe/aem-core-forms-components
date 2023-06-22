@@ -116,7 +116,50 @@ describe("Form Runtime with Text Input", () => {
         })
     })
 
-    it("should show validation error messages based on expression rule", () => {
+    it("should set and clear value based on rules", () => {
+        // Rule on textBox5: When input of textBox5 is "aemforms", set value of textBox1 to "new value" and clear value of textBox4
+
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+        const [textbox5, textBox5FieldView] = Object.entries(formContainer._fields)[4];
+
+        const input = "aemforms";
+        cy.get(`#${textbox4}`).find("input").clear().type("this must be cleared")
+        cy.get(`#${textbox5}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${textbox4}`).find("input").should('have.value',"")
+            cy.get(`#${textbox1}`).find("input").should('have.value', "new value")
+        })
+    })
+
+    it.only("should show different default error messages on different constraints", () => {
+        const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[5];
+        const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
+        const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
+
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[8]
+
+        // 1. Required
+        cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
+            cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please fill in this field.")
+        })
+
+        // 2. Pattern: [^'\x22]+
+        cy.get(`#${textbox6}`).find("input").clear().type("'").blur().then(x => {
+            cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please match the format requested.")
+        })
+
+        // 3. Maximum Number of Characters: 20
+        cy.get(`#${submitbutton1}`).find("button").click()
+        cy.get(`#${textbox7}`).find("input").then(x => {
+            cy.get(`#${textbox7}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please shorten this text to 20 characters or less.")
+        })
+
+        // 4. Minimum Number of Characters: 12
+        cy.get(`#${textbox8}`).find("input").then(x => {
+            cy.get(`#${textbox8}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please lengthen this text to 12 characters or more.")
+        })
+
+        // 5. Script Validation: Validate textBox1 using Expression: textBox1 === "validate"
         // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
 
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
@@ -131,20 +174,6 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
         })
-    })
 
-    it("should set and clear value based on rules", () => {
-        // Rule on textBox5: When input of textBox5 is "aemforms", set value of textBox1 to "new value" and clear value of textBox4
-
-        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
-        const [textbox5, textBox5FieldView] = Object.entries(formContainer._fields)[4];
-
-        const input = "aemforms";
-        cy.get(`#${textbox4}`).find("input").clear().type("this must be cleared")
-        cy.get(`#${textbox5}`).find("input").clear().type(input).blur().then(x => {
-            cy.get(`#${textbox4}`).find("input").should('have.value',"")
-            cy.get(`#${textbox1}`).find("input").should('have.value', "new value")
-        })
     })
 })
