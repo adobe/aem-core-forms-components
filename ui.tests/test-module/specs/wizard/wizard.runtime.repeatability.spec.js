@@ -167,17 +167,29 @@ describe('visibility of navigation buttons', function () {
 
         getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
         cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
-        for(let i=0; i<6; i++) {
-            cy.get(nextNavButton).click({force: true});
-        };
+        cy.get(nextNavButton).click({force: true}).then(() => {
+            cy.get(nextNavButton).click({force: true}).then(() => {
+                cy.get(nextNavButton).click({force: true}).then(() => {
+                    cy.get(nextNavButton).click({force: true})
+                }).then(() => {
+                    cy.get(nextNavButton).click({force: true})
+                    getWizardPanelAtIndex(4).should('have.class', wizardPanelActive);
+                    cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
 
-        getWizardPanelAtIndex(4).should('have.class', wizardPanelActive);
-        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-        for(let i=0; i<6; i++) {
-            cy.get(previousNavButton).click({force: true});
-        };
-
-        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+                    cy.get(previousNavButton).click({force: true}).then(() => {
+                        cy.get(previousNavButton).click({force: true}).then(() => {
+                            cy.get(previousNavButton).click({force: true}).then(() => {
+                                cy.get(previousNavButton).click({force: true}).then (() => {
+                                    cy.get(previousNavButton).click({force: true})
+                                    getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+                                    cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
     })
 
     it("testing visibility on add/remove instance", () => {
