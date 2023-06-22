@@ -46,7 +46,7 @@
          id="${accordion.exportedItems[item].id}-item"
          data-cmp-hook-adaptiveFormAccordion="item"
          data-cmp-expanded="${itemList.first}">
-        <h3 class="cmp-accordion__header">
+        <div class="cmp-accordion__header">
             <button id="${accordion.exportedItems[item].id}-button"
                     class="cmp-accordion__button${itemList.first ? ' cmp-accordion__button--expanded' : ''}"
                     title="${accordion.tooltipVisible ? '' : accordion.tooltipText}"
@@ -56,20 +56,20 @@
                 <span class="cmp-accordion__title">${accordion.exportedItems[item].label.value}</span>
                 <span class="cmp-accordion__icon"></span>
             </button>
-            <div 
-              data-sly-test="${accordion.exportedItems[item].repeatable}" 
+          <div
+              data-sly-test="${accordion.exportedItems[item].repeatable}"
               class="cmp-accordion__repeatable-buttons"
               data-cmp-hook-adaptiveFormAccordion="repeatableButton">
-              <button 
+              <button
                 class="cmp-accordion__add-button"
                 data-cmp-hook-add-instance="${accordion.exportedItems[item].id}"
                 type="button"></button>
-              <button 
+              <button
                 class="cmp-accordion__remove-button"
                 data-cmp-hook-remove-instance="${accordion.exportedItems[item].id}"
                 type="button"></button>
             </div>
-        </h3>
+        </div>
         <div data-sly-resource="${item @ decorationTagName='div'}"
              data-cmp-hook-adaptiveFormAccordion="panel"
              id="${accordion.exportedItems[item].id}-panel"
