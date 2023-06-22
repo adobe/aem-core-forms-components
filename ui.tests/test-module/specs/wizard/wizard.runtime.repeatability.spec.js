@@ -142,28 +142,6 @@ describe('visibility of navigation buttons', function () {
         })
     })
 
-    it("navigating start to end to start", () => {
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
-            wizardItems = formContainer._model.items[0].items;
-
-        const wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
-
-        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
-        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
-        for(let i=0; i<6; i++) {
-            cy.get(nextNavButton).click({force: true});
-        };
-
-        getWizardPanelAtIndex(5).should('have.class', wizardPanelActive);
-        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-        for(let i=0; i<6; i++) {
-            cy.get(previousNavButton).click({force: true});
-        };
-
-        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
-    })
-
     const getTabs = () => {
         return cy.get(".cmp-adaptiveform-wizard__tab");
     }
@@ -180,59 +158,60 @@ describe('visibility of navigation buttons', function () {
         return getWizardPanels().eq(index);
     }
 
-    // it("testing visibility on add/remove instance", () => {
-    //     const textInputId = formContainer._model.items[1].id;
-    //     const wizardItems = formContainer._model.items[0].items;
-    //
-    //     const firstItemNavOfWizardId = wizardItems[0].id + "_wizard-item-nav",
-    //         firstItemOfWizardId = wizardItems[0].id + "__wizardpanel",
-    //         secondItemNavOfWizardId = wizardItems[1].id + "_wizard-item-nav",
-    //         secondItemOfWizardId = wizardItems[1].id + "__wizardpanel";
-    //
-    //     const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-    //         nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
-    //         driverTextInput = '.cmp-adaptiveform-textinput__widget',
-    //         wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
-    //         wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
-    //
-    //     cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
-    //     cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
-    //     cy.get(`#${secondItemNavOfWizardId}`).should('have.class', wizardTabActive);
-    //     cy.get(`#${secondItemOfWizardId}`).should('have.class', wizardPanelActive);
-    //     cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
-    //     cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
-    //
-    //     cy.get(`#${textInputId}`).find(driverTextInput).focus().clear().type('a').blur().then(() => {
-    //         // check if first is not hidden and prev is visible
-    //         cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'true');
-    //         cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
-    //         cy.get(previousNavButton).click({force: true});
-    //
-    //         // check if prev is not visible now and active is first
-    //         cy.get(`#${firstItemNavOfWizardId}`).should('have.class', wizardTabActive);
-    //         cy.get(`#${firstItemOfWizardId}`).should('have.class', wizardPanelActive);
-    //         cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
-    //
-    //         // check if active tab changes if current active is invisible
-    //         cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('b').blur().then(() => {
-    //             cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
-    //             cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
-    //             cy.get(`#${secondItemNavOfWizardId}`).should('have.class', wizardTabActive);
-    //             cy.get(`#${secondItemOfWizardId}`).should('have.class', wizardPanelActive);
-    //             cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
-    //             cy.get(nextNavButton).click({force: true});
-    //             cy.get(nextNavButton).click({force: true});
-    //
-    //             // now check if next button is invisible after reaching last tab
-    //             cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-    //
-    //             // check if active tab changes if current active is invisible
-    //             cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('c').blur().then(() => {
-    //                 cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
-    //                 cy.get(nextNavButton).click({force: true});
-    //                 cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
-    //             });
-    //         });
-    //     });
-    // });
+    it("navigating start to end to start", () => {
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            wizardItems = formContainer._model.items[0].items;
+
+        const wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        for(let i=0; i<6; i++) {
+            cy.get(nextNavButton).click({force: true});
+        };
+
+        getWizardPanelAtIndex(4).should('have.class', wizardPanelActive);
+        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        for(let i=0; i<6; i++) {
+            cy.get(previousNavButton).click({force: true});
+        };
+
+        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+    })
+
+    it("testing visibility on add/remove instance", () => {
+        const textInputId = formContainer._model.items[1].id;
+        const wizardItems = formContainer._model.items[0].items;
+
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            driverTextInput = '.cmp-adaptiveform-textinput__widget',
+            wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
+            wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        // check if first instance of repeatable panel is active
+        // previous nav button is invisible next nav button is visible
+        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+
+        // check when new instance of repeatable panel is added
+        // and that new instance gets active & prev and next nav buttons are visible
+        cy.get(`#${textInputId}`).find(driverTextInput).focus().clear().type('a').blur().then(() => {
+            getWizardPanelAtIndex(2).should('have.class', wizardPanelActive);
+            cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+
+            // check if active tab changes if current active is invisible
+            cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('b').blur().then(() => {
+                // check if repeatable instance is removed honouring rule
+                // first tab gets active and previous nav button is invisible
+                // and next nav button is visible
+                getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+            });
+        });
+    });
 });
