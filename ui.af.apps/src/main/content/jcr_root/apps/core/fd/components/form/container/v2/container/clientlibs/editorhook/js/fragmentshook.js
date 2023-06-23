@@ -43,8 +43,25 @@
         };
     };
 
-    // TODO: Fragment creation API
+    // TODO: Fragment creation API integration
     const fragmentCreationDialogDef = (componentPath) =>  {
+
+        const options = {
+            data: {
+                title: "x",
+                name: "y",
+                templatePath: "",
+                panelPath: componentPath,
+                formLocation: "",
+                schemaPath: "",
+                schemaRoot: "",
+                publishDateTime: new Date(),
+                unPublishDateTime: "",
+                schemaType: "",
+            },
+            successHandler: () => {},
+            errorHandler: () => {}
+        };
         return {
             getConfig : function getConfig() {
                 return fragmentCreationDialogConfig(componentPath);
@@ -61,7 +78,9 @@
             onFocus : function onFocus() {
 
             },
-            onSuccess :function() {console.log('success')},
+            onSuccess :function() {
+                ns.afUtils.createFragmentFromPanelAFV2(options)
+            },
 
             onClose : ns.DialogFrame.clearDialog,
             resourceType : FRAGMENT_CREATION_DIALOG_PATH
