@@ -39,6 +39,7 @@
 
         constructor(params) {
             super(params);
+            this.#bindEvents(this);
         }
 
         getWidget() {
@@ -77,6 +78,26 @@
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
             });
+        }
+
+        /**
+         * Binds Telephone input event handling for number input only
+         *
+         * @private
+         */
+        #bindEvents(telephoneInput) {
+            var _self = this.#getContext(telephoneInput);
+            (function () {
+                _self.addEventListener("keypress", function (event) {
+                    if (!(/[0-9]/.test(event.key))) {
+                        event.preventDefault();
+                    }
+                });
+            })();
+        }
+
+        #getContext(telephoneInput) {
+            return this.element.querySelector(TelephoneInput.selectors.widget);
         }
     }
 
