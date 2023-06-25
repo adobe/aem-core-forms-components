@@ -139,6 +139,33 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
+    const verifyOpenDoRTemplate = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open Document of Record Template tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Document of Record Template').click({force:true});
+        cy.get("coral-radio[name='dortypeselector']").should("have.length", 3);
+
+        //select dor template type
+        cy.get("coral-radio[value='generate']").click();
+        cy.get(".cq-dialog-submit").click();
+    };
+
+    const verifyDoRTemplateChange = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open DoR Template Tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Document of Record Template').click({force:true});
+
+        cy.get("coral-radio[value='generate']").should('have.attr', 'checked');
+        cy.get("coral-radio[value='none']").click();
+        cy.get(".cq-dialog-cancel").click();
+    };
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -177,6 +204,14 @@ describe('Page/Form Authoring', function () {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
             })
+
+            it('open and select DoR template tab in container edit dialog', function () {
+                verifyOpenDoRTemplate(formContainerEditPathSelector);
+            });
+
+            it('change in DoR template config should be presisted', function () {
+                verifyDoRTemplateChange(formContainerEditPathSelector);
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
