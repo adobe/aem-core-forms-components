@@ -224,14 +224,14 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
 
         cy.get(`#${innerModelId}`).should('exist');
         cy.get(`#${innerModelId}`).find(`.${innerLabelClass}`).should('exist');
-        cy.get(`#${innerModelId}`).find('label[for="'+innerModelId+'"]').should('exist');
+        cy.get(`#${innerModelId}`).find('label[id="'+innerModelId+'-widget"]').should('exist');
         cy.get(`#${innerModelId}`).find(`.${innerTooltipClass}`).should('exist');
         cy.get(`#${innerModelId}`).find(`.${innerDescriptionClass}`).should('exist');
         cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
-        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'-widget"]').should('exist');
         cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
         cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupLabelClass}`).should('exist');
-        cy.get(`#${checkBoxGroupId}`).find('label[for="'+checkBoxGroupId+'"]').should('exist');
+        cy.get(`#${checkBoxGroupId}`).find('label[for="'+checkBoxGroupId+'-widget"]').should('exist');
         return cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupViewErrorClass}`).should('exist');
     };
 
@@ -252,14 +252,14 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         const numberInputLabelClass = numberInputView.getLabel().className;
         const numberInputErrorClass = numberInputView.getErrorDiv().className;
         cy.get(`#${modelId}`).find(`.${parentLabelClass}`).should('exist');
-        cy.get(`#${modelId}`).find('label[for="'+modelId+'"]').should('exist');
+        cy.get(`#${modelId}`).find('label[id="'+modelId+'-widget"]').should('exist');
         cy.get(`#${modelId}`).find(`.${parentTooltipClass}`).should('exist');
         cy.get(`#${modelId}`).find(`.${parentDescriptionClass}`).should('exist');
         cy.get(`#${textInputId}`).find(`.${textInputLabelClass}`).should('exist');
-        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'"]').should('exist');
+        cy.get(`#${textInputId}`).find('label[for="'+textInputId+'-widget"]').should('exist');
         cy.get(`#${textInputId}`).find(`.${textInputErrorClass}`).should('exist');
         cy.get(`#${numberInputId}`).find(`.${numberInputLabelClass}`).should('exist');
-        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'"]').should('exist');
+        cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'-widget"]').should('exist');
         return cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
     };
 
