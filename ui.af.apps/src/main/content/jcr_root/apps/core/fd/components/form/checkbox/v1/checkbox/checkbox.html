@@ -39,7 +39,7 @@
            id="${checkbox.id}_widget"
            title="${checkbox.tooltipVisible ? '' : checkbox.tooltipText}"
            name="${checkbox.name}"
-           aria-readonly="${checkboxgroup.readOnly ? 'true' : 'false'}"
+           aria-readonly="${checkbox.readOnly ? 'true' : 'false'}"
            value="${checkbox.default[0]? checkbox.default[0] : checkbox.enums[1].toString}"
            checked="${checkbox.enums[0] == checkbox.default[0]}"
            disabled="${!checkbox.enabled || checkbox.readOnly}" />

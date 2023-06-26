@@ -62,7 +62,7 @@ BLOCK cmp-adaptiveform-checkbox
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the checkbox-group component in the form view:  
+The following attributes must be added for the initialization of the checkbox component in the form view:  
  1. `data-cmp-is="adaptiveFormCheckBox"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 

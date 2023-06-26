@@ -19,7 +19,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
- * Testing CheckBoxGroup with Sites Editor
+ * Testing CheckBox with Sites Editor
  */
 describe('Page - Authoring', function () {
 
