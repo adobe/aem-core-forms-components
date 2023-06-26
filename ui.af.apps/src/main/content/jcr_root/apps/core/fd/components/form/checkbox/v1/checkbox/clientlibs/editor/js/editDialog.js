@@ -17,8 +17,8 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-checkbox__editdialog",
-        CHECKBOXGROUP_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
-        CHECKBOXGROUP_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
+        CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
+        CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
         CHECKBOX_OPTIONS = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__options",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -28,8 +28,8 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleAssistPriorityChange(dialog) {
-        var assistpriority = dialog.find(CHECKBOXGROUP_ASSISTPRIORITY);
-        var customtext = dialog.find(CHECKBOXGROUP_CUSTOMTEXT);
+        var assistpriority = dialog.find(CHECKBOX_ASSISTPRIORITY);
+        var customtext = dialog.find(CHECKBOX_CUSTOMTEXT);
         var hideAndShowElements = function() {
             if(assistpriority[0].value === "custom"){
                 customtext.show();
