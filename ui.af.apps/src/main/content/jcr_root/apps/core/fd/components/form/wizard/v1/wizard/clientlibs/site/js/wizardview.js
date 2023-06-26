@@ -352,14 +352,14 @@
                 this.maxEnabledTab = wizardPanels.length-1;
                 this.minEnabledTab = 0;
                 for (let i = 0; i < wizardPanels.length; i++) {
-                    if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                    if(!this.#childComponentVisible(this.#getCachedWizardPanels()[i])) {
                         this.minEnabledTab = i+1;
                     } else {
                         break;
                     }
                 }
                 for (let i = wizardPanels.length - 1; i >= 0; i--) {
-                    if(!this.#childComponentEnabled(this.#getCachedWizardPanels()[i])) {
+                    if(!this.#childComponentVisible(this.#getCachedWizardPanels()[i])) {
                         this.maxEnabledTab = i;
                     } else {
                         break;
@@ -370,7 +370,7 @@
             }
         }
 
-        #childComponentEnabled(wizardTab) {
+        #childComponentVisible(wizardTab) {
             return wizardTab.children[0].getAttribute('data-cmp-visible') === 'true';
         }
 
