@@ -72,27 +72,6 @@
                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                               fieldLabel="Default value"
                                               name="./default"/>
-                                            <alignment
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:orderBefore="visible"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
-                                                    fieldLabel="Display options"
-                                                    name="./orientation"
-                                                    text="Item Alignment">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <horizontal
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
-                                                            checked="true"
-                                                            text="Horizontally"
-                                                            value="horizontal"/>
-                                                    <vertical
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
-                                                            text="Vertically"
-                                                            value="vertical"/>
-                                                </items>
-                                            </alignment>
                                         </items>
                                     </column>
                                 </items>
