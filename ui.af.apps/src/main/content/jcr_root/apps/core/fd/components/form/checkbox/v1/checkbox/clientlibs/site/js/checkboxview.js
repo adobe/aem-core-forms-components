@@ -89,12 +89,13 @@
             if (modelValue === this._model._jsonModel.enum[0]) {
                 this.widget.checked = true
                 this.widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
-                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
+                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
             } else {
                 this.widget.checked = false
                 this.widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
                 this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
             }
+            this.widget.value = modelValue;
         }
     }
     FormView.Utils.setupField(({element, formContainer}) => {

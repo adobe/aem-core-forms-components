@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with CheckBox Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkbox/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkbox'
     const IS = "adaptiveFormCheckBox"
     const selectors = {
@@ -39,16 +39,18 @@ describe("Form Runtime with CheckBox Input", () => {
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
             .should('eq', visible.toString());
+
         cy.get(`#${id}`)
             .invoke('attr', 'data-cmp-enabled')
             .should('eq', state.enabled.toString());
+
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
-                .should('have.length', 4)
+                .should('have.length', 1)
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
-            cy.get('input').eq(1).should('be.checked')
+            cy.get('input').should('be.checked');
         })
     }
 
@@ -61,132 +63,102 @@ describe("Form Runtime with CheckBox Input", () => {
         });
     })
 
-    // it(" model's changes are reflected in the html ", () => {
-    //     const [id, fieldView] = Object.entries(formContainer._fields)[0]
-    //     const model = formContainer._model.getElement(id)
-    //     const val = Array('1','2')
-    //     model.value = '1'
-    //     cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'VERTICAL')
-    //     const [id2, fieldView2] = Object.entries(formContainer._fields)[1]
-    //     cy.get(`#${id2}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.class', 'HORIZONTAL')
-    //
-    //
-    //     checkHTML(model.id, model.getState()).then(() => {
-    //         model.visible = false
-    //         return checkHTML(model.id, model.getState())
-    //     }).then(() => {
-    //         model.enable = false
-    //         return checkHTML(model.id, model.getState())
-    //     })
-    // });
-    //
-    // it(" html changes are reflected in model ", () => {
-    //     const [id, fieldView] = Object.entries(formContainer._fields)[1]
-    //     const model = formContainer._model.getElement(id)
-    //
-    //     cy.log(model.getState().value)
-    //     cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-    //         cy.log(model.getState().value)
-    //         expect(model.getState().value).to.contain('1');
-    //     })
-    //
-    //     cy.get(`#${id}`).find("input").eq(2).click().then(x => {
-    //         cy.log(model.getState().value)
-    //         expect(model.getState().value).to.contain('2');
-    //     })
-    // });
-    //
-    // it(" should show error messages in the HTML ", () => {
-    //     const [id, fieldView] = Object.entries(formContainer._fields)[1]
-    //     const model = formContainer._model.getElement(id)
-    //
-    //     cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-    //         cy.log(model.getState().value)
-    //         expect(model.getState().value).to.contain('1');
-    //     })
-    //
-    //     cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-    //         cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"This is a custom required checkboxgroup")
-    //     })
-    //
-    //     cy.get(`#${id}`).find("input").eq(1).click().then(x => {
-    //         cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
-    //     })
-    // });
-    //
-    // it("should toggle description and tooltip", () => {
-    //     cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
-    // })
-    //
-    // it("should show and hide components on certain checkbox input", () => {
-    //     // Rule on checkbox2: When checkbox2 has Item 1 AND Item 3 selected => Show checkbox3 and Hide checkBox4
-    //
-    //     const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
-    //     const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
-    //     const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
-    //
-    //     cy.get(`#${checkBox2}`).find("input").check(["0","3"]).then(x => {
-    //         cy.get(`#${checkBox3}`).should('be.visible')
-    //         cy.get(`#${checkBox4}`).should('not.be.visible')
-    //     })
-    // })
-    //
-    // it("should enable and disable components on certain checkbox input", () => {
-    //     // Rule on checkbox4: When checkbox4 has Item 3 selected => Enable checkbox1 and Disable checkBox2
-    //
-    //     const [checkBox1, checkBox1FieldView] = Object.entries(formContainer._fields)[0];
-    //     const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
-    //     const [checkBox4, checkBox4FieldView] = Object.entries(formContainer._fields)[3];
-    //
-    //     cy.get(`#${checkBox4}`).find("input").check(["2"]).then(x => {
-    //         cy.get(`#${checkBox1}`).find("input").should('be.enabled')
-    //         cy.get(`#${checkBox2}`).find("input").should('not.be.enabled')
-    //     })
-    // })
-    //
-    // it("should show validation error messages based on expression rules", () => {
-    //     // Rule on checkBox5: Validate checkBox using Expression: checkBox5 === checkBox3
-    //
-    //     const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
-    //     const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
-    //     const [checkBox5, checkBox5FieldView] = Object.entries(formContainer._fields)[4];
-    //
-    //     // Making checkBox3 visible
-    //     cy.get(`#${checkBox2}`).find("input").check(["0","3"])
-    //
-    //     cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
-    //         cy.get(`#${checkBox5}`).find("input").uncheck().check(["1"])
-    //         cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"Please enter a valid value.")
-    //     })
-    //
-    //     cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
-    //         cy.get(`#${checkBox5}`).find("input").uncheck().check(["0"])
-    //         cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
-    //     })
-    // })
-    //
-    // it("should set and clear value based on rules", () => {
-    //     // Rule on checkBox3: When input has Item2 selected, set value of checkBox5 to Item 1 and clear value of checkBox2
-    //
-    //     const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
-    //     const [checkBox3, checkBox3FieldView] = Object.entries(formContainer._fields)[2];
-    //     const [checkBox5, checkBox5FieldView] = Object.entries(formContainer._fields)[4];
-    //
-    //     // Make checkbox3 visible
-    //     cy.get(`#${checkBox2}`).find("input").check(["0", "3"])
-    //     cy.get(`#${checkBox3}`).find("input").check("1").blur().then(x => {
-    //         cy.get(`#${checkBox5}`).find("input").should('be.checked')
-    //         cy.get(`#${checkBox2}`).find("input").should('not.be.checked')
-    //     })
-    // })
-    //
-    // it("should update enum values on providing duplicate enums", () => {
-    //
-    //     const [checkBox6, checkBox6FieldView] = Object.entries(formContainer._fields)[5];
-    //     cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
-    //     cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 3');
-    //     cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 2');
-    //     cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 1').should('not.exist');
-    //
-    // })
+    it(" model's changes are reflected in the html ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        model.value = 'true'
+
+        checkHTML(model.id, model.getState()).then(() => {
+            return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.enable = false
+            return checkHTML(model.id, model.getState())
+        })
+    });
+
+
+    it ('should have value set to off during initial render, if default value not set', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        expect(model.getState().value).to.contain('false');
+    });
+
+    it ('should have value set to default during initial render', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[1]
+        const model = formContainer._model.getElement(id)
+        expect(model.getState().value).to.contain('true');
+        cy.get(`#${id}`).get('input').should('be.checked');
+    })
+
+    it(" html changes are reflected in model ", () => {
+
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        cy.get(`#${id}`).find("input").click().then(x => {
+            expect(model.getState().value).to.contain('true');
+        })
+
+        cy.get(`#${id}`).find("input").click().then(x => {
+            expect(model.getState().value).to.contain('false');
+        })
+    });
+
+    it(" should show error messages in the HTML ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[2]
+        const model = formContainer._model.getElement(id)
+
+        cy.get(`#${id}`).find("input").click().then(x => {
+            expect(model.getState().value).to.contain('true');
+        })
+
+        cy.get(`#${id}`).find("input").click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__errormessage").should('have.text',"This is a custom required checkbox")
+        })
+
+        cy.get(`#${id}`).find("input").click().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__errormessage").should('have.text',"")
+        })
+    });
+
+    it("should toggle description and tooltip", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        cy.toggleDescriptionTooltip(bemBlock, id);
+    })
+
+    it("should show and hide components on certain checkbox input", () => {
+        // Rule on checkbox2: When checkbox2 has Item 1 AND Item 3 selected => Show checkbox3 and Hide checkBox4
+
+        const [checkbox, checkBox2FieldView] = Object.entries(formContainer._fields)[3];
+        const [hiddenCB, checkBox3FieldView] = Object.entries(formContainer._fields)[4];
+
+        cy.get(`#${hiddenCB}`).should('not.be.visible');
+
+        cy.get(`#${checkbox}`).find('input').click().then(x => {
+            cy.get(`#${hiddenCB}`).should('be.visible');
+            cy.get(`#${checkbox}`).find('input').click().then(x => {
+                cy.get(`#${hiddenCB}`).should('not.be.visible')
+            });
+        });
+
+    })
+
+    it("should enable and disable components on certain checkbox input", () => {
+        // Rule on checkbox4: When checkbox4 has Item 3 selected => Enable checkbox1 and Disable checkBox2
+
+        const [enabledisablecb, checkBox1FieldView] = Object.entries(formContainer._fields)[5];
+        const [cbUnderTest, checkBox2FieldView] = Object.entries(formContainer._fields)[6];
+
+        // Initially cb should be disabled
+        cy.get(`#${cbUnderTest}`).find("input").should('not.be.enabled')
+
+        // check to enable cb
+        cy.get(`#${enabledisablecb}`).find("input").click().then(x => {
+            cy.get(`#${cbUnderTest}`).find("input").should('be.enabled')
+            // uncheck to disable cb
+            cy.get(`#${enabledisablecb}`).find("input").click().then(x => {
+                cy.get(`#${cbUnderTest}`).find("input").should('not.be.enabled')
+
+            })
+        })
+    })
 })
