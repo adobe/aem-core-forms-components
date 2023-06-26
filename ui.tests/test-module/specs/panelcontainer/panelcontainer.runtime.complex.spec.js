@@ -231,7 +231,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         cy.get(`#${numberInputId}`).find('label[for="'+numberInputId+'-widget"]').should('exist');
         cy.get(`#${numberInputId}`).find(`.${numberInputErrorClass}`).should('exist');
         cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupLabelClass}`).should('exist');
-        cy.get(`#${checkBoxGroupId}`).find('label[for="'+checkBoxGroupId+'-widget"]').should('exist');
+        cy.get(`#${checkBoxGroupId}`).find('label[id="'+checkBoxGroupId+'-widget"]').should('exist');
         return cy.get(`#${checkBoxGroupId}`).find(`.${checkBoxGroupViewErrorClass}`).should('exist');
     };
 
