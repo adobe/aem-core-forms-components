@@ -413,7 +413,7 @@
         addChild(childView) {
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
-            if (this.getModel()._children.length === this.children.length) {
+            if (this.getCountOfAllChildrenInModel() === this.children.length) {
                 this.cacheClosestFieldsInView();
                 this.handleHiddenChildrenVisibility();
             }
@@ -442,11 +442,18 @@
         }
 
         handleChildAddition(childView) {
+            var itemDivToExpand;
             this.#cacheElements(this._elements.self);
-            var addedItemDiv = this.#getItemById(childView.id + Accordion.idSuffixes.item);
             this.#bindEventsToAddedChild(childView.id);
-            this.#expandItem(addedItemDiv);
-            this.#collapseAllOtherItems(addedItemDiv.id);
+            if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
+                itemDivToExpand = this.#getItemById(childView.id + Accordion.idSuffixes.item);
+            } else {
+                //this will run at initial runtime loading when the repeatable panel is being added minOccur no of times.
+                // in this case we want the focus to stay at first tab
+                itemDivToExpand = this.findFirstVisibleChild(this.#getCachedItems());
+            }
+            this.#expandItem(itemDivToExpand);
+            this.#collapseAllOtherItems(itemDivToExpand.id);
         }
 
         handleChildRemoval(removedInstanceView) {
