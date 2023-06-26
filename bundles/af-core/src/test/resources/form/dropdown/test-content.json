@@ -72,6 +72,7 @@
     "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
     "fieldType": "drop-down",
     "name": "Favorite Animal",
+    "jcr:title" : "Favorite Animal",
     "description": "What is your favorite animal?",
     "visible": true,
     "type": "string",
@@ -136,6 +137,78 @@
       "0",
       "1",
       "0"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-insertion-order": {
+    "id": "dropdown-f0a2750c3a",
+    "fieldType": "drop-down",
+    "name": "dropdown1686728705395",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Zero",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+      "Twenty"
+    ],
+    "label": {
+      "value": "Dropdown",
+      "visible": true
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2-insertion-order-check/jcr:content/guideContainer/dropdown"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "enum": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
     ],
     ":type": "forms-components-examples/components/form/dropdown"
   }

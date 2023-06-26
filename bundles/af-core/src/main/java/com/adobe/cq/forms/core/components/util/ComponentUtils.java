@@ -36,6 +36,7 @@ import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
+import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FRAGMENT_FIELD_TYPE;
 
 /**
  * Utility helper functions for components.
@@ -61,19 +62,19 @@ public class ComponentUtils {
 
     /**
      * Checks if the given resource if a core adaptive form container
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return true, if it is an adaptive form container, false otherwise
      */
     @NotNull
     public static boolean isAFContainer(@NotNull Resource resource) {
         String fieldType = resource.getValueMap().get("fieldType", String.class);
-        return FORM_FIELD_TYPE.equals(fieldType);
+        return FORM_FIELD_TYPE.equals(fieldType) || FRAGMENT_FIELD_TYPE.equals(fieldType);
     }
 
     /**
      * Returns the form container resource
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return form container resource, null if no form container found
      */
@@ -89,7 +90,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property
@@ -105,7 +106,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property

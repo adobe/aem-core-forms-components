@@ -13,17 +13,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <div data-sly-include="headerlibs.html" data-sly-unwrap></div>
-    </head>
-    <body>
-        <sly data-sly-repeat.child="${currentPage.contentResource.children}"
-            data-sly-resource="${child.path @ resourceType=child.resourceType, decorationTagName='div'}"></sly>
-        <div data-sly-include="footerlibs.html" data-sly-unwrap></div>
-    </body>
-</html>
+
+<%@include file="/libs/foundation/global.jsp" %>
+<cq:defineObjects/>
+<body>
+   <cq:include script="fragment.html"/>
+</body>
