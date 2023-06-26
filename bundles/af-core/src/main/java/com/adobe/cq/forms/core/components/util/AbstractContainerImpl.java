@@ -159,9 +159,13 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     }
 
     protected List<Resource> getFilteredChildrenResources() {
+        return getFilteredChildrenResources(resource);
+    }
+
+    protected List<Resource> getFilteredChildrenResources(Resource containerResource) {
         if (filteredChildComponents == null) {
             filteredChildComponents = new LinkedList<>();
-            for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
+            for (Resource child : slingModelFilter.filterChildResources(containerResource.getChildren())) {
                 if (!child.getName().startsWith("fd:")) {
                     filteredChildComponents.add(child);
                 }

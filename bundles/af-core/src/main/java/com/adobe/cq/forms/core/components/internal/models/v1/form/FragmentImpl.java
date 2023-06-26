@@ -111,7 +111,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         Map<String, T> models = new LinkedHashMap<>();
-        List<Resource> filteredChildrenResources = getFilteredChildrenResources();
+        List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
         SlingHttpServletRequest wrappedSlingHttpServletRequest = new SlingHttpServletRequestWrapper(request) {
 
             @Override
@@ -146,25 +146,10 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     @Override
-    protected List<Resource> getFilteredChildrenResources() {
-        if (filteredChildComponents == null) {
-            filteredChildComponents = new LinkedList<>();
-            if (fragmentContainer != null) {
-                for (Resource child : slingModelFilter.filterChildResources(fragmentContainer.getChildren())) {
-                    if (!child.getName().startsWith("fd:")) {
-                        filteredChildComponents.add(child);
-                    }
-                }
-            }
-        }
-        return filteredChildComponents;
-    }
-
-    @Override
     @JsonIgnore
     public List<Resource> getFragmentChildren() {
         if (filteredChildComponents == null) {
-            filteredChildComponents = getFilteredChildrenResources();
+            filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
         return filteredChildComponents;
     }
@@ -186,7 +171,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     public List<String> getTitleListOfChildren() {
         List<String> titleList = new ArrayList<>();
         if (filteredChildComponents == null) {
-            filteredChildComponents = getFilteredChildrenResources();
+            filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
         for (Resource child : filteredChildComponents) {
             ValueMap vm = child.getValueMap();

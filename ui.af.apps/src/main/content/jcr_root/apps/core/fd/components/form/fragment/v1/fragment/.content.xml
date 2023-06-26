@@ -4,5 +4,5 @@
     jcr:description="Adaptive Form Fragment placeholder."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Fragment (v1)"
-    sling:resourceSuperType="core/fd/components/form/base/v1/base"
+    sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
     componentGroup=".core-adaptiveform"/>
