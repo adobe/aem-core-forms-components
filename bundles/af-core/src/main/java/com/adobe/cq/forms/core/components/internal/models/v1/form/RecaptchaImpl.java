@@ -27,8 +27,12 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.osgi.service.component.annotations.Reference;
 
+import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -38,10 +42,10 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Recaptcha.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
+        adaptables = { SlingHttpServletRequest.class, Resource.class },
+        adapters = { Recaptcha.class,
+                ComponentExporter.class },
+        resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
@@ -49,6 +53,14 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private ResourceResolver resourceResolver;
 
     private Resource resource;
+
+    @Reference
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private ReCaptchaConfigurationModel reCaptchaConfiguration;
+
+    @OSGiService
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Named("rcCloudServicePath")
@@ -66,13 +78,11 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
     private static final String RECAPTCHA_URI = "uri";
 
-    @JsonIgnore
     @Override
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
-    @JsonIgnore
     @Override
     public String getSize() {
         return size;
@@ -85,8 +95,13 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         String siteKey = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null) {
-            // todo: Add cloud configuration provider service
+            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
+            if (reCaptchaConfiguration != null) {
+                siteKey = reCaptchaConfiguration.siteKey();
+            }
         }
+        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         return customCaptchaProperties;
     }
 
@@ -94,8 +109,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         try {
-            Map<String, Object> customCaptchaProperties = getRecaptchaProperties();
-            if (customCaptchaProperties != null && customCaptchaProperties.size() > 0) {
+            if (getRecaptchaProperties().size() > 0) {
                 properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
             }
         } catch (GuideException e) {
