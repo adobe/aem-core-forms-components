@@ -148,10 +148,10 @@ class DatePickerWidget {
     constructor(view, widget, model) {
         this.#model = model;
         this.#lang = view.formContainer.getModel()._jsonModel.lang;
-        let editValFn = (value) => {
+        let editValFn = () => {
             return model.editValue;
         };
-        let displayValueFn = (value) => {
+        let displayValueFn = () => {
             return model.displayValue;
         };
         this.#options = Object.assign({editValue:editValFn, displayValue:displayValueFn}, this.#defaultOptions, this.#model._jsonModel);
@@ -168,6 +168,8 @@ class DatePickerWidget {
         this.#widget = view.getWidget();
         this.#attachField(view.getWidget(), this.#options);
     }
+
+
 
 
     #initialiseCalenderElement() {
@@ -1079,7 +1081,8 @@ class DatePickerWidget {
         }
         if (this.#curInstance != null) {
             this.#curInstance.selectedDate = value;
-            this.#curInstance.$field.value = this.#curInstance.editValue(this.toString()) || value;
+            this.#model.value = this.toString(); // updating model value to the latest
+            this.#curInstance.$field.value = this.#curInstance.editValue() || value;
         } else {
             this.#widget.value = this.#model.editValue || value;
         }
