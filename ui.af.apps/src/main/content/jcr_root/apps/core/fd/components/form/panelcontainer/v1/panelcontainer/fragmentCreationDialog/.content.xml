@@ -17,8 +17,7 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="nt:unstructured"
           jcr:title="Save as Fragment"
-          sling:resourceType="cq/gui/components/authoring/dialog"
-          extraClientlibs="[af.authoring.dialog,formsmanager.gui.components.common.fragmentCreation]">
+          sling:resourceType="cq/gui/components/authoring/dialog">
     <content
             granite:class="guideIndependentDialog"
             jcr:primaryType="nt:unstructured"
@@ -40,9 +39,6 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Title"
                     name="title">
-                <granite:data
-                        jcr:primaryType="nt:unstructured"
-                        af.listeners.onload="guidelib.touchlib.editLayer.dialogEventHandlers.createFragmentOnLoad()"/>
             </title>
             <description
                     jcr:primaryType="nt:unstructured"
