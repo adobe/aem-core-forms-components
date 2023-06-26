@@ -146,7 +146,7 @@ describe("Form Runtime with Date Picker", () => {
         })
     })
 
-    it.only("Formatters test on Custom DatePicker widget", () => {
+    it("Formatters test on Custom DatePicker widget", () => {
 
         const [datePicker5, datePicker5FieldView] = Object.entries(formContainer._fields)[4];
         const incorrectInput = "01-01-2023";
