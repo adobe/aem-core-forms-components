@@ -657,7 +657,7 @@
             }
         }
         getRepeatableRootElement(childView){
-          return this.element.querySelector('#'+childView.id+'-item');
+          return this.element.querySelector('#'+childView.id+'-item div[data-cmp-hook-adaptiveFormAccordion="repeatableButton"]')
         }
         #showHideRepeatableButtons(instanceManager){
           const {_model: {minOccur, maxOccur, items = [] } = {}, children} = instanceManager;

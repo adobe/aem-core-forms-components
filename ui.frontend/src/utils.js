@@ -227,12 +227,8 @@ export default class Utils {
     static registerClickHandler(parentElement, hook, handler) {
         const dataAttr = "[" + hook + "]";
         const buttons = parentElement.querySelectorAll(dataAttr);
-        buttons.forEach((button) => {
-          if(!button.getAttribute('data-event-registered')){
-            button.addEventListener('click', handler);
-            button.setAttribute('data-event-registered', true);
-          }
-        });
+        buttons.forEach(
+          (button) => button.addEventListener('click', handler));
     }
 
     /**
