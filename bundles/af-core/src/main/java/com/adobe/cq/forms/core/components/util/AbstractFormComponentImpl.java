@@ -44,7 +44,6 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.policies.ContentPolicy;
@@ -218,6 +217,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
+    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_CHECK = "fd:additionalCustomPropertiesCheck";
+
+    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS = "fd:additionalCustomPropertyKeys";
+
+    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES = "fd:additionalCustomPropertyValues";
+
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -230,26 +235,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
-        if (getCustomLayoutProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
-        }
-        if (getDorProperties().size() > 0) {
-            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
-        }
-        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
-        Map<String, Object> rulesProperties = getRulesProperties();
-        if (rulesProperties.size() > 0) {
-            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
-        }
-        Map<String, String> templatePolicyCustomProperties = getTemplatePolicyCustomProperties();
-        if (templatePolicyCustomProperties.size() > 0) {
-            for (Map.Entry<String, String> entry : templatePolicyCustomProperties.entrySet()) {
-                customProperties.put(entry.getKey(), entry.getValue());
+        Map<String, Object> properties = new LinkedHashMap<>();
+        Map<String, String> headlessCustomProperties = getHeadlessCustomProperties();
+        if (headlessCustomProperties.size() > 0) {
+            for (Map.Entry<String, String> entry : headlessCustomProperties.entrySet()) {
+                properties.put(entry.getKey(), entry.getValue());
             }
         }
+        if (getCustomLayoutProperties().size() != 0) {
+            properties.put(CUSTOM_LAYOUT_PROPERTY_WRAPPER, getCustomLayoutProperties());
+        }
+        if (getDorProperties().size() > 0) {
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
+        Map<String, Object> rulesProperties = getRulesProperties();
+        if (rulesProperties.size() > 0) {
+            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+        }
 
-        return customProperties;
+        return properties;
     }
 
     @Override
@@ -289,20 +294,36 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
-    public Map<String, String> getTemplatePolicyCustomProperties() {
+    public Map<String, String> getHeadlessCustomProperties() {
         Set<String> groupNames = new LinkedHashSet<>();
         Map<String, String> keyValuePairs = new HashMap<>();
         for (Map.Entry<String, Object> entry : resource.getValueMap().entrySet()) {
             if (entry.getKey().equals(CUSTOM_PROPERTY_JCR_NAME)) {
-                groupNames.add(entry.getValue().toString());
+                if (entry.getValue() != null) {
+                    groupNames.addAll(Arrays.asList((String[]) ComponentUtils.convertToArray(entry.getValue())));
+                }
             }
         }
-        ContentPolicy policy = com.adobe.cq.forms.core.components.util.ComponentUtils.getPolicy(resource.getPath(), resource
+        ContentPolicy policy = ComponentUtils.getPolicy(resource.getPath(), resource
             .getResourceResolver());
         if (policy != null) {
             Resource policyResource = resource.getResourceResolver().resolve(policy.getPath());
-            keyValuePairs = com.adobe.cq.forms.core.components.util.ComponentUtils.getCustomPropertyPairsFromPolicy(
+            keyValuePairs = ComponentUtils.getCustomPropertyPairsFromPolicy(
                 groupNames, policyResource);
+            ValueMap resourceMap = resource.getValueMap();
+            if (resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_CHECK) && resourceMap.containsKey(
+                CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS) && resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES)) {
+                String[] addonKeys = (String[]) ComponentUtils.convertToArray(resourceMap.get(
+                    CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS));
+                String[] addonValues = (String[]) ComponentUtils.convertToArray(resourceMap.get(
+                    CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES));
+
+                for (int i = 0; i < addonKeys.length; i++) {
+                    if (!addonKeys[i].isEmpty()) {
+                        keyValuePairs.put(addonKeys[i], addonValues[i]);
+                    }
+                }
+            }
         }
         return keyValuePairs;
     }
@@ -440,7 +461,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                     this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
                         .getContentResource());
                 } else {
-                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.resource);
                 }
             }
             if (this.dataLayerEnabled) {

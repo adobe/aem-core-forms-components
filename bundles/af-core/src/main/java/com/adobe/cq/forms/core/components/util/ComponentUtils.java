@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -164,6 +165,16 @@ public class ComponentUtils {
         return policy;
     }
 
+    public static <T> T[] convertToArray(T param) {
+        if (param.getClass().isArray()) {
+            return (T[]) param;
+        } else {
+            T[] array = (T[]) Array.newInstance(param.getClass(), 1);
+            array[0] = (T) param;
+            return array;
+        }
+    }
+
     public static List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
         if (policy == null) {
             return new ArrayList<>();
@@ -204,26 +215,29 @@ public class ComponentUtils {
         customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
             for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
                 if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
-                    customPropertiesGroup.getChild("keyValuePairs").getChildren().forEach((keyValueNode) -> {
-                        String key = "", value = "";
-                        for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
-                            if (property.getKey().equals("key")) {
-                                Object keyObject = property.getValue();
-                                if (keyObject != null) {
-                                    key = keyObject.toString();
+                    Resource keyValuePairsResource = customPropertiesGroup.getChild("keyValuePairs");
+                    if (keyValuePairsResource != null) {
+                        keyValuePairsResource.getChildren().forEach((keyValueNode) -> {
+                            String key = "", value = "";
+                            for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
+                                if (property.getKey().equals("key")) {
+                                    Object keyObject = property.getValue();
+                                    if (keyObject != null) {
+                                        key = keyObject.toString();
+                                    }
+                                }
+                                if (property.getKey().equals("value")) {
+                                    Object valueObject = property.getValue();
+                                    if (valueObject != null) {
+                                        value = valueObject.toString();
+                                    }
                                 }
                             }
-                            if (property.getKey().equals("value")) {
-                                Object valueObject = property.getValue();
-                                if (valueObject != null) {
-                                    value = valueObject.toString();
-                                }
+                            if (!key.isEmpty()) {
+                                keyValuePairs.put(key, value);
                             }
-                        }
-                        if (!key.isEmpty()) {
-                            keyValuePairs.put(key, value);
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });

@@ -345,7 +345,7 @@ public class TextInputImplTest {
         Map<String, Object> properties = textInput.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "afs:layout"
-        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
+        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_LAYOUT_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
     }
 
