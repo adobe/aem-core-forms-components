@@ -16,6 +16,7 @@
 
 import {Constants} from "../constants.js";
 import FormField from './FormField.js';
+import LanguageUtils from '../LanguageUtils.js';
 
 export default class FormFieldBase extends FormField {
 
@@ -297,7 +298,7 @@ export default class FormFieldBase extends FormField {
                 this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
                 // if there is no error message in model, set a default error in the view
                 if (!state.errorMessage) {
-                    this.errorDiv.innerHTML = 'There is an error in the field';
+                    this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
                 }
             }
         }

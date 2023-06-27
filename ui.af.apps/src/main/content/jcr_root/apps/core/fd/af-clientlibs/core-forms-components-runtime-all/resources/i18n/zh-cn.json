@@ -1,7 +1,23 @@
 {
-  "FileCloseAccessText"   :       "按 Enter 可删除文件",
-  "FileSizeGreater"       :        "文件 {0} 大于预期大小: {1}MB。",
-  "FileNameInvalid"       :       "文件 {0} 的名称中包含无效字符。仅支持字母数字字符",
-  "FileMimeTypeInvalid"   :       "文件 {0} 的类型不受支持",
-  "InternalFormSubmissionError" :  "提交表单时遇到内部错误。"
+  "FileCloseAccessText"         :   "按 Enter 可删除文件",
+  "FileSizeGreater"             :   "文件 ${0} 大于预期大小: ${1}MB。",
+  "FileNameInvalid"             :   "文件 ${0} 的名称中包含无效字符。仅支持字母数字字符",
+  "FileMimeTypeInvalid"         :   "文件 ${0} 的类型不受支持",
+  "InternalFormSubmissionError" :   "提交表单时遇到内部错误。",
+  "type"                        :   "Please enter a valid value.",
+  "required"                    :   "Please fill in this field.",
+  "minimum"                     :   "Value must be greater than or equal to ${0}.",
+  "maximum"                     :   "Value must be less than or equal to ${0}.",
+  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
+  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
+  "step"                        :   "Please enter a valid value.",
+  "format"                      :   "Specify the value in allowed format : ${0}.",
+  "pattern"                     :   "Please match the format requested.",
+  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
+  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
+  "uniqueItems"                 :   "All the items must be unique.",
+  "validationExpression"        :   "Please enter a valid value.",
+  "maxFileSize"                 :   "File too large. Reduce size and try again.",
+  "accept"                      :   "The specified file type not supported.",
+  "defaultError"                :   "There is an error in the field"
 }

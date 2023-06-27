@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2023-06-26T09:41:07.122+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        fd:translationIds="\{&quot;jcr:title&quot;:&quot;jcr:title##607&quot;}"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="basic_with_dictionary_en_to_de"
+        sling:configRef="/conf/forms/core-components-it/samples/textinput/basic_with_dictionary_en_to_de/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="basic_with_dictionary_en_to_de">
+            <textinput
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput##jcr:title##4491&quot;}"
+                jcr:lastModified="{Date}2023-06-23T16:57:22.478+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 1"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                fieldType="text-input"
+                name="textinput1687519615704"
+                validationExpression="$field == 'validate'">
+                <fd:rules
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1687519615704&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;textinput1687519615704&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1687519615704&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1687519615704&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;validate&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == 'validate'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </textinput>
+            <textinput_944977664
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput_944977664##jcr:title##6733&quot;}"
+                jcr:lastModified="{Date}2023-06-26T09:37:31.177+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 6"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                name="textinput_9449776641687519661477"
+                pattern="\[^'\\x22]+"
+                readOnly="{Boolean}false"
+                required="true"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                validationPatternType="custom"
+                visible="{Boolean}true"/>
+            <textinput_1993218058
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput_1993218058##jcr:title##8616&quot;}"
+                jcr:lastModified="{Date}2023-06-26T09:37:22.284+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 7"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                default="longer text than allowed"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                maxLength="20"
+                name="textinput_19932180581687751917945"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <textinput_2041736021
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput_2041736021##jcr:title##3276&quot;}"
+                jcr:lastModified="{Date}2023-06-26T09:36:54.094+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 8"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                default="small text"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                minLength="12"
+                name="textinput_20417360211687751927383"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <submit
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##submit##jcr:title##3364&quot;}"
+                jcr:lastModified="{Date}2023-06-26T09:28:53.479+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Submit"
+                sling:resourceType="forms-components-examples/components/form/actions/submit"
+                buttonType="submit"
+                dorExclusion="true"
+                fieldType="button"
+                name="submit1687751971063">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+            </submit>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

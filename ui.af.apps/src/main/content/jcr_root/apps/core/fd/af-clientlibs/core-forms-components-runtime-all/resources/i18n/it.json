@@ -1,7 +1,24 @@
 {
-  "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
-  "FileSizeGreater"       :        "I file {0} superano le dimensioni previste: {1} MB.",
-  "FileNameInvalid"       :       "I file {0} contengono caratteri non validi nel nome. Sono supportati solo caratteri alfanumerici",
-  "FileMimeTypeInvalid"   :       "I file {0} non sono tipi di file supportati",
-  "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
+  "FileCloseAccessText"         :   "Premete Invio per eliminare il file ",
+  "FileSizeGreater"             :   "I file ${0} superano le dimensioni previste: ${1} MB.",
+  "FileNameInvalid"             :   "I file ${0} contengono caratteri non validi nel nome. Sono supportati solo caratteri alfanumerici",
+  "FileMimeTypeInvalid"         :   "I file ${0} non sono tipi di file supportati",
+  "InternalFormSubmissionError" :   "Errore interno durante l'invio del modulo.",
+  "type"                        :   "Please enter a valid value.",
+  "required"                    :   "Please fill in this field.",
+  "minimum"                     :   "Value must be greater than or equal to ${0}.",
+  "maximum"                     :   "Value must be less than or equal to ${0}.",
+  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
+  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
+  "step"                        :   "Please enter a valid value.",
+  "format"                      :   "Specify the value in allowed format : ${0}.",
+  "pattern"                     :   "Please match the format requested.",
+  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
+  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
+  "uniqueItems"                 :   "All the items must be unique.",
+  "validationExpression"        :   "Please enter a valid value.",
+  "maxFileSize"                 :   "File too large. Reduce size and try again.",
+  "accept"                      :   "The specified file type not supported.",
+  "defaultError"                :   "There is an error in the field"
+
 }
