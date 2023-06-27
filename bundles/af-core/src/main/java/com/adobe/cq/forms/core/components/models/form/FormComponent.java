@@ -81,7 +81,7 @@ public interface FormComponent extends Component {
      */
     @JsonView(Views.Author.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, String> getTemplatePolicyCustomProperties() {
+    default Map<String, String> getHeadlessCustomProperties() {
         return Collections.emptyMap();
     }
 
