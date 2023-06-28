@@ -72,7 +72,7 @@
 
         addChild(childView) {
             super.addChild(childView);
-            if (this.getModel()._children.length === this.children.length) {
+            if (this.getCountOfAllChildrenInModel() === this.children.length) {
                 this.#cacheElements(this.element);
                 this.#cacheDivToAppendChildMarkup();
                 this.cacheClosestFieldsInView();

@@ -228,7 +228,7 @@ export default class Utils {
         const dataAttr = "[" + hook + "]";
         const buttons = parentElement.querySelectorAll(dataAttr);
         buttons.forEach(
-            (button) => button.addEventListener('click', handler));
+          (button) => button.addEventListener('click', handler));
     }
 
     /**

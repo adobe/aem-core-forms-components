@@ -209,3 +209,36 @@ describe("Form with TabsOnTop Layout Container with Hidden Children", () => {
         })
     });
 });
+
+describe("setFocus of tabs using rules", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focusWithRule.html";
+  let formContainer = null;
+  beforeEach(() => {
+      cy.previewForm(pagePath).then(p => {
+          formContainer = p;
+      })
+  });
+
+  const tabSelector = '.cmp-tabs__tablist .cmp-tabs__tab';
+  const tab1 = () => {
+      return cy.get(tabSelector).first();
+  }
+  const tab2 = () => {
+      return cy.get(tabSelector).last();
+  }
+
+  it("check if first tab activated if focus call from button using rules", () => {
+      // panel 1 active
+      tab1().should('have.class', 'cmp-tabs__tab--active');
+      tab1().should('have.attr', 'aria-selected', 'true');
+      tab2().should('have.attr', 'aria-selected', 'false');
+
+      cy.get(".cmp-adaptiveform-button__widget").click().then(() => {
+          // panel 2 active
+          tab2().should('have.class', 'cmp-tabs__tab--active');
+          tab2().should('have.attr', 'aria-selected', 'true');
+          tab1().should('have.attr', 'aria-selected', 'false');
+      });
+  });
+});
