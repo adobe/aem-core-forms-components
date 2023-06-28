@@ -56,6 +56,20 @@ export default class FormPanel extends FormFieldBase {
         this.children.push(childView);
     }
 
+    getCountOfAllChildrenInModel() {
+        var countOfChildren = 0;
+        for (let key in this.getModel()._children) {
+            var child = this.getModel()._children[key];
+            if (child.minOccur != undefined && child.maxOccur != undefined && child._children != undefined) {
+                //(child._children.length == 0) this can happen in cases of prefill or removeInstance onLoad via rules
+                countOfChildren += (child._children.length == 0) ? 1 : child._children.length;
+            } else {
+                countOfChildren += 1;
+            }
+        }
+        return countOfChildren;
+    }
+
     getChild(id) {
         for (let key in this.children) {
             if (this.children[key].id === id) {
@@ -156,6 +170,9 @@ export default class FormPanel extends FormFieldBase {
             }
         }
         return resultIndex + 1;
+    }
+    getRepeatableRootElement(childView){
+      return childView.element.parentElement;
     }
 
     updateChildVisibility(visible, state) {

@@ -85,7 +85,7 @@ describe("Form with Submit Button", () => {
                 Object.entries(formContainer._fields).forEach(([id, field]) => {
                     // if non submit field, check that all have error message in them
                     if (id.indexOf('submit') === -1) {
-                        cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "There is an error in the field")
+                        cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "Please fill in this field.")
                     }
                 });
             });

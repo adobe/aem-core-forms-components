@@ -123,7 +123,7 @@ describe("Form Runtime with Date Picker", () => {
         const correctInput = "2023-01-01";
 
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Please enter a valid value.")
         })
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -154,7 +154,7 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker5}`).find("input").should('have.attr',"type", "text");
         cy.get(`#${datePicker5}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Specify the value in allowed format : date.")
         })
 
         cy.get(`#${datePicker5}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -166,6 +166,18 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker5}`).find("input").focus().then(x => {
             cy.get(`#${datePicker5}`).find("input").should("have.value", "Sunday, January 1, 2023")
         })
+
+        // change the current date to something else using calendar,
+        // and it should be rendered as per formatter and updated in model
+        cy.get(`#${datePicker5}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
+            cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month
+        });
+        cy.get(`#${datePicker5}`).find("input").focus().then(x => {
+            cy.get(`#${datePicker5}`).find("input").should("have.value", "Monday, January 2, 2023");
+            const model = formContainer._model.getElement(datePicker5);
+            expect(model.getState().value).to.equal("2023-01-02");
+        })
+
     })
 
 })

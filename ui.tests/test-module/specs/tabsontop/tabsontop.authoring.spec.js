@@ -108,7 +108,7 @@ describe.only('Page - Authoring', function () {
         });
 
         // todo: flaky
-        it.only('switch tabs using dialog select panel button in toolbar', {retries: 3}, function () {
+        it('switch tabs using dialog select panel button in toolbar', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
                 dropTabsInContainer();
                 //Add 2 children in tabs on top component
