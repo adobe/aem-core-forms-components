@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
 import java.util.Collections;
 import java.util.Map;
 
@@ -30,6 +29,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
