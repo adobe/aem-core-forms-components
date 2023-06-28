@@ -131,3 +131,99 @@ describe("Form with Wizard Container", () => {
 
 
 })
+
+describe('visibility of navigation buttons', function () {
+    const pagePath = "content/forms/af/core-components-it/samples/wizard/navigationWithRepeatability.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    })
+
+    const getTabs = () => {
+        return cy.get(".cmp-adaptiveform-wizard__tab");
+    }
+
+    const getWizardPanels = () => {
+        return cy.get(".cmp-adaptiveform-wizard__wizardpanel");
+    }
+
+    const getTabAtIndex = (index) => {
+        return getTabs().eq(index);
+    }
+
+    const getWizardPanelAtIndex = (index) => {
+        return getWizardPanels().eq(index);
+    }
+
+    it("navigating start to end to start", () => {
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            wizardItems = formContainer._model.items[0].items;
+
+        const wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).click({force: true}).then(() => {
+            cy.get(nextNavButton).click({force: true}).then(() => {
+                cy.get(nextNavButton).click({force: true}).then(() => {
+                    cy.get(nextNavButton).click({force: true})
+                }).then(() => {
+                    cy.get(nextNavButton).click({force: true})
+                    getWizardPanelAtIndex(4).should('have.class', wizardPanelActive);
+                    cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+
+                    cy.get(previousNavButton).click({force: true}).then(() => {
+                        cy.get(previousNavButton).click({force: true}).then(() => {
+                            cy.get(previousNavButton).click({force: true}).then(() => {
+                                cy.get(previousNavButton).click({force: true}).then (() => {
+                                    cy.get(previousNavButton).click({force: true})
+                                    getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+                                    cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
+
+    it("testing visibility on add/remove instance", () => {
+        const textInputId = formContainer._model.items[1].id;
+        const wizardItems = formContainer._model.items[0].items;
+
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            driverTextInput = '.cmp-adaptiveform-textinput__widget',
+            wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
+            wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        // check if first instance of repeatable panel is active
+        // previous nav button is invisible next nav button is visible
+        getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+
+        // check when new instance of repeatable panel is added
+        // and that new instance gets active & prev and next nav buttons are visible
+        cy.get(`#${textInputId}`).find(driverTextInput).focus().clear().type('a').blur().then(() => {
+            getWizardPanelAtIndex(2).should('have.class', wizardPanelActive);
+            cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+
+            // check if active tab changes if current active is invisible
+            cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('b').blur().then(() => {
+                // check if repeatable instance is removed honouring rule
+                // first tab gets active and previous nav button is invisible
+                // and next nav button is visible
+                getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
+                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+            });
+        });
+    });
+});
