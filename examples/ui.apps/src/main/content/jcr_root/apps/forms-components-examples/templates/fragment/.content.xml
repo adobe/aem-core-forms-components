@@ -13,7 +13,8 @@
         <guideContainer
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/fragmentcontainer"
-            fieldType="fragment"
+            fieldType="form"
+            fd:type="fragment"
             fd:version="2.1"
             name="fragment1">
         </guideContainer>
