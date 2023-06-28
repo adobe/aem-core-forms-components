@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-(function(){
+(function(author){
 
     "use strict";
     window.CQ = window.CQ || {};
@@ -25,19 +25,27 @@
     const ASSET_NODE_PATH_PREFIX = "/content/dam/formsanddocuments";
     const PAGE_NODE_PATH_PREFIX = "/content/forms/af";
 
-    window.CQ.FormsCoreComponents.editorhooks.showEditFragmentToolbar = function (editable) {
+    window.CQ.FormsCoreComponents.editorhooks.showFragmentToolbar = function (editable) {
         return $(editable.dom).find(FRAGMENT_PLACEHOLDER_SELECTOR).length > 0;
     }
 
     window.CQ.FormsCoreComponents.editorhooks.openFragmentInEditor = function (editable) {
-        var fragRef = $(editable.dom).find(FRAGMENT_PLACEHOLDER_SELECTOR).data("cmp-fragmentPath");
-        if(fragRef) {
-            if(fragRef.indexOf(ASSET_NODE_PATH_PREFIX) != null) {
-                fragRef = fragRef.replace(ASSET_NODE_PATH_PREFIX, PAGE_NODE_PATH_PREFIX);
+        var fragmentPath = $(editable.dom).find(FRAGMENT_PLACEHOLDER_SELECTOR).data("cmp-fragmentPath");
+        if(fragmentPath) {
+            if(fragmentPath.indexOf(ASSET_NODE_PATH_PREFIX) != null) {
+                fragmentPath = fragmentPath.replace(ASSET_NODE_PATH_PREFIX, PAGE_NODE_PATH_PREFIX);
             }
-            var url = Granite.HTTP.externalize("/editor.html" + fragRef + ".html");
+            var url = Granite.HTTP.externalize("/editor.html" + fragmentPath + ".html");
             window.open(url);
         }
     }
 
-})();
+    var embedFragmentHandler = function (component, editable) {
+        var resourceType = component.getResourceType();
+        author.afUtils.embedFragment(editable, resourceType);
+    }
+
+    window.CQ.FormsCoreComponents.editorhooks.embedFragment = function (editable) {
+        window.CQ.FormsCoreComponents.editorhooks.openCmpSelectionDialog(editable, "Embed Fragment", embedFragmentHandler);
+    }
+})(Granite.author);

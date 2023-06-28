@@ -8,24 +8,33 @@
     <cq:listeners
         jcr:primaryType="cq:EditListenersConfig"
         afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
+    <cq:dropTargets jcr:primaryType="nt:unstructured">
+        <fragment
+                jcr:primaryType="cq:DropTargetConfig"
+                accept="application/vnd.adobe.affragment"
+                groups="[media]"
+                propertyName="./fragmentPath">
+        </fragment>
+    </cq:dropTargets>
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
         <edit
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.openFragmentInEditor"
-                condition="CQ.FormsCoreComponents.editorhooks.showEditFragmentToolbar"
+                condition="CQ.FormsCoreComponents.editorhooks.showFragmentToolbar"
                 order="before CONFIGURE"
                 icon="edit"
                 text="Edit Fragment"/>
-        <editexpression
+        <editexpressionx
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
                 order="after CONFIGURE"
                 icon="bidRule"
                 text="Edit Rules"/>
-        <replace
+        <embed
                 jcr:primaryType="nt:unstructured"
-                handler="CQ.FormsCoreComponents.editorhooks.replace"
-                icon="shuffle"
-                text="Replace"/>
+                handler="CQ.FormsCoreComponents.editorhooks.embedFragment"
+                condition="CQ.FormsCoreComponents.editorhooks.showFragmentToolbar"
+                icon="import"
+                text="Embed Fragment"/>
     </cq:actionConfigs>
 </jcr:root>

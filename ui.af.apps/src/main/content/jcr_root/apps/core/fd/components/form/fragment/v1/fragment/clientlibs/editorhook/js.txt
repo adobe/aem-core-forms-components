@@ -1,2 +1,2 @@
 #base=js
-editfragmenthook.js
+fragmenthook.js
