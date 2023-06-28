@@ -600,13 +600,7 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                             granite:class="cmp-adaptiveform-base__additionalCustomPropertiesCheck"
                                                             value="true"
-                                                            text="Additional Custom Properties"
-                                                            name="./fd:additionalCustomPropertiesCheck"/>
-                                                    <additionalCustomPropertiesCheck-typeHint
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                            name="./fd:additionalCustomPropertiesCheck@TypeHint"
-                                                            value="Boolean"/>
+                                                            text="Additional Custom Properties"/>
                                                     <additionalCustomProperties
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

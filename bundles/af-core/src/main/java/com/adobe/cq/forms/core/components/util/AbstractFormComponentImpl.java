@@ -311,8 +311,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             keyValuePairs = ComponentUtils.getCustomPropertyPairsFromPolicy(
                 groupNames, policyResource);
             ValueMap resourceMap = resource.getValueMap();
-            if (resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_CHECK) && resourceMap.containsKey(
-                CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS) && resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES)) {
+            if (resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS) && resourceMap.containsKey(
+                CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES)) {
                 String[] addonKeys = (String[]) ComponentUtils.convertToArray(resourceMap.get(
                     CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS));
                 String[] addonValues = (String[]) ComponentUtils.convertToArray(resourceMap.get(
