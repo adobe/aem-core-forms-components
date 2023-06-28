@@ -338,7 +338,6 @@ public class CheckBoxImplTest {
         assertEquals(Orientation.HORIZONTAL, checkbox.getOrientation());
     }
 
-
     private CheckBox getCheckBoxUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
