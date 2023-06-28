@@ -50,6 +50,15 @@
               tooltip="This is short description"
               tooltipVisible="true"
               sling:resourceType="forms-components-examples/components/form/telephoneinput"/>
+            <telephoneinput5
+                    fieldType="text-input"
+                    jcr:primaryType="nt:unstructured"
+                    name="telephoneinput5"
+                    jcr:title="Telephone Input 5"
+                    visible="{Boolean}true"
+                    enabled="{Boolean}true"
+                    pattern="^[+][0-9]{0,14}$"
+                    sling:resourceType="forms-components-examples/components/form/telephoneinput"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
