@@ -52,7 +52,6 @@ public class FragmentImplTest {
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        // context.load().json(BASE + "/test-fragment-content.json", CONTENT_ROOT + "/affragment");
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -106,10 +105,10 @@ public class FragmentImplTest {
         assertEquals("textinput", fragment.getFragmentChildren().get(0).getName());
     }
 
-    // @Test
-    // void testJSONExport() throws Exception {
-    // Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
-    // Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
-    // }
+     @Test
+     void testJSONExport() throws Exception {
+         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
+     }
 
 }

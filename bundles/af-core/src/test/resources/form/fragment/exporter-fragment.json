@@ -6,8 +6,6 @@
   "repeatable": true,
   "minOccur": 0,
   "maxOccur": 4,
-  "fragmentPath": "/content/affragment/guideContainer",
-  "fragmentTitle": "AF Fragment (v2)",
   "label": {
     "value": "Fragment"
   },
@@ -22,14 +20,15 @@
       "dorExcludeTitle": false,
       "dorExcludeDescription": false
     },
-    "fd:path": "/content/fragment"
+    "fd:path": "/content/fragment",
+    "fd:fragment": true
   },
   ":itemsOrder": [
     "textinput"
   ],
   ":items": {
     "textinput": {
-      "id": "textinput-77a9cb9b7e",
+      "id": "textinput-233cc688ba",
       "fieldType": "text-input",
       "name": "fragmenttextinput",
       "type": "string",
@@ -45,7 +44,7 @@
         "fd:dor": {
           "dorExclusion": false
         },
-        "fd:path": "/content/affragment/guideContainer/textinput"
+        "fd:path": "/content/affragment/jcr:content/guideContainer/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }

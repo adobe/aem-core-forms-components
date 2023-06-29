@@ -63,7 +63,10 @@ describe('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='./enabled']")
             .should("exist");
-
+        cy.get("[name='./fragmentPath'] [title='Open Selection Dialog']").click();
+        cy.get("[data-foundation-collection-id='/content/dam/formsanddocuments']")
+            .should("be.visible");
+        cy.get(".granite-pickerdialog-content button[variant='quiet']:contains('Cancel')").click();
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(fragmentDrop);
     }
@@ -84,7 +87,7 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Fragment', function () {
             testFragmentDialogBehaviour(fragmentPathSelector, fragmentEditPath);
-        })
+        });
     })
 
     context('Open Sites Editor', function () {

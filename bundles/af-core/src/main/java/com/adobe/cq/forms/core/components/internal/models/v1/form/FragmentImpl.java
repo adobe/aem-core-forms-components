@@ -36,7 +36,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
-import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
@@ -74,15 +73,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
         fragmentContainer = null;
-        if (fragmentPath != null && GuideWCMUtils.isForms(fragmentPath)) {
-            String fragmentRef = fragmentPath;
-            if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
-                fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
-            }
-            fragmentContainer = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
-        } else {
-            fragmentContainer = resourceResolver.getResource(fragmentPath);
+        String fragmentRef = fragmentPath;
+        if (fragmentPath != null && StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
         }
+        fragmentContainer = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
         if (fragmentContainer != null) {
             FormStructureParser formStructureParser = resource.adaptTo(FormStructureParser.class);
             if (formStructureParser != null) {

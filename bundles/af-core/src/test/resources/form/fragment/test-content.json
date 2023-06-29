@@ -11,25 +11,28 @@
     "repeatable": true,
     "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
     "fieldType": "panel",
-    "fragmentPath": "/content/affragment/guideContainer"
+    "fragmentPath": "/content/affragment"
   },
   "affragment": {
     "jcr:primaryType": "nt:unstructured",
     "jcr:title": "AF Fragment (v2)",
-    "guideContainer": {
-      "jcr:primaryType": "nt:unstructured",
-      "thankYouOption": "page",
-      "fd:version": "2.1",
-      "title": "AF Fragment (v2)",
-      "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
-      "fieldType": "form",
-      "dorType": "none",
-      "textinput": {
+    "jcr:content": {
+      "jcr:primaryType": "cq:PageContent",
+      "guideContainer": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:title": "Text Input",
-        "name": "fragmenttextinput",
-        "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-        "fieldType": "text-input"
+        "thankYouOption": "page",
+        "fd:version": "2.1",
+        "title": "AF Fragment (v2)",
+        "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+        "fieldType": "form",
+        "dorType": "none",
+        "textinput": {
+          "jcr:primaryType": "nt:unstructured",
+          "jcr:title": "Text Input",
+          "name": "fragmenttextinput",
+          "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+          "fieldType": "text-input"
+        }
       }
     }
   }
