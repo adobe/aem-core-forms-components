@@ -21,6 +21,7 @@ import {Constants} from "./constants.js";
 import GuideBridge from "./GuideBridge.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {formatDate, parseDate} from "@aemforms/af-formatters";
+import {FunctionRuntime} from '@aemforms/af-core';
 
 window.af = {
     formsRuntime: {
@@ -49,4 +50,4 @@ const FileAttachmentUtils = {
 };
 
 
-export {createFormInstance, FormTabs, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils};
+export {createFormInstance, FormTabs, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils, FunctionRuntime};
