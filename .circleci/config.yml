@@ -105,7 +105,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: 
+          keys:
             - maven-repo-v1-{{ checksum "pom.xml" }}
             - maven-repo-v1-
       - run:
@@ -191,7 +191,7 @@ jobs:
       - run:
           name: Deploy jsdocs to gh-pages branch
           command: gh-pages --dotfiles --message "[skip ci] jsdoc updates" --dist jsdocs/target/jsapi/
- 
+
   release:
     executor: forms_executor
     steps:

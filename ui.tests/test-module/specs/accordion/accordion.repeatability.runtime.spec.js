@@ -188,3 +188,36 @@ describe("Form with Accordion Container with repeatable elements", () => {
         })
     })
 })
+
+describe("Form with Accordion Container with nested repeatable elements", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/accordion/nestedrepeatability.html";
+  let formContainer = null
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  });
+
+  it("testing add/remove instance", () => {
+    cy.get("[data-cmp-hook-add-instance]").should('have.length', 2);
+    cy.get("[data-cmp-hook-remove-instance]").should('have.length', 2);
+    cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 1);
+    cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 1);
+
+    cy.get('button[data-cmp-hook-add-instance=' + formContainer._model._jsonModel.items[0].items[0].items[1].items[0].id + ']').click().then(() => {
+      cy.get("[data-cmp-hook-add-instance]").should('have.length', 3);
+      cy.get("[data-cmp-hook-remove-instance]").should('have.length', 3);
+      cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 1);
+      cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 2);
+
+      cy.get('button[data-cmp-hook-add-instance=' + formContainer._model._jsonModel.items[0].items[0].id + ']').click().then(() => {
+        cy.get("[data-cmp-hook-add-instance]").should('have.length', 5);
+        cy.get("[data-cmp-hook-remove-instance]").should('have.length', 5);
+        cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 2);
+        cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 3);
+      });
+    });
+  });
+})

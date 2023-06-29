@@ -212,6 +212,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
+    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     /**
      * Predicate to check if a map entry is non empty
