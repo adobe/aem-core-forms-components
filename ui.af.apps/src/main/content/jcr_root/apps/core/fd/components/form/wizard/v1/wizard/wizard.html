@@ -29,10 +29,8 @@
         data-panelcontainer="wizard"
         id="${wizard.id}"
         class="cmp-adaptiveform-wizard"
-        data-placeholder-text="${'Please drag Wizard components here' @ i18n}"
-        data-sly-test.widgetId="${'{0}-{1}' @ format=[wizard.id, 'widget']}"
-        aria-labelledby="${wizard.label.visible != false ? widgetId : ''}">
-        <div data-sly-call="${label.label @componentId=widgetId, labelValue=wizard.label.value, labelVisible=wizard.label.visible, bemBlock='cmp-adaptiveform-wizard', withId=true}" data-sly-unwrap></div>
+        data-placeholder-text="${'Please drag Wizard components here' @ i18n}">
+        <div data-sly-call="${label.label @componentId=wizard.id, labelValue=wizard.label.value, labelVisible=wizard.label.visible, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=wizard.id, shortDescriptionVisible=wizard.tooltipVisible, shortDescription=wizard.tooltip, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         <div data-sly-call="${longDescription.longDescription @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>

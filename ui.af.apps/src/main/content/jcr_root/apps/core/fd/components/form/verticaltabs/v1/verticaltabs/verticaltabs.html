@@ -26,10 +26,8 @@
   data-panelcontainer="${wcmmode.edit && 'verticaltabs'}"
   data-cmp-is="adaptiveFormVerticalTabs"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-  data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}"
-  data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}"
-  aria-labelledby="${panel.label.visible != false ? widgetId : ''}">
-     <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs', withId=true}" data-sly-unwrap></div>
+  data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}">
+     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>

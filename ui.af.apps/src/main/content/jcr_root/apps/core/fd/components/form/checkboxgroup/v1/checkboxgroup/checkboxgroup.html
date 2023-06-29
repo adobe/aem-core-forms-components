@@ -30,11 +30,8 @@
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
      data-cmp-required="${checkboxgroup.required ? 'true': 'false'}"
      data-cmp-data-layer="${checkboxgroup.data.json}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-     data-sly-test.widgetId="${'{0}-{1}' @ format=[checkboxgroup.id, 'widget']}"
-     aria-labelledby="${checkboxgroup.label.visible ? widgetId : ''}"
-     role="group">
-    <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup', withId=true}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
     <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">

@@ -30,11 +30,10 @@
      data-cmp-enabled="${text.enabled ? 'true' : 'false'}"
      id="${text.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=widgetId, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${label.label @componentId=text.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               title="${text.tooltipVisible ? '' : text.tooltipText}"
-              aria-label="${text.label.visible ? '' : text.label.value}"
-              id="${text.label.visible ? widgetId : ''}"
+              aria-label="${text.label.value}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
               data-cmp-data-layer="${text.data.json}"
@@ -47,8 +46,7 @@
     <input data-sly-test="${!useTextarea}"
            title="${text.tooltipVisible ? '' : text.tooltipText}"
            class="cmp-adaptiveform-textinput__widget"
-           aria-label="${text.label.visible ? '' : text.label.value}"
-           id="${text.label.visible ? widgetId : ''}"
+           aria-label="${text.label.value}"
            type="text"
            name="${text.name}"
            data-cmp-data-layer="${text.data.json}"

@@ -94,7 +94,6 @@
         }
 
         updateReadOnly(readonly, state) {
-            this.toggle(readonly, "aria-readonly", true);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (readonly === true) {

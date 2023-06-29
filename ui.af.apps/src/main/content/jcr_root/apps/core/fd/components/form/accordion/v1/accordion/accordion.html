@@ -27,11 +27,9 @@
      class="cmp-accordion"
      data-cmp-is="adaptiveFormAccordion"
      data-cmp-single-expansion="true"
-     data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}"
-     data-sly-test.widgetId="${'{0}-{1}' @ format=[accordion.id, 'widget']}"
-     aria-labelledby="${accordion.label.visible != false ? widgetId : ''}">
+     data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
 
-    <div data-sly-call="${label.label @componentId=widgetId, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion', withId=true}"
+    <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
@@ -63,10 +61,12 @@
               <button
                 class="cmp-accordion__add-button"
                 data-cmp-hook-add-instance="${accordion.exportedItems[item].id}"
+                title="Add Panel"
                 type="button"></button>
               <button
                 class="cmp-accordion__remove-button"
                 data-cmp-hook-remove-instance="${accordion.exportedItems[item].id}"
+                title="Remove Panel"
                 type="button"></button>
             </div>
         </div>

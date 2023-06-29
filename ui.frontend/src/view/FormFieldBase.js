@@ -99,10 +99,8 @@ export default class FormFieldBase extends FormField {
 
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-        if (labelElement && labelElement.getAttribute('for') ) {
-            labelElement.setAttribute('for', `${this.getId()}-widget`);
-        }else if (labelElement && labelElement.getAttribute('id') ) {
-          labelElement.setAttribute('id', `${this.getId()}-widget`);
+        if (labelElement) {
+            labelElement.setAttribute('for', this.getId());
         }
     }
 

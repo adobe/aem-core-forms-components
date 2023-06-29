@@ -22,14 +22,13 @@
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.datePicker="com.adobe.cq.forms.core.components.models.form.DatePicker"
-     data-sly-test.widgetId="${'{0}-{1}' @ format=[datePicker.id, 'widget']}"
      class="cmp-adaptiveform-datepicker"
      data-cmp-is="adaptiveFormDatePicker"
      data-cmp-visible="${datePicker.visible ? 'true' : 'false'}"
      data-cmp-enabled="${datePicker.enabled ? 'true' : 'false'}"
      id="${datePicker.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-     <div data-sly-call="${label.label @componentId=widgetId, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
+     <div data-sly-call="${label.label @componentId=datePicker.id, labelValue=datePicker.label.value, labelVisible=datePicker.label.visible, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
      <div data-sly-call="${questionMark.questionMark @componentId=datePicker.id, longDescription=datePicker.description, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap></div>
      <input type="date"
             name="${datePicker.name}"
@@ -39,8 +38,7 @@
             required="${datePicker.required}"
             data-cmp-data-layer="${datePicker.data.json}"
             title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
-            aria-label="${datePicker.label.visible ? '' : datePicker.label.value}"
-            id="${datePicker.label.visible ? widgetId : ''}"
+            aria-label="${datePicker.label.value}"
             placeholder="${datePicker.placeHolder}"
             min="${datePicker.minimumDate}"
             max="${datePicker.maximumDate}"/>
