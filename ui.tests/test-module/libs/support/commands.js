@@ -41,7 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
-import { recurse } from 'cypress-recurse'
+import {recurse} from 'cypress-recurse'
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -51,7 +51,7 @@ const commons = require('../commons/commons'),
 
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath) => {
-    const username = Cypress.env('crx.username') ?  Cypress.env('crx.username') : "admin";
+    const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
     cy.get('#username').type(username);
     cy.get('#password').type(password);
@@ -101,7 +101,7 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         preferences[":cq_csrf_token"] = token;
     });
     cy.get("@home").then(home => {
-        const contextPath = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         const url = contextPath + home + '/preferences';
         //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
         cy.window().then(win => {
@@ -145,7 +145,7 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
                     //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
                     // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
                     var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
                 }
             };
         }
@@ -154,14 +154,14 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
-    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
+    const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
     cy.visit(baseUrl);
     cy.login(baseUrl);
     cy.openSiteAuthoring(pagePath);
 });
 
 // Cypress command to open authoring page
-Cypress.Commands.add("openPage", (pagePath, options={}) => {
+Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     if (!options.noLogin) {
         const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         cy.visit(baseUrl);
@@ -182,30 +182,30 @@ Cypress.Commands.add("selectLayer", (layer) => {
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
     cy.get(selector) // adding assertion does implicit retry
-    .invoke('attr', 'data-path')
-    .then(($path) => {
-        const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-        cy.get("body").then($body => {
-            if ($body.find(path).length === 0) {
-                //evaluates as true if toolbar doesnt exists at all
-                //you get here only if toolbar is visible
-                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                cy.get(path).should('be.visible');
-            } else {
-                cy.get(path).then($header => {
-                    if (!$header.is(':visible')){
-                        cy.get(selector).first().click({force: true});
-                        cy.get(path).should('be.visible');
-                    } else {
-                        cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click
-                        cy.get(selector).click({force: true});
-                        cy.get(path).should('be.visible');
-                    }
-                });
-            }
-        });
-    })
+        .invoke('attr', 'data-path')
+        .then(($path) => {
+            const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
+            cy.get("body").then($body => {
+                if ($body.find(path).length === 0) {
+                    //evaluates as true if toolbar doesnt exists at all
+                    //you get here only if toolbar is visible
+                    cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
+                    // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
+                    cy.get(path).should('be.visible');
+                } else {
+                    cy.get(path).then($header => {
+                        if (!$header.is(':visible')) {
+                            cy.get(selector).first().click({force: true});
+                            cy.get(path).should('be.visible');
+                        } else {
+                            cy.get(siteSelectors.overlays.self).click(0, 0); // dont click on body, always use overlay wrapper to click
+                            cy.get(selector).click({force: true});
+                            cy.get(path).should('be.visible');
+                        }
+                    });
+                }
+            });
+        })
 });
 
 // cypress command to invoke an editable action
@@ -285,7 +285,9 @@ const waitForChildViewAddition = () => {
 Cypress.Commands.add("getFormData", () => {
     return cy.window().then(win => {
         const promise = new Cypress.Promise((resolve, reject) => {
-            const successhandler = data => { resolve(data); };
+            const successhandler = data => {
+                resolve(data);
+            };
             win.guideBridge.getFormDataString({success: successhandler});
         });
         return promise;
@@ -294,7 +296,7 @@ Cypress.Commands.add("getFormData", () => {
 
 
 Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
-    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({ body }) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
         // We need its ID to continue nesting below it
         let retVal = body.items.find(collection => collection.path === formPath);
         if (retVal) {
@@ -307,10 +309,10 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 });
 
 
-Cypress.Commands.add("previewForm", (formPath, options={}) => {
+Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     let pagePath = `${formPath}?wcmmode=disabled`;
-    if(options?.params) {
-        options.params.forEach((param) => pagePath +=`&${param}`)
+    if (options?.params) {
+        options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
     }
     return cy.openPage(pagePath, options).then(waitForFormInit)
@@ -322,9 +324,25 @@ Cypress.Commands.add("cleanTest", (editPath) => {
     return cy.get("body").then($body => {
         return new Cypress.Promise((resolve, reject) => {
             // do something custom here
-            const selector12 =  "[data-path='" + editPath + "']";
+            const selector12 = "[data-path='" + editPath + "']";
             if ($body.find(selector12).length > 0) {
                 cy.deleteComponentByPath(editPath);
+            }
+            resolve(editPath);
+        });
+    });
+})
+
+Cypress.Commands.add("cleanTitleTest", (editPath) => {
+    // clean the test before the next run, if any
+    return cy.get("body").then($body => {
+        return new Cypress.Promise((resolve, reject) => {
+            // do something custom here
+            const selector12 = "div[data-path^='" + editPath + "']";
+            if ($body.find(selector12).length > 0) {
+                $body.find(selector12).each(($index, $titleComponent) => {
+                    cy.deleteComponentByPath($titleComponent.dataset.path);
+                })
             }
             resolve(editPath);
         });
@@ -359,7 +377,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
 // cypress command to delete component by title
 Cypress.Commands.add("deleteComponentByTitle", (title) => {
     const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
-        componentPathSelector = "[title='"+title+"']",
+        componentPathSelector = "[title='" + title + "']",
         overlayRepositionEvent = siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED;
     // intialize the event handler for editableUpdateEvent
     cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
@@ -447,25 +465,25 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
         longDescriptionText = 'This is long description';
     }
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible=false')
-    .should('not.exist');
+        .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`)
         .should('contain.text', shortDescriptionText);
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
-    .should('not.exist');
+        .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`)
         .should('contain.text', longDescriptionText);
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
-    .should('eq', 'false');
+        .should('eq', 'false');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
-    cy.window().then(function(win) {
+    cy.window().then(function (win) {
         let isSidePanelOpen = win.$("#SidePanel").hasClass("sidepanel-opened");
-        if(!isSidePanelOpen) {
+        if (!isSidePanelOpen) {
             cy.get("#Content .toggle-sidepanel").click();
         }
     });

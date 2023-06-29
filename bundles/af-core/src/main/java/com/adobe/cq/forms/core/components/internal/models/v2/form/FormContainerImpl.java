@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
 
@@ -39,9 +40,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.wcm.api.Page;
@@ -53,8 +52,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormContainerImpl.RESOURCE_TYPE })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class FormContainerImpl extends AbstractContainerImpl implements
-    FormContainer {
+public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
     private static final String DOR_TYPE = "dorType";
@@ -273,6 +271,25 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         return customDorProperties;
     }
 
+    @JsonIgnore
+    public <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
+
+        return traverseChild(this, callBack);
+    }
+
+    private <FormComponent, R> R traverseChild(Container container, Function<FormComponent, R> callBack) throws Exception {
+
+        R result = null;
+        for (ComponentExporter component : container.getItems()) {
+            if (component instanceof Container) {
+                result = traverseChild((Container) component, callBack);
+            } else {
+                result = callBack.apply((FormComponent) component);
+            }
+        }
+        return result;
+    }
+
     @Override
     @JsonIgnore
     public String getParentPagePath() {
@@ -285,4 +302,5 @@ public class FormContainerImpl extends AbstractContainerImpl implements
         }
         return StringUtils.EMPTY;
     }
+
 }

@@ -46,6 +46,12 @@
 .cmp-adaptiveform-wizard__previousNav{
 
 }
+.cmp-adaptiveform-wizard__previousNav__hidden{
+    display: none;
+}
+.cmp-adaptiveform-wizard__nextNav__hidden{
+    display: none;
+}
 .cmp-adaptiveform-wizard{
   
 }
