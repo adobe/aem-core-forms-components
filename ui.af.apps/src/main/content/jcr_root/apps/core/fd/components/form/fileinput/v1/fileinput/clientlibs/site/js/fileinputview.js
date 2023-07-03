@@ -99,7 +99,11 @@
 
         }
 
-        // add comment
+        /*
+          We are overriding the syncLabel method of the FormFieldBase class because for all components, 
+          we pass the widgetId in 'for' attribute. However, for the file input component, 
+          we already have a widget, so we should not pass the widgetId twice
+        */
         #syncLabel() {
           let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
           if (labelElement) {
