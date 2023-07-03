@@ -28,11 +28,12 @@
      id="${dropdown.id}"
      data-cmp-visible="${dropdown.visible ? 'true' : 'false'}"
      data-cmp-enabled="${dropdown.enabled ? 'true' : 'false'}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=dropdown.id, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[dropdown.id, 'widget']}">
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     <select class="cmp-adaptiveform-dropdown__widget"
-            aria-label="${dropdown.label.value}"
+            id="${widgetId}"
             title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
             name="${dropdown.name}"
             data-cmp-data-layer="${dropdown.data.json}"

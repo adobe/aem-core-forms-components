@@ -99,9 +99,18 @@
 
         }
 
+        // add comment
+        #syncLabel() {
+          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+          if (labelElement) {
+              labelElement.setAttribute('for', this.getId());
+          }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncWidget();
+            this.#syncLabel();
         }
     }
 

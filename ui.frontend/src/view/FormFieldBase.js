@@ -97,10 +97,14 @@ export default class FormFieldBase extends FormField {
         this.#registerEventListeners();
     }
 
+    getWidgetId(){
+      return this.getId() + '-widget';
+    }
+
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
-            labelElement.setAttribute('for', this.getId());
+            labelElement.setAttribute('for', this.getWidgetId());
         }
     }
 

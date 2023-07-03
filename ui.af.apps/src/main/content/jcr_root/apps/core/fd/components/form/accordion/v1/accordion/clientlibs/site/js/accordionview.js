@@ -144,6 +144,10 @@
             this.#expandItem(item)
         }
 
+        getWidgetId(){
+          return this.getId();
+        }
+
         #collapseAllItems() {
             var items = this.#getCachedItems();
             if (items) {
