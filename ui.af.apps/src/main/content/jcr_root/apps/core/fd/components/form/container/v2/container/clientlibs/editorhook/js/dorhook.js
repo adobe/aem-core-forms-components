@@ -33,7 +33,7 @@
             return {
                 src : options.getPath() + '?resourceType=' + encodeURIComponent(DOR_DIALOG_PATH),
                 isFloating : false,
-                loadingMode : "auto",
+                loadingMode : "sidePanel",
                 layout : "auto"
             };
         };
