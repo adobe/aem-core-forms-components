@@ -302,6 +302,12 @@
                             </columns>
                         </items>
                     </submitActions>
+                    <signature
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Electronic Signature"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="fd/af/authoring/content/adobeSignV2DialogConfig"
+                            resouceType="granite/ui/components/coral/foundation/container"/>
                 </items>
             </tabs>
         </items>

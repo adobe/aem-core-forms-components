@@ -155,6 +155,15 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetSignerProperties() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+
+        assertEquals(
+            "{jcr:primaryType=nt:unstructured, firstSignerFormFiller=false, workflowType=SEQUENTIAL, signer0={jcr:primaryType=nt:unstructured, signerTitle=Signer One}}",
+            formContainer.getSignerProperties().toString());
+    }
+
+    @Test
     void testGetLocalizedValue() throws Exception {
         FormContainer formContainer = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         TextInput textInput = (TextInput) formContainer.getItems().stream()

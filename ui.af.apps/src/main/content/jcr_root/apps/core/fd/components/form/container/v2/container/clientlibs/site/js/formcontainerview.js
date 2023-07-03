@@ -41,7 +41,7 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
+                        let redirectURL = body.redirectUrl;  //default ThankYouPage Path
                         let redirectElement = document.querySelector('[name=":redirect"]');
                         // check to prevent tampering of redirectURL from client
                         if(redirectElement && redirectElement.value === body.redirectUrl) {

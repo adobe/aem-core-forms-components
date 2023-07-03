@@ -77,10 +77,22 @@ public interface FormComponent extends Component {
     }
 
     /**
+     * Returns signer properties map present in form
+     *
+     * @return signerPropertiesMap of the form
+     * @since com.adobe.cq.forms.core.components.models.form 4.4.0
+     */
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    default Map<String, Object> getSignerProperties() {
+        return Collections.emptyMap();
+    }
+
+    /**
      * Returns getPath of the form field
      *
      * @return getPath of the field
-     * @since com.adobe.cq.forms.core.components.util 3.1.0
+     * @since com.adobe.cq.forms.core.components.models.form 3.1.0
      */
     @JsonView(Views.Author.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)

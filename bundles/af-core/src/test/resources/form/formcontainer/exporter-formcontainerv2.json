@@ -9,6 +9,15 @@
       "dorTemplateRef": "xyz"
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
+    "fd:signerInfo":{
+      "jcr:primaryType":"nt:unstructured",
+      "firstSignerFormFiller":false,
+      "workflowType":"SEQUENTIAL",
+      "signer0":{
+        "jcr:primaryType":"nt:unstructured",
+        "signerTitle":"Signer One"
+      }
+    },
     "fd:schemaType": "BASIC"
   },
   ":items": {
