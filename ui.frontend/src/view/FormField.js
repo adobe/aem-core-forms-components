@@ -17,8 +17,17 @@
 import {Constants} from "../constants.js";
 import Utils from "../utils.js";
 
+
 export default class FormField {
 
+    /**
+     * Creates a new instance of the FormField class.
+     * @constructor
+     * @memberof FormField
+     * @param {object} params - The parameters for initializing the FormField.
+     * @param {object} params.formContainer - The form container that the field belongs to.
+     * @param {HTMLElement} params.element - The HTML element of the field.
+     */
     constructor(params) {
         this.formContainer = params.formContainer;
         this.element = params.element; //html element of field
@@ -27,10 +36,24 @@ export default class FormField {
         this.active = false;
     }
 
+    /**
+     * Sets the ID of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {string} id - The ID to set for the form field.
+     */
     setId(id) {
         this.id = id;
     }
 
+    /**
+     * Sets the parent view of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {object} parentView - The parent view to set for the form field.
+     */
     setParent(parentView) {
         this.parentView = parentView;
         if (this.parentView.addChild) {
@@ -41,10 +64,23 @@ export default class FormField {
         }
     }
 
+    /**
+     * Sets the instance manager for the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {object} instanceManager - The instance manager to set for the form field.
+     */
     setInstanceManager(instanceManager) {
         this.instanceManager = instanceManager;
     }
 
+    /**
+     * Sets the form field as active.
+     * @method
+     * @memberof FormField
+     * @instance
+     */
     setActive() {
         if (!this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
@@ -54,6 +90,12 @@ export default class FormField {
         }
     }
 
+    /**
+     * Sets the form field as inactive.
+     * @method
+     * @memberof FormField
+     * @instance
+     */
     setInactive() {
         if (this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
@@ -63,18 +105,47 @@ export default class FormField {
         }
     }
 
+    /**
+     * Checks if the form field is active.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {boolean} True if the form field is active, false otherwise.
+     */
     isActive() {
         return this.active;
     }
 
+    /**
+     * Returns the form container path of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {string} The form container path.
+     */
     getFormContainerPath() {
         return this.options["adaptiveformcontainerPath"];
     }
 
+    /**
+     * Returns the ID of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {string} The form field ID.
+     */
     getId() {
         return this.id;
     }
 
+    /**
+     * Sets the model for the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {object} model - The model to set for the form field.
+     * @throws {string} Throws an error if the model is already initialized.
+     */
     setModel(model) {
         if (typeof this._model === "undefined" || this._model === null) {
             this._model = model;
@@ -84,31 +155,39 @@ export default class FormField {
     }
 
     /**
-     * Update the HTML, with respective model
-     * It is for the markup that is generated on the client-side (eg: repeatable panel)
+     * Updates the HTML with the respective model.
+     * This is for the markup that is generated on the client-side (e.g., repeatable panel).
+     * @method
+     * @memberof FormField
+     * @instance
+     * @throws {string} Throws an error if the method is not implemented.
      */
     syncMarkupWithModel() {
         throw "method not implemented";
     }
 
     /**
-     * toggles the html element based on the property. If the property is false, then adds the data-attribute and
-     * css class
-     * @param property
-     * @param dataAttribute
-     * @param value
+     * Toggles the HTML element based on the property. If the property is false, then adds the data-attribute and CSS class.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {boolean} property - The property to toggle.
+     * @param {string} dataAttribute - The data attribute to set or remove.
+     * @param {string} value - The value to set for the data attribute.
      */
     toggle(property, dataAttribute, value) {
        this.toggleAttribute(this.element, property, dataAttribute, value);
     }
 
     /**
-     * Toggles the given @param element based on the property. If the property is false, then adds the data-attribute and
-     * css class
-     * @param element
-     * @param property
-     * @param dataAttribute
-     * @param value
+     * Toggles the given element based on the property. If the property is false, then adds the data-attribute and CSS class.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @param {HTMLElement} element - The element to toggle.
+     * @param {boolean} property - The property to toggle.
+     * @param {string} dataAttribute - The data attribute to set or remove.
+     * @param {string} value - The value to set for the data attribute.
      */
     toggleAttribute(element, property, dataAttribute, value) {
         if (element) {
@@ -121,7 +200,11 @@ export default class FormField {
     }
 
     /**
-     * @return 'afs:layout' properties. Empty object if no layout property present
+     * Returns the 'afs:layout' properties. Empty object if no layout property is present.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {object} The 'afs:layout' properties.
      */
     getLayoutProperties() {
         let layoutProperties = {};
@@ -132,18 +215,46 @@ export default class FormField {
         return layoutProperties;
     }
 
+    /**
+     * Returns the model of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {object} The model of the form field.
+     */
     getModel() {
         return this._model;
     }
 
+    /**
+     * Subscribes the field to the model.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @throws {string} Throws an error if the field does not subscribe to the model.
+     */
     subscribe() {
         throw "the field does not subscribe to the model"
     }
 
+    /**
+     * Initializes the help content based on the state.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @throws {string} Throws an error if the method is not implemented.
+     */
     initializeHelpContent(state) {
         throw "method not implemented";
     }
 
+    /**
+     * Returns the instance manager of the form field.
+     * @method
+     * @memberof FormField
+     * @instance
+     * @returns {object} The instance manager of the form field.
+     */
     getInstanceManager() {
         return this.instanceManager;
     }
