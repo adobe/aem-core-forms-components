@@ -7,10 +7,13 @@
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
-        <parsys1
+        <container
                 jcr:primaryType="nt:unstructured"
-                editable="{Boolean}true"
-                sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                jcr:title="Header"
+                sling:resourceType="wcm/foundation/components/responsivegrid"
+                cq:policy="wcm/foundation/components/responsivegrid/page-header"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
         <guideContainer
                 jcr:primaryType="nt:unstructured"
                 editable="{Boolean}true"

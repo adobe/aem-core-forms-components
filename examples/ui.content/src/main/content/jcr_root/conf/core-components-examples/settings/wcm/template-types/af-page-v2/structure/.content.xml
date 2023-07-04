@@ -6,10 +6,13 @@
         jcr:primaryType="cq:PageContent"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
-        <parsys1
-            jcr:primaryType="nt:unstructured"
-                editable="{Boolean}true"
-            sling:resourceType="wcm/foundation/components/responsivegrid"/>
+        <container
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Header"
+                sling:resourceType="wcm/foundation/components/responsivegrid"
+                cq:policy="wcm/foundation/components/responsivegrid/page-header"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
         <guideContainer
             jcr:primaryType="nt:unstructured"
             editable="{Boolean}true"
