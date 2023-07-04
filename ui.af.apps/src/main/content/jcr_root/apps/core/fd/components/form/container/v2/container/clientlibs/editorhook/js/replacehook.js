@@ -137,20 +137,18 @@
                     }
 
                     if (performReplace) {
-                        if (allowedComponents.indexOf(component.componentConfig.path) > -1 || allowedComponents.indexOf("group:" + component.getGroup()) > -1) {
-                            g = component.getGroup();
+                        g = component.getGroup();
 
-                            var group = document.createElement('coral-selectlist-group');
-                            group.label = Granite.I18n.getVar(g);
+                        var group = document.createElement('coral-selectlist-group');
+                        group.label = Granite.I18n.getVar(g);
 
-                            groups[g] = groups[g] || group;
+                        groups[g] = groups[g] || group;
 
-                            var item = document.createElement('coral-selectlist-item');
-                            item.value = cfg.path;
-                            item.innerHTML = Granite.I18n.getVar(cfg.title);
+                        var item = document.createElement('coral-selectlist-item');
+                        item.value = cfg.path;
+                        item.innerHTML = Granite.I18n.getVar(cfg.title);
 
-                            groups[g].items.add(item);
-                        }
+                        groups[g].items.add(item);
                     }
                 }
             });
