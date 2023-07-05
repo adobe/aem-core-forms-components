@@ -15,12 +15,23 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.annotation.PostConstruct;
-
+import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.aemds.guide.utils.GuideWCMUtils;
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ContainerExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
+import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -32,20 +43,10 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.common.GuideContainer;
-import com.adobe.aemds.guide.service.GuideSchemaType;
-import com.adobe.aemds.guide.utils.GuideUtils;
-import com.adobe.aemds.guide.utils.GuideWCMUtils;
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ContainerExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
-import com.adobe.cq.forms.core.components.models.form.*;
-import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
-import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.annotation.PostConstruct;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -262,22 +263,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @JsonIgnore
-    public <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
-
-        return traverseChild(this, callBack);
+    @Override
+    public void visit(Function<ComponentExporter, Boolean> callback) {
+        traverseChild(this, callback);
     }
 
-    private <FormComponent, R> R traverseChild(Container container, Function<FormComponent, R> callBack) throws Exception {
-
-        R result = null;
+    private void traverseChild(Container container, Function<ComponentExporter, Boolean> callback) {
         for (ComponentExporter component : container.getItems()) {
+            if (callback.apply(component)) {
+                return; // Stop the traversal
+            }
+
             if (component instanceof Container) {
-                result = traverseChild((Container) component, callBack);
-            } else {
-                result = callBack.apply((FormComponent) component);
+                traverseChild((Container) component, callback);
             }
         }
-        return result;
     }
 
     @Override

@@ -31,7 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.model.ReCaptchaClientConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
@@ -42,10 +42,10 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
-        adaptables = { SlingHttpServletRequest.class, Resource.class },
-        adapters = { Recaptcha.class,
-                ComponentExporter.class },
-        resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Recaptcha.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
@@ -56,7 +56,7 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
 
     @Reference
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ReCaptchaConfigurationModel reCaptchaConfiguration;
+    private ReCaptchaClientConfigurationModel reCaptchaConfiguration;
 
     @OSGiService
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

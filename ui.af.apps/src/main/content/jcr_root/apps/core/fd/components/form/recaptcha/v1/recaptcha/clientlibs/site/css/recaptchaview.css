@@ -1,0 +1,35 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-recaptcha
+    ELEMENT cmp-adaptiveform-recaptcha__label
+    ELEMENT cmp-adaptiveform-recaptcha__widget
+    ELEMENT cmp-adaptiveform-recaptcha__questionmark
+    ELEMENT cmp-adaptiveform-recaptcha__shortdescription
+    ELEMENT cmp-adaptiveform-recaptcha__longdescription
+    ELEMENT cmp-adaptiveform-recaptcha__errormessage
+*/
+
+.cmp-adaptiveform-recaptcha {
+
+}
+
+.cmp-adaptiveform-recaptcha__widget {
+
+}
+
+.cmp-adaptiveform-recaptcha__label {
+
+}
+
+.cmp-adaptiveform-recaptcha__longdescription {
+
+}
+
+.cmp-adaptiveform-recaptcha__shortdescription {
+
+}
+
+.cmp-adaptiveform-recaptcha__questionmark {
+  
+}
+

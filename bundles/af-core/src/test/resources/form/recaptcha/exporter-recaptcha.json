@@ -6,9 +6,15 @@
     "type": "string",
     "enabled": true,
     "readOnly": false,
+    "size": "compact",
+    "cloudServicePath": "v2checkbox",
     "properties": {
       "fd:dor": {
         "dorExclusion": false
+      },
+      "fd:captcha":{
+        "siteKey": "test-key",
+        "uri": "https://www.recaptcha.net/recaptcha/api.js"
       },
       "fd:path": "/content/recaptcha"
     },

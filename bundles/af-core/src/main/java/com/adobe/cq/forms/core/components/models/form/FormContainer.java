@@ -24,6 +24,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -324,10 +325,13 @@ public interface FormContainer extends Container {
     @JsonIgnore
     default void setContextPath(String contextPath) {}
 
+    // @JsonIgnore
+    // default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
+    // return null;
+    // }
+
     @JsonIgnore
-    default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
-        return null;
-    }
+    default void visit(Function<ComponentExporter, Boolean> callback) {};
 
     /**
      * Returns site page path if dropped in sites else the form page path.
