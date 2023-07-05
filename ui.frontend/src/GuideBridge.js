@@ -20,10 +20,8 @@ import AfFormData from "./FormData.js";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
- * @class
- * @since 2.0.36
  */
-export default class GuideBridge {
+class GuideBridge {
 
     /**
      * Map to store the form container views.
@@ -31,7 +29,6 @@ export default class GuideBridge {
      * @private
      * @memberof GuideBridge
      * @instance
-     * @since 1.0.0
      */
     #formContainerViewMap = {};
     /**
@@ -40,7 +37,6 @@ export default class GuideBridge {
      * @private
      * @memberof GuideBridge
      * @instance
-     * @since 1.0.0
      */
     #guideBridgeConnectHandlers = [];
     /**
@@ -49,14 +45,12 @@ export default class GuideBridge {
      * @private
      * @memberof GuideBridge
      * @instance
-     * @since 1.0.0
      */
     #formContainerPath = "";
 
     /**
      * Constructs a new GuideBridge instance.
-     * @constructor
-     * @since 1.0.0
+     * @constructor GuideBridge
      */
     constructor() {
         let customEvent = document.createEvent("CustomEvent");
@@ -95,8 +89,6 @@ export default class GuideBridge {
      * @param {Function} [options.success] - Callback function that receives the result of the API in case of success.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     getFormDataString(options) {
         let formModel = this.getFormModel();
@@ -123,8 +115,6 @@ export default class GuideBridge {
      * @param {Function} [options.success] - Callback function that receives the result of the API in case of success.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     getFormDataObject(options) {
         this.getFormDataString({success: function (resultObject) {
@@ -141,8 +131,6 @@ export default class GuideBridge {
      * @returns {null|Object} - The Form Instance associated with the GuideBridge.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     getFormModel() {
         if (this.#formContainerPath) {
@@ -155,6 +143,13 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * Retrieves the path of the form container.
+     * @returns {string} The path of the form container.
+     * @method
+     * @memberof GuideBridge
+     * @private
+     */
     #getFormContainerPath() {
         let actualFormContainerPath = this.#formContainerPath;
         if (!actualFormContainerPath) {
@@ -173,8 +168,6 @@ export default class GuideBridge {
      * @returns {boolean} - True if the form is valid, false otherwise.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     validate() {
         let formModel = this.getFormModel();
@@ -209,8 +202,6 @@ export default class GuideBridge {
      *
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     connect(handler, context, formContainerPath) {
         context = context || this;
@@ -240,8 +231,6 @@ export default class GuideBridge {
      * @returns {boolean} true if the Adaptive Form is ready for interaction, false otherwise
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     isConnected() {
         return !!this.getFormModel();
@@ -251,8 +240,6 @@ export default class GuideBridge {
      * @summary Disables the adaptive form, i.e. it disables all the fields and buttons.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     disableForm() {
         let formModel = this.getFormModel();
@@ -267,8 +254,6 @@ export default class GuideBridge {
      * Resets the adaptive form, clearing all entered values.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     reset() {
         let formModel = this.getFormModel();
@@ -283,8 +268,6 @@ export default class GuideBridge {
      * @summary Hides all the submit buttons present in the Adaptive Form
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      *
      */
     hideSubmitButtons() {
@@ -299,8 +282,6 @@ export default class GuideBridge {
      * @summary Hides all the reset buttons present in the Adaptive Form.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     hideResetButtons() {
         if (this.isConnected()) {
@@ -317,8 +298,6 @@ export default class GuideBridge {
      * @private
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     #hideButtons(buttonType) {
         let formModel = this.getFormModel();
@@ -342,8 +321,6 @@ export default class GuideBridge {
      * Hides all the save buttons present in the Adaptive Form.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     hideSaveButtons() {
         //TODO: implement it later. NO-OP for now.
@@ -353,8 +330,6 @@ export default class GuideBridge {
      * Hides the summary panel in the Adaptive Form.
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     hideSummaryPanel() {
         //TODO: implement it later. NO-OP for now.
@@ -369,8 +344,6 @@ export default class GuideBridge {
      *
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      */
     trigger(eventName, eventPayload, formContainerPath) {
         let formContainer;
@@ -388,8 +361,6 @@ export default class GuideBridge {
     /**
      * @method
      * @memberof GuideBridge
-     * @instance
-     * @since 1.0.0
      * @summary Adds an event listener for events triggered by the GuideBridge object.
      * The subscriber must first be connected to GuideBridge to be able to use this API.
      *
@@ -407,6 +378,8 @@ export default class GuideBridge {
             throw new Error("GuideBridge is not connected");
         }
     }
-}
+};
+
+export default GuideBridge;
 
 
