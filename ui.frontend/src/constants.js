@@ -178,6 +178,9 @@ export const Constants = {
 
     /**
      * HTML attributes.
+     * @type {object}
+     * @memberof module:FormView~Constants
+     * @namespace HTML_ATTRS
      */
     HTML_ATTRS : {
         /**
