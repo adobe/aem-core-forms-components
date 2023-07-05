@@ -46,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -264,15 +264,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @JsonIgnore
     @Override
-    public void visit(Function<ComponentExporter, Boolean> callback) {
+    public void visit(Consumer<ComponentExporter> callback) throws Exception {
         traverseChild(this, callback);
     }
 
-    private void traverseChild(Container container, Function<ComponentExporter, Boolean> callback) {
+    private void traverseChild(Container container, Consumer<ComponentExporter> callback) throws Exception {
         for (ComponentExporter component : container.getItems()) {
-            if (callback.apply(component)) {
-                return; // Stop the traversal
-            }
+            callback.accept(component);
 
             if (component instanceof Container) {
                 traverseChild((Container) component, callback);
