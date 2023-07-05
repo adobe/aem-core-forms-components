@@ -53,22 +53,16 @@ class RecaptchaWidget {
             gcontainer.classList.add('g-recaptcha-invisible');
         }
          if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
-                     guideBridge.getFormModel().subscribe( (action)=>{
-                     if (action.type === 'preSubmit') {
-//                        return new Promise((resolve)=>{
-//                            this.recaptchaInvisibleValidate()
-//                                .then(() => resolve())
-//                                .catch(() => resolve());
-//                        });
-
-                          return new Promise((resolve) => {
-                                          this.recaptchaInvisibleValidate(successCallback, expiredCallback)
-                                            .then(() => resolve())
-                                            .catch(() => resolve());
-                                      });
-                     }
-                 	}, 'validate');
-             	}
+            guideBridge.getFormModel().subscribe( (action)=>{
+                if (action.type === 'preSubmitValidate') {
+                    return new Promise((resolve) => {
+                        this.recaptchaInvisibleValidate(successCallback, expiredCallback)
+                            .then(() => resolve())
+                            .catch(() => resolve());
+                    });
+                }
+            }, 'preSubmitValidate');
+         }
 
         var successCallback = function(response) {
             element.setAttribute("af-grecaptcha-response", response);

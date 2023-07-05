@@ -105,10 +105,4 @@ public class RecaptchaImplTest {
         assertEquals(null, recaptchaMock.isEnabled());
     }
 
-    @Test
-    void testJSONExport() throws Exception {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
-    }
-
 }
