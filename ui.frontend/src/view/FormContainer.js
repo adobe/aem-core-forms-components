@@ -16,14 +16,15 @@
 import {createFormInstance} from "@aemforms/af-core";
 
 /**
- * Represents a FormContainer class.
- * @class
- * @since 1.0.0
+ * @module FormView
  */
-export default class FormContainer {
+
+/**
+ * Represents a FormContainer class.
+ */
+class FormContainer {
     /**
      * Creates an instance of the FormContainer class.
-     * @constructor
      * @param {object} params - The parameters for constructing the FormContainer instance.
      */
     constructor(params) {
@@ -38,10 +39,6 @@ export default class FormContainer {
 
     /**
      * Adds an instance manager view to the fields of the formContainer.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {object} instanceManager - The instance manager view to be added.
      */
     addInstanceManager(instanceManager) {
@@ -50,10 +47,6 @@ export default class FormContainer {
 
     /**
      * Returns the form field view with the specified field ID.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {string} fieldId - The ID of the form field.
      * @returns {object|null} The form field view, or null if not found.
      */
@@ -66,10 +59,6 @@ export default class FormContainer {
 
     /**
      * Returns the model with the specified ID. If no ID is provided, returns the entire model.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {string} [id] - The ID of the model element.
      * @returns {object} The model element or the entire model.
      */
@@ -80,10 +69,6 @@ export default class FormContainer {
     // todo: fix this once exposed in af-core
     /**
      * Returns the language code of the form.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {string} The language code (e.g., "en").
      */
     getLang() {
@@ -92,10 +77,6 @@ export default class FormContainer {
 
     /**
      * Returns the ID of the form element's parent in the HTML structure.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {object} model - The form element model.
      * @returns {string} The parent ID.
      */
@@ -106,10 +87,6 @@ export default class FormContainer {
 
     /**
      * Adds a field view to the form container.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {object} fieldView - The field view to be added.
      */
     addField(fieldView) {
@@ -150,10 +127,6 @@ export default class FormContainer {
 
     /**
      * Sets the focus on the specified field ID.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @param {string} id - The ID of the field to set the focus on.
      */
     setFocus(id) {
@@ -175,10 +148,6 @@ export default class FormContainer {
 
     /**
      * Returns the ID of the form.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {string} The form ID.
      */
     getFormId() {
@@ -187,10 +156,6 @@ export default class FormContainer {
 
     /**
      * Returns the title of the form.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {string} The form title.
      */
     getFormTitle() {
@@ -199,10 +164,6 @@ export default class FormContainer {
 
     /**
      * Returns the path of the form container.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {string} The form container path.
      */
     getPath() {
@@ -211,10 +172,6 @@ export default class FormContainer {
 
     /**
      * Returns the form element associated with the form container.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {HTMLElement} The form element.
      */
     getFormElement() {
@@ -223,13 +180,11 @@ export default class FormContainer {
 
     /**
      * Returns all fields of the form container.
-     * @method
-     * @memberof FormContainer
-     * @instance
-     * @since 1.0.0
      * @returns {object} An object containing all fields of the form container.
      */
     getAllFields() {
         return this._fields;
     }
 }
+
+export default FormContainer;

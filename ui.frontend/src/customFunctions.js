@@ -14,11 +14,16 @@
  * limitations under the License.
  ******************************************************************************/
 
+
 /**
- *
- * @param str {string} json string to convert custom function to object
- * @return {object} JSON Object after parsing the string as json. In case of
- * exceptions empty object is returned
+ * @module FormView
+ */
+
+/**
+ * Converts a JSON string to an object.
+ * @param {string} str - The JSON string to convert to an object.
+ * @returns {object} - The parsed JSON object. Returns an empty object if an exception occurs.
+ * @memberof module:FormView~customFunctions
  */
 function toObject(str) {
     try {
@@ -30,9 +35,10 @@ function toObject(str) {
 }
 
 /**
- * prefixes the url with the context path
- * @param url {string}
- * @returns {string}
+ * Prefixes the URL with the context path.
+ * @param {string} url - The URL to externalize.
+ * @returns {string} - The externalized URL.
+ * @memberof module:FormView~customFunctions
  */
 function externalize(url) {
     if (window?.Granite?.HTTP && typeof (window.Granite.HTTP.externalize === "function")) {
@@ -43,9 +49,10 @@ function externalize(url) {
 }
 
 /**
- * Validates if the given URL is correct
- * @param url
- * @returns {boolean}
+ * Validates if the given URL is correct.
+ * @param {string} url - The URL to validate.
+ * @returns {boolean} - True if the URL is valid, false otherwise.
+ * @memberof module:FormView~customFunctions
  */
 function validateURL(url) {
     try {
@@ -59,10 +66,11 @@ function validateURL(url) {
 
 
 /**
- * Navigates to the URl mentioned. By specifying the location, you can set the name of the window you are going to open
- * @param destinationURL   {string} URL complete URL. If you do not specify any URL in this function, it will open a new blank window
- * @param destinationType {string} destinationType supports the following values, "_newwindow", "_blank", "_parent", "_self", "_top" or name of the window
- * @returns newly opened window
+ * Navigates to the specified URL.
+ * @param {string} destinationURL - The URL to navigate to. If not specified, a new blank window will be opened.
+ * @param {string} destinationType - The type of destination. Supports the following values: "_newwindow", "_blank", "_parent", "_self", "_top", or the name of the window.
+ * @returns {Window} - The newly opened window.
+ * @memberof module:FormView~customFunctions
  */
 function navigateTo(destinationURL, destinationType) {
     let param = null,
@@ -87,12 +95,12 @@ function navigateTo(destinationURL, destinationType) {
 }
 
 /**
- * Default Error handler for invoke service api
- * @name defaultErrorHandler Default Error Handler Function
- * @param response response body of the invoke service api
- * @param headers response headers of the invoke service api
- * @param globals object containing form instance and invoke method to call other custom functions
- * @errorHandler
+ * Default error handler for the invoke service API.
+ * @param {object} response - The response body of the invoke service API.
+ * @param {object} headers - The response headers of the invoke service API.
+ * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+ * @returns {void}
+ * @memberof module:FormView~customFunctions
  */
 function defaultErrorHandler(response, headers, globals) {
     if(response && response.validationErrors) {
@@ -116,6 +124,12 @@ function defaultErrorHandler(response, headers, globals) {
     }
 }
 
+/**
+ * Namespace for custom functions.
+ * @description Contains custom functions which can be used in the rule editor
+ * @exports FormView/customFunctions
+ * @namespace customFunctions
+ */
 export const customFunctions = {
     toObject,
     externalize,
