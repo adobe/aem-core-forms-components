@@ -33,9 +33,7 @@ class RecaptchaWidget {
 
         //Always inserting it in body
         document.body.appendChild(this.#widget);
-        this.#options = Object.assign({}, {
-            "contextPath": ""
-        }, this.#model._jsonModel);
+        this.#options = Object.assign({}, this.#model._jsonModel);
 
         this.#renderRecaptcha(widget);
     }
