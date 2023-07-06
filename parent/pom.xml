@@ -68,10 +68,10 @@
         <main.basedir>${project.basedir}</main.basedir>
 
         <aem.host>localhost</aem.host>
-        <aem.port>4506</aem.port>
+        <aem.port>4502</aem.port>
         <aem.contextPath />
         <aem.publish.host>localhost</aem.publish.host>
-        <aem.publish.port>4507</aem.publish.port>
+        <aem.publish.port>4503</aem.publish.port>
         <aem.publish.contextPath />
 
         <quickstart.url>http://${aem.host}:${aem.port}${aem.contextPath}</quickstart.url>
