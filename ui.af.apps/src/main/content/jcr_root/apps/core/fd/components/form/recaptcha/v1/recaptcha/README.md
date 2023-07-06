@@ -49,7 +49,7 @@ It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
 ```
-BLOCK cmp-adaptiveform-textinput
+BLOCK cmp-adaptiveform-recaptcha
     ELEMENT cmp-adaptiveform-recaptcha__label
     ELEMENT cmp-adaptiveform-recaptcha__widget
     ELEMENT cmp-adaptiveform-recaptcha__questionmark

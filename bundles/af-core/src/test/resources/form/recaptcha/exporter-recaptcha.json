@@ -6,8 +6,6 @@
     "type": "string",
     "enabled": true,
     "readOnly": false,
-    "size": "compact",
-    "cloudServicePath": "v2checkbox",
     "properties": {
       "fd:dor": {
         "dorExclusion": false

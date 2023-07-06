@@ -17,7 +17,6 @@
 /**
  * This class is responsible for interacting with the recaptcha widget. It displays Google reCAPTCHA challenge.
  */
-
 class RecaptchaWidget {
     #widget = null
     #model = null // passed by reference
@@ -49,11 +48,11 @@ class RecaptchaWidget {
         var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
         var widgetId;
         var url = recaptchaConfigData.properties["fd:captcha"].uri;
-        if(recaptchaConfigData.recaptchaSize == "invisible") {
+        if (recaptchaConfigData.properties["fd:captcha"].size == "invisible") {
             gcontainer.classList.add('g-recaptcha-invisible');
         }
-         if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
-            guideBridge.getFormModel().subscribe( (action)=>{
+        if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
+            guideBridge.getFormModel().subscribe((action) => {
                 if (action.type === 'preSubmitValidate') {
                     return new Promise((resolve) => {
                         this.recaptchaInvisibleValidate(successCallback, expiredCallback)
@@ -62,17 +61,15 @@ class RecaptchaWidget {
                     });
                 }
             }, 'preSubmitValidate');
-         }
+        }
 
         var successCallback = function(response) {
-            element.setAttribute("af-grecaptcha-response", response);
-            self.util(response);
+            self.setCaptchaModel(response);
         };
 
         var expiredCallback = function() {
-            element.removeAttribute("af-grecaptcha-response");
             grecaptcha.reset(widgetId);
-            self.util("");
+            self.setCaptchaModel("");
         };
 
         var onloadCallbackInternal = function() {
@@ -85,9 +82,9 @@ class RecaptchaWidget {
 
         var gparameters = {
             'sitekey': recaptchaConfigData.properties["fd:captcha"].siteKey,
-            'size': recaptchaConfigData.size,
-            'theme': recaptchaConfigData.theme || 'light',
-            'type': recaptchaConfigData.type || 'image',
+            'size': recaptchaConfigData.properties["fd:captcha"].size,
+            'theme': recaptchaConfigData.properties["fd:captcha"].theme || 'light',
+            'type': recaptchaConfigData.properties["fd:captcha"].type || 'image',
             'callback': successCallback,
             'expired-callback': expiredCallback
         };
@@ -102,15 +99,14 @@ class RecaptchaWidget {
         element.appendChild(scr);
     }
 
-    util = function(response) {
+    setCaptchaModel = function(response) {
         this.#model.value = (response);
-        //guideBridge.getFormModel()['captchaInfo'] =  { [this.#model.qualifiedName]: response };
     }
 
     recaptchaInvisibleValidate = function(successCallback, expiredCallback) {
-                                     return grecaptcha.execute()
-                                       .then(successCallback)
-                                       .catch(expiredCallback);
+        return grecaptcha.execute()
+            .then(successCallback)
+            .catch(expiredCallback);
     }
 
 }

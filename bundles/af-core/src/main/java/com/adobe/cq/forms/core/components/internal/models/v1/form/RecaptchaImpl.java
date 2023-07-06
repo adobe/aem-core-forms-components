@@ -31,7 +31,6 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
 
-
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
@@ -72,19 +71,22 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
-
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
-
     private static final String RECAPTCHA_SITE_KEY = "siteKey";
-
     private static final String RECAPTCHA_URI = "uri";
+    private static final String RECAPTCHA_SIZE = "size";
+    private static final String RECAPTCHA_THEME = "theme";
+    private static final String RECAPTCHA_TYPE = "type";
+
 
     @Override
+    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
     @Override
+    @JsonIgnore
     public String getSize() {
         return size;
     }
@@ -103,6 +105,9 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         }
         customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
         customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+        customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
+        customCaptchaProperties.put(RECAPTCHA_THEME, "light");
+        customCaptchaProperties.put(RECAPTCHA_TYPE, "type");
         return customCaptchaProperties;
     }
 
