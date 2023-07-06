@@ -78,6 +78,15 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(panelContainerDrop);
     }
 
+    const getPreviewIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
+
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             panelEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/panelcontainer",
@@ -94,6 +103,34 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Panel', function () {
             testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+        });
+
+        it('test data-placeholder-text of Panel', function () {
+            dropPanelInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('input[name="./name"]').invoke('val', 'customPanel');
+            cy.get('input[name="./jcr:title"]').invoke('val', 'Custom Panel');
+            cy.get('.cq-dialog-submit').click().then(() => {
+                cy.get('.cq-dialog-submit').should('not.exist');
+            });
+            getPreviewIframeBody().find('.cmp-container__label').should('have.text', 'Custom Panel')
+            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer']").should('have.attr', 'data-placeholder-text', 'Please drag Custom Panel components here');
+            cy.deleteComponentByPath(panelEditPath);
+        })
+
+        it('test data-placeholder-text of Panel with blank title', function () {
+            dropPanelInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('input[name="./name"]').invoke('val', 'customPanel');
+            cy.get('input[name="./jcr:title"]').invoke('val', '');
+            cy.get('.cq-dialog-submit').click().then(() => {
+                cy.get('.cq-dialog-submit').should('not.exist');
+            });
+            getPreviewIframeBody().find('.cmp-container__label').should('not.exist')
+            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer']").should('have.attr', 'data-placeholder-text', 'Drag Panel components here');
+            cy.deleteComponentByPath(panelEditPath);
         })
     })
 
