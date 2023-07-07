@@ -31,15 +31,10 @@
      data-cmp-enabled="${recaptcha.enabled ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=recaptcha.label.value, labelVisible=recaptcha.label.visible, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=component.id, longDescription=reCaptcha.description, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
 
     <div class="cmp-adaptiveform-recaptcha__widget"
          name="${recaptcha.name}"
          required="${recaptcha.required}"></div>
-
-    <div data-sly-call="${shortDescription.shortDescription @componentId=component.id, shortDescriptionVisible=recaptcha.tooltipVisible, shortDescription=recaptcha.tooltip, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap>
-    </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=component.id, longDescription=recaptcha.description, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
 </div>

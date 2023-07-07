@@ -52,9 +52,6 @@ It should be added to a relevant site client library using the `embed` property.
 BLOCK cmp-adaptiveform-recaptcha
     ELEMENT cmp-adaptiveform-recaptcha__label
     ELEMENT cmp-adaptiveform-recaptcha__widget
-    ELEMENT cmp-adaptiveform-recaptcha__questionmark
-    ELEMENT cmp-adaptiveform-recaptcha__shortdescription
-    ELEMENT cmp-adaptiveform-recaptcha__longdescription
     ELEMENT cmp-adaptiveform-recaptcha__errormessage
 ```
 

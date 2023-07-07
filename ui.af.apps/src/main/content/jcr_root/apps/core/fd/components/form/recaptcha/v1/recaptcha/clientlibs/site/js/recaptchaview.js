@@ -25,8 +25,6 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${Recaptcha.bemBlock}__widget`,
             label: `.${Recaptcha.bemBlock}__label`,
-            description: `.${Recaptcha.bemBlock}__longdescription`,
-            tooltipDiv: `.${Recaptcha.bemBlock}__shortdescription`,
             errorDiv: `.${Recaptcha.bemBlock}__errormessage`
         };
 
@@ -39,7 +37,7 @@
         }
 
         getDescription() {
-            return this.element.querySelector(Recaptcha.selectors.description);
+            return null;
         }
 
         getLabel() {
@@ -47,7 +45,7 @@
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(Recaptcha.selectors.tooltipDiv);
+            return null;
         }
 
         getErrorDiv() {
@@ -55,7 +53,7 @@
         }
 
         getQuestionMarkDiv() {
-            return this.element.querySelector(Recaptcha.selectors.qm);
+            return null;
         }
 
     	initializeWidget() {

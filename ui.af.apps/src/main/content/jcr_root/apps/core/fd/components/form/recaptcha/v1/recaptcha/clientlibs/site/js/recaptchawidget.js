@@ -48,6 +48,7 @@ class RecaptchaWidget {
         var url = recaptchaConfigData.properties["fd:captcha"].uri;
         if (recaptchaConfigData.properties["fd:captcha"].size == "invisible") {
             gcontainer.classList.add('g-recaptcha-invisible');
+            recaptchaConfigData.required = false;
         }
         if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
             guideBridge.getFormModel().subscribe((action) => {

@@ -141,7 +141,7 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     checked="{Boolean}true"
                                                     fieldLabel="Required"
-                                                    sling:hideResource="{Boolean}false"
+                                                    sling:hideResource="{Boolean}true"
                                                     labelledBy="Mandatory"
                                                     name="./required"
                                                     granite:class="cmp-adaptiveform-base__required"
