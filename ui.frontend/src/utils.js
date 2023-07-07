@@ -270,7 +270,9 @@ export default class Utils {
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
                 const urlSearchParams = new URLSearchParams(window.location.search);
-                const params = Object.fromEntries(urlSearchParams.entries());
+                const currParams = Object.fromEntries(urlSearchParams.entries());
+                const parentParams = Object.fromEntries(new URLSearchParams(window.parent.location.search).entries());
+                const params = {...currParams, ...parentParams}
                 let _prefillData = {};
                 if (_formJson) {
                     _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};

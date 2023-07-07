@@ -408,6 +408,18 @@
         }
     });
 
+    function handlePrefillChange() {
+        if ($(".cmp-prefill-service-selection").val() === "HTTP Prefill Service") {
+            $(".prefill-http-container").show();
+        } else {
+            $(".prefill-http-container").hide();
+        }
+    }
+
+    $(document).on("change", ".cmp-prefill-service-selection" , function (e) {
+        handlePrefillChange();
+    });
+
     Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);
 

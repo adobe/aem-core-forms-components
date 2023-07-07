@@ -65,6 +65,224 @@
                                           sling:resourceType="core/fd/components/form/container/v1/datasource"
                                           type="prefillServiceProvider"/>
                                     </prefill_service>
+                                    <content
+                                            jcr:primaryType="nt:unstructured"
+                                            granite:class="prefill-http-container"
+                                            jcr:title="Invoke an HTTP request"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <methodSelect
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    emptyText="Select Method"
+                                                    fieldLabel="Method"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./prefillMethod"
+                                                    required="{Boolean}true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <get
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="GET"
+                                                            value="GET"/>
+                                                    <put
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="PUT"
+                                                            value="PUT"/>
+                                                    <post
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="POST"
+                                                            value="POST"/>
+                                                    <delete
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="DELETE"
+                                                            value="DELETE"/>
+                                                    <patch
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="PATCH"
+                                                            value="PATCH"/>
+                                                </items>
+                                            </methodSelect>
+                                            <URL
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:mixinTypes="[granite:InternalArea]"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Request URL"
+                                                    required="{Boolean}true"
+                                                    emptyText="Enter the Request URL"
+                                                    name="./prefillUrl"/>
+                                            <cloudConfigPath
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    emptyText="Select Authentication Configuration"
+                                                    fieldLabel="Authentication Configuration"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./prefillCloudConfigPath"
+                                                    required="{Boolean}true">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                        type="cloudStorageSubmitAction"
+                                                        cloudStorageSubmitType="AUTH_CONFIG"/>
+                                            </cloudConfigPath>
+                                            <contentType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    emptyText="Select Content Type"
+                                                    fieldLabel="Content Type"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./prefillContentType"
+                                                    required="{Boolean}true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <json
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="application/json"
+                                                            value="application/json"/>
+                                                    <urlencoded
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="x-www-form-urlencoded"
+                                                            value="x-www-form-urlencoded"/>
+                                                    <formdata
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="multipart/form-data"
+                                                            value="multipart/form-data"/>
+                                                </items>
+                                            </contentType>
+                                            <accordion
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/accordion">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <header
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            composite="{Boolean}true"
+                                                            jcr:title="Header"
+                                                            wrapperClass="cq-AllowedStyles-styles">
+                                                        <field
+                                                                granite:class="cq-AllowedStyles-style"
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                name="./prefillHeader">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        emptyText="Key"
+                                                                        required="{Boolean}true"
+                                                                        name="key"/>
+                                                                <value
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        emptyText="Value"
+                                                                        name="value"/>
+                                                            </items>
+                                                        </field>
+                                                    </header>
+                                                    <query
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            composite="{Boolean}true"
+                                                            jcr:title="Query"
+                                                            wrapperClass="cq-AllowedStyles-styles">
+                                                        <field
+                                                                granite:class="cq-AllowedStyles-style"
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                name="./prefillQuery">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        emptyText="Key"
+                                                                        required="{Boolean}true"
+                                                                        name="key"/>
+                                                                <value
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        emptyText="Value"
+                                                                        name="value"/>
+                                                            </items>
+                                                        </field>
+                                                    </query>
+                                                    <bodyContainer
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Body"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <body
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                    composite="{Boolean}true"
+                                                                    wrapperClass="cq-AllowedStyles-styles">
+                                                                <field
+                                                                        granite:class="cq-AllowedStyles-style"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                        name="./prefillBody">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <key
+                                                                                granite:class="cq-AllowedStyles-styleField"
+                                                                                jcr:primaryType="nt:unstructured"
+                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                emptyText="Key"
+                                                                                required="{Boolean}true"
+                                                                                name="key"/>
+                                                                        <value
+                                                                                granite:class="cq-AllowedStyles-styleField"
+                                                                                jcr:primaryType="nt:unstructured"
+                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                emptyText="Value"
+                                                                                name="value"/>
+                                                                    </items>
+                                                                </field>
+                                                            </body>
+                                                        </items>
+                                                    </bodyContainer>
+                                                    <body
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            composite="{Boolean}true"
+                                                            jcr:title="Response Mapping"
+                                                            wrapperClass="cq-AllowedStyles-styles">
+                                                        <field
+                                                                granite:class="cq-AllowedStyles-style"
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                name="./prefillResponseMapping">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <key
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        emptyText="Key"
+                                                                        required="{Boolean}true"
+                                                                        name="key"/>
+                                                                <value
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="fd/af/authoring/components/granite/form/autocomplete"
+                                                                        granite:class="cq-AllowedStyles-styleField"
+                                                                        multiple="{Boolean}false"
+                                                                        allowBlank="{Boolean}true"
+                                                                        emptyText="Value"
+                                                                        name="value">
+                                                                    <granite:data
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            blank-value-validation=""/>
+                                                                    <datasource
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                                            type="formFieldsJson"/>
+                                                                </value>
+                                                            </items>
+                                                        </field>
+                                                    </body>
+                                                </items>
+                                            </accordion>
+                                        </items>
+                                    </content>
                                     <clientLibRef
                                       jcr:primaryType="nt:unstructured"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
