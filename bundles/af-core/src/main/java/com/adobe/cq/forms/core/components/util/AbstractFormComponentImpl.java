@@ -217,8 +217,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
-    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_CHECK = "fd:additionalCustomPropertiesCheck";
-
     public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS = "fd:additionalCustomPropertyKeys";
 
     public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES = "fd:additionalCustomPropertyValues";
