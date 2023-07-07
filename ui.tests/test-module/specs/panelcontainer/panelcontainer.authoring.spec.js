@@ -90,7 +90,8 @@ describe('Page - Authoring', function () {
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             panelEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/panelcontainer",
-            panelContainerPathSelector = "[data-path='" + panelEditPath + "']";
+            panelContainerPathSelector = "[data-path='" + panelEditPath + "']",
+            formContainerPath = pagePath + "/jcr:content/guideContainer";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
@@ -115,7 +116,7 @@ describe('Page - Authoring', function () {
                 cy.get('.cq-dialog-submit').should('not.exist');
             });
             getPreviewIframeBody().find('.cmp-container__label').should('have.text', 'Custom Panel')
-            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer']").should('have.attr', 'data-placeholder-text', 'Please drag Custom Panel components here');
+            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='" + formContainerPath + "']").should('have.attr', 'data-placeholder-text', 'Please drag Custom Panel components here');
             cy.deleteComponentByPath(panelEditPath);
         })
 
@@ -129,7 +130,7 @@ describe('Page - Authoring', function () {
                 cy.get('.cq-dialog-submit').should('not.exist');
             });
             getPreviewIframeBody().find('.cmp-container__label').should('not.exist')
-            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer']").should('have.attr', 'data-placeholder-text', 'Drag Panel components here');
+            getPreviewIframeBody().find("div[data-cmp-adaptiveformcontainer-path='" + formContainerPath + "']").should('have.attr', 'data-placeholder-text', 'Drag Panel components here');
             cy.deleteComponentByPath(panelEditPath);
         })
     })
