@@ -4,7 +4,6 @@
   "name": "test-recaptcha",
   "visible": true,
   "type": "string",
-  "required": true,
   "enabled": true,
   "readOnly": false,
   "properties": {
@@ -13,21 +12,21 @@
     },
     "fd:path": "/content/recaptcha",
     "fd:captcha": {
-      "siteKey": "test-siteKey",
+      "siteKey": null,
       "uri": "https://www.recaptcha.net/recaptcha/api.js",
-      "size": "normal",
+      "size": "compact",
       "theme": "light",
       "type": "type"
     }
   },
   "label": {
-    "value": "CAPTCHA",
-    "visible": true
+    "visible": true,
+    "value": "CAPTCHA"
   },
   "events": {
     "custom:setProperty": [
       "$event.payload"
     ]
   },
-  ":type": "forms-components-examples/components/form/recaptcha"
+  ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

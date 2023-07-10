@@ -63,10 +63,12 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
     @Named("rcCloudServicePath")
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
     @Named("recaptchaSize")
     protected String size;
 

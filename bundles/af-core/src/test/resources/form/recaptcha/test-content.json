@@ -13,6 +13,15 @@
     "hideTitle": "false",
     "sling:resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",
     "fieldType": "captcha",
-    "recaptchaSize": "compact"
+    "recaptchaSize": "compact",
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:path": "/content/forms/af/af2runtime/jcr:content/guideContainer/recaptcha"
+    },
+    ":type": "forms-components-examples/components/form/recaptcha"
   }
 }

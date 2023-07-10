@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.service.CloudConfigurationProvider;
+import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,13 +26,13 @@ import org.mockito.Mockito;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Recaptcha;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
 public class RecaptchaImplTest {
@@ -39,10 +42,19 @@ public class RecaptchaImplTest {
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
+    ReCaptchaConfigurationModel reCaptchaConfiguration = Mockito.mock(ReCaptchaConfigurationModel.class);
+
+    CloudConfigurationProvider cloudConfigurationProvider = new CloudConfigurationProvider() {
+        @Override
+        public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
+            return reCaptchaConfiguration;
+        }
+    };
+
     @BeforeEach
     void setUp() throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-
+        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
     }
 
     @Test
@@ -104,5 +116,15 @@ public class RecaptchaImplTest {
         Mockito.when(recaptchaMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.isEnabled());
     }
+
+     @Test
+     void testJSONExport() throws Exception {
+         // Check if cloudConfigurationProvider is null
+         if (cloudConfigurationProvider == null) {
+             throw new NullPointerException("cloudConfigurationProvider is null");
+         }
+         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+         Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
+     }
 
 }
