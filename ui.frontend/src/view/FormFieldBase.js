@@ -18,8 +18,20 @@ import {Constants} from "../constants.js";
 import FormField from './FormField.js';
 import LanguageUtils from '../LanguageUtils.js';
 
-export default class FormFieldBase extends FormField {
+/**
+ * @module FormView
+ */
 
+/**
+ * Base class for form fields.
+ * @extends module:FormView~FormField
+ */
+class FormFieldBase extends FormField {
+
+    /**
+     * Constructor for FormFieldBase.
+     * @param {object} params - The parameters for initializing the form field.
+     */
     constructor(params) {
         super(params)
         this.widget = this.getWidget();
@@ -31,65 +43,96 @@ export default class FormFieldBase extends FormField {
         this.updateEmptyStatus();
     }
 
+    /**
+     * Event constant for element focus change.
+     * @type {string}
+     */
     ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
 
+    /**
+     * Event constant for element help shown.
+     * @type {string}
+     */
     ELEMENT_HELP_SHOWN = "elementHelpShown";
 
+    /**
+     * Event constant for element error shown.
+     * @type {string}
+     */
     ELEMENT_ERROR_SHOWN = "elementErrorShown";
 
     /**
-     * implementations should return the widget element that is used to capture the value from the user
-     * It will be a input/textarea element
-     * @returns html element corresponding to widget
+     * Gets the widget element used to capture the value from the user.
+     * Implementations should return the widget element that is used to capture the value from the user.
+     * @returns {HTMLElement} - The widget element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getWidget() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the description of the field
-     * @returns html element corresponding to description
+     * Gets the element used to show the description of the field.
+     * Implementations should return the description element that is used to capture the description
+     * @returns {HTMLElement} - The description element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getDescription() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the label of the field
-     * @returns html element corresponding to label
+     * Gets the element used to show the label of the field.
+     * Implementations should return the label element that is used to capture the label
+     * @returns {HTMLElement} - The label element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getLabel() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the error on the field
-     * @returns html element corresponding to error
+     * Gets the element used to show the error on the field.
+     * Implementations should return the error element that is used to capture the error
+     * @returns {HTMLElement} - The error element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getErrorDiv() {
         throw "method not implemented";
     }
 
     /**
-     * implementation should return the tooltip / short description div
-     * @returns html element corresponding to tooltip
+     * Gets the tooltip / short description div.
+     * Implementations should return the tooltip element that is used to capture the tooltip or short description
+     * @returns {HTMLElement} - The tooltip element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getTooltipDiv() {
         throw "method not implemented";
     }
 
     /**
-     * Implementation should return the questionMark div
-     * @returns html element corresponding to question mark
+     * Gets the question mark div.
+     * Implementations should return the question mark element
+     * @returns {HTMLElement} - The question mark element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getQuestionMarkDiv() {
         throw "method not implemented";
     }
 
+    /**
+     * Gets the class of the form field.
+     * @returns {string} - The class of the form field.
+     */
     getClass() {
         return this.constructor.IS;
     }
 
+    /**
+     * Sets the model for the form field.
+     * @param {object} model - The model object.
+     */
     setModel(model) {
         super.setModel(model);
         const state = this._model.getState();
@@ -97,6 +140,10 @@ export default class FormFieldBase extends FormField {
         this.#registerEventListeners();
     }
 
+    /**
+     * Synchronizes the label element with the model.
+     * @private
+     */
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
@@ -104,12 +151,17 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Synchronizes the markup with the model.
+     * @method
+     */
     syncMarkupWithModel() {
         this.#syncLabel()
     }
 
     /**
-     * Sets the focus on component's widget.
+     * Sets the focus on the component's widget.
+     * @param {string} id - The ID of the component's widget.
      */
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
@@ -120,8 +172,9 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * applies full state of the field to the HTML. Generally done just after the model is bound to the field
-     * @param state
+     * Applies the full state of the field to the HTML.
+     * Generally done just after the model is bound to the field.
+     * @param {Object} state - The state object.
      */
     applyState(state) {
         if (state.value) {
@@ -134,8 +187,8 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * Initialise Hint ('?') and long description.
-     * @param state
+     * Initializes the hint ('?') and long description.
+     * @param {Object} state - The state object.
      */
     initializeHelpContent(state) {
         this.#showHideLongDescriptionDiv(false);
@@ -145,13 +198,18 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * Register all event listeners on this field
+     * Registers all event listeners on this field.
+     * @private
      */
     #registerEventListeners() {
         this.#addOnFocusEventListener();
         this.#addOnHelpIconClickEventListener();
     }
 
+    /**
+     * Adds an event listener for the help icon click event.
+     * @private
+     */
     #addOnHelpIconClickEventListener() {
         const questionMarkDiv = this.qm;
         if (questionMarkDiv) {
@@ -161,6 +219,10 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Adds an event listener for the focus event.
+     * @private
+     */
     #addOnFocusEventListener() {
         const widget = this.getWidget();
         if (widget) {
@@ -178,6 +240,11 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Triggers an event on GuideBridge.
+     * @param {string} eventType - The event type.
+     * @private
+     */
     #triggerEventOnGuideBridge(eventType) {
         const formId = this.formContainer.getFormId();
         const formTitle = this.formContainer.getFormTitle();
@@ -196,13 +263,18 @@ export default class FormFieldBase extends FormField {
     }
 
 
+    /**
+     * Gets the panel name.
+     * @returns {string} The panel name.
+     * @private
+     */
     #getPanelName() {
         return this.parentView.getModel().name;
     }
 
     /**
-     *
-     * @param show If true then <div> containing tooltip(Short Description) will be shown else hidden
+     * Shows or hides the tooltip <div> based on the provided flag.
+     * @param {boolean} show - If true, the tooltip <div> will be shown; otherwise, it will be hidden.
      * @private
      */
     #showHideTooltipDiv(show) {
@@ -212,8 +284,8 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     *
-     * @param show If true then <div> containing description(Long Description) will be shown
+     * Shows or hides the long description <div> based on the provided flag.
+     * @param {boolean} show - If true, the long description <div> will be shown; otherwise, it will be hidden.
      * @private
      */
     #showHideLongDescriptionDiv(show) {
@@ -222,13 +294,19 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Checks if the tooltip is always visible.
+     * @returns {boolean} True if the tooltip is always visible; otherwise, false.
+     * @private
+     */
     #isTooltipAlwaysVisible() {
         return !!this.getLayoutProperties()['tooltipVisible'];
     }
 
     /**
-     * updates html based on visible state
-     * @param visible
+     * Updates the HTML based on the visible state.
+     * @param {boolean} visible - The visible state.
+     * @param {Object} state - The state object.
      */
     updateVisible(visible, state) {
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
@@ -239,10 +317,10 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on enable state of the field
-     * @param enabled
+     * Updates the HTML state based on the enabled state of the field.
+     * @param {boolean} enabled - The enabled state.
+     * @param {Object} state - The state object.
      */
-
     updateEnabled(enabled, state) {
         if (this.widget) {
             this.toggle(enabled, Constants.ARIA_DISABLED, true);
@@ -258,9 +336,9 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * udpates the html state based on enable state of the field
-     * @param readOnly
-     * @private
+     * Updates the HTML state based on the read-only state of the field.
+     * @param {boolean} readOnly - The read-only state.
+     * @param {Object} state - The state object.
      */
     updateReadOnly(readOnly, state) {
         if (this.widget) {
@@ -274,9 +352,9 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on valid state of the field
-     * @param valid
-     * @param state
+     * Updates the HTML state based on the valid state of the field.
+     * @param {boolean} valid - The valid state.
+     * @param {Object} state - The state object.
      */
     updateValid(valid, state) {
         if (this.errorDiv) {
@@ -287,9 +365,9 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on errorMessage state of the field
-     * @param errorMessage
-     * @param state
+     * Updates the HTML state based on the error message state of the field.
+     * @param {string} errorMessage - The error message.
+     * @param {Object} state - The state object.
      */
     updateErrorMessage(errorMessage, state) {
         if (this.errorDiv) {
@@ -305,8 +383,8 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on value state of the field
-     * @param value
+     * Updates the HTML state based on the value state of the field.
+     * @param {any} value - The value.
      */
     updateValue(value) {
         // html sets undefined value as undefined string in input value, hence this check is added
@@ -318,7 +396,7 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html class based on the existence of a value in a field
+     * Updates the HTML class based on the existence of a value in a field.
      */
     updateEmptyStatus() {
         if (!this.getWidget())
@@ -342,8 +420,8 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on label state of the field
-     * @param label
+     * Updates the HTML state based on the label state of the field.
+     * @param {Object} label - The label.
      */
     updateLabel(label) {
         if (this.label) {
@@ -356,14 +434,18 @@ export default class FormFieldBase extends FormField {
             }
         }
     }
-    
+
+    /**
+     * Updates the active child of the form container.
+     * @param {Object} activeChild - The active child.
+     */
     updateActiveChild(activeChild) {
       this.formContainer.setFocus(activeChild?._activeChild?.id || activeChild?.id);
     }
 
     /**
-     * updates the html state based on description state of the field
-     * @param description
+     * Updates the HTML state based on the description state of the field.
+     * @param {string} description - The description.
      */
     updateDescription(description) {
         if (this.description) {
@@ -375,7 +457,8 @@ export default class FormFieldBase extends FormField {
 
 
     /**
-     * Shows or Hides Description Based on click of '?' mark.
+     * Adds an event listener for the '?' icon click.
+     * @param {Object} state - The state object.
      * @private
      */
     #addHelpIconHandler(state) {
@@ -402,6 +485,10 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Subscribes to model changes and updates the corresponding properties in the view.
+     * @override
+     */
     subscribe() {
         const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
         this._model.subscribe((action) => {
@@ -418,3 +505,5 @@ export default class FormFieldBase extends FormField {
         });
     }
 }
+
+export default FormFieldBase;
