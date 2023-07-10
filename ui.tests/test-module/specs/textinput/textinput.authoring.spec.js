@@ -169,7 +169,7 @@ describe('Page - Authoring', function () {
     //}
 
     // not yet in available publicly released april far
-    // if (cy.af.isLatestAddon()) {
+    //if (cy.af.isLatestAddon()) {
       it('Test z-index of Rule editor iframe for components inside site container', function () {
           cy.openSidePanelTab("Content Tree");
           cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
@@ -185,6 +185,6 @@ describe('Page - Authoring', function () {
           cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
           getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
       });
-    // }
+    //}
   });
 });
