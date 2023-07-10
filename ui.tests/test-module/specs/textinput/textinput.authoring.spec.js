@@ -144,15 +144,14 @@ describe('Page - Authoring', function () {
       dropTextInputInSites();
       cy.deleteComponentByPath(textInputDrop);
     });
-    
+
     it('open edit dialog of aem forms TextInput', function() {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
     // conditionally run the test on latest addon
     //if (cy.af.isLatestAddon()) {
-      // todo: needs to be uncommented later
-        it.skip('Test z-index of Rule editor iframe', function () {
+        it('Test z-index of Rule editor iframe', function () {
             dropTextInputInSites();
             cy.openSidePanelTab("Content Tree");
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
@@ -171,8 +170,7 @@ describe('Page - Authoring', function () {
 
     // not yet in available publicly released april far
     //if (cy.af.isLatestAddon()) {
-      // todo: needs to be uncommented later
-      it.skip('Test z-index of Rule editor iframe for components inside site container', function () {
+      it('Test z-index of Rule editor iframe for components inside site container', function () {
           cy.openSidePanelTab("Content Tree");
           cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
           cy.invokeEditableAction("[data-action='editexpression']");
