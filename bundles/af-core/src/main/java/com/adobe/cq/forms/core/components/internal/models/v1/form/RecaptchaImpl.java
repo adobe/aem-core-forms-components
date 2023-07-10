@@ -78,7 +78,6 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
     private static final String RECAPTCHA_THEME = "theme";
     private static final String RECAPTCHA_TYPE = "type";
 
-
     @Override
     @JsonIgnore
     public String getCloudServicePath() {

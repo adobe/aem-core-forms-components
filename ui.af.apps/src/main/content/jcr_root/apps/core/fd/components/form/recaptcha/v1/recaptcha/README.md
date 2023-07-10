@@ -21,7 +21,7 @@ Adaptive Form Recaptcha field component written in HTL.
 
 * Provides the following type of input:
   * Google reCAPTCHA
-* Allows various versions of reCAPTCHA-v2
+* Allows various flavours of reCAPTCHA-v2
 * Styles
 * Custom constraint messages for the above types
 

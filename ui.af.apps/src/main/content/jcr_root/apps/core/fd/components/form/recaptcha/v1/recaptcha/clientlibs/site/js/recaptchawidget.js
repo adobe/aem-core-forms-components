@@ -50,17 +50,6 @@ class RecaptchaWidget {
             gcontainer.classList.add('g-recaptcha-invisible');
             recaptchaConfigData.required = false;
         }
-        if (document.getElementsByClassName("g-recaptcha-invisible").length > 0) {
-            guideBridge.getFormModel().subscribe((action) => {
-                if (action.type === 'preSubmitValidate') {
-                    return new Promise((resolve) => {
-                        this.recaptchaInvisibleValidate(successCallback, expiredCallback)
-                            .then(() => resolve())
-                            .catch(() => resolve());
-                    });
-                }
-            }, 'preSubmitValidate');
-        }
 
         var successCallback = function(response) {
             self.setCaptchaModel(response);
@@ -102,10 +91,5 @@ class RecaptchaWidget {
         this.#model.value = (response);
     }
 
-    recaptchaInvisibleValidate = function(successCallback, expiredCallback) {
-        return grecaptcha.execute()
-            .then(successCallback)
-            .catch(expiredCallback);
-    }
 
 }

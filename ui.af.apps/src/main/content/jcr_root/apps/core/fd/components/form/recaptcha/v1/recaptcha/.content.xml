@@ -3,6 +3,6 @@
     cq:icon="shield"
     jcr:description="Add CAPTCHA validation using Google reCAPTCHA service"
     jcr:primaryType="cq:Component"
-    jcr:title="Adaptive Form reCAPTCHA"
+    jcr:title="Adaptive Form reCAPTCHA (v1)"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
     componentGroup=".core-adaptiveform"/>
