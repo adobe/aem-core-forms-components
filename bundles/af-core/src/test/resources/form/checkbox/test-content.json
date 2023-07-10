@@ -47,5 +47,25 @@
     "fd:events" : {
       "jcr:primaryType": "nt:unstructured"
     }
+  },
+  "checkboxNoEnum" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/checkbox/v1/checkbox",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "boolean",
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
   }
 }
