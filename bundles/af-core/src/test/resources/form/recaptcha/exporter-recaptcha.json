@@ -1,29 +1,33 @@
 {
-    "id": "recaptcha-4b672680a2",
-    "fieldType": "captcha",
-    "name": "test-recaptcha",
-    "visible": true,
-    "type": "string",
-    "enabled": true,
-    "readOnly": false,
-    "properties": {
-      "fd:dor": {
-        "dorExclusion": false
-      },
-      "fd:captcha":{
-        "siteKey": "test-key",
-        "uri": "https://www.recaptcha.net/recaptcha/api.js"
-      },
-      "fd:path": "/content/recaptcha"
+  "id": "recaptcha-4b672680a2",
+  "fieldType": "captcha",
+  "name": "test-recaptcha",
+  "visible": true,
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "readOnly": false,
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
     },
-    "label": {
-      "value": "CAPTCHA",
-      "visible": true
-    },
-    "events": {
-      "custom:setProperty": [
-        "$event.payload"
-      ]
-    },
-    ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
+    "fd:path": "/content/recaptcha",
+    "fd:captcha": {
+      "siteKey": "test-siteKey",
+      "uri": "https://www.recaptcha.net/recaptcha/api.js",
+      "size": "normal",
+      "theme": "light",
+      "type": "type"
+    }
+  },
+  "label": {
+    "value": "CAPTCHA",
+    "visible": true
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "forms-components-examples/components/form/recaptcha"
 }

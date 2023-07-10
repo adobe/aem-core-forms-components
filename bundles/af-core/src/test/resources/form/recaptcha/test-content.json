@@ -5,7 +5,6 @@
     "jcr:createdBy": "admin",
     "jcr:title": "CAPTCHA",
     "enabled": true,
-    "rcSize": "compact",
     "readOnly": false,
     "mandatory": "true",
     "name": "test-recaptcha",
