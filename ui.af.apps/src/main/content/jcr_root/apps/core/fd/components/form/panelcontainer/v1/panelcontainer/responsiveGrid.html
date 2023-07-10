@@ -16,6 +16,7 @@
 <template data-sly-template.responsiveGrid="${ @ container, panel, label, shortDescription, longDescription, questionMark}">
     <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
          id="${panel.id}"
+         name="${panel.name}"
          class="cmp-container"
          data-cmp-is="adaptiveFormPanel"
          data-cmp-data-layer="${panel.data.json}"
