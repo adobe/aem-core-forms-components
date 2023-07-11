@@ -294,8 +294,8 @@
         /**
          * Toggle the visibility of a component based on a toggler
          *  @param dialog {HTMLElement} the dialog in which the multified is present
-         *  @param visibleFieldSelector {String} Class applied to the toggling element
-         *  @param hiddenFieldSelector {String} Element who's visibility is being altered
+         *  @param togglerClass {String} Class applied to the toggling element
+         *  @param displayElementClass {String} Element whose visibility is being altered
          */
         static toggleComponentVisibility(dialog, togglerClass, displayElementClass) {
             const toggler = dialog.find(togglerClass)[0];
