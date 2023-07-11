@@ -6,19 +6,6 @@
   "type": "string",
   "enabled": true,
   "readOnly": false,
-  "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
-    "fd:path": "/content/recaptcha",
-    "fd:captcha": {
-      "siteKey": null,
-      "uri": "https://www.recaptcha.net/recaptcha/api.js",
-      "size": "compact",
-      "theme": "light",
-      "type": "type"
-    }
-  },
   "label": {
     "visible": true,
     "value": "CAPTCHA"
@@ -27,6 +14,22 @@
     "custom:setProperty": [
       "$event.payload"
     ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/recaptcha",
+    "fd:captcha": {
+      "provider": "Recaptcha",
+      "config": {
+        "siteKey": null,
+        "uri": "https://www.recaptcha.net/recaptcha/api.js",
+        "size": "compact",
+        "theme": "light",
+        "type": "image"
+      }
+    }
   },
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

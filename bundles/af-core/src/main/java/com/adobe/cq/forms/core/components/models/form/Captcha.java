@@ -15,8 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.Map;
+
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.service.GuideException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -26,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface Recaptcha extends Field {
+public interface Captcha extends Field {
 
     @JsonIgnore
     default String getCloudServicePath() {
@@ -34,8 +37,9 @@ public interface Recaptcha extends Field {
     }
 
     @JsonIgnore
-    default String getSize() {
-        return "normal";
-    }
+    String getProvider();
+
+    @JsonIgnore
+    Map<String, Object> getCaptchaProperties() throws GuideException;
 
 }

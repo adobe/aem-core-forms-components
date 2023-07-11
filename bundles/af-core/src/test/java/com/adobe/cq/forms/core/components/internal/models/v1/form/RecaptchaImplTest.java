@@ -26,8 +26,8 @@ import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Recaptcha;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -59,60 +59,60 @@ public class RecaptchaImplTest {
 
     @Test
     void testExportedType() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals(FormConstants.RT_FD_FORM_RECAPTCHA_V1, recaptcha.getExportedType());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.getExportedType()).thenCallRealMethod();
         assertEquals("", recaptchaMock.getExportedType());
     }
 
     @Test
     void testFieldType() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals(FieldType.CAPTCHA.getValue(), recaptcha.getFieldType());
     }
 
     @Test
     void testGetName() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals("test-recaptcha", recaptcha.getName());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
     }
 
     @Test
-    void testGetRecaptchaSize() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-        assertEquals("compact", recaptcha.getSize());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+    void testGetRecaptchaProvider() {
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals("Recaptcha", recaptcha.getProvider());
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
     }
 
     @Test
     void testGetConfigurationPath() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals("v2checkbox", recaptcha.getCloudServicePath());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
     }
 
     @Test
     void testIsVisible() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals(true, recaptcha.isVisible());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.isVisible()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.isVisible());
     }
 
     @Test
     void testIsEnabled() {
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         assertEquals(true, recaptcha.isEnabled());
-        Recaptcha recaptchaMock = Mockito.mock(Recaptcha.class);
+        Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.isEnabled());
     }
@@ -123,7 +123,7 @@ public class RecaptchaImplTest {
         if (cloudConfigurationProvider == null) {
             throw new NullPointerException("cloudConfigurationProvider is null");
         }
-        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
     }
 

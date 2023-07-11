@@ -45,8 +45,8 @@ class RecaptchaWidget {
         element.innerHTML = '<div class="g-recaptcha"></div>';
         var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
         var widgetId;
-        var url = recaptchaConfigData.properties["fd:captcha"].uri;
-        if (recaptchaConfigData.properties["fd:captcha"].size == "invisible") {
+        var url = recaptchaConfigData.properties["fd:captcha"].config.uri;
+        if (recaptchaConfigData.properties["fd:captcha"].config.size == "invisible") {
             gcontainer.classList.add('g-recaptcha-invisible');
             recaptchaConfigData.required = false;
         }
@@ -69,10 +69,10 @@ class RecaptchaWidget {
         };
 
         var gparameters = {
-            'sitekey': recaptchaConfigData.properties["fd:captcha"].siteKey,
-            'size': recaptchaConfigData.properties["fd:captcha"].size,
-            'theme': recaptchaConfigData.properties["fd:captcha"].theme || 'light',
-            'type': recaptchaConfigData.properties["fd:captcha"].type || 'image',
+            'sitekey': recaptchaConfigData.properties["fd:captcha"].config.siteKey,
+            'size': recaptchaConfigData.properties["fd:captcha"].config.size,
+            'theme': recaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
+            'type': recaptchaConfigData.properties["fd:captcha"].config.type || 'image',
             'callback': successCallback,
             'expired-callback': expiredCallback
         };

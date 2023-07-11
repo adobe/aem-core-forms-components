@@ -37,17 +37,17 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Recaptcha;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.models.form.Captcha;
+import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Recaptcha.class,
+    adapters = { Captcha.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
+public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @Inject
     private ResourceResolver resourceResolver;
@@ -86,14 +86,20 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         return cloudServicePath;
     }
 
-    @Override
+    // @Override
     @JsonIgnore
     public String getSize() {
         return size;
     }
 
+    @Override
+    public String getProvider() {
+        return "Recaptcha";
+    }
+
     @JsonIgnore
-    public Map<String, Object> getRecaptchaProperties() throws GuideException {
+    @Override
+    public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null;
@@ -108,21 +114,9 @@ public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
         customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
         customCaptchaProperties.put(RECAPTCHA_THEME, "light");
-        customCaptchaProperties.put(RECAPTCHA_TYPE, "type");
-        return customCaptchaProperties;
-    }
+        customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
 
-    @Override
-    public Map<String, Object> getProperties() {
-        Map<String, Object> properties = super.getProperties();
-        try {
-            if (getRecaptchaProperties().size() > 0) {
-                properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
-            }
-        } catch (GuideException e) {
-            throw new RuntimeException(e);
-        }
-        return properties;
+        return customCaptchaProperties;
     }
 
 }
