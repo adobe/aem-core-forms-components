@@ -6,7 +6,7 @@
         jcr:primaryType="cq:PageContent"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
-        <container
+        <container1
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Header"
                 sling:resourceType="wcm/foundation/components/responsivegrid"
@@ -20,10 +20,12 @@
                 fd:version="2.1"
                 sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
-        <parsys2
-            jcr:primaryType="nt:unstructured"
-                editable="{Boolean}true"
-            sling:resourceType="wcm/foundation/components/responsivegrid"/>
+        <container2
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Footer"
+                sling:resourceType="wcm/foundation/components/responsivegrid"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <smallScreen

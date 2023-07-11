@@ -6,7 +6,7 @@
             cq:policy="forms-components-examples/components/page/default"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="wcm/core/components/policies/mappings">
-        <container
+        <container1
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Header"
                 sling:resourceType="wcm/core/components/policies/mapping"
@@ -43,9 +43,12 @@
             </forms-components-examples>
 
         </guideContainer>
-        <parsys2
-                cq:policy="wcm/foundation/components/responsivegrid/page-footer"
+        <container2
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="wcm/core/components/policies/mapping"/>
+                jcr:title="Footer"
+                sling:resourceType="wcm/core/components/policies/mapping"
+                cq:policy="wcm/foundation/components/responsivegrid/page-footer"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
     </jcr:content>
 </jcr:root>

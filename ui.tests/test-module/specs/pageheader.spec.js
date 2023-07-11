@@ -24,7 +24,7 @@ describe('Page - Authoring', function () {
     // we can use these values to log in
 
 const dropPageHeaderInContainer = function() {
-    const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/parsys1/*", 
+    const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Header", afConstants.components.forms.resourceType.pageheader);
