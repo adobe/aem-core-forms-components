@@ -17,7 +17,11 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -209,38 +213,39 @@ public class ComponentUtils {
             customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
                 .spliterator(), false)
                 .collect(Collectors.toList());
-        } else {
-            return new HashMap<>();
-        }
-        customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
-            for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
-                    Resource keyValuePairsResource = customPropertiesGroup.getChild("keyValuePairs");
-                    if (keyValuePairsResource != null) {
-                        keyValuePairsResource.getChildren().forEach((keyValueNode) -> {
-                            String key = "", value = "";
-                            for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
-                                if (property.getKey().equals("key")) {
-                                    Object keyObject = property.getValue();
-                                    if (keyObject != null) {
-                                        key = keyObject.toString();
+            customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
+                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
+                    if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
+                        Resource keyValuePairsResource = customPropertiesGroup.getChild("keyValuePairs");
+                        if (keyValuePairsResource != null) {
+                            keyValuePairsResource.getChildren().forEach((keyValueNode) -> {
+                                String key = "", value = "";
+                                for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
+                                    if (property.getKey().equals("key")) {
+                                        Object keyObject = property.getValue();
+                                        if (keyObject != null) {
+                                            key = keyObject.toString();
+                                        }
+                                    }
+                                    if (property.getKey().equals("value")) {
+                                        Object valueObject = property.getValue();
+                                        if (valueObject != null) {
+                                            value = valueObject.toString();
+                                        }
                                     }
                                 }
-                                if (property.getKey().equals("value")) {
-                                    Object valueObject = property.getValue();
-                                    if (valueObject != null) {
-                                        value = valueObject.toString();
-                                    }
+                                if (!key.isEmpty()) {
+                                    keyValuePairs.put(key, value);
                                 }
-                            }
-                            if (!key.isEmpty()) {
-                                keyValuePairs.put(key, value);
-                            }
-                        });
+                            });
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            return new HashMap<>(); // no custom property set in policy
+        }
+
 
         return keyValuePairs;
     }
