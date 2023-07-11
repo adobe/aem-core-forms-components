@@ -15,14 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
-import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -117,14 +117,14 @@ public class RecaptchaImplTest {
         assertEquals(null, recaptchaMock.isEnabled());
     }
 
-     @Test
-     void testJSONExport() throws Exception {
-         // Check if cloudConfigurationProvider is null
-         if (cloudConfigurationProvider == null) {
-             throw new NullPointerException("cloudConfigurationProvider is null");
-         }
-         Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
-         Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
-     }
+    @Test
+    void testJSONExport() throws Exception {
+        // Check if cloudConfigurationProvider is null
+        if (cloudConfigurationProvider == null) {
+            throw new NullPointerException("cloudConfigurationProvider is null");
+        }
+        Recaptcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Recaptcha.class, context);
+        Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
+    }
 
 }
