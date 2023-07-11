@@ -191,7 +191,7 @@
         }
     }
 
-    function advancedTab(dialog) {
+    function advancedTabSetup(dialog) {
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
 
         // set the initial state
@@ -223,7 +223,7 @@
         handleAssistPriority(dialog);
         Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
-        advancedTab(dialog);
+        advancedTabSetup(dialog);
         validateName();
         handleDialogSubmit(dialog);
     }

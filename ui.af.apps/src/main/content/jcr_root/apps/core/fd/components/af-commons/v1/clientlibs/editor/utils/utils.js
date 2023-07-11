@@ -290,6 +290,13 @@
             $(parentTag).attr("hidden", "");
         }
 
+
+        /**
+         * Toggle the visibility of a component based on a toggler
+         *  @param dialog {HTMLElement} the dialog in which the multified is present
+         *  @param visibleFieldSelector {String} Class applied to the toggling element
+         *  @param hiddenFieldSelector {String} Element who's visibility is being altered
+         */
         static toggleComponentVisibility(dialog, togglerClass, displayElementClass) {
             const toggler = dialog.find(togglerClass)[0];
             const displayElement = dialog.find(displayElementClass);
@@ -301,8 +308,11 @@
             }
         }
 
-        /*
+        /**
         * This function is used to overcome the inability of Granite UI's multifield component to prefill its values in dialogs
+        *  @param dialog {HTMLElement} the dialog in which the multified is present
+         * @param visibleFieldSelector {String} BEM class associated with the visible field
+         * @param hiddenFieldSelector {String} BEM class associated with the hidden field
         */
         static prefillMultifieldValues(dialog, visibleFieldSelector, hiddenFieldSelector) {
             const visibleFields = dialog.find(visibleFieldSelector);
