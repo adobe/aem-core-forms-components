@@ -88,7 +88,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12142-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12441-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -245,6 +245,50 @@ jobs:
                 --data-binary @"$ARTIFACT" \
                 "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
             done
+      - run:
+          name: Configure git user name
+          command: |
+            git config user.email "ci-build@aemforms"
+            git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
+      - run:
+          name: Update VERSIONS.md and README.md with the new released version
+          command: |
+            # Retrieve the branch name
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+            # Find the last two tags on the branch
+            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
+
+            # Extract the last released from the output
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
+
+            # If there is no previous release, use an empty string
+            if [[ -z "$LAST_TAG" ]]; then
+              LAST_TAG=""
+            fi
+
+            # Fetch the new version
+            NEW_VERSION=$(echo ${CIRCLE_TAG} | sed 's/^core-forms-components-reactor-//')
+
+            # Fetch the last released version
+            LAST_VERSION=$(echo "${LAST_TAG}" | sed 's/core-forms-components-reactor-//')
+
+            # Fetch the wcm core component version
+            WCM_CORE_COMPONENTS_VERSION=$(mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout)
+
+            # update versions.md
+            sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
+            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
+
+            # update readme.md
+            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
+
+            git add VERSIONS.md README.md
+            git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
+            git push origin $CIRCLE_BRANCH
 
 workflows:
   version: 2
