@@ -8,7 +8,7 @@
         <container1
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Header"
-                sling:resourceType="forms-components-examples/components/form/container"
+                sling:resourceType="wcm/core/components/policies/mapping"
                 cq:policy="wcm/foundation/components/responsivegrid/page-header"
                 layout="responsiveGrid"/>
         <guideContainer

@@ -9,7 +9,7 @@
         <container1
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Header"
-                sling:resourceType="wcm/foundation/components/responsivegrid"
+                sling:resourceType="core/wcm/components/container/v1/container"
                 cq:policy="wcm/foundation/components/responsivegrid/page-header"
                 layout="responsiveGrid"
                 editable="{Boolean}true" />
@@ -23,7 +23,7 @@
         <container2
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Footer"
-                sling:resourceType="wcm/foundation/components/responsivegrid"
+                sling:resourceType="core/wcm/components/container/v1/container"
                 layout="responsiveGrid"
                 editable="{Boolean}true" />
         <cq:responsive jcr:primaryType="nt:unstructured">

@@ -10,7 +10,7 @@
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Header"
                 editable="{Boolean}true"
-                sling:resourceType="wcm/foundation/components/responsivegrid"
+                sling:resourceType="core/wcm/components/container/v1/container"
                 layout="responsiveGrid"/>
         <guideContainer
             jcr:primaryType="nt:unstructured"
@@ -23,7 +23,7 @@
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Footer"
                 editable="{Boolean}true"
-                sling:resourceType="wcm/foundation/components/responsivegrid"
+                sling:resourceType="core/wcm/components/container/v1/container"
                 layout="responsiveGrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
