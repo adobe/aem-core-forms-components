@@ -101,6 +101,15 @@ export default class FormFieldBase extends FormField {
       return this.getId() + '-widget';
     }
 
+    #syncWidget() {
+      let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+      let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+      widgetElement = widgetElements || widgetElement;
+      if (widgetElement) {
+          widgetElement.setAttribute('id', this.getWidgetId());
+      }
+    }
+
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
@@ -110,6 +119,7 @@ export default class FormFieldBase extends FormField {
 
     syncMarkupWithModel() {
         this.#syncLabel()
+        this.#syncWidget()
     }
 
     /**

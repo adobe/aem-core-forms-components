@@ -29,6 +29,7 @@
         static bemBlock = 'cmp-adaptiveform-radiobutton';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            widgets: `.${RadioButton.bemBlock}__widget`,
             widget: `.${RadioButton.bemBlock}__option__widget`,
             label: `.${RadioButton.bemBlock}__label`,
             description: `.${RadioButton.bemBlock}__longdescription`,
@@ -42,8 +43,12 @@
             this.qm = this.element.querySelector(RadioButton.selectors.qm);
         }
 
+        getWidgets() {
+            return this.element.querySelector(RadioButton.selectors.widgets);
+        }
+
         getWidget() {
-            return this.element.querySelectorAll(RadioButton.selectors.widget);
+          return this.element.querySelectorAll(RadioButton.selectors.widget);
         }
 
         getDescription() {

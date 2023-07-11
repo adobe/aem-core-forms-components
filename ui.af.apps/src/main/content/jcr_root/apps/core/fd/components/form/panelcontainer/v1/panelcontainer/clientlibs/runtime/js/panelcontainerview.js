@@ -49,7 +49,7 @@
         }
 
         getWidget() {
-            return this.element.querySelector(Panel.selectors.widget);
+            return null;
         }
 
         getDescription() {

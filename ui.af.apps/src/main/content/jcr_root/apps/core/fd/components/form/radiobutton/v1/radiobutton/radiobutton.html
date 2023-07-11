@@ -45,7 +45,7 @@
                         value="${item.toString}"
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
-                        aria-readonly="${radioButton.readOnly ? 'true' : 'false'}"/>
+                        aria-readonly="${radioButton.readOnly ? 'true' : ''}"/>
                   <span>${radioButton.enumNames[itemList.index]}</span>
               </label>
           </div>

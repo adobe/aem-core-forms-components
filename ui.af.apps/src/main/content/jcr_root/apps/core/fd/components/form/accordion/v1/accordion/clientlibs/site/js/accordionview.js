@@ -24,6 +24,7 @@
         _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
+            widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
             tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
@@ -113,7 +114,7 @@
         }
 
         getWidget() {
-            return null;
+          return this.element.querySelector(Accordion.selectors.widget);
         }
 
         getDescription() {
@@ -144,9 +145,6 @@
             this.#expandItem(item)
         }
 
-        getWidgetId(){
-          return this.getId();
-        }
 
         #collapseAllItems() {
             var items = this.#getCachedItems();
