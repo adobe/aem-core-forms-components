@@ -105,10 +105,10 @@ public class FragmentImplTest {
         assertEquals("textinput", fragment.getFragmentChildren().get(0).getName());
     }
 
-     @Test
-     void testJSONExport() throws Exception {
-         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
-         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
-     }
+    @Test
+    void testJSONExport() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
+    }
 
 }
