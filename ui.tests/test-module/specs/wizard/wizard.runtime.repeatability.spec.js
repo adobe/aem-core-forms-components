@@ -59,6 +59,7 @@ describe("Form with Wizard Container", () => {
                 })
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("testing max instance addition", () => {
@@ -73,6 +74,7 @@ describe("Form with Wizard Container", () => {
                 getWizardPanels().should('have.length', length);
             })
         }
+        cy.expectNoConsoleErrors();
     })
 
     it("test repeatedTab instance html", () => {
@@ -88,6 +90,7 @@ describe("Form with Wizard Container", () => {
             getWizardPanelAtIndex(1).should('have.attr', 'aria-labelledby');
             getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in tab", () => {
@@ -110,6 +113,7 @@ describe("Form with Wizard Container", () => {
                 getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in instanceManager", () => {
@@ -131,6 +135,7 @@ describe("Form with Wizard Container", () => {
             })
 
         })
+        cy.expectNoConsoleErrors();
     })
 
 

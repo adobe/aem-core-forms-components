@@ -41,6 +41,7 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Next Navigation Button Functionality", () => {
@@ -65,6 +66,7 @@ describe("Form with Wizard Layout Container", () => {
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Prev Navigation Button Functionality", () => {
@@ -92,11 +94,12 @@ describe("Form with Wizard Layout Container", () => {
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
+        cy.expectNoConsoleErrors();
     });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+        cy.expectNoConsoleErrors();
     })
 
 });
