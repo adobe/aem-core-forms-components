@@ -20,7 +20,6 @@ import java.util.Map;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
-import com.adobe.cq.forms.core.components.models.form.Field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -28,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
+
     @JsonIgnore
     public abstract String getProvider();
 
