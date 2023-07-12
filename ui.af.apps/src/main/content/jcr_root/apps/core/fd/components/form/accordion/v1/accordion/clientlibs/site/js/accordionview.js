@@ -114,7 +114,7 @@
         }
 
         getWidget() {
-          return this.element.querySelector(Accordion.selectors.widget);
+          return null;
         }
 
         getDescription() {
@@ -475,8 +475,16 @@
             this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
         }
 
+        #syncLabel() {
+          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+          if (labelElement) {
+              labelElement.setAttribute('for', this.getId());
+          }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
+            this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
