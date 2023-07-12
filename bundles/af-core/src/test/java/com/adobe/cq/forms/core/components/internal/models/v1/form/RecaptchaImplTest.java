@@ -84,7 +84,7 @@ public class RecaptchaImplTest {
     @Test
     void testGetRecaptchaProvider() {
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
-        assertEquals("Recaptcha", recaptcha.getProvider());
+        assertEquals("recaptcha", recaptcha.getProvider());
         Captcha recaptchaMock = Mockito.mock(Captcha.class);
         Mockito.when(recaptchaMock.getName()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getName());
