@@ -20,6 +20,10 @@ describe("Form with Wizard Layout Container", () => {
 
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;

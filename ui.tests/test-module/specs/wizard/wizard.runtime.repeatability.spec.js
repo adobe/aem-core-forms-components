@@ -18,6 +18,10 @@ describe("Form with Wizard Container", () => {
     const bemBlock = 'cmp-tabs';
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;

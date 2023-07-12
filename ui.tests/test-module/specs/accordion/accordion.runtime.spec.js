@@ -20,6 +20,10 @@ describe("Form with Accordion Container", () => {
     const bemBlock = "cmp-accordion";
     let formContainer = null
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -55,6 +59,7 @@ describe("Form with Accordion Container", () => {
         const datepickerId = formContainer._model.items[0].items[0].id;
         const datepickerView = formContainer._fields[datepickerId];
         expect(datepickerView, "panel child view is created").to.not.be.null;
+        cy.expectNoConsoleErrors();
     })
 
     it(" model's changes are reflected in the html ", () => {
@@ -70,6 +75,7 @@ describe("Form with Accordion Container", () => {
             model.enable = false;
             return checkHTML(model.id, model.getState(), panelView, count);
         });
+        cy.expectNoConsoleErrors();
     });
 
     it("should collapse/expand view properly", () => {
@@ -113,6 +119,7 @@ describe("Form with Accordion Container", () => {
                 cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
             });
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("should collapse/expand view properly with keyboard", () => {
@@ -156,6 +163,7 @@ describe("Form with Accordion Container", () => {
                         cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
                     });
             })
+        cy.expectNoConsoleErrors();
     })
 
     it("should toggle description and tooltip", () => {
@@ -167,6 +175,10 @@ describe("Form with Accordion Layout Container with focus", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/accordion/focus.html";
     let formContainer = null
+
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
@@ -208,6 +220,7 @@ describe("Form with Accordion Layout Container with focus", () => {
                 });
             });
         });
+        cy.expectNoConsoleErrors();
     });
 });
 
