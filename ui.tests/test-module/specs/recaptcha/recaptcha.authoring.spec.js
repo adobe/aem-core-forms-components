@@ -22,7 +22,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
 
-    const formrecaptcha = "/apps/forms-components-examples/components/form/recaptcha";
+    const formrecaptcha = "/apps/forms-core-components-it/form/recaptcha";
 
     // we can use these values to log in
 
