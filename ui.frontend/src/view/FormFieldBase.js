@@ -352,15 +352,44 @@ class FormFieldBase extends FormField {
     }
 
     /**
+     * Updates the HTML state based on the required state of the field.
+     * @param {boolean} required - The required state.
+     * @param {Object} state - The state object.
+     */
+    updateRequired(required, state) {
+        if (this.widget) {
+            this.toggle(required, "required");
+            if (required === true) {
+                this.widget.setAttribute("required", "required");
+            } else {
+                this.widget.removeAttribute("required");
+            }
+        }
+    }
+
+    /**
      * Updates the HTML state based on the valid state of the field.
      * @param {boolean} valid - The valid state.
      * @param {Object} state - The state object.
+     * @deprecated Use the new method updateValidity() instead.
      */
     updateValid(valid, state) {
+        // not doing anything, since it would impact performance, as the same functionality
+        // is implemented by updateValidity
+    }
+
+    /**
+     * Updates the HTML state based on the validity state of the field.
+     * @param {Object} validity - The validity state.
+     * @param {Object} state - The state object.
+     */
+    updateValidity(validity, state) {
+        // todo: handle the type of validity if required later
+        const valid = validity.valid;
         if (this.errorDiv) {
             this.toggle(valid, Constants.ARIA_INVALID, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
-            this.updateErrorMessage(state.errorMessage, state);
+            this.updateValidationMessage(state.validationMessage, state);
         }
     }
 
@@ -368,14 +397,26 @@ class FormFieldBase extends FormField {
      * Updates the HTML state based on the error message state of the field.
      * @param {string} errorMessage - The error message.
      * @param {Object} state - The state object.
+     * @deprecated Use the new method updateValidationMessage() instead.
      */
     updateErrorMessage(errorMessage, state) {
+        // not doing anything, since it would impact performance, as the same functionality
+        // is implemented by updateValidationMessage
+    }
+
+
+    /**
+     * Updates the HTML state based on the validation message state of the field.
+     * @param {string} validationMessage - The validation message.
+     * @param {Object} state - The state object.
+     */
+    updateValidationMessage(validationMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.errorMessage;
-            if (state.valid === false) {
+            this.errorDiv.innerHTML = state.validationMessage;
+            if (state.validity.valid === false) {
                 this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
                 // if there is no error message in model, set a default error in the view
-                if (!state.errorMessage) {
+                if (!state.validationMessage) {
                     this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
                 }
             }
@@ -499,7 +540,7 @@ class FormFieldBase extends FormField {
                 if (typeof this[fn] === "function") {
                     this[fn](change.currentValue, state);
                 } else {
-                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
+                    console.warn(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                 }
             })
         });
