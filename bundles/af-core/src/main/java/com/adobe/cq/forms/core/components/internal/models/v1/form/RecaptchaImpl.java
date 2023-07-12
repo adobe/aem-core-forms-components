@@ -94,7 +94,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @Override
     public String getProvider() {
-        return "Recaptcha";
+        return "recaptcha";
     }
 
     @JsonIgnore

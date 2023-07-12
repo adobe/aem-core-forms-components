@@ -21,7 +21,7 @@
     },
     "fd:path": "/content/recaptcha",
     "fd:captcha": {
-      "provider": "Recaptcha",
+      "provider": "recaptcha",
       "config": {
         "siteKey": null,
         "uri": "https://www.recaptcha.net/recaptcha/api.js",
