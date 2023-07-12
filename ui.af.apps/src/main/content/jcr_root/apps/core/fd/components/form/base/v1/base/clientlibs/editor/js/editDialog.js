@@ -127,19 +127,6 @@
         }
     }
 
-    /**
-     * Prefills all the multifield values in enum Names and deletes the hidden input
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function prefillEnumNames(dialog) {
-        var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
-        var hiddenEnumNames = dialog.find(BASE_ENUMNAMES_HIDDEN);
-        for (var i = 0; i < hiddenEnumNames.length; i++) {
-            visibleEnumNames[i].value = hiddenEnumNames[i].value;
-            hiddenEnumNames[i].remove();
-        }
-    }
-
     function validateName() {
         var elementNameRegex = /^[\w\-]+$/;  // word char [A-Za-z0-9_] and '-'
         // Validator for name field. Please use node-name-validation where we are creating a node with name using this field
@@ -163,7 +150,7 @@
             _manageCustomProperties();
         });
 
-        function _manageEmptyEnumNames(){
+        function _manageEmptyEnumNames() {
             var enums = dialog.find(BASE_ENUM);
             var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
 
@@ -177,21 +164,20 @@
         function _manageCustomProperties() {
             const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
 
-            const cleanOldValues = () => {
-                const multifield = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
-                multifield.children().toArray().forEach((element) => {
-                    if(element.classList.contains('_coral-Multifield-item'))
-                        element.remove();
-                })
-            };
-
             if(!additionalCustomPropertiesCheck.checked) {
-                cleanOldValues();
+                Utils.deleteMultifieldEntries(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
             }
         }
     }
 
-    function advancedTabSetup(dialog) {
+    function advancedTabInit(dialog) {
+        if(!Utils.isTabPresentInDialog(dialog, "Advanced")) {
+            /**
+             * todo: need to figure out a way to remove additional custom properties (if set)
+             *       when Advanced Tab is no longer visible (i.e., when all policy properties are deleted)
+             * */
+            return;
+        }
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
 
         // set the initial state
@@ -223,7 +209,7 @@
         handleAssistPriority(dialog);
         Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
-        advancedTabSetup(dialog);
+        advancedTabInit(dialog);
         validateName();
         handleDialogSubmit(dialog);
     }
