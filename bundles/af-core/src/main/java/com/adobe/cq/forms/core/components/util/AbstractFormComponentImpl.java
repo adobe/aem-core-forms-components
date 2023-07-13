@@ -299,6 +299,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customRulesProperties;
     }
 
+    /**
+     * Returns {@code Map<String, String>} containing the key value pairs associated with this resource
+     */
     @JsonIgnore
     public Map<String, String> getHeadlessCustomProperties() {
         Set<String> groupNames = new LinkedHashSet<>();

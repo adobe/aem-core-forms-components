@@ -56,6 +56,7 @@ public class ComponentUtils {
     private ComponentUtils() {
         // NOOP
     }
+    private static final String HEADLESS_CUSTOM_PROPERTY_NODE_NAME = "customProperties";
 
     /**
      * Returns the base64 encoded path
@@ -174,6 +175,13 @@ public class ComponentUtils {
         return policy;
     }
 
+    /**
+     * Takes in a single variable and returns an array of size 1 consisting of the same variable.
+     * Useful to directly iterate on, when something returns either a single value or an array of values of a particular type.
+     *
+     * @param param of any type T
+     * @return array of size 1 having the same variable
+     */
     public static <T> T[] convertToArray(T param) {
         if (param.getClass().isArray()) {
             return (T[]) param;
@@ -184,6 +192,13 @@ public class ComponentUtils {
         }
     }
 
+    /**
+     * Fetches all the custom property group names defined in the template policy
+     *
+     * @param policy reference to the template policy {@link ContentPolicy}
+     * @param resourceResolver {@link ResourceResolver}
+     * @return {@code List<String>} a list of all the group names of custom properties defined in the policy
+     */
     public static List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
         if (policy == null) {
             return new ArrayList<>();
@@ -192,28 +207,34 @@ public class ComponentUtils {
         List<String> groupNames = new ArrayList<>();
         List<Resource> customPropertiesGroupsList;
 
-        Resource customPropertiesResource = policyResource.getChild("customProperties");
+        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
         if (customPropertiesResource != null) {
             customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
                 .spliterator(), false).collect(Collectors.toList());
+            customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
+                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
+                    if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME)) {
+                        groupNames.add(entry.getValue().toString());
+                    }
+                }
+            });
         } else {
             return new ArrayList<>();
         }
-        customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
-            for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME)) {
-                    groupNames.add(entry.getValue().toString());
-                }
-            }
-        });
-
         return groupNames;
     }
 
+    /**
+     * Fetches the key value pairs associated with the group names passed in
+     *
+     * @param groupNames  {@link Set<String>}
+     * @param policyResource {@link Resource}
+     * @return {@code Map<String, String>} key value pairs associated with the given group names
+     */
     public static Map<String, String> getCustomPropertyPairsFromPolicy(Set<String> groupNames, Resource policyResource) {
         Map<String, String> keyValuePairs = new HashMap<>();
         List<Resource> customPropertiesGroupsList;
-        Resource customPropertiesResource = policyResource.getChild("customProperties");
+        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
         if (customPropertiesResource != null) {
             customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
                 .spliterator(), false)
