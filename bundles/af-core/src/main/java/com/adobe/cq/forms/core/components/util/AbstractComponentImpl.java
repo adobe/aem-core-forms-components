@@ -138,7 +138,7 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            String resourceCallerPath = (String) request.getAttribute(FormConstants.RESOURCE_CALLER_PATH);
+            String resourceCallerPath = request != null ? (String) request.getAttribute(FormConstants.RESOURCE_CALLER_PATH) : null;
             this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
