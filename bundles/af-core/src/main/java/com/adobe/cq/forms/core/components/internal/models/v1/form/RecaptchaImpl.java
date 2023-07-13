@@ -118,5 +118,4 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
         return customCaptchaProperties;
     }
-
 }
