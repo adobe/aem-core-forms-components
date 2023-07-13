@@ -120,5 +120,13 @@
     "fieldType": "text-input",
     "unboundFormElement": true,
     "dataRef": "$.h"
+  },
+  "textinput-blank-dataref" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "text-input",
+    "dataRef": ""
   }
 }

@@ -17,8 +17,23 @@
 import Utils from "../utils.js";
 import {Constants} from "../constants.js";
 
-export default class InstanceManager {
 
+/**
+ * @module FormView
+ */
+
+/**
+ * Class representing an instance manager to manage repeatable instances.
+ */
+class InstanceManager {
+
+    /**
+     * Creates an instance of the InstanceManager.
+     * @param {object} params - The parameters for the InstanceManager.
+     * @param {module:FormView~FormContainer} params.formContainer - The form container object
+     * @param {object} params.model - The model associated with the instance manager.
+     * @param {HTMLElement} params.parentElement - The parent element of the instance manager.
+     */
     constructor(params) {
         this.formContainer = params.formContainer;
         this._model = params.model;
@@ -53,6 +68,7 @@ export default class InstanceManager {
 
     /**
      * Syncs instanceManager model items with HTML
+     * @private
      */
     #syncInstancesHTML() {
         const views = this.children;
@@ -68,6 +84,13 @@ export default class InstanceManager {
         }
     }
 
+    /**
+     * Updates template IDs in the HTML based on the model
+     * @param html {HTMLElement} The HTML element to update
+     * @param model {object} The model associated with the HTML element
+     * @param newId {string} The new ID to assign to the HTML element
+     * @private
+     */
     #updateTemplateIds(html, model, newId) {
         //In case of instance manager, type is an array, which doesn't have presence in HTML
         if (model.type != 'array') {
@@ -80,6 +103,12 @@ export default class InstanceManager {
         }
     }
 
+    /**
+     * Updates clone IDs in the HTML based on the old ID and new model
+     * @param html {HTMLElement} The HTML element to update
+     * @param oldId {string} The old ID to replace
+     * @param newModel {object} The new model associated with the HTML element
+     */
     updateCloneIds(html, oldId, newModel) {
         //In case of instance manager, type is an array, which doesn't have presence in HTML
         if (newModel.type != 'array') {
@@ -92,6 +121,10 @@ export default class InstanceManager {
         }
     }
 
+    /**
+     * Updates the template with the given child view
+     * @param childView {object} The child view to update the template with
+     */
     updateTemplate(childView) {
         const repeatableElement = childView.element.parentElement;
         /**
@@ -112,6 +145,13 @@ export default class InstanceManager {
         this.#updateTemplateIds(this._templateHTML, childModel, 'temp_0');
     }
 
+    /**
+     * Dispatches a model event with the given event name and payload
+     * @param event {object} The event object
+     * @param eventName {string} The name of the event to dispatch
+     * @param payload {object} The payload to include in the event
+     * @private
+     */
     #dispatchModelEvent(event, eventName, payload) {
         const customEvent = new CustomEvent(eventName);
         if (payload) {
@@ -121,6 +161,13 @@ export default class InstanceManager {
         this.getModel().dispatch(customEvent);
     }
 
+    /**
+     * Adds a child instance based on the added model and position before the element
+     * @param addedModel {object} The model of the added instance
+     * @param beforeElement {HTMLElement} The element before which the instance should be added
+     * @returns {HTMLElement} The added HTML element
+     * @private
+     */
     #addChildInstance(addedModel, beforeElement) {
         if (!(this._templateHTML)) {
             console.error('Panel needs to have templateHTML to support repeatability.');
@@ -129,6 +176,11 @@ export default class InstanceManager {
         return this.handleAddition(addedModel, beforeElement);
     }
 
+    /**
+     * Removes a child instance based on the removed model
+     * @param removedModel {object} The model of the removed instance
+     * @private
+     */
     #removeChildInstance(removedModel) {
         const removedIndex = removedModel.index;
         let removedChildView = this.children[removedIndex];
@@ -144,13 +196,32 @@ export default class InstanceManager {
         this.formContainer.getFormElement().dispatchEvent(event);
     }
 
+    /**
+     * Adds an instance based on the event and payload
+     * @param event {object} The event object
+     * @param payload {object} The payload associated with the event
+     */
     addInstance(event, payload) {
         this.#dispatchModelEvent(event, "addInstance", payload);
     }
 
+    /**
+     * Removes an instance based on the event and payload
+     * @param event {object} The event object
+     * @param payload {object} The payload associated with the event
+     */
     removeInstance(event, payload) {
         this.#dispatchModelEvent(event, "removeInstance", payload);
     }
+
+    /**
+     * Adds or removes an instance based on the ID, event name, index, and event
+     * @param id {string} The ID of the instance
+     * @param eventName {string} The name of the event
+     * @param index {number} The index of the instance
+     * @param event {object} The event object
+     * @private
+     */
     #addRemoveInstance(id, eventName, index, event){
       const model = this.formContainer.getModel(id);
       const customEvent = new CustomEvent(eventName);
@@ -159,6 +230,11 @@ export default class InstanceManager {
       event.stopPropagation();
     }
 
+    /**
+     * Registers instance handlers for the child view
+     * @param childView {object} The child view to register handlers for
+     * @private
+     */
     #registerInstanceHandlers(childView) {
         if(typeof this?.repeatableParentView?.getRepeatableRootElement === "function"){
           const parentElement = this.repeatableParentView.getRepeatableRootElement(childView);
@@ -182,10 +258,10 @@ export default class InstanceManager {
     }
 
     /**
-     * Inserts HTML for added instance
-     * @param addedInstanceJson
-     * @param beforeElement
-     * @returns added htmlElement
+     * Inserts HTML for the added instance
+     * @param addedInstanceJson {object} The JSON representation of the added instance
+     * @param beforeElement {HTMLElement} The element before which the instance should be added
+     * @returns {HTMLElement} The added HTML element
      */
     handleAddition(addedInstanceJson, beforeElement) {
         const instanceIndex = addedInstanceJson.index;
@@ -214,8 +290,8 @@ export default class InstanceManager {
     }
 
     /**
-     * Removes HTML for removed instance
-     * @param removedInstanceView
+     * Removes HTML for the removed instance
+     * @param removedInstanceView {object} The view of the removed instance
      */
     handleRemoval(removedInstanceView) {
         if (this.repeatableParentView && (typeof this.repeatableParentView.handleChildRemoval === "function")) {
@@ -227,8 +303,9 @@ export default class InstanceManager {
     }
 
     /**
-     * Add repeatable instance view
-     * @param childView
+     * Adds a repeatable instance view
+     * @param childView {object} The child view to add
+     * @fires module:FormView~Constants#PANEL_INSTANCE_ADDED
      */
     addChild(childView) {
         //Add template when first view is added
@@ -247,10 +324,10 @@ export default class InstanceManager {
     }
 
     /**
-     * Adds or remove repeatable children
-     * @param prevValue will have removed instances, for removeItem otherwise its null
-     * @param currentValue will have added instance, for addItem otherwise its null
-     * @param state
+     * Adds or removes repeatable children
+     * @param {object} prevValue - The previous value (removed instance) or null
+     * @param {object} currentValue - The current value (added instance) or null
+     * @param {object} state - The state object
      */
     updateItems(prevValue, currentValue, state) {
         //if previous value exists it means remove item is invoked
@@ -272,20 +349,32 @@ export default class InstanceManager {
                 if ("items" === change.propertyName) {
                     this.updateItems(change.prevValue, change.currentValue, state);
                 } else {
-                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
+                    console.warn(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                 }
             })
         });
     }
 
+    /**
+     * Gets the ID of the instance manager
+     * @returns {string} The ID
+     */
     getId() {
         return this.id;
     }
 
+    /**
+     * Gets the model associated with the instance manager
+     * @returns {object} The model
+     */
     getModel() {
         return this._model;
     }
 
+    /**
+     * Sets the repeatable parent view
+     * @param {object} parentView - The repeatable parent view
+     */
     setRepeatableParentView(parentView) {
         //adding repeatable parent view
         this.repeatableParentView = parentView;
@@ -297,7 +386,13 @@ export default class InstanceManager {
         }
     }
 
+    /**
+     * Gets the repeatable parent view
+     * @returns {object} The repeatable parent view
+     */
     getRepeatableParentView() {
         return this.repeatableParentView;
     }
 }
+
+export default InstanceManager;

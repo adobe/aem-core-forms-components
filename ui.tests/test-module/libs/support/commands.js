@@ -494,3 +494,31 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
 })
 
 
+/**
+ * This will attach a listener to console.error calls,
+ * that will help in checking if errors were logged or not.
+ *
+ * This is supposed to be called in the before hook of a test, like this:
+ * before(() => {
+     *     cy.attachConsoleErrorSpy();
+     * });
+ */
+Cypress.Commands.add("attachConsoleErrorSpy", () => {
+    Cypress.on('window:before:load', (win) => {
+        cy.spy(win.console, 'error');
+    });
+});
+
+
+
+/**
+ * This checks if any console.errors were logged or not,
+ * after the spy was attached (see above command).
+ * So make sure to attach the spy function first!
+ */
+Cypress.Commands.add("expectNoConsoleErrors", () => {
+    return cy.window().then(win => {
+        expect(win.console.error).to.have.callCount(0);
+    });
+});
+

@@ -17,8 +17,20 @@
 import {Constants} from "../constants.js";
 import FormPanel from "./FormPanel.js";
 
-export default class FormTabs extends FormPanel {
+/**
+ * @module FormView
+ */
 
+/**
+ * Class representing a FormTabs component.
+ * @extends module:FormView~FormPanel
+ */
+class FormTabs extends FormPanel {
+
+    /**
+     * Keycodes for various keyboard keys.
+     * @type {object}
+     */
     static keyCodes = {
         END: 35,
         HOME: 36,
@@ -28,14 +40,51 @@ export default class FormTabs extends FormPanel {
         ARROW_DOWN: 40
     };
 
+    /**
+     * Private property for storing the active tab ID.
+     * @type {string}
+     */
     #_active;
+
+    /**
+     * Private property for storing the IS.
+     * @type {string}
+     */
     #_IS;
+    /**
+     * Private property for storing the namespace.
+     * @type {string}
+     */
     #_NS;
+    /**
+     * Private property for storing the selectors.
+     * @type {object}
+     */
     #_selectors;
+    /**
+     * Suffix for tab IDs.
+     * @type {string}
+     */
     #tabIdSuffix = "__tab";
+    /**
+     * Suffix for tab panel IDs.
+     * @type {string}
+     */
     #tabPanelIdSuffix = "__tabpanel";
+    /**
+     * Template HTML object.
+     * @type {object}
+     */
     _templateHTML = {};
 
+    /**
+     * Create a FormTabs instance.
+     * @param {object} params - The parameters object.
+     * @param {HTMLElement} params.element - The element for the FormTabs component.
+     * @param {string} ns - The namespace.
+     * @param {string} is - The IS.
+     * @param {object} selectors - The selectors object.
+     */
     constructor(params, ns, is, selectors) {
         super(params);
         this.#_NS = ns;
@@ -49,7 +98,8 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Refreshes the tab markup based on the current {@code Tabs#_active} index
+     * Refreshes the tab markup based on the current active index.
+     * @private
      */
     #refreshActive() {
         var tabpanels = this.#getCachedTabPanels();
@@ -74,8 +124,7 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Binds Tabs event handling
-     *
+     * Binds Tabs event handling.
      * @private
      */
     #bindEvents() {
@@ -97,13 +146,9 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Caches the Tabs elements as defined via the {@code data-tabs-hook="ELEMENT_NAME"} markup API
-     *
+     * Caches the Tabs elements as defined via the {@code data-tabs-hook="ELEMENT_NAME"} markup API.
      * @private
-     * @param {HTMLElement} wrapper The Tabs wrapper element
-     * @param {string} ns Namespace
-     * @param {string} is IS
-     *
+     * @param {HTMLElement} wrapper - The Tabs wrapper element.
      */
     #cacheElements(wrapper) {
         this._elements = {};
@@ -130,10 +175,9 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Handles tab keydown events
-     *
+     * Caches the Tabs elements as defined via the {@code data-tabs-hook="ELEMENT_NAME"} markup API.
      * @private
-     * @param {Object} event The keydown event
+     * @param {HTMLElement} wrapper - The Tabs wrapper element.
      */
     #onKeyDown(event) {
         var index = this.#getTabIndexById(this.#_active);
@@ -168,6 +212,11 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Retrieves the index of a tab element by its ID.
+     * @param {string} tabId - The ID of the tab element.
+     * @returns {number} The index of the tab element, or -1 if not found.
+     */
     #getTabIndexById(tabId) {
         var tabs = this.#getCachedTabs();
         if (tabs) {
@@ -181,10 +230,9 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Navigates to the item at the provided index and ensures the active tab gains focus
-     *
+     * Navigates to the item at the provided index and ensures the active tab gains focus.
      * @private
-     * @param {Number} index The index of the item to navigate to
+     * @param {string} tabId - The ID of the tab to navigate to.
      */
     navigateAndFocusTab(tabId) {
         this.navigate(tabId);
@@ -204,9 +252,8 @@ export default class FormTabs extends FormPanel {
     }
 
     /**
-     * Focuses the element and prevents scrolling the element into view
-     *
-     * @param {HTMLElement} element Element to focus
+     * Focuses the element and prevents scrolling the element into view.
+     * @param {HTMLElement} element - Element to focus.
      */
     focusWithoutScroll(element) {
         var x = window.scrollX || window.pageXOffset;
@@ -245,6 +292,12 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+
+    /**
+     * Synchronizes tab labels with their corresponding tab panels.
+     * Updates the ID and aria-controls attribute of each tab label.
+     * @private
+     */
     #syncTabLabels() {
         var tabs = this.#getCachedTabs();
         var tabPanels = this.#getCachedTabPanels();
@@ -257,6 +310,11 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Synchronizes tab panels with their corresponding tab labels.
+     * Updates the ID and aria-labelledby attribute of each tab panel.
+     * @private
+     */
     #syncTabPanels() {
         var tabPanels = this.#getCachedTabPanels();
         if (tabPanels) {
@@ -268,12 +326,22 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Synchronizes the markup with the component model.
+     * Calls the syncMarkupWithModel method of the superclass.
+     * Calls #syncTabLabels and #syncTabPanels methods.
+     */
     syncMarkupWithModel() {
         super.syncMarkupWithModel();
         this.#syncTabLabels();
         this.#syncTabPanels();
     }
 
+    /**
+     * Handles the addition of a child view.
+     * @param {Object} childView - The child view being added.
+     * @override
+     */
     handleChildAddition(childView) {
         if (childView.getInstanceManager() != null && this._templateHTML[childView.getInstanceManager().getId()] != null) {
             var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab'].cloneNode(true);
@@ -311,6 +379,12 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+
+    /**
+     * Handles the removal of a child view.
+     * @param {Object} removedInstanceView - The removed child view.
+     * @override
+     */
     handleChildRemoval(removedInstanceView) {
         var removedTabPanelId = removedInstanceView.element.id + this.#tabPanelIdSuffix;
         var removedTabNavId = removedInstanceView.element.id + this.#tabIdSuffix;
@@ -324,6 +398,11 @@ export default class FormTabs extends FormPanel {
         this.#refreshActive();
     }
 
+    /**
+     * Adds a child view.
+     * @param {Object} childView - The child view to be added.
+     * @override
+     */
     addChild(childView) {
         super.addChild(childView);
         this.#cacheTemplateHTML(childView);
@@ -333,6 +412,11 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Caches the HTML template for a child view.
+     * @param {Object} childView - The child view.
+     * @private
+     */
     #cacheTemplateHTML(childView) {
         if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
             var tabId = childView.element.id + this.#tabIdSuffix;
@@ -346,6 +430,12 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Gets the tab panel element by its ID.
+     * @param {string} tabPanelId - The ID of the tab panel element.
+     * @returns {HTMLElement} The tab panel element.
+     * @private
+     */
     #getTabPanelElementById(tabPanelId) {
         var tabPanels = this.#getCachedTabPanels();
         if (tabPanels) {
@@ -357,6 +447,11 @@ export default class FormTabs extends FormPanel {
         }
     }
 
+    /**
+     * Binds events to a tab element.
+     * @param {string} tabId - The ID of the tab element.
+     * @private
+     */
     #bindEventsToTab(tabId) {
         var _self = this;
         var tabs = this.#getCachedTabs();
@@ -369,23 +464,39 @@ export default class FormTabs extends FormPanel {
         });
     }
 
+    /**
+     * Gets the tab list element.
+     * @returns {HTMLElement} The tab list element.
+     * @private
+     */
     #getTabListElement() {
         return this.element.querySelector(this.#_selectors.olTabList)
     }
 
+    /**
+     * Gets the cached tab panels.
+     * @returns {NodeList} The cached tab panels.
+     * @private
+     */
     #getCachedTabPanels() {
         return this._elements["tabpanel"]
     }
 
+    /**
+     * Gets the cached tabs.
+     * @returns {NodeList} The cached tabs.
+     * @private
+     */
     #getCachedTabs() {
         return this._elements["tab"];
     }
 
     /**
-     * Adds unique HTML for added instance corresponding to requirements of different types of repeatableParent
-     * @param instanceManager of the repeated component
-     * @param addedModel of the repeated component
-     * @param htmlElement of the repeated component
+     * Adds unique HTML for an added instance corresponding to the requirements of different types of repeatable parents.
+     * @param {Object} instanceManager - The instance manager of the repeated component.
+     * @param {Object} addedModel - The added model of the repeated component.
+     * @param {HTMLElement} htmlElement - The HTML element of the repeated component.
+     * @returns {HTMLElement} The enclosed element containing the added instance HTML.
      */
     addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
         let elementToEnclose = this._templateHTML[instanceManager.getId()]['targetTabPanel'].cloneNode(false);
@@ -397,6 +508,13 @@ export default class FormTabs extends FormPanel {
         return elementToEnclose;
     }
 
+    /**
+     * Gets the element before which a new view should be inserted.
+     * @param {Object} instanceManager - The instance manager.
+     * @param {number} instanceIndex - The index of the instance.
+     * @returns {Object} An object with the before view element.
+     * @private
+     */
     #getBeforeViewElement(instanceManager, instanceIndex) {
         var result = {};
         var instanceManagerId = instanceManager.getId();
@@ -417,13 +535,25 @@ export default class FormTabs extends FormPanel {
         return result;
     }
 
-
+    /**
+     * Gets the child view at the specified index.
+     * @param {number} index - The index of the child view.
+     * @returns {Object} The child view at the specified index.
+     * @override
+     */
     getChildViewByIndex(index) {
         var allTabPanels = this.#getCachedTabPanels();
         var fieldId = allTabPanels[index].id.substring(0, allTabPanels[index].id.lastIndexOf("__"));
         return this.getChild(fieldId);
     }
 
+
+    /**
+     * Updates the visibility of a child element based on the provided state.
+     * @param {boolean} visible - The visibility state of the child element.
+     * @param {Object} state - The state of the child element.
+     * @override
+     */
     updateChildVisibility(visible, state) {
         this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + this.#tabIdSuffix), visible);
         var activeTabId = this.getActiveTabId(this._elements["tab"]);
@@ -436,3 +566,5 @@ export default class FormTabs extends FormPanel {
     }
 
 }
+
+export default FormTabs;
