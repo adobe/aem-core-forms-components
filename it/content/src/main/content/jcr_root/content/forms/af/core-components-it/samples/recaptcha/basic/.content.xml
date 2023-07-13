@@ -2,7 +2,6 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
-            cq:conf="/conf/global"
             cq:deviceGroups="[/etc/mobile/groups/responsive]"
             cq:lastModified="{Date}2023-05-16T10:25:16.811+05:30"
             cq:lastModifiedBy="admin"
@@ -10,7 +9,7 @@
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="basic"
-            sling:configRef="/conf/global"
+            sling:configRef="/conf/forms/core-components-it/samples/recaptcha/basic"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
@@ -32,7 +31,7 @@
                     fieldType="captcha"
                     hideTitle="false"
                     name="recaptcha-test"
-                    cloudServicePath="test-captcha"
+                    cloudServicePath="v2checkbox"
                     readOnly="{Boolean}false"
                     size="normal"
                     visible="{Boolean}true"/>

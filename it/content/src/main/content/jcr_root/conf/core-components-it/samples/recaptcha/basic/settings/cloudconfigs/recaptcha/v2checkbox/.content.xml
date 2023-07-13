@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2023-07-07T17:39:45.081+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/libs/fd/af/cloudservices/recaptcha/template"
+        jcr:lastModified="{Date}2023-04-12T11:53:14.479+05:30"
+        jcr:lastModifiedBy="admin"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="v2Checkboxconfig"
+        sling:resourceType="fd/af/cloudservices/recaptcha/page"
+        name="v2checkbox"
+        secretKey="\{003970c42365002c6cf7facdf1f1116881b32a9e85a8e45437c473e4b432c12348d7916d119ef1ef86df1d6c228fd02f1a3f3a363be5739b754f99522905e495}"
+        siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"/>
+</jcr:root>
