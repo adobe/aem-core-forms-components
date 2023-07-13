@@ -3,7 +3,7 @@
           xmlns:jcr="http://www.jcp.org/jcr/1.0"
           cq:icon="image"
           jcr:primaryType="cq:Component"
-          jcr:title="Test Group Image"
+          jcr:title="Replace Test Group Image"
           jcr:description="Dummy image component to test if replace is working with different groups"
           sling:resourceSuperType="core/fd/components/form/image/v1/image"
-          componentGroup="test group"/>
+          componentGroup="replace test group"/>

@@ -36,17 +36,14 @@ describe('component replace - Authoring', function () {
         "title": fieldTypes.NON_INPUT,
         "formimage": fieldTypes.NON_INPUT
     }
-    const imageTestGroup = "/apps/forms-core-components-it/form/image";
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
         buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
         buttonDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
-        imageEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
-        imageEditPathSelector = "[data-path='" + imageEditPath + "']",
-        imageDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + imageTestGroup.split("/").pop(),
         checkboxEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/checkboxgroup",
         checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
         checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
+        dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
         emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
         emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
@@ -74,9 +71,6 @@ describe('component replace - Authoring', function () {
             case emailinputEditPathSelector:
                 cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email Input", afConstants.components.forms.resourceType.formemailinput);
                 break;
-            case imageEditPathSelector:
-                cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
-                break;
             case fileInputEditPathSelector:
                 cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form File Attachment", afConstants.components.forms.resourceType.formfileinput);
                 break;
@@ -97,7 +91,11 @@ describe('component replace - Authoring', function () {
 
     const testComponentReplaceBehaviour = function (componentEditPathSelector, componentDrop) {
 
-        var horizontalTabs = "[value='/apps/forms-components-examples/components/form/tabsontop']",
+        var titleName = 'Adaptive Form Title',
+            telephoneInputName = 'Adaptive Form Telephone Input',
+            radioButtonName = 'Adaptive Form Radio Button',
+
+            horizontalTabs = "[value='/apps/forms-components-examples/components/form/tabsontop']",
             accordion = "[value='/apps/forms-components-examples/components/form/accordion']",
             wizard = "[value='/apps/forms-components-examples/components/form/wizard']";
 
@@ -116,24 +114,24 @@ describe('component replace - Authoring', function () {
                 .should("exist");
             cy.get(accordion)
                 .click();
+            cy.deleteComponentByPath(componentDrop);
         } else {
-            var currentType, replacementComp;
+            var replacedComponentName, currentType, replacementComp;
             switch (componentEditPathSelector) {
                 case buttonEditPathSelector:
                     currentType = fieldTypes.NON_INPUT;
                     replacementComp = "[value='" + afConstants.components.forms.resourceType.title + "']";
+                    replacedComponentName = titleName;
                     break;
                 case checkboxEditPathSelector:
                     currentType = fieldTypes.SELECT;
                     replacementComp = "[value='" + afConstants.components.forms.resourceType.formradiobutton + "']";
+                    replacedComponentName = radioButtonName;
                     break;
                 case emailinputEditPathSelector:
                     currentType = fieldTypes.TEXT;
                     replacementComp = "[value='" + afConstants.components.forms.resourceType.formtelephoneinput + "']";
-                    break;
-                case imageEditPathSelector:
-                    currentType = fieldTypes.NON_INPUT;
-                    replacementComp = "[value='" + imageTestGroup + "']";
+                    replacedComponentName = telephoneInputName;
                     break;
             }
             for (var type in typeMap) {
@@ -144,8 +142,8 @@ describe('component replace - Authoring', function () {
                 }
             }
             cy.get(replacementComp).click();
+            cy.deleteComponentByTitle(replacedComponentName);
         }
-        cy.deleteComponentByPath(componentDrop);
     }
 
     context('Open Forms Editor', function () {
@@ -173,9 +171,34 @@ describe('component replace - Authoring', function () {
         it('test behaviour of replace file input', function () {
             testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
         })
+    })
+
+    context('Group independent replace action test', function () {
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            let pagePath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic";
+            cy.openAuthoring(pagePath);
+        });
 
         it('test replace of component by different group', function () {
-            testComponentReplaceBehaviour(imageEditPathSelector, imageDrop);
+            const testGroupImageDataPath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic/jcr:content/guideContainer/*",
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupImageDataPath + "']";
+
+            const pagePath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic",
+                imageEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
+                imageEditPathSelector = "[data-path='" + imageEditPath + "']",
+                imageTestGroup = "/apps/forms-core-components-it/form/image",
+                imageDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + imageTestGroup.split("/").pop();
+            // const imageTestGroup = "/apps/forms-core-components-it/form/image";
+
+
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+            const replacementComp = "[value='" + imageTestGroup + "']";
+            cy.get(replacementComp).click();
+            cy.deleteComponentByPath(imageDrop);
         });
-    })
+    });
 });
