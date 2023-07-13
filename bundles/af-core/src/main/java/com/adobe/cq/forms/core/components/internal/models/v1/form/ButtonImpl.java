@@ -120,4 +120,3 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
         return new ComponentDataImpl(this, resource);
     }
 }
-
