@@ -131,8 +131,7 @@
 
                 if (!(keyword.length > 0) || isKeywordFound) {
                     if ((!cannotBeReplacedWith.includes(componentType))
-                        && typeMap[editableType] === typeMap[componentType]
-                        && editable.getResourceTypeName() != getComponentResourceType(component)) {
+                        && typeMap[editableType] === typeMap[componentType]) {
                         performReplace = true;
                     }
 
@@ -157,11 +156,6 @@
                 selectList.append(groups[g]);
             });
         };
-
-        var getComponentResourceType = function (component) {
-            var p = component.componentConfig.resourceType.split("/");
-            return p[p.length - 1]
-        }
 
         var bindEventToReplaceComponentDialog = function (allowedComponents, editable) {
             $searchComponent.off("keydown.replaceComponent.coral-search");
