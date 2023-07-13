@@ -387,12 +387,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!isEventValid.test(entry)) {
             updatedEntry = Stream.empty();
         } else {
-            if (eventValue instanceof String) {
-                arrayEventValue = new String[1];
-                arrayEventValue[0] = (String) eventValue;
-            } else {
-                arrayEventValue = (String[]) eventValue;
-            }
+            arrayEventValue = (String[]) ComponentUtils.convertToArray(eventValue);
             updatedEntry = Stream.of(new AbstractMap.SimpleEntry<>(key, arrayEventValue));
         }
         return updatedEntry;

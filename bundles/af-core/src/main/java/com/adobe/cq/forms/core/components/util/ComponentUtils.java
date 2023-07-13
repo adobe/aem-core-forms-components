@@ -56,6 +56,7 @@ public class ComponentUtils {
     private ComponentUtils() {
         // NOOP
     }
+
     private static final String HEADLESS_CUSTOM_PROPERTY_NODE_NAME = "customProperties";
 
     /**
@@ -227,7 +228,7 @@ public class ComponentUtils {
     /**
      * Fetches the key value pairs associated with the group names passed in
      *
-     * @param groupNames  {@link Set<String>}
+     * @param groupNames {@link Set<String>}
      * @param policyResource {@link Resource}
      * @return {@code Map<String, String>} key value pairs associated with the given group names
      */
