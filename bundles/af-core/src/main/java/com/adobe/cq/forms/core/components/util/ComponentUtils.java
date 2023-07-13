@@ -130,7 +130,6 @@ public class ComponentUtils {
      * @param date date
      * @return clone of date object
      */
-    @NotNull
     public static Date clone(@Nullable Date date) {
         return Optional.ofNullable(date)
             .map(Date::getTime)
