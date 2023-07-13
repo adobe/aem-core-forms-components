@@ -147,7 +147,9 @@
         var submitButton=dialog.find(".cq-dialog-submit")[0];
         submitButton.addEventListener("click", () => {
             _manageEmptyEnumNames();
-            _manageCustomProperties();
+            if(Utils.isTabPresentInDialog(dialog, "Advanced")) {
+                _manageCustomProperties();
+            }
         });
 
         function _manageEmptyEnumNames() {
@@ -162,6 +164,15 @@
         }
 
         function _manageCustomProperties() {
+            $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+                selector : "BASE_CUSTOMPROPERTIES_ADDITIONALFIELD",
+                validate : function (el) {
+                    var name = el.value;
+                    let $el = $(el);
+                    return "Error!?";
+                }
+            });
+
             const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
 
             if(!additionalCustomPropertiesCheck.checked) {

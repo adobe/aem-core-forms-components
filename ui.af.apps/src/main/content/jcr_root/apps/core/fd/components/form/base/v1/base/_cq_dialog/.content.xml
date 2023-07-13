@@ -624,7 +624,8 @@
                                                                         granite:class="cmp-adaptiveform-base__additionalCustomPropertyKeys"
                                                                         fieldDescription=""
                                                                         fieldLabel="Custom Property Name"
-                                                                        name = "./fd:additionalCustomPropertyKeys"/>
+                                                                        name = "./fd:additionalCustomPropertyKeys"
+                                                                        required="{Boolean}true"/>
                                                                 <additionalCustomPropertyValues
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
