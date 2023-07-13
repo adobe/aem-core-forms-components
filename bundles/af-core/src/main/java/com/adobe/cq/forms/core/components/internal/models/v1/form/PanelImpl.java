@@ -19,7 +19,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -140,11 +139,6 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
             customDorProperties.put(DOR_LAYOUT_TYPE, dorLayoutType);
         }
         return customDorProperties;
-    }
-
-    @PostConstruct
-    protected void initGetName() {
-        getName();
     }
 
 }
