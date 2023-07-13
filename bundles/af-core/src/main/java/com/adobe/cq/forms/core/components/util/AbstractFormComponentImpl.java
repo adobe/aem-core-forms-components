@@ -116,7 +116,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
-        // getName();
+        getName();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
