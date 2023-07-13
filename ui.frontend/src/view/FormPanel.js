@@ -159,8 +159,22 @@ class FormPanel extends FormFieldBase {
      * @param {boolean} valid - The valid state of the panel.
      * @param {Object} state - The state object.
      * @override
+     * @deprecated Use the new method updateValidity() instead.
      */
     updateValid(valid, state) {
+        // not doing anything, since it would impact performance, as the same functionality
+        // is implemented by updateValidity
+    }
+
+    /**
+     * Updates the HTML state based on the validity state of the panel.
+     * @param {object} validity - The validity state of the panel.
+     * @param {Object} state - The state object.
+     * @override
+     */
+    updateValidity(validity, state) {
+        // todo: handle the type of validity later
+        const valid = validity.valid;
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
     }

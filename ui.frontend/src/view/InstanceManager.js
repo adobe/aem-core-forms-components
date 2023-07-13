@@ -349,7 +349,7 @@ class InstanceManager {
                 if ("items" === change.propertyName) {
                     this.updateItems(change.prevValue, change.currentValue, state);
                 } else {
-                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
+                    console.warn(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                 }
             })
         });
