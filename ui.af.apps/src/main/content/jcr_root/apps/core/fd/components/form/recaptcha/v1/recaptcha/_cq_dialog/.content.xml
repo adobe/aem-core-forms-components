@@ -65,7 +65,7 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
                                                         rootPath="/etc/cloudservices/recaptcha"
-                                                        type="recaptchaCloudServiceConfiguration"/>
+                                                        type="recaptchaCoreCloudServiceConfiguration"/>
                                             </configuration>
                                             <size
                                                     jcr:primaryType="nt:unstructured"

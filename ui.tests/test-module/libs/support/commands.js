@@ -48,6 +48,7 @@ const commons = require('../commons/commons'),
     siteConstants = require('../commons/sitesConstants'),
     guideSelectors = require('../commons/guideSelectors'),
     guideConstants = require('../commons/formsConstants');
+var toggles = [];
 
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath) => {
@@ -317,6 +318,9 @@ Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     return cy.openPage(pagePath, options).then(waitForFormInit)
 })
 
+Cypress.Commands.add("fetchFeatureToggles",()=>{
+    return cy.request('/etc.clientlibs/toggles.json')
+})
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
