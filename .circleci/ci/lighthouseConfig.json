@@ -1,6 +1,6 @@
 {
     "urls": [
-        "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/lighthouse/lighthouse-collateral/jcr:content?wcmmode=disabled"
+        "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
     ],
     "requiredScores": [
         {
