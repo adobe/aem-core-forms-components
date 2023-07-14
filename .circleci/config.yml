@@ -157,7 +157,7 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
-    resource_class: large
+    resource_class: xlarge
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
 
@@ -168,7 +168,7 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
-    resource_class: large
+    resource_class: xlarge
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
 
