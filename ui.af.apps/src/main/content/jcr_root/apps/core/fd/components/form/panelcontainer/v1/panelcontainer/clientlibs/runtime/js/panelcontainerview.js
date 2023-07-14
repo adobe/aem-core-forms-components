@@ -44,8 +44,12 @@
             this.setActive();
         }
 
+        getWidgetId(){
+          return this.getId();
+        }
+
         getWidget() {
-            return this.element.querySelector(Panel.selectors.widget);
+            return null;
         }
 
         getDescription() {

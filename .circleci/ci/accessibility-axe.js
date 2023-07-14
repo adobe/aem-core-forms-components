@@ -27,7 +27,7 @@ const calculateAccessibility = async () => {
 
     const options = new chrome.Options();
     const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
-    const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/wizard/repeatability/jcr:content?wcmmode=disabled"
+    const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
     const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
     const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
 

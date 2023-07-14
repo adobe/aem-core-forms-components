@@ -31,7 +31,8 @@
             description: `.${VerticalTabs.bemBlock}__longdescription`,
             qm: `.${VerticalTabs.bemBlock}__questionmark`,
             tooltipDiv: `.${VerticalTabs.bemBlock}__shortdescription`,
-            olTabList: `.${VerticalTabs.bemBlock}__tablist`
+            olTabList: `.${VerticalTabs.bemBlock}__tablist`,
+            widget: `.${VerticalTabs.bemBlock}__tabs-container`
         };
 
         constructor(params) {
