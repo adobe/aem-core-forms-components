@@ -30,21 +30,22 @@
      data-cmp-enabled="${checkboxgroup.enabled ? 'true' : 'false'}"
      data-cmp-required="${checkboxgroup.required ? 'true': 'false'}"
      data-cmp-data-layer="${checkboxgroup.data.json}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=checkboxgroup.id, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[checkboxgroup.id, 'widget']}">
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
 
-    <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}">
+    <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}" id="${widgetId}">
         <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
             <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
-                <label class="cmp-adaptiveform-checkboxgroup__label" aria-label="${checkboxgroup.enumNames[itemList.index]}"
+                <label class="cmp-adaptiveform-checkboxgroup__label"
                        title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}">
                     <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox"
                            name="${checkboxgroup.name}"
                            value="${checkboxgroup.enums[itemList.index].toString}"
                            checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                            disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
-                           aria-readonly="${checkboxgroup.readOnly ? 'true' : 'false'}"/>
+                           aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"/>
                     <span>${checkboxgroup.enumNames[itemList.index]}</span>
                 </label>
             </div>

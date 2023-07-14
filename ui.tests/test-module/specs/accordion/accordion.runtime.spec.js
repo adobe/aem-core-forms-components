@@ -20,6 +20,7 @@ describe("Form with Accordion Container", () => {
     const bemBlock = "cmp-accordion";
     let formContainer = null
 
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -167,6 +168,7 @@ describe("Form with Accordion Layout Container with focus", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/accordion/focus.html";
     let formContainer = null
+
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
