@@ -33,6 +33,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -67,4 +68,12 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
         return orientation;
     }
 
+    @Override
+    public Object[] getEnums() {
+        if (enums == null) {
+            return null;
+        } else {
+            return ComponentUtils.coerce(type, enums);
+        }
+    }
 }

@@ -19,11 +19,37 @@ describe("Min Occur Repeatability Tests in Accordion", () => {
 
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewFormWithPanel(pagePath).then(p => {
             formContainer = p;
         });
     });
+
+    const getItemDivs = () => {
+        return cy.get(".cmp-accordion__item");
+    }
+
+    const getAccordionPanels = () => {
+        return cy.get(".cmp-accordion__panel");
+    }
+
+    const getAccordionButtons = () => {
+        return cy.get(".cmp-accordion__button");
+    }
+
+
+    const getAccordionPanelsAtIndex = (index) => {
+        return getAccordionPanels().eq(index);
+    }
+
+    const getAccordionButtonsAtIndex = (index) => {
+        return getAccordionButtons().eq(index);
+    }
+
 
     it("Check min occur instance in view and model", () => {
         const formContainerModel = formContainer.getModel();
@@ -36,7 +62,25 @@ describe("Min Occur Repeatability Tests in Accordion", () => {
             expect(instanceManagerModel.items[i].id, "Repeatable model id should be in sync with repeatable view id for index " + i).to.equal(instanceManagerView.children[i].id);
             expect(instanceManagerModel.items[i].items[0].id, "Repeatable panel child model id should be in sync with repeatable panel view child id for index " + i).to.equal(instanceManagerView.children[i].children[0].id);
         }
+        cy.expectNoConsoleErrors();
     })
 
-    //TODO Add setfocus test minoccur case
+    it("With min occur, focus should remain at first element", () => {
+        getItemDivs().should('have.length', 6).then(() => {
+            getAccordionPanelsAtIndex(0).should('have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(1).should('not.have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(1).should('not.have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(2).should('not.have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(2).should('not.have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(3).should('not.have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(3).should('not.have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(4).should('not.have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(4).should('not.have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(5).should('not.have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(5).should('not.have.class', 'cmp-accordion__button--expanded');
+        })
+        cy.expectNoConsoleErrors();
+    })
+
 })

@@ -14,13 +14,41 @@
  * limitations under the License.
  ******************************************************************************/
 
-export default class Response {
+/**
+ * @module FormView
+ */
 
+/**
+ * Represents a response object with message and error information.
+ */
+class Response {
+
+    /**
+     * The array of messages.
+     * @type {string[]}
+     */
     #message;
+    /**
+     * The array of messages.
+     * @type {string[]}
+     */
     #errorCode;
+    /**
+     * The array of SOM expressions. (deprecated)
+     * @type {any[]}
+     */
     #somExpression;
+    /**
+     * The array of qualified names.
+     * @type {any[]}
+     */
     #qualifiedName;
 
+    /**
+     * Constructs a new Response object.
+     * @param {Object} params - The parameters for constructing the Response.
+     * @param {any} params.data - The data associated with the Response.
+     */
     constructor(params) {
         this.errors = false;
         this.data = params.data;
@@ -30,6 +58,12 @@ export default class Response {
         this.#qualifiedName = this.#somExpression;
     }
 
+    /**
+     * Adds a message to the response.
+     * @param {number} code - The error code.
+     * @param {string} msg - The message.
+     * @param {any} som - The SOM expression. (deprecated)
+     */
     addMessage(code, msg, som) {
         this.errors = true;
         this.#message.push(msg);
@@ -37,6 +71,11 @@ export default class Response {
         this.#errorCode.push(code);
     };
 
+    /**
+     * Retrieves the next message from the response.
+     * @returns {Object|null} An object containing the error code, SOM expression (deprecated),
+     * qualified name, and message; or null if there are no more messages.
+     */
     getNextMessage () {
         if (this.#errorCode.length === 0) {
             return null;
@@ -51,5 +90,7 @@ export default class Response {
     };
 
 }
+
+export default Response;
 
 

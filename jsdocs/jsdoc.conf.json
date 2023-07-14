@@ -6,7 +6,6 @@
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_",
         "include": ["./../ui.frontend/src",
-            "./../ui.af.apps/src/main/content/jcr_root/apps/core/fd/components",
             "./resources/copyright/README.md"
         ]
     },

@@ -14,14 +14,20 @@
  * limitations under the License.
  ******************************************************************************/
 /**
- * JavaScript class to represent Adaptive Form data
- * @class AfFormData
+ * Class to represent Adaptive Form data
  */
-export default class AfFormData {
+class AfFormData {
     data;  // keeping public as per AF v1
     contentType;
     attachments;
 
+    /**
+     * Creates an instance of AfFormData.
+     * @param {object} params - The parameters for initializing the AfFormData object.
+     * @param {object} params.data - The form data.
+     * @param {string} params.attachments - The attachments.
+     * @constructor AfFormData
+     */
     constructor(params) {
         this.data = params.data;
         this.contentType = "application/json";
@@ -29,21 +35,24 @@ export default class AfFormData {
     }
 
     /**
-     * Returns actual form data
+     * Returns the actual form data.
+     * @returns {*} The form data.
      */
     getData() {
         return this.data;
     }
 
     /**
-     * Returns Content type of form data
+     * Returns the content type of the form data.
+     * @returns {string} The content type.
      */
     getContentType() {
         return this.contentType;
     }
 
     /**
-     * Returns list of attachments
+     * Returns the list of attachments.
+     * @returns {Array} The attachments.
      */
     getAttachments() {
         return this.attachments;
@@ -56,7 +65,7 @@ export default class AfFormData {
      * 2. contentType -> contains content type of form data (it would be application/xml or application/json)
      * 2. fileAttachments -> list of blobs containing the file (in case of fileUrl's the type of blob would be application/json)
      * 3. fileAttachmentBindRefs -> list of string containing file bindRef's, this has one to one mapping with fileAttachments
-     * @returns {*}
+     * @returns {*} The HTML form data.
      */
     toHTMLFormData() {
         let formData = new FormData();
@@ -88,6 +97,10 @@ export default class AfFormData {
         return formData;
     }
 
+    /**
+     * Returns the JavaScript object representation of adaptive form data.
+     * @returns {object} The JavaScript object.
+     */
     toJsObject() {
         return {
             "data" : this.data,
@@ -97,3 +110,5 @@ export default class AfFormData {
     }
 
 }
+
+export default AfFormData;
