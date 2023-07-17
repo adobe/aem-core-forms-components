@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:primaryType="cq:EditConfig"
+          cq:actions="[edit,-,copymove,delete,-,insert,-]"
+          cq:dialogMode="floating"
+          cq:layout="editbar"
+          cq:disableTargeting="{Boolean}true">
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+                order="after CONFIGURE"
+                icon="bidRule"
+                text="Edit Rules"/>
+    </cq:actionConfigs>
+    <cq:inplaceEditing
+            jcr:primaryType="cq:InplaceEditingConfig"
+            active="{Boolean}true"
+            configPath="inplaceEditingConfig"
+            editorType="plaintext">
+        <inplaceEditingConfig
+                jcr:primaryType="nt:unstructured"
+                editElementQuery="label:first"
+                textPropertyName="jcr:title"/>
+    </cq:inplaceEditing>
+</jcr:root>

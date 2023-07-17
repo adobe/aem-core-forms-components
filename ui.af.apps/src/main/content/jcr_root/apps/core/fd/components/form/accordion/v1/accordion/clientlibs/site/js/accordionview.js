@@ -24,6 +24,7 @@
         _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
+            widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
             tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
@@ -113,7 +114,7 @@
         }
 
         getWidget() {
-            return null;
+          return null;
         }
 
         getDescription() {
@@ -143,6 +144,7 @@
             const item = this.#getItemById(id + '-item');
             this.#expandItem(item)
         }
+
 
         #collapseAllItems() {
             var items = this.#getCachedItems();
@@ -473,8 +475,16 @@
             this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
         }
 
+        #syncLabel() {
+          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+          if (labelElement) {
+              labelElement.setAttribute('for', this.getId());
+          }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
+            this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }

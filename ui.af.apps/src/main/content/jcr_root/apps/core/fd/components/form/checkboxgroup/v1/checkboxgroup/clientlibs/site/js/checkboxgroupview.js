@@ -31,7 +31,7 @@
         static checkboxBemBlock = 'cmp-adaptiveform-checkbox'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widgets: `.${CheckBoxGroup.bemBlock}__widgets`,
+            widgets: `.${CheckBoxGroup.bemBlock}__widget`,
             widget: `.${CheckBoxGroup.bemBlock}__option__widget`,
             widgetLabel: `.${CheckBoxGroup.bemBlock}__label`,
             label: `.${CheckBoxGroup.bemBlock}__label`,
@@ -47,8 +47,12 @@
             this.widgetLabel = this.element.querySelector(CheckBoxGroup.selectors.widgetLabel)
         }
 
+        getWidgets() {
+            return this.element.querySelector(CheckBoxGroup.selectors.widgets);
+        }
+
         getWidget() {
-            return this.element.querySelectorAll(CheckBoxGroup.selectors.widget);
+          return this.element.querySelectorAll(CheckBoxGroup.selectors.widget);
         }
 
         getDescription() {
@@ -130,7 +134,6 @@
         }
 
         updateReadOnly(readonly) {
-            this.toggle(readonly, "aria-readonly", true);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (readonly === true) {
