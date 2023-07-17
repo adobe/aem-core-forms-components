@@ -215,7 +215,7 @@ module.exports = class CI {
     }
 
     warmCache(url) {
-        for(let i = 0; i < 4 ; i++) {
+        for(let i = 0; i < 10 ; i++) {
             this.sh(`curl -s -o /dev/null -u admin:admin ${url}`);
         }
     }
