@@ -162,7 +162,7 @@ class DatePickerWidget {
         //update widget markup to have input type=text element.
         let newDatePickerElement = widget.cloneNode(true);
         newDatePickerElement.setAttribute("type", "text");
-        newDatePickerElement.id = widget.name;
+        newDatePickerElement.id = model.id + '-widget';
 
         widget.parentNode.replaceChild(newDatePickerElement, widget);
         this.#widget = view.getWidget();

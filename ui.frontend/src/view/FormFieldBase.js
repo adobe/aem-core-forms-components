@@ -140,6 +140,19 @@ class FormFieldBase extends FormField {
         this.#registerEventListeners();
     }
 
+    getWidgetId(){
+      return this.getId() + '-widget';
+    }
+
+    #syncWidget() {
+      let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+      let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+      widgetElement = widgetElements || widgetElement;
+      if (widgetElement) {
+          widgetElement.setAttribute('id', this.getWidgetId());
+      }
+    }
+
     /**
      * Synchronizes the label element with the model.
      * @private
@@ -147,7 +160,7 @@ class FormFieldBase extends FormField {
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
-            labelElement.setAttribute('for', this.getId());
+            labelElement.setAttribute('for', this.getWidgetId());
         }
     }
 
@@ -157,6 +170,7 @@ class FormFieldBase extends FormField {
      */
     syncMarkupWithModel() {
         this.#syncLabel()
+        this.#syncWidget()
     }
 
     /**
