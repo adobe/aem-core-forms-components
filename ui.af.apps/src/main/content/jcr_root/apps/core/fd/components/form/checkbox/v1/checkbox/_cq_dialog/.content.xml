@@ -48,6 +48,22 @@
                                             <placeholder
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
+                                            <type
+                                              wrapperClass="cmp-adaptiveform-checkbox__type"
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                              sling:orderBefore="visible"
+                                              fieldLabel="Data type of submitted value"
+                                              name="./type"
+                                              key="String"
+                                              value="string[]">
+                                                <items jcr:primaryType="nt:unstructured"
+                                                  granite:class="cmp-adaptiveform-checkbox__type_value">
+                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                                                    <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean"/>
+                                                    <number jcr:primaryType="nt:unstructured" text="Number" value="number"/>
+                                                </items>
+                                            </type>
                                             <enumOptions jcr:primaryType="nt:unstructured"
                                               granite:class="cmp-adaptiveform-checkbox__options"
                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

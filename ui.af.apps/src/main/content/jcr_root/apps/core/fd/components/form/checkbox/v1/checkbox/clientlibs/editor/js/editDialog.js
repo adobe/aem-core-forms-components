@@ -20,6 +20,7 @@
         CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
         CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
         CHECKBOX_OPTIONS = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__options",
+        CHECKBOX_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__type",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -48,6 +49,25 @@
         optionDialog.find('button').hide(); // Should not be able to add options
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleEnums);
+    function handleTypeSelection(dialog) {
+        var checkboxDataType = dialog.find(CHECKBOX_DATATYPE);
+        var optionDialog = dialog.find(CHECKBOX_OPTIONS);
+        handle();
+        function handle() {
+            var selectedValue = checkboxDataType.find('coral-select')[0].selectedItem.value;
+            if (selectedValue == 'boolean') {
+                optionDialog.hide();
+            } else {
+                optionDialog.show();
+            }
+        }
+
+        dialog.on("change", checkboxDataType, function() {
+           handle()
+        })
+    }
+
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleEnums, handleTypeSelection);
 
 })(jQuery);
