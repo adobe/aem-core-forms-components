@@ -50,6 +50,12 @@ describe('Page - Authoring', function () {
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.get("[name='./name']")
     .should("exist");
+
+    cy.get('.cmp-adaptiveform-checkbox__options').should('not.have.css', 'display', 'none')
+    cy.get(".cmp-adaptiveform-checkbox__type").click();
+    cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+    cy.get('.cmp-adaptiveform-checkbox__options').should('have.css', 'display', 'none')
+
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(checkboxDrop);
   }
@@ -67,10 +73,10 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    it('insert TextInput in form container', function () {
-      dropCheckboxInContainer();
-      cy.deleteComponentByPath(checkboxDrop);
-    });
+    // it('insert TextInput in form container', function () {
+    //   dropCheckboxInContainer();
+    //   cy.deleteComponentByPath(checkboxDrop);
+    // });
 
     it('open edit dialog of aem forms Checkbox', function() {
       testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);

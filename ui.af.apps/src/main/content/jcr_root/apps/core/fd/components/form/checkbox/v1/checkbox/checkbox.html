@@ -32,7 +32,6 @@
      data-cmp-data-layer="${checkbox.data.json}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[component.id, '_widget']}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
     <div data-sly-call="${questionMark.questionMark @componentId=checkbox.id, longDescription=checkbox.description, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
 
     <input class="cmp-adaptiveform-checkbox__widget" type="checkbox"
@@ -43,6 +42,8 @@
            value="${checkbox.default[0]? checkbox.default[0] : checkbox.enums[1].toString}"
            checked="${checkbox.enums[0] == checkbox.default[0]}"
            disabled="${!checkbox.enabled || checkbox.readOnly}" />
+
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=checkbox.id, shortDescriptionVisible=checkbox.tooltipVisible, shortDescription=checkbox.tooltip, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap>
     </div>
