@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Adaptive Forms (Core Components) Class: AfFormData</title>
+	<title>Adaptive Forms (Core Components) Class: FormContainer</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,14 +86,18 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: AfFormData</h1>
+	<h1 class="page-title">Class: FormContainer</h1>
 <section>
 
 <header>
     
         <h2>
-        AfFormData
+            <span class="ancestors"><a href="module-FormView.html">FormView</a>~</span>
+        
+        FormContainer
         </h2>
+        
+            <div class="class-description"><p>Represents a FormContainer class.</p></div>
         
     
 </header>
@@ -105,7 +109,7 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="AfFormData"><span class="type-signature"></span>new AfFormData(params)</h4>
+    <h4 class="name" id="FormContainer"><span class="type-signature"></span>new FormContainer(params)</h4>
     
     
 </dt>
@@ -113,7 +117,7 @@
 
     
     <div class="description">
-        <p>Creates an instance of AfFormData.</p>
+        <p>Creates an instance of the FormContainer class.</p>
     </div>
     
 
@@ -165,9 +169,112 @@
 
             
 
-            <td class="description last"><p>The parameters for initializing the AfFormData object.</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
-                
+            <td class="description last"><p>The parameters for constructing the FormContainer instance.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="addInstanceManager"><span class="type-signature"></span>addInstanceManager(instanceManager)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Adds an instance manager view to the fields of the formContainer.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params table table-striped">
     <thead>
@@ -191,7 +298,7 @@
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>instanceManager</code></td>
             
 
             <td class="type">
@@ -208,14 +315,118 @@
 
             
 
-            <td class="description last"><p>The form data.</p></td>
+            <td class="description last"><p>The instance manager view to be added.</p></td>
         </tr>
 
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getField"><span class="type-signature"></span>getField(fieldId)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Returns the form field view with the specified field ID.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>attachments</code></td>
+                <td class="name"><code>fieldId</code></td>
             
 
             <td class="type">
@@ -232,116 +443,13 @@
 
             
 
-            <td class="description last"><p>The attachments.</p></td>
+            <td class="description last"><p>The ID of the form field.</p></td>
         </tr>
 
     
     </tbody>
 </table>
 
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="getData"><span class="type-signature"></span>getData()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns the actual form data.</p>
-    </div>
-    
-
-    
-
-    
-
-    
     
 
     
@@ -399,7 +507,7 @@
     
             
 <div class="param-desc">
-    <p>The form data.</p>
+    <p>The form field view, or null if not found.</p>
 </div>
 
 
@@ -410,7 +518,10 @@
     </dt>
     <dd>
         
-<span class="param-type">*</span>
+<span class="param-type">object</span>
+|
+
+<span class="param-type">null</span>
 
 
 
@@ -427,7 +538,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="getContentType"><span class="type-signature"></span>getContentType()</h4>
+    <h4 class="name" id="getModel"><span class="type-signature"></span>getModel( [id])</h4>
     
     
 </dt>
@@ -435,7 +546,7 @@
 
     
     <div class="description">
-        <p>Returns the content type of the form data.</p>
+        <p>Returns the model with the specified ID. If no ID is provided, returns the entire model.</p>
     </div>
     
 
@@ -445,107 +556,67 @@
 
     
     
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>The content type.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+        <h5>Parameters:</h5>
         
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">string</span>
 
 
 
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
             
-<hr>
-<dt>
-    <h4 class="name" id="getAttachments"><span class="type-signature"></span>getAttachments()</h4>
-    
-    
-</dt>
-<dd>
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The ID of the model element.</p></td>
+        </tr>
 
     
-    <div class="description">
-        <p>Returns the list of attachments.</p>
-    </div>
-    
+    </tbody>
+</table>
 
-    
-
-    
-
-    
     
 
     
@@ -603,218 +674,7 @@
     
             
 <div class="param-desc">
-    <p>The attachments.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="toHTMLFormData"><span class="type-signature"></span>toHTMLFormData()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>This returns the html form data representation of adaptive form data. This could be used to submit the adaptive form data to
-external end point from the client. The HTML form data contains the following the key / value pairs:</p>
-<ol>
-<li>data -&gt; contains form data represented as string</li>
-<li>contentType -&gt; contains content type of form data (it would be application/xml or application/json)</li>
-<li>fileAttachments -&gt; list of blobs containing the file (in case of fileUrl's the type of blob would be application/json)</li>
-<li>fileAttachmentBindRefs -&gt; list of string containing file bindRef's, this has one to one mapping with fileAttachments</li>
-</ol>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>The HTML form data.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="toJsObject"><span class="type-signature"></span>toJsObject()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns the JavaScript object representation of adaptive form data.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>The JavaScript object.</p>
+    <p>The model element or the entire model.</p>
 </div>
 
 
@@ -838,133 +698,11 @@ external end point from the client. The HTML form data contains the following th
     
 </dd>
 
-        </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-	<h1 class="page-title">Class: AfFormData</h1>
-<section>
-
-<header>
-    
-        <h2>
-        AfFormData
-        </h2>
         
-            <div class="class-description"><p>Class to represent Adaptive Form data</p></div>
-        
-    
-</header>
-
-
-<article>
-    <div class="container-overview">
-    
-        
-<hr>
-<dt>
-    <h4 class="name" id="AfFormData"><span class="type-signature"></span>new AfFormData()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
             
 <hr>
 <dt>
-    <h4 class="name" id="getData"><span class="type-signature"></span>getData()</h4>
+    <h4 class="name" id="getLang"><span class="type-signature"></span>getLang()</h4>
     
     
 </dt>
@@ -972,7 +710,7 @@ external end point from the client. The HTML form data contains the following th
 
     
     <div class="description">
-        <p>Returns the actual form data.</p>
+        <p>Returns the language code of the form.</p>
     </div>
     
 
@@ -1038,109 +776,7 @@ external end point from the client. The HTML form data contains the following th
     
             
 <div class="param-desc">
-    <p>The form data.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getContentType"><span class="type-signature"></span>getContentType()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Returns the content type of the form data.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>The content type.</p>
+    <p>The language code (e.g., &quot;en&quot;).</p>
 </div>
 
 
@@ -1168,7 +804,7 @@ external end point from the client. The HTML form data contains the following th
             
 <hr>
 <dt>
-    <h4 class="name" id="getAttachments"><span class="type-signature"></span>getAttachments()</h4>
+    <h4 class="name" id="getParentFormElementId"><span class="type-signature"></span>getParentFormElementId(model)</h4>
     
     
 </dt>
@@ -1176,7 +812,7 @@ external end point from the client. The HTML form data contains the following th
 
     
     <div class="description">
-        <p>Returns the list of attachments.</p>
+        <p>Returns the ID of the form element's parent in the HTML structure.</p>
     </div>
     
 
@@ -1185,6 +821,56 @@ external end point from the client. The HTML form data contains the following th
     
 
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>model</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The form element model.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
     
 
     
@@ -1242,7 +928,7 @@ external end point from the client. The HTML form data contains the following th
     
             
 <div class="param-desc">
-    <p>The attachments.</p>
+    <p>The parent ID.</p>
 </div>
 
 
@@ -1253,7 +939,7 @@ external end point from the client. The HTML form data contains the following th
     </dt>
     <dd>
         
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
 
@@ -1270,7 +956,7 @@ external end point from the client. The HTML form data contains the following th
             
 <hr>
 <dt>
-    <h4 class="name" id="toHTMLFormData"><span class="type-signature"></span>toHTMLFormData()</h4>
+    <h4 class="name" id="addField"><span class="type-signature"></span>addField(fieldView)</h4>
     
     
 </dt>
@@ -1278,14 +964,263 @@ external end point from the client. The HTML form data contains the following th
 
     
     <div class="description">
-        <p>This returns the html form data representation of adaptive form data. This could be used to submit the adaptive form data to
-external end point from the client. The HTML form data contains the following the key / value pairs:</p>
-<ol>
-<li>data -&gt; contains form data represented as string</li>
-<li>contentType -&gt; contains content type of form data (it would be application/xml or application/json)</li>
-<li>fileAttachments -&gt; list of blobs containing the file (in case of fileUrl's the type of blob would be application/json)</li>
-<li>fileAttachmentBindRefs -&gt; list of string containing file bindRef's, this has one to one mapping with fileAttachments</li>
-</ol>
+        <p>Adds a field view to the form container.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldView</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The field view to be added.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setFocus"><span class="type-signature"></span>setFocus(id)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Sets the focus on the specified field ID.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the field to set the focus on.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getFormId"><span class="type-signature"></span>getFormId()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Returns the ID of the form.</p>
     </div>
     
 
@@ -1351,7 +1286,7 @@ external end point from the client. The HTML form data contains the following th
     
             
 <div class="param-desc">
-    <p>The HTML form data.</p>
+    <p>The form ID.</p>
 </div>
 
 
@@ -1362,7 +1297,7 @@ external end point from the client. The HTML form data contains the following th
     </dt>
     <dd>
         
-<span class="param-type">*</span>
+<span class="param-type">string</span>
 
 
 
@@ -1379,7 +1314,7 @@ external end point from the client. The HTML form data contains the following th
             
 <hr>
 <dt>
-    <h4 class="name" id="toJsObject"><span class="type-signature"></span>toJsObject()</h4>
+    <h4 class="name" id="getFormTitle"><span class="type-signature"></span>getFormTitle()</h4>
     
     
 </dt>
@@ -1387,7 +1322,7 @@ external end point from the client. The HTML form data contains the following th
 
     
     <div class="description">
-        <p>Returns the JavaScript object representation of adaptive form data.</p>
+        <p>Returns the title of the form.</p>
     </div>
     
 
@@ -1453,7 +1388,313 @@ external end point from the client. The HTML form data contains the following th
     
             
 <div class="param-desc">
-    <p>The JavaScript object.</p>
+    <p>The form title.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getPath"><span class="type-signature"></span>getPath()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Returns the path of the form container.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>The form container path.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getFormElement"><span class="type-signature"></span>getFormElement()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Returns the form element associated with the form container.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>The form element.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTMLElement</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getAllFields"><span class="type-signature"></span>getAllFields()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Returns all fields of the form container.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>An object containing all fields of the form container.</p>
 </div>
 
 
