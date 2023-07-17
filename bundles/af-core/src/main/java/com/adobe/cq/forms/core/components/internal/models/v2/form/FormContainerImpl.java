@@ -292,8 +292,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         return StringUtils.EMPTY;
     }
-<<<<<<< HEAD
-=======
 
     @JsonIgnore
     @Override
@@ -301,6 +299,4 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         // explicitly setting null, since form container does not have name property, but other containers like panel have a name
         return null;
     }
-
->>>>>>> 56487e6c (FORMS-9364 Changes after PR tests cases failed)
 }
