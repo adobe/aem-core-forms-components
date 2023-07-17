@@ -52,7 +52,6 @@ describe('Button - Authoring', function () {
         cy.get('[title="'+titleName+'"]')
             .should('exist');
 
-        cy.log('opening component editable toolbar')
         cy.deleteComponentByTitle(titleName);
     }
 
@@ -70,5 +69,51 @@ describe('Button - Authoring', function () {
             testButtonBehaviour(buttonEditPathSelector, );
         });
 
+    });
+
+    context('Test replace action within different groups', function () {
+        const   pagePath = "/content/forms/sites/core-components-it/blank",
+            imageTestGroup = "/apps/forms-core-components-it/form/image",
+            image = "[value='"+imageTestGroup+"']",
+            containerSuffix = "/jcr:content/root/responsivegrid/container";
+
+        const dataPath = "/content/forms/sites/core-components-it/blank/jcr:content/root/responsivegrid/container/container/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']",
+            imageTestGroupDataPath = containerSuffix + "/container/image",
+            editPath = pagePath + imageTestGroupDataPath,
+            editPathSelector = "[data-path='" + editPath + "']",
+            imageTestGroupDrop = pagePath + containerSuffix + "/container/image";
+
+        beforeEach(function () {
+            cy.openAuthoring(pagePath);
+        });
+
+        it('test behaviour of replace within different groups same component type', function () {
+
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
+            cy.get('body').click( 0,0);
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+
+            cy.get(image).click();
+
+            cy.deleteComponentByPath(imageTestGroupDrop);
+        });
+
+        it('test behaviour of replace within different groups different component type', function () {
+                const buttonEditPath = pagePath + containerSuffix + "/container/button",
+                    buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
+
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+            cy.get('body').click( 0,0);
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+            cy.get(image).click();
+            cy.deleteComponentByPath(buttonEditPath);
+        });
     });
 });

@@ -61,7 +61,7 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Core Components Examples - Structure"
                             sling:resourceType="wcm/core/components/policy/policy"
-                            components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                            components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:replace test group]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                         <cq:authoring jcr:primaryType="nt:unstructured">
                             <assetToComponentMapping jcr:primaryType="nt:unstructured">
@@ -142,7 +142,7 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="formcontainer-policy"
                             sling:resourceType="wcm/core/components/policy/policy"
-                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Core Components Examples]">
+                            components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Core Components Examples,group:replace test group]">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
