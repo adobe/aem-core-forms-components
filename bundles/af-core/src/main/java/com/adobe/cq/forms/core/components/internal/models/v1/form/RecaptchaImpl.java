@@ -117,6 +117,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
 
         return customCaptchaProperties;
+
     }
 
 }
