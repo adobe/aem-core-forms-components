@@ -39,7 +39,7 @@
             message = message + Granite.I18n.get("This might lead to behaviour changes on applications consuming the headless JSON of forms based on templates using this policy.");
             message = message + "</p>";
 
-            ui.prompt(Granite.I18n.get("Delete Custom Properties"), message, "notice", [{
+            ui.prompt(Granite.I18n.get("Delete Custom Property"), message, "notice", [{
                 text: Granite.I18n.get("Cancel")
             }, {
                 text   : Granite.I18n.get("Delete"),
