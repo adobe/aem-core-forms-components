@@ -25,8 +25,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.wcm.core.components.models.Component;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -40,6 +38,7 @@ import org.mockito.Mockito;
 
 import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -284,7 +283,6 @@ public class FormContainerImplTest {
         verify(callback, times(1)).accept(captor.capture());
 
     }
-
 
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
         context.currentResource(resourcePath);
