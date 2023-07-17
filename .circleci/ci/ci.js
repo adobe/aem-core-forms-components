@@ -214,4 +214,10 @@ module.exports = class CI {
         req.end();
     }
 
+    warmCache(url) {
+        for(let i = 0; i < 4 ; i++) {
+            this.sh(`curl -s -o /dev/null -u admin:admin ${url}`);
+        }
+    }
+
 };
