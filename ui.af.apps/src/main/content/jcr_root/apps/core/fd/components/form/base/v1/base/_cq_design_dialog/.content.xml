@@ -19,7 +19,8 @@
           xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Field"
-    sling:resourceType="cq/gui/components/authoring/dialog">
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.base.v1.design]">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
@@ -44,6 +45,7 @@
                                     sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
                                     <customPropertiesMultiField
+                                        granite:class="cmp-adaptiveform-base-customproperties__multifield"
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                         fieldDescription=""
