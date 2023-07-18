@@ -55,6 +55,8 @@ try {
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
     }
+    // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+    extras += ` --bundle ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
 
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
