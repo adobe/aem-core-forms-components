@@ -12,7 +12,8 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/fragmentcontainer"
             editable="{Boolean}true"
-            fieldType="fragment"/>
+            fieldType="form"
+            fd:type="fragment"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <smallScreen
