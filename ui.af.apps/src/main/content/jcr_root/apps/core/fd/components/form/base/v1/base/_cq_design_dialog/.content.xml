@@ -38,7 +38,8 @@
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Custom Properties"
                             sling:resourceType="granite/ui/components/coral/foundation/container"
-                            margin="{Boolean}true">
+                            margin="{Boolean}true"
+                            granite:class="cmp-adaptiveform-base-customproperties">
                         <items jcr:primaryType="nt:unstructured">
                             <column
                                     jcr:primaryType="nt:unstructured"

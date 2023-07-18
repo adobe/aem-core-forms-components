@@ -28,11 +28,11 @@
         BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
-        BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base__additionalCustomPropertiesCheck",
-        BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base__additionalCustomPropertiesField",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base__additionalCustomPropertyKeys",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base__additionalCustomPropertyValues",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN =".cmp-adaptiveform-base__additionalCustomPropertyValuesHidden",
+        BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck",
+        BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base-customproperties__additionalMultifield",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base-customproperties__additionalKeys",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base-customproperties__additionalValues",
+        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN =".cmp-adaptiveform-base-customproperties__additionalValuesHidden",
 
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -164,15 +164,6 @@
         }
 
         function _manageCustomProperties() {
-            $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
-                selector : "BASE_CUSTOMPROPERTIES_ADDITIONALFIELD",
-                validate : function (el) {
-                    var name = el.value;
-                    let $el = $(el);
-                    return "Error!?";
-                }
-            });
-
             const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
 
             if(!additionalCustomPropertiesCheck.checked) {
