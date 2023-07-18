@@ -259,9 +259,6 @@ jobs:
           command: |
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-            
-            # Checkout branch
-            git checkout $BRANCH_NAME
 
             # Find the last two tags on the branch
             LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
