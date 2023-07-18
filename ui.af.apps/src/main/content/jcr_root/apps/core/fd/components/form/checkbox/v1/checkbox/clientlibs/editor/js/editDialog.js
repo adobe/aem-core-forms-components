@@ -46,8 +46,29 @@
 
     function handleEnums(dialog) {
         var optionDialog = dialog.find(CHECKBOX_OPTIONS);
-        optionDialog.find('button').hide(); // Should not be able to add options
+        optionDialog.find('.coral-Form-fieldwrapper')[0].querySelector('input').required = true;
+        var moveIcons = optionDialog.find('coral-icon[icon="moveUpDown"]');
+        for (var icon of moveIcons) {
+            icon.hide();
+        }
+        optionDialog.find('coral-multifield-item')[0].querySelector('button[handle="remove"]').hide();
+
+        var addButton = optionDialog.find('[coral-multifield-add]');
+        addButton.on('click', function() {
+            addButton.hide();
+        })
+
+        var removeOffBtn = optionDialog.find('coral-multifield-item')[1].querySelector('button[handle="remove"]');
+
+        if (!removeOffBtn) {
+            addButton.hide();
+        } else {
+            removeOffBtn.addEventListener('click', function() {
+                addButton.show();
+            })
+        }
     }
+
 
     function handleTypeSelection(dialog) {
         var checkboxDataType = dialog.find(CHECKBOX_DATATYPE);

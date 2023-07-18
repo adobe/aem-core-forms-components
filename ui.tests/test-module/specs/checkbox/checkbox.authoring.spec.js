@@ -73,10 +73,10 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    // it('insert TextInput in form container', function () {
-    //   dropCheckboxInContainer();
-    //   cy.deleteComponentByPath(checkboxDrop);
-    // });
+    it('insert Checkbox in form container', function () {
+      dropCheckboxInContainer();
+      cy.deleteComponentByPath(checkboxDrop);
+    });
 
     it('open edit dialog of aem forms Checkbox', function() {
       testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
