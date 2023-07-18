@@ -19,27 +19,31 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
- * Testing Form Button with Sites Editor
+ * Testing Form replace with Sites Editor
  */
-describe('Button - Authoring', function () {
+describe('Replace functionality - sites', function () {
     // we can use these values to log in
+    const pagePath = "/content/forms/sites/core-components-it/blank",
+        pageDropZoneSuffix = "/jcr:content/root/responsivegrid/container";
 
-    const dropButtonInSites = function () {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/button/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
+    const dropComponentInSites = function (componentName, resourceType) {
+        const dataPath = "/content/forms/sites/core-components-it/blank/jcr:content/root/responsivegrid/container/container/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
-        cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+        cy.insertComponent(responsiveGridDropZoneSelector, componentName, resourceType);
         cy.get('body').click(0, 0);
     }
 
-    const testButtonBehaviour = function (buttonEditPathSelector) {
-        var textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
+    const testButtonReplaceBehaviour = function (editPathSelector) {
+        const textInput = "[value='"+afConstants.components.forms.resourceType.formtextinput+"']",
             title = "[value='"+afConstants.components.forms.resourceType.title+"']",
             titleName = 'Adaptive Form Title',
             submitButton = "[value='/apps/forms-components-examples/components/form/actions/submit']";
+        const buttonName = "Adaptive Form Button",
+            buttonResourceType = afConstants.components.forms.resourceType.formbutton
 
-        dropButtonInSites();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+        dropComponentInSites(buttonName, buttonResourceType);
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
         cy.invokeEditableAction("[data-action='replace']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
         cy.get(textInput)
@@ -52,22 +56,57 @@ describe('Button - Authoring', function () {
         cy.get('[title="'+titleName+'"]')
             .should('exist');
 
-        cy.log('opening component editable toolbar')
         cy.deleteComponentByTitle(titleName);
     }
 
+    const testPanelReplaceBehaviourWithAccordion = function (editPathSelector) {
+        const accordion = "[value='"+afConstants.components.forms.resourceType.accordion+"']",
+            verticalTabs = "[value='"+afConstants.components.forms.resourceType.verticaltabs+"']",
+            horizontalTabs = "[value='"+afConstants.components.forms.resourceType.tabsontop+"']",
+            wizard = "[value='"+afConstants.components.forms.resourceType.wizard+"']",
+            panelEditPath = pagePath + pageDropZoneSuffix + "/container/accordion/item_1",
+            accordionDefaultPanel = "[data-path='" + panelEditPath + "']",
+            accordionName = 'Adaptive Form Accordion';
+
+        const panelName = "Adaptive Form Panel",
+            panelResourceType = afConstants.components.forms.resourceType.panelcontainer
+
+        dropComponentInSites(panelName, panelResourceType);
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
+        cy.invokeEditableAction("[data-action='replace']"); // this line is causing frame busting which is causing cypress to fail
+        // Check If Dialog Options Are Visible
+        cy.get(accordion)
+            .should("exist");
+        cy.get(verticalTabs)
+            .should("exist");
+        cy.get(horizontalTabs)
+            .should("exist");
+        cy.get(wizard)
+            .should("exist");
+        cy.get(accordion)
+            .click();
+        cy.get(accordionDefaultPanel)
+            .should("not.exist");
+
+        cy.deleteComponentByTitle(accordionName);
+    }
+
     context('Open Sites Editor', function () {
-        const buttonPagePath = "/content/core-components-examples/library/adaptive-form/button",
-            buttonEditPath = buttonPagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/button",
-            buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
+        const buttonEditPath = pagePath + pageDropZoneSuffix + "/container/button",
+            buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
+            panelEditPath = pagePath + pageDropZoneSuffix + "/container/panelcontainer",
+            panelEditPathSelector = "[data-path='" + panelEditPath + "']";
 
         beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(buttonPagePath);
+            cy.openAuthoring(pagePath);
         });
 
         it('test behaviour of replace button', function () {
-            testButtonBehaviour(buttonEditPathSelector, );
+            testButtonReplaceBehaviour(buttonEditPathSelector);
+        });
+
+        it('test behaviour of replace button', function () {
+            testPanelReplaceBehaviourWithAccordion(panelEditPathSelector);
         });
 
     });

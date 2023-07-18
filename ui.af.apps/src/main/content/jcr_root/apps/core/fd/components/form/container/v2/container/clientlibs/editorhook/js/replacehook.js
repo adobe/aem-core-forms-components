@@ -181,10 +181,10 @@
 
             selectList.off('coral-selectlist:change').on('coral-selectlist:change', function (event) {
                 selectList.off('coral-selectlist:change');
-                var component = author.components.find(event.detail.selection.value);
-                if (component.length > 0) {
-                    doReplace(component[0], editable, preservedProperties);
-                }
+                let component = author.components.find(event.detail.selection.value)[0];
+                let compTemplatePath = component.componentConfig.templatePath,
+                    componentType = getComponentType(compTemplatePath, componentJsonPath);
+                doReplace(component, editable, preservedProperties, componentType);
                 dialog.hide();
                 dialog.remove();
             });

@@ -22,7 +22,7 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
+    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties, componentType) {
         var args = arguments;
 
         channel.trigger("cq-persistence-before-replace", args);
@@ -87,7 +87,7 @@
 
             // Delete properties that are not preserved
             for (p in comData) {
-                if (preservedProperties.includes(p)) {
+                if ((!Array.isArray(comData[p]) && typeof comData[p] === 'object') || preservedProperties.includes(p)) {
                     delete comData[p];
                 }
             }
