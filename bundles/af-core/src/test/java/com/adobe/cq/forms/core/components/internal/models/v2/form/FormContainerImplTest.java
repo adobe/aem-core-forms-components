@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,10 +33,12 @@ import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -51,6 +54,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -104,7 +108,7 @@ public class FormContainerImplTest {
     void testExportedType() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("core/fd/components/form/container/v2/container", formContainer.getExportedType());
-        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        FormContainer formContainerMock = mock(FormContainer.class);
         Mockito.when(formContainerMock.getExportedType()).thenCallRealMethod();
         assertEquals("", formContainerMock.getExportedType());
     }
@@ -265,11 +269,26 @@ public class FormContainerImplTest {
         assertEquals(formContainerInSites.getParentPagePath(), SITES_PATH);
     }
 
+    @Test
+    void testVisit() throws Exception {
+        Consumer<ComponentExporter> callback = mock(Consumer.class);
+        // Get the JSON form representation using Utils.getComponentUnderTest
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+
+        // Call the visit method on the formContainer
+        formContainer.visit(callback);
+
+        // Verify that the callback consumer was called with the expected components
+        ArgumentCaptor<ComponentExporter> captor = ArgumentCaptor.forClass(ComponentExporter.class);
+        verify(callback, times(1)).accept(captor.capture());
+
+    }
+
     private FormContainer getFormContainerWithLocaleUnderTest(String resourcePath) throws Exception {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present
         GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
-            Mockito.mock(GuideLocalizationService.class));
+            mock(GuideLocalizationService.class));
         Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
         MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
         MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
