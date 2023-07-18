@@ -44,7 +44,9 @@ context('Drag drop the pageheader', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
     pageheaderDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop(),
     imageDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/image',
-    textDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text';
+    textDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text',
+    pageHeaderDropAuth = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + 'pageheader';
+
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
         cy.openAuthoring(pagePath);
@@ -55,16 +57,13 @@ context('Drag drop the pageheader', function() {
         cy.deleteComponentByPath(pageheaderDrop);
     });
 
-    it('deleting image from the pageheader', function () {
+    it('deleting image and text from the pageheader', function () {
         dropPageHeaderInContainer();
         cy.deleteComponentByPath(imageDrop);
+        cy.deleteComponentByPath(textDrop);
+        cy.deleteComponentByPath(pageheaderDrop);
     });
 
-    it('deleting text from the pageheader', function () {
-        dropPageHeaderInContainer();
-        cy.deleteComponentByPath(textDrop);
-    });
-    
      // no edit dialogue for text editor, no test for that
     })
 
