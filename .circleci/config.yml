@@ -289,7 +289,7 @@ jobs:
 
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
-            git push origin $CIRCLE_BRANCH
+            git push origin HEAD:$CIRCLE_BRANCH
 
 workflows:
   version: 2
