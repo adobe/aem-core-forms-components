@@ -256,6 +256,11 @@ jobs:
       - run:
           name: Update VERSIONS.md and README.md with the new released version
           command: |
+            RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
+            
+            # Checkout branch
+            git checkout $RELEASE_BRANCH
+            
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
@@ -288,7 +293,7 @@ jobs:
 
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
-            git push origin $CIRCLE_BRANCH
+            git push origin $RELEASE_BRANCH
 
 workflows:
   version: 2
