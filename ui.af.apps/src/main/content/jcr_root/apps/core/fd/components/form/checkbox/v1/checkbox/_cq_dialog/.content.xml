@@ -78,7 +78,7 @@
                                                           granite:class="cmp-adaptiveform-base__enum"
                                                           name="./enum"
                                                           fieldLabel="Data value"
-                                                          required="{Boolean}true"/>
+                                                          required="{Boolean}false"/>
                                                     </items>
                                                 </field>
                                             </enumOptions>
