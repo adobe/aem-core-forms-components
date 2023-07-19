@@ -305,4 +305,11 @@ public class FormContainerImplTest {
         context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
+
+    @Test
+    void testGetName() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getName());
+        // assertEquals("L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getId());
+    }
 }
