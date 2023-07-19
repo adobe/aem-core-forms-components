@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
-  browser-tools: circleci/browser-tools@1.3.0
+  browser-tools: circleci/browser-tools@1.4.2
 
 common:
   restore_cache: &restore_cache
@@ -15,8 +15,7 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-chrome:
-          chrome-version: "114.0.5735.90"  # refer: https://github.com/CircleCI-Public/browser-tools-orb/issues/75 TODO: once issue is resolved need to remove using a fixed version
+      - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
           command: |
