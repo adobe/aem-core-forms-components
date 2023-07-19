@@ -82,6 +82,38 @@ describe.only('Page - Authoring', function () {
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(tabsContainerDrop);
     }
+    
+    const testSaveAsFragmentBehaviour =  function(tabsEditPathSelector, tabsContainerDrop, isSites) {
+        if (isSites) {
+            dropTabsInSites();
+        } else {
+            dropTabsInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsEditPathSelector);
+        cy.invokeEditableAction("[data-action='saveAsFragment']");
+        // Check If Dialog Options Are Visible
+        cy.get("[name='name']")
+            .should("exist");
+        cy.get("[name='title']")
+            .should("exist");
+        cy.get("[name='description']")
+            .should("exist");
+        cy.get("[name='tags']")
+            .should("exist");
+        cy.get("[name='targetPath']")
+            .should("exist");
+        cy.get("[name='formModel']")
+            .should("exist");
+        cy.get("[name='fragmentModelRoot']")
+            .should("exist");
+
+        // TODO: To Test done when fragment is created
+        // cy.get('.cq-dialog-submit').click();
+        // check if panel is replaced by fragment component and check for fragRef
+
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(tabsContainerDrop);
+    };
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -107,6 +139,7 @@ describe.only('Page - Authoring', function () {
             });
         });
 
+      
         // todo: flaky
         it('switch tabs using dialog select panel button in toolbar', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
@@ -126,9 +159,17 @@ describe.only('Page - Authoring', function () {
             });
         });
 
+
         it('open edit dialog of Tab on top', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
                 testPanelBehaviour(tabsContainerPathSelector, tabsPath);
+            });
+        });
+      
+      
+        it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
+            cy.cleanTest(tabsPath).then(function() {
+                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
             });
         });
 
@@ -149,9 +190,16 @@ describe.only('Page - Authoring', function () {
             cy.deleteComponentByPath(panelContainerEditPath);
         });
 
+
         it('open edit dialog of tabs on top of form', {retries: 3}, function () {
             cy.cleanTest(panelContainerEditPath).then(function () {
                 testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+            });
+        });
+      
+        it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
+            cy.cleanTest(panelContainerEditPath).then(function() {
+                testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
             });
         });
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Save as Fragment"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+            granite:class="guideIndependentDialog"
+            jcr:primaryType="nt:unstructured"
+            jcr:title=""
+            sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
+        <items jcr:primaryType="nt:unstructured">
+            <name
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                fieldLabel="Name"
+                required="{Boolean}true"
+                name="name">
+                <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        node-name-validation=""/>
+            </name>
+            <title
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Title"
+                    name="title">
+            </title>
+            <description
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Description"
+                    name="description"/>
+            <tags
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Tags"
+                    name="tags"/>
+            <targetPath
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                    nodeTypes="nt:folder, sling:Folder, sling:OrderedFolder"
+                    filter="folder"
+                    fieldLabel="Target Path"
+                    name="targetPath"
+                    rootPath="/content/dam/formsanddocuments"/>
+            <formmodel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Form Model"
+                    name="formModel"
+                    required="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <none
+                            jcr:primaryType="nt:unstructured"
+                            text="none"
+                            value="none"/>
+                    <jsonschema
+                            jcr:primaryType="nt:unstructured"
+                            text="jsonschema"
+                            value="jsonschema"/>
+                    <formdatamodel
+                            jcr:primaryType="nt:unstructured"
+                            text="formdatamodel"
+                            value="formdatamodel"/>
+                </items>
+            </formmodel>
+            <fragmentModelRoot
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Fragment Model Root"
+                    name="fragmentModelRoot">
+                <items jcr:primaryType="nt:unstructured"/>
+            </fragmentModelRoot>
+        </items>
+    </content>
+</jcr:root>

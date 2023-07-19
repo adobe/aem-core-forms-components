@@ -76,7 +76,40 @@ describe('Page - Authoring', function () {
 
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(panelContainerDrop);
-    }
+    };
+
+    const testSaveAsFragmentBehaviour = (panelContainerEditPathSelector, panelContainerDrop, isSites) => {
+        if (isSites) {
+            dropPanelInSites();
+        } else {
+            dropPanelInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='saveAsFragment']"); // this line is causing frame busting which is causing cypress to fail
+        // Check If Dialog Options Are Visible
+        cy.get("[name='name']")
+            .should("exist");
+        cy.get("[name='title']")
+            .should("exist");
+        cy.get("[name='description']")
+            .should("exist");
+        cy.get("[name='tags']")
+            .should("exist");
+        cy.get("[name='targetPath']")
+            .should("exist");
+        cy.get("[name='formModel']")
+            .should("exist");
+        cy.get("[name='fragmentModelRoot']")
+            .should("exist");
+
+        cy.get('.cq-dialog-cancel').click();
+        // TODO: To Test done when fragment is created
+        // cy.get('.cq-dialog-submit').click();
+        // check if panel is replaced by fragment component and check for fragRef
+
+        cy.deleteComponentByPath(panelContainerDrop);
+    };
+
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -94,6 +127,10 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Panel', function () {
             testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+        })
+
+        it('Save panel as fragment via toolbar', function () {
+            testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
         })
     })
 
@@ -114,6 +151,10 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of aem forms Panel', function () {
             testPanelBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
+        });
+
+        it('Save panel as fragment via toolbar', function () {
+            testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
         });
 
     });

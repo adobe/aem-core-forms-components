@@ -19,5 +19,6 @@
   "reporterEnabled": "spec, mocha-junit-reporter",
   "mochaJunitReporterReporterOptions": {
     "mochaFile": "target/reports/TEST-[hash].xml"
-  }
+  },
+  "numTestsKeptInMemory": 0
 }

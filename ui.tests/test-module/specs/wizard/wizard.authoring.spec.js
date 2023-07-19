@@ -107,6 +107,36 @@ describe('Page - Authoring', function () {
                 });
             });
         });
+
+        it('verify save as fragment dialog of Wizard',function (){
+            dropWizardInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
+                cy.invokeEditableAction("[data-action='saveAsFragment']").then(()=>{
+                    // Check If Dialog Options Are Visible
+                    cy.get("[name='name']")
+                        .should("exist");
+                    cy.get("[name='title']")
+                        .should("exist");
+                    cy.get("[name='description']")
+                        .should("exist");
+                    cy.get("[name='tags']")
+                        .should("exist");
+                    cy.get("[name='targetPath']")
+                        .should("exist");
+                    cy.get("[name='formModel']")
+                        .should("exist");
+                    cy.get("[name='fragmentModelRoot']")
+                        .should("exist");
+
+                    // TODO: To Test done when fragment is created
+                    // cy.get('.cq-dialog-submit').click();
+                    // check if wizard is replaced by fragment component and check for fragRef
+
+                    cy.get('.cq-dialog-cancel').click();
+                });
+            });
+            cy.deleteComponentByPath(wizardLayoutDrop);
+        });
     });
 
     context('Open Sites Editor', function () {
@@ -146,6 +176,38 @@ describe('Page - Authoring', function () {
                     cy.deleteComponentByPath(wizardEditPath);
                 })
 
+            });
+        });
+
+        it('open save as fragment dialog of aem forms Wizard', { retries: 3 }, function() {
+            cy.cleanTest(wizardEditPath).then(function() {
+                dropWizardInSites();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction("[data-action='saveAsFragment']");
+                // cy.get(wizardBlockBemSelector + '__editdialog').contains('Help Content').click({force: true});
+                // cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click({force: true});
+                // Check If Dialog Options Are Visible
+                cy.get("[name='name']")
+                    .should("exist");
+                cy.get("[name='title']")
+                    .should("exist");
+                cy.get("[name='description']")
+                    .should("exist");
+                cy.get("[name='tags']")
+                    .should("exist");
+                cy.get("[name='targetPath']")
+                    .should("exist");
+                cy.get("[name='formModel']")
+                    .should("exist");
+                cy.get("[name='fragmentModelRoot']")
+                    .should("exist");
+
+                // TODO: To Test done when fragment is created
+                // cy.get('.cq-dialog-submit').click();
+                // check if wizard is replaced by fragment component and check for fragRef
+
+                cy.get('.cq-dialog-cancel').click();
+                cy.deleteComponentByPath(wizardEditPath);
             });
         });
 
