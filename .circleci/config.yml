@@ -15,8 +15,7 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-chrome:
-          replace-existing: true
+      - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
           command: |
