@@ -2,4 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/system/config/com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json"/>
     <filter root="/apps/system/config/Guide Localization Service.cfg.json"/>
+    <filter root="/apps/system/config/org.apache.felix.http.cfg.json"/>
 </workspaceFilter>

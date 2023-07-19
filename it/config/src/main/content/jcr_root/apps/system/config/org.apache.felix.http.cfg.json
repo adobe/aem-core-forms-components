@@ -1,0 +1,6 @@
+{
+  "org.apache.felix.jetty.gziphandler.enable":true,
+  "org.apache.felix.jetty.gzip.excludedMimeTypes":[
+    "application/json"
+  ]
+}
