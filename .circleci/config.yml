@@ -15,7 +15,8 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-chrome
+      - browser-tools/install-chrome:
+          chrome-version: 114.0.5735.90  # refer: https://github.com/CircleCI-Public/browser-tools-orb/issues/75 TODO: once issue is resolved need to remove using a fixed version
       - browser-tools/install-chromedriver
       - run:
           command: |
