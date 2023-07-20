@@ -43,7 +43,7 @@ const checkLightHouse = async () => {
     // warming the cache before lighthouse test
     ci.warmCache(LIGHTHOUSE_COLLATERAL_URL);
 
-    const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
+    const runnerResult = await lighthouse(lighthouseConfig.urls[0], options);
     // `.report` is the HTML report as a string
 
     const reportHtml = runnerResult.report;
