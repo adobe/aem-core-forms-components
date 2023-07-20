@@ -196,7 +196,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @JsonIgnore
     @Nullable
     public String getRedirectUrl() {
-        return getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
+        String redirectURL = redirect;
+        // Only do this for relative URLs, that is, ones hosted in AEM itself
+        if (StringUtils.isNoneEmpty(redirect) && redirect.startsWith("/")) {
+            redirectURL = getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
+        }
+        return redirectURL;
     }
 
     @JsonIgnore
