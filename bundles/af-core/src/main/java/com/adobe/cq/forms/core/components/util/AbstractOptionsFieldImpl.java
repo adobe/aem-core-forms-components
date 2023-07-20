@@ -43,7 +43,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
     @Nullable
-    private String[] enums; // todo: this needs to be thought through ?
+    protected String[] enums; // todo: this needs to be thought through ?
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable

@@ -28,12 +28,13 @@
      data-cmp-visible="${numberinput.visible ? 'true' : 'false'}"
      data-cmp-enabled="${numberinput.enabled ? 'true' : 'false'}"
      id="${numberinput.id}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=numberinput.id, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[numberinput.id, 'widget']}">
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
     <input
             class="cmp-adaptiveform-numberinput__widget"
-            aria-label="${numberinput.label.visible && numberinput.label.value}"
+            id="${widgetId}"
             title="${numberinput.tooltipVisible ? '' : numberinput.tooltipText}"
             type="number"
             name="${numberinput.name}"

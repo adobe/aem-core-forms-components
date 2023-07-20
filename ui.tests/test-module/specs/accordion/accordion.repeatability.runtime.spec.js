@@ -20,6 +20,10 @@ describe("Form with Accordion Container with repeatable elements", () => {
     const bemBlock = "cmp-accordion";
     let formContainer = null
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -102,6 +106,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 }
             })
         }
+        cy.expectNoConsoleErrors();
     })
 
     it("test repeatedTab instance html", () => {
@@ -122,6 +127,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
             getAccordionPanelsAtIndex(1).should('have.class', 'cmp-accordion__panel--expanded');
             getAccordionPanelsAtIndex(1).should('have.attr', 'aria-labelledby');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in tab", () => {
@@ -146,6 +152,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--expanded');
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at any position within instance manager other than first in tab", () => {
@@ -165,6 +172,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
             getAccordionItemAtIndex(5).should('have.attr', 'data-cmp-expanded');
             getAccordionButtonsAtIndex(5).should('have.class', 'cmp-accordion__button--expanded');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when multiple removable repeatable panels appear before it in view", () => {
@@ -186,5 +194,39 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 })
             })
         })
+        cy.expectNoConsoleErrors();
     })
+})
+
+describe("Form with Accordion Container with nested repeatable elements", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/accordion/nestedrepeatability.html";
+  let formContainer = null
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  });
+
+  it("testing add/remove instance", () => {
+    cy.get("[data-cmp-hook-add-instance]").should('have.length', 2);
+    cy.get("[data-cmp-hook-remove-instance]").should('have.length', 2);
+    cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 1);
+    cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 1);
+
+    cy.get('button[data-cmp-hook-add-instance=' + formContainer._model._jsonModel.items[0].items[0].items[1].items[0].id + ']').click().then(() => {
+      cy.get("[data-cmp-hook-add-instance]").should('have.length', 3);
+      cy.get("[data-cmp-hook-remove-instance]").should('have.length', 3);
+      cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 1);
+      cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 2);
+
+      cy.get('button[data-cmp-hook-add-instance=' + formContainer._model._jsonModel.items[0].items[0].id + ']').click().then(() => {
+        cy.get("[data-cmp-hook-add-instance]").should('have.length', 5);
+        cy.get("[data-cmp-hook-remove-instance]").should('have.length', 5);
+        cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Item 1)').should('have.length', 2);
+        cy.get("button[data-cmp-hook-adaptiveFormAccordion='button']").get('span:contains(Inner panel 1)').should('have.length', 3);
+      });
+    });
+  });
 })
