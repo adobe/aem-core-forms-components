@@ -29,6 +29,7 @@ const checkLightHouse = async () => {
     const options = {
       logLevel: "info",
       output: "html",
+        preset: "desktop",
       port: chrome.port,
       extraHeaders: {
         Authorization:
