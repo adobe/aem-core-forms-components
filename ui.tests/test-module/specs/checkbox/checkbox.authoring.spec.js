@@ -51,10 +51,6 @@ describe('Page - Authoring', function () {
     cy.get("[name='./name']")
     .should("exist");
 
-    cy.get('.cmp-adaptiveform-checkbox__options').should('not.have.css', 'display', 'none')
-    cy.get(".cmp-adaptiveform-checkbox__type").click();
-    cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
-    cy.get('.cmp-adaptiveform-checkbox__options').should('have.css', 'display', 'none')
 
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(checkboxDrop);

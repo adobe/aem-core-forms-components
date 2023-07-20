@@ -102,7 +102,8 @@
                                 <checkbox_demo
                                   jcr:title="Checkbox"
                                   fieldType="checkbox"
-                                  enum="[true,false]"
+                                  checkedValue="on"
+                                  uncheckedValue="off"
                                   type="string"
                                   jcr:created="{Date}2019-03-06T14:11:01.819+01:00"
                                   jcr:createdBy="admin"
