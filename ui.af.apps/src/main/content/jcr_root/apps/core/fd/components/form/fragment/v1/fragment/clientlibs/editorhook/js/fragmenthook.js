@@ -30,7 +30,7 @@
     }
 
     window.CQ.FormsCoreComponents.editorhooks.openFragmentInEditor = function (editable) {
-        var fragmentPath = $(editable.dom).find(FRAGMENT_PLACEHOLDER_SELECTOR).data("cmp-fragmentPath");
+        var fragmentPath = $(editable.dom).find(FRAGMENT_PLACEHOLDER_SELECTOR).data("cmp-fragmentpath");
         if(fragmentPath) {
             if(fragmentPath.indexOf(ASSET_NODE_PATH_PREFIX) != null) {
                 fragmentPath = fragmentPath.replace(ASSET_NODE_PATH_PREFIX, PAGE_NODE_PATH_PREFIX);
