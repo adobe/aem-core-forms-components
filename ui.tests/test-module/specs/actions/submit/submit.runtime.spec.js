@@ -21,7 +21,7 @@ describe("Form with Submit Button", () => {
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
-        submit : `[data-cmp-is="${IS}"]`
+        submit: `[data-cmp-is="${IS}"]`
     }
 
     let formContainer = null;
@@ -71,7 +71,7 @@ describe("Form with Submit Button", () => {
         });
 
         cy.get(`.cmp-adaptiveform-button__widget`).click()
-        cy.wait('@afSubmission').then(({ response}) => {
+        cy.wait('@afSubmission').then(({response}) => {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
             expect(response.body.thankYouMessage).to.be.not.null;
@@ -81,15 +81,15 @@ describe("Form with Submit Button", () => {
 
 
     it("Form submit should show validation errors", () => {
-            cy.previewForm(pagePath);
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                Object.entries(formContainer._fields).forEach(([id, field]) => {
-                    // if non submit field, check that all have error message in them
-                    if (id.indexOf('submit') === -1) {
-                        cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "Please fill in this field.")
-                    }
-                });
+        cy.previewForm(pagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            Object.entries(formContainer._fields).forEach(([id, field]) => {
+                // if non submit field, check that all have error message in them
+                if (id.indexOf('submit') === -1) {
+                    cy.get(`#${id}`).find(`.cmp-adaptiveform-${id.split("-")[0]}__errormessage`).should('have.text', "Please fill in this field.")
+                }
             });
+        });
     });
 
 
@@ -101,14 +101,16 @@ describe("Form with Submit Button", () => {
     })
 
 
-    it("Custom Submit Action Localisation Test", () => {
-        cy.previewForm(customSubmitLocalisationPagePath);
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-            cy.get('body')
-                .find('div.tyMessage')
-                .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
-        });
-    })
+    if (cy.af.isLatestAddon()) {
+        it("Custom Submit Action Localisation Test", () => {
+            cy.previewForm(customSubmitLocalisationPagePath);
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.get('body')
+                    .find('div.tyMessage')
+                    .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
+            });
+        })
+    }
 
 
     it("Tampering redirectURL post submit redirects to default ThankYou Page", () => {
