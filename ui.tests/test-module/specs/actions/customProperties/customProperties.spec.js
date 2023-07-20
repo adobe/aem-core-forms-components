@@ -41,6 +41,8 @@ describe("Custom Properties Tests", () => {
 
             cy.openAFv2TemplateEditor();
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
+            cy.get('.cq-dialog').should('be.visible');
+
             cy.get(tabSelector).eq(1).click({force: true});
             cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
@@ -51,9 +53,10 @@ describe("Custom Properties Tests", () => {
             cy.openSiteAuthoring(pagePath);
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']").then(() => {
-                cy.get(tabSelector).contains("Advanced").click({force: true});
-            });
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get(".cq-dialog").should("be.visible");
+
+            cy.get(tabSelector).contains("Advanced").click({force: true});
             cy.get(".cmp-adaptiveform-base-customproperties__select").click();
             cy.get("._coral-Menu-item").contains("Group 1").click();
             cy.get(".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck").click();
