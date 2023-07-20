@@ -42,14 +42,13 @@ describe("Custom Properties Tests", () => {
             cy.openAFv2TemplateEditor();
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
             cy.get(tabSelector).eq(1).click({force: true});
-
             cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/value']").focus().clear().type("value 1");
             cy.get(submitBtnSelector).click({force: true});
 
-            cy.openSiteAuthoring(pagePath);
 
+            cy.openSiteAuthoring(pagePath);
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']").then(() => {
@@ -57,18 +56,15 @@ describe("Custom Properties Tests", () => {
             });
             cy.get(".cmp-adaptiveform-base-customproperties__select").click();
             cy.get("._coral-Menu-item").contains("Group 1").click();
-
             cy.get(".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck").click();
-
             cy.get(".cmp-adaptiveform-base-customproperties__additionalMultifield").contains("Add").click();
-
             cy.get(".cmp-adaptiveform-base-customproperties__additionalKeys").focus().type("addonKey1");
             cy.get(".cmp-adaptiveform-base-customproperties__additionalValues").focus().type("addonValue1");
-
             cy.get(submitBtnSelector).click({force: true});
 
             // check model json
             cy.getFormJson(pagePath).then((body) => {
+                expect(body).not.to.be.undefined;
                 const properties = body[":items"]["guideContainer"][":items"].textinput.properties;
                 expect(properties['key 1']).not.to.be.undefined
                 expect(properties['key 1']).to.equal("value 1")
