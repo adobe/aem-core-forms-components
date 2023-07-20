@@ -19,7 +19,7 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-checkbox__editdialog",
         CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
         CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
-        CHECKBOX_OPTIONS = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__options",
+        UNCHECKED_VALUE_WRAPPER = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__uncheckedvalue",
         CHECKBOX_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__type",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -44,51 +44,27 @@
         });
     }
 
-    function handleEnums(dialog) {
-        var optionDialog = dialog.find(CHECKBOX_OPTIONS);
-        optionDialog.find('.coral-Form-fieldwrapper')[0].querySelector('input').required = true;
-        var moveIcons = optionDialog.find('coral-icon[icon="moveUpDown"]');
-        for (var icon of moveIcons) {
-            icon.hide();
-        }
-        optionDialog.find('coral-multifield-item')[0].querySelector('button[handle="remove"]').hide();
+    function handleUncheckedValue(dialog) {
+       var disableUncheckedValueElement = dialog.find('coral-checkbox[name="./disableUncheckedValue"]')[0];
+       var disableUnchecked = disableUncheckedValueElement.hasAttribute('checked');
+       var uncheckValueWrapper = dialog.find(UNCHECKED_VALUE_WRAPPER);
 
-        var addButton = optionDialog.find('[coral-multifield-add]');
-        addButton.on('click', function() {
-            addButton.hide();
-        })
+       if (disableUnchecked) {
+           uncheckValueWrapper.hide();
+       } else {
+           uncheckValueWrapper.show();
+       }
 
-        var removeOffBtn = optionDialog.find('coral-multifield-item')[1].querySelector('button[handle="remove"]');
-
-        if (!removeOffBtn) {
-            addButton.hide();
-        } else {
-            removeOffBtn.addEventListener('click', function() {
-                addButton.show();
-            })
-        }
-    }
-
-
-    function handleTypeSelection(dialog) {
-        var checkboxDataType = dialog.find(CHECKBOX_DATATYPE);
-        var optionDialog = dialog.find(CHECKBOX_OPTIONS);
-        handle();
-        function handle() {
-            var selectedValue = checkboxDataType.find('coral-select')[0].selectedItem.value;
-            if (selectedValue == 'boolean') {
-                optionDialog.hide();
+        disableUncheckedValueElement.addEventListener('click', function(e) {
+            disableUnchecked = !disableUnchecked;
+            if (disableUnchecked) {
+                uncheckValueWrapper.hide();
             } else {
-                optionDialog.show();
+                uncheckValueWrapper.show();
             }
-        }
-
-        dialog.on("change", checkboxDataType, function() {
-           handle()
         })
     }
 
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleEnums, handleTypeSelection);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleUncheckedValue);
 
 })(jQuery);
