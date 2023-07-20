@@ -16,6 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
+const LHDesktopConfig = require('/lighthouse/core/config/desktop-config');
 const LIGHTHOUSE_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
 
 const checkLightHouse = async () => {
@@ -29,7 +30,6 @@ const checkLightHouse = async () => {
     const options = {
       logLevel: "info",
       output: "html",
-        preset: "desktop",
       port: chrome.port,
       extraHeaders: {
         Authorization:
@@ -44,7 +44,7 @@ const checkLightHouse = async () => {
     // warming the cache before lighthouse test
     ci.warmCache(LIGHTHOUSE_COLLATERAL_URL);
 
-    const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
+    const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options, LHDesktopConfig);
     // `.report` is the HTML report as a string
 
     const reportHtml = runnerResult.report;
