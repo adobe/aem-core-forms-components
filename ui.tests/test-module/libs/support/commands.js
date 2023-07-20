@@ -161,15 +161,7 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open Site authoring page
-Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
-    const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+const preventClickJacking = () => {
     cy.window().then(win => {
         // only if granite is defined, override the API
         if (win.Granite) {
@@ -184,6 +176,19 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
             };
         }
     });
+};
+
+
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
+    const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    preventClickJacking();
 });
 
 // Cypress command to open AFv2
@@ -194,28 +199,21 @@ Cypress.Commands.add("openAFv2TemplateEditor", () => {
     cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
 });
 
+// Cypress command to get form JSON
+Cypress.Commands.add("getFormJson", (pagePath) => {
+    const pageUrl = cy.af.getFormJsonUrl(pagePath);
+    return cy.request({
+        method : 'GET',
+        url: pageUrl
+    }).its('body');
+});
+
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
     const path = `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
-    cy.window().then(win => {
-        // only if granite is defined, override the API
-        if (win.Granite) {
-            win.Granite.HTTP.handleLoginRedirect = function () {
-                if (!loginRedirected) {
-                    loginRedirected = true;
-                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-                }
-            };
-        }
-    });
+    preventClickJacking();
 });
 
 // Cypress command to open authoring page

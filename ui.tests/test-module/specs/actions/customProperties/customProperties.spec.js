@@ -17,8 +17,6 @@ const sitesSelectors = require("../../../libs/commons/sitesSelectors");
  ******************************************************************************/
 describe("Custom Properties Tests", () => {
 
-    let component;
-    const componentBox = ``
     const dropTextInputInContainer = function () {
         const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -33,29 +31,52 @@ describe("Custom Properties Tests", () => {
             textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
             textInputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
-        it.skip('End to End Custom Property Test', function () {
+        it('End to End Custom Property Test', function () {
             const textInputEditBoxSelector = "coral-tag[value='/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure/jcr:content/guideContainer/forms-components-examples/components/form/textinput']";
+            const tabSelector = '._coral-Tabs--horizontal ._coral-Tabs-item';
+            const submitBtnSelector = ".cq-dialog-submit";
+            cy.on('uncaught:exception', () => {
+                return false
+            });
 
             cy.openAFv2TemplateEditor();
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
-            cy.get('._coral-Tabs--horizontal ._coral-Tabs-item').eq(1).click({force: true});
+            cy.get(tabSelector).eq(1).click({force: true});
 
             cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/value']").focus().clear().type("value 1");
-            cy.get(".cq-dialog-submit").click({force: true});
+            cy.get(submitBtnSelector).click({force: true});
 
             cy.openSiteAuthoring(pagePath);
 
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']");
-
-            cy.get("._coral-Tabs--horizontal ._coral-Tabs-item").contains("Advanced").click({force: true})
+            cy.invokeEditableAction("[data-action='CONFIGURE']").then(() => {
+                cy.get(tabSelector).contains("Advanced").click({force: true});
+            });
             cy.get(".cmp-adaptiveform-base-customproperties__select").click();
             cy.get("._coral-Menu-item").contains("Group 1").click();
 
             cy.get(".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck").click();
+
+            cy.get(".cmp-adaptiveform-base-customproperties__additionalMultifield").contains("Add").click();
+
+            cy.get(".cmp-adaptiveform-base-customproperties__additionalKeys").focus().type("addonKey1");
+            cy.get(".cmp-adaptiveform-base-customproperties__additionalValues").focus().type("addonValue1");
+
+            cy.get(submitBtnSelector).click({force: true});
+
+            // check model json
+            cy.getFormJson(pagePath).then((body) => {
+                const properties = body[":items"]["guideContainer"][":items"].textinput.properties;
+                expect(properties['key 1']).not.to.be.undefined
+                expect(properties['key 1']).to.equal("value 1")
+
+                expect(properties['addonKey1']).not.to.be.undefined
+                expect(properties['addonKey1']).to.equal("addonValue1")
+            });
+
             cy.deleteComponentByPath(textInputDrop);
         });
     })
