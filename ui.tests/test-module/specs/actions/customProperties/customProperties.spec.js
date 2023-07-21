@@ -44,6 +44,8 @@ describe("Custom Properties Tests", () => {
             cy.openAFv2TemplateEditor();
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
             cy.get('.cq-dialog').should('be.visible');
+            cy.get(".coral-Form-fieldwrapper").contains("Policy Title *").next().focus().clear().type("Test policy");
+
             cy.get(tabSelector).eq(1).click({force: true});
             // Fill custom properties in policy
             cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
