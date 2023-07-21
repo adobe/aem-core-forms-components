@@ -47,7 +47,7 @@ describe("Custom Properties Tests", () => {
             cy.get(tabSelector).eq(1).click({force: true});
             // Fill custom properties in policy
             cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
-            cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").debug().click();
+            cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
             cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/value']").focus().clear().type("value 1");
