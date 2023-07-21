@@ -113,7 +113,7 @@ public abstract class AbstractComponentImpl implements Component {
 
     /**
      * Setter for current page.
-     * 
+     *
      * @param currentPage The {@link Page} to set
      */
     protected void setCurrentPage(Page currentPage) {
@@ -123,7 +123,7 @@ public abstract class AbstractComponentImpl implements Component {
     @PostConstruct
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
-        if (currentPage != null && resource != null) {
+        if (currentPage != null && resource != null && request.getAttribute("embeddedAdaptiveForm") != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
                 Page resourcePage = pageManager.getContainingPage(resource);
