@@ -43,6 +43,7 @@ var formsConstants = {
                 "formfileinput": "/apps/forms-components-examples/components/form/fileinput",
                 "wizard": "/apps/forms-components-examples/components/form/wizard",
                 "title": "/apps/forms-components-examples/components/form/title",
+                "checkbox": "/apps/forms-components-examples/components/form/checkbox",
                 "fragment": "/apps/forms-components-examples/components/form/fragment"
             }
         },

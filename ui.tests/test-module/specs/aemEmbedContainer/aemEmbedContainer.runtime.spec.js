@@ -46,7 +46,23 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 5);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 8);
         })
+    })
+
+    context('aem embed container in iframe mode with custom height ', function () {
+
+        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainerwithcustomheight.html?wcmmode=disabled";
+
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openPage(pagePath);
+
+        })
+
+        it("test for embed container height property working in iFrameMode", () => {
+            cy.get('.cmp-aemform__iframecontent').should('have.css', 'height', '1000px');
+        })
+
     })
 })

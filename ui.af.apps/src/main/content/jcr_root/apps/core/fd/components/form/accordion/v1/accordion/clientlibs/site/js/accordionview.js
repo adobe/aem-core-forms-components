@@ -24,6 +24,7 @@
         _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
+            widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
             tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
@@ -113,7 +114,7 @@
         }
 
         getWidget() {
-            return null;
+          return null;
         }
 
         getDescription() {
@@ -143,6 +144,7 @@
             const item = this.#getItemById(id + '-item');
             this.#expandItem(item)
         }
+
 
         #collapseAllItems() {
             var items = this.#getCachedItems();
@@ -438,6 +440,7 @@
                     result.parentElement.append(accordionItemDivToBeRepeated);
                 }
             }
+            this.#showHideRepeatableButtons(instanceManager);
             return accordionItemDivToBeRepeated;
         }
 
@@ -454,6 +457,7 @@
             }
             this.#expandItem(itemDivToExpand);
             this.#collapseAllOtherItems(itemDivToExpand.id);
+            this.#showHideRepeatableButtons(childView.getInstanceManager());
         }
 
         handleChildRemoval(removedInstanceView) {
@@ -468,10 +472,19 @@
                 this.#expandItem(firstItem);
                 this.#collapseAllOtherItems(firstItem.id);
             }
+            this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
+        }
+
+        #syncLabel() {
+          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+          if (labelElement) {
+              labelElement.setAttribute('for', this.getId());
+          }
         }
 
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
+            this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
@@ -528,6 +541,14 @@
             accordionPanelDiv.id = childViewId + Accordion.idSuffixes.panel;
             accordionButton.setAttribute("aria-controls", childViewId + Accordion.idSuffixes.panel);
             accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
+            var accordionAdd = accordionItemDiv.querySelector(".cmp-accordion__add-button");
+            if(accordionAdd){
+              accordionAdd.setAttribute('data-cmp-hook-add-instance', childViewId);
+            }
+            var accordionRemove = accordionItemDiv.querySelector(".cmp-accordion__remove-button");
+            if(accordionRemove){
+              accordionRemove.setAttribute('data-cmp-hook-remove-instance', childViewId);
+            }
         }
 
         #cacheTemplateHTML(childView) {
@@ -644,6 +665,22 @@
                     this.#expandItem(child);
                 }
             }
+        }
+        getRepeatableRootElement(childView){
+          return this.element.querySelector('#'+childView.id+'-item div[data-cmp-hook-adaptiveFormAccordion="repeatableButton"]')
+        }
+        #showHideRepeatableButtons(instanceManager){
+          const {_model: {minOccur, maxOccur, items = [] } = {}, children} = instanceManager;
+          children.forEach(child=>{
+            const addButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-add-instance]');
+            const removeButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-remove-instance]');
+            if(addButtonElement){
+              addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
+            }
+            if(removeButtonElement){
+              removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
+            }
+          });
         }
     }
 

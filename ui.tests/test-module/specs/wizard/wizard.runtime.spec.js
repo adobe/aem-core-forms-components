@@ -20,6 +20,10 @@ describe("Form with Wizard Layout Container", () => {
 
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -37,6 +41,7 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Next Navigation Button Functionality", () => {
@@ -61,6 +66,7 @@ describe("Form with Wizard Layout Container", () => {
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Prev Navigation Button Functionality", () => {
@@ -88,11 +94,12 @@ describe("Form with Wizard Layout Container", () => {
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
+        cy.expectNoConsoleErrors();
     });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+        cy.expectNoConsoleErrors();
     })
 
 });
@@ -326,5 +333,110 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
                 })
             })
         })
+    });
+});
+
+describe('visibility of navigation buttons', function () {
+    const pagePath = "content/forms/af/core-components-it/samples/wizard/navigation.html";
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("rule based visibility of tabs is toggles visibility of nav buttons", () => {
+        const textInputId = formContainer._model.items[1].id;
+        const wizardItems = formContainer._model.items[0].items;
+
+        const firstItemNavOfWizardId = wizardItems[0].id + "_wizard-item-nav",
+            firstItemOfWizardId = wizardItems[0].id + "__wizardpanel",
+            secondItemNavOfWizardId = wizardItems[1].id + "_wizard-item-nav",
+            secondItemOfWizardId = wizardItems[1].id + "__wizardpanel";
+
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            driverTextInput = '.cmp-adaptiveform-textinput__widget',
+            wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
+            wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        // check if first tab is hidden and second tab is active, previous nav button is hidden and next button is visible
+        cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
+        cy.get(`#${secondItemNavOfWizardId}`).should('have.class', wizardTabActive);
+        cy.get(`#${secondItemOfWizardId}`).should('have.class', wizardPanelActive);
+        cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+
+        // check if first is unhided honouring rule and previous nav button is visible
+        cy.get(`#${textInputId}`).find(driverTextInput).focus().clear().type('a').blur().then(() => {
+            cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(previousNavButton).click({force: true});
+
+            // check when first tab is active, prev nav button is not visible now
+            cy.get(`#${firstItemNavOfWizardId}`).should('have.class', wizardTabActive);
+            cy.get(`#${firstItemOfWizardId}`).should('have.class', wizardPanelActive);
+            cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+
+            // check if active tab changes if current active is invisible
+            cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('b').blur().then(() => {
+                cy.get(`#${firstItemNavOfWizardId}`).should('have.attr', 'data-cmp-visible', 'false');
+                cy.get(`#${firstItemOfWizardId}`).should('have.attr', 'aria-hidden', 'true');
+                cy.get(`#${secondItemNavOfWizardId}`).should('have.class', wizardTabActive);
+                cy.get(`#${secondItemOfWizardId}`).should('have.class', wizardPanelActive);
+                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                cy.get(nextNavButton).click({force: true});
+
+                // check if next button is invisible after reaching last tab
+                cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+
+                // check if last hidden tab gets active honouring rule, next nav button is visible
+                cy.get(`#${textInputId}`).find(driverTextInput).clear().focus().type('c').blur().then(() => {
+                    cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
+                    cy.get(nextNavButton).click({force: true});
+
+                    // check if reaching last tab, next nav button is invisible
+                    cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                });
+            });
+        });
+    });
+});
+
+describe('visibility of navigation buttons with 0 and 1 tabs', function () {
+    const pagePath = "content/forms/af/core-components-it/samples/wizard/navigationWithLesserTabs.html";
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("test wizard with no tabs", () => {
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav';
+
+        cy.get(previousNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
+    });
+
+    it("test wizard with 1 tab", () => {
+        const wizardItems = formContainer._model.items[1].items;
+
+        const firstItemNavOfWizardId = wizardItems[0].id + "_wizard-item-nav",
+            firstItemOfWizardId = wizardItems[0].id + "__wizardpanel";
+
+        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
+            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+            wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
+            wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
+
+        cy.get(previousNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(nextNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
+        cy.get(`#${firstItemNavOfWizardId}`).should('have.class', wizardTabActive);
+        cy.get(`#${firstItemOfWizardId}`).should('have.class', wizardPanelActive);
     });
 });

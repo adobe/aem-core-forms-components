@@ -15,23 +15,31 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.Map;
+
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.adobe.aemds.guide.service.GuideException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * Defines the form {@code reCaptcha} Sling Model used for the {@code /apps/core/fd/components/form/captcha/v1/captcha}
+ * Defines the form {@code Captcha} Sling Model used for the {@code /apps/core/fd/components/form/recaptcha/v1/recaptcha}
  * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface Recaptcha extends Field {
+public interface Captcha extends Field {
 
+    @JsonIgnore
     default String getCloudServicePath() {
         return null;
     }
 
-    default String getSize() {
-        return "normal";
-    }
+    @JsonIgnore
+    String getProvider();
+
+    @JsonIgnore
+    Map<String, Object> getCaptchaProperties() throws GuideException;
 
 }
