@@ -22,7 +22,7 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties, componentType) {
+    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
         var args = arguments;
 
         channel.trigger("cq-persistence-before-replace", args);
