@@ -17,8 +17,6 @@
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
 
-const LIGHTHOUSE_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
-
 const checkLightHouse = async () => {
 
     const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
@@ -41,10 +39,6 @@ const checkLightHouse = async () => {
       },
     };
     const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
-
-    // warming the cache before lighthouse test
-    ci.warmCache(LIGHTHOUSE_COLLATERAL_URL);
-
     const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options, LHDesktopConfig);
     // `.report` is the HTML report as a string
 

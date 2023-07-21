@@ -213,11 +213,4 @@ module.exports = class CI {
         req.write(postData);
         req.end();
     }
-
-    warmCache(url) {
-        for(let i = 0; i < 10 ; i++) {
-            this.sh(`curl -s -o /dev/null -u admin:admin ${url}`);
-        }
-    }
-
 };
