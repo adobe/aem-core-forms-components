@@ -35,27 +35,31 @@ describe("Custom Properties Tests", () => {
             const textInputEditBoxSelector = "coral-tag[value='/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure/jcr:content/guideContainer/forms-components-examples/components/form/textinput']";
             const tabSelector = '._coral-Tabs--horizontal ._coral-Tabs-item';
             const submitBtnSelector = ".cq-dialog-submit";
+            const AFv2FormTemplatePath = "/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html";
+            // Exceptions coming from coral and template policy
             cy.on('uncaught:exception', () => {
                 return false
             });
-
+            // open template policy
             cy.openAFv2TemplateEditor();
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
             cy.get('.cq-dialog').should('be.visible');
-
             cy.get(tabSelector).eq(1).click({force: true});
+            // Fill custom properties in policy
+            cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
             cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
             cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/value']").focus().clear().type("value 1");
             cy.get(submitBtnSelector).click({force: true});
 
-
+            // Open form
             cy.openSiteAuthoring(pagePath);
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get(".cq-dialog").should("be.visible");
 
+            // Advanced Tab in dialog
             cy.get(tabSelector).contains("Advanced").click({force: true});
             cy.get(".cmp-adaptiveform-base-customproperties__select").click();
             cy.get("._coral-Menu-item").contains("Group 1").click();
@@ -77,6 +81,19 @@ describe("Custom Properties Tests", () => {
             });
 
             cy.deleteComponentByPath(textInputDrop);
+
+
+            // delete custom properties in template
+
+            cy.openTemplateEditor(AFv2FormTemplatePath);
+            cy.get(textInputEditBoxSelector).find("button").click({force: true});
+            cy.get('.cq-dialog').should('be.visible');
+            cy.get(tabSelector).eq(1).click({force: true});
+            cy.get(".cmp-adaptiveform-base-customproperties__multifield ._coral-Multifield-remove").eq(1).click().then(() => {
+                cy.get('._coral-Dialog').should('be.visible');
+                cy.get("._coral-Button--warning").contains("Delete").click({force:true});
+                cy.get(submitBtnSelector).click({force: true});
+            })
         });
     })
 })
