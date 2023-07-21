@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
-const LHDesktopConfig = import('lighthouse/core/config/desktop-config');
+
 const LIGHTHOUSE_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
 
 const checkLightHouse = async () => {
@@ -25,6 +25,7 @@ const checkLightHouse = async () => {
     const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
 
     const lighthouse = await import('lighthouse')
+    const LHDesktopConfig = await import('lighthouse/core/config/desktop-config')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {
