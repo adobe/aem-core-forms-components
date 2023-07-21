@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
-const LHDesktopConfig = require('lighthouse/core/config/desktop-config');
+const LHDesktopConfig = import('lighthouse/core/config/desktop-config');
 const LIGHTHOUSE_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
 
 const checkLightHouse = async () => {
