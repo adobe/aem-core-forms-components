@@ -17,7 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
@@ -40,7 +40,10 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.wcm.api.Page;
@@ -193,7 +196,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @JsonIgnore
     @Nullable
     public String getRedirectUrl() {
-        return getContextPath() + GuideUtils.getRedirectUrl(redirect, getPath());
+        String redirectURL = GuideUtils.getRedirectUrl(redirect, getPath());
+        // Only do this if redirect configured to relative URL, that is, page hosted on same AEM
+        if (StringUtils.isNotEmpty(redirect) && redirect.startsWith("/")) {
+            redirectURL = getContextPath() + redirectURL;
+        }
+        return redirectURL;
     }
 
     @JsonIgnore
@@ -262,22 +270,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @JsonIgnore
-    public <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
-
-        return traverseChild(this, callBack);
+    @Override
+    public void visit(Consumer<ComponentExporter> callback) throws Exception {
+        traverseChild(this, callback);
     }
 
-    private <FormComponent, R> R traverseChild(Container container, Function<FormComponent, R> callBack) throws Exception {
-
-        R result = null;
+    private void traverseChild(Container container, Consumer<ComponentExporter> callback) throws Exception {
         for (ComponentExporter component : container.getItems()) {
+            callback.accept(component);
+
             if (component instanceof Container) {
-                result = traverseChild((Container) component, callBack);
-            } else {
-                result = callBack.apply((FormComponent) component);
+                traverseChild((Container) component, callback);
             }
         }
-        return result;
     }
 
     @Override
@@ -292,5 +297,4 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         return StringUtils.EMPTY;
     }
-
 }
