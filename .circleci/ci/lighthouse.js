@@ -24,6 +24,7 @@ const checkLightHouse = async () => {
     const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
 
     const lighthouse = await import('lighthouse')
+    const LHDesktopConfig = await import('lighthouse/core/config/desktop-config.js')
     const chromeLauncher = await import('chrome-launcher')
     const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
     const options = {
@@ -40,23 +41,28 @@ const checkLightHouse = async () => {
     };
     const lighthouseConfig = JSON.parse(fs.readFileSync('/home/circleci/build/.circleci/ci/lighthouseConfig.json'))
 
-    const runnerResult = await lighthouse.default(lighthouseConfig.urls[0], options);
-    // `.report` is the HTML report as a string
+    const desktopRunnerResult = await lighthouse.default(lighthouseConfig.urls[0], options, LHDesktopConfig.default);// `.report` is the HTML report as a string
+    const desktopReportHtml = desktopRunnerResult.report;
+    console.log('Lighthouse Report for desktop generated', desktopRunnerResult.lhr.finalDisplayedUrl);
+    console.log(getCommentText(desktopRunnerResult.lhr.categories, 'desktop'))
 
-    const reportHtml = runnerResult.report;
-    console.log('Report is done for', runnerResult.lhr.finalDisplayedUrl);
-    console.log(getCommentText(runnerResult.lhr.categories))
+    const defaultRunnerResult = await lighthouse.default(lighthouseConfig.urls[0], options); // by default lighthouse scores are computed for mobile device
+    const mobileReportHtml = defaultRunnerResult.report;
+    console.log('Lighthouse Report for mobile generated', defaultRunnerResult.lhr.finalDisplayedUrl);
+    console.log(getCommentText(defaultRunnerResult.lhr.categories, 'mobile'))
 
     if(process.env.AEM === "addon"){ // posting lighthouse scores only in case of AEM is addon
-        await ci.postCommentToGitHubFromCI(getCommentText(runnerResult.lhr.categories))
+        await ci.postCommentToGitHubFromCI(getCommentText(desktopRunnerResult.lhr.categories, 'desktop'))
+        await ci.postCommentToGitHubFromCI(getCommentText(defaultRunnerResult.lhr.categories, 'mobile'))
     }
     ci.sh('mkdir artifacts');
     ci.dir("artifacts", () => {
-           fs.writeFileSync('LigthouseReport.html', reportHtml);
+        fs.writeFileSync('DesktopLigthouseReport.html', desktopReportHtml);
+        fs.writeFileSync('MobileLigthouseReport.html', mobileReportHtml);
         });
 
 
-    const thresholdResults = checkThresholds(runnerResult.lhr.categories, lighthouseConfig)
+    const thresholdResults = checkThresholds(defaultRunnerResult.lhr.categories, lighthouseConfig) // using mobile lighthouse scores as these are usually lower
     console.log("thresholdResults -->>>> ", thresholdResults)
     if(!thresholdResults.isThresholdPass && process.env.AEM === "addon"){
         console.log("Error: Lighthouse score for aem-core-forms-components, below the thresholds")
@@ -64,13 +70,13 @@ const checkLightHouse = async () => {
         process.exit(1);
     }
     else if(thresholdResults.updateLighthouseConfig && ['master', 'dev', 'release/650'].includes(process.env.CIRCLE_BRANCH) && process.env.AEM === "addon"){ // only execute if branch name is 'master'
-        writeObjLighthouseConfig(runnerResult.lhr.categories, lighthouseConfig)
+        writeObjLighthouseConfig(defaultRunnerResult.lhr.categories, lighthouseConfig)
     }
     await chrome.kill();
 }
 
-const getCommentText = (resultCategories) => {
-  const commentText = `### Lighthouse scores\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score*100}      |       ${resultCategories.accessibility.score*100}       |       ${resultCategories['best-practices'].score*100}       |  ${resultCategories.seo.score*100} |`
+const getCommentText = (resultCategories, preset) => {
+  const commentText = `### Lighthouse scores (${preset})\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score*100}      |       ${resultCategories.accessibility.score*100}       |       ${resultCategories['best-practices'].score*100}       |  ${resultCategories.seo.score*100} |`
   return commentText
 }
 
