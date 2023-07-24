@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>2.0.102-CISCO</version>
+        <version>2.0.100-FORMS9942-SNAPSHOT</version>
         <relativePath>parent/pom.xml</relativePath>
     </parent>
 
