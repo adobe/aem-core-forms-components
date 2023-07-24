@@ -66,6 +66,8 @@ describe("Custom Properties Tests", () => {
             cy.get(tabSelector).contains("Advanced").click({force: true});
             cy.get(".cmp-adaptiveform-base-customproperties__select").click();
             cy.get("._coral-Menu-item").contains("Group 1").click();
+            cy.get(".cmp-adaptiveform-base-customproperties__select").click(); // does the job of blur
+
             cy.get(".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck").click();
             cy.get(".cmp-adaptiveform-base-customproperties__additionalMultifield").contains("Add").click();
             cy.get(".cmp-adaptiveform-base-customproperties__additionalKeys").focus().type("addonKey1");
