@@ -68,6 +68,10 @@
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
                             path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_design/styletab"/>
+                    <customProperties
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="core/fd/components/form/base/v1/base/cq:design_dialog/content/items/tabs/items/customProperties"/>
                 </items>
             </tabs>
         </items>
