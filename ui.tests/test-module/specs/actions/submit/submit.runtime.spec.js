@@ -18,6 +18,7 @@ describe("Form with Submit Button", () => {
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
+    const basicSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/basicsubmit.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -123,6 +124,19 @@ describe("Form with Submit Button", () => {
         })
     })
 
+    it("Submit Action test without passing any custom submit event", () => {
+        cy.previewForm(basicSubmitPagePath).then(p => {
+            const func = cy.spy();
+            cy.window().then((win) => {
+                win.guideBridge.on("submitStart", func)
+            })
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.get('body').should('have.contain', "Thank you for submitting the form.\n")
+                expect(func).to.be.calledOnce;
+            });
+        })
+    })
+
     it("External redirectURL post submit redirects to external page.", () => {
         cy.previewForm(externalPagePathSubmit).then(p => {
             formContainer = p;
@@ -140,12 +154,5 @@ describe("Form with Submit Button", () => {
 
         // To Fix: this is failing the test saying waiting for page load
         //cy.wait('@redirected');
-    })
-
-    it("Submit Action test without passing any custom submit event", () => {
-        cy.previewForm(basicSubmitPagePath);
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-            cy.get('body').should('have.contain', "Thank you for submitting the form.\n")
-        });
     })
 })
