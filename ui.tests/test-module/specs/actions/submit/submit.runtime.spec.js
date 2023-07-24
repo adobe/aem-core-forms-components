@@ -17,6 +17,7 @@ describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
+    const basicSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/basicsubmit.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -120,5 +121,12 @@ describe("Form with Submit Button", () => {
             expect(response.statusCode).to.equal(200);
             cy.get('body').should('have.text', "Thank you for submitting the form.\n")
         })
+    })
+
+    it("Submit Action test without passing any custom submit event", () => {
+        cy.previewForm(basicSubmitPagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get('body').should('have.text', "Thank you for submitting the form.\n")
+        });
     })
 })
