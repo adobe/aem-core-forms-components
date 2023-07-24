@@ -440,8 +440,7 @@
                     <advanced
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
-                            path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/advanced">
-                    </advanced>
+                            path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/advanced"/>
                 </items>
             </tabs>
         </items>
