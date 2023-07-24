@@ -37,8 +37,6 @@ import com.adobe.granite.ui.components.rendercondition.RenderCondition;
 import com.adobe.granite.ui.components.rendercondition.SimpleRenderCondition;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_ADDON_CHECK_JCR_NAME;
-
 @Component(
     service = { Servlet.class },
     property = {
@@ -67,7 +65,7 @@ public class HasCustomPropertiesServlet extends SlingSafeMethodsServlet {
             Resource componentInstance = resourceResolver.getResource(componentInstancePath);
             if (componentInstance != null) {
                 for (Map.Entry<String, Object> entry : componentInstance.getValueMap().entrySet()) {
-                    if (entry.getKey().equals(CUSTOM_PROPERTY_ADDON_CHECK_JCR_NAME)) {
+                    if (entry.getKey().equals(FormConstants.CUSTOM_PROPERTY_ADDON_CHECK_JCR_NAME)) {
                         hasAdditionalCustomProperties = true;
                         break;
                     }

@@ -589,6 +589,7 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             multiple="true"
                                                             fieldLabel="Custom Property Type"
+                                                            fieldDescription="This field allows for the selection of custom properties that are defined in the template policy."
                                                             name="./fd:customPropertySelect"
                                                             typeHint="String[]">
                                                         <datasource
@@ -612,7 +613,7 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                             granite:class="cmp-adaptiveform-base-customproperties__additionalMultifield"
-                                                            fieldDescription=""
+                                                            fieldDescription="Additional key-value pairs that are specific to this instance of the core component can be added here"
                                                             fieldLabel="Custom Properties">
                                                         <field
                                                                 jcr:primaryType="nt:unstructured"
@@ -623,15 +624,13 @@
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                         granite:class="cmp-adaptiveform-base-customproperties__additionalKeys"
-                                                                        fieldDescription=""
-                                                                        fieldLabel="Custom Property Name"
                                                                         name = "./fd:additionalCustomPropertyKeys"
+                                                                        fieldLabel="Custom Property Name"
                                                                         required="{Boolean}true"/>
                                                                 <additionalCustomPropertyValues
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                         granite:class="cmp-adaptiveform-base-customproperties__additionalValues"
-                                                                        fieldDescription=""
                                                                         fieldLabel="Custom Property Value"
                                                                         name = "./fd:additionalCustomPropertyValues"/>
                                                             </items>

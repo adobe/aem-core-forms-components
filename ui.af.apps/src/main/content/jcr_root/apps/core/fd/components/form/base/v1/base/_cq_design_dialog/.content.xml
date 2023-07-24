@@ -49,7 +49,7 @@
                                         granite:class="cmp-adaptiveform-base-customproperties__multifield"
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                        fieldDescription=""
+                                        fieldDescription="Key value pairs are defined here, which when selected via the 'Advanced' tab in the dialog of a component, renders them in the JSON of the form."
                                         fieldLabel="Custom Properties"
                                         composite="true"
                                         name="./customProperties">
@@ -61,6 +61,7 @@
                                                 <customPropertyGroupName
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldDescription="A User friendly name that will be displayed in the 'Advanced' tab of the Dialog for selection, describing the utility of the set of key-value pairs"
                                                         emptyText="Group Name"
                                                         name="./customPropertyGroupName"
                                                         required="{Boolean}true"/>
@@ -79,11 +80,13 @@
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     emptyText="Property Name"
                                                                     name="key"
+                                                                    fieldLabel="Custom Property Name"
                                                                     required="{Boolean}true"/>
                                                             <customPropertyValue
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     emptyText="Property Value"
+                                                                    fieldLabel="Custom Property Value"
                                                                     name="value"/>
                                                         </items>
                                                     </field>
