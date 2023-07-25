@@ -17,7 +17,24 @@ describe("Render form", () => {
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html";
     let formContainer = null;
 
-    //if (cy.af.isLatestAddon()) {
+    if (cy.af.isLatestAddon()) {
+        it("using open api to list/render form", () => {
+            cy.previewForm(pagePath);
+            // important: For this to work in local cloud ready SDK, restart is required
+            // intercepting render call and returning with open api
+            cy.getFromDefinitionUsingOpenAPIUsingCursor("/content/forms/af/core-components-it/samples/actions/submit/basic").then(function({body}){
+                cy.intercept("GET",  '**/guideContainer.model.json', req => {
+                    req.continue((res) => {
+                        res.body = body.afModelDefinition;
+                    });
+                });
+                cy.previewForm(pagePath, {'noLogin' : true}).then(p => {
+                    formContainer = p;
+                    expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+                });
+            });
+        }) 
+    } else {
         it("using open api to list/render form", () => {
             cy.previewForm(pagePath);
             // important: For this to work in local cloud ready SDK, restart is required
@@ -33,6 +50,6 @@ describe("Render form", () => {
                     expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
                 });
             });
-        }) 
-    //}
+        })
+    }
 });
