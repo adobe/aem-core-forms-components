@@ -129,11 +129,13 @@ describe("Form with Submit Button", () => {
             const func = cy.spy();
             cy.window().then((win) => {
                 win.guideBridge.on("submitStart", func)
+                cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                    cy.get('body').should('have.contain', "Thank you for submitting the form.\n")
+                    cy.wrap(null).then(() => {
+                        expect(func).to.be.calledOnce;
+                    });
+                });
             })
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                cy.get('body').should('have.contain', "Thank you for submitting the form.\n")
-                expect(func).to.be.calledOnce;
-            });
         })
     })
 
