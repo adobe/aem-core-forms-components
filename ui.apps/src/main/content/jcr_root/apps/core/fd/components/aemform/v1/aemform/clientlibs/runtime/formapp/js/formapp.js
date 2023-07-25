@@ -87,8 +87,8 @@
                 }, aemFormIframeSelector);
             }
             if (aemFormConfig.height != "auto") {
-                document.querySelector(aemFormIframeSelector).style.height = aemFormConfig.height;
-	    }
+                $(aemFormIframeSelector).css("height", aemFormConfig.height);
+            }
             var submitConfig = {},
                 renderConfig = {},
                 formElement,
