@@ -32,7 +32,11 @@ class HTTPAPILayer {
      * @see {@link https://opensource.adobe.com/aem-forms-af-runtime/api/#tag/Get-Form-Definition} - API documentation
      */
     static async getForm(formContainerPath) {
-        const _formPath = formContainerPath.substring(0, formContainerPath.indexOf("/jcr:content/guideContainer"));
+        const guideContainerIndex = formContainerPath.indexOf("/jcr:content/guideContainer");
+        let _formPath = formContainerPath;
+        if (guideContainerIndex !== -1) {
+            _formPath = formContainerPath.substring(0, guideContainerIndex);
+        }
         const _formsList =  await this.#getFormsList();
         if (_formsList) {
             return await this.#findForm(_formPath, _formsList);
@@ -74,8 +78,8 @@ class HTTPAPILayer {
         const _form = formsList.items.find((form) => {return form.path === formPath});
         if (_form) {
             return _form;
-        } else if (formsList._links && formsList._links.next) {
-            const _nextList = await this.getJson(formsList._links.next);
+        } else if (formsList.cursor) {
+            const _nextList = await this.#getFormsList(formsList.cursor);
             return await this.#findForm(formPath, _nextList);
         } else {
             //TODO: throw errors once API is available on Circle CI set up
@@ -88,8 +92,8 @@ class HTTPAPILayer {
      * @returns {Promise<Object>} - A Promise that resolves to the list of forms.
      * @private
      */
-    static async #getFormsList() {
-        return await this.getJson(Constants.API_PATH_PREFIX + "/listforms");
+    static async #getFormsList(cursor = "") {
+        return await this.getJson(`${Constants.API_PATH_PREFIX}/listforms?cursor=${cursor}`);
     }
 
     /**
