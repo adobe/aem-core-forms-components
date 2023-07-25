@@ -126,16 +126,13 @@ describe("Form with Submit Button", () => {
 
     it("Submit Action test without passing any custom submit event", () => {
         cy.previewForm(basicSubmitPagePath).then(p => {
-            const func = cy.spy();
-            cy.window().then((win) => {
-                win.guideBridge.on("submitStart", func)
-                cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                    cy.get('body').should('have.contain', "Thank you for submitting the form.\n")
-                    cy.wrap(null).then(() => {
-                        expect(func).to.be.calledOnce;
-                    });
-                });
-            })
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.location('href')
+                    .should('eq', 'http://localhost:4502/aem/forms.html/content/dam/formsanddocuments');
+            });
+
         })
     })
 
