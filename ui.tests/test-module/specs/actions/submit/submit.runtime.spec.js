@@ -18,7 +18,7 @@ describe("Form with Submit Button", () => {
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
-    const basicSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/basicsubmit.html"
+    const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -125,7 +125,7 @@ describe("Form with Submit Button", () => {
     })
 
     it("Submit Action test without passing any custom submit event", () => {
-        cy.previewForm(basicSubmitPagePath).then(p => {
+        cy.previewForm(submitSuccessRulePagePath).then(p => {
             formContainer = p;
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
