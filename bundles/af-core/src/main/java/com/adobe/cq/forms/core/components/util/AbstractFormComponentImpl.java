@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -242,9 +241,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
-        Map<String, String> headlessCustomProperties = getHeadlessCustomProperties();
-        if (headlessCustomProperties.size() > 0) {
-            for (Map.Entry<String, String> entry : headlessCustomProperties.entrySet()) {
+        Map<String, String> customProperties = getCustomProperties();
+        if (customProperties.size() > 0) {
+            for (Map.Entry<String, String> entry : customProperties.entrySet()) {
                 properties.put(entry.getKey(), entry.getValue());
             }
         }
@@ -303,9 +302,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns {@code Map<String, String>} containing the key value pairs associated with this resource
      */
     @JsonIgnore
-    public Map<String, String> getHeadlessCustomProperties() {
-        Set<String> groupNames = new LinkedHashSet<>();
-        Map<String, String> keyValuePairs = new HashMap<>();
+    private Map<String, String> getCustomProperties() {
+        Set<String> groupNames = new HashSet<>();
+        Map<String, String> customPropertiesMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : resource.getValueMap().entrySet()) {
             if (entry.getKey().equals(CUSTOM_PROPERTY_JCR_NAME)) {
                 if (entry.getValue() != null) {
@@ -317,7 +316,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             .getResourceResolver());
         if (policy != null) {
             Resource policyResource = resource.getResourceResolver().resolve(policy.getPath());
-            keyValuePairs = ComponentUtils.getCustomPropertyPairsFromPolicy(
+            customPropertiesMap = ComponentUtils.getCustomPropertyPairsFromPolicy(
                 groupNames, policyResource);
             ValueMap resourceMap = resource.getValueMap();
             if (resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS) && resourceMap.containsKey(
@@ -329,12 +328,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
                 for (int i = 0; i < addonKeys.length; i++) {
                     if (!addonKeys[i].isEmpty()) {
-                        keyValuePairs.put(addonKeys[i], addonValues[i]);
+                        customPropertiesMap.put(addonKeys[i], addonValues[i]);
                     }
                 }
             }
         }
-        return keyValuePairs;
+        return customPropertiesMap;
     }
 
     /***

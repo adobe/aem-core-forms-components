@@ -77,15 +77,6 @@ public interface FormComponent extends Component {
     }
 
     /**
-     * Template Policy key-value Custom Properties
-     */
-    @JsonView(Views.Author.class)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, String> getHeadlessCustomProperties() {
-        return Collections.emptyMap();
-    }
-
-    /**
      * Returns getPath of the form field
      *
      * @return getPath of the field

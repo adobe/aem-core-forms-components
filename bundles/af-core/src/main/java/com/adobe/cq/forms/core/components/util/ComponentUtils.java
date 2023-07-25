@@ -206,12 +206,9 @@ public class ComponentUtils {
         }
         Resource policyResource = resourceResolver.resolve(policy.getPath());
         List<String> groupNames = new ArrayList<>();
-        List<Resource> customPropertiesGroupsList;
 
-        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
-        if (customPropertiesResource != null) {
-            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
-                .spliterator(), false).collect(Collectors.toList());
+        List<Resource> customPropertiesGroupsList = getCustomPropertiesResources(policyResource);
+        if (!customPropertiesGroupsList.isEmpty()) {
             customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
                 for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
                     if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME)) {
@@ -219,10 +216,18 @@ public class ComponentUtils {
                     }
                 }
             });
-        } else {
-            return new ArrayList<>();
         }
         return groupNames;
+    }
+
+    private static List<Resource> getCustomPropertiesResources(Resource policyResource) {
+        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
+        List<Resource> customPropertiesGroupsList = new ArrayList<>();
+        if (customPropertiesResource != null) {
+            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
+                .spliterator(), false).collect(Collectors.toList());
+        }
+        return customPropertiesGroupsList;
     }
 
     /**
@@ -233,13 +238,9 @@ public class ComponentUtils {
      * @return {@code Map<String, String>} key value pairs associated with the given group names
      */
     public static Map<String, String> getCustomPropertyPairsFromPolicy(Set<String> groupNames, Resource policyResource) {
-        Map<String, String> keyValuePairs = new HashMap<>();
-        List<Resource> customPropertiesGroupsList;
-        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
-        if (customPropertiesResource != null) {
-            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
-                .spliterator(), false)
-                .collect(Collectors.toList());
+        Map<String, String> customPropertiesMap = new HashMap<>();
+        List<Resource> customPropertiesGroupsList = getCustomPropertiesResources(policyResource);
+        if (!customPropertiesGroupsList.isEmpty()) {
             customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
                 for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
                     if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
@@ -262,17 +263,14 @@ public class ComponentUtils {
                                     }
                                 }
                                 if (!key.isEmpty()) {
-                                    keyValuePairs.put(key, value);
+                                    customPropertiesMap.put(key, value);
                                 }
                             });
                         }
                     }
                 }
             });
-        } else {
-            return new HashMap<>(); // no custom property set in policy
         }
-
-        return keyValuePairs;
+        return customPropertiesMap;
     }
 }

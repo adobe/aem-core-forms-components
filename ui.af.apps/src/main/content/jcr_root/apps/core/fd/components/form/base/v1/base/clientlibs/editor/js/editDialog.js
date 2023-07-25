@@ -174,10 +174,6 @@
 
     function advancedTabInit(dialog) {
         if(!Utils.isTabPresentInDialog(dialog, "Advanced")) {
-            /**
-             * todo: need to figure out a way to remove additional custom properties (if set)
-             *       when Advanced Tab is no longer visible (i.e., when all policy properties are deleted)
-             * */
             return;
         }
         const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
