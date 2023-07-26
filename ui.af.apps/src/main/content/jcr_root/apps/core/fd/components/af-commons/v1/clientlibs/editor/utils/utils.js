@@ -290,24 +290,6 @@
             $(parentTag).attr("hidden", "");
         }
 
-
-        /**
-         *  Toggle the visibility of a component based on a toggler (such as checkbox)
-         *  @param dialog {HTMLElement} the dialog in which the multified is present
-         *  @param togglerClass {String} Class applied to the toggling element
-         *  @param displayElementClass {String} Element whose visibility is being altered
-         */
-        static toggleComponentVisibility(dialog, togglerClass, displayElementClass) {
-            const toggler = dialog.find(togglerClass)[0];
-            const displayElement = dialog.find(displayElementClass);
-            if(toggler?.checked) {
-                this.showComponent(displayElement, "div");
-            }
-            else {
-                this.hideComponent(displayElement, "div");
-            }
-        }
-
         /**
         * This function is used to overcome the inability of Granite UI's multifield component to prefill its values in dialogs
          *  Prefills all the multifield values in the first field and deletes the hidden input
@@ -323,36 +305,6 @@
                 hiddenFields[i].remove();
             }
         }
-
-
-        /**
-         *  Checks if the tab is visible in the dialog
-         *  @param dialog {HTMLElement}
-         *  @param tabName {String}
-         */
-        static isTabPresentInDialog(dialog, tabName) {
-            const tabs = dialog.find(".cq-dialog-content ._coral-Tabs-itemLabel").toArray();
-            for (let tab of tabs) {
-                if(tab.innerHTML.toLowerCase() === tabName.toLowerCase()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         *  Delete all the values in a multifield
-         *  @param dialog {HTMLElement}
-         *  @param multifieldSelector {String} BEM class associated with the entire multified
-         */
-        static deleteMultifieldEntries(dialog, multifieldSelector) {
-            const multifield = dialog.find(multifieldSelector);
-            multifield.children().toArray().forEach((element) => {
-                if(element.classList.contains('_coral-Multifield-item'))
-                    element.remove();
-            })
-        };
-
     }
 
 })(jQuery, jQuery(document), Coral);
