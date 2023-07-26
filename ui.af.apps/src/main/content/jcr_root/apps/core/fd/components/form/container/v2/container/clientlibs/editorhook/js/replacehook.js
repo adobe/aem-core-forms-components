@@ -68,15 +68,14 @@
         return !irreplaceable.includes(getComponentType(editable.path, editableJsonPath));
     }
 
-    window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
-
+    window.CQ.FormsCoreComponents.editorhooks.openCmpSelectionDialog = function (editable, title, actionCallback) {
         var $searchComponent = null;
         var $clearButton = null;
 
         var dialog = new Coral.Dialog().set({
             closable: Coral.Dialog.closable.ON,
             header: {
-                innerHTML: Granite.I18n.get('Replace Component')
+                innerHTML: Granite.I18n.get(title)
             },
             content: {
                 innerHTML: '<coral-search class="cmp-replace-dialog-search" placeholder="' + Granite.I18n.get("Enter Keyword") + '"></coral-search> <coral-selectlist class="cmp-replace-dialog-list"></coral-selectlist>'
@@ -183,7 +182,7 @@
                 selectList.off('coral-selectlist:change');
                 var component = author.components.find(event.detail.selection.value);
                 if (component.length > 0) {
-                    doReplace(component[0], editable, preservedProperties);
+                    actionCallback(component[0], editable, preservedProperties);
                 }
                 dialog.hide();
                 dialog.remove();
@@ -199,6 +198,10 @@
             bindEventToReplaceComponentDialog(allowedComponents, editable);
             dialog.show();
         });
+    }
+
+    window.CQ.FormsCoreComponents.editorhooks.replace = function (editable) {
+        window.CQ.FormsCoreComponents.editorhooks.openCmpSelectionDialog(editable, "Replace Component", doReplace);
     }
 
 })(window, Granite.author, Coral, jQuery(document));
