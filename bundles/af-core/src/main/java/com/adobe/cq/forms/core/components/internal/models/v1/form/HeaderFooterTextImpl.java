@@ -40,7 +40,7 @@ import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilde
 import com.day.cq.wcm.api.WCMMode;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Text.class, ComponentExporter.class },
     resourceType = {
         "core/wcm/components/text/v1/text", "core/wcm/components/text/v2/text" })
