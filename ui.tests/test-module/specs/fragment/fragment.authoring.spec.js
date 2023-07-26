@@ -17,11 +17,14 @@
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const siteSelectors = require("../../libs/commons/sitesSelectors");
 
 /**
  * Testing Fragment
  */
 describe('Page - Authoring', function () {
+
+    const fragmentPath = "/content/forms/af/core-components-it/samples/fragment/test-fragment";
     // we can use these values to log in
 
     const dropFragmentInContainer = function () {
@@ -71,6 +74,25 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(fragmentDrop);
     }
 
+    const attachFragmentReference = function (fragmentEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("foundation-autocomplete[name='./fragmentPath']")
+            .should("exist")
+            .invoke("val", fragmentPath);
+        cy.get("[name='./name']")
+            .should("exist")
+            .invoke("val", "fragment1234");
+        cy.get('.cq-dialog-submit').click();
+    }
+
+    const getContentFrameBody = () => {
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
+
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             fragmentEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/fragment",
@@ -88,6 +110,30 @@ describe('Page - Authoring', function () {
         it('open edit dialog of Fragment', function () {
             testFragmentDialogBehaviour(fragmentPathSelector, fragmentEditPath);
         });
+
+        it('fragment component placeholder visible after setting fragment path', function () {
+            dropFragmentInContainer();
+            getContentFrameBody().find('.cmp-adaptiveform-fragment__placeholderContainer').should("not.exist");
+            attachFragmentReference(fragmentPathSelector);
+
+            // If fragment reference is set, placeholder should be visible
+            getContentFrameBody().find('.cmp-adaptiveform-fragment__placeholderContainer').should("be.visible");
+        });
+
+        it('embed fragment in form', function () {
+            // Textfield should not exist before embeding fragment
+            getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentPathSelector);
+            cy.invokeEditableAction("[data-action='embed']");
+            cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
+            cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
+
+            // Textfield should be visible after embeding fragment
+            getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
+            cy.deleteComponentByPath(fragmentEditPath);
+
+        })
     })
 
     context('Open Sites Editor', function () {
@@ -108,6 +154,29 @@ describe('Page - Authoring', function () {
         it('open edit dialog of aem forms Fragment', function () {
             testFragmentDialogBehaviour(fragmentEditPathSelector, fragmentEditPath, true);
         });
+
+        it('fragment component placeholder visible after setting fragment path', function () {
+            dropFragmentInSites();
+            getContentFrameBody().find('.cmp-adaptiveform-fragment__placeholderContainer').should("not.exist");
+            attachFragmentReference(fragmentEditPathSelector);
+
+            // If fragment reference is set, placeholder should be visible
+            getContentFrameBody().find('.cmp-adaptiveform-fragment__placeholderContainer').should("be.visible");
+        })
+
+        it('embed fragment in sites', function () {
+            // Textfield should not exist before embeding fragment
+            getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentEditPathSelector);
+            cy.invokeEditableAction("[data-action='embed']");
+            cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
+            cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
+
+            // Textfield should be visible after embeding fragment
+            getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
+            cy.deleteComponentByPath(fragmentEditPath);
+        })
 
     });
 });

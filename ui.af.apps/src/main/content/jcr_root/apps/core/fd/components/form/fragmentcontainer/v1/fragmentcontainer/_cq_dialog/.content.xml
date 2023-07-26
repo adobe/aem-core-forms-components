@@ -16,14 +16,14 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
   jcr:primaryType="nt:unstructured"
-  jcr:title="Adaptive Form Container"
+  jcr:title="Adaptive Form Fragment Container"
   sling:resourceType="cq/gui/components/authoring/dialog"
   extraClientlibs="[core.forms.components.container.v1.editor]"
   helpPath="https://www.adobe.com/go/aem_af_cmp_fragmentcontainer_v1"
   trackingFeature="core-components:adaptiveform-fragmentcontainer:v1">
     <content
       jcr:primaryType="nt:unstructured"
-      granite:class="cmp-adaptiveform-container__editdialog"
+      granite:class="cmp-adaptiveform-container__editdialog cmp-adaptiveform-container__editdialog--fragmentcontainer"
       sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs
