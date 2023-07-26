@@ -97,7 +97,7 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     @Nullable
     public String getAltText() {
-        return altText;
+        return translate("altText",altText);
     }
 
     @Override
