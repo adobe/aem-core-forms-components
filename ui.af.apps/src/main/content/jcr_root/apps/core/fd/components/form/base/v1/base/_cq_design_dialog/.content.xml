@@ -37,7 +37,7 @@
                     <customProperties
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
-                            path="/libs/fd/af/authoring/dialog/customProperties/cq:design_dialog/customProperties"/>
+                            path="/mnt/overlay/fd/af/authoring/dialog/customProperties/cq:design_dialog/customProperties"/>
                 </items>
             </tabs>
         </items>

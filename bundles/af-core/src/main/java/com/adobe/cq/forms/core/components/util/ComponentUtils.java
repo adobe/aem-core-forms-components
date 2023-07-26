@@ -17,18 +17,11 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.resource.Resource;
@@ -43,7 +36,6 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_GROUP_NAME;
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
 /**
@@ -56,8 +48,6 @@ public class ComponentUtils {
     private ComponentUtils() {
         // NOOP
     }
-
-    private static final String HEADLESS_CUSTOM_PROPERTY_NODE_NAME = "customProperties";
 
     /**
      * Returns the base64 encoded path
@@ -191,42 +181,5 @@ public class ComponentUtils {
             array[0] = (T) param;
             return array;
         }
-    }
-
-    /**
-     * Fetches all the custom property group names defined in the template policy
-     *
-     * @param policy reference to the template policy {@link ContentPolicy}
-     * @param resourceResolver {@link ResourceResolver}
-     * @return {@code List<String>} a list of all the group names of custom properties defined in the policy
-     */
-    public static List<String> getCustomPropertyGroupsFromPolicy(ContentPolicy policy, ResourceResolver resourceResolver) {
-        if (policy == null) {
-            return new ArrayList<>();
-        }
-        Resource policyResource = resourceResolver.resolve(policy.getPath());
-        List<String> groupNames = new ArrayList<>();
-
-        List<Resource> customPropertiesGroupsList = getCustomPropertiesResources(policyResource);
-        if (!customPropertiesGroupsList.isEmpty()) {
-            customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
-                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                    if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME)) {
-                        groupNames.add(entry.getValue().toString());
-                    }
-                }
-            });
-        }
-        return groupNames;
-    }
-
-    private static List<Resource> getCustomPropertiesResources(Resource policyResource) {
-        Resource customPropertiesResource = policyResource.getChild(HEADLESS_CUSTOM_PROPERTY_NODE_NAME);
-        List<Resource> customPropertiesGroupsList = new ArrayList<>();
-        if (customPropertiesResource != null) {
-            customPropertiesGroupsList = StreamSupport.stream(customPropertiesResource.getChildren()
-                .spliterator(), false).collect(Collectors.toList());
-        }
-        return customPropertiesGroupsList;
     }
 }
