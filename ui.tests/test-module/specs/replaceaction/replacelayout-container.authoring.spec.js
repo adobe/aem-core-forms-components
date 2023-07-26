@@ -114,6 +114,9 @@ describe('component replace - Authoring', function () {
                 .should("exist");
             cy.get(accordion)
                 .click();
+            // check if default panels of accordion's template are not visible
+            cy.get('[data-path="/content/forms/af/af2/jcr:content/guideContainer/accordion/item_1"]')
+                .should('not.exist');
             cy.deleteComponentByPath(componentDrop);
         } else {
             var replacedComponentName, currentType, replacementComp;

@@ -1,0 +1,9 @@
+{
+  "org.apache.felix.jetty.gziphandler.enable":true,
+  "org.apache.felix.jetty.gzip.includedPaths":[
+    "/content/forms/af/core-components-it/samples/accessibility/jcr:content/guideContainer.model.json"
+  ],
+  "org.apache.felix.jetty.gzip.includedMethods":[
+    "GET"
+  ]
+}

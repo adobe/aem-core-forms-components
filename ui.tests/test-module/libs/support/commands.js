@@ -328,6 +328,23 @@ Cypress.Commands.add("getFormData", () => {
 });
 
 
+Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, cursor = "", limit = 20) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?cursor=${cursor}&limit=${limit}`).then(({body}) => {
+        // We need its ID to continue nesting below it
+        let retVal = body.items.find(collection => collection.path === formPath);
+        if (retVal) {
+            return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+        } else {
+            console.log("fetching the list of forms again");
+            if (body.cursor) {
+                cursor = body.cursor;
+            }
+            return cy.getFromDefinitionUsingOpenAPIUsingCursor(formPath, cursor, limit);
+        }
+    });
+});
+
+// this API is deprecated, this is not to be used anymore
 Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
     return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
         // We need its ID to continue nesting below it
