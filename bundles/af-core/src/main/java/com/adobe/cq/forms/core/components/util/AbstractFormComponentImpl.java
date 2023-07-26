@@ -312,7 +312,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
             Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
