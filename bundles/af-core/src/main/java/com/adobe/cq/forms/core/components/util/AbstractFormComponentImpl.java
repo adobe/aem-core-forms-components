@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -44,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.aemds.guide.utils.GuideV2Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -53,15 +53,12 @@ import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
-import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.CUSTOM_PROPERTY_JCR_NAME;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -241,7 +238,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
-        Map<String, String> customProperties = getCustomProperties();
+        GuideV2Utils internalAPI = resource.getResourceResolver().adaptTo(GuideV2Utils.class);
+        Map<String, String> customProperties = internalAPI.getFormV2ComponentCustomProperties(resource);
         if (customProperties.size() > 0) {
             for (Map.Entry<String, String> entry : customProperties.entrySet()) {
                 properties.put(entry.getKey(), entry.getValue());
@@ -296,44 +294,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
         }
         return customRulesProperties;
-    }
-
-    /**
-     * Returns {@code Map<String, String>} containing the key value pairs associated with this resource
-     */
-    @JsonIgnore
-    private Map<String, String> getCustomProperties() {
-        Set<String> groupNames = new HashSet<>();
-        Map<String, String> customPropertiesMap = new HashMap<>();
-        for (Map.Entry<String, Object> entry : resource.getValueMap().entrySet()) {
-            if (entry.getKey().equals(CUSTOM_PROPERTY_JCR_NAME)) {
-                if (entry.getValue() != null) {
-                    groupNames.addAll(Arrays.asList((String[]) ComponentUtils.convertToArray(entry.getValue())));
-                }
-            }
-        }
-        ContentPolicy policy = ComponentUtils.getPolicy(resource.getPath(), resource
-            .getResourceResolver());
-        if (policy != null) {
-            Resource policyResource = resource.getResourceResolver().resolve(policy.getPath());
-            customPropertiesMap = ComponentUtils.getCustomPropertyPairsFromPolicy(
-                groupNames, policyResource);
-            ValueMap resourceMap = resource.getValueMap();
-            if (resourceMap.containsKey(CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS) && resourceMap.containsKey(
-                CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES)) {
-                String[] addonKeys = (String[]) ComponentUtils.convertToArray(resourceMap.get(
-                    CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS));
-                String[] addonValues = (String[]) ComponentUtils.convertToArray(resourceMap.get(
-                    CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES));
-
-                for (int i = 0; i < addonKeys.length; i++) {
-                    if (!addonKeys[i].isEmpty()) {
-                        customPropertiesMap.put(addonKeys[i], addonValues[i]);
-                    }
-                }
-            }
-        }
-        return customPropertiesMap;
     }
 
     /***

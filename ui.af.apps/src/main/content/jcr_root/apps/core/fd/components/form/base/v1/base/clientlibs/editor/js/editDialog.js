@@ -28,12 +28,6 @@
         BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
-        BASE_CUSTOMPROPERTIES_ADDITIONALCHECK = ".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck",
-        BASE_CUSTOMPROPERTIES_ADDITIONALFIELD = ".cmp-adaptiveform-base-customproperties__additionalMultifield",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_KEYS =".cmp-adaptiveform-base-customproperties__additionalKeys",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES =".cmp-adaptiveform-base-customproperties__additionalValues",
-        BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN =".cmp-adaptiveform-base-customproperties__additionalValuesHidden",
-
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -147,9 +141,6 @@
         var submitButton=dialog.find(".cq-dialog-submit")[0];
         submitButton.addEventListener("click", () => {
             _manageEmptyEnumNames();
-            if(Utils.isTabPresentInDialog(dialog, "Advanced")) {
-                _manageCustomProperties();
-            }
         });
 
         function _manageEmptyEnumNames() {
@@ -162,32 +153,6 @@
                 }
             }
         }
-
-        function _manageCustomProperties() {
-            const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
-
-            if(!additionalCustomPropertiesCheck.checked) {
-                Utils.deleteMultifieldEntries(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
-            }
-        }
-    }
-
-    function advancedTabInit(dialog) {
-        if(!Utils.isTabPresentInDialog(dialog, "Advanced")) {
-            return;
-        }
-        const additionalCustomPropertiesCheck = dialog.find(BASE_CUSTOMPROPERTIES_ADDITIONALCHECK)[0];
-
-        // set the initial state
-        Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
-
-        if(additionalCustomPropertiesCheck.checked) {
-            Utils.prefillMultifieldValues(dialog, BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES, BASE_CUSTOMPROPERTIES_ADDITIONAL_VALUES_HIDDEN);
-        }
-
-        additionalCustomPropertiesCheck.on("change", () => {
-            Utils.toggleComponentVisibility(dialog, BASE_CUSTOMPROPERTIES_ADDITIONALCHECK, BASE_CUSTOMPROPERTIES_ADDITIONALFIELD);
-        });
     }
 
     /**
@@ -207,7 +172,6 @@
         handleAssistPriority(dialog);
         Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
-        advancedTabInit(dialog);
         validateName();
         handleDialogSubmit(dialog);
     }

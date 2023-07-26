@@ -194,8 +194,9 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                     resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
                     break;
                 case CUSTOM_PROPERTIES:
-                    if (policy != null) {
-                        List<String> customPropertyGroups = ComponentUtils.getCustomPropertyGroupsFromPolicy(policy, resourceResolver);
+                    Resource componentResource = resourceResolver.getResource((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE));
+                    if (componentResource != null) {
+                        List<String> customPropertyGroups = formMetaData.getFormV2ComponentCustomPropertyGroups(componentResource);
                         for (String groupName : customPropertyGroups) {
                             resources.add(getResourceForDropdownDisplay(resourceResolver, groupName, groupName));
                         }

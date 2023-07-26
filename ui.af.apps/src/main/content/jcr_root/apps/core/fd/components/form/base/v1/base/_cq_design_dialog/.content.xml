@@ -36,68 +36,8 @@
                         path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_design/styletab"/>
                     <customProperties
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Custom Properties"
-                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                            margin="{Boolean}true"
-                            granite:class="cmp-adaptiveform-base-customproperties">
-                        <items jcr:primaryType="nt:unstructured">
-                            <column
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/container">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <customPropertiesMultiField
-                                        granite:class="cmp-adaptiveform-base-customproperties__multifield"
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                        fieldDescription="Key value pairs are defined here, which when selected via the 'Advanced' tab in the dialog of a component, renders them in the JSON of the form. NOTE: The 'Advanced' Tab in the dialog will only be visible if at least one Custom Property group is defined here."
-                                        fieldLabel="Custom Properties"
-                                        composite="true"
-                                        name="./customProperties">
-                                        <field
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType = "granite/ui/components/coral/foundation/container"
-                                                name = "./customProperties">
-                                            <items jcr:primaryType="nt:unstructured">
-                                                <customPropertyGroupName
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        fieldDescription="A User friendly name that will be displayed in the 'Advanced' tab of the Dialog for selection, describing the utility of the set of key-value pairs"
-                                                        emptyText="Group Name"
-                                                        name="./customPropertyGroupName"
-                                                        required="{Boolean}true"/>
-                                                <keyValuePairs
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                        composite="{Boolean}true"
-                                                        fieldLabel="Key-value pairs">
-                                                    <field
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                            name="./keyValuePairs">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <customPropertyKey
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    emptyText="Property Name"
-                                                                    name="key"
-                                                                    fieldLabel="Custom Property Name"
-                                                                    required="{Boolean}true"/>
-                                                            <customPropertyValue
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    emptyText="Property Value"
-                                                                    fieldLabel="Custom Property Value"
-                                                                    name="value"/>
-                                                        </items>
-                                                    </field>
-                                                </keyValuePairs>
-                                            </items>
-                                        </field>
-                                    </customPropertiesMultiField>
-                                </items>
-                            </column>
-                        </items>
-                    </customProperties>
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="/libs/fd/af/authoring/dialog/customProperties/cq:design_dialog/customProperties"/>
                 </items>
             </tabs>
         </items>

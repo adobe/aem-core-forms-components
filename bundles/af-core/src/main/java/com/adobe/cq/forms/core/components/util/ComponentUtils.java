@@ -229,48 +229,4 @@ public class ComponentUtils {
         }
         return customPropertiesGroupsList;
     }
-
-    /**
-     * Fetches the key value pairs associated with the group names passed in
-     *
-     * @param groupNames {@link Set<String>}
-     * @param policyResource {@link Resource}
-     * @return {@code Map<String, String>} key value pairs associated with the given group names
-     */
-    public static Map<String, String> getCustomPropertyPairsFromPolicy(Set<String> groupNames, Resource policyResource) {
-        Map<String, String> customPropertiesMap = new HashMap<>();
-        List<Resource> customPropertiesGroupsList = getCustomPropertiesResources(policyResource);
-        if (!customPropertiesGroupsList.isEmpty()) {
-            customPropertiesGroupsList.forEach((customPropertiesGroup) -> {
-                for (Map.Entry<String, Object> entry : customPropertiesGroup.getValueMap().entrySet()) {
-                    if (entry.getKey().equals(CUSTOM_PROPERTY_GROUP_NAME) && groupNames.contains(entry.getValue().toString())) {
-                        Resource keyValuePairsResource = customPropertiesGroup.getChild("keyValuePairs");
-                        if (keyValuePairsResource != null) {
-                            keyValuePairsResource.getChildren().forEach((keyValueNode) -> {
-                                String key = "", value = "";
-                                for (Map.Entry<String, Object> property : keyValueNode.getValueMap().entrySet()) {
-                                    if (property.getKey().equals("key")) {
-                                        Object keyObject = property.getValue();
-                                        if (keyObject != null) {
-                                            key = keyObject.toString();
-                                        }
-                                    }
-                                    if (property.getKey().equals("value")) {
-                                        Object valueObject = property.getValue();
-                                        if (valueObject != null) {
-                                            value = valueObject.toString();
-                                        }
-                                    }
-                                }
-                                if (!key.isEmpty()) {
-                                    customPropertiesMap.put(key, value);
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        }
-        return customPropertiesMap;
-    }
 }
