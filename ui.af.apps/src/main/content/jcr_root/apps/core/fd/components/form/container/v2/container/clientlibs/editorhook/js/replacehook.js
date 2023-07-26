@@ -181,10 +181,8 @@
 
             selectList.off('coral-selectlist:change').on('coral-selectlist:change', function (event) {
                 selectList.off('coral-selectlist:change');
-                var component = author.components.find(event.detail.selection.value);
-                if (component.length > 0) {
-                    doReplace(component[0], editable, preservedProperties);
-                }
+                const component = author.components.find(event.detail.selection.value)[0];
+                doReplace(component, editable, preservedProperties);
                 dialog.hide();
                 dialog.remove();
             });
