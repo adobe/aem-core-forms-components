@@ -174,31 +174,36 @@ describe('component replace - Authoring', function () {
     })
 
     context('Group independent replace action test', function () {
-        beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            let pagePath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic";
-            cy.openAuthoring(pagePath);
-        });
+        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
+            replaceCompPageUrl = replaceCompPagePath + ".html"
 
         it('test replace of component by different group', function () {
-            const testGroupImageDataPath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic/jcr:content/guideContainer/*",
-                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupImageDataPath + "']";
+            const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
-            const pagePath = "/content/forms/af/core-components-it/samples/imagetestgroup/basic",
-                imageEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
-                imageEditPathSelector = "[data-path='" + imageEditPath + "']",
-                imageTestGroup = "/apps/forms-core-components-it/form/image",
-                imageDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + imageTestGroup.split("/").pop();
-            // const imageTestGroup = "/apps/forms-core-components-it/form/image";
+            const replaceCompEditPath = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
+                replaceCompEditPathSelector = "[data-path='" + replaceCompEditPath + "']",
+                replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
+                replaceCompDrop = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + replaceCompTestGroup.split("/").pop();
 
+            cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
+            cy.get('[title="Adaptive Form Container [Root]"]').click()
+                .then(() => {
+                    cy.get('.cq-editable-action').eq(0).click().then(() => {
+                        cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                            cy.get('[title="Done"]').scrollIntoView().click();
+                        })
+                    });
+                })
 
+            cy.openSiteAuthoring(replaceCompPageUrl);
             cy.selectLayer("Edit");
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
             cy.invokeEditableAction("[data-action='replace']");
-            const replacementComp = "[value='" + imageTestGroup + "']";
+            const replacementComp = "[value='" + replaceCompTestGroup + "']";
             cy.get(replacementComp).click();
-            cy.deleteComponentByPath(imageDrop);
+            cy.deleteComponentByPath(replaceCompDrop);
         });
     });
 });

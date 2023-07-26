@@ -111,6 +111,39 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
     });
 });
 
+// Cypress command to open AFv2
+Cypress.Commands.add("openAFv2TemplateEditor", () => {
+    const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl);
+    cy.login(baseUrl);
+    cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const path = `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path).then(waitForEditorToInitialize);
+    preventClickJacking();
+});
+
+const preventClickJacking = () => {
+    cy.window().then(win => {
+        // only if granite is defined, override the API
+        if (win.Granite) {
+            win.Granite.HTTP.handleLoginRedirect = function () {
+                if (!loginRedirected) {
+                    loginRedirected = true;
+                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
+                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
+                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+                }
+            };
+        }
+    });
+};
+
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
     cy.window().then((win) => {
