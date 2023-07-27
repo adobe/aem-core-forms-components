@@ -111,8 +111,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
             @Override
             public Object getAttribute(String attrName) {
-                if (RESOURCE_CALLER_PATH.equals(attrName)) {
-                    String resourceCallerPath = (String) super.getAttribute(RESOURCE_CALLER_PATH);
+                if (REQ_ATTR_RESOURCE_CALLER_PATH.equals(attrName)) {
+                    String resourceCallerPath = (String) super.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH);
                     // If the attribute is already defined then we're in a nested situation.
                     // The code for computing the components id uses the root-most resource path
                     // (because of how componentContext is handled in HTML rendering, so we return

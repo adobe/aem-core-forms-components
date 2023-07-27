@@ -32,7 +32,6 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
@@ -92,7 +91,7 @@ public abstract class AbstractComponentImpl implements Component {
 
     protected I18n i18n = null;
 
-    protected static final String RESOURCE_CALLER_PATH = "resourceCallerPath";
+    protected static final String REQ_ATTR_RESOURCE_CALLER_PATH = "resourceCallerPath";
 
     private static final String REQ_ATTR_EMBEDDED_ADAPTIVEFORM = "embeddedAdaptiveForm";
 
@@ -142,7 +141,7 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            String resourceCallerPath = request != null ? (String) request.getAttribute(RESOURCE_CALLER_PATH) : null;
+            String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
             this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
