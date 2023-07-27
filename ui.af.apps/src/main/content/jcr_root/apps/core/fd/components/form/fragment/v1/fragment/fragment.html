@@ -37,8 +37,8 @@
         <sly data-sly-test.showfragment="${wcmmode.preview || wcmmode.disabled}"
              data-sly-repeat="${fragment.fragmentChildren}" data-sly-resource="${item.path @ decoration=true}"></sly>
         <sly data-sly-test="${ !showfragment }"
-             data-sly-use.fragmentPlaceholder="fragmentplaceholder.html"
-             data-sly-call="${ fragmentPlaceholder.fragmentPlaceholder @ fragment=fragment, templates=templates }"></sly>
+             data-sly-use.placeholder="placeholder.html"
+             data-sly-call="${ placeholder.placeholder @ fragment=fragment, templates=templates }"></sly>
     </div>
     <sly data-sly-test="${fragment.clientLibRef}" data-sly-call="${clientlib.css @ categories=fragment.clientLibRef}"></sly>
 </sly>

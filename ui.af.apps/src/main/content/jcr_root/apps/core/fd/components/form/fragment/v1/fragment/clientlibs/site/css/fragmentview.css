@@ -22,7 +22,7 @@
 
 }
 textarea.cmp-adaptiveform-fragment__widget {
-  
+
 }
 
 .cmp-adaptiveform-fragment__label {
@@ -67,7 +67,7 @@ textarea.cmp-adaptiveform-fragment__widget {
 .cmp-adaptiveform-fragment__fragmentTitle {
     text-align: left;
     color: #4b4b4b;
-    background-image: url("/libs/core/fd/components/form/fragment/v1/fragment/clientlibs/site/resources/fragmentPlaceholderIcon.png");
+    background-image: url("/libs/core/fd/components/form/fragment/v1/fragment/clientlibs/site/resources/placeholderIcon.png");
     background-position: left center;
     background-repeat: no-repeat;
     padding-left: 25px;
