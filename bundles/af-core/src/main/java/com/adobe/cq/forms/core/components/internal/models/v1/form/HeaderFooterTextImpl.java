@@ -26,7 +26,6 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -35,8 +34,6 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.core.components.models.Text;
-import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
-import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.wcm.api.WCMMode;
 
 @Model(
@@ -88,19 +85,5 @@ public class HeaderFooterTextImpl extends AbstractComponentImpl implements Text 
     @Override
     public boolean isRichText() {
         return textIsRich;
-    }
-
-    @NotNull
-    @Override
-    public String getExportedType() {
-        return resource.getResourceType();
-    }
-
-    @Override
-    @NotNull
-    protected ComponentData getComponentData() {
-        return DataLayerBuilder.extending(super.getComponentData()).asComponent()
-            .withText(() -> StringUtils.defaultIfEmpty(this.getText(), StringUtils.EMPTY))
-            .build();
     }
 }
