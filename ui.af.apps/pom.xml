@@ -91,9 +91,6 @@
                             <root>/apps/core/fd/components/page</root>
                         </filter>
                         <filter>
-                            <root>/apps/core/fd/components/fragmentPage</root>
-                        </filter>
-                        <filter>
                             <root>/apps/core/fd/af-clientlibs</root>
                         </filter>
                     </filters>
@@ -330,9 +327,6 @@
                                         </filter>
                                         <filter>
                                             <root>/libs/core/fd/components/page</root>
-                                        </filter>
-                                        <filter>
-                                            <root>/libs/core/fd/components/fragmentPage</root>
                                         </filter>
                                         <filter>
                                             <root>/libs/core/fd/af-clientlibs</root>
