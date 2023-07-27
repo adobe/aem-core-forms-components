@@ -175,4 +175,38 @@ describe('component replace - Authoring', function () {
             testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
         })
     })
+
+    context('Group independent replace action test', function () {
+        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
+            replaceCompPageUrl = replaceCompPagePath + ".html"
+
+        it('test replace of component by different group', function () {
+            const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
+
+            const replaceCompEditPath = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
+                replaceCompEditPathSelector = "[data-path='" + replaceCompEditPath + "']",
+                replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
+                replaceCompDrop = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + replaceCompTestGroup.split("/").pop();
+
+            cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
+            cy.get('[title="Adaptive Form Container [Root]"]').click()
+                .then(() => {
+                    cy.get('.cq-editable-action').eq(0).click().then(() => {
+                        cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                            cy.get('[title="Done"]').scrollIntoView().click();
+                        })
+                    });
+                })
+
+            cy.openSiteAuthoring(replaceCompPageUrl);
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+            const replacementComp = "[value='" + replaceCompTestGroup + "']";
+            cy.get(replacementComp).click();
+            cy.deleteComponentByPath(replaceCompDrop);
+        });
+    });
 });

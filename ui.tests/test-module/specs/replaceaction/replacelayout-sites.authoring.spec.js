@@ -110,4 +110,82 @@ describe('Replace functionality - sites', function () {
         });
 
     });
+
+    const checkTestGroupPolicy = () => {
+        cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/content-page/structure");
+        cy.get('[data-text="Layout Container"]').eq(0).click()
+            .then(() => {
+                cy.get('.cq-editable-action').eq(3).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                        cy.get('[title="Done"]').scrollIntoView().click();
+                    })
+                });
+            });
+    }
+
+    const uncheckTestGroupPolicy = () => {
+        cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/content-page/structure");
+        cy.get('[data-text="Layout Container"]').eq(0).click()
+            .then(() => {
+                cy.get('.cq-editable-action').eq(3).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                        cy.get('[title="Done"]').scrollIntoView().click();
+                    })
+                });
+            });
+    }
+
+    context('Test replace action within different groups', function () {
+        const templatePath = "/conf/core-components-examples/settings/wcm/templates/content-page/structure";
+
+        const   pagePath = "/content/forms/sites/core-components-it/blank",
+            replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
+            image = "[value='"+replaceCompTestGroup+"']",
+            containerSuffix = "/jcr:content/root/responsivegrid/container";
+
+        const dataPath = "/content/forms/sites/core-components-it/blank/jcr:content/root/responsivegrid/container/container/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']",
+            replaceCompTestGroupDataPath = containerSuffix + "/container/image",
+            editPath = pagePath + replaceCompTestGroupDataPath,
+            editPathSelector = "[data-path='" + editPath + "']",
+            replaceCompTestGroupDrop = pagePath + containerSuffix + "/container/image";
+
+        beforeEach(function () {
+            checkTestGroupPolicy();
+        });
+
+        afterEach(function () {
+            uncheckTestGroupPolicy();
+        });
+
+        it('test behaviour of replace within different groups same component type', function () {
+            cy.openSiteAuthoring(pagePath);
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
+            cy.get('body').click( 0,0);
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+
+            cy.get(image).click();
+
+            cy.deleteComponentByPath(replaceCompTestGroupDrop);
+        });
+
+        it('test behaviour of replace within different groups different component type', function () {
+                const buttonEditPath = pagePath + containerSuffix + "/container/button",
+                    buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
+
+            cy.openSiteAuthoring(pagePath);
+            cy.selectLayer("Edit");
+
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+            cy.get('body').click( 0,0);
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+            cy.get(image).click();
+            cy.deleteComponentByPath(buttonEditPath);
+        });
+    });
 });
