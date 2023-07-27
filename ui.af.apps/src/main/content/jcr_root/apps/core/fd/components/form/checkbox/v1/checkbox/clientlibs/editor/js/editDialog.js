@@ -14,57 +14,70 @@
  * limitations under the License.
  ******************************************************************************/
 (function($) {
-    "use strict";
+  "use strict";
 
-    var EDIT_DIALOG = ".cmp-adaptiveform-checkbox__editdialog",
-        CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
-        CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
-        UNCHECKED_VALUE_WRAPPER = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__uncheckedvalue",
-        CHECKBOX_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__type",
-        Utils = window.CQ.FormsCoreComponents.Utils.v1;
+  var EDIT_DIALOG = ".cmp-adaptiveform-checkbox__editdialog",
+      CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
+      CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
+      UNCHECKED_VALUE_WRAPPER = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__uncheckedvalue",
+      CHECKBOX_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__type",
+      Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
-    /**
-     * Shows custom text box depending on the value of assist priority of radio button
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function handleAssistPriorityChange(dialog) {
-        var assistpriority = dialog.find(CHECKBOX_ASSISTPRIORITY);
-        var customtext = dialog.find(CHECKBOX_CUSTOMTEXT);
-        var hideAndShowElements = function() {
-            if(assistpriority[0].value === "custom"){
-                customtext.show();
-            } else {
-                customtext.hide();
-            }
-        };
-        hideAndShowElements();
-        dialog.on("change", assistpriority, function() {
-            hideAndShowElements();
-        });
+  /**
+   * Shows custom text box depending on the value of assist priority of radio button
+   * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+   */
+  function handleAssistPriorityChange(dialog) {
+    var assistpriority = dialog.find(CHECKBOX_ASSISTPRIORITY);
+    var customtext = dialog.find(CHECKBOX_CUSTOMTEXT);
+    var hideAndShowElements = function() {
+      if(assistpriority[0].value === "custom"){
+        customtext.show();
+      } else {
+        customtext.hide();
+      }
+    };
+    hideAndShowElements();
+    dialog.on("change", assistpriority, function() {
+      hideAndShowElements();
+    });
+  }
+
+  function handleUncheckedValue(dialog) {
+    var enabledCheckedValueSwitch = $('coral-switch[name="./enableUncheckedValue"]')[0];
+    var isChecked = enabledCheckedValueSwitch.hasAttribute('checked');
+    var uncheckedValueBox = $('.cmp-adaptiveform-checkbox__uncheckedvalue');
+
+    var enableCheckedValueInput = $('input[name="./enableUncheckedValue"]')[0];
+
+    enableCheckedValueInput.addEventListener("click", function() {
+      isChecked = !isChecked;
+      if (isChecked) {
+        uncheckedValueBox.show();
+      } else {
+        uncheckedValueBox.hide();
+      }
+    })
+
+    if (!isChecked) {
+      uncheckedValueBox.hide();
     }
 
-    function handleUncheckedValue(dialog) {
-       var disableUncheckedValueElement = dialog.find('coral-checkbox[name="./disableUncheckedValue"]')[0];
-       var disableUnchecked = disableUncheckedValueElement.hasAttribute('checked');
-       var uncheckValueWrapper = dialog.find(UNCHECKED_VALUE_WRAPPER);
 
-       if (disableUnchecked) {
-           uncheckValueWrapper.hide();
-       } else {
-           uncheckValueWrapper.show();
-       }
+  }
 
-        disableUncheckedValueElement.addEventListener('click', function(e) {
-            disableUnchecked = !disableUnchecked;
-            if (disableUnchecked) {
-                uncheckValueWrapper.hide();
-            } else {
-                uncheckValueWrapper.show();
-            }
-        })
-    }
+  function handleLayout(dialog) {
+    var switchWrapper =  dialog.find('.cmp-adaptiveform-checkbox__disable_unchecked_value')[0];
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleUncheckedValue);
+    $(switchWrapper).css({"display":"flex", "margin-bottom":"1px"});
+    var label = $(switchWrapper).find('label[class="coral-Form-fieldlabel"]')[0];
+    $(label).css('padding-right', '20px');
+
+    var switchBtn = dialog.find('coral-switch[name="./enableUncheckedValue"]')[0];
+    $(switchBtn).css({"width":"40px"});
+  }
+
+  Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleUncheckedValue, handleLayout);
 
 })(jQuery);
