@@ -32,6 +32,7 @@ import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.models.Text;
+import com.day.cq.wcm.api.WCMMode;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -94,6 +95,13 @@ public class HeaderFooterTextImplTest {
         request.setParameterMap(paramMap);
         Text text = request.adaptTo(Text.class);
         assertEquals("<p><b>This is the header text</b></p>", text.getText());
+    }
+
+    @Test
+    void testTextWithWcmEditMode() throws Exception {
+        context.request().setAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME, WCMMode.EDIT);
+        Text text_header = getTextUnderTest(PATH_TEXT_HEADER);
+        assertEquals("<p><b>This is the header text</b></p>", text_header.getText());
     }
 
     private Text getTextUnderTest(String resourcePath) {
