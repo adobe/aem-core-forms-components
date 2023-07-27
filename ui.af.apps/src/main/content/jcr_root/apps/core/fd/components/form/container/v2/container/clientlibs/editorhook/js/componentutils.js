@@ -87,7 +87,7 @@
 
             // Delete properties that are not preserved
             for (p in comData) {
-                if (preservedProperties.includes(p)) {
+                if ((!Array.isArray(comData[p]) && typeof comData[p] === 'object') || preservedProperties.includes(p)) {
                     delete comData[p];
                 }
             }

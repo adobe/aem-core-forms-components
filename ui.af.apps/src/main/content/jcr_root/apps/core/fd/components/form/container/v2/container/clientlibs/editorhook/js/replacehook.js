@@ -131,26 +131,23 @@
 
                 if (!(keyword.length > 0) || isKeywordFound) {
                     if ((!cannotBeReplacedWith.includes(componentType))
-                        && typeMap[editableType] === typeMap[componentType]
-                        && editable.getResourceTypeName() != getComponentResourceType(component)) {
+                        && typeMap[editableType] === typeMap[componentType]) {
                         performReplace = true;
                     }
 
                     if (performReplace) {
-                        if (allowedComponents.indexOf(component.componentConfig.path) > -1 || allowedComponents.indexOf("group:" + component.getGroup()) > -1) {
-                            g = component.getGroup();
+                        g = component.getGroup();
 
-                            var group = document.createElement('coral-selectlist-group');
-                            group.label = Granite.I18n.getVar(g);
+                        var group = document.createElement('coral-selectlist-group');
+                        group.label = Granite.I18n.getVar(g);
 
-                            groups[g] = groups[g] || group;
+                        groups[g] = groups[g] || group;
 
-                            var item = document.createElement('coral-selectlist-item');
-                            item.value = cfg.path;
-                            item.innerHTML = Granite.I18n.getVar(cfg.title);
+                        var item = document.createElement('coral-selectlist-item');
+                        item.value = cfg.path;
+                        item.innerHTML = Granite.I18n.getVar(cfg.title);
 
-                            groups[g].items.add(item);
-                        }
+                        groups[g].items.add(item);
                     }
                 }
             });
@@ -159,11 +156,6 @@
                 selectList.append(groups[g]);
             });
         };
-
-        var getComponentResourceType = function (component) {
-            var p = component.componentConfig.resourceType.split("/");
-            return p[p.length - 1]
-        }
 
         var bindEventToReplaceComponentDialog = function (allowedComponents, editable) {
             $searchComponent.off("keydown.replaceComponent.coral-search");
@@ -181,10 +173,8 @@
 
             selectList.off('coral-selectlist:change').on('coral-selectlist:change', function (event) {
                 selectList.off('coral-selectlist:change');
-                var component = author.components.find(event.detail.selection.value);
-                if (component.length > 0) {
-                    doReplace(component[0], editable, preservedProperties);
-                }
+                const component = author.components.find(event.detail.selection.value)[0];
+                doReplace(component, editable, preservedProperties);
                 dialog.hide();
                 dialog.remove();
             });
