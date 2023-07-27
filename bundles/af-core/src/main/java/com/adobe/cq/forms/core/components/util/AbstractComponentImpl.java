@@ -92,6 +92,10 @@ public abstract class AbstractComponentImpl implements Component {
 
     protected I18n i18n = null;
 
+    protected static final String RESOURCE_CALLER_PATH = "resourceCallerPath";
+
+    private static final String REQ_ATTR_EMBEDDED_ADAPTIVEFORM = "embeddedAdaptiveForm";
+
     /**
      * Flag indicating if the data layer is enabled.
      */
@@ -123,7 +127,7 @@ public abstract class AbstractComponentImpl implements Component {
     @PostConstruct
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
-        if (currentPage != null && resource != null && request.getAttribute("embeddedAdaptiveForm") != null) {
+        if (currentPage != null && resource != null && request.getAttribute(REQ_ATTR_EMBEDDED_ADAPTIVEFORM) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
                 Page resourcePage = pageManager.getContainingPage(resource);
@@ -138,7 +142,7 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            String resourceCallerPath = request != null ? (String) request.getAttribute(FormConstants.RESOURCE_CALLER_PATH) : null;
+            String resourceCallerPath = request != null ? (String) request.getAttribute(RESOURCE_CALLER_PATH) : null;
             this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;

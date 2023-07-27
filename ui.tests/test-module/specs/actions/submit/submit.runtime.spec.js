@@ -18,6 +18,7 @@ describe("Form with Submit Button", () => {
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
+    const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -120,6 +121,18 @@ describe("Form with Submit Button", () => {
         cy.wait('@thankYouPage').then(({response}) => {
             expect(response.statusCode).to.equal(200);
             cy.get('body').should('contain', "Thank you for submitting the form.\n")
+        })
+    })
+
+    it("Submit Action test without passing any custom submit event", () => {
+        cy.previewForm(submitSuccessRulePagePath).then(p => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.location('href')
+                    .should('eq', 'http://localhost:4502/aem/forms.html/content/dam/formsanddocuments');
+            });
+
         })
     })
 
