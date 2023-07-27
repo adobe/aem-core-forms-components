@@ -73,29 +73,29 @@
                                                 <checkedValue
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                  fieldLabel="Checked Value"
-                                                  fieldDescription="checked value"
+                                                  fieldLabel="When Checked, return value"
+                                                  fieldDescription="Specify the value to be returned when the checkbox is checked by the user."
                                                   name="./checkedValue"/>
-                                                <disableUncheckedValue
+                                                <enableUncheckedValue
                                                   jcr:primaryType="nt:unstructured"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                  name="./disableUncheckedValue"
-                                                  text="Disable Unchecked Value"
-                                                  fieldDescription="disable unchecked value"
+                                                  sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                  wrapperClass="cmp-adaptiveform-checkbox__disable_unchecked_value"
+                                                  name="./enableUncheckedValue"
+                                                  fieldLabel="Enable Uncheck."
+                                                  fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
                                                   uncheckedValue="false"
                                                   value="true">
-                                                </disableUncheckedValue>
-                                                <disableUncheckedValue-typehint
+                                                </enableUncheckedValue>
+                                                <enableUncheckedValue-typehint
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                  name="./disableUncheckedValue@TypeHint"
+                                                  name="./enableUncheckedValue@TypeHint"
                                                   value="Boolean"/>
                                                 <unCheckedValue
                                                   wrapperClass="cmp-adaptiveform-checkbox__uncheckedvalue"
+                                                  fieldLabel="When Unchecked, return value"
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                  fieldLabel="Unchecked Value"
-                                                  fieldDescription="unchecked value"
                                                   name="./uncheckedValue"/>
                                                 </items>
                                             </enums_123>
