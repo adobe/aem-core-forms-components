@@ -31,5 +31,21 @@
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/text"
     },
     ":type": "forms-components-examples/components/form/text"
+  },
+  "text-header": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:lastModifiedBy": "admin",
+    "text": "<p><b>This is the header text</b></p>",
+    "value": "Company Name Here",
+    "jcr:lastModified": "Thu Jul 27 2023 08:21:33 GMT+0530",
+    "sling:resourceType": "core/wcm/components/text/v2/text",
+    "textIsRich": "true"
+  },
+  "text-footer": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Footer",
+    "css": "footerText",
+    "text": "© YYYY Company name | All rights reserved",
+    "sling:resourceType": "core/wcm/components/text/v2/text"
   }
 }

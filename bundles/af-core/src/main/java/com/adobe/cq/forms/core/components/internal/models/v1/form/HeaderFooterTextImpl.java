@@ -42,11 +42,13 @@ import com.day.cq.wcm.api.WCMMode;
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Text.class, ComponentExporter.class },
-    resourceType = {
-        "core/wcm/components/text/v1/text", "core/wcm/components/text/v2/text" })
+    resourceType = { HeaderFooterTextImpl.RESOURCE_TYPE_V1, HeaderFooterTextImpl.RESOURCE_TYPE_V2 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 
 public class HeaderFooterTextImpl extends AbstractComponentImpl implements Text {
+
+    protected static final String RESOURCE_TYPE_V1 = "core/wcm/components/text/v1/text";
+    protected static final String RESOURCE_TYPE_V2 = "core/wcm/components/text/v2/text";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable

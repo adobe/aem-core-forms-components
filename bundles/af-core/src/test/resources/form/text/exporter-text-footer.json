@@ -1,0 +1,5 @@
+{
+  "css": "footerText",
+  "text": "© YYYY Company name | All rights reserved",
+  "sling:resourceType": "core/wcm/components/text/v2/text"
+}

@@ -1,0 +1,7 @@
+{
+  ":type": "core/wcm/components/text/v2/text",
+  "id": "text-ce5ecfdabc",
+  "richText": true,
+  "text": "<p><b>This is the header text</b></p>",
+  "textIsRich": "true"
+}
