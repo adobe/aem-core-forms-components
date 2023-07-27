@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -111,6 +113,18 @@ public class FragmentImplTest {
     void testJSONExport() throws Exception {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
+    }
+
+    @Test
+    void testGetChildrenModels() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, ComponentExporter> childrenModels = ((FragmentImpl) fragment).getChildrenModels(context.request(), ComponentExporter.class);
+        Assertions.assertEquals(1, childrenModels.size());
+        Assertions.assertNotNull(childrenModels.get("textinput"));
+        TextInput textInput = (TextInput) childrenModels.get("textinput");
+        Assertions.assertEquals("core/fd/components/form/textinput/v1/textinput", textInput.getExportedType());
+        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
+        Assertions.assertEquals("fragmenttextinput", textInput.getName());
     }
 
     @Test
