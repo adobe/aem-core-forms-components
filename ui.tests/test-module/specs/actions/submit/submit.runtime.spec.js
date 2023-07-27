@@ -107,7 +107,7 @@ describe("Form with Submit Button", () => {
     if (cy.af.isLatestAddon()) {
         it("Custom Submit Action Localisation Test", () => {
             cy.previewForm(customSubmitLocalisationPagePath);
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
                 cy.get('body')
                     .find('div.tyMessage')
                     .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
