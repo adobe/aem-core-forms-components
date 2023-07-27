@@ -17,12 +17,14 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -109,6 +111,16 @@ public class FragmentImplTest {
     void testJSONExport() throws Exception {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
+    }
+
+    @Test
+    void testFragmentPlaceholderTitleAndElement() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Assertions.assertEquals("AF Fragment (v2)", ((FragmentImpl) fragment).getFragmentTitle());
+
+        List<String> childrenList = ((FragmentImpl) fragment).getTitleListOfChildren();
+        Assertions.assertEquals(1, childrenList.size());
+        Assertions.assertEquals("Text Input", childrenList.get(0));
     }
 
 }

@@ -18,6 +18,7 @@
     "jcr:title": "AF Fragment (v2)",
     "jcr:content": {
       "jcr:primaryType": "cq:PageContent",
+      "jcr:title": "AF Fragment (v2)",
       "guideContainer": {
         "jcr:primaryType": "nt:unstructured",
         "thankYouOption": "page",

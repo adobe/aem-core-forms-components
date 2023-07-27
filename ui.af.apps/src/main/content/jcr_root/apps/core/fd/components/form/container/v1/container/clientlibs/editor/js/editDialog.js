@@ -17,6 +17,8 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
+        EDIT_DIALOG_FORM = ".cmp-adaptiveform-container__editdialog--formcontainer",
+        EDIT_DIALOG_FRAGMENT = ".cmp-adaptiveform-container__editdialog--fragmentcontainer",
         CONTAINER_ENABLEASYNCSUBMISSION = ".cmp-adaptiveform-container__enableasyncsubmission",
         CONTAINER_THANKYOUOPTION = ".cmp-adaptiveform-container__thankyouoption",
         CONTAINER_REDIRECT = ".cmp-adaptiveform-container__redirect",
@@ -408,7 +410,9 @@
         }
     });
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
+    Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);
+
+    Utils.initializeEditDialog(EDIT_DIALOG_FRAGMENT)(initialiseDataModel);
 
 })(jQuery, Granite, jQuery(document), Coral);
