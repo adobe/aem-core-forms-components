@@ -59,15 +59,6 @@ BLOCK cmp-adaptiveform-fragment
     ELEMENT cmp-adaptiveform-fragment__errormessage
 ```
 
-## Replace feature:
-We support replace feature that allows replacing accordion component to any of the below components:
-
-* Accordion
-* Horizontal tabs
-* Wizard Layout
-* Vertical tabs
-* Panel Container
-
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the fragment component in the form view:  
