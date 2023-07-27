@@ -19,6 +19,7 @@ describe("Form with Submit Button", () => {
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
     const customSubmitLocalisationPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/thankyoumessage_localisation.de.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
+    const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
 
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
@@ -138,6 +139,18 @@ describe("Form with Submit Button", () => {
         })
     })
 
+    it("Submit Action test without passing any custom submit event", () => {
+        cy.previewForm(submitSuccessRulePagePath).then(p => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.location('href')
+                    .should('eq', 'http://localhost:4502/aem/forms.html/content/dam/formsanddocuments');
+            });
+
+        })
+    })
+
     it("External redirectURL post submit redirects to external page.", () => {
         cy.previewForm(externalPagePathSubmit).then(p => {
             formContainer = p;
@@ -157,4 +170,3 @@ describe("Form with Submit Button", () => {
         //cy.wait('@redirected');
     })
 })
-
