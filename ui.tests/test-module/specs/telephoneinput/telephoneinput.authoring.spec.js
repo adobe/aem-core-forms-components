@@ -75,19 +75,59 @@ describe('Page - Authoring', function () {
         });
     })
 
-    it.only('change validation pattern type of TelephoneInput', function(){
+    it('change validation pattern type of TelephoneInput', function () {
       const bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog';
       dropTelephoneInputInContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get(bemEditDialog).contains('Validation').click({force:true}).then(() => {
+      cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
         cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select('US Phone Number', {force: true});
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+]1[0-9]{0,10}$');
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(telephoneInputDrop);
-      })
-    })
+      });
+    });
+  });
+
+  context('Adding removing patterns from design policy', function () {
+    const templateDataPath = '/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure',
+        telephoneInputPolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/telephoneinput' + '"] [data-action="POLICY"]',
+        authoringPagePath = '/content/forms/af/core-components-it/blank',
+        bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog',
+        telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
+        telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
+        telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
+    const customKey = 'customKey',
+        customValue = 'customValue';
+
+    beforeEach(function () {
+      cy.openAuthoring(templateDataPath + ".html");
+    });
+
+    it('Adding removing patterns from design policy', function () {
+      cy.get(telephoneInputPolicy).click({force: true});
+      cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
+      cy.get('[name="./allowedFormat3"]').eq(0).click();
+      cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"] button').eq(1).click();
+      cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
+        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
+        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().type(customValue);
+        cy.get('[title="Done"]').click();
+      }).then(() => {
+        cy.openSiteAuthoring(authoringPagePath);
+        dropTelephoneInputInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
+          cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
+          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true});
+          cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
+          cy.get('.cq-dialog-cancel').click();
+          cy.deleteComponentByPath(telephoneInputDrop);
+        });
+      });
+    });
   });
 
   context('Open Sites Editor', function () {
