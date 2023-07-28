@@ -34,12 +34,15 @@
   },
   "text-header": {
     "jcr:primaryType": "nt:unstructured",
-    "jcr:lastModifiedBy": "admin",
     "text": "<p><b>This is the header text</b></p>",
-    "value": "Company Name Here",
-    "jcr:lastModified": "Thu Jul 27 2023 08:21:33 GMT+0530",
     "sling:resourceType": "core/wcm/components/text/v2/text",
     "textIsRich": "true"
+  },
+  "text-blankheader":{
+    ":type": "core/wcm/components/text/v2/text",
+    "id": "text-ce5ecfdabc",
+    "text": " ",
+    "textIsRich": "false"
   },
   "text-footer": {
     "jcr:primaryType": "nt:unstructured",

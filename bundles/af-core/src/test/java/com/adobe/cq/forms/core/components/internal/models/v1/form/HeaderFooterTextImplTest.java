@@ -44,6 +44,7 @@ public class HeaderFooterTextImplTest {
     private static final String BASE = "/form/text";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXT_HEADER = CONTENT_ROOT + "/text-header";
+    private static final String PATH_EMPTY_TEXT_HEADER = CONTENT_ROOT + "/text-blankheader";
     private static final String PATH_TEXT_FOOTER = CONTENT_ROOT + "/text-footer";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -102,6 +103,12 @@ public class HeaderFooterTextImplTest {
         context.request().setAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME, WCMMode.EDIT);
         Text text_header = getTextUnderTest(PATH_TEXT_HEADER);
         assertEquals("<p><b>This is the header text</b></p>", text_header.getText());
+    }
+
+    @Test
+    void testEmptyText() throws Exception {
+        Text text_header = getTextUnderTest(PATH_EMPTY_TEXT_HEADER);
+        assertNull(text_header.getText());
     }
 
     private Text getTextUnderTest(String resourcePath) {

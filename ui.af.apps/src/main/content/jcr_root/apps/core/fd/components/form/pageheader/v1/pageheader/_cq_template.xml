@@ -26,5 +26,5 @@
     <text
         jcr:primaryType="nt:unstructured"
         sling:resourceType="core/wcm/components/text/v2/text"
-        value="Company Name Here"/>
+        text="Company Name Here"/>
 </jcr:root>
