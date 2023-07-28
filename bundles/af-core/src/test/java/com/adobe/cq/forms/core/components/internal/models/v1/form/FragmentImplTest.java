@@ -23,8 +23,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +30,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -118,7 +118,8 @@ public class FragmentImplTest {
     @Test
     void testGetChildrenModels() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
-        Map<String, ComponentExporter> childrenModels = ((FragmentImpl) fragment).getChildrenModels(context.request(), ComponentExporter.class);
+        Map<String, ComponentExporter> childrenModels = ((FragmentImpl) fragment).getChildrenModels(context.request(),
+            ComponentExporter.class);
         Assertions.assertEquals(1, childrenModels.size());
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = (TextInput) childrenModels.get("textinput");
