@@ -3,20 +3,25 @@
     jcr:language="de"
     jcr:mixinTypes="[mix:language]"
     jcr:primaryType="sling:OrderedFolder"
-    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/actions/submit/customsubmit/thankyoumessage_localisation/jcr:content/dictionary">
-    <e830e1e2-d1ab-4d3c-86fb-09d4b5485252
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/actions/submit/customsubmit/basic/jcr:content/dictionary">
+    <_x0035_c486e61-df19-4b41-92f3-0d1fef13da2b
         jcr:mixinTypes="[sling:Message]"
         jcr:primaryType="nt:folder"
-        sling:key="jcr:title##9397"
-        sling:message="thankYouMessaage_Localisation"/>
-    <_x0032_09bbcb1-381e-4a4a-9c77-38fb5aff8827
+        sling:key="jcr:title##6141"
+        sling:message="Grundlegend"/>
+    <ae60ee79-1ac0-4ec9-bd7b-61ee3801d78e
         jcr:mixinTypes="[sling:Message]"
         jcr:primaryType="nt:folder"
-        sling:key="guideContainer##thankYouMessage##315"
+        sling:key="parsys1##pageheader##jcr:title##910"
+        sling:message="Kopfball"/>
+    <ea0d81e4-7a75-42c5-8809-c7ce1c163a70
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##thankYouMessage##8603"
         sling:message="Vielen Dank für das Absenden des Formulars."/>
-    <_x0037_9393d22-482a-4d7d-94e9-59055af81f17
+    <f1d81261-8754-4642-bc57-3f6cc73215fb
         jcr:mixinTypes="[sling:Message]"
         jcr:primaryType="nt:folder"
-        sling:key="guideContainer##submit##jcr:title##2811"
+        sling:key="guideContainer##submit##jcr:title##155"
         sling:message="Senden"/>
 </jcr:root>

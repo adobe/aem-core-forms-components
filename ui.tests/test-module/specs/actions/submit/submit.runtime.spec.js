@@ -17,7 +17,7 @@ describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
-    const customSubmitLocalisationPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/thankyoumessage_localisation.de.html"
+    const customSubmitLocalisationPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.de.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
     const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
 
@@ -104,16 +104,14 @@ describe("Form with Submit Button", () => {
     })
 
 
-    if (cy.af.isLatestAddon()) {
-        it("Custom Submit Action Localisation Test", () => {
-            cy.previewForm(customSubmitLocalisationPagePath);
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
-                cy.get('body')
-                    .find('div.tyMessage')
-                    .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
-            });
-        })
-    }
+    it("Custom Submit Action Localisation Test", () => {
+        cy.previewForm(customSubmitLocalisationPagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
+            cy.get('body')
+                .find('div.tyMessage')
+                .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
+        });
+    })
 
 
     it("Tampering redirectURL post submit redirects to default ThankYou Page", () => {
