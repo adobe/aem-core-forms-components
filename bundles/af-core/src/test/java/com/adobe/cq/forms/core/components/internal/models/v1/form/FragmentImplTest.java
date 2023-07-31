@@ -51,6 +51,7 @@ public class FragmentImplTest {
     private static final String BASE = "/form/fragment";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_FRAGMENT = CONTENT_ROOT + "/fragment";
+    private static final String PATH_FRAGMENT_DAMPATH = CONTENT_ROOT + "/fragment-dampath";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -116,6 +117,12 @@ public class FragmentImplTest {
     }
 
     @Test
+    void testJSONExportWithDamPath() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_DAMPATH, Fragment.class, context);
+        Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_DAMPATH));
+    }
+
+    @Test
     void testGetChildrenModels() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Map<String, ComponentExporter> childrenModels = ((FragmentImpl) fragment).getChildrenModels(context.request(),
@@ -129,6 +136,20 @@ public class FragmentImplTest {
     }
 
     @Test
+    void testGetChildrenModelsForNullRequest() {
+        Resource resource = context.resourceResolver().getResource(PATH_FRAGMENT);
+        Fragment fragment = resource.adaptTo(Fragment.class);
+        Assertions.assertNotNull(fragment);
+        Map<String, TextInput> childrenModels = ((FragmentImpl) fragment).getChildrenModels(null,
+            TextInput.class);
+        Assertions.assertEquals(1, childrenModels.size());
+        Assertions.assertNotNull(childrenModels.get("textinput"));
+        TextInput textInput = childrenModels.get("textinput");
+        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
+        Assertions.assertEquals("fragmenttextinput", textInput.getName());
+    }
+
+    @Test
     void testFragmentPlaceholderTitleAndElement() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Assertions.assertEquals("AF Fragment (v2)", ((FragmentImpl) fragment).getFragmentTitle());
@@ -136,6 +157,9 @@ public class FragmentImplTest {
         List<String> childrenList = ((FragmentImpl) fragment).getTitleListOfChildren();
         Assertions.assertEquals(1, childrenList.size());
         Assertions.assertEquals("Text Input", childrenList.get(0));
+
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath());
+        Assertions.assertEquals("extra-clientlib", ((FragmentImpl) fragment).getClientLibRef());
     }
 
 }

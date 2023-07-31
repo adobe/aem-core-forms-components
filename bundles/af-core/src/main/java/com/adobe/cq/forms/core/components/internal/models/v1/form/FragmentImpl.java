@@ -79,7 +79,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
         fragmentContainer = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
         if (fragmentContainer != null) {
-            FormStructureParser formStructureParser = resource.adaptTo(FormStructureParser.class);
+            FormStructureParser formStructureParser = fragmentContainer.adaptTo(FormStructureParser.class);
             if (formStructureParser != null) {
                 this.clientLibRef = formStructureParser.getClientLibRefFromFormContainer();
             }
@@ -107,24 +107,27 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         Map<String, T> models = new LinkedHashMap<>();
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
-        SlingHttpServletRequest wrappedSlingHttpServletRequest = new SlingHttpServletRequestWrapper(request) {
+        SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
+        if (request != null) {
+            wrappedSlingHttpServletRequest = new SlingHttpServletRequestWrapper(request) {
 
-            @Override
-            public Object getAttribute(String attrName) {
-                if (REQ_ATTR_RESOURCE_CALLER_PATH.equals(attrName)) {
-                    String resourceCallerPath = (String) super.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH);
-                    // If the attribute is already defined then we're in a nested situation.
-                    // The code for computing the components id uses the root-most resource path
-                    // (because of how componentContext is handled in HTML rendering, so we return
-                    // that.
-                    return (resourceCallerPath != null) ? resourceCallerPath : resource.getPath();
+                @Override
+                public Object getAttribute(String attrName) {
+                    if (REQ_ATTR_RESOURCE_CALLER_PATH.equals(attrName)) {
+                        String resourceCallerPath = (String) super.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH);
+                        // If the attribute is already defined then we're in a nested situation.
+                        // The code for computing the components id uses the root-most resource path
+                        // (because of how componentContext is handled in HTML rendering, so we return
+                        // that.
+                        return (resourceCallerPath != null) ? resourceCallerPath : resource.getPath();
+                    }
+                    return super.getAttribute(attrName);
                 }
-                return super.getAttribute(attrName);
-            }
-        };
+            };
+        }
         for (Resource child : filteredChildrenResources) {
             T model = null;
-            if (request != null) {
+            if (wrappedSlingHttpServletRequest != null) {
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                 model = modelFactory.getModelFromWrappedRequest(wrappedSlingHttpServletRequest, child, modelClass);
             } else {
