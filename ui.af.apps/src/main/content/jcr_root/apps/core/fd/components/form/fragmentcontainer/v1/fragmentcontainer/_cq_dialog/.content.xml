@@ -50,11 +50,9 @@
                                       jcr:primaryType="nt:unstructured"
                                       sling:hideResource="true"/>
                                     <clientLibRef
-                                      jcr:primaryType="nt:unstructured"
-                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                      fieldDescription="This client library contains JavaScript Functions which can be used in expressions supported by Adaptive Forms."
-                                      fieldLabel="Client library category"
-                                      name="./clientLibRef"/>
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                                        path="core/fd/components/form/container/v2/container/cq:dialog/content/items/tabs/items/basic/items/container/items/clientLibRef"/>
                                 </items>
                             </container>
                         </items>

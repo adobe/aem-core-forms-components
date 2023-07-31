@@ -65,7 +65,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
-    private static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -105,7 +104,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     protected void initFormContainerModel() {
         if (request != null) {
             contextPath = request.getContextPath();
-            request.setAttribute(REQ_ATTR_FORMCONTAINER_PATH, this.getPath());
+            request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, this.getPath());
         }
     }
 

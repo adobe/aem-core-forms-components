@@ -91,8 +91,8 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     private String getFormContainerPath(Resource resource) {
-        if (request != null && request.getAttribute("formContainerPath") != null) {
-            return (String) request.getAttribute("formContainerPath");
+        if (request != null && request.getAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH) != null) {
+            return (String) request.getAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH);
         }
         if (resource == null) {
             return null;
