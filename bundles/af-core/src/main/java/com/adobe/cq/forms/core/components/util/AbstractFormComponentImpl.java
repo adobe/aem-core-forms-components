@@ -116,7 +116,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
-        getName();
+        getNameOrSetDefault();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
@@ -156,12 +156,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
-            name = getDefaultName();
+            name = getNameOrSetDefault();
         }
         return name;
     }
 
-    protected String getDefaultName() {
+    protected String getNameOrSetDefault() {
         return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
