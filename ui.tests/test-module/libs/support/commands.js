@@ -223,9 +223,11 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                 if ($body.find(path).length === 0) {
                     //evaluates as true if toolbar doesnt exists at all
                     //you get here only if toolbar is visible
-                    cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
+                    cy.get(selector).click({force: true}).then(() => {
+                        cy.get(path).should('be.visible');
+                    }) // end user does not face this but due to cypress checks, we need to add force true here
                     // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                    cy.get(path).should('be.visible');
+
                 } else {
                     cy.get(path).then($header => {
                         if (!$header.is(':visible')) {
