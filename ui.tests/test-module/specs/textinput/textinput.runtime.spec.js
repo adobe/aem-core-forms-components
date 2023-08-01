@@ -15,6 +15,10 @@
  ******************************************************************************/
 describe("Form Runtime with Text Input", () => {
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
     const localisationPagePath = "content/forms/af/core-components-it/samples/textinput/basic_with_dictionary_en_to_de.de.html"
     const bemBlock = 'cmp-adaptiveform-textinput'
@@ -63,6 +67,7 @@ describe("Form Runtime with Text Input", () => {
                 checkHTML(id, field.getModel().getState())
             }
         });
+        cy.expectNoConsoleErrors();
     })
 
     it(" model's changes are reflected in the html ", () => {
@@ -76,6 +81,7 @@ describe("Form Runtime with Text Input", () => {
             model.enabled = false
             return checkHTML(model.id, model.getState())
         })
+        cy.expectNoConsoleErrors();
     });
 
     it(" html changes are reflected in model ", () => {
@@ -85,6 +91,7 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input)
         })
+        cy.expectNoConsoleErrors();
     });
 
     it("should toggle description and tooltip", () => {
@@ -103,6 +110,7 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox3}`).should('be.visible')
             cy.get(`#${textbox2}`).should('not.be.visible')
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("should enable and disable other textfields on a certain string input", () => {
@@ -117,6 +125,7 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox2}`).find("input").should('be.enabled')
             cy.get(`#${textbox4}`).find("input").should('not.be.enabled')
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("should set and clear value based on rules", () => {
@@ -132,6 +141,7 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox4}`).find("input").should('have.value',"")
             cy.get(`#${textbox1}`).find("input").should('have.value', "new value")
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("should show different default error messages on different constraints", () => {
@@ -177,6 +187,7 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
         })
+        cy.expectNoConsoleErrors();
 
     })
 
