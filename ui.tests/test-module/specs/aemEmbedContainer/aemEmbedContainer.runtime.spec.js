@@ -68,7 +68,7 @@ describe("Sites with Aem Embed Container", () => {
 
     context('aem embed container id mismatch test ', function () {
 
-        const pagePath = "/content/core-components-examples/aemembedcontainertest.html";
+        const pagePath = "/content/forms/sites/core-components-it/aemembedcontainertest.html";
         let formContainer = null;
 
         beforeEach(function () {

@@ -8,5 +8,4 @@
     <filter root="/conf/core-components-it" mode="update"/>
     <filter root="/conf/wknd" mode="update"/>
     <filter root="/conf/datalayerContainer" mode="update"/>
-    <filter root="/content/core-components-examples/aemembedcontainertest"/>
 </workspaceFilter>
