@@ -42,10 +42,9 @@ const dropPageHeaderInSites = function() {
 
 context('Drag drop the pageheader', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
-    pageheaderDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop(),
-    imageDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/image',
-    textDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text',
-    pageHeaderDropAuth = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + 'pageheader';
+    pageheaderDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop(),
+    imageDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/image',
+    textDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text';
 
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
