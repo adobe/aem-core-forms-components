@@ -188,8 +188,6 @@ describe('component replace - Authoring', function () {
                             .invoke('attr', 'checked').then(isChecked => {
                             cy.log('logging if it is checked' + isChecked)
                             cy.log('logging if it is allowed' + allow)
-                            cy.get('[value="group:replace test group"]').eq(0).scrollIntoView();
-                            cy.wait(1000);
                             if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
                                 cy.log('clicking now');
                                 cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
@@ -203,7 +201,7 @@ describe('component replace - Authoring', function () {
                 })
         }
 
-        it.only('test replace of component by different group', function () {
+        it.only('test replace of component by different group' + i, function () {
             const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
