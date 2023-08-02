@@ -156,13 +156,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
-            name = getNameOrSetDefault();
+            //setting the default name if name is null.
+            name = StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
         }
         return name;
-    }
-
-    protected String getNameOrSetDefault() {
-        return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
     /**
