@@ -178,9 +178,32 @@ describe('component replace - Authoring', function () {
 
     context('Group independent replace action test', function () {
         const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
-            replaceCompPageUrl = replaceCompPagePath + ".html"
+            replaceCompPageUrl = replaceCompPagePath;
 
-        it('test replace of component by different group', function () {
+        const allowedComponent = function (allow) {
+            cy.get('[title="Adaptive Form Container [Root]"]').click()
+                .then(() => {
+                    cy.get('.cq-editable-action').eq(0).click().then(() => {
+                        cy.get('[value="group:replace test group"]').eq(0)
+                            .invoke('attr', 'checked').then(isChecked => {
+                            cy.log('logging if it is checked' + isChecked)
+                            cy.log('logging if it is allowed' + allow)
+                            cy.get('[value="group:replace test group"]').eq(0).scrollIntoView();
+                            cy.wait(1000);
+                            if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
+                                cy.log('clicking now');
+                                cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                                    cy.get('[title="Done"]').scrollIntoView().click();
+                                });
+                            } else {
+                                cy.get('[title="Done"]').scrollIntoView().click();
+                            }
+                        })
+                    });
+                })
+        }
+
+        it.only('test replace of component by different group', function () {
             const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
@@ -189,15 +212,8 @@ describe('component replace - Authoring', function () {
                 replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
                 replaceCompDrop = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + replaceCompTestGroup.split("/").pop();
 
-            cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
-            cy.get('[title="Adaptive Form Container [Root]"]').click()
-                .then(() => {
-                    cy.get('.cq-editable-action').eq(0).click().then(() => {
-                        cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
-                            cy.get('[title="Done"]').scrollIntoView().click();
-                        })
-                    });
-                })
+            cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
+            allowedComponent(true);
 
             cy.openSiteAuthoring(replaceCompPageUrl);
             cy.selectLayer("Edit");
@@ -207,6 +223,8 @@ describe('component replace - Authoring', function () {
             const replacementComp = "[value='" + replaceCompTestGroup + "']";
             cy.get(replacementComp).click();
             cy.deleteComponentByPath(replaceCompDrop);
+            cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
+            allowedComponent(false);
         });
     });
 });
