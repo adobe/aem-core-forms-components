@@ -95,6 +95,7 @@ describe('Page - Authoring', function () {
         telephoneInputPolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/telephoneinput' + '"] [data-action="POLICY"]',
         authoringPagePath = '/content/forms/af/core-components-it/blank',
         bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog',
+        bemDesignDialog = '.cmp-adaptiveform-telephoneinput__designdialog',
         telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
         telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
@@ -107,7 +108,8 @@ describe('Page - Authoring', function () {
 
     it('Adding removing patterns from design policy', function () {
       cy.get(telephoneInputPolicy).click({force: true});
-      cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
+      cy.get(bemDesignDialog).contains('Validation patterns').click();
+      // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
       cy.get('[name="./allowedFormat3"]').eq(0).click();
       cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"] button').eq(1).click();
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
@@ -121,10 +123,11 @@ describe('Page - Authoring', function () {
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
-          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true});
-          cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
-          cy.get('.cq-dialog-cancel').click();
-          cy.deleteComponentByPath(telephoneInputDrop);
+          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true}).then(() => {
+            cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(telephoneInputDrop);
+          })
         });
       });
     });
