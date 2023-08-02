@@ -180,7 +180,7 @@ describe('component replace - Authoring', function () {
         const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
             replaceCompPageUrl = replaceCompPagePath;
 
-        const allowedComponent = function (allow) {
+        const updateAllowedComponent = function (allow) {
             cy.get('[title="Adaptive Form Container [Root]"]').click()
                 .then(() => {
                     cy.get('.cq-editable-action').eq(0).click().then(() => {
@@ -211,7 +211,7 @@ describe('component replace - Authoring', function () {
                 replaceCompDrop = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + replaceCompTestGroup.split("/").pop();
 
             cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
-            allowedComponent(true);
+            updateAllowedComponent(true);
 
             cy.openSiteAuthoring(replaceCompPageUrl);
             cy.selectLayer("Edit");
@@ -222,7 +222,7 @@ describe('component replace - Authoring', function () {
             cy.get(replacementComp).click();
             cy.deleteComponentByPath(replaceCompDrop);
             cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
-            allowedComponent(false);
+            updateAllowedComponent(false);
         });
     });
 });
