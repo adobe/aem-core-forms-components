@@ -46,7 +46,7 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 8);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 10);
         })
     })
 })
