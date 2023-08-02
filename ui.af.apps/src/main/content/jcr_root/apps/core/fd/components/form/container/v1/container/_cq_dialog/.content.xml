@@ -23,7 +23,7 @@
     trackingFeature="core-components:adaptiveform-container:v1">
     <content
         jcr:primaryType="nt:unstructured"
-        granite:class="cmp-adaptiveform-container__editdialog cmp-adaptiveform-container__editdialog--formcontainer"
+        granite:class="cmp-adaptiveform-container__editdialog cmp-adaptiveform-formcontainer__editdialog"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <accordion

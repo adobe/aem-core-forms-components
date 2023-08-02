@@ -4,6 +4,6 @@
     <jcr:content
         cq:templateType="/conf/core-components-examples/settings/wcm/template-types/af2-fragment"
         jcr:primaryType="cq:PageContent"
-        jcr:title="afv2frag template"
+        jcr:title="Adaptive Form Fragment (core components) Template"
         status="enabled"/>
 </jcr:root>
