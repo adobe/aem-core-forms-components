@@ -157,9 +157,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public String getName() {
         if (name == null) {
             // setting the default name if name is null.
-            name = StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
+            name = getDefaultName();
         }
         return name;
+    }
+
+    protected String getDefaultName(){
+        return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
     /**

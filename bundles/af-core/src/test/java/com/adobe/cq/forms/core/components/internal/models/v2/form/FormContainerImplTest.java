@@ -310,6 +310,5 @@ public class FormContainerImplTest {
     void testGetName() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNull(formContainer.getName());
-        // assertEquals("L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getId());
     }
 }
