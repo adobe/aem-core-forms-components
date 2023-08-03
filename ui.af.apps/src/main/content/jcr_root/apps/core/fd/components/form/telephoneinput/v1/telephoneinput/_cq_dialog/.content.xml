@@ -19,6 +19,7 @@
     jcr:title="Adaptive Form Telephone Input field"
     sling:resourceType="cq/gui/components/authoring/dialog"
     helpPath="https://www.adobe.com/go/aem_af_cmp_telephoneinput_v1"
+    extraClientlibs="[core.forms.components.telephoneinput.v1.editor]"
     trackingFeature="core-components:adaptiveform-telephoneinput:v1">
     <content
         granite:class="cmp-adaptiveform-telephoneinput__editdialog"
@@ -65,6 +66,33 @@
                             </columns>
                         </items>
                     </basic>
+                    <displayPatternGroup
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Display Format"
+                            sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                            title="Display Format">
+                        <items jcr:primaryType="nt:unstructured">
+                            <displayPatternType
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-telephoneinput__displaypattern"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    fieldLabel="Type"
+                                    name="./displayPatternType">
+                                <datasource
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                        type="formatters"/>
+                            </displayPatternType>
+                            <displayPictureClause
+                                    jcr:primaryType="nt:unstructured"
+                                    granite:class="cmp-adaptiveform-telephoneinput__displayformat"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldDescription="The format in which the value will be displayed to the user."
+                                    fieldLabel="Format"
+                                    name="./displayFormat">
+                            </displayPictureClause>
+                        </items>
+                    </displayPatternGroup>
                     <validation
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
