@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,6 +84,12 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testFormContainerPathEmbedWithoutIframe() {
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
     void testFormContainerPathInsideContainers() {
         String path = FORM_CONTAINER_PATH + "/container1";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
@@ -139,5 +146,12 @@ public class FormStructureParserImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.getResource().adaptTo(FormStructureParser.class);
+    }
+
+    private FormStructureParser getFormStructureParserUnderTest(String resourcePath, String requestAttribute) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        return request.adaptTo(FormStructureParser.class);
     }
 }
