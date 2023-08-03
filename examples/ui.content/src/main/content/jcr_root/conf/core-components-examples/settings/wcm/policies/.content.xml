@@ -164,6 +164,19 @@
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
                 </numberinput>
+                <telephoneinput jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="telephoneinput-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedFormat1="01 April, 2007=d MMMM, y"
+                            allowedFormat2="April 01, 2007=MMMM d, y"
+                            allowedFormat3="4/1/2007=M/d/y">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </telephoneinput>
                 <datepicker jcr:primaryType="nt:unstructured">
                     <default
                             jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
