@@ -129,7 +129,8 @@ public abstract class AbstractComponentImpl implements Component {
         if (currentPage != null && resource != null && request.getAttribute(REQ_ATTR_EMBEDDED_ADAPTIVEFORM) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
-                Page resourcePage = pageManager.getContainingPage(resource);
+                String pagePath = (String) request.getAttribute(REQ_ATTR_EMBEDDED_ADAPTIVEFORM);
+                Page resourcePage = pageManager.getContainingPage(pagePath);
                 if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
                     setCurrentPage(resourcePage);
                 }
