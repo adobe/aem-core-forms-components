@@ -162,7 +162,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return name;
     }
 
-    protected String getDefaultName(){
+    protected String getDefaultName() {
         return StringEscapeUtils.escapeHtml4(GuideUtils.getGuideName(resource));
     }
 
