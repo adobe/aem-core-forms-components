@@ -82,7 +82,6 @@
                     elements[i].classList.remove(FormContainerV2.loadingClass);
                     console.debug("Form loading started", elements[i].id);
                 }
-                // formEl.classList.remove(FormContainerV2.loadingClass);
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
