@@ -134,7 +134,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return getChildrenModels(request, modelClass, filteredChildrenResources);
     }
 
-    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass, List<Resource> filteredChildrenResources) {
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass,
+        List<Resource> filteredChildrenResources) {
         Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
