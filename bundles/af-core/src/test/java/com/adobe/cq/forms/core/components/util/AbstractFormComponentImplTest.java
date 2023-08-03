@@ -19,9 +19,6 @@ package com.adobe.cq.forms.core.components.util;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +29,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -114,7 +113,7 @@ public class AbstractFormComponentImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute("embeddedAdaptiveForm", AF_PATH);
 
-        class  TestAbstractComponent extends AbstractComponentImpl {
+        class TestAbstractComponent extends AbstractComponentImpl {
             public Page getCurrentPageToTest() {
                 return getCurrentPage();
             }
