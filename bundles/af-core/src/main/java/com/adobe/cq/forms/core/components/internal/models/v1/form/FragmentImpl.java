@@ -105,7 +105,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
-        Map<String, T> models = new LinkedHashMap<>();
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
         SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
         if (request != null) {
@@ -125,22 +124,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 }
             };
         }
-        for (Resource child : filteredChildrenResources) {
-            T model = null;
-            if (wrappedSlingHttpServletRequest != null) {
-                // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
-                model = modelFactory.getModelFromWrappedRequest(wrappedSlingHttpServletRequest, child, modelClass);
-            } else {
-                model = child.adaptTo(modelClass);
-                if (model instanceof Base && i18n != null) {
-                    ((Base) model).setI18n(i18n);
-                }
-            }
-            if (model != null) {
-                models.put(child.getName(), model);
-            }
-        }
-        return models;
+        return getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
     }
 
     @Override
