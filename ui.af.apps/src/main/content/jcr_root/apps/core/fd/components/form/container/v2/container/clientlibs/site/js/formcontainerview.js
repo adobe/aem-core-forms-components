@@ -21,8 +21,10 @@
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
+        static loader = "loader" ;
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            loader: "[data-" + this.NS + '-' + this.loader + '= "true" ]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
@@ -67,16 +69,20 @@
 
     async function onDocumentReady() {
         const startTime = new Date().getTime();
-        let elements = document.querySelectorAll(FormContainerV2.selectors.self);
+        let elements = document.querySelectorAll(FormContainerV2.selectors.loader);
         for (let i = 0; i < elements.length; i++) {
             elements[i].classList.add(FormContainerV2.loadingClass);
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
             let formContainer =  e.detail;
-            let formEl = formContainer.getFormElement();
             setTimeout(() => {
-                formEl.classList.remove(FormContainerV2.loadingClass);
+                //for loop added to remove the applied loading class from the newly added Div in html
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove(FormContainerV2.loadingClass);
+                    console.debug("Form loading started", elements[i].id);
+                }
+                // formEl.classList.remove(FormContainerV2.loadingClass);
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
