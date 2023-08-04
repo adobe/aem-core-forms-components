@@ -45,7 +45,7 @@
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
-        <iframe class="cmp-aemform__iframecontent"
+    <iframe class="cmp-aemform__iframecontent"
             src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
             width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
