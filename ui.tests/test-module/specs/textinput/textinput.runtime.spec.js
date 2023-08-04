@@ -128,6 +128,19 @@ describe("Form Runtime with Text Input", () => {
         cy.expectNoConsoleErrors();
     })
 
+    it("should set valid to false and errorMessage other textfields on a certain string input", () => {
+        // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
+
+        const [textbox9, textBox9FieldView] = Object.entries(formContainer._fields)[8];
+        const [textbox10, textBox10FieldView] = Object.entries(formContainer._fields)[9];
+
+        cy.get(`#${textbox9}`).find("input").clear().type('text').blur().then(x => {
+            cy.get(`#${textbox10}`).should('have.attr', 'data-cmp-valid', 'false')
+            cy.get(`#${textbox10}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Field is not valid")
+        })
+        cy.expectNoConsoleErrors();
+    })
+
     it("should set and clear value based on rules", () => {
         // Rule on textBox5: When input of textBox5 is "aemforms", set value of textBox1 to "new value" and clear value of textBox4
 
@@ -150,7 +163,7 @@ describe("Form Runtime with Text Input", () => {
         const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
         const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
 
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[8]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10]
 
         // 1. Required
         cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
