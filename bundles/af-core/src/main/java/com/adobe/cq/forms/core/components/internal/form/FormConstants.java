@@ -103,5 +103,12 @@ public final class FormConstants {
     /** The resource type for submit button v1 */
     public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 
+    /** The resource type for fragment v1 */
+    public static final String RT_FD_FORM_FRAGMENT_V1 = RT_FD_FORM_PREFIX + "fragment/v1/fragment";
+
+    public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX + "fragmentcontainer/v1/fragmentcontainer";
+
     public static final String FORM_FIELD_TYPE = "form";
+
+    public static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";
 }

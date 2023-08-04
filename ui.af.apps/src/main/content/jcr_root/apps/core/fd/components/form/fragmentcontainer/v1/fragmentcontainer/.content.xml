@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    cq:icon="form"
+    cq:isContainer="{Boolean}true"
+    jcr:description="Container allowing to construct adaptive form fragment"
+    jcr:primaryType="cq:Component"
+    jcr:title="Adaptive Form Fragment Container (v1)"
+    sling:resourceSuperType="core/fd/components/form/container/v2/container"
+    componentGroup=".core-wcm"/>
