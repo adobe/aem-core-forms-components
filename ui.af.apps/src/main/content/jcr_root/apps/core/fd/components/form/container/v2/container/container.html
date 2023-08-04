@@ -32,7 +32,7 @@
     </sly>
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
-    <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl @ extension='html'}"/>
+    <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl}"/>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper ${grid.cssClass} ${allowed.cssClass}">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"
