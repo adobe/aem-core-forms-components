@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="dam:Asset">
+    <jcr:content
+        jcr:lastModified="{Date}2021-12-02T15:12:59.947+05:30"
+        jcr:primaryType="dam:AssetContent"
+        sling:resourceType="fd/fm/af/render"
+        guide="1"
+        type="guide">
+        <metadata
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            allowedRenderFormat="HTML"
+            author="admin"
+            availableInMobileApp="{Boolean}false"
+            dorType="none"
+            formmodel="none"
+            hasCustomThumbnail="{Boolean}false"
+            title="Adaptive Form V2 (IT)"/>
+    </jcr:content>
+</jcr:root>

@@ -61,7 +61,7 @@ public class ComponentUtils {
 
     /**
      * Checks if the given resource if a core adaptive form container
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return true, if it is an adaptive form container, false otherwise
      */
@@ -73,7 +73,7 @@ public class ComponentUtils {
 
     /**
      * Returns the form container resource
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return form container resource, null if no form container found
      */
@@ -89,7 +89,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property
@@ -105,7 +105,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property
@@ -129,7 +129,6 @@ public class ComponentUtils {
      * @param date date
      * @return clone of date object
      */
-    @NotNull
     public static Date clone(@Nullable Date date) {
         return Optional.ofNullable(date)
             .map(Date::getTime)
