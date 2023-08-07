@@ -46,7 +46,7 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 8);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 10);
         })
     })
 
@@ -63,6 +63,58 @@ describe("Sites with Aem Embed Container", () => {
         it("test for embed container height property working in iFrameMode", () => {
             cy.get('.cmp-aemform__iframecontent').should('have.css', 'height', '1000px');
         })
+
+    })
+
+    context('aem embed container id mismatch test ', function () {
+
+        const pagePath = "/content/forms/sites/core-components-it/aemembedcontainertest.html";
+        let formContainer = null;
+
+        beforeEach(function () {
+            cy.previewForm(pagePath).then(p => {
+                formContainer = p;
+            })
+        })
+
+        const checkHTML = (id, state) => {
+            const visible = state.visible;
+            const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+            const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+            const value = state.value == null ? '' : state.value;
+            cy.get(`#${id}`)
+                .should(passVisibleCheck)
+                .invoke('attr', 'data-cmp-visible')
+                .should('eq', visible.toString());
+            cy.get(`#${id}`)
+                .invoke('attr', 'data-cmp-enabled')
+                .should('eq', state.enabled.toString());
+            return cy.get(`#${id}`).within((root) => {
+                cy.get('*').should(passVisibleCheck)
+                cy.get('input')
+                    .should(passDisabledAttributeCheck, 'disabled');
+                cy.get('input').should('have.value', value)
+            })
+        }
+
+        it("model initialized properly", () => {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            // fragment component, text field and IntanceManager
+            expect(Object.keys(formContainer._fields).length).to.equal(3);
+        })
+
+        it(" model's changes are reflected in the html ", () => {
+            const [id, fieldView] = Object.entries(formContainer._fields)[0]
+            const model = formContainer._model.getElement(id)
+            model.value = "some other value"
+            checkHTML(model.id, model.getState()).then(() => {
+                model.visible = false
+                return checkHTML(model.id, model.getState())
+            }).then(() => {
+                model.enabled = false
+                return checkHTML(model.id, model.getState())
+            })
+        });
 
     })
 })

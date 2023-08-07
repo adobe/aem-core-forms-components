@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -79,6 +80,12 @@ public class FormStructureParserImplTest {
     void testFormContainerPath() {
         String path = FORM_CONTAINER_PATH + "/datepicker";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
+    void testFormContainerPathEmbedWithoutIframe() {
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
         assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
     }
 
@@ -139,5 +146,12 @@ public class FormStructureParserImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.getResource().adaptTo(FormStructureParser.class);
+    }
+
+    private FormStructureParser getFormStructureParserUnderTest(String resourcePath, String requestAttribute) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        return request.adaptTo(FormStructureParser.class);
     }
 }
