@@ -10,12 +10,11 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "boolean",
-    "checkedValue":  true,
-    "uncheckedValue": false,
+    "type" : "string",
+    "checkedValue":  "on",
+    "uncheckedValue": "off",
     "enableUncheckedValue": true,
     "fieldType": "checkbox",
-    "enumNames" : ["yes", "no"],
     "fd:rules" : {
       "jcr:primaryType": "nt:unstructured"
     },
