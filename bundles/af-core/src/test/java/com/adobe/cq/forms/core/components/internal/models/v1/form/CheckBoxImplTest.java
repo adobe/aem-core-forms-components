@@ -303,14 +303,14 @@ public class CheckBoxImplTest {
     @Test
     void testGetEnum() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new Boolean[] { true, false }, checkbox.getEnums());
+        assertArrayEquals(new String[] { "on", "off" }, checkbox.getEnums());
 
     }
 
     @Test
-    void testGetEnumNames() {
-        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
+    void testGetNullEnum() {
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnums());
     }
 
     @Test
