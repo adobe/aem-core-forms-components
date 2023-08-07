@@ -11,7 +11,9 @@
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
     "type" : "boolean",
-    "enum" : [true, false],
+    "checkedValue":  true,
+    "uncheckedValue": false,
+    "enableUncheckedValue": true,
     "fieldType": "checkbox",
     "enumNames" : ["yes", "no"],
     "fd:rules" : {
@@ -37,10 +39,12 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "type" : "boolean",
+    "type" : "string",
     "enum" : [true, false],
     "fieldType": "checkbox",
-    "enumNames" : ["yes", "no"],
+    "checkedValue":  "yes",
+    "uncheckedValue": "no",
+    "enableUncheckedValue": true,
     "fd:rules" : {
       "jcr:primaryType": "nt:unstructured"
     },
