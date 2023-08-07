@@ -61,10 +61,12 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     @PostConstruct
     private void initCheckBoxModel() {
         orientation = Orientation.fromString(orientationJcr);
-        if (Boolean.TRUE.equals(enableUncheckedValue)) {
-            enums = new String[] { checkedValue, uncheckedValue };
-        } else {
-            enums = new String[] { checkedValue };
+        if (!Type.BOOLEAN.equals(type)) {
+            if (Boolean.TRUE.equals(enableUncheckedValue)) {
+                enums = new String[] { checkedValue, uncheckedValue };
+            } else {
+                enums = new String[] { checkedValue };
+            }
         }
     }
 

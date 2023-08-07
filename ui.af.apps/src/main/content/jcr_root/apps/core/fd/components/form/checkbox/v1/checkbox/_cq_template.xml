@@ -3,6 +3,6 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Check Box"
     fieldType="checkbox"
-    checkedValue="true"
-    uncheckedValue="false"/>
+    checkedValue="on"
+    uncheckedValue="off"/>
 
