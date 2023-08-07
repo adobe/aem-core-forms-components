@@ -311,6 +311,7 @@ public class CheckBoxImplTest {
     void testGetNullEnum() {
         CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
         assertNull(noEnumCheckbox.getEnums());
+
     }
 
     @Test
