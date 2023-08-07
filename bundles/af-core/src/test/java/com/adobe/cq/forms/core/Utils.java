@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.json.Json;
@@ -113,7 +114,7 @@ public class Utils {
 
     /**
      * The given model is validated against adaptive form specification
-     * 
+     *
      * @param model reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {
@@ -227,4 +228,13 @@ public class Utils {
         return request.adaptTo(clazz);
     }
 
+    public static Method getPrivateMethod(Class clazz, String privateMethodName) {
+        try {
+            Method method = clazz.getDeclaredMethod(privateMethodName);
+            method.setAccessible(true);
+            return method;
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
 }
