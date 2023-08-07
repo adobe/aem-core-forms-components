@@ -33,6 +33,11 @@
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="wcm/core/components/policies/mapping">
                         </datepicker>
+                        <telephoneinput
+                                cq:policy="forms-components-examples/components/form/telephoneinput/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </telephoneinput>
                         <panelcontainer
                                 cq:policy="forms-components-examples/components/form/panelcontainer/default"
                                 jcr:primaryType="nt:unstructured"

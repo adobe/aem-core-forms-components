@@ -58,7 +58,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @SlingObject
     protected Resource resource;
 
-    private List<? extends ComponentExporter> childrenModels;
+    protected List<? extends ComponentExporter> childrenModels;
 
     protected Map<String, ? extends ComponentExporter> itemModels;
 
@@ -130,8 +130,13 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
-        Map<String, T> models = new LinkedHashMap<>();
         List<Resource> filteredChildrenResources = getFilteredChildrenResources();
+        return getChildrenModels(request, modelClass, filteredChildrenResources);
+    }
+
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass,
+        List<Resource> filteredChildrenResources) {
+        Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
             if (request != null) {
@@ -158,12 +163,18 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return itemModels;
     }
 
-    private List<Resource> getFilteredChildrenResources() {
+    protected List<Resource> getFilteredChildrenResources() {
+        return getFilteredChildrenResources(resource);
+    }
+
+    protected List<Resource> getFilteredChildrenResources(Resource containerResource) {
         if (filteredChildComponents == null) {
             filteredChildComponents = new LinkedList<>();
-            for (Resource child : slingModelFilter.filterChildResources(resource.getChildren())) {
-                if (!child.getName().startsWith("fd:")) {
-                    filteredChildComponents.add(child);
+            if (containerResource != null) {
+                for (Resource child : slingModelFilter.filterChildResources(containerResource.getChildren())) {
+                    if (!child.getName().startsWith("fd:")) {
+                        filteredChildComponents.add(child);
+                    }
                 }
             }
         }
