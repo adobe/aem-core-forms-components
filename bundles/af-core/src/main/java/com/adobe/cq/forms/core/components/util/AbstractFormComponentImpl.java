@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -194,10 +195,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
-        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
-        // we anyways dont need to rely on wcmmode while fetching form definition.
-        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        if (request != null && request.getPathInfo() != null) {
+            String pathInfo = request.getPathInfo();
+            boolean matches = Pattern.matches(".+model.*\\.json$", pathInfo);
+            // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+            // we anyways dont need to rely on wcmmode while fetching form definition.
+            if (!matches) {
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+            }
         }
         return editMode;
     }
