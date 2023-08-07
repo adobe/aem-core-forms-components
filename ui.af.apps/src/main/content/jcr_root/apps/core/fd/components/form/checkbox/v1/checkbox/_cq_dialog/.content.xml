@@ -79,7 +79,7 @@
                                                 <enableUncheckedValue
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/switch"
-                                                  wrapperClass="cmp-adaptiveform-checkbox__disable_unchecked_value"
+                                                  wrapperClass="cmp-adaptiveform-checkbox__enable-unchecked-value"
                                                   name="./enableUncheckedValue"
                                                   fieldLabel="Enable Uncheck."
                                                   fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."

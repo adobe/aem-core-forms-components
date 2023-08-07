@@ -40,7 +40,6 @@
            name="${checkbox.name}"
            aria-readonly="${checkbox.readOnly ? 'true' : 'false'}"
            value="${checkbox.default[0]}"
-           checked="${checkbox.enums[0] == checkbox.default[0]}"
            disabled="${!checkbox.enabled || checkbox.readOnly}" />
 
     <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
