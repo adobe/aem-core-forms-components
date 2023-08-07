@@ -7,6 +7,7 @@
   "screenshotsFolder" : "target/screenshots",
   "videosFolder" : "target/videos",
   "videoUploadOnPasses" : false,
+  "experimentalFetchPolyfill": true,
   "video" : true,
   "chromeWebSecurity" :true,
   "viewportHeight" : 900,
