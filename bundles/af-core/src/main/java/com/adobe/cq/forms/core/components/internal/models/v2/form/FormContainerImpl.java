@@ -299,4 +299,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         return StringUtils.EMPTY;
     }
+
+    @Override
+    public String getName() {
+        return FormContainer.super.getName();
+    }
+
 }

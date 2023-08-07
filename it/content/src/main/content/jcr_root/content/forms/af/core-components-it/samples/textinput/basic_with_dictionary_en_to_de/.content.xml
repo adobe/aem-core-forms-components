@@ -110,6 +110,21 @@
                     jcr:primaryType="nt:unstructured"
                     click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
             </submit>
+            <textinput_2009142641
+                    jcr:lastModified="{Date}2023-06-26T09:37:31.177+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input 9"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    autocomplete="off"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    hideTitle="false"
+                    name="textinput_20091426411690369609159"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}false"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
