@@ -34,7 +34,7 @@ describe('GuideBridge ', () => {
         })
     });
 
-    // Assuming you have a custom Cypress assertion function
+
     Cypress.Commands.add('checkEventArguments', (spy, expectedObjectProps, ...expectedOtherArgs) => {
         const calledArgs = spy.args; // Get the arguments of the event call
         const actualObject = calledArgs.find(arg => typeof arg === 'object');
@@ -55,24 +55,21 @@ describe('GuideBridge ', () => {
                 const input = "test123";
 
                 cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+                    // Assert that the function was called two times
+                    cy.wrap(spy).should('have.callCount', 2);
                     // first check for focus change
                     let expectedArg1 = $window.FormView.Constants.ELEMENT_FOCUS_CHANGED;
                     let expectedArg2ObjectProps = {
                         fieldName: textBox1FieldView._model.name,
                         fieldId: textBox1FieldView.id
-                        // Add other properties you want to match
                     };
                     let expectedArg3 = textBox1FieldView._model.form.properties["fd:path"];
-                    // Assert that the function was called multiple times
-                    cy.wrap(spy).should('have.callCount', 2);
-                    // check for element focus changes
                     cy.checkEventArguments(spy.getCall(0), expectedArg2ObjectProps, expectedArg1, expectedArg3);
                     // then check for value change
                     expectedArg1 = $window.FormView.Constants.ELEMENT_VALUE_CHANGED;
                     let expectedArg2ValueObjectProps = {
                         ...expectedArg2ObjectProps,
                         newText: 'test123'
-                        // Add other properties you want to match
                     };
                     cy.checkEventArguments(spy.getCall(1), expectedArg2ValueObjectProps, expectedArg1, expectedArg3);
                 });
