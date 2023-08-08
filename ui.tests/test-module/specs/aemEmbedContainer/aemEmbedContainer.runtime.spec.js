@@ -65,4 +65,56 @@ describe("Sites with Aem Embed Container", () => {
         })
 
     })
+
+    context('aem embed container id mismatch test ', function () {
+
+        const pagePath = "/content/forms/sites/core-components-it/aemembedcontainertest.html";
+        let formContainer = null;
+
+        beforeEach(function () {
+            cy.previewForm(pagePath).then(p => {
+                formContainer = p;
+            })
+        })
+
+        const checkHTML = (id, state) => {
+            const visible = state.visible;
+            const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+            const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+            const value = state.value == null ? '' : state.value;
+            cy.get(`#${id}`)
+                .should(passVisibleCheck)
+                .invoke('attr', 'data-cmp-visible')
+                .should('eq', visible.toString());
+            cy.get(`#${id}`)
+                .invoke('attr', 'data-cmp-enabled')
+                .should('eq', state.enabled.toString());
+            return cy.get(`#${id}`).within((root) => {
+                cy.get('*').should(passVisibleCheck)
+                cy.get('input')
+                    .should(passDisabledAttributeCheck, 'disabled');
+                cy.get('input').should('have.value', value)
+            })
+        }
+
+        it("model initialized properly", () => {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            // fragment component, text field and IntanceManager
+            expect(Object.keys(formContainer._fields).length).to.equal(3);
+        })
+
+        it(" model's changes are reflected in the html ", () => {
+            const [id, fieldView] = Object.entries(formContainer._fields)[0]
+            const model = formContainer._model.getElement(id)
+            model.value = "some other value"
+            checkHTML(model.id, model.getState()).then(() => {
+                model.visible = false
+                return checkHTML(model.id, model.getState())
+            }).then(() => {
+                model.enabled = false
+                return checkHTML(model.id, model.getState())
+            })
+        });
+
+    })
 })

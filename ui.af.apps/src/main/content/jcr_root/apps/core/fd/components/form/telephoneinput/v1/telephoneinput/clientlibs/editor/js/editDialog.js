@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($) {
+(function ($) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-telephoneinput__editdialog",
@@ -24,21 +24,21 @@
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function handleDisplayPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,TELEPHONEINPUT_DISPLAYPATTERN,TELEPHONEINPUT_DISPLAYFORMAT);
+        Utils.handlePatternDropDown(dialog, TELEPHONEINPUT_DISPLAYPATTERN, TELEPHONEINPUT_DISPLAYFORMAT);
     }
 
-    function handleDisplayFormat(dialog){
-        Utils.handlePatternFormat(dialog,TELEPHONEINPUT_DISPLAYPATTERN,TELEPHONEINPUT_DISPLAYFORMAT);
+    function handleDisplayFormat(dialog) {
+        Utils.handlePatternFormat(dialog, TELEPHONEINPUT_DISPLAYPATTERN, TELEPHONEINPUT_DISPLAYFORMAT);
     }
 
     function handleValidationPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
+        Utils.handlePatternDropDown(dialog, TELEPHONEINPUT_VALIDATIONPATTERN, TELEPHONEINPUT_VALIDATIONFORMAT);
     }
 
-    function handleValidationFormat(dialog){
-        Utils.handlePatternFormat(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
+    function handleValidationFormat(dialog) {
+        Utils.handlePatternFormat(dialog, TELEPHONEINPUT_VALIDATIONPATTERN, TELEPHONEINPUT_VALIDATIONFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat,
-        handleDisplayPatternDropDown,handleDisplayFormat);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown, handleValidationFormat,
+        handleDisplayPatternDropDown, handleDisplayFormat);
 })(jQuery);

@@ -114,10 +114,14 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <validationPatternType
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:hideResource="{Boolean}true">
+                                                            granite:class="cmp-adaptiveform-telephoneinput__validationpattern"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Type"
+                                                            name="./validationPatternType">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
-                                                                sling:hideResource="{Boolean}true"/>
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                type="formatters"/>
                                                     </validationPatternType>
                                                     <validateFormat
                                                             jcr:primaryType="nt:unstructured"

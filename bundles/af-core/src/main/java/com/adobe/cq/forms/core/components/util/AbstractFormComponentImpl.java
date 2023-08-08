@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -116,6 +117,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
+        getName();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
@@ -155,6 +157,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
+            // setting the default name if name is null.
             name = getDefaultName();
         }
         return name;
@@ -194,10 +197,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
-        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
-        // we anyways dont need to rely on wcmmode while fetching form definition.
-        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        if (request != null && request.getPathInfo() != null) {
+            String pathInfo = request.getPathInfo();
+            boolean matches = Pattern.matches(".+model.*\\.json$", pathInfo);
+            // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+            // we anyways dont need to rely on wcmmode while fetching form definition.
+            if (!matches) {
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+            }
         }
         return editMode;
     }
