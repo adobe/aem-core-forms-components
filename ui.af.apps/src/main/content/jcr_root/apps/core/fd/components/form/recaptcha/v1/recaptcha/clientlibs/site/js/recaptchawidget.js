@@ -70,7 +70,7 @@ class RecaptchaWidget {
 
         var gparameters = {
             'sitekey': recaptchaConfigData.properties["fd:captcha"].config.siteKey,
-            'size': recaptchaConfigData.properties["fd:captcha"].config.size,
+            'size': recaptchaConfigData.properties["fd:captcha"].config.size || 'normal',
             'theme': recaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
             'type': recaptchaConfigData.properties["fd:captcha"].config.type || 'image',
             'callback': successCallback,

@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Abstract class which can be used as base class for {@link Captcha} implementations.
  */
-public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
+public abstract class AbstractCaptchaImpl extends AbstractFieldImpl {
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     @JsonIgnore

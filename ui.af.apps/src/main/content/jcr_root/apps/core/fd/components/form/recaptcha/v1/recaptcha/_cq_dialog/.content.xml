@@ -78,6 +78,7 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <normal
                                                             jcr:primaryType="nt:unstructured"
+                                                            checked="{Boolean}true"
                                                             text="Normal"
                                                             value="normal"/>
                                                     <compact
@@ -86,7 +87,6 @@
                                                             value="compact"/>
                                                     <invisible
                                                             jcr:primaryType="nt:unstructured"
-                                                            checked="{Boolean}true"
                                                             text="Invisible"
                                                             value="invisible"></invisible>
                                                 </items>
