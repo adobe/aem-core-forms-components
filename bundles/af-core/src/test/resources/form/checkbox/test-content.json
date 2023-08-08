@@ -70,5 +70,28 @@
     "fd:events" : {
       "jcr:primaryType": "nt:unstructured"
     }
+  },
+  "checkbox-enableUncheckedValueFalse" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/checkbox/v1/checkbox",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "string",
+    "checkedValue":  "on",
+    "uncheckedValue": "off",
+    "enableUncheckedValue": false,
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
   }
 }
