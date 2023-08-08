@@ -19,9 +19,8 @@
  * file list, handling invalid file size, file name, file mime type functionality
  */
 
-if (typeof FileInputWidget === 'undefined') {
-
-    class FileInputWidget {
+if (typeof window.FileInputWidget === 'undefined') {
+    window.FileInputWidget = class {
         #fileItemSelector='.cmp-adaptiveform-fileinput__fileitem'
         #widget=null
         #fileArr=[]
@@ -464,3 +463,5 @@ if (typeof FileInputWidget === 'undefined') {
         }
     }
 }
+
+

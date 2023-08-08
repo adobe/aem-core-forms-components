@@ -14,10 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-
-
-if (typeof DatePickerWidget === 'undefined') {
-    class DatePickerWidget {
+if (typeof window.DatePickerWidget === 'undefined') {
+    window.DatePickerWidget  = class {
 
         #widget=null;
         #model=null // passed by reference
@@ -1108,3 +1106,4 @@ if (typeof DatePickerWidget === 'undefined') {
 
     }
 }
+

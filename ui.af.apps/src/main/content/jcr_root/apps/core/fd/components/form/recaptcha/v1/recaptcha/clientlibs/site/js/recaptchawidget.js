@@ -18,8 +18,8 @@
  * This class is responsible for interacting with the recaptcha widget. It displays Google reCAPTCHA challenge.
  */
 
-if (typeof RecaptchaWidget === 'undefined') {
-    class RecaptchaWidget {
+if (typeof window.RecaptchaWidget === 'undefined') {
+    window.RecaptchaWidget = class {
         #widget = null
         #model = null // passed by reference
         #options = null
@@ -92,7 +92,5 @@ if (typeof RecaptchaWidget === 'undefined') {
         setCaptchaModel = function(response) {
             this.#model.value = (response);
         }
-
-
     }
 }
