@@ -82,11 +82,13 @@
                 }, 10);
         }
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
-        const formContainer = FormView.Utils.setupFormContainer(({
+        FormView.Utils.setupFormContainer(({
             _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path, _element});
-        }, FormContainerV2.selectors.self, FormContainerV2.IS)
+            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            formContainer.subscribe();
+            return formContainer;
+        }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }
 
 

@@ -277,3 +277,30 @@ describe("Form Runtime with Text Input For Different locale", () => {
     })
 })
 
+describe("setFocus on text field via rules", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/textinput/focus.html"
+  let formContainer = null
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+        formContainer = p;
+    })
+  });
+
+  it("should focus text field when click on radio button", () => {
+    const [textField] = Object.entries(formContainer._fields)[0];
+    const [radioButton] = Object.entries(formContainer._fields)[1];
+
+    cy.get(`#${textField}`).find("input").should('not.have.focus');
+
+    cy.get(`#${radioButton}`).find("input").eq(0).click().then(x => {
+      cy.get(`#${textField}`).find("input").should('have.focus');
+
+      cy.get(`#${radioButton}`).find("input").eq(1).click().then(x => {
+        cy.get(`#${textField}`).find("input").should('have.focus');
+      });
+    });
+  })
+})
+
