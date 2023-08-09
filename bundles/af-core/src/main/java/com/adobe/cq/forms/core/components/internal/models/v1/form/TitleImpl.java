@@ -37,6 +37,7 @@ import com.adobe.cq.wcm.core.components.models.Title;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,6 +61,9 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     @Nullable
     private Style currentStyle;
 
+    @ScriptVariable
+    private Page currentPage;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String type;
@@ -79,6 +83,11 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
+
+        if (StringUtils.isBlank(title)) {
+            title = StringUtils.defaultIfEmpty(currentPage.getPageTitle(), currentPage.getTitle());
+        }
+
         if (StringUtils.isBlank(title)) {
             Resource formContainerResource = ComponentUtils.getFormContainer(resource);
             if (formContainerResource != null) {
