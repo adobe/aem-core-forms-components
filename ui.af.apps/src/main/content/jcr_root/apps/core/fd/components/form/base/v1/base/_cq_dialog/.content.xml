@@ -562,6 +562,71 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="/mnt/overlay/cq/gui/components/authoring/dialog/style/tab_edit/styletab"/>
+                    <advanced
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Advanced"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <customProperties jcr:primaryType="nt:unstructured"
+                                                   sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <customPropertiesOptions jcr:primaryType="nt:unstructured"
+                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                 fieldDescription="Provide the name (key) and value of the custom property"
+                                                                 fieldLabel="Custom Properties">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                               name="./customProperties">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <customKey jcr:primaryType="nt:unstructured"
+                                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                      granite:class="cmp-adaptiveform-base__customKey"
+                                                                      name="./customKey"
+                                                                      fieldLabel="Name"
+                                                                      fieldDescription="Specify the name of the custom property"
+                                                                      required="{Boolean}true"/>
+                                                                <customValueType jcr:primaryType="nt:unstructured"
+                                                                           sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                           granite:class="cmp-adaptiveform-base__customValueType"
+                                                                           width="50%"
+                                                                           name="./customValueType"
+                                                                           fieldLabel="Type"
+                                                                           fieldDescription="Specify the data type of the value of the custom property">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <String jcr:primaryType="nt:unstructured" text="String" value="0"/>
+                                                                        <Boolean jcr:primaryType="nt:unstructured" text="Boolean" value="1"/>
+                                                                        <Number jcr:primaryType="nt:unstructured" text="Number" value="2"/>
+                                                                    </items>
+                                                                </customValueType>
+                                                                <customValue
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        granite:class="cmp-adaptiveform-base__customValue"
+                                                                        width="50%"
+                                                                        name="./customValue"
+                                                                        fieldLabel="Value"
+                                                                        fieldDescription="Specify the value of the custom property"
+                                                                        required="{Boolean}false"/>
+                                                            </items>
+                                                        </field>
+                                                    </customPropertiesOptions>
+                                                </items>
+                                            </customProperties>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </advanced>
                 </items>
             </tabs>
         </items>

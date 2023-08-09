@@ -27,10 +27,14 @@
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
         BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
-        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
+        BASE_CUSTOMPROPERTY_KEY = ".cmp-adaptiveform-base__customKey",
+        BASE_CUSTOMPROPERTY_VALUETYPE = ".cmp-adaptiveform-base__customValueType",
+        BASE_CUSTOMPROPERTY_VALUE = ".cmp-adaptiveform-base__customValue",
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
-    /**
+        /**
      * Toggles the display of the given element based on the actual and the expected values.
      * If the actualValue is equal to the expectedValue, then the element is shown,
      * otherwise the element is hidden.
@@ -164,6 +168,31 @@
         }
     }
 
+    var registerCustomPropertiesDialogValidator = Utils.registerDialogDataTypeValidators(
+        BASE_CUSTOMPROPERTY_VALUETYPE,
+        BASE_CUSTOMPROPERTY_VALUE,
+        function (dialog) {
+            var selectedValue = '';
+            var dropdownSaveValue = dialog.find(BASE_CUSTOMPROPERTY_VALUETYPE);
+            if (dropdownSaveValue && dropdownSaveValue.length > 0) {
+                selectedValue = dropdownSaveValue[0].selectedItem ? dropdownSaveValue[0].selectedItem.value : '';
+            }
+            var dataType = '';
+            switch (selectedValue) {
+                case '0':
+                    dataType = 'string';
+                    break;
+                case '1':
+                    dataType = 'boolean';
+                    break;
+                case '2':
+                    dataType = 'number';
+                    break;
+            }
+            return dataType;
+        }
+    );
+
     /**
      * Initialise the conditional display of the various elements of the dialog.
      *
@@ -183,6 +212,7 @@
         showHideDoRBindRefField(dialog);
         validateName();
         handleDialogSubmit(dialog);
+        registerCustomPropertiesDialogValidator(dialog);
     }
 
     channel.on("foundation-contentloaded", function(e) {
