@@ -163,7 +163,7 @@ class FileInputWidget {
             } else {
                 // todo: add support here
                 //let previewFileObjIdx = this._getFileObjIdx(index);
-                let previewFile = this.#fileArr[index] ? this.#fileArr[index].data : this.#fileArr[index];
+                let previewFile = this.#fileArr[index]?.data;
                 let objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
                 if (objectUrl) {
                     elem.dataset.objectUrl = objectUrl;
