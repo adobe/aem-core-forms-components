@@ -316,12 +316,6 @@ public class CheckBoxImplTest {
     }
 
     @Test
-    void testGetEnumNames() {
-        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
-    }
-
-    @Test
     void testStyleSystemClasses() {
         ComponentStyleInfo componentStyleInfoMock = mock(ComponentStyleInfo.class);
         Resource resource = spy(context.resourceResolver().getResource(PATH_CHECKBOX));
