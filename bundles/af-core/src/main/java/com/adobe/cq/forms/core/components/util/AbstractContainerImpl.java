@@ -26,7 +26,9 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
@@ -40,6 +42,8 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -104,6 +108,17 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         // added composition check, since we don't have special container for responsive grid
         if (request != null && resource.isResourceType("wcm/foundation/components/responsivegrid")) {
             resGrid = request.adaptTo(ResponsiveGrid.class);
+        }
+
+        if (request != null) {
+            Page currentPage = getCurrentPage();
+            if (currentPage != null) {
+                PageManager pageManager = currentPage.getPageManager();
+                Page resourcePage = pageManager.getContainingPage(resource);
+                if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
+                    request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, resourcePage.getPath());
+                }
+            }
         }
     }
 

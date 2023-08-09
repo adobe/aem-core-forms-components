@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -93,8 +94,6 @@ public abstract class AbstractComponentImpl implements Component {
 
     protected static final String REQ_ATTR_RESOURCE_CALLER_PATH = "resourceCallerPath";
 
-    private static final String REQ_ATTR_EMBEDDED_ADAPTIVEFORM = "embeddedAdaptiveForm";
-
     /**
      * Flag indicating if the data layer is enabled.
      */
@@ -126,10 +125,10 @@ public abstract class AbstractComponentImpl implements Component {
     @PostConstruct
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
-        if (currentPage != null && resource != null && request.getAttribute(REQ_ATTR_EMBEDDED_ADAPTIVEFORM) != null) {
+        if (currentPage != null && resource != null && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
-                String pagePath = (String) request.getAttribute(REQ_ATTR_EMBEDDED_ADAPTIVEFORM);
+                String pagePath = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
                 Page resourcePage = pageManager.getContainingPage(pagePath);
                 if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
                     setCurrentPage(resourcePage);
