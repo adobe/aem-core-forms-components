@@ -85,8 +85,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
         PREFILL_ACTION("prefillServiceProvider"),
-        FORMATTERS("formatters"),
-        CUSTOM_PROPERTIES("customProperties");
+        FORMATTERS("formatters");
 
         private String value;
 
@@ -192,15 +191,6 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
-                    break;
-                case CUSTOM_PROPERTIES:
-                    Resource componentResource = resourceResolver.getResource((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE));
-                    if (componentResource != null) {
-                        List<String> customPropertyGroups = formMetaData.getFormV2ComponentCustomPropertyGroups(componentResource);
-                        for (String groupName : customPropertyGroups) {
-                            resources.add(getResourceForDropdownDisplay(resourceResolver, groupName, groupName));
-                        }
-                    }
                     break;
             }
         }
