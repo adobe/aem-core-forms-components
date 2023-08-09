@@ -16,7 +16,16 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.Optional;
+
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -25,6 +34,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
+import com.adobe.aemds.guide.model.CustomPropertySelector;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -36,7 +46,6 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.model.CustomPropertySelector;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -460,7 +469,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (selectedCustomProperties != null) {
             selectedCustomProperties.forEach(allCustomPropertyPairs::putIfAbsent);
         }
-
         // Additional Custom Properties
         ValueMap componentResourceMap = this.resource.getValueMap();
         if (componentResourceMap.containsKey(PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS) && componentResourceMap.containsKey(
