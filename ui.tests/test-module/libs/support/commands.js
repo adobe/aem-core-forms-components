@@ -494,4 +494,19 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
     cy.get(tabSelector + ".is-selected").should("exist");
 })
 
+/**
+ * This will attach a listener to console.error calls,
+ * that will help in checking if errors were logged or not.
+ *
+ * This is supposed to be called in the before hook of a test, like this:
+ * before(() => {
+ *     cy.attachConsoleErrorSpy();
+ * });
+ */
+Cypress.Commands.add("attachConsoleErrorSpy", () => {
+    Cypress.on('window:before:load', (win) => {
+        cy.spy(win.console, 'error');
+    });
+});
+
 
