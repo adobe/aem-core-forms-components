@@ -111,7 +111,7 @@ public class AbstractFormComponentImplTest {
         Mockito.when(sitePage.getPath()).thenReturn(PAGE_PATH);
         Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute("embeddedAdaptiveForm", AF_PATH);
+        request.setAttribute("referencedPage", AF_PATH);
 
         class TestAbstractComponent extends AbstractComponentImpl {
             public Page getCurrentPageToTest() {
