@@ -1,38 +1,42 @@
 {
   "id": "checkbox-d98f771fbc",
+  "dataRef": "a.b",
+  "fieldType": "checkbox",
   "name": "checkbox-customized",
   "visible": false,
-  "enabled" : false,
-  "required" : true,
-  "readOnly" : true,
-  "fieldType": "checkbox",
-  "description" : "checkbox-customized",
+  "description": "checkbox-customized",
   "tooltip": "test-short-description",
+  "type": "string",
+  "required": true,
+  "enabled": false,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": true,
+  "enforceEnum": true,
+  "label": {
+    "visible": true,
+    "value": "checkbox-customized"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
   "properties": {
-    "afs:layout" : {
+    "afs:layout": {
       "tooltipVisible": false,
-      "orientation" : "horizontal"
+      "orientation": "horizontal"
     },
     "fd:dor": {
-      "dorExclusion":false
+      "dorExclusion": false
     },
-    "fd:path":"/content/checkbox-customized"
+    "fd:path": "/content/checkbox-customized"
   },
-  "enforceEnum":true,
-  "enum" : [true, false],
-  "enumNames" : ["yes", "no"],
-  "label": {
-    "value": "checkbox-customized",
-    "visible": true
-  },
-  "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
-  "constraintMessages":{
-    "type":"incorrect type"
-  },
-  "events" : {
-    "custom:setProperty" : ["$event.payload"]
-  },
-  "type": "boolean",
+  "enum": [
+    "yes",
+    "no"
+  ],
   ":type": "core/fd/components/form/checkbox/v1/checkbox"
 }

@@ -345,7 +345,7 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testDataLayerProperties() throws IllegalAccessException {
-        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         FormComponentData dataObject = (FormComponentData) checkBox.getData();
         assert (dataObject != null);
@@ -358,7 +358,7 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testJSONExportDataLayer() throws Exception {
-        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
     }
