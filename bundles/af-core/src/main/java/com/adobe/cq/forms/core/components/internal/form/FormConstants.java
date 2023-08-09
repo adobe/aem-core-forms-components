@@ -110,7 +110,6 @@ public final class FormConstants {
 
     public static final String FORM_FIELD_TYPE = "form";
     public static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";
-    public static final String FORM_FIELD_TYPE = "form";
 
     /** The property name for the additional property keys within the multi field */
     public static final String PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS = "fd:additionalCustomPropertyKeys";
