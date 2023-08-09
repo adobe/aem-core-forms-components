@@ -49,12 +49,12 @@ describe('GuideBridge ', () => {
             if($window.guideBridge && $window.guideBridge.isConnected()) {
                 // Create a spy on the event
                 const spy = cy.spy($window.guideBridge, 'trigger');
-                const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-                const [textbox2, textbox2FieldView] = Object.entries(formContainer._fields)[1];
-                const [textbox3, textbox3FieldView] = Object.entries(formContainer._fields)[2];
+                // find textinput with name, textinput_18577078541690896990322
+                const targetName = "textinput_18577078541690896990322";
+                const textBox1FieldView = Object.values(formContainer._fields).find(obj => obj._model.name === targetName);
                 const input = "test123";
 
-                cy.get(`#${textbox1}`).find("input").clear().type(input).blur().then(x => {
+                cy.get(`#${textBox1FieldView.id}`).find("input").clear().type(input).blur().then(x => {
                     // Assert that the function was called two times
                     cy.wrap(spy).should('have.callCount', 2);
                     // first check for focus change
@@ -72,6 +72,7 @@ describe('GuideBridge ', () => {
                         newText: 'test123'
                     };
                     cy.checkEventArguments(spy.getCall(1), expectedArg2ValueObjectProps, expectedArg1, expectedArg3);
+
                 });
             }
         })
