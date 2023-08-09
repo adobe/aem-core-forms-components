@@ -509,4 +509,13 @@ Cypress.Commands.add("attachConsoleErrorSpy", () => {
     });
 });
 
-
+/**
+ * This checks if any console.errors were logged or not,
+ * after the spy was attached (see above command).
+ * So make sure to attach the spy function first!
+ */
+Cypress.Commands.add("expectNoConsoleErrors", () => {
+    return cy.window().then(win => {
+        expect(win.console.error).to.have.callCount(0);
+    });
+});
