@@ -49,9 +49,25 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     protected String orientationJcr;
     private Orientation orientation;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String checkedValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String uncheckedValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean enableUncheckedValue;
+
     @PostConstruct
     private void initCheckBoxModel() {
         orientation = Orientation.fromString(orientationJcr);
+        if (!Type.BOOLEAN.equals(type)) {
+            if (Boolean.TRUE.equals(enableUncheckedValue)) {
+                enums = new String[] { checkedValue, uncheckedValue };
+            } else {
+                enums = new String[] { checkedValue };
+            }
+        }
     }
 
     @Override

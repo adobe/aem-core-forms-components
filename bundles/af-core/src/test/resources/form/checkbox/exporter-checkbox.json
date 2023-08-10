@@ -15,8 +15,7 @@
     "fd:path":"/content/checkbox"
   },
   "enforceEnum":true,
-  "enum" : [true, false],
-  "enumNames" : ["yes", "no"],
+  "enum" : ["on", "off"],
   "label": {
     "value": "def"
   },
@@ -28,6 +27,6 @@
   "events" : {
     "custom:setProperty" : ["$event.payload"]
   },
-  "type": "boolean",
+  "type": "string",
   ":type": "core/fd/components/form/checkbox/v1/checkbox"
 }
