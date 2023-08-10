@@ -49,8 +49,8 @@ describe('GuideBridge ', () => {
             if($window.guideBridge && $window.guideBridge.isConnected()) {
                 // Create a spy on the event
                 const spy = cy.spy($window.guideBridge, 'trigger');
-                // find textinput with name, textinput_66014071687434939255
-                const targetName = "textinput_66014071687434939255";
+                // find textinput with name, textinput_18577078541690896990322
+                const targetName = "textinput_18577078541690896990322";
                 const textBox1FieldView = Object.values(formContainer._fields).find(obj => obj._model.name === targetName);
                 const input = "test123";
 
