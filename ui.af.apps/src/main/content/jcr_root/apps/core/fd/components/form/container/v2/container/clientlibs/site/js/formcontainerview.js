@@ -76,6 +76,7 @@
         }
         function onInit(e) {
             let formContainer =  e.detail;
+            let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 //for loop added to remove the applied loading class from the newly added Div in html
                 for (let i = 0; i < elements.length; i++) {
