@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -25,11 +26,15 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,6 +59,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(AemContextExtension.class)
@@ -67,6 +73,8 @@ public class FormContainerImplTest {
 
     protected static final String SITES_PATH = "/content/exampleSite";
     protected static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH + "/jcr:content/root/sitecontainer/formcontainer";
+
+    protected static final String AF_PATH = "/content/forms/af/testAf";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -310,5 +318,32 @@ public class FormContainerImplTest {
     void testGetName() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNull(formContainer.getName());
+    }
+
+
+    @Test
+    public void testRequestAttributeIfContainerPageDifferent() {
+        Resource resource = Mockito.mock(Resource.class);
+        Page afPage = Mockito.mock(Page.class);
+        Mockito.when(afPage.getPath()).thenReturn(AF_PATH);
+        PageManager pageManager = Mockito.mock(PageManager.class);
+        Mockito.when(pageManager.getContainingPage(resource)).thenReturn(afPage);
+        Page sitePage = Mockito.mock(Page.class);
+        Mockito.when(sitePage.getPath()).thenReturn("/content/examplepage");
+        Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
+        MockSlingHttpServletRequest request = context.request();
+
+        FormContainerImpl formContainerImpl = new FormContainerImpl();
+        Utils.setInternalState(formContainerImpl, "resource", resource);
+        Utils.setInternalState(formContainerImpl, "request", request);
+        Utils.setInternalState(formContainerImpl, "currentPage", sitePage);
+        Method initMethod = Utils.getPrivateMethod(FormContainerImpl.class, "initFormContainerModel");
+        try {
+            initMethod.invoke(formContainerImpl);
+            String referencePage = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
+            Assertions.assertEquals(referencePage, AF_PATH, "Reference page should be set to the AF page");
+        } catch (Exception e) {
+            fail("initFormContainerModel method should have invoked");
+        }
     }
 }

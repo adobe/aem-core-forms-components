@@ -19,6 +19,7 @@ package com.adobe.cq.forms.core.components.util;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -111,7 +112,7 @@ public class AbstractFormComponentImplTest {
         Mockito.when(sitePage.getPath()).thenReturn(PAGE_PATH);
         Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute("referencedPage", AF_PATH);
+        request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, AF_PATH);
 
         class TestAbstractComponent extends AbstractComponentImpl {
             public Page getCurrentPageToTest() {
