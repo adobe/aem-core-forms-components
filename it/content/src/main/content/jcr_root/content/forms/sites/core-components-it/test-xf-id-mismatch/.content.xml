@@ -54,7 +54,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core-components-examples/components/experiencefragment"
-                    fragmentVariationPath="/content/experience-fragments/test-experience-fragment/master"/>
+                    fragmentVariationPath="/content/experience-fragments/test-xf-idmismatch/master"/>
             </responsivegrid>
         </root>
     </jcr:content>
