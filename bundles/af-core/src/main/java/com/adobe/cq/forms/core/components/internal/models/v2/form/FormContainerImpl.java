@@ -105,6 +105,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (request != null) {
             contextPath = request.getContextPath();
             request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, this.getPath());
+
+            Page currentPage = getCurrentPage();
+            if (currentPage != null) {
+                PageManager pageManager = currentPage.getPageManager();
+                Page resourcePage = pageManager.getContainingPage(resource);
+                if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
+                    request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, resourcePage.getPath());
+                }
+            }
         }
     }
 
