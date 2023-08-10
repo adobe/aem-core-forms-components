@@ -91,6 +91,26 @@
                         jcr:primaryType="nt:unstructured"
                         change="[if($field == '2023-01-12'\, dispatchEvent(dateinput4\, 'custom:setProperty'\, {value : '2023-01-01'})\, {}),if($field == '2023-01-12'\, dispatchEvent(dateinput1\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
             </dateinput6>
+         <datepicker
+                jcr:created="{Date}2023-08-10T15:45:30.311+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2023-08-10T15:47:00.344+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date Picker with edit and display formats"
+                sling:resourceType="forms-components-examples/components/form/datepicker"
+                displayFormat="EEEE, d MMMM, y"
+                displayPatternType="EEEE, d MMMM, y"
+                editFormat="d/M/y"
+                editPatternType="d/M/y"
+                enabled="{Boolean}true"
+                fieldType="date-input"
+                hideTitle="false"
+                name="datepicker7"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

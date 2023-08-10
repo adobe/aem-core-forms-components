@@ -1067,6 +1067,9 @@ class DatePickerWidget {
      */
 
     setValue(value) {
+        if(value && this.#curInstance.editValue() === value) { 
+            return; // prevent the date pattern value from being set on the widget hence changing the model
+        }
         let currDate = new Date(value);
         if (!isNaN(currDate) && value != null) {
             //in case the value is directly updated from the field without using calendar widget
@@ -1081,7 +1084,9 @@ class DatePickerWidget {
         }
         if (this.#curInstance != null) {
             this.#curInstance.selectedDate = value;
-            this.#model.value = this.toString(); // updating model value to the latest
+            if(value) {
+                this.#model.value = this.toString(); // updating model value to the latest
+            }
             this.#curInstance.$field.value = this.#curInstance.editValue() || value;
         } else {
             this.#widget.value = this.#model.editValue || value;
