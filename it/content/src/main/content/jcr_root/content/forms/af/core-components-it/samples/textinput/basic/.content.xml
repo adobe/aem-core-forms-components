@@ -132,40 +132,6 @@
                 textIsRich="[true,true]"
                 unboundFormElement="{Boolean}false"
                 visible="{Boolean}true"/>
-            <textinput_260707727
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 9"
-                    enabled="{Boolean}true"
-                    readOnly="{Boolean}false"
-                    autocomplete="off"
-                    name="textinput_2607077271690896983422"
-                    visible="{Boolean}true"
-                    hideTitle="false"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    fieldType="text-input"
-                    textIsRich="[true,true]"
-                    unboundFormElement="{Boolean}false">
-                <fd:rules
-                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_2607077271690896983422&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput_2607077271690896983422&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;valid&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;valid&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_18577078541690896990322&quot;\,&quot;displayName&quot;:&quot;Text Input 10&quot;\,&quot;type&quot;:&quot;FIELD|TEXT FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 10/&quot;\,&quot;name&quot;:&quot;textinput_18577078541690896990322&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;False&quot;\,&quot;value&quot;:null}}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;errorMessage&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_18577078541690896990322&quot;\,&quot;displayName&quot;:&quot;Text Input 10&quot;\,&quot;type&quot;:&quot;FIELD|TEXT FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 10/&quot;\,&quot;name&quot;:&quot;textinput_18577078541690896990322&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Field is not valid&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(textinput_18577078541690896990322\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                        jcr:primaryType="nt:unstructured"
-                        validationStatus="valid"/>
-                <fd:events
-                        jcr:primaryType="nt:unstructured"
-                        change="[if(contains($event.payload.changes[].propertyName\, 'value')\,dispatchEvent(textinput_18577078541690896990322\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})\,{})]"/>
-            </textinput_260707727>
-            <textinput_1857707854
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 10"
-                    enabled="{Boolean}true"
-                    readOnly="{Boolean}false"
-                    autocomplete="off"
-                    name="textinput_18577078541690896990322"
-                    visible="{Boolean}true"
-                    hideTitle="false"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    fieldType="text-input"
-                    textIsRich="[true,true]"
-                    unboundFormElement="{Boolean}false"/>
             <submit
                 jcr:lastModified="{Date}2023-06-22T17:28:46.456+05:30"
                 jcr:lastModifiedBy="admin"
