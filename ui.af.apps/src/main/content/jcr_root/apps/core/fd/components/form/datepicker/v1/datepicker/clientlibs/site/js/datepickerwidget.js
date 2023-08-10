@@ -1067,8 +1067,8 @@ class DatePickerWidget {
      */
 
     setValue(value) {
-        if(value && this.#curInstance.editValue() === value) { 
-            return; // prevent the date pattern value from being set on the widget hence changing the model
+        if(value && this.#curInstance.editValue() === value || this.#curInstance.displayValue() === value) { 
+            return; // prevent the date pattern value from being set on the model through the widget
         }
         let currDate = new Date(value);
         if (!isNaN(currDate) && value != null) {
