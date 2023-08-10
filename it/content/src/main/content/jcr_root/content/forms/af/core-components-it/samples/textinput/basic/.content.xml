@@ -132,6 +132,32 @@
                 textIsRich="[true,true]"
                 unboundFormElement="{Boolean}false"
                 visible="{Boolean}true"/>
+            <textinput_260707727
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input 9"
+                    enabled="{Boolean}true"
+                    readOnly="{Boolean}false"
+                    autocomplete="off"
+                    name="textinput_2607077271690896983422"
+                    visible="{Boolean}true"
+                    hideTitle="false"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"/>
+            <textinput_1857707854
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input 10"
+                    enabled="{Boolean}true"
+                    readOnly="{Boolean}false"
+                    autocomplete="off"
+                    name="textinput_18577078541690896990322"
+                    visible="{Boolean}true"
+                    hideTitle="false"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"/>
             <submit
                 jcr:lastModified="{Date}2023-06-22T17:28:46.456+05:30"
                 jcr:lastModifiedBy="admin"
