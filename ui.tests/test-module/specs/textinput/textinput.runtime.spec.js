@@ -140,7 +140,7 @@ describe("Form Runtime with Text Input", () => {
         const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
         const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
 
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[8]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10]
 
         // 1. Required
         cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
