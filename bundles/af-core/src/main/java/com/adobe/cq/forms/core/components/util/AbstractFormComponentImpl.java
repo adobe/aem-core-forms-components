@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
 import java.util.Optional;
-
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -34,7 +33,6 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
-import com.adobe.aemds.guide.model.CustomPropertySelector;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -46,6 +44,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.model.CustomPropertySelector;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -246,7 +245,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
         Map<String, String> customProperties = getCustomProperties();
-        if (customProperties != null) {
+        if (customProperties.size() > 0) {
             customProperties.forEach(properties::putIfAbsent);
         }
         if (getCustomLayoutProperties().size() != 0) {
@@ -461,6 +460,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      *
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
+    @NotNull
     private Map<String, String> getCustomProperties() {
         Map<String, String> allCustomPropertyPairs = new HashMap<>();
         Map<String, String> selectedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertySelector.class))

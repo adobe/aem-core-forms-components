@@ -142,7 +142,8 @@ public abstract class AbstractComponentImpl implements Component {
     public String getId() {
         if (id == null) {
             String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
-            this.id = com.adobe.cq.wcm.core.components.util.ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
+            this.id = com.adobe.cq.wcm.core.components.util.ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath,
+                this.componentContext);
         }
         return id;
     }
