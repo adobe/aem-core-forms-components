@@ -986,6 +986,7 @@ class DatePickerWidget {
                 this.selectedYear = this.currentYear;
                 this.selectedDay = val;
                 this.setValue(this.toString());
+                this.#model.value = this.toString(); // updating model value to the latest when calender is changed
                 this.#curInstance.$field.focus();
                 let existingSelectedElement =  this['$'+this.view.toLowerCase()].getElementsByClassName("dp-selected")[0];
                 if (existingSelectedElement) {
@@ -1036,11 +1037,18 @@ class DatePickerWidget {
         });
     }
 
+    #isEditValueOrDisplayValue(value) {
+    	return (this.#model.editValue === value || this.#model.displayValue === value);
+    }
+
     /**
      * returns the original value of format YYYY-MM-DD
      * @returns {*|string}
      */
     getValue() {
+        if(this.#isEditValueOrDisplayValue(this.#widget.value)) {
+            return this.#model.value; // if the widget has edit/display value thus method should return model value
+         }
         let dateVal = new Date(this.toString());
         if (!isNaN(dateVal)) {
             return this.toString();
@@ -1080,8 +1088,9 @@ class DatePickerWidget {
                 = -1;
         }
         if (this.#curInstance != null) {
-            this.#curInstance.selectedDate = value;
-            this.#model.value = this.toString(); // updating model value to the latest
+            if(!this.#isEditValueOrDisplayValue(value)) {
+                this.#curInstance.selectedDate = value;  // prevent edit/display value from getting set in calender
+            }
             this.#curInstance.$field.value = this.#curInstance.editValue() || value;
         } else {
             this.#widget.value = this.#model.editValue || value;
