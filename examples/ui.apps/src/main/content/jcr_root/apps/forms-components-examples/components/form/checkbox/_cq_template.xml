@@ -3,4 +3,6 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Check Box"
   fieldType="checkbox"
-  enum="[true,false]"/>
+  checkedValue="on"
+  uncheckedValue="off"/>
+
