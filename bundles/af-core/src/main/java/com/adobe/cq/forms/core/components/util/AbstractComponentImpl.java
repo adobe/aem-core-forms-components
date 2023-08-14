@@ -35,6 +35,7 @@ import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.i18n.I18n;
@@ -142,8 +143,7 @@ public abstract class AbstractComponentImpl implements Component {
     public String getId() {
         if (id == null) {
             String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
-            this.id = com.adobe.cq.wcm.core.components.util.ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath,
-                this.componentContext);
+            this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
     }
@@ -166,10 +166,9 @@ public abstract class AbstractComponentImpl implements Component {
             if (this.dataLayerEnabled == null) {
                 if (this.currentPage != null) {
                     // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.currentPage
-                        .getContentResource());
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.currentPage.getContentResource());
                 } else {
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.resource);
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
                 }
             }
             if (this.dataLayerEnabled) {

@@ -16,15 +16,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,7 +36,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.model.CustomPropertySelector;
+import com.adobe.aemds.guide.model.impl.CustomPropertyInfoImpl;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -61,10 +53,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import static com.adobe.aemds.guide.utils.GuideV2Constants.PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS;
-import static com.adobe.aemds.guide.utils.GuideV2Constants.PN_CUSTOM_PROPERTY_ADDITIONAL_VALUES;
-import static com.adobe.cq.forms.core.components.util.ComponentUtils.convertToArray;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -259,7 +247,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (rulesProperties.size() > 0) {
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
-
         return properties;
     }
 
@@ -349,7 +336,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!isEventValid.test(entry)) {
             updatedEntry = Stream.empty();
         } else {
-            arrayEventValue = (String[]) convertToArray(eventValue);
+            arrayEventValue = (String[]) ComponentUtils.convertToArray(eventValue);
             updatedEntry = Stream.of(new AbstractMap.SimpleEntry<>(key, arrayEventValue));
         }
         return updatedEntry;
@@ -460,30 +447,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      *
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
-    @NotNull
     private Map<String, String> getCustomProperties() {
-        Map<String, String> allCustomPropertyPairs = new HashMap<>();
-        Map<String, String> selectedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertySelector.class))
-            .map(CustomPropertySelector::getSelectedCustomPropertyPairs)
-            .orElse(null);
-        if (selectedCustomProperties != null) {
-            selectedCustomProperties.forEach(allCustomPropertyPairs::putIfAbsent);
-        }
-        // Additional Custom Properties
-        ValueMap componentResourceMap = this.resource.getValueMap();
-        if (componentResourceMap.containsKey(PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS) && componentResourceMap.containsKey(
-            PN_CUSTOM_PROPERTY_ADDITIONAL_VALUES)) {
-            String[] addonKeys = (String[]) convertToArray(componentResourceMap.get(
-                PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS));
-            String[] addonValues = (String[]) convertToArray(componentResourceMap.get(
-                PN_CUSTOM_PROPERTY_ADDITIONAL_VALUES));
-
-            for (int i = 0; i < addonKeys.length; i++) {
-                if (!addonKeys[i].isEmpty()) {
-                    allCustomPropertyPairs.put(addonKeys[i], addonValues[i]);
-                }
-            }
-        }
-        return allCustomPropertyPairs;
+        return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfoImpl.class))
+            .map(CustomPropertyInfoImpl::getAllCustomPropertyPairs)
+            .orElse(Collections.emptyMap());
     }
 }
