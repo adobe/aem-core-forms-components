@@ -62,8 +62,8 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS;
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.PN_CUSTOM_PROPERTY_ADDITIONAL_VALUES;
+import static com.adobe.aemds.guide.utils.GuideV2Constants.PN_CUSTOM_PROPERTY_ADDITIONAL_KEYS;
+import static com.adobe.aemds.guide.utils.GuideV2Constants.PN_CUSTOM_PROPERTY_ADDITIONAL_VALUES;
 import static com.adobe.cq.forms.core.components.util.ComponentUtils.convertToArray;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
