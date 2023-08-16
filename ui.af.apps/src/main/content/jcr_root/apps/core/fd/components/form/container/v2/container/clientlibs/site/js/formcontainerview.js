@@ -41,7 +41,7 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        window.location.href = body.redirectUrl;
+                        window.location.href = encodeURI(body.redirectUrl);
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
