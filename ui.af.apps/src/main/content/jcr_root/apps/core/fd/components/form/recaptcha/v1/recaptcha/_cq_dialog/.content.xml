@@ -85,10 +85,6 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="Compact"
                                                             value="compact"/>
-                                                    <invisible
-                                                            jcr:primaryType="nt:unstructured"
-                                                            text="Invisible"
-                                                            value="invisible"></invisible>
                                                 </items>
                                             </size>
                                             <markOptional
