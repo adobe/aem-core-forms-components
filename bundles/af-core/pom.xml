@@ -469,11 +469,6 @@
 
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
-<!--        <dependency>-->
-<!--            <groupId>com.adobe.aem</groupId>-->
-<!--            <artifactId>aem-forms-sdk-api</artifactId>-->
-<!--            <version>2023.01.10.01-SNAPSHOT</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>com.adobe.aemfd</groupId>
