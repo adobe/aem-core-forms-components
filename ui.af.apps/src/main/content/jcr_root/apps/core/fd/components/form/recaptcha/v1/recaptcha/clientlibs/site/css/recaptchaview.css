@@ -18,4 +18,14 @@ BLOCK cmp-adaptiveform-recaptcha
 
 }
 
+.cmp-adaptiveform-recaptcha__errormessage {
 
+}
+
+.cmp-adaptiveform-recaptcha[data-cmp-valid=false] {
+
+}
+
+.cmp-adaptiveform-recaptcha[data-cmp-valid=false] {
+
+}
