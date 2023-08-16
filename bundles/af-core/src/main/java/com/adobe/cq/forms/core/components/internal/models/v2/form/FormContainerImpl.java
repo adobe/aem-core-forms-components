@@ -62,11 +62,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
-
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
-    private static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
+    public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
