@@ -333,11 +333,17 @@ public class FormContainerImplTest {
         MockSlingHttpServletRequest request = context.request();
 
         FormContainerImpl formContainerImpl = new FormContainerImpl();
-        Utils.setInternalState(formContainerImpl, "resource", resource);
         Utils.setInternalState(formContainerImpl, "request", request);
-        Utils.setInternalState(formContainerImpl, "currentPage", sitePage);
         Method initMethod = Utils.getPrivateMethod(FormContainerImpl.class, "initFormContainerModel");
         try {
+            // Test when currentPage is null
+            initMethod.invoke(formContainerImpl);
+            Assertions.assertNull(request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH));
+            Utils.setInternalState(formContainerImpl, "currentPage", sitePage);
+            // Test when resource is not set somehow
+            initMethod.invoke(formContainerImpl);
+            Assertions.assertNull(request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH));
+            Utils.setInternalState(formContainerImpl, "resource", resource);
             initMethod.invoke(formContainerImpl);
             String referencePage = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
             Assertions.assertEquals(referencePage, AF_PATH, "Reference page should be set to the AF page");
