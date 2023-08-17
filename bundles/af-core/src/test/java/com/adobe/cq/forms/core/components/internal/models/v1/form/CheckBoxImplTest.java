@@ -55,6 +55,8 @@ public class CheckBoxImplTest {
     private static final String PATH_CHECKBOX_CUSTOMIZED = CONTENT_ROOT + "/checkbox-customized";
 
     private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
+
+    private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -303,7 +305,7 @@ public class CheckBoxImplTest {
     @Test
     void testGetEnum() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new Boolean[] { true, false }, checkbox.getEnums());
+        assertArrayEquals(new String[] { "on", "off" }, checkbox.getEnums());
 
     }
 
@@ -311,12 +313,7 @@ public class CheckBoxImplTest {
     void testGetNullEnum() {
         CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
         assertNull(noEnumCheckbox.getEnums());
-    }
 
-    @Test
-    void testGetEnumNames() {
-        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
     }
 
     @Test
@@ -336,6 +333,12 @@ public class CheckBoxImplTest {
     void testGetOrientiztion() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertEquals(Orientation.HORIZONTAL, checkbox.getOrientation());
+    }
+
+    @Test
+    void shouldOnlyHaveOnEnumIfEnableUncheckedValueOff() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDOFF);
+        assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
     }
 
     private CheckBox getCheckBoxUnderTest(String resourcePath) {
