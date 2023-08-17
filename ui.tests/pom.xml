@@ -322,6 +322,7 @@
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>run</argument>
+                                        <argument>--spec=${specFiles}</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>

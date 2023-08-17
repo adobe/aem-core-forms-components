@@ -51,6 +51,7 @@ common:
           command: npm install axe-html-reporter
       - run:
           name: UI tests
+          # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
             TESTFILES=$(circleci tests glob "ui.tests/**/*.spec.js")
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
