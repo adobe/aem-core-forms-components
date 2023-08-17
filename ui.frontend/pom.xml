@@ -50,6 +50,10 @@
                     <configuration>
                         <nodeVersion>v18.9.0</nodeVersion>
                         <npmVersion>8.19.1</npmVersion>
+                        <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
+                        <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+                        <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
+                        <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                     </configuration>
                     <executions>
                         <execution>

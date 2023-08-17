@@ -16,19 +16,25 @@
 
 package com.adobe.cq.forms.core.components.util;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import static com.adobe.xfa.HostPseudoModelScript.getCurrentPage;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
@@ -41,6 +47,9 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_NO_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker2";
     private static final String PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker3";
     private static final String PATH_COMPONENT_WITH_NO_RULE = CONTENT_ROOT + "/numberinput";
+    private static final String AF_PATH = "/content/forms/af/testAf";
+    private static final String PAGE_PATH = "/content/testPage";
+
     public final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -89,6 +98,39 @@ public class AbstractFormComponentImplTest {
         Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
         assertNotNull(rulesProperties);
         assertEquals("invalid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testEmbedWithIframe() {
+        Resource resource = Mockito.mock(Resource.class);
+        Page afPage = Mockito.mock(Page.class);
+        Mockito.when(afPage.getPath()).thenReturn(AF_PATH);
+        PageManager pageManager = Mockito.mock(PageManager.class);
+        Mockito.when(pageManager.getContainingPage(AF_PATH)).thenReturn(afPage);
+        Page sitePage = Mockito.mock(Page.class);
+        Mockito.when(sitePage.getPath()).thenReturn(PAGE_PATH);
+        Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute("embeddedAdaptiveForm", AF_PATH);
+
+        class TestAbstractComponent extends AbstractComponentImpl {
+            public Page getCurrentPageToTest() {
+                return getCurrentPage();
+            }
+        }
+        TestAbstractComponent abstractComponentImpl = new TestAbstractComponent();
+        Utils.setInternalState(abstractComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractComponentImpl, "request", request);
+        Utils.setInternalState(abstractComponentImpl, "currentPage", sitePage);
+        Method initMethod = Utils.getPrivateMethod(AbstractComponentImpl.class, "init");
+        try {
+            initMethod.invoke(abstractComponentImpl);
+            Page newCurrentPage = abstractComponentImpl.getCurrentPageToTest();
+            assertEquals(afPage.getPath(), newCurrentPage.getPath(), "Page should be set to AF page instead of sites page.");
+        } catch (Exception e) {
+            fail("Init method should have invoked");
+        }
+
     }
 
     @Test

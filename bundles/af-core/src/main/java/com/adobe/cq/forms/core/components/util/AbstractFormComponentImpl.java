@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
@@ -212,7 +213,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
-    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     /**
      * Predicate to check if a map entry is non empty
@@ -311,7 +311,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
             Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
@@ -430,6 +430,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             } else {
                 jsonGenerator.writeString(s);
             }
+        }
+
+        @Override
+        public boolean isEmpty(SerializerProvider provider, String value) {
+            return (StringUtils.isEmpty(value));
         }
     }
 
