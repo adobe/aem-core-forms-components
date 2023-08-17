@@ -50,9 +50,6 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
-          name: Install coverage reporter
-          command: npm install cypress-circleci-reporter
-      - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |

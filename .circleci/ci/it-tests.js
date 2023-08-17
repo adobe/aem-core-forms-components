@@ -130,7 +130,7 @@ try {
 } finally {
     // test-results folder will store the test results to re-try only failed test
     // this is done, because this is how circle ci expects test reports
-    ci.sh('mkdir -p test-results/cypress');
+    ci.sh('mkdir -p test-results/cypress/');
     ci.sh('cp ./ui.tests/test-module/target/reports/*.xml ./test-results/cypress/');
     // Always download logs from AEM container
     ci.sh('mkdir logs');
