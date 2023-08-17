@@ -112,10 +112,12 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
-                ci.sh(command);
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            ci.sh(command);
         });
     }
 
