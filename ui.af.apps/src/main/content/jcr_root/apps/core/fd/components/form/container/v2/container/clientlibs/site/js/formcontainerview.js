@@ -41,13 +41,7 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
-                        let redirectElement = document.querySelector('[name=":redirect"]');
-                        // check to prevent tampering of redirectURL from client
-                        if(redirectElement && redirectElement.value === body.redirectUrl) {
-                            redirectURL = body.redirectUrl;
-                        }
-                        window.location.href = redirectURL;
+                        window.location.href = encodeURI(body.redirectUrl);
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
