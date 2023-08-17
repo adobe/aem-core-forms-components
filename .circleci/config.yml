@@ -56,7 +56,6 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
-            mkdir test_results
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
@@ -74,7 +73,7 @@ common:
           path: test_results
       # Save test results as artifacts
       - store_artifacts:
-          path: ui.tests/test-module/target
+          path: test_results
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs

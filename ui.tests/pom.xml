@@ -311,7 +311,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>e2e Cypress Circle CI UI Headless tests</id>
+                                <id>e2e Cypress CI UI Headless tests</id>
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>exec</goal>
@@ -327,7 +327,9 @@
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
                                         <argument>--reporter</argument>
-                                        <argument>cypress-circleci-reporter</argument>
+                                        <argument>mocha-multi-reporters</argument>
+                                        <argument>--reporter-options</argument>
+                                        <argument>configFile=cypress.json</argument>
                                         <argument>--env</argument>
                                         <!-- value of forms.far is addon or addon-latest -->
                                         <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR}</argument>
