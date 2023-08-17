@@ -51,7 +51,9 @@ common:
           command: npm install axe-html-reporter
       - run:
           name: UI tests
-          command: node .circleci/ci/it-tests.js
+          command: |
+            TESTFILES=$(circleci tests glob "ui.tests/**/*.spec.js")
+            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
       - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js
