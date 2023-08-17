@@ -50,9 +50,13 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
+          name: Install coverage reporter
+          command: npm install cypress-circleci-reporter
+      - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
+            mkdir test_results
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
@@ -67,7 +71,7 @@ common:
           name: Stop CQ
           command: node .circleci/ci/stop-cq.js
       - store_test_results:
-          path: ui.tests/test-module/target/reports
+          path: test_results
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
