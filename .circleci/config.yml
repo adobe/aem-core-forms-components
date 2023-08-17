@@ -53,7 +53,9 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
-            TESTFILES=$(circleci tests glob "ui.tests/**/*.spec.js")
+            cd ui.tests/test-module
+            TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
+            cd ../../
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
       - run:
           name: Calculate lighthouse Scores
