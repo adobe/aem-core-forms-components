@@ -52,6 +52,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -222,10 +223,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
-    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_KEYS = "fd:additionalCustomPropertyKeys";
-
-    public static final String CUSTOM_HEADLESS_PROPERTIES_ADDITIONAL_VALUES = "fd:additionalCustomPropertyValues";
-
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -343,7 +340,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!isEventValid.test(entry)) {
             updatedEntry = Stream.empty();
         } else {
-            arrayEventValue = (String[]) ComponentUtils.convertToArray(eventValue);
+            if (eventValue instanceof String) {
+                arrayEventValue = new String[1];
+                arrayEventValue[0] = (String) eventValue;
+            } else {
+                arrayEventValue = (String[]) eventValue;
+            }
             updatedEntry = Stream.of(new AbstractMap.SimpleEntry<>(key, arrayEventValue));
         }
         return updatedEntry;
@@ -418,10 +420,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             if (this.dataLayerEnabled == null) {
                 if (this.getCurrentPage() != null) {
                     // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
                         .getContentResource());
                 } else {
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.resource);
+                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
                 }
             }
             if (this.dataLayerEnabled) {

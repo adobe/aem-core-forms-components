@@ -153,9 +153,10 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
-            ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE), resourceResolver);
             switch (type) {
                 case FORMATTERS:
+                    ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
+                        resourceResolver);
                     resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
                     if (policy != null) {
                         ValueMap props = policy.getProperties();
