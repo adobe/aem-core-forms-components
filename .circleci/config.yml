@@ -14,10 +14,6 @@ common:
 
   cypress_test_steps: &cypress_test_steps
     steps:
-      - run:
-          name: Check out previous test metadata
-          command: |
-            cat "${CIRCLE_INTERNAL_TASK_DATA}/circle-test-results/cypress/results.json" | jq .
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
@@ -62,7 +58,7 @@ common:
             cd ../../
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
       - store_test_results:
-            path: test_results
+          path: test_results
       - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js
