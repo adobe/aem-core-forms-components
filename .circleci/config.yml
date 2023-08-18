@@ -58,7 +58,7 @@ common:
             cd ../../
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
       - store_test_results:
-          path: test_results
+          path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js

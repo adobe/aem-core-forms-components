@@ -16,5 +16,5 @@
   "responseTimeout" : 120000,
   "watchForFileChanges" : true,
   "trashAssetsBeforeRuns" : true,
-  "reporterEnabled": "spec, mocha-junit-reporter"
+  "reporterEnabled": "spec, cypress-circleci-reporter"
 }
