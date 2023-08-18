@@ -60,7 +60,7 @@ class DatePickerWidget {
         width: 433,
         viewHeight: 248,
         locale: {
-            days:[1, 2, 3, 4, 5, 6, 7].map(d => new Date(2001, 0, d)),
+            days:[0,1, 2, 3, 4, 5, 6].map(d => new Date(2001, 0, d)),
             months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(m => new Date(2000, m, 1)),
             zero: "0",
             clearText: "Clear",
