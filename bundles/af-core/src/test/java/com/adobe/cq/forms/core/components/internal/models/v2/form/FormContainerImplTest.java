@@ -57,8 +57,10 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
@@ -69,6 +71,8 @@ public class FormContainerImplTest {
     private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
+    private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
+    private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
@@ -86,6 +90,7 @@ public class FormContainerImplTest {
         context.load().json(BASE + "/test-lib-form-container.json", LIB_FORM_CONTAINER); // required since v2 container resource type should
                                                                                          // be v1 for localization to work
         context.load().json(BASE + "/test-forms-in-sites.json", "/content/exampleSite");
+        context.load().json(BASE + "/test-content.json", CONTENT_FORM_WITHOUT_PREFILL_ROOT);
 
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
@@ -350,5 +355,29 @@ public class FormContainerImplTest {
         } catch (Exception e) {
             fail("initFormContainerModel method should have invoked");
         }
+    }
+
+    @Test
+    void testGetFormDataEnabledWhenPrefillServiceIsSet() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertTrue(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+    }
+
+    @Test
+    void testGetFormDataEnabledWhenDataRefIsSet() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> tempMap = new HashMap<>();
+        tempMap.put(GuideConstants.AF_DATA_REF, "abc");
+        request.setParameterMap(tempMap);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertTrue(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+        // reset the parameter map
+        request.setParameterMap(new HashMap<>());
+    }
+
+    @Test
+    void testGetFormDataDisabled() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertFalse(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
     }
 }

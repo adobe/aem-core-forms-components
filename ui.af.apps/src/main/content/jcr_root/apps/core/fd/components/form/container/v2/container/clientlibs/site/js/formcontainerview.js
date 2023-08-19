@@ -41,13 +41,7 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
-                        let redirectElement = document.querySelector('[name=":redirect"]');
-                        // check to prevent tampering of redirectURL from client
-                        if(redirectElement && redirectElement.value === body.redirectUrl) {
-                            redirectURL = body.redirectUrl;
-                        }
-                        window.location.href = redirectURL;
+                        window.location.href = encodeURI(body.redirectUrl);
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
@@ -82,11 +76,13 @@
                 }, 10);
         }
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
-        const formContainer = FormView.Utils.setupFormContainer(({
+        FormView.Utils.setupFormContainer(({
             _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path, _element});
-        }, FormContainerV2.selectors.self, FormContainerV2.IS)
+            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            formContainer.subscribe();
+            return formContainer;
+        }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }
 
 

@@ -9,7 +9,8 @@
       "dorTemplateRef": "xyz"
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
-    "fd:schemaType": "BASIC"
+    "fd:schemaType": "BASIC",
+    "fd:formDataEnabled" : true
   },
   ":items": {
     "textinput": {

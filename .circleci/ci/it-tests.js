@@ -94,9 +94,11 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
     }
@@ -125,7 +127,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} finally { // Always download logs from AEM container
+} finally {
+    // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.
