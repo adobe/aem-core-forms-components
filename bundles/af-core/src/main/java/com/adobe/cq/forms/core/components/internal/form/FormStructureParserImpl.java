@@ -15,6 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -25,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
+import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
@@ -38,6 +48,11 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     @SlingObject
     private Resource resource;
+
+    @PostConstruct
+    protected void initModel() {
+        setClientLibRef();
+    }
 
     @Override
     public String getFormContainerPath() {
@@ -105,4 +120,63 @@ public class FormStructureParserImpl implements FormStructureParser {
         return getFormContainerPath(resource.getParent());
     }
 
+    private void setClientLibRef() {
+        if (resource == null || request == null) {
+            return;
+        }
+        Map<String, Boolean> clientLibMap = (Map<String, Boolean>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
+        String clientLibRef = null;
+        if (ComponentUtils.isFragmentComponent(resource)) {
+            clientLibRef = getClientLibForFragment(resource);
+        }
+        if (clientLibRef != null) {
+            if (clientLibMap == null) {
+                clientLibMap = new HashMap<>();
+                request.setAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS, clientLibMap);
+            }
+            if (!clientLibMap.containsKey(clientLibRef)) {
+                clientLibMap.put(clientLibRef, false);
+            }
+        }
+    }
+
+    /**
+     * Returns the list of client libraries associated with the fragment and not already included in the page
+     * Once a library is used we are setting the value to true to avoid duplication in case of multiple containers
+     * 
+     * @return list of client libraries
+     */
+    public List<String> getClientLibs() {
+        if (request != null && request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS) != null) {
+            Map<String, Boolean> clientLibMap = (Map<String, Boolean>) request.getAttribute("clientLibs");
+            return clientLibMap.entrySet()
+                .stream().filter(entry -> {
+                    if (!entry.getValue()) {
+                        entry.setValue(true);
+                        return true;
+                    }
+                    return false;
+                }).map(Map.Entry::getKey).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
+    }
+
+    private String getClientLibForFragment(Resource resource) {
+        if (resource == null) {
+            return null;
+        }
+        String clientLibRef = null;
+        Fragment fragment = resource.adaptTo(Fragment.class);
+        if (fragment != null) {
+            String fragmentPath = fragment.getFragmentPath();
+            if (StringUtils.isNotEmpty(fragmentPath)) {
+                Resource fragmentContainer = ComponentUtils.getFragmentContainer(resource.getResourceResolver(), fragmentPath);
+                if (fragmentContainer != null) {
+                    FormStructureParser formStructureParser = fragmentContainer.adaptTo(FormStructureParser.class);
+                    clientLibRef = formStructureParser != null ? formStructureParser.getClientLibRefFromFormContainer() : null;
+                }
+            }
+        }
+        return clientLibRef;
+    }
 }

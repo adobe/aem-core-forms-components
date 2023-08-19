@@ -159,7 +159,6 @@ public class FragmentImplTest {
         Assertions.assertEquals("Text Input", childrenList.get(0));
 
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath());
-        Assertions.assertEquals("extra-clientlib", ((FragmentImpl) fragment).getClientLibRef());
     }
 
 }

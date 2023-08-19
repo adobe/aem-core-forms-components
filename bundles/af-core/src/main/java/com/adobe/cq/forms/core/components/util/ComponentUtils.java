@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -163,6 +165,18 @@ public class ComponentUtils {
             policy = policyManager.getPolicy(contentResource);
         }
         return policy;
+    }
+
+    public static Resource getFragmentContainer(ResourceResolver resourceResolver, String fragmentPath) {
+        String fragmentRef = fragmentPath;
+        if (fragmentPath != null && StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
+        }
+        return resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+    }
+
+    public static boolean isFragmentComponent(Resource resource) {
+        return resource != null && resource.getValueMap().get("fragmentPath", String.class) != null;
     }
 
 }
