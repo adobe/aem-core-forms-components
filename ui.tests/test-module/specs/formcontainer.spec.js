@@ -139,6 +139,32 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
+    //verifying the Loading class
+    const verifyLoadingClass = function (formContainerEditPathSelector) {
+        it('should have loading class initially and remove it after loading', function () {
+            // Stub the necessary functions to simulate loading
+            cy.stub(cy, "openEditableToolbar");
+            cy.stub(cy, "invokeEditableAction");
+            cy.stub(cy.document(), "readyState").value("loading");
+
+            // Simulate the form container loading by triggering "DOMContentLoaded"
+            cy.document().trigger("DOMContentLoaded");
+
+            // Check if loading class is initially present
+            cy.get(formContainerEditPathSelector).should("have.class", "cmp-adaptiveform-container--loading");
+
+            // Simulate loading completion by removing the loading class
+            // cy.document().then(doc => {
+            //     const formContainer = doc.querySelector(formContainerEditPathSelector);
+            //     formContainer.classList.remove("cmp-adaptiveform-container--loading");
+            // });
+
+            // Check if loading class is removed
+            cy.get(formContainerEditPathSelector).should("not.have.class", "cmp-adaptiveform-container--loading");
+        });
+    };
+
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -176,7 +202,12 @@ describe('Page/Form Authoring', function () {
             it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
-            })
+            });
+            
+            //verifying the Loading class 
+            it('check the loading class', function(){
+                verifyLoadingClass("[your-selector-for-form-container]");
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
