@@ -22,20 +22,12 @@ describe("Form Runtime with Recaptcha Input", () => {
     const selectors = {
         recaptcha : `[data-cmp-is="${IS}"]`
     }
-    let toggle_array = []
 
     let formContainer = null
 
     beforeEach(() => {
-        cy.fetchFeatureToggles().then((response) => {
-            if (response.status === 200) {
-                toggle_array = response.body.enabled;
-                if (toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-                    cy.previewForm(pagePath).then((p) => {
-                        formContainer = p;
-                    });
-                }
-            }
+        cy.previewForm(pagePath).then((p) => {
+            formContainer = p;
         });
     });
 
@@ -57,42 +49,36 @@ describe("Form Runtime with Recaptcha Input", () => {
     }
 
     it(" should get model and view initialized properly ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-            Object.entries(formContainer._fields).forEach(([id, field]) => {
-                expect(field.getId()).to.equal(id)
-                expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-            });
-        }
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            expect(field.getId()).to.equal(id)
+            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+        });
     })
 
     it(" model's changes are reflected in the html ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
 
-            checkHTML(model.id, model.getState()).then(() => {
-                model.visible = false
-                return checkHTML(model.id, model.getState())
-            }).then(() => {
-                model.enable = false
-                return checkHTML(model.id, model.getState())
-            })
-        }
+        checkHTML(model.id, model.getState()).then(() => {
+            model.visible = false
+            return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.enable = false
+            return checkHTML(model.id, model.getState())
+        })
     });
 
     it(" html changes are reflected in model ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        cy.log(model.getState().value)
+        cy.get(`#${id}`).click().then(x => {
             cy.log(model.getState().value)
-            cy.get(`#${id}`).click().then(x => {
-                cy.log(model.getState().value)
-                expect(model.getState().value).to.not.be.null
-            })
-        }
+            expect(model.getState().value).to.not.be.null
+        })
     });
 
 })
