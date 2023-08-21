@@ -76,12 +76,22 @@ describe("Form Runtime with CheckBox Input", () => {
         })
     });
 
-
-    it ('should have value set to off during initial render, if default value not set', () => {
+    it ('should have initial value "undefined" if no default set', () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        expect(model.getState().value).to.contain('false');
-    });
+        expect(model.getState().value).eq(undefined)
+    })
+
+    it ('should have value set to false if checked and then unchecked', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        cy.get(`#${id}`).find("input").click().then(() => {
+            cy.get(`#${id}`).find("input").click().then(() => {
+                expect(model.getState().value).eq('false')
+            })
+        })
+
+    })
 
     it ('should have value set to default during initial render', () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[1]

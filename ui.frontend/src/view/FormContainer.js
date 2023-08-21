@@ -185,6 +185,34 @@ class FormContainer {
     getAllFields() {
         return this._fields;
     }
+
+    /**
+       * Updates the active child of the form container.
+       * @param {Object} activeChild - The active child.
+    */
+    updateActiveChild(activeChild) {
+      this.setFocus(activeChild?._activeChild?.id || activeChild?.id);
+    }
+
+    /**
+       * Subscribes to model changes and updates the corresponding properties in the view.
+       * @override
+     */
+    subscribe() {
+        const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
+        this._model.subscribe((action) => {
+            let state = action.target.getState();
+            const changes = action.payload.changes;
+            changes.forEach(change => {
+                const fn = changeHandlerName(change.propertyName);
+                if (typeof this[fn] === "function") {
+                    this[fn](change.currentValue, state);
+                } else {
+                    console.warn(`changes to ${change.propertyName} are not supported at form. Please raise an issue`)
+                }
+            })
+        });
+    }
 }
 
 export default FormContainer;

@@ -55,7 +55,7 @@ var formsConstants = {
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
     FORM_EDITOR_FORM_CONTAINER_SUFFIX : "/jcr:content/guideContainer",
-    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/parsys1",
+    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/container1",
     RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
     EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
     events : {
