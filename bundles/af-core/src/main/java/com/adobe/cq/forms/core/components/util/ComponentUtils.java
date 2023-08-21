@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
@@ -164,22 +163,5 @@ public class ComponentUtils {
             policy = policyManager.getPolicy(contentResource);
         }
         return policy;
-    }
-
-    /**
-     * Takes in a single variable and returns an array of size 1 consisting of the same variable.
-     * Useful to directly iterate on, when something returns either a single value or an array of values of a particular type.
-     *
-     * @param param of any type T
-     * @return array of size 1 having the same variable
-     */
-    public static <T> T[] convertToArray(T param) {
-        if (param.getClass().isArray()) {
-            return (T[]) param;
-        } else {
-            T[] array = (T[]) Array.newInstance(param.getClass(), 1);
-            array[0] = (T) param;
-            return array;
-        }
     }
 }

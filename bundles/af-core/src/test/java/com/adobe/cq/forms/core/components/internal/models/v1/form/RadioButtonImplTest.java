@@ -241,7 +241,7 @@ public class RadioButtonImplTest {
         Map<String, Object> properties = radioButton.getProperties();
         assertFalse(properties.isEmpty());
         // get custom properties of "af:layout"
-        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_LAYOUT_PROPERTY_WRAPPER);
+        Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertTrue((boolean) customProperties.get("tooltipVisible"));
         assertEquals(CheckBox.Orientation.VERTICAL.getValue(), customProperties.get("orientation"));
     }

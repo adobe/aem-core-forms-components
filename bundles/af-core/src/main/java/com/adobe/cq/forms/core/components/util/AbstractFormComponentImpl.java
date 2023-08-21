@@ -43,7 +43,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.model.impl.CustomPropertyInfoImpl;
+import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -241,7 +241,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             customProperties.forEach(properties::putIfAbsent);
         }
         if (getCustomLayoutProperties().size() != 0) {
-            properties.put(CUSTOM_LAYOUT_PROPERTY_WRAPPER, getCustomLayoutProperties());
+            properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
         if (getDorProperties().size() > 0) {
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
@@ -420,7 +420,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             if (this.dataLayerEnabled == null) {
                 if (this.getCurrentPage() != null) {
                     // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
                         .getContentResource());
                 } else {
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
@@ -457,8 +457,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, String> getCustomProperties() {
-        return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfoImpl.class))
-            .map(CustomPropertyInfoImpl::getAllCustomPropertyPairs)
+        return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+            .map(CustomPropertyInfo::getAllCustomPropertyPairs)
             .orElse(Collections.emptyMap());
     }
 }
