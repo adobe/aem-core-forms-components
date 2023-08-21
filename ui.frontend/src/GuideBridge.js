@@ -411,7 +411,7 @@ class GuideBridge {
      * @example
      *
      * // Register a function configuration for additional behavior
-     * guideBridge.registerConfig(GuideBridge.ConfigKeys.LOCALE_CONFIG, () => console.log('Function config'));
+     * guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () => console.log('Function config'));
      */
     registerConfig(key, config, formContainerPath = null) {
         if (!this.#userConfig[key]) {
