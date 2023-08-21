@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
@@ -167,16 +168,16 @@ public class ComponentUtils {
         return policy;
     }
 
-    public static Resource getFragmentContainer(ResourceResolver resourceResolver, String fragmentPath) {
+    public static Resource getFragmentContainer(ResourceResolver resourceResolver, @NotNull String fragmentPath) {
         String fragmentRef = fragmentPath;
-        if (fragmentPath != null && StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+        if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
             fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
         }
         return resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
     }
 
     public static boolean isFragmentComponent(Resource resource) {
-        return resource != null && resource.getValueMap().get("fragmentPath", String.class) != null;
+        return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
     }
 
 }

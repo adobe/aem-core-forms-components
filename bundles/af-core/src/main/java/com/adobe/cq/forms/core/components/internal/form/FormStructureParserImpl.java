@@ -16,10 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.form;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -124,47 +123,34 @@ public class FormStructureParserImpl implements FormStructureParser {
         if (resource == null || request == null) {
             return;
         }
-        Map<String, Boolean> clientLibMap = (Map<String, Boolean>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
+        Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
         String clientLibRef = null;
         if (ComponentUtils.isFragmentComponent(resource)) {
             clientLibRef = getClientLibForFragment(resource);
         }
         if (clientLibRef != null) {
-            if (clientLibMap == null) {
-                clientLibMap = new HashMap<>();
-                request.setAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS, clientLibMap);
+            if (clientLibSet == null) {
+                clientLibSet = new HashSet<>();
+                request.setAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS, clientLibSet);
             }
-            if (!clientLibMap.containsKey(clientLibRef)) {
-                clientLibMap.put(clientLibRef, false);
-            }
+            clientLibSet.add(clientLibRef);
         }
     }
 
     /**
-     * Returns the list of client libraries associated with the fragment and not already included in the page
-     * Once a library is used we are setting the value to true to avoid duplication in case of multiple containers
+     * Returns the list of client libraries associated with the fragment
      * 
      * @return list of client libraries
      */
     public List<String> getClientLibs() {
         if (request != null && request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS) != null) {
-            Map<String, Boolean> clientLibMap = (Map<String, Boolean>) request.getAttribute("clientLibs");
-            return clientLibMap.entrySet()
-                .stream().filter(entry -> {
-                    if (!entry.getValue()) {
-                        entry.setValue(true);
-                        return true;
-                    }
-                    return false;
-                }).map(Map.Entry::getKey).collect(Collectors.toList());
+            Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
+            return new ArrayList<>(clientLibSet);
         }
         return new ArrayList<>();
     }
 
     private String getClientLibForFragment(Resource resource) {
-        if (resource == null) {
-            return null;
-        }
         String clientLibRef = null;
         Fragment fragment = resource.adaptTo(Fragment.class);
         if (fragment != null) {

@@ -17,6 +17,7 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-test.clientLibRef="${formstructparser.clientLibRefFromFormContainer}">
     <sly data-sly-test="${clientLibRef}" data-sly-call="${clientlib.js @ categories=clientLibRef, async=true}"/>
+    <sly data-sly-repeat="${formstructparser.clientLibs}" data-sly-call="${clientlib.all @ categories=item, async=true}"/>
 </sly>
 <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
     <sly data-sly-test="${!wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.runtime.all', async=true}"/>

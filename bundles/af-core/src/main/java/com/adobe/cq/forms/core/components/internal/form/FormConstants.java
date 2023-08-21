@@ -115,4 +115,6 @@ public final class FormConstants {
     public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
 
     public static final String REQ_ATTR_CLIENT_LIBS = "clientLibs";
+
+    public static final String PROP_FRAGMENT_PATH = "fragmentPath";
 }

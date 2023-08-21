@@ -16,7 +16,6 @@
 <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
 <form data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
       data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
-      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
       data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
       action="${container.metadata.action}"
       id="${container.id}"
@@ -43,5 +42,4 @@
         <sly data-sly-use="${'removeattribute.js' @ referencedPage }"/>
     </div>
 </form>
-<sly data-sly-repeat="${formstructparser.clientLibs}" data-sly-call="${clientlib.all @ categories=item, async=true}"/>
 

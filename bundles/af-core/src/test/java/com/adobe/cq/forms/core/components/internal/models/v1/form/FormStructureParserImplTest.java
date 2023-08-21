@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -152,8 +153,14 @@ public class FormStructureParserImplTest {
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path, "");
         List<String> clientLibs = ((FormStructureParserImpl) formStructureParser).getClientLibs();
         assertEquals(1, clientLibs.size());
-        clientLibs = ((FormStructureParserImpl) formStructureParser).getClientLibs();
-        assertEquals(0, clientLibs.size());
+    }
+
+    @Test
+    public void testSetClientLibRefIfNotFragment() {
+        String path = FORM_CONTAINER_PATH + "/datepicker";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path, "");
+        List<String> clientLibs = ((FormStructureParserImpl) formStructureParser).getClientLibs();
+        Assertions.assertEquals(0, clientLibs.size());
     }
 
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
