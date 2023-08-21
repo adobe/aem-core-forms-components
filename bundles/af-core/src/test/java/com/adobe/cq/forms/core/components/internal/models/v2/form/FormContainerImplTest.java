@@ -16,12 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -44,9 +39,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
@@ -380,4 +373,15 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
     }
+
+    @Test
+    public void testAddClientLibRef() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1,
+            FormContainer.class, context);
+        FormStructureParser formStructureParser = context.request().adaptTo(FormStructureParser.class);
+        List<String> clientLibs = formStructureParser.getClientLibRefList();
+        assertEquals(1, clientLibs.size());
+        assertEquals("abc", clientLibs.get(0));
+    }
+
 }

@@ -15,6 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -43,4 +47,20 @@ public interface FormStructureParser {
      * @return true if this resource or one of its children is a form container, else false
      */
     Boolean containsFormContainer();
+
+    /**
+     * Adds a client lib reference.
+     * 
+     * @param clientLibRef
+     */
+    default void addClientLibRef(@NotNull String clientLibRef) {}
+
+    /**
+     * Returns a unique list of client lib references.
+     * 
+     * @return client libs
+     */
+    default List<String> getClientLibRefList() {
+        return new ArrayList<>();
+    }
 }

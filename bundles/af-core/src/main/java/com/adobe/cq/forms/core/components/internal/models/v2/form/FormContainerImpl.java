@@ -45,6 +45,7 @@ import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataIm
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -115,6 +116,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
                     request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, resourcePage.getPath());
                 }
+            }
+            FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
+            if (formStructureParser != null && clientLibRef != null) {
+                formStructureParser.addClientLibRef(clientLibRef);
             }
         }
     }

@@ -20,9 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -33,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
-import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
@@ -47,11 +43,6 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     @SlingObject
     private Resource resource;
-
-    @PostConstruct
-    protected void initModel() {
-        setClientLibRef();
-    }
 
     @Override
     public String getFormContainerPath() {
@@ -119,15 +110,11 @@ public class FormStructureParserImpl implements FormStructureParser {
         return getFormContainerPath(resource.getParent());
     }
 
-    private void setClientLibRef() {
-        if (resource == null || request == null) {
+    public void addClientLibRef(String clientLibRef) {
+        if (request == null) {
             return;
         }
         Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
-        String clientLibRef = null;
-        if (ComponentUtils.isFragmentComponent(resource)) {
-            clientLibRef = getClientLibForFragment(resource);
-        }
         if (clientLibRef != null) {
             if (clientLibSet == null) {
                 clientLibSet = new HashSet<>();
@@ -137,32 +124,11 @@ public class FormStructureParserImpl implements FormStructureParser {
         }
     }
 
-    /**
-     * Returns the list of client libraries associated with the fragment
-     * 
-     * @return list of client libraries
-     */
-    public List<String> getClientLibs() {
+    public List<String> getClientLibRefList() {
         if (request != null && request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS) != null) {
             Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
             return new ArrayList<>(clientLibSet);
         }
         return new ArrayList<>();
-    }
-
-    private String getClientLibForFragment(Resource resource) {
-        String clientLibRef = null;
-        Fragment fragment = resource.adaptTo(Fragment.class);
-        if (fragment != null) {
-            String fragmentPath = fragment.getFragmentPath();
-            if (StringUtils.isNotEmpty(fragmentPath)) {
-                Resource fragmentContainer = ComponentUtils.getFragmentContainer(resource.getResourceResolver(), fragmentPath);
-                if (fragmentContainer != null) {
-                    FormStructureParser formStructureParser = fragmentContainer.adaptTo(FormStructureParser.class);
-                    clientLibRef = formStructureParser != null ? formStructureParser.getClientLibRefFromFormContainer() : null;
-                }
-            }
-        }
-        return clientLibRef;
     }
 }

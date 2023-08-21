@@ -68,30 +68,5 @@
         }
       }
     }
-  },
-  "affragment": {
-    "jcr:primaryType": "nt:unstructured",
-    "jcr:title": "AF Fragment (v2)",
-    "jcr:content": {
-      "jcr:primaryType": "cq:PageContent",
-      "jcr:title": "AF Fragment (v2)",
-      "guideContainer": {
-        "jcr:primaryType": "nt:unstructured",
-        "thankYouOption": "page",
-        "fd:version": "2.1",
-        "title": "AF Fragment (v2)",
-        "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
-        "clientLibRef": "extra-clientlib",
-        "fieldType": "form",
-        "dorType": "none",
-        "textinput": {
-          "jcr:primaryType": "nt:unstructured",
-          "jcr:title": "Text Input",
-          "name": "fragmenttextinput",
-          "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-          "fieldType": "text-input"
-        }
-      }
-    }
   }
 }

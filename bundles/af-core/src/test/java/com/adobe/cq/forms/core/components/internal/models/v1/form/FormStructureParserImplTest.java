@@ -16,7 +16,6 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,14 +24,12 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.internal.form.FormStructureParserImpl;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -145,22 +142,6 @@ public class FormStructureParserImplTest {
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         boolean result = formStructureParser.containsFormContainer();
         assertFalse(result);
-    }
-
-    @Test
-    public void testSetClientLibRef() {
-        String path = FORM_CONTAINER_PATH + "/fragment";
-        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path, "");
-        List<String> clientLibs = ((FormStructureParserImpl) formStructureParser).getClientLibs();
-        assertEquals(1, clientLibs.size());
-    }
-
-    @Test
-    public void testSetClientLibRefIfNotFragment() {
-        String path = FORM_CONTAINER_PATH + "/datepicker";
-        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path, "");
-        List<String> clientLibs = ((FormStructureParserImpl) formStructureParser).getClientLibs();
-        Assertions.assertEquals(0, clientLibs.size());
     }
 
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
