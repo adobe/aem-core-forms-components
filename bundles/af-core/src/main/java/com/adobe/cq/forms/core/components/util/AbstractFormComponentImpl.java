@@ -458,7 +458,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     private Map<String, String> getCustomProperties() {
         return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
-            .map(CustomPropertyInfo::getAllCustomPropertyPairs)
+            .map(CustomPropertyInfo::getProperties)
             .orElse(Collections.emptyMap());
     }
 }
