@@ -153,12 +153,6 @@ describe('Page/Form Authoring', function () {
             // Check if loading class is initially present
             cy.get(formContainerEditPathSelector).should("have.class", "cmp-adaptiveform-container--loading");
 
-            // Simulate loading completion by removing the loading class
-            // cy.document().then(doc => {
-            //     const formContainer = doc.querySelector(formContainerEditPathSelector);
-            //     formContainer.classList.remove("cmp-adaptiveform-container--loading");
-            // });
-
             // Check if loading class is removed
             cy.get(formContainerEditPathSelector).should("not.have.class", "cmp-adaptiveform-container--loading");
         });
