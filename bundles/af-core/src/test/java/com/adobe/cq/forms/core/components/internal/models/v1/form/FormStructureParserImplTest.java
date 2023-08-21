@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -142,6 +144,45 @@ public class FormStructureParserImplTest {
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         boolean result = formStructureParser.containsFormContainer();
         assertFalse(result);
+    }
+
+    @Test
+    public void testGetClientLibRefList() {
+        String path = FORM_CONTAINER_PATH + "/datepicker";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path, "");
+        List<String> clientLibs = formStructureParser.getClientLibRefList();
+        Assertions.assertEquals(0, clientLibs.size());
+        formStructureParser = getFormStructureParserUnderTest(path);
+        clientLibs = formStructureParser.getClientLibRefList();
+        Assertions.assertEquals(0, clientLibs.size());
+        formStructureParser.addClientLibRef("abc");
+        clientLibs = formStructureParser.getClientLibRefList();
+        Assertions.assertEquals(0, clientLibs.size());
+    }
+
+    @Test
+    public void testDefaultMethodOfAddAndGetClientLibRef() {
+        class TestFormStructureParser implements FormStructureParser {
+            @Override
+            public String getFormContainerPath() {
+                return "";
+            }
+
+            @Override
+            public String getClientLibRefFromFormContainer() {
+                return null;
+            }
+
+            @Override
+            public Boolean containsFormContainer() {
+                return null;
+            }
+        }
+
+        TestFormStructureParser testFormStructureParser = new TestFormStructureParser();
+        testFormStructureParser.addClientLibRef("abc");
+        List<String> clientLibs = testFormStructureParser.getClientLibRefList();
+        Assertions.assertEquals(0, clientLibs.size());
     }
 
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
