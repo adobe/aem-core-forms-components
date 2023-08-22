@@ -159,14 +159,16 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms Fragment', function () {
-            dropFragmentInSites();
-            cy.deleteComponentByPath(fragmentEditPath);
-        });
+        if (toggle_array.includes("FT_FORMS-2494")) {
+            it('insert aem forms Fragment', function () {
+                dropFragmentInSites();
+                cy.deleteComponentByPath(fragmentEditPath);
+            });
 
-        it('open edit dialog of aem forms Fragment', function () {
-            testFragmentDialogBehaviour(fragmentEditPathSelector, fragmentEditPath, true);
-        });
+            it('open edit dialog of aem forms Fragment', function () {
+                testFragmentDialogBehaviour(fragmentEditPathSelector, fragmentEditPath, true);
+            });
+        }
 
         if(cy.af.isLatestAddon()) {
             it('fragment component placeholder visible after setting fragment path', function () {
