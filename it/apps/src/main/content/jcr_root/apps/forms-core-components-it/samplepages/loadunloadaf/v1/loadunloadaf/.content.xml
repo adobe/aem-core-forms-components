@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    cq:icon="form"
+    jcr:description="Load Unload of Adaptive Form Test"
+    jcr:primaryType="cq:Component"
+    jcr:title="Load Unload Test"
+    componentGroup=".Core Content"/>
