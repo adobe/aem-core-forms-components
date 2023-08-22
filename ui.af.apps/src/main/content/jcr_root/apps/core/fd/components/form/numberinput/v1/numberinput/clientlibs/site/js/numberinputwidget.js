@@ -57,17 +57,17 @@ class NumericInputWidget {
         this.#model = model;
         // initialize options for backward compatibility
         this.#options = Object.assign({}, this.#defaultOptions, this.#model._jsonModel);
-        var matchStr =  this.#matchArray[this.#options.type];
+        let matchStr =  this.#matchArray[this.#options.type];
         if(matchStr) {
-            var ld = this.#options.leadDigits,
+            let ld = this.#options.leadDigits,
                 fd = this.#options.fracDigits,
                 ldstr = ld && ld !== -1 ? "{0,"+ld+"}"
                     : "*",
                 fdstr = fd && fd !== -1 ? "{0,"+fd+"}"
-                    : "*",
-                matchStr =  matchStr.replace("{leading}",ldstr)
-                    .replace("{fraction}",fdstr),
-                localeStr = matchStr.replace(/{digits}/g,this.#getDigits())
+                    : "*";
+            matchStr =  matchStr.replace("{leading}",ldstr)
+                    .replace("{fraction}",fdstr);
+            let localeStr = matchStr.replace(/{digits}/g,this.#getDigits())
                     .replace("{decimal}",this.#escape(this.#options.decimal)),
                 engStr = matchStr.replace(/{digits}/g,"[0-9]")
                     .replace("{decimal}","\\.")
