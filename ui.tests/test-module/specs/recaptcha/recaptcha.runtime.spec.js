@@ -35,30 +35,32 @@ describe("Form Runtime with Recaptcha Input", () => {
         });
     });
 
-    if (toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-        beforeEach(() => {
-            cy.previewForm(pagePath).then((p) => {
-                formContainer = p;
-            });
+
+    // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
+    beforeEach(() => {
+        cy.previewForm(pagePath).then((p) => {
+            formContainer = p;
         });
+    });
 
-        const checkHTML = (id, state) => {
-            const visible = state.visible;
-            const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-            const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
-            const value = state.value
-            cy.get(`#${id}`)
-                .should(passVisibleCheck)
-                .invoke('attr', 'data-cmp-visible')
-                .should('eq', visible.toString());
-            cy.get(`#${id}`)
-                .invoke('attr', 'data-cmp-enabled')
-                .should('eq', state.enabled.toString());
-            return cy.get(`#${id}`).within((root) => {
-                cy.get('*').should(passVisibleCheck)
-            })
-        }
+    const checkHTML = (id, state) => {
+        const visible = state.visible;
+        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
+        const value = state.value
+        cy.get(`#${id}`)
+            .should(passVisibleCheck)
+            .invoke('attr', 'data-cmp-visible')
+            .should('eq', visible.toString());
+        cy.get(`#${id}`)
+            .invoke('attr', 'data-cmp-enabled')
+            .should('eq', state.enabled.toString());
+        return cy.get(`#${id}`).within((root) => {
+            cy.get('*').should(passVisibleCheck)
+        })
+    }
 
+    if (toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
         it(" should get model and view initialized properly ", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);

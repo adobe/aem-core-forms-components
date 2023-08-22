@@ -78,6 +78,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("Failed to execute 'insertBefore' on 'Node'")) {
         return false;
     }
+
+    // when we render form with captcha, and FT is not enabled, this error is expected
+    if (err.message.includes("Missing required parameters: sitekey")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
