@@ -35,6 +35,16 @@ describe("Form Runtime with Recaptcha Input", () => {
         });
     });
 
+    // Whitelist the error message
+    cy.on('uncaught:exception', (err) => {
+        // when we render form with captcha, and FT is not enabled, this error is expected
+        if (err.message.includes("Missing required parameters: sitekey")) {
+            return false;
+        }
+        // Let Cypress handle other errors
+        return true;
+    });
+
 
     // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
     beforeEach(() => {
