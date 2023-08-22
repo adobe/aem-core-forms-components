@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -83,6 +84,12 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testFormContainerPathEmbedWithoutIframe() {
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
     void testFormContainerPathInsideContainers() {
         String path = FORM_CONTAINER_PATH + "/container1";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
@@ -119,9 +126,32 @@ public class FormStructureParserImplTest {
         assertNull(formStructureParser.getClientLibRefFromFormContainer());
     }
 
+    @Test
+    public void containsFormContainer_should_return_true() {
+        String path = JCR_CONTENT_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        boolean result = formStructureParser.containsFormContainer();
+        assertTrue(result);
+    }
+
+    @Test
+    public void containsFormContainer_should_return_false() {
+        String path = FORM_CONTAINER_PATH + "/container1";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        boolean result = formStructureParser.containsFormContainer();
+        assertFalse(result);
+    }
+
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.getResource().adaptTo(FormStructureParser.class);
+    }
+
+    private FormStructureParser getFormStructureParserUnderTest(String resourcePath, String requestAttribute) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        return request.adaptTo(FormStructureParser.class);
     }
 }

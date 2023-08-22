@@ -26,6 +26,7 @@ public final class FormConstants {
 
     public static final String ITEMS_PATH = "items";
     /** The prefixes for all core form related resource types */
+
     public final static String RT_FD_FORM_PREFIX = "core/fd/components/form/";
 
     /** The resource type for form container v1 */
@@ -64,6 +65,9 @@ public final class FormConstants {
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 
+    /** The resource type for reCaptcha v1 */
+    public static final String RT_FD_FORM_RECAPTCHA_V1 = RT_FD_FORM_PREFIX + "recaptcha/v1/recaptcha";
+
     /** The resource type for radio button v1 */
     public static final String RT_FD_FORM_RADIO_BUTTON_V1 = RT_FD_FORM_PREFIX + "radiobutton/v1/radiobutton";
 
@@ -99,5 +103,12 @@ public final class FormConstants {
     /** The resource type for submit button v1 */
     public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 
+    /** The resource type for fragment v1 */
+    public static final String RT_FD_FORM_FRAGMENT_V1 = RT_FD_FORM_PREFIX + "fragment/v1/fragment";
+
+    public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX + "fragmentcontainer/v1/fragmentcontainer";
+
     public static final String FORM_FIELD_TYPE = "form";
+
+    public static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";
 }

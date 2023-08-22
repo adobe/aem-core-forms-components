@@ -16,6 +16,9 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -40,7 +43,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
     @Nullable
-    private String[] enums; // todo: this needs to be thought through ?
+    protected String[] enums; // todo: this needs to be thought through ?
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
@@ -49,6 +52,31 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Override
     public boolean isEnforceEnum() {
         return enforceEnum;
+    }
+
+    /**
+     * Function to override the enum names on providing same enum values
+     *
+     * @return an empty hashmap
+     *         {@code @if} either of the arrays is null or if they have different lengths
+     *
+     *         {@code @else}
+     * @return map containing enum values and enum names as key-value pairs
+     */
+    private Map<Object, String> removeDuplicates() {
+
+        Object[] enumArray = this.enums;
+        String[] enumNamesArray = this.enumNames;
+
+        LinkedHashMap<Object, String> map = new LinkedHashMap<>();
+
+        if (enumArray != null && enumNamesArray != null && enumArray.length == enumNamesArray.length) {
+            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]),
+                LinkedHashMap::putAll);
+        }
+
+        return map;
+
     }
 
     @Override
@@ -60,14 +88,18 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            return ComponentUtils.coerce(type, enums);
+            Map<Object, String> map = removeDuplicates();
+            String[] enumValue = map.keySet().toArray(new String[0]);
+            return ComponentUtils.coerce(type, enumValue);
         }
     }
 
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            return Arrays.stream(enumNames)
+            Map<Object, String> map = removeDuplicates();
+            String[] enumName = map.values().toArray(new String[0]);
+            return Arrays.stream(enumName)
                 .map(p -> {
                     return this.translate("enumNames", p);
                 })

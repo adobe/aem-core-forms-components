@@ -144,13 +144,13 @@ describe('Page - Authoring', function () {
       dropTextInputInSites();
       cy.deleteComponentByPath(textInputDrop);
     });
-    
+
     it('open edit dialog of aem forms TextInput', function() {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
     });
 
     // conditionally run the test on latest addon
-    if (cy.af.isLatestAddon()) {
+    //if (cy.af.isLatestAddon()) {
         it('Test z-index of Rule editor iframe', function () {
             dropTextInputInSites();
             cy.openSidePanelTab("Content Tree");
@@ -166,9 +166,10 @@ describe('Page - Authoring', function () {
             getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
             cy.deleteComponentByPath(textInputDrop);
         });
-    }
+    //}
 
-    if (cy.af.isLatestAddon()) {
+    // not yet in available publicly released april far
+    //if (cy.af.isLatestAddon()) {
       it('Test z-index of Rule editor iframe for components inside site container', function () {
           cy.openSidePanelTab("Content Tree");
           cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
@@ -184,6 +185,6 @@ describe('Page - Authoring', function () {
           cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
           getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
       });
-    }
+    //}
   });
 });

@@ -169,7 +169,7 @@ describe('Page/Form Authoring', function () {
                 verifyOpenDataModel(formContainerEditPathSelector);
             });
 
-            it('change data model in container edit dialog box', {retries: 3}, function () {
+            it('change data model in container edit dialog box', {retries: 3},function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
             });
 
@@ -231,5 +231,4 @@ describe('Page/Form Authoring', function () {
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
         });
-
 });

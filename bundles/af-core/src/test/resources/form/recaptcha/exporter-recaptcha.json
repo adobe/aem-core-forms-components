@@ -1,0 +1,35 @@
+{
+  "id": "recaptcha-4b672680a2",
+  "fieldType": "captcha",
+  "name": "test-recaptcha",
+  "visible": true,
+  "type": "string",
+  "enabled": true,
+  "readOnly": false,
+  "label": {
+    "visible": true,
+    "value": "CAPTCHA"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/recaptcha",
+    "fd:captcha": {
+      "provider": "recaptcha",
+      "config": {
+        "siteKey": null,
+        "uri": "https://www.recaptcha.net/recaptcha/api.js",
+        "size": "compact",
+        "theme": "light",
+        "type": "image"
+      }
+    }
+  },
+  ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
+}

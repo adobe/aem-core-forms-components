@@ -1,85 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
-          jcr:primaryType="cq:Page">
+    jcr:primaryType="cq:Page">
     <jcr:content
-            cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-01-09T16:01:24.451+05:30"
-            cq:lastModifiedBy="admin"
-            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
-            jcr:language="en"
-            jcr:primaryType="cq:PageContent"
-            jcr:title="Adaptive Form V2 (IT)"
-            sling:resourceType="forms-components-examples/components/page">
+        cq:deviceGroups="[mobile/groups/responsive]"
+        cq:lastModified="{Date}2023-06-22T18:14:59.819+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Adaptive Form V2 (IT)"
+        sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-                fd:version="2.1"
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="forms-components-examples/components/form/container"
-                dorType="none"
-                fieldType="form">
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form">
             <textinput
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 1"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    fieldType="text-input"
-                    name="textinput1"
-                    validationExpression="$field == 'validate'">
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 1"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                fieldType="text-input"
+                name="textinput1"
+                validationExpression="$field == 'validate'">
                 <fd:rules
-                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;validate&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == 'validate'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;adobe&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput3&quot;\,&quot;displayName&quot;:&quot;Text Input 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 3/&quot;\,&quot;name&quot;:&quot;textinput3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput2&quot;\,&quot;displayName&quot;:&quot;Text Input 2&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 2/&quot;\,&quot;name&quot;:&quot;textinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'adobe'\, dispatchEvent(textinput3\, 'custom:setProperty'\, {visible : true()})\, {})&quot;\,&quot;if($field == 'adobe'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;aem&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput2&quot;\,&quot;displayName&quot;:&quot;Text Input 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 2/&quot;\,&quot;name&quot;:&quot;textinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput41671690715329&quot;\,&quot;displayName&quot;:&quot;Text Input With Tooltip\, Description\, Tooltip always visible&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input With Tooltip\, Description\, Tooltip always visible/&quot;\,&quot;name&quot;:&quot;textinput41671690715329&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'aem'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if($field == 'aem'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                        jcr:primaryType="nt:unstructured"
-                        validationStatus="valid"/>
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;validate&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == 'validate'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;adobe&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput3&quot;\,&quot;displayName&quot;:&quot;Text Input 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 3/&quot;\,&quot;name&quot;:&quot;textinput3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput2&quot;\,&quot;displayName&quot;:&quot;Text Input 2&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 2/&quot;\,&quot;name&quot;:&quot;textinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'adobe'\, dispatchEvent(textinput3\, 'custom:setProperty'\, {visible : true()})\, {})&quot;\,&quot;if($field == 'adobe'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|TEXT FIELD|STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;aem&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput2&quot;\,&quot;displayName&quot;:&quot;Text Input 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 2/&quot;\,&quot;name&quot;:&quot;textinput2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput41671690715329&quot;\,&quot;displayName&quot;:&quot;Text Input With Tooltip\, Description\, Tooltip always visible&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input With Tooltip\, Description\, Tooltip always visible/&quot;\,&quot;name&quot;:&quot;textinput41671690715329&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'aem'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if($field == 'aem'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
                 <fd:events
-                        jcr:primaryType="nt:unstructured"
-                        change="[if($field == 'adobe'\, dispatchEvent(textinput3\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 'adobe'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 'aem'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == 'aem'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+                    jcr:primaryType="nt:unstructured"
+                    change="[if($field == 'adobe'\, dispatchEvent(textinput3\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == 'adobe'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {visible : false()})\, {}),if($field == 'aem'\, dispatchEvent(textinput2\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == 'aem'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
             </textinput>
             <textinput2
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 2"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    enabled="{Boolean}false"
-                    fieldType="text-input"
-                    name="textinput2"
-                    visible="{Boolean}true"/>
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 2"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                enabled="{Boolean}false"
+                fieldType="text-input"
+                name="textinput2"
+                visible="{Boolean}true"/>
             <textinput3
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 3"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    enabled="{Boolean}true"
-                    fieldType="text-input"
-                    name="textinput3"
-                    visible="{Boolean}false"/>
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 3"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                name="textinput3"
+                visible="{Boolean}false"/>
             <textinput4
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input With Tooltip, Description, Tooltip always visible"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    description="This is long description"
-                    fieldType="text-input"
-                    id="tooltip_scenario_test"
-                    name="textinput41671690715329"
-                    tooltip="This is short description"
-                    tooltipVisible="true"/>
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input With Tooltip, Description, Tooltip always visible"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                description="This is long description"
+                fieldType="text-input"
+                id="tooltip_scenario_test"
+                name="textinput41671690715329"
+                tooltip="This is short description"
+                tooltipVisible="true"/>
             <textinput_1469562442
-                    jcr:lastModified="{Date}2023-01-09T15:59:57.045+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Text Input 5"
-                    sling:resourceType="forms-components-examples/components/form/textinput"
-                    autocomplete="off"
-                    enabled="{Boolean}true"
-                    fieldType="text-input"
-                    name="textinput_14695624421673260189420"
-                    readOnly="{Boolean}false"
-                    textIsRich="[true,true,true]"
-                    validatePictureClauseMessage="[,]"
-                    visible="{Boolean}true">
+                jcr:lastModified="{Date}2023-01-09T15:59:57.045+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 5"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                name="textinput_14695624421673260189420"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true,true]"
+                validatePictureClauseMessage="[,]"
+                visible="{Boolean}true">
                 <fd:rules
-                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_14695624421673260189420&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput_14695624421673260189420&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;aemforms&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;new value&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput41671690715329&quot;\,&quot;displayName&quot;:&quot;Text Input With Tooltip\, Description\, Tooltip always visible&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input With Tooltip\, Description\, Tooltip always visible/&quot;\,&quot;name&quot;:&quot;textinput41671690715329&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'aemforms'\, dispatchEvent(textinput1\, 'custom:setProperty'\, {value : 'new value'})\, {})&quot;\,&quot;if($field == 'aemforms'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {value : `null`})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_14695624421673260189420&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput_14695624421673260189420&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;aemforms&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;displayName&quot;:&quot;Text Input 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 1/&quot;\,&quot;name&quot;:&quot;textinput1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;new value&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput41671690715329&quot;\,&quot;displayName&quot;:&quot;Text Input With Tooltip\, Description\, Tooltip always visible&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input With Tooltip\, Description\, Tooltip always visible/&quot;\,&quot;name&quot;:&quot;textinput41671690715329&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'aemforms'\, dispatchEvent(textinput1\, 'custom:setProperty'\, {value : 'new value'})\, {})&quot;\,&quot;if($field == 'aemforms'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {value : `null`})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if($field == 'aemforms'\, dispatchEvent(textinput1\, 'custom:setProperty'\, {value : 'new value'})\, {}),if($field == 'aemforms'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
+            </textinput_1469562442>
+            <textinput_2106533918
+                jcr:lastModified="{Date}2023-06-22T18:14:59.804+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 6"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                name="textinput_21065339181687434913522"
+                pattern="\[^'\\x22]+"
+                readOnly="{Boolean}false"
+                required="true"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                validationPatternType="custom"
+                visible="{Boolean}true"/>
+            <textinput_6601407
+                jcr:lastModified="{Date}2023-06-22T17:28:31.083+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 7"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                default="longer text than allowed"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                maxLength="20"
+                name="textinput_66014071687434939255"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <textinput_1064925569
+                jcr:lastModified="{Date}2023-06-22T17:29:41.384+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 8"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                autocomplete="off"
+                default="small text"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                minLength="12"
+                name="textinput_10649255691687435008215"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <textinput_260707727
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input 9"
+                enabled="{Boolean}true"
+                readOnly="{Boolean}false"
+                autocomplete="off"
+                name="textinput_2607077271690896983422"
+                visible="{Boolean}true"
+                hideTitle="false"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                fieldType="text-input"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_2607077271690896983422&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput_2607077271690896983422&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;valid&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;valid&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_18577078541690896990322&quot;\,&quot;displayName&quot;:&quot;Text Input 10&quot;\,&quot;type&quot;:&quot;FIELD|TEXT FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 10/&quot;\,&quot;name&quot;:&quot;textinput_18577078541690896990322&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;False&quot;\,&quot;value&quot;:null}}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;errorMessage&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput_18577078541690896990322&quot;\,&quot;displayName&quot;:&quot;Text Input 10&quot;\,&quot;type&quot;:&quot;FIELD|TEXT FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input 10/&quot;\,&quot;name&quot;:&quot;textinput_18577078541690896990322&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Field is not valid&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(textinput_18577078541690896990322\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
                         jcr:primaryType="nt:unstructured"
                         validationStatus="valid"/>
+            <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,dispatchEvent(textinput_18577078541690896990322\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})\,{})]"/>
+            </textinput_260707727>
+            <textinput_1857707854
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input 10"
+                    enabled="{Boolean}true"
+                    readOnly="{Boolean}false"
+                    autocomplete="off"
+                    name="textinput_18577078541690896990322"
+                    visible="{Boolean}true"
+                    hideTitle="false"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"/>
+            <submit
+                jcr:lastModified="{Date}2023-06-22T17:28:46.456+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Submit"
+                sling:resourceType="forms-components-examples/components/form/actions/submit"
+                buttonType="submit"
+                dorExclusion="true"
+                fieldType="button"
+                name="submit1687435309125">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"/>
                 <fd:events
-                        jcr:primaryType="nt:unstructured"
-                        change="[if($field == 'aemforms'\, dispatchEvent(textinput1\, 'custom:setProperty'\, {value : 'new value'})\, {}),if($field == 'aemforms'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
-            </textinput_1469562442>
+                    jcr:primaryType="nt:unstructured"
+                    click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+            </submit>
         </guideContainer>
     </jcr:content>
 </jcr:root>

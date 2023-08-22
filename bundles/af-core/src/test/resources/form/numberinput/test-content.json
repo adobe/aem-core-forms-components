@@ -36,6 +36,7 @@
     "fieldType": "number-input",
     "description": "Enter your phone number.",
     "name": "Phone Number",
+    "jcr:title" : "Phone Number",
     "type": "string",
     "label": {
       "value": "Phone Number"

@@ -15,7 +15,12 @@
  ******************************************************************************/
 describe("Form Runtime with Text Input", () => {
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
+    const localisationPagePath = "content/forms/af/core-components-it/samples/textinput/basic_with_dictionary_en_to_de.de.html"
     const bemBlock = 'cmp-adaptiveform-textinput'
     const IS = "adaptiveFormTextInput"
     const selectors = {
@@ -25,9 +30,11 @@ describe("Form Runtime with Text Input", () => {
     let formContainer = null
 
     beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
-            formContainer = p;
-        })
+         if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
+            cy.previewForm(pagePath).then(p => {
+                formContainer = p;
+            })
+        }
     });
 
     const checkHTML = (id, state) => {
@@ -60,6 +67,7 @@ describe("Form Runtime with Text Input", () => {
                 checkHTML(id, field.getModel().getState())
             }
         });
+        cy.expectNoConsoleErrors();
     })
 
     it(" model's changes are reflected in the html ", () => {
@@ -73,6 +81,7 @@ describe("Form Runtime with Text Input", () => {
             model.enabled = false
             return checkHTML(model.id, model.getState())
         })
+        cy.expectNoConsoleErrors();
     });
 
     it(" html changes are reflected in model ", () => {
@@ -82,6 +91,7 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input)
         })
+        cy.expectNoConsoleErrors();
     });
 
     it("should toggle description and tooltip", () => {
@@ -100,6 +110,7 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox3}`).should('be.visible')
             cy.get(`#${textbox2}`).should('not.be.visible')
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("should enable and disable other textfields on a certain string input", () => {
@@ -114,23 +125,20 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox2}`).find("input").should('be.enabled')
             cy.get(`#${textbox4}`).find("input").should('not.be.enabled')
         })
+        cy.expectNoConsoleErrors();
     })
 
-    it("should show validation error messages based on expression rule", () => {
-        // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
+    it("should set valid to false and errorMessage other textfields on a certain string input", () => {
+        // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 
-        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const incorrectInput = "invalidate";
-        const correctInput = "validate";
+        const [textbox9, textBox9FieldView] = Object.entries(formContainer._fields)[8];
+        const [textbox10, textBox10FieldView] = Object.entries(formContainer._fields)[9];
 
-
-        cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"There is an error in the field")
+        cy.get(`#${textbox9}`).find("input").clear().type('text').blur().then(x => {
+            cy.get(`#${textbox10}`).should('have.attr', 'data-cmp-valid', 'false')
+            cy.get(`#${textbox10}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Field is not valid")
         })
-
-        cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
-            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
-        })
+        cy.expectNoConsoleErrors();
     })
 
     it("should set and clear value based on rules", () => {
@@ -146,5 +154,153 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textbox4}`).find("input").should('have.value',"")
             cy.get(`#${textbox1}`).find("input").should('have.value', "new value")
         })
+        cy.expectNoConsoleErrors();
+    })
+
+    it("should show different default error messages on different constraints", () => {
+        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+        const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[5];
+        const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
+        const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
+
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10]
+
+        // 1. Required
+        cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
+            cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please fill in this field.")
+        })
+
+        // 2. Pattern: [^'\x22]+
+        cy.get(`#${textbox6}`).find("input").clear().type("'").blur().then(x => {
+            cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please match the format requested.")
+        })
+
+        // 3. Maximum Number of Characters: 20
+        cy.get(`#${submitbutton1}`).find("button").click()
+        cy.get(`#${textbox7}`).find("input").then(x => {
+            cy.get(`#${textbox7}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please shorten this text to 20 characters or less.")
+        })
+
+        // 4. Minimum Number of Characters: 12
+        cy.get(`#${textbox8}`).find("input").then(x => {
+            cy.get(`#${textbox8}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please lengthen this text to 12 characters or more.")
+        })
+
+        // 5. Script Validation: Validate textBox1 using Expression: textBox1 === "validate"
+        // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
+
+        const incorrectInput = "invalidate";
+        const correctInput = "validate";
+
+
+        cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please enter a valid value.")
+        })
+
+        cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+        })
+        cy.expectNoConsoleErrors();
+
+    })
+
+    //Todo: Uncomment once the strings are translated in de.json
+    it.skip("should show different localised default error messages on different constraints", () => {
+        cy.previewForm(localisationPagePath).then(p => {
+            formContainer = p;
+
+            const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
+            const [textbox2, textBox2FieldView] = Object.entries(formContainer._fields)[1];
+            const [textbox3, textBox3FieldView] = Object.entries(formContainer._fields)[2];
+            const [textbox4, textBox4FieldView] = Object.entries(formContainer._fields)[3];
+
+            const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[4]
+
+            // 1. Required
+            cy.get(`#${textbox2}`).find("input").focus().blur().then(x => {
+                cy.get(`#${textbox2}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Bitte füllen Sie dieses Feld aus.")
+            })
+
+            // 2. Pattern: [^'\x22]+
+            cy.get(`#${textbox2}`).find("input").clear().type("'").blur().then(x => {
+                cy.get(`#${textbox2}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Bitte passen Sie das gewünschte Format an.")
+            })
+
+            // 3. Maximum Number of Characters: 20
+            cy.get(`#${submitbutton1}`).find("button").click()
+            cy.get(`#${textbox3}`).find("input").then(x => {
+                cy.get(`#${textbox3}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Bitte kürzen Sie diesen Text auf maximal 20 Zeichen.")
+            })
+
+            // 4. Minimum Number of Characters: 12
+            cy.get(`#${textbox4}`).find("input").then(x => {
+                cy.get(`#${textbox4}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Bitte verlängern Sie diesen Text auf 12 Zeichen oder mehr.")
+            })
+
+            // 5. Script Validation: Validate textBox1 using Expression: textBox1 === "validate"
+            // Rule on textBox1: Validate textBox1 using Expression: textBox1 === "validate"
+
+            const incorrectInput = "invalidate";
+            const correctInput = "validate";
+
+
+            cy.get(`#${textbox1}`).find("input").clear().type(incorrectInput).blur().then(x => {
+                cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Bitte geben Sie einen gültigen Wert ein.")
+            })
+
+            cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
+                cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+            })
+        })
     })
 })
+
+describe("Form Runtime with Text Input For Different locale", () => {
+
+    const localisationPagePath = "content/forms/af/core-components-it/samples/textinput/basic_with_dictionary_en_to_de.de.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
+            cy.previewForm(localisationPagePath, { params: [`afAcceptLang=de`]}).then(p => {
+                formContainer = p;
+            })
+        }
+    });
+
+    it("should not show hidden text field component in different localised form", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        const [textbox5, textbox5FieldView] = Object.entries(formContainer._fields)[4];
+        cy.get(`#${textbox5}`).should('not.be.visible');
+        cy.expectNoConsoleErrors();
+    })
+})
+
+describe("setFocus on text field via rules", () => {
+
+  const pagePath = "content/forms/af/core-components-it/samples/textinput/focus.html"
+  let formContainer = null
+
+  beforeEach(() => {
+    cy.previewForm(pagePath).then(p => {
+        formContainer = p;
+    })
+  });
+
+  it("should focus text field when click on radio button", () => {
+    const [textField] = Object.entries(formContainer._fields)[0];
+    const [radioButton] = Object.entries(formContainer._fields)[1];
+
+    cy.get(`#${textField}`).find("input").should('not.have.focus');
+
+    cy.get(`#${radioButton}`).find("input").eq(0).click().then(x => {
+      cy.get(`#${textField}`).find("input").should('have.focus');
+
+      cy.get(`#${radioButton}`).find("input").eq(1).click().then(x => {
+        cy.get(`#${textField}`).find("input").should('have.focus');
+      });
+    });
+  })
+})
+

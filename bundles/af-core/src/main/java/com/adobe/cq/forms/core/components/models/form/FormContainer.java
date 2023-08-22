@@ -17,12 +17,14 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -322,6 +324,9 @@ public interface FormContainer extends Container {
      */
     @JsonIgnore
     default void setContextPath(String contextPath) {}
+
+    @JsonIgnore
+    default void visit(Consumer<ComponentExporter> callback) throws Exception {}
 
     /**
      * Returns site page path if dropped in sites else the form page path.

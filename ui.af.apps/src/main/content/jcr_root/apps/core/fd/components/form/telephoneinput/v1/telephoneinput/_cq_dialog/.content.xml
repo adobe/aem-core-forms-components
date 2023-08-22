@@ -18,6 +18,8 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Telephone Input field"
     sling:resourceType="cq/gui/components/authoring/dialog"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_telephoneinput_v1"
+  extraClientlibs="[core.forms.components.telephoneinput.v1.editor]"
     trackingFeature="core-components:adaptiveform-telephoneinput:v1">
     <content
         granite:class="cmp-adaptiveform-telephoneinput__editdialog"
@@ -85,10 +87,14 @@
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <validationPatternType
                                                             jcr:primaryType="nt:unstructured"
-                                                            sling:hideResource="{Boolean}true">
+                                                            granite:class="cmp-adaptiveform-telephoneinput__validationpattern"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Type"
+                                                            name="./validationPatternType">
                                                         <datasource
                                                                 jcr:primaryType="nt:unstructured"
-                                                                sling:hideResource="{Boolean}true"/>
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                type="formatters"/>
                                                     </validationPatternType>
                                                     <validateFormat
                                                             jcr:primaryType="nt:unstructured"

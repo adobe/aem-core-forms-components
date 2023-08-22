@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
-          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
+            cq:lastModified="{Date}2023-05-24T14:34:52.935+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -14,21 +12,29 @@
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
-                fieldType="form"
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="forms-components-examples/components/form/container">
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form">
             <textinput
-                    fieldType="text-input"
                     jcr:primaryType="nt:unstructured"
-                    name="textinput1"
                     jcr:title="Text Input 1"
-                    sling:resourceType="forms-components-examples/components/form/textinput"/>
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput1">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Change me&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.text1&quot;\,&quot;displayName&quot;:&quot;text1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/text1/&quot;\,&quot;name&quot;:&quot;text1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;CHANGED&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'Change me'\, dispatchEvent(text1\, 'custom:setProperty'\, {value : 'CHANGED'})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == 'Change me'\, dispatchEvent(text1\, 'custom:setProperty'\, {value : 'CHANGED'})\, {})]"/>
+            </textinput>
             <text
-                    fieldType="text"
                     jcr:primaryType="nt:unstructured"
-                    name="text1"
                     jcr:title="Text 1"
                     sling:resourceType="forms-components-examples/components/form/text"
+                    fieldType="text"
+                    name="text1"
                     value="Custom Text">
                 <fd:rules
                         jcr:primaryType="nt:unstructured"

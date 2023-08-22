@@ -148,11 +148,11 @@ class DatePickerWidget {
     constructor(view, widget, model) {
         this.#model = model;
         this.#lang = view.formContainer.getModel()._jsonModel.lang;
-        let editValFn = (value) => {
-            return this.#formatDate(value, model.editFormat);
+        let editValFn = () => {
+            return model.editValue;
         };
-        let displayValueFn = (value) => {
-            return this.#formatDate(value, model.displayFormat);
+        let displayValueFn = () => {
+            return model.displayValue;
         };
         this.#options = Object.assign({editValue:editValFn, displayValue:displayValueFn}, this.#defaultOptions, this.#model._jsonModel);
         this.#localizeDateElements(this.#options);
@@ -162,20 +162,15 @@ class DatePickerWidget {
         //update widget markup to have input type=text element.
         let newDatePickerElement = widget.cloneNode(true);
         newDatePickerElement.setAttribute("type", "text");
-        newDatePickerElement.id = widget.name;
+        newDatePickerElement.id = model.id + '-widget';
 
         widget.parentNode.replaceChild(newDatePickerElement, widget);
         this.#widget = view.getWidget();
         this.#attachField(view.getWidget(), this.#options);
     }
 
-    #formatDate(value, format) {
-        let dateValue = new Date(value);
-        if (!isNaN(dateValue)) {
-            return FormView.Formatters.formatDate(new Date(value), this.#lang, format);
-        }
-        return null;
-    }
+
+
 
     #initialiseCalenderElement() {
         let self = this,
@@ -991,6 +986,7 @@ class DatePickerWidget {
                 this.selectedYear = this.currentYear;
                 this.selectedDay = val;
                 this.setValue(this.toString());
+                this.#model.value = this.toString(); // updating model value to the latest when calender is changed
                 this.#curInstance.$field.focus();
                 let existingSelectedElement =  this['$'+this.view.toLowerCase()].getElementsByClassName("dp-selected")[0];
                 if (existingSelectedElement) {
@@ -1041,11 +1037,18 @@ class DatePickerWidget {
         });
     }
 
+    #isEditValueOrDisplayValue(value) {
+    	return (this.#model.editValue === value || this.#model.displayValue === value);
+    }
+
     /**
      * returns the original value of format YYYY-MM-DD
      * @returns {*|string}
      */
     getValue() {
+        if(this.#isEditValueOrDisplayValue(this.#widget.value)) {
+            return this.#model.value; // if the widget has edit/display value thus method should return model value
+         }
         let dateVal = new Date(this.toString());
         if (!isNaN(dateVal)) {
             return this.toString();
@@ -1062,7 +1065,7 @@ class DatePickerWidget {
         if (this.#curInstance != null) {
             this.#curInstance.$field.value = this.#curInstance.displayValue(this.toString()) || value;
         } else {
-            this.#widget.value = this.#formatDate(value, this.#model.displayFormat) || value;
+            this.#widget.value = this.#model.displayValue || value;
         }
     }
 
@@ -1085,10 +1088,12 @@ class DatePickerWidget {
                 = -1;
         }
         if (this.#curInstance != null) {
-            this.#curInstance.selectedDate = value;
-            this.#curInstance.$field.value = this.#curInstance.editValue(this.toString()) || value;
+            if(!this.#isEditValueOrDisplayValue(value)) {
+                this.#curInstance.selectedDate = value;  // prevent edit/display value from getting set in calender
+            }
+            this.#curInstance.$field.value = this.#curInstance.editValue() || value;
         } else {
-            this.#widget.value = this.#formatDate(value, this.#model.editFormat) || value;
+            this.#widget.value = this.#model.editValue || value;
         }
     }
 

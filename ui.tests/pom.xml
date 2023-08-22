@@ -176,6 +176,10 @@
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
+                            <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
+                            <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+                            <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
+                            <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                         </configuration>
                         <executions>
                             <execution>
@@ -244,6 +248,10 @@
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
+                            <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
+                            <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
+                            <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
+                            <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                         </configuration>
                         <executions>
                             <execution>
@@ -303,7 +311,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>e2e Cypress UI Headless tests</id>
+                                <id>e2e Cypress CI UI Headless tests</id>
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>exec</goal>
@@ -314,11 +322,12 @@
                                     <arguments>
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>run</argument>
+                                        <argument>--spec=${specFiles}</argument>
                                         <argument>--browser</argument>
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
                                         <argument>--reporter</argument>
-                                        <argument>mocha-multi-reporters</argument>
+                                        <argument>cypress-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
                                         <argument>configFile=cypress.json</argument>
                                         <argument>--env</argument>

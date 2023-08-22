@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/apps/system/config/com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json"/>
+    <filter root="/apps/system/config/com.adobe.aemds.guide.factory.impl.AdaptiveFormFDMConfigurationFactoryImpl~core-components-it.cfg.json"/>
     <filter root="/apps/system/config/Guide Localization Service.cfg.json"/>
+    <filter root="/apps/system/config/org.apache.felix.http.cfg.json"/>
 </workspaceFilter>

@@ -51,6 +51,7 @@
   "checkboxgroup-datalayer": {
     "id": "checkboxgroup-40e63c6f46",
     "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "jcr:title": "Personality",
     "fieldType": "checkbox-group",
     "name": "Personality",
     "visible": true,
@@ -83,6 +84,120 @@
     "enum": [
       0,
       1
+    ],
+    ":type": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-duplicate-enum": {
+    "id": "checkboxgroup-9d6c474801",
+    "fieldType": "checkbox-group",
+    "name": "checkboxgroup1683093797337",
+    "visible": true,
+    "type": "number[]",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Item 1",
+      "Item 2",
+      "Item 3"
+    ],
+    "label": {
+      "visible": true,
+      "value": "Check Box Group 6"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/checkboxgroup/basic/jcr:content/guideContainer/checkboxgroup"
+    },
+    "enum": [
+      0,
+      1,
+      0
+    ],
+    ":type": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-insertion-order": {
+    "id": "checkboxgroup-a484170b96",
+    "fieldType": "checkbox-group",
+    "name": "checkboxgroup1686739316577",
+    "visible": true,
+    "type": "number[]",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [
+      "Zero",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+      "Twenty"
+    ],
+    "label": {
+      "value": "Check Box Group",
+      "visible": true
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2-insertion-order-check/jcr:content/guideContainer/checkboxgroup"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "enum": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
     ],
     ":type": "forms-components-examples/components/form/checkboxgroup"
   }

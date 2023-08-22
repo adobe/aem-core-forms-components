@@ -16,14 +16,29 @@
 
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
+import {setCustomDefaultConstraintTypeMessages} from "@aemforms/af-core";
 
-export default class LanguageUtils {
+/**
+ * @module FormView
+ */
+
+/**
+ * Utility class for language-related operations.
+ */
+class LanguageUtils {
+    /**
+     * Internal map to store loaded language data.
+     * @type {Object.<string, Object>}
+     * @private
+     */
     static #langData = {};
 
     /**
-     * Load language data from the given URL
-     * @param lang language
-     * @param url  url of the language strings
+     * Load language data from the given URL.
+     * @param {string} lang - The language.
+     * @param {string} url - The URL of the language strings.
+     * @returns {Promise<void>} A promise that resolves when the language data is loaded.
+     * @fires module:FormView~Constants#FORM_LANGUAGE_INITIALIZED
      */
     static async loadLang(lang, url) {
         if (!(lang in this.#langData))
@@ -32,6 +47,7 @@ export default class LanguageUtils {
             if(_langData) {
                 console.debug("fetched language data", _langData);
                 this.#langData[lang] = _langData;
+                setCustomDefaultConstraintTypeMessages(_langData);
                 const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
                 document.dispatchEvent(event);
             }
@@ -39,10 +55,11 @@ export default class LanguageUtils {
     }
 
     /**
-     * Returns the translated string for the given language
-     * @param lang      language
-     * @param key       key for which translation needs to be fetched
-     * @param snippets  comma separated list of template value
+     * Returns the translated string for the given language and key.
+     * @param {string} lang - The language.
+     * @param {string} key - The key for which the translation needs to be fetched.
+     * @param {string[]} snippets - An array of template values.
+     * @returns {string} The translated string.
      */
     static getTranslatedString(lang, key, snippets) {
         let translatedText = "";
@@ -62,3 +79,5 @@ export default class LanguageUtils {
     }
 
 }
+
+export default LanguageUtils;

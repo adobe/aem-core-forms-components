@@ -31,7 +31,8 @@
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
             tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
-            olTabList: `.${Tabs.bemBlock}__tablist`
+            olTabList: `.${Tabs.bemBlock}__tablist`,
+            widget: `.${Tabs.bemBlock}__tablist`
         };
 
         constructor(params) {
@@ -47,7 +48,7 @@
                 var _self = this;
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
-                        if (message.data.operation === "navigate") {
+                        if (message.data.operation === "navigate" && _self._elements["tab"][message.data.index] != undefined) {
                             _self.navigate(_self._elements["tab"][message.data.index].id);
                         }
                     }

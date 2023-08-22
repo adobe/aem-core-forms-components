@@ -55,11 +55,15 @@ try {
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
     }
+    // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
 
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-            --bundle com.adobe.cq:core.wcm.components.examples.all:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
+            --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
@@ -90,24 +94,14 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
-            try {
-                ci.sh(command);
-            } catch (ex) {
-                console.log(ex);
-                // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
-                ci.stage('Retrying test run due to eirslett flaky ci issue');
-                ci.sh(command);
-            }
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            ci.sh(command);
         });
     }
-
-    ci.dir(qpPath, () => {
-        // Stop CQ
-        ci.sh('./qp.sh -v stop --id author');
-    });
 
     // No coverage for UI tests
     if (TYPE === 'cypress') {
@@ -133,7 +127,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} finally { // Always download logs from AEM container
+} finally {
+    // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.

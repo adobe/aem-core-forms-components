@@ -26,8 +26,9 @@
   data-panelcontainer="${wcmmode.edit && 'tabs'}"
   data-cmp-is="adaptiveFormTabs"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-  data-placeholder-text="${wcmmode.edit && 'Please drag Tab components here' @ i18n}">
-     <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+  data-placeholder-text="${wcmmode.edit && 'Please drag Tab components here' @ i18n}"
+  data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}">
+     <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
@@ -37,7 +38,8 @@
      role="tablist"
      class="cmp-tabs__tablist"
      aria-label="${tabs.accessibilityLabel}"
-     aria-multiselectable="false">
+     aria-multiselectable="false"
+     id="${widgetId}">
      <sly data-sly-test.isActive="${tab.name == tabs.activeItem}"/>
      <li role="tab"
          id="${tab.id}__tab"
@@ -55,7 +57,7 @@
       tabindex="0"
       class="cmp-tabs__tabpanel${item.name == tabs.activeItem ? ' cmp-tabs__tabpanel--active' : ''}"
       data-cmp-hook-adaptiveFormTabs="tabpanel"></div>
- <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+ <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
       data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
 </div>
 <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">

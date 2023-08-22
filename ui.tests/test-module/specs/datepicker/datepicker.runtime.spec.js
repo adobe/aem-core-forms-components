@@ -123,7 +123,7 @@ describe("Form Runtime with Date Picker", () => {
         const correctInput = "2023-01-01";
 
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Please enter a valid value.")
         })
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -154,7 +154,7 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker5}`).find("input").should('have.attr',"type", "text");
         cy.get(`#${datePicker5}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Specify the value in allowed format : date.")
         })
 
         cy.get(`#${datePicker5}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -167,5 +167,23 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker5}`).find("input").should("have.value", "Sunday, January 1, 2023")
         })
     })
+
+    it("Test changing dates in datePicker with edit/display patterns", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+
+        const date = '2023-08-10';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Thursday, 10 August, 2023");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value","10/8/2023");
+        });
+
+        // choose a different date and check if its persisted
+        cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
+            cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
+            
+        });
+    });
 
 })

@@ -43,6 +43,7 @@
         <module>ui.frontend</module>
         <module>ui.apps</module>
         <module>ui.af.apps</module>
+        <module>jsdocs</module>
         <module>bundles/core</module>
         <module>bundles/af-core</module>
         <module>examples</module>

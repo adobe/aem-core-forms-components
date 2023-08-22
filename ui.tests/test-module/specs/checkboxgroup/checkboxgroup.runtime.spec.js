@@ -156,7 +156,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
         cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
             cy.get(`#${checkBox5}`).find("input").uncheck().check(["1"])
-            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"There is an error in the field")
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"Please enter a valid value.")
         })
 
         cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
@@ -178,5 +178,15 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox5}`).find("input").should('be.checked')
             cy.get(`#${checkBox2}`).find("input").should('not.be.checked')
         })
+    })
+
+    it("should update enum values on providing duplicate enums", () => {
+
+        const [checkBox6, checkBox6FieldView] = Object.entries(formContainer._fields)[5];
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 3');
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 2');
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Item 1').should('not.exist');
+
     })
 })

@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,6 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
@@ -115,6 +117,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
+        getName();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
@@ -154,6 +157,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
+            // setting the default name if name is null.
             name = getDefaultName();
         }
         return name;
@@ -193,10 +197,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
-        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
-        // we anyways dont need to rely on wcmmode while fetching form definition.
-        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        if (request != null && request.getPathInfo() != null) {
+            String pathInfo = request.getPathInfo();
+            boolean matches = Pattern.matches(".+model.*\\.json$", pathInfo);
+            // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+            // we anyways dont need to rely on wcmmode while fetching form definition.
+            if (!matches) {
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+            }
         }
         return editMode;
     }
@@ -310,7 +318,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
             Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
@@ -429,6 +437,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             } else {
                 jsonGenerator.writeString(s);
             }
+        }
+
+        @Override
+        public boolean isEmpty(SerializerProvider provider, String value) {
+            return (StringUtils.isEmpty(value));
         }
     }
 

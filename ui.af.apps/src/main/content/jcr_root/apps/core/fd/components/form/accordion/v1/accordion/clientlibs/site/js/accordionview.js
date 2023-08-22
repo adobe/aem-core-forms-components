@@ -19,10 +19,12 @@
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormAccordion";
-        static bemBlock = 'cmp-accordion'
+        static bemBlock = 'cmp-accordion';
+        static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
         _templateHTML = {};
         static selectors = {
             self: `.${Accordion.bemBlock}`,
+            widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
             tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
@@ -112,7 +114,7 @@
         }
 
         getWidget() {
-            return null;
+          return null;
         }
 
         getDescription() {
@@ -143,12 +145,13 @@
             this.#expandItem(item)
         }
 
-        #collapseAllItems(){
-          var items = this.#getCachedItems();
+
+        #collapseAllItems() {
+            var items = this.#getCachedItems();
             if (items) {
                 for (var i = 0; i < items.length; i++) {
                     if (this.#isItemExpanded(items[i])) {
-                      this.#collapseItem(items[i])
+                        this.#collapseItem(items[i])
                     }
                 }
             }
@@ -412,8 +415,9 @@
         addChild(childView) {
             super.addChild(childView);
             this.#cacheTemplateHTML(childView);
-            if (this.getModel()._children.length === this.children.length) {
+            if (this.getCountOfAllChildrenInModel() === this.children.length) {
                 this.cacheClosestFieldsInView();
+                this.handleHiddenChildrenVisibility();
             }
         }
 
@@ -436,14 +440,24 @@
                     result.parentElement.append(accordionItemDivToBeRepeated);
                 }
             }
+            this.#showHideRepeatableButtons(instanceManager);
+            return accordionItemDivToBeRepeated;
         }
 
         handleChildAddition(childView) {
+            var itemDivToExpand;
             this.#cacheElements(this._elements.self);
-            var addedItemDiv = this.#getItemById(childView.id + Accordion.idSuffixes.item);
             this.#bindEventsToAddedChild(childView.id);
-            this.#expandItem(addedItemDiv);
-            this.#collapseAllOtherItems(addedItemDiv.id);
+            if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
+                itemDivToExpand = this.#getItemById(childView.id + Accordion.idSuffixes.item);
+            } else {
+                //this will run at initial runtime loading when the repeatable panel is being added minOccur no of times.
+                // in this case we want the focus to stay at first tab
+                itemDivToExpand = this.findFirstVisibleChild(this.#getCachedItems());
+            }
+            this.#expandItem(itemDivToExpand);
+            this.#collapseAllOtherItems(itemDivToExpand.id);
+            this.#showHideRepeatableButtons(childView.getInstanceManager());
         }
 
         handleChildRemoval(removedInstanceView) {
@@ -458,10 +472,19 @@
                 this.#expandItem(firstItem);
                 this.#collapseAllOtherItems(firstItem.id);
             }
+            this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
+        }
+
+        #syncLabel() {
+          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+          if (labelElement) {
+              labelElement.setAttribute('for', this.getId());
+          }
         }
 
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
+            this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
@@ -518,6 +541,14 @@
             accordionPanelDiv.id = childViewId + Accordion.idSuffixes.panel;
             accordionButton.setAttribute("aria-controls", childViewId + Accordion.idSuffixes.panel);
             accordionPanelDiv.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.button);
+            var accordionAdd = accordionItemDiv.querySelector(".cmp-accordion__add-button");
+            if(accordionAdd){
+              accordionAdd.setAttribute('data-cmp-hook-add-instance', childViewId);
+            }
+            var accordionRemove = accordionItemDiv.querySelector(".cmp-accordion__remove-button");
+            if(accordionRemove){
+              accordionRemove.setAttribute('data-cmp-hook-remove-instance', childViewId);
+            }
         }
 
         #cacheTemplateHTML(childView) {
@@ -618,6 +649,38 @@
          */
         #convertToPanelId(idToConvert) {
             return idToConvert.substring(0, idToConvert.lastIndexOf("-")) + Accordion.idSuffixes.panel;
+        }
+
+        updateChildVisibility(visible, state) {
+            this.updateVisibilityOfNavigationElement(this.#getItemById(state.id + Accordion.idSuffixes.item), visible);
+            if (!visible) {
+                var expandedItems = this.#getExpandedItems();
+                for (let i = 0; i < expandedItems.length; i++) {
+                    if (expandedItems[i].getAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE) === 'false') {
+                        this.#collapseItem(expandedItems[i]);
+                    }
+                }
+                let child = this.findFirstVisibleChild(this.#getCachedItems());
+                if (child) {
+                    this.#expandItem(child);
+                }
+            }
+        }
+        getRepeatableRootElement(childView){
+          return this.element.querySelector('#'+childView.id+'-item div[data-cmp-hook-adaptiveFormAccordion="repeatableButton"]')
+        }
+        #showHideRepeatableButtons(instanceManager){
+          const {_model: {minOccur, maxOccur, items = [] } = {}, children} = instanceManager;
+          children.forEach(child=>{
+            const addButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-add-instance]');
+            const removeButtonElement = this.element.querySelector('#'+child.id+'-item')?.querySelector('[data-cmp-hook-remove-instance]');
+            if(addButtonElement){
+              addButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, !(items.length === maxOccur && maxOccur != -1))
+            }
+            if(removeButtonElement){
+              removeButtonElement.setAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE, items.length > minOccur && minOccur != -1)
+            }
+          });
         }
     }
 

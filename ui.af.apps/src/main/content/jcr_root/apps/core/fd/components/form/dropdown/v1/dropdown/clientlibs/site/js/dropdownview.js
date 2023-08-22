@@ -95,7 +95,6 @@
         }
 
         updateReadOnly(readonly) {
-            this.toggle(readonly, "aria-readonly", true);
             let widget = this.widget;
             if (readonly === true) {
                 widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");

@@ -84,6 +84,7 @@
     "id": "textinput-1c7bc238a6",
     "fieldType": "text-input",
     "name": "Full Name",
+    "jcr:title" : "Full Name",
     "visible": true,
     "description": "Enter Full Name",
     "tooltip": "Full Name",
@@ -119,5 +120,13 @@
     "fieldType": "text-input",
     "unboundFormElement": true,
     "dataRef": "$.h"
+  },
+  "textinput-blank-dataref" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "text-input",
+    "dataRef": ""
   }
 }

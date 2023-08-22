@@ -141,7 +141,7 @@ describe("Form with Radio Button Input", () => {
 
         cy.get(`#${radioButton5}`).find("input").check(["1"]).then(x => {
             cy.get(`#${radioButton6}`).find("input").check(["0"])
-            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "There is an error in the field")
+            cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "Please enter a valid value.")
 
             cy.get(`#${radioButton6}`).find("input").check(["1"])
             cy.get(`#${radioButton6}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text', "")
@@ -161,4 +161,16 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${radioButton1}`).find("input").should('not.be.checked')
         })
     })
+
+    it("should update enum values on providing duplicate enums", () => {
+
+        const [radioButton7, radioButton7FieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option").should('have.length', 2);
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 3');
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 2');
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 1').should('not.exist');
+
+    })
+
+
 })
