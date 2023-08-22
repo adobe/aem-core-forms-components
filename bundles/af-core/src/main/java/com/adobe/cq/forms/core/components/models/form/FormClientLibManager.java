@@ -27,14 +27,14 @@ import org.jetbrains.annotations.NotNull;
 public interface FormClientLibManager {
 
     /**
-     * Adds a client lib reference associated with a fragment/form container to a global store in a particular request.
+     * Adds a client library associated with form or fragment for a request, that can be consumed later within the scope of request.
      *
      * @param clientLibRef
      */
     void addClientLibRef(@NotNull String clientLibRef);
 
     /**
-     * Returns a unique list of client lib references that was added to the global store in a particular request.
+     * Returns list of client libraries associated with form and fragments that were added for the request.
      *
      * @return client libs
      */

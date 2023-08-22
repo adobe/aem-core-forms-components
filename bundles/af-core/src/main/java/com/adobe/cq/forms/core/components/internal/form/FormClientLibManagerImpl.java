@@ -39,23 +39,25 @@ public class FormClientLibManagerImpl implements FormClientLibManager {
     @Nullable
     private SlingHttpServletRequest request;
 
+    public static final String REQ_ATTR_CLIENT_LIBS = "clientLibs";
+
     @Override
     public void addClientLibRef(@NotNull String clientLibRef) {
         if (request == null) {
             return;
         }
-        Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
+        Set<String> clientLibSet = (Set<String>) request.getAttribute(REQ_ATTR_CLIENT_LIBS);
         if (clientLibSet == null) {
             clientLibSet = new HashSet<>();
-            request.setAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS, clientLibSet);
+            request.setAttribute(REQ_ATTR_CLIENT_LIBS, clientLibSet);
         }
         clientLibSet.add(clientLibRef);
     }
 
     @Override
     public List<String> getClientLibRefList() {
-        if (request != null && request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS) != null) {
-            Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
+        if (request != null && request.getAttribute(REQ_ATTR_CLIENT_LIBS) != null) {
+            Set<String> clientLibSet = (Set<String>) request.getAttribute(REQ_ATTR_CLIENT_LIBS);
             return new ArrayList<>(clientLibSet);
         }
         return new ArrayList<>();
