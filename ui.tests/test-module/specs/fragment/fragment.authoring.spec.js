@@ -24,6 +24,16 @@ const siteSelectors = require("../../libs/commons/sitesSelectors");
  */
 describe('Page - Authoring', function () {
 
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
+
     const fragmentPath = "/content/forms/af/core-components-it/samples/fragment/test-fragment";
     // we can use these values to log in
 
@@ -122,17 +132,19 @@ describe('Page - Authoring', function () {
             });
 
             it('embed fragment in form', function () {
-                // Textfield should not exist before embeding fragment
-                getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
+                if (toggle_array.includes("FT_FORMS-2494")) {
+                    // Textfield should not exist before embeding fragment
+                    getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
 
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentPathSelector);
-                cy.invokeEditableAction("[data-action='embed']");
-                cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
-                cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentPathSelector);
+                    cy.invokeEditableAction("[data-action='embed']");
+                    cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
+                    cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
 
-                // Textfield should be visible after embeding fragment
-                getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
-                cy.deleteComponentByPath(fragmentEditPath);
+                    // Textfield should be visible after embeding fragment
+                    getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
+                    cy.deleteComponentByPath(fragmentEditPath);
+                }
             })
         }
     })
@@ -167,17 +179,19 @@ describe('Page - Authoring', function () {
             })
 
             it('embed fragment in sites', function () {
-                // Textfield should not exist before embeding fragment
-                getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
+                if (toggle_array.includes("FT_FORMS-2494")) {
+                    // Textfield should not exist before embeding fragment
+                    getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
 
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentEditPathSelector);
-                cy.invokeEditableAction("[data-action='embed']");
-                cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
-                cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fragmentEditPathSelector);
+                    cy.invokeEditableAction("[data-action='embed']");
+                    cy.get("coral-dialog-header:contains('Embed Fragment')").should("be.visible");
+                    cy.get("coral-selectlist-item[value='/apps/forms-components-examples/components/form/panelcontainer']").click();
 
-                // Textfield should be visible after embeding fragment
-                getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
-                cy.deleteComponentByPath(fragmentEditPath);
+                    // Textfield should be visible after embeding fragment
+                    getContentFrameBody().find('.cmp-adaptiveform-textinput').should("be.visible");
+                    cy.deleteComponentByPath(fragmentEditPath);
+                }
             })
         }
 
