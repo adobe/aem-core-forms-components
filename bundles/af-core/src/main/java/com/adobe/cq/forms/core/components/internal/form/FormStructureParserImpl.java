@@ -15,11 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -108,27 +103,5 @@ public class FormStructureParserImpl implements FormStructureParser {
         }
 
         return getFormContainerPath(resource.getParent());
-    }
-
-    @Override
-    public void addClientLibRef(@NotNull String clientLibRef) {
-        if (request == null) {
-            return;
-        }
-        Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
-        if (clientLibSet == null) {
-            clientLibSet = new HashSet<>();
-            request.setAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS, clientLibSet);
-        }
-        clientLibSet.add(clientLibRef);
-    }
-
-    @Override
-    public List<String> getClientLibRefList() {
-        if (request != null && request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS) != null) {
-            Set<String> clientLibSet = (Set<String>) request.getAttribute(FormConstants.REQ_ATTR_CLIENT_LIBS);
-            return new ArrayList<>(clientLibSet);
-        }
-        return new ArrayList<>();
     }
 }

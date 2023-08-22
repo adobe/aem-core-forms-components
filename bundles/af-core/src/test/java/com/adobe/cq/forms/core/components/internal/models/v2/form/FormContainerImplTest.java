@@ -378,8 +378,8 @@ public class FormContainerImplTest {
     public void testAddClientLibRef() {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1,
             FormContainer.class, context);
-        FormStructureParser formStructureParser = context.request().adaptTo(FormStructureParser.class);
-        List<String> clientLibs = formStructureParser.getClientLibRefList();
+        FormClientLibManager formClientLibManager = context.request().adaptTo(FormClientLibManager.class);
+        List<String> clientLibs = formClientLibManager.getClientLibRefList();
         assertEquals(1, clientLibs.size());
         assertEquals("abc", clientLibs.get(0));
     }

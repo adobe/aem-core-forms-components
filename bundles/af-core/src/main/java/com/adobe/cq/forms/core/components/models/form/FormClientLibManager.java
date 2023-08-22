@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2023 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -15,32 +15,28 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Defines the {@code FormStructureParser} Sling Model to access the form container path from page or any child.
+ * Defines the {@code FormClientLibManager} Sling Model to perform operation related to client libraries.
  *
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 4.5.0
  */
-@ProviderType
-public interface FormStructureParser {
+public interface FormClientLibManager {
 
     /**
+     * Adds a client lib reference associated with a fragment/form container to a global store in a particular request.
      *
-     * @returns the path of the form container in which the component is there
+     * @param clientLibRef
      */
-    String getFormContainerPath();
+    void addClientLibRef(@NotNull String clientLibRef);
 
     /**
+     * Returns a unique list of client lib references that was added to the global store in a particular request.
      *
-     * @returns reference to the client lib stored in the form container
+     * @return client libs
      */
-    String getClientLibRefFromFormContainer();
-
-    /**
-     * Checks if this resource contains a form container
-     *
-     * @return true if this resource or one of its children is a form container, else false
-     */
-    Boolean containsFormContainer();
+    List<String> getClientLibRefList();
 }

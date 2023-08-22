@@ -43,9 +43,9 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -117,9 +117,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, resourcePage.getPath());
                 }
             }
-            FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
-            if (formStructureParser != null && clientLibRef != null) {
-                formStructureParser.addClientLibRef(clientLibRef);
+            FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
+            if (formClientLibManager != null && clientLibRef != null) {
+                formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
     }

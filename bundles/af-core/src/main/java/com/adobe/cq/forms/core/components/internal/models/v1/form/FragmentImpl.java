@@ -38,8 +38,8 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -71,10 +71,10 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         ResourceResolver resourceResolver = resource.getResourceResolver();
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
-            FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
+            FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             String clientLibRef = getClientLibForFragment();
-            if (formStructureParser != null && clientLibRef != null) {
-                formStructureParser.addClientLibRef(clientLibRef);
+            if (formClientLibManager != null && clientLibRef != null) {
+                formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
     }
