@@ -10,6 +10,7 @@
            }
 
            var loadAdaptiveForm = function(options) {
+             // Note: Query Parameter 'wcmmode=disabled' is not required for publish instance
              var path = options.formPath + '.html?wcmmode=disabled';
              fetch(path).then((res) => res.text()).then(html => {
                setInnerHTML(document.querySelector(options.CSS_Selector), html); // OR $(options.CSS_Selector).html(html);
