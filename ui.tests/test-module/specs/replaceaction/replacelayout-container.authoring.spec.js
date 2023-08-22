@@ -114,6 +114,9 @@ describe('component replace - Authoring', function () {
                 .should("exist");
             cy.get(accordion)
                 .click();
+            // check if default panels of accordion's template are not visible
+            cy.get('[data-path="/content/forms/af/af2/jcr:content/guideContainer/accordion/item_1"]')
+                .should('not.exist');
             cy.deleteComponentByPath(componentDrop);
         } else {
             var replacedComponentName, currentType, replacementComp;
@@ -172,4 +175,52 @@ describe('component replace - Authoring', function () {
             testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
         })
     })
+
+    context('Group independent replace action test', function () {
+        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
+            replaceCompPageUrl = replaceCompPagePath;
+
+        const updateAllowedComponent = function (allow) {
+            cy.get('[title="Adaptive Form Container [Root]"]').click()
+                .then(() => {
+                    cy.get('.cq-editable-action').eq(0).click().then(() => {
+                        cy.get('[value="group:replace test group"]').eq(0)
+                            .invoke('attr', 'checked').then(isChecked => {
+                            if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
+                                cy.log('clicking now');
+                                cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                                    cy.get('[title="Done"]').scrollIntoView().click();
+                                });
+                            } else {
+                                cy.get('[title="Done"]').scrollIntoView().click();
+                            }
+                        })
+                    });
+                })
+        }
+
+        it('test replace of component by different group', function () {
+            const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
+
+            const replaceCompEditPath = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
+                replaceCompEditPathSelector = "[data-path='" + replaceCompEditPath + "']",
+                replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
+                replaceCompDrop = replaceCompPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + replaceCompTestGroup.split("/").pop();
+
+            cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
+            updateAllowedComponent(true);
+
+            cy.openSiteAuthoring(replaceCompPageUrl);
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
+            cy.invokeEditableAction("[data-action='replace']");
+            const replacementComp = "[value='" + replaceCompTestGroup + "']";
+            cy.get(replacementComp).click();
+            cy.deleteComponentByPath(replaceCompDrop);
+            cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
+            updateAllowedComponent(false);
+        });
+    });
 });

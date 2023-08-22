@@ -296,11 +296,12 @@ class Utils {
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
-                if (_formJson) {
+                if (_formJson?.properties?.['fd:formDataEnabled'] === true) {
+                    // only execute when fd:formDataEnabled is present and set to true
                     _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
-                const formContainer = createFormContainer({
+                const formContainer = await createFormContainer({
                     _formJson,
                     _prefillData,
                     _path,

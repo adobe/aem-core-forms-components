@@ -15,174 +15,174 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  jcr:primaryType="nt:unstructured"
+  jcr:title="Adaptive Form CheckBox field"
+  sling:resourceType="cq/gui/components/authoring/dialog"
+  extraClientlibs="[core.forms.components.checkbox.v1.editor]"
+  helpPath="https://www.adobe.com/go/aem_af_cmp_checkbox_v1"
+  trackingFeature="core-components:adaptiveform-checkbox:v1">
+  <content
+    granite:class="cmp-adaptiveform-checkbox__editdialog"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Adaptive Form CheckBox field"
-    sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.checkbox.v1.editor]"
-    helpPath="https://www.adobe.com/go/aem_af_cmp_checkbox_v1"
-    trackingFeature="core-components:adaptiveform-checkbox:v1">
-    <content
-        granite:class="cmp-adaptiveform-checkbox__editdialog"
+    sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+      <tabs
         jcr:primaryType="nt:unstructured"
-        sling:resourceType="granite/ui/components/coral/foundation/container">
+        sling:resourceType="granite/ui/components/coral/foundation/tabs"
+        maximized="{Boolean}true">
         <items jcr:primaryType="nt:unstructured">
-            <tabs
-                  jcr:primaryType="nt:unstructured"
-                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
-                  maximized="{Boolean}true">
+          <basic
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Basic"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+              <columns
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                margin="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
-                    <basic
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Basic"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                    margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <placeholder
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true"/>
-                                            <type
-                                              wrapperClass="cmp-adaptiveform-checkbox__type"
-                                              jcr:primaryType="nt:unstructured"
-                                              sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                              sling:orderBefore="visible"
-                                              fieldLabel="Data type of submitted value"
-                                              name="./type"
-                                              key="String"
-                                              value="string[]">
-                                                <items jcr:primaryType="nt:unstructured"
-                                                  granite:class="cmp-adaptiveform-checkbox__type_value">
-                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
-                                                    <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean"/>
-                                                    <number jcr:primaryType="nt:unstructured" text="Number" value="number"/>
-                                                </items>
-                                            </type>
-                                            <!--<enumOptions jcr:primaryType="nt:unstructured"
-                                              sling:hideResource="{Boolean}true" />-->
-                                            <enums_123 jcr:primaryType="nt:unstructured"
-                                              sling:resourceType="granite/ui/components/coral/foundation/container"
-                                              granite:class="cmp-adaptiveform-checkbox__enums">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                <checkedValue
-                                                  jcr:primaryType="nt:unstructured"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                  fieldLabel="Checked Value"
-                                                  fieldDescription="checked value"
-                                                  name="./checkedValue"/>
-                                                <disableUncheckedValue
-                                                  jcr:primaryType="nt:unstructured"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                  name="./disableUncheckedValue"
-                                                  text="Disable Unchecked Value"
-                                                  fieldDescription="disable unchecked value"
-                                                  uncheckedValue="false"
-                                                  value="true">
-                                                </disableUncheckedValue>
-                                                <disableUncheckedValue-typehint
-                                                  jcr:primaryType="nt:unstructured"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                  name="./disableUncheckedValue@TypeHint"
-                                                  value="Boolean"/>
-                                                <unCheckedValue
-                                                  wrapperClass="cmp-adaptiveform-checkbox__uncheckedvalue"
-                                                  jcr:primaryType="nt:unstructured"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                  fieldLabel="Unchecked Value"
-                                                  fieldDescription="unchecked value"
-                                                  name="./uncheckedValue"/>
-                                                </items>
-                                            </enums_123>
-                                            <defaultValue
-                                              wrapperClass="cmp-adaptiveform-checkbox__value"
-                                              jcr:primaryType="nt:unstructured"
-                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                              fieldLabel="Default value"
-                                              name="./default"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </columns>
+                  <column
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                      <placeholder
+                        jcr:primaryType="nt:unstructured"
+                        sling:hideResource="{Boolean}true"/>
+                      <type
+                        wrapperClass="cmp-adaptiveform-checkbox__type"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        sling:orderBefore="visible"
+                        fieldLabel="Data type of submitted value"
+                        name="./type"
+                        key="String"
+                        value="string[]">
+                        <items jcr:primaryType="nt:unstructured"
+                          granite:class="cmp-adaptiveform-checkbox__type_value">
+                          <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                          <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean"/>
+                          <number jcr:primaryType="nt:unstructured" text="Number" value="number"/>
                         </items>
-                    </basic>
-                    <patterns
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Patterns"
-                            sling:hideResource="{Boolean}true"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                    </patterns>
-                    <help
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Help Content"
-                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured"/>
-                    </help>
-                    <accessibility jcr:primaryType="nt:unstructured"
-                                   jcr:title="Accessibility"
-                                   sling:resourceType="granite/ui/components/coral/foundation/container">
+                      </type>
+                      <!--<enumOptions jcr:primaryType="nt:unstructured"
+                        sling:hideResource="{Boolean}true" />-->
+                      <enums_123 jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        granite:class="cmp-adaptiveform-checkbox__enums">
                         <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                    jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                    margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <assistPriority
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true"/>
-                                            <assistPriorityCustom
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:orderBefore="customText"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                    granite:class="cmp-adaptiveform-checkbox__assistprioritycustom"
-                                                    fieldLabel="Text for screen readers"
-                                                    name="./assistPriority"
-                                                    value="">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <empty
-                                                            jcr:primaryType="nt:unstructured"
-                                                            text=""
-                                                            value=""/>
-                                                    <customText
-                                                            jcr:primaryType="nt:unstructured"
-                                                            text="Custom text"
-                                                            value="custom"/>
-                                                    <caption
-                                                            jcr:primaryType="nt:unstructured"
-                                                            text="Title"
-                                                            value="caption"/>
-                                                </items>
-                                            </assistPriorityCustom>
-                                            <customText
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    wrapperClass="cmp-adaptiveform-checkbox__customtext"
-                                                    fieldLabel="Custom text">
-                                                <granite:data
-                                                        jcr:primaryType="nt:unstructured"
-                                                        wrapper-class="custom-text-wrapper"/>
-                                                <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        name="./custom"/>
-                                            </customText>
-                                        </items>
-                                    </column>
-                                </items>
-                            </columns>
+                          <checkedValue
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            fieldLabel="When Checked, return value"
+                            fieldDescription="Specify the value to be returned when the checkbox is checked by the user."
+                            name="./checkedValue"/>
+                          <enableUncheckedValue
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                            wrapperClass="cmp-adaptiveform-checkbox__enable-unchecked-value"
+                            name="./enableUncheckedValue"
+                            fieldLabel="Enable Uncheck."
+                            fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
+                            uncheckedValue="false"
+                            value="true">
+                          </enableUncheckedValue>
+                          <enableUncheckedValue-typehint
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            name="./enableUncheckedValue@TypeHint"
+                            value="Boolean"/>
+                          <unCheckedValue
+                            wrapperClass="cmp-adaptiveform-checkbox__uncheckedvalue"
+                            fieldLabel="When Unchecked, return value"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            name="./uncheckedValue"/>
                         </items>
-                    </accessibility>
+                      </enums_123>
+                      <defaultValue
+                        wrapperClass="cmp-adaptiveform-checkbox__value"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Default value"
+                        name="./default"/>
+                    </items>
+                  </column>
                 </items>
-            </tabs>
+              </columns>
+            </items>
+          </basic>
+          <patterns
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Patterns"
+            sling:hideResource="{Boolean}true"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+          </patterns>
+          <help
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Help Content"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured"/>
+          </help>
+          <accessibility jcr:primaryType="nt:unstructured"
+            jcr:title="Accessibility"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+              <columns
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                margin="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                  <column
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                      <assistPriority
+                        jcr:primaryType="nt:unstructured"
+                        sling:hideResource="{Boolean}true"/>
+                      <assistPriorityCustom
+                        jcr:primaryType="nt:unstructured"
+                        sling:orderBefore="customText"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        granite:class="cmp-adaptiveform-checkbox__assistprioritycustom"
+                        fieldLabel="Text for screen readers"
+                        name="./assistPriority"
+                        value="">
+                        <items jcr:primaryType="nt:unstructured">
+                          <empty
+                            jcr:primaryType="nt:unstructured"
+                            text=""
+                            value=""/>
+                          <customText
+                            jcr:primaryType="nt:unstructured"
+                            text="Custom text"
+                            value="custom"/>
+                          <caption
+                            jcr:primaryType="nt:unstructured"
+                            text="Title"
+                            value="caption"/>
+                        </items>
+                      </assistPriorityCustom>
+                      <customText
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                        wrapperClass="cmp-adaptiveform-checkbox__customtext"
+                        fieldLabel="Custom text">
+                        <granite:data
+                          jcr:primaryType="nt:unstructured"
+                          wrapper-class="custom-text-wrapper"/>
+                        <field
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                          name="./custom"/>
+                      </customText>
+                    </items>
+                  </column>
+                </items>
+              </columns>
+            </items>
+          </accessibility>
         </items>
-    </content>
+      </tabs>
+    </items>
+  </content>
 </jcr:root>

@@ -16,8 +16,5 @@
   "responseTimeout" : 120000,
   "watchForFileChanges" : true,
   "trashAssetsBeforeRuns" : true,
-  "reporterEnabled": "spec, mocha-junit-reporter",
-  "mochaJunitReporterReporterOptions": {
-    "mochaFile": "target/reports/TEST-[hash].xml"
-  }
+  "reporterEnabled": "spec, cypress-circleci-reporter"
 }

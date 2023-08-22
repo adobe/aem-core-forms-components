@@ -55,6 +55,8 @@ try {
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
     }
+    // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
 
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
@@ -92,9 +94,11 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
     }
@@ -123,7 +127,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} finally { // Always download logs from AEM container
+} finally {
+    // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.

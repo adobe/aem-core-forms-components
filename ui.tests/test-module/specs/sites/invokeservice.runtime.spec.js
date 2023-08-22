@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+describe("Invoke Service", () => {
+    const pagePath = "content/forms/sites/core-components-it/blank.html";
 
-(function() {
-    "use strict";
-    async function onDocumentReady() {
-        function onInit(e) {
-            const formContainer =  e.detail;
-            const formLanguage = formContainer.getLang();
-            const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
-            FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
-        }
-        document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
+    let formContainer = null;
+
+    if (cy.af.isLatestAddon()) {
+        it("should execute for forms inside sites", () => {
+            cy.intercept('POST', '**af.dermis**').as('invokeService');
+            cy.previewForm(pagePath)
+            cy.wait('@invokeService').then(({response}) => {
+                expect(response.statusCode).to.equal(400);
+                expect(response.body).to.contain('Invalid form data model path');
+            });
+        })
     }
-
-    if (document.readyState !== "loading") {
-        onDocumentReady();
-    } else {
-        document.addEventListener("DOMContentLoaded", onDocumentReady);
-    }
-
-})();
+})

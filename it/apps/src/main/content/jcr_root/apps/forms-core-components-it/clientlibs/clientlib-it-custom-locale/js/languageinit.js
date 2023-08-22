@@ -16,32 +16,22 @@
 
 (function() {
     "use strict";
-    async function onDocumentReady() {
-        const initGuideBridge = function(evnt) {
-            let guideBridge = evnt.detail.guideBridge;
-            onInit(guideBridge);
-            window.removeEventListener("bridgeInitializeStart", initGuideBridge);
-        };
-        const onInit = function(gb) {
-            gb.connect(function(){
-                const formContainer =  gb.getFormModel();
-                const formLanguage = formContainer.lang;
-                const aemLangUrl = `/etc.clientlibs/forms-core-components-it/clientlibs/clientlib-it-custom-locale/resources/i18n/${formLanguage}.json`;
-                FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl);
-            });
-        }
-        if (window.guideBridge) {
-            let guideBridge = window.guideBridge;
-            onInit(guideBridge);
-        } else {
-            window.addEventListener("bridgeInitializeStart", initGuideBridge);
-        }
-    }
-
-    if (document.readyState !== "loading") {
-        onDocumentReady();
+    const initGuideBridge = function(evnt) {
+        let guideBridge = evnt.detail.guideBridge;
+        onInit(guideBridge);
+        window.removeEventListener("bridgeInitializeStart", initGuideBridge);
+    };
+    const onInit = function(gb) {
+        gb.registerConfig(gb.ConfigKeys.LOCALE_CONFIG, async (lang) => {
+            const aemLangUrl = `/etc.clientlibs/forms-core-components-it/clientlibs/clientlib-it-custom-locale/resources/i18n/${lang}.json`;
+            await FormView.LanguageUtils.loadLang(lang, aemLangUrl);
+        });
+    };
+    if (window.guideBridge) {
+        let guideBridge = window.guideBridge;
+        onInit(guideBridge);
     } else {
-        document.addEventListener("DOMContentLoaded", onDocumentReady);
+        window.addEventListener("bridgeInitializeStart", initGuideBridge);
     }
 
 })();

@@ -78,7 +78,7 @@
             aria-labelledby="${accordion.exportedItems[item].id}-button">
         </div>
     </div>
-    <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+    <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}"></sly>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
         <sly data-sly-test="${wcmmode.edit}"
