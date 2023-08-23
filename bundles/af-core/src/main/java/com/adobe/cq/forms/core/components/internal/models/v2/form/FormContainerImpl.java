@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
@@ -61,10 +62,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
-
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
+    public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -83,6 +84,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private String clientLibRef;
 
     protected String contextPath = StringUtils.EMPTY;
+    private boolean formDataEnabled = false;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -252,6 +254,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (StringUtils.isNotBlank(getSchemaRef())) {
             properties.put(FD_SCHEMA_REF, getSchemaRef());
         }
+        // adding a custom property to know if form data is enabled
+        // this is done so that an extra API call from the client can be avoided
+        if (StringUtils.isNotBlank(getPrefillService()) ||
+            (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
+            formDataEnabled = true;
+        }
+        properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         return properties;
     }
 

@@ -19,10 +19,10 @@
   var EDIT_DIALOG = ".cmp-adaptiveform-checkbox__editdialog",
       CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__assistprioritycustom",
       CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__customtext",
-      DISABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__disable_unchecked_value",
+      ENABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__enable-unchecked-value",
       ENUMS = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__enums",
       DATA_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__type",
-      UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__enable-unchecked-value",
+      UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-checkbox__uncheckedvalue",
       Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -136,7 +136,7 @@
   }
 
   function _handleLayout(dialog) {
-    var switchWrapper =  dialog.find(DISABLE_UNCHECKED_VALUE)[0];
+    var switchWrapper =  dialog.find(ENABLE_UNCHECKED_VALUE)[0];
     $(switchWrapper).css({"display":"flex", "margin-bottom":"1px"});
     var label = $(switchWrapper).find('label[class="coral-Form-fieldlabel"]')[0];
     $(label).css('padding-right', '20px');
