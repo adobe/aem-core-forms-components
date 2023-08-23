@@ -43,6 +43,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
@@ -107,6 +108,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (request != null) {
             contextPath = request.getContextPath();
             request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, this.getPath());
+
+            Page currentPage = getCurrentPage();
+            if (currentPage != null) {
+                PageManager pageManager = currentPage.getPageManager();
+                Page resourcePage = pageManager.getContainingPage(resource);
+                if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
+                    request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, resourcePage.getPath());
+                }
+            }
+            FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
+            if (formClientLibManager != null && clientLibRef != null) {
+                formClientLibManager.addClientLibRef(clientLibRef);
+            }
         }
     }
 
