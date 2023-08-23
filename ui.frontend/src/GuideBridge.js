@@ -48,6 +48,29 @@ class GuideBridge {
      */
     #formContainerPath = "";
 
+
+    /**
+     * Object to store user configurations.
+     * @member {Object}
+     * @private
+     * @memberof GuideBridge
+     * @instance
+     */
+    #userConfig = {};
+
+
+    /**
+     * Predefined key values for user configurations.
+     * @member {Object}
+     * @memberof GuideBridge
+     * @instance
+     */
+    ConfigKeys = {
+        LOCALE_CONFIG: 'localeConfig',
+        RENDER_CONFIG: 'renderConfig', // todo: needs to be added
+        SUBMIT_CONFIG: 'submitConfig'  // todo: needs to be added
+    };
+
     /**
      * Constructs a new GuideBridge instance.
      * @constructor GuideBridge
@@ -377,6 +400,35 @@ class GuideBridge {
         } else {
             throw new Error("GuideBridge is not connected");
         }
+    }
+
+    /**
+     * Register a configuration for a specific key.
+     * @param {string} key - The key for which to register the configuration.
+     * @param {Object|Function} config - The configuration object or function.
+     * @param {string|null} [formContainerPath=null] - The form container path to associate with the configuration.
+     * @returns {Array} - An array of configurations associated with the key.
+     * @example
+     *
+     * // Register a function configuration for additional behavior
+     * guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () => console.log('Function config'));
+     */
+    registerConfig(key, config, formContainerPath = null) {
+        if (!this.#userConfig[key]) {
+            this.#userConfig[key] = [];
+        }
+        const configEntry = typeof config === 'function' ? { fn: config, formContainerPath } : { ...config, formContainerPath };
+        this.#userConfig[key].push(configEntry);
+        return this.#userConfig[key];
+    }
+
+    /**
+     * Get configurations associated with a specific key.
+     * @param {string} key - The key for which to retrieve configurations.
+     * @returns {Array} - An array of configurations associated with the key.
+     */
+    getConfigsForKey(key) {
+        return this.#userConfig[key] || [];
     }
 };
 

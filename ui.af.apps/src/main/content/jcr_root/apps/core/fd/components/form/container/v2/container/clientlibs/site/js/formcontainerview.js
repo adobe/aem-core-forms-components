@@ -76,10 +76,15 @@
                 }, 10);
         }
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
-        FormView.Utils.setupFormContainer(({
+        await FormView.Utils.setupFormContainer(async ({
             _formJson, _prefillData, _path, _element
         }) => {
             let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            // before initializing the form container load all the locale specific json resources
+            // for runtime
+            const formLanguage = formContainer.getLang();
+            const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
+            await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
             formContainer.subscribe();
             return formContainer;
         }, FormContainerV2.selectors.self, FormContainerV2.IS);
