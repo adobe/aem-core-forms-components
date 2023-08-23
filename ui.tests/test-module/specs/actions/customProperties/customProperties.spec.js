@@ -33,7 +33,7 @@ describe("Custom Properties Tests", () => {
 
         it('End to End Custom Property Test', function () {
             const textInputEditBoxSelector = "coral-tag[value='/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure/jcr:content/guideContainer/forms-components-examples/components/form/textinput']";
-            const tabSelector = '._coral-Tabs--horizontal ._coral-Tabs-item';
+            const tabSelector = '.cq-dialog-content coral-tablist';
             const submitBtnSelector = ".cq-dialog-submit";
             const AFv2FormTemplatePath = "/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html";
             // Exceptions coming from coral and template policy
@@ -46,13 +46,13 @@ describe("Custom Properties Tests", () => {
             cy.get('.cq-dialog').should('be.visible');
             cy.get(".coral-Form-fieldwrapper").contains("Policy Title *").next().focus().clear().type("Test policy");
 
-            cy.get(tabSelector).eq(1).click({force: true});
+            cy.get(tabSelector).contains("Custom Properties").click({force: true});
             // Fill custom properties in policy
-            cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
-            cy.get(".cmp-adaptiveform-base-customproperties__multifield").contains("Add").click();
-            cy.get("input[name='./customProperties/item0/./customPropertyGroupName']").focus().clear().type("Group 1");
-            cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/key']").focus().clear().type("key 1");
-            cy.get("input[name='./customProperties/item0/./keyValuePairs/item0/value']").focus().clear().type("value 1");
+            cy.get(".fd-CustomProperties-multifield").contains("Add").click();
+            cy.get(".fd-CustomProperties-multifield").contains("Add").click();
+            cy.get("input[name='./fd:customPropertyGroups/item0/./fd:customPropertyGroupName']").focus().clear().type("Group 1");
+            cy.get("input[name='./fd:customPropertyGroups/item0/./fd:customProperties/item0/fd:customKey']").focus().clear().type("key 1");
+            cy.get("input[name='./fd:customPropertyGroups/item0/./fd:customProperties/item0/fd:customValue']").focus().clear().type("value 1");
             cy.get(submitBtnSelector).click({force: true});
 
             // Open form
@@ -64,14 +64,14 @@ describe("Custom Properties Tests", () => {
 
             // Advanced Tab in dialog
             cy.get(tabSelector).contains("Advanced").click({force: true});
-            cy.get(".cmp-adaptiveform-base-customproperties__select").click();
-            cy.get("._coral-Menu-item").contains("Group 1").click();
-            cy.get(".cmp-adaptiveform-base-customproperties__select").click(); // does the job of blur
+            cy.get(".fd-CustomProperties-select").click();
+            cy.get("coral-selectlist-item[role='option']").contains("Group 1").click();
+            cy.get(".fd-CustomProperties-select").click(); // does the job of blur
 
-            cy.get(".cmp-adaptiveform-base-customproperties__additionalCustomPropertiesCheck").click();
-            cy.get(".cmp-adaptiveform-base-customproperties__additionalMultifield").contains("Add").click();
-            cy.get(".cmp-adaptiveform-base-customproperties__additionalKeys").focus().type("addonKey1");
-            cy.get(".cmp-adaptiveform-base-customproperties__additionalValues").focus().type("addonValue1");
+            cy.get(".fd-CustomProperties-additionalCustomPropertiesCheck").click();
+            cy.get(".fd-CustomProperties-additionalMultifield").contains("Add").click();
+            cy.get(".fd-CustomProperties-additionalKeys").focus().type("addonKey1");
+            cy.get(".fd-CustomProperties-additionalValues").focus().type("addonValue1");
             cy.get(submitBtnSelector).click({force: true});
 
             // check model json
@@ -93,8 +93,8 @@ describe("Custom Properties Tests", () => {
             cy.openTemplateEditor(AFv2FormTemplatePath);
             cy.get(textInputEditBoxSelector).find("button").click({force: true});
             cy.get('.cq-dialog').should('be.visible');
-            cy.get(tabSelector).eq(1).click({force: true});
-            cy.get(".cmp-adaptiveform-base-customproperties__multifield ._coral-Multifield-remove").eq(1).click().then(() => {
+            cy.get(tabSelector).contains("Custom Properties").click({force: true});
+            cy.get(".fd-CustomProperties-multifield coral-multifield-item[role='listitem'] button[icon='delete']").eq(1).click().then(() => {
                 cy.get('._coral-Dialog').should('be.visible');
                 cy.get("._coral-Button--warning").contains("Delete").click({force:true});
                 cy.get(submitBtnSelector).click({force: true});

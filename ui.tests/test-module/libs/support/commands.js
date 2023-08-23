@@ -127,23 +127,6 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
     preventClickJacking();
 });
 
-const preventClickJacking = () => {
-    cy.window().then(win => {
-        // only if granite is defined, override the API
-        if (win.Granite) {
-            win.Granite.HTTP.handleLoginRedirect = function () {
-                if (!loginRedirected) {
-                    loginRedirected = true;
-                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-                }
-            };
-        }
-    });
-};
-
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
     cy.window().then((win) => {
