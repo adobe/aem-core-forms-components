@@ -15,9 +15,20 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import org.junit.jupiter.api.Test;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.apache.jackrabbit.JcrConstants;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ComponentUtilsTest {
     @Test
@@ -25,4 +36,30 @@ public class ComponentUtilsTest {
         // THEN
         assertEquals("L2NvbnRlbnQvZm9ybXMvYWYvYWJj", ComponentUtils.getEncodedPath("/content/forms/af/abc"));
     }
+
+    @Test
+    public void testGetFragmentContainer() {
+        ResourceResolver resourceResolver = Mockito.mock(ResourceResolver.class);
+        String fragmentPath = "/content/forms/af/abc";
+        ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
+        Mockito.verify(resourceResolver).getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+        String damFragmentPath = "/content/dam/formsanddocuments/abc";
+        resourceResolver = Mockito.mock(ResourceResolver.class);
+        ComponentUtils.getFragmentContainer(resourceResolver, damFragmentPath);
+        Mockito.verify(resourceResolver).getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+    }
+
+    @Test
+    public void testIsFragmentComponent() {
+        assertFalse(ComponentUtils.isFragmentComponent(null));
+        Resource resource = Mockito.mock(Resource.class);
+        Map<String, Object> valueMap = new HashMap<>();
+        valueMap.put(FormConstants.PROP_FRAGMENT_PATH, "/content/forms/af/abc");
+        ValueMap vm = new ValueMapDecorator(valueMap);
+        Mockito.when(resource.getValueMap()).thenReturn(vm);
+        assertTrue(ComponentUtils.isFragmentComponent(resource));
+        vm.remove(FormConstants.PROP_FRAGMENT_PATH);
+        assertFalse(ComponentUtils.isFragmentComponent(resource));
+    }
+
 }

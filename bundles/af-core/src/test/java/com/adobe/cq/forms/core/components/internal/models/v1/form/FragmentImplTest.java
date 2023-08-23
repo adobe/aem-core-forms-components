@@ -34,6 +34,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -159,7 +160,21 @@ public class FragmentImplTest {
         Assertions.assertEquals("Text Input", childrenList.get(0));
 
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath());
-        Assertions.assertEquals("extra-clientlib", ((FragmentImpl) fragment).getClientLibRef());
     }
 
+    @Test
+    public void testAddClientLibRefWithNoRef() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FormClientLibManager formClientLibManager = context.request().adaptTo(FormClientLibManager.class);
+        List<String> clientLibs = formClientLibManager.getClientLibRefList();
+        assertEquals(0, clientLibs.size());
+    }
+
+    @Test
+    public void testAddClientLibRef() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_DAMPATH, Fragment.class, context);
+        FormClientLibManager formClientLibManager = context.request().adaptTo(FormClientLibManager.class);
+        List<String> clientLibs = formClientLibManager.getClientLibRefList();
+        assertEquals(1, clientLibs.size());
+    }
 }

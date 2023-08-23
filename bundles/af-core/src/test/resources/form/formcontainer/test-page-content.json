@@ -26,6 +26,7 @@
       "fieldType" : "form",
       "dorType": "generate",
       "dorTemplateRef": "xyz",
+      "clientLibRef": "abc",
       "textinput" : {
         "jcr:primaryType": "nt:unstructured",
         "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",

@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -30,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
@@ -163,6 +166,18 @@ public class ComponentUtils {
             policy = policyManager.getPolicy(contentResource);
         }
         return policy;
+    }
+
+    public static Resource getFragmentContainer(ResourceResolver resourceResolver, @NotNull String fragmentPath) {
+        String fragmentRef = fragmentPath;
+        if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
+        }
+        return resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+    }
+
+    public static boolean isFragmentComponent(Resource resource) {
+        return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
     }
 
 }

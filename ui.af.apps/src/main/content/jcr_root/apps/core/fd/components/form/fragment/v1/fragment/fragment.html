@@ -40,6 +40,5 @@
              data-sly-use.placeholder="placeholder.html"
              data-sly-call="${ placeholder.placeholder @ fragment=fragment, templates=templates }"></sly>
     </div>
-    <sly data-sly-test="${fragment.clientLibRef}" data-sly-call="${clientlib.css @ categories=fragment.clientLibRef}"></sly>
 </sly>
 <sly data-sly-call="${templates.placeholder @ isEmpty = !fragment.fragmentPath}"></sly>
