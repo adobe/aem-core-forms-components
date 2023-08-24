@@ -55,22 +55,21 @@ if (typeof window.DatePickerWidget === 'undefined') {
      *
      * showCalendarIcon: to show the Calendar on the right of the text field or not
      */
-    #defaultOptions = {
-      yearsPerView: 16,
-      width: 433,
-      viewHeight: 248,
-      locale: {
-        days: [1, 2, 3, 4, 5, 6, 7].map(d => new Date(2001, 0, d)),
-        months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
-            m => new Date(2000, m, 1)),
-        zero: "0",
-        clearText: "Clear",
-        name: "en_US"
-      },
-      format: "YYYY-MM-DD",
-      pickerType: "date",
-      positioning: null,
-      showCalendarIcon: true
+    #defaultOptions={
+        yearsPerView: 16,
+        width: 433,
+        viewHeight: 248,
+        locale: {
+            days:[0,1, 2, 3, 4, 5, 6].map(d => new Date(2001, 0, d)),
+            months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(m => new Date(2000, m, 1)),
+            zero: "0",
+            clearText: "Clear",
+            name:"en_US"
+        },
+        format:"YYYY-MM-DD",
+        pickerType:"date",
+        positioning: null,
+        showCalendarIcon: true
     }
 
     #dates = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
