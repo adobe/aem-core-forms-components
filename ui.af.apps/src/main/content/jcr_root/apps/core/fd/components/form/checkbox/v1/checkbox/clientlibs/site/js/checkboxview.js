@@ -73,10 +73,8 @@
             super.setModel(model);
             this._onValue = this._model._jsonModel.enum[0];
             this._offValue = this._model._jsonModel.enum[1];
-            this._model.value = this.widget.value;
             this.widget.addEventListener('change', (e) => {
                 if (this.widget.checked) {
-                    console.log('setting the value to ')
                     this._model.value = this._onValue;
                 } else {
                     this._model.value = this._offValue;

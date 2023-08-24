@@ -50,6 +50,8 @@ describe('Page - Authoring', function () {
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.get("[name='./name']")
     .should("exist");
+
+
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(checkboxDrop);
   }
@@ -67,7 +69,7 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    it('insert TextInput in form container', function () {
+    it('insert Checkbox in form container', function () {
       dropCheckboxInContainer();
       cy.deleteComponentByPath(checkboxDrop);
     });
