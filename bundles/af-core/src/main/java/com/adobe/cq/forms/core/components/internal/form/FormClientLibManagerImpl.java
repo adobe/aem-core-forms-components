@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -31,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 
 @Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adaptables = { SlingHttpServletRequest.class },
     adapters = FormClientLibManager.class)
 public class FormClientLibManagerImpl implements FormClientLibManager {
 
