@@ -20,6 +20,7 @@
             fieldType="form"
             thankYouOption="page"
             themeRef="/libs/fd/af/themes/canvas"
+            clientLibRef="x.y"
             title="AF Fragment (v2)">
             <textinput
                 jcr:lastModified="{Date}2023-06-02T12:27:19.294+05:30"

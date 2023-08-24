@@ -15,12 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -30,6 +26,7 @@ import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,12 +38,13 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -56,6 +54,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(AemContextExtension.class)
@@ -71,6 +70,8 @@ public class FormContainerImplTest {
 
     protected static final String SITES_PATH = "/content/exampleSite";
     protected static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH + "/jcr:content/root/sitecontainer/formcontainer";
+
+    protected static final String AF_PATH = "/content/forms/af/testAf";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -318,6 +319,38 @@ public class FormContainerImplTest {
     }
 
     @Test
+    public void testRequestAttributeIfContainerPageDifferent() {
+        Resource resource = Mockito.mock(Resource.class);
+        Page afPage = Mockito.mock(Page.class);
+        Mockito.when(afPage.getPath()).thenReturn(AF_PATH);
+        PageManager pageManager = Mockito.mock(PageManager.class);
+        Mockito.when(pageManager.getContainingPage(resource)).thenReturn(afPage);
+        Page sitePage = Mockito.mock(Page.class);
+        Mockito.when(sitePage.getPath()).thenReturn("/content/examplepage");
+        Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
+        MockSlingHttpServletRequest request = context.request();
+
+        FormContainerImpl formContainerImpl = new FormContainerImpl();
+        Utils.setInternalState(formContainerImpl, "request", request);
+        Method initMethod = Utils.getPrivateMethod(FormContainerImpl.class, "initFormContainerModel");
+        try {
+            // Test when currentPage is null
+            initMethod.invoke(formContainerImpl);
+            Assertions.assertNull(request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH));
+            Utils.setInternalState(formContainerImpl, "currentPage", sitePage);
+            // Test when resource is not set somehow
+            initMethod.invoke(formContainerImpl);
+            Assertions.assertNull(request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH));
+            Utils.setInternalState(formContainerImpl, "resource", resource);
+            initMethod.invoke(formContainerImpl);
+            String referencePage = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
+            Assertions.assertEquals(referencePage, AF_PATH, "Reference page should be set to the AF page");
+        } catch (Exception e) {
+            fail("initFormContainerModel method should have invoked");
+        }
+    }
+
+    @Test
     void testGetFormDataEnabledWhenPrefillServiceIsSet() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertTrue(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
@@ -340,4 +373,15 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
     }
+
+    @Test
+    public void testAddClientLibRef() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1,
+            FormContainer.class, context);
+        FormClientLibManager formClientLibManager = context.request().adaptTo(FormClientLibManager.class);
+        List<String> clientLibs = formClientLibManager.getClientLibRefList();
+        assertEquals(1, clientLibs.size());
+        assertEquals("abc", clientLibs.get(0));
+    }
+
 }

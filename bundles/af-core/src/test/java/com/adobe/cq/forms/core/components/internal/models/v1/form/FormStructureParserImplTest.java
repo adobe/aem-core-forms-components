@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,10 +42,11 @@ import static org.junit.Assert.*;
 @ExtendWith(AemContextExtension.class)
 public class FormStructureParserImplTest {
     private static final String BASE = "/form/formstructparser";
-    private static final String CONTENT_ROOT = "/content/myTestPage";
-    private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/jcr:content";
+    private static final String CONTENT_ROOT = "/content";
+    private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/myTestPage/jcr:content";
 
     private static final String FORM_CONTAINER_PATH = JCR_CONTENT_PATH + "/formcontainerv2";
+    private static final String FRAGMENT_PATH = JCR_CONTENT_PATH + "/affragment";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -117,7 +119,7 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetClientLibRef() {
-        String path = CONTENT_ROOT;
+        String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals("abc", formStructureParser.getClientLibRefFromFormContainer());
 
@@ -151,7 +153,9 @@ public class FormStructureParserImplTest {
     private FormStructureParser getFormStructureParserUnderTest(String resourcePath, String requestAttribute) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        if (StringUtils.isNotEmpty(requestAttribute)) {
+            request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        }
         return request.adaptTo(FormStructureParser.class);
     }
 }

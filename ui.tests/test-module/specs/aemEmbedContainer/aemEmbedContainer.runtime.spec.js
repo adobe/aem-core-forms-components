@@ -41,7 +41,7 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for aemembedcontainer presence inside iframe", () => {
             getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
-            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 7);
         })
 
         it("test for form presence in nonIframe mode", () => {
@@ -103,9 +103,9 @@ describe("Sites with Aem Embed Container", () => {
             expect(Object.keys(formContainer._fields).length).to.equal(3);
         })
 
-        it(" model's changes are reflected in the html ", () => {
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
+        it("model's changes are reflected in the html ", () => {
+            const id = formContainer._model.items[0].items[0].items[0].id;
+            const model = formContainer._model.getElement(id);
             model.value = "some other value"
             checkHTML(model.id, model.getState()).then(() => {
                 model.visible = false
@@ -116,5 +116,13 @@ describe("Sites with Aem Embed Container", () => {
             })
         });
 
+        it("html changes are reflected in model", () => {
+            const fragmentTextinputId = formContainer._model.items[0].items[0].items[0].id;
+            const fragmentTextInputModel = formContainer._model.getElement(fragmentTextinputId);
+            const input = "Test value"
+            cy.get(`#${fragmentTextinputId}`).find("input").clear().type(input).blur().then(x => {
+                expect(fragmentTextInputModel.getState().value).to.equal(input)
+            })
+        })
     })
 })

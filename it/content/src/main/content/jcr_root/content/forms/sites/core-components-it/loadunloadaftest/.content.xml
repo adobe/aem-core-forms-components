@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2023-08-02T10:36:18.709+05:30"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+        jcr:description="Aem Embed Container Runtime test"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Aem Embed Container"
+        sling:resourceType="forms-components-examples/components/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <aemform
+                    jcr:lastModified="{Date}2023-08-02T10:36:18.704+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="/apps/forms-core-components-it/samplepages/loadunloadaf/v1/loadunloadaf"
+                    enableFocusOnFirstField="{Boolean}true"
+                    submitType="inline"
+                    textIsRich="true"
+                    useiframe="false"
+                    usePageLocale="true"/>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>

@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
 
 try {
     ci.stage("Integration Tests");
@@ -55,8 +55,11 @@ try {
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
     }
-    // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
-    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+
+    if (FT === 'true') {
+        // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+    }
 
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
