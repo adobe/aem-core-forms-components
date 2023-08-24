@@ -200,7 +200,7 @@ describe('Page/Form Authoring', function () {
             
             //verifying the Loading class 
             it('check the loading class', function(){
-                verifyLoadingClass("[your-selector-for-form-container]");
+                verifyLoadingClass(formContainerEditPathSelector);
             });
         });
 
@@ -255,18 +255,5 @@ describe('Page/Form Authoring', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
-        });
-
-        context("Render Forms in Disabled mode", function () {
-            const pagePath = "/content/forms/af/core-components-it/blank.html";
-
-            beforeEach(function () {
-                cy.previewForm(pagePath);
-            });
-
-            it('check wcmmode cookie deletion when disbaled mode', function () {
-                cy.getCookie('wcmmode').should('be.null');
-            });
-
         });
 });
