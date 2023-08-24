@@ -996,11 +996,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #clearDate(view) {
       this.setValue("");
-      let existingSelectedItem = this['$'
-      + view.toLowerCase()].getElementsByClassName("dp-selected")[0];
+      let existingSelectedItem = this['$' + view.toLowerCase()].getElementsByClassName("dp-selected")[0];
       if (existingSelectedItem) {
         existingSelectedItem.classList.remove("dp-selected");
       }
+      this.#dp.style.display = "none";
     }
 
     #getEvent() {
@@ -1012,8 +1012,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     toString() {
-      return this.selectedYear + "-" + this.#pad2(this.selectedMonth + 1) + "-"
-          + this.#pad2(this.selectedDay);
+      if(this.selectedYear === -1 || this.selectedMonth === -1 || this.selectedDay === -1){
+        return ""
+      }
+      return this.selectedYear + "-" + this.#pad2(this.selectedMonth + 1) + "-" + this.#pad2(this.selectedDay);
     }
 
     #selectDate(evnt) {
