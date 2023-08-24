@@ -54,6 +54,9 @@ public class FormClientLibManagerImplTest {
         Assertions.assertEquals(0, clientLibs.size());
         formClientLibManager.addClientLibRef("abc");
         clientLibs = formClientLibManager.getClientLibRefList();
+        Assertions.assertEquals(1, clientLibs.size());
+        formClientLibManager = new FormClientLibManagerImpl();
+        clientLibs = formClientLibManager.getClientLibRefList();
         Assertions.assertEquals(0, clientLibs.size());
     }
 
@@ -65,6 +68,6 @@ public class FormClientLibManagerImplTest {
     private FormClientLibManager getFormClientLibManagerUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
-        return request.getResource().adaptTo(FormClientLibManager.class);
+        return request.adaptTo(FormClientLibManager.class);
     }
 }
