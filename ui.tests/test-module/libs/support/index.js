@@ -83,6 +83,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("Failed to execute 'insertBefore' on 'Node'")) {
         return false;
     }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;

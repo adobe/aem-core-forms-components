@@ -20,7 +20,6 @@ import java.util.*;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -35,13 +34,14 @@ import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -64,23 +64,17 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String fragmentPath;
 
-    private String clientLibRef;
-
     private Resource fragmentContainer;
 
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-        fragmentContainer = null;
-        String fragmentRef = fragmentPath;
-        if (fragmentPath != null && StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
-            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
-        }
-        fragmentContainer = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
-        if (fragmentContainer != null) {
-            FormStructureParser formStructureParser = fragmentContainer.adaptTo(FormStructureParser.class);
-            if (formStructureParser != null) {
-                this.clientLibRef = formStructureParser.getClientLibRefFromFormContainer();
+        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
+        if (request != null) {
+            FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
+            String clientLibRef = getClientLibForFragment();
+            if (formClientLibManager != null && clientLibRef != null) {
+                formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
     }
@@ -88,11 +82,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @JsonIgnore
     public String getFragmentPath() {
         return fragmentPath;
-    }
-
-    @JsonIgnore
-    public String getClientLibRef() {
-        return clientLibRef;
     }
 
     @Override
@@ -166,5 +155,14 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         return properties;
+    }
+
+    private String getClientLibForFragment() {
+        String clientLibRef = null;
+        if (fragmentContainer != null) {
+            FormContainer fragment = fragmentContainer.adaptTo(FormContainer.class);
+            clientLibRef = fragment != null ? fragment.getClientLibRef() : null;
+        }
+        return clientLibRef;
     }
 }

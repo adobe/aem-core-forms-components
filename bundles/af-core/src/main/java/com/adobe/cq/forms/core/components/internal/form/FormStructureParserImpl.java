@@ -108,5 +108,4 @@ public class FormStructureParserImpl implements FormStructureParser {
 
         return getFormContainerPath(resource.getParent());
     }
-
 }

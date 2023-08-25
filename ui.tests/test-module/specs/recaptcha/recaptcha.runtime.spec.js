@@ -21,21 +21,35 @@ describe("Form Runtime with Recaptcha Input", () => {
     const IS = "adaptiveFormRecaptcha"
     const selectors = {
         recaptcha : `[data-cmp-is="${IS}"]`
-    }
-    let toggle_array = []
+    };
 
     let formContainer = null
 
-    beforeEach(() => {
+    let toggle_array = [];
+
+    before(() => {
         cy.fetchFeatureToggles().then((response) => {
             if (response.status === 200) {
                 toggle_array = response.body.enabled;
-                if (toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-                    cy.previewForm(pagePath).then((p) => {
-                        formContainer = p;
-                    });
-                }
             }
+        });
+    });
+
+    // Whitelist the error message
+    cy.on('uncaught:exception', (err) => {
+        // when we render form with captcha, and FT is not enabled, this error is expected
+        if (err.message.includes("Missing required parameters: sitekey")) {
+            return false;
+        }
+        // Let Cypress handle other errors
+        return true;
+    });
+
+
+    // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
+    beforeEach(() => {
+        cy.previewForm(pagePath).then((p) => {
+            formContainer = p;
         });
     });
 
@@ -56,19 +70,17 @@ describe("Form Runtime with Recaptcha Input", () => {
         })
     }
 
-    it(" should get model and view initialized properly ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
+    if (toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
+        it(" should get model and view initialized properly ", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
             Object.entries(formContainer._fields).forEach(([id, field]) => {
                 expect(field.getId()).to.equal(id)
                 expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
             });
-        }
-    })
+        })
 
-    it(" model's changes are reflected in the html ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
+        it(" model's changes are reflected in the html ", () => {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
@@ -80,11 +92,9 @@ describe("Form Runtime with Recaptcha Input", () => {
                 model.enable = false
                 return checkHTML(model.id, model.getState())
             })
-        }
-    });
+        });
 
-    it(" html changes are reflected in model ", () => {
-        if(toggle_array && toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
+        it(" html changes are reflected in model ", () => {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.log(model.getState().value)
@@ -92,7 +102,10 @@ describe("Form Runtime with Recaptcha Input", () => {
                 cy.log(model.getState().value)
                 expect(model.getState().value).to.not.be.null
             })
-        }
-    });
-
+        });
+    } else {
+        it('Feature toggle of captcha is disabled, skipping tests', () => {
+            cy.log('Tests were skipped because the feature toggle of captcha is disabled');
+        });
+    }
 })

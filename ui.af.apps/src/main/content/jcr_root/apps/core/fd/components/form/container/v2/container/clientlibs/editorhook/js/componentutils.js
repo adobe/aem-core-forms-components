@@ -16,38 +16,6 @@
 (function (window, author, Coral, channel) {
 
     /**
-     * Replace an existing component
-     * @param {Object} component The component that has to be instantiated
-     * @param {Object} [editable] editable which has to be replaced
-     * @param {Object} [preservedProperties] properties that will be preserved after replace
-     * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
-     */
-    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
-        var args = arguments;
-
-        channel.trigger("cq-persistence-before-replace", args);
-
-        return (
-            sendReplaceParagraph({
-                resourceType: component.getResourceType(),
-                configParams: component.getConfigParams(),
-                extraParams: component.getExtraParams(),
-                templatePath: component.getTemplatePath()
-            }, editable, preservedProperties)
-                .done(function () {
-                    editable.refresh();
-                    channel.trigger("cq-persistence-after-replace", args);
-                })
-                .fail(function () {
-                    author.ui.helpers.notify({
-                        content: Granite.I18n.get("Paragraph replace operation failed."),
-                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
-                    });
-                })
-        );
-    };
-
-    /**
      * Send a request to replace an existing component
      * @param {String} config.resourceType The resource type of the new paragraph.
      * @param {Object} [config.configParams] The config parameters to be set upon the new paragraph's creation.
@@ -57,7 +25,7 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    var sendReplaceParagraph = function (config, editable, preservedProperties) {
+    let sendReplaceParagraph = function (config, editable, preservedProperties) {
         return (
             new RequestManager.PostRequest()
                 .prepareReplaceParagraph(config, editable, preservedProperties)
@@ -65,7 +33,7 @@
         );
     };
 
-    RequestManager = {};
+    let RequestManager = {};
     RequestManager.PostRequest = function () {
         RequestManager.Request.call(this, arguments);
         this.type = "POST"
@@ -82,7 +50,7 @@
 
     RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties) {
         if (config.templatePath) {
-            var comTemplatePath = Granite.HTTP.externalize(config.templatePath),
+            let comTemplatePath = Granite.HTTP.externalize(config.templatePath),
                 comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
 
             // Delete properties that are not preserved
@@ -140,13 +108,45 @@
             return this;
         }
 
-        var i;
+        let i;
         for (i in params) {
             if (params.hasOwnProperty(i)) {
                 this.setParam(i, params[i]);
             }
         }
         return this;
+    };
+
+    /**
+     * Replace an existing component
+     * @param {Object} component The component that has to be instantiated
+     * @param {Object} [editable] editable which has to be replaced
+     * @param {Object} [preservedProperties] properties that will be preserved after replace
+     * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
+     */
+    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
+        let args = arguments;
+
+        channel.trigger("cq-persistence-before-replace", args);
+
+        return (
+            sendReplaceParagraph({
+                resourceType: component.getResourceType(),
+                configParams: component.getConfigParams(),
+                extraParams: component.getExtraParams(),
+                templatePath: component.getTemplatePath()
+            }, editable, preservedProperties)
+                .done(function () {
+                    editable.refresh();
+                    channel.trigger("cq-persistence-after-replace", args);
+                })
+                .fail(function () {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("Paragraph replace operation failed."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                    });
+                })
+        );
     };
 
     window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes = [];

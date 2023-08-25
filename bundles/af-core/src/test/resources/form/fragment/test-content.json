@@ -39,7 +39,6 @@
         "fd:version": "2.1",
         "title": "AF Fragment (v2)",
         "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
-        "clientLibRef": "extra-clientlib",
         "fieldType": "form",
         "dorType": "none",
         "textinput": {
