@@ -184,6 +184,11 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
 
         });
+
+        // check clear option
+        cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
+            cy.get(".dp-clear").click();
+        });
     });
 
     it("Test order of the days", () => {
