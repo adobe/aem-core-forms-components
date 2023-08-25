@@ -301,6 +301,32 @@ const waitForFormInit = () => {
     })
 }
 
+const waitForFormInitMultipleContiners = () => {
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        const promiseArray = []
+        cy.get('form').each(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    const isReady = () => {
+                        if (e.detail._path === $form.data("cmp-path") &&
+                            !($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                            resolve(e.detail);
+                        }
+                        setTimeout(isReady, 0)
+                    }
+                    isReady();
+                }
+                document.addEventListener(INIT_EVENT, listener1);
+            })
+
+            promiseArray.push(promise)
+        }).then(($lis) => {
+           return Promise.all(promiseArray)
+        });
+    })
+}
+
 const waitForChildViewAddition = () => {
     return cy.get('[data-cmp-is="adaptiveFormContainer"]')
         .then((el) => {
@@ -364,6 +390,9 @@ Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
+    }
+    if(options?.multipleContainers) {
+        return cy.openPage(pagePath, options).then(waitForFormInitMultipleContiners)
     }
     return cy.openPage(pagePath, options).then(waitForFormInit)
 })

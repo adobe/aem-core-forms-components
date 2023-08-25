@@ -36,7 +36,6 @@
     <sly data-sly-call="${clientLib.css @ categories=['guide.core.common']}"/>
     <sly data-sly-test.isParentWCMModeDisabled="${wcmmode.disabled}"/>
     <sly data-sly-test.isWCMModePreview="${wcmmode.preview}"/>
-    <sly data-sly-use="${'formcontainer.js' @ wcmmode=isWCMModePreview ? 'preview' : 'disabled', themeOverride=form.themePath, pageFallbackClientlib=guideConstants.THEME_DEFAULT_CLIENTLIB, parentWcmModeDisabled=isParentWCMModeDisabled, afAcceptLang=form.locale, embeddedAdaptiveForm=form.formEditPagePath}" data-sly-resource="${ @ path=form.formPagePath, wcmmode=isWCMModePreview ? 'preview' : 'disabled'}" />
-    <sly data-sly-use="${'removeattribute.js' @ embeddedAdaptiveForm }"/>
+    <sly data-sly-use="${'formcontainer.js' @ wcmmode=isWCMModePreview ? 'preview' : 'disabled', themeOverride=form.themePath, pageFallbackClientlib=guideConstants.THEME_DEFAULT_CLIENTLIB, parentWcmModeDisabled=isParentWCMModeDisabled, afAcceptLang=form.locale}" data-sly-resource="${ @ path=form.formPagePath, wcmmode=isWCMModePreview ? 'preview' : 'disabled'}" />
     <sly data-sly-call="${clientLib.css @ categories=[form.cssClientlib]}"/>
 </div>

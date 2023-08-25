@@ -17,79 +17,80 @@
 /**
  * This class is responsible for interacting with the recaptcha widget. It displays Google reCAPTCHA challenge.
  */
-class RecaptchaWidget {
-    #widget = null
-    #model = null // passed by reference
-    #options = null
-    #lang = 'en'
 
-    constructor(view, model, widget) {
-        // initialize the widget and model
-        this.#widget = widget;
-        this.#model = model;
-        this.#widget = document.createElement("div");
-        this.#widget.classList.add("cmp-adaptiveform-recaptcha__widget");
-        this.#lang = view.formContainer.getModel().lang;
+if (typeof window.RecaptchaWidget === 'undefined') {
+    window.RecaptchaWidget = class {
+        #widget = null
+        #model = null // passed by reference
+        #options = null
+        #lang = 'en'
 
-        //Always inserting it in body
-        document.body.appendChild(this.#widget);
-        this.#options = Object.assign({}, this.#model._jsonModel);
+        constructor(view, model, widget) {
+            // initialize the widget and model
+            this.#widget = widget;
+            this.#model = model;
+            this.#widget = document.createElement("div");
+            this.#widget.classList.add("cmp-adaptiveform-recaptcha__widget");
+            this.#lang = view.formContainer.getModel().lang;
 
-        this.#renderRecaptcha(widget);
-    }
+            //Always inserting it in body
+            document.body.appendChild(this.#widget);
+            this.#options = Object.assign({}, this.#model._jsonModel);
 
-    #renderRecaptcha(element) {
-
-        var self = this;
-        var recaptchaConfigData = this.#options;
-        element.innerHTML = '<div class="g-recaptcha"></div>';
-        var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
-        var widgetId;
-        var url = recaptchaConfigData.properties["fd:captcha"].config.uri;
-        if (recaptchaConfigData.properties["fd:captcha"].config.size == "invisible") {
-            gcontainer.classList.add('g-recaptcha-invisible');
-            recaptchaConfigData.required = false;
+            this.#renderRecaptcha(widget);
         }
 
-        var successCallback = function(response) {
-            self.setCaptchaModel(response);
-        };
+        #renderRecaptcha(element) {
 
-        var expiredCallback = function() {
-            grecaptcha.reset(widgetId);
-            self.setCaptchaModel("");
-        };
+            var self = this;
+            var recaptchaConfigData = this.#options;
+            element.innerHTML = '<div class="g-recaptcha"></div>';
+            var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
+            var widgetId;
+            var url = recaptchaConfigData.properties["fd:captcha"].config.uri;
+            if (recaptchaConfigData.properties["fd:captcha"].config.size == "invisible") {
+                gcontainer.classList.add('g-recaptcha-invisible');
+                recaptchaConfigData.required = false;
+            }
 
-        var onloadCallbackInternal = function() {
-            widgetId = grecaptcha.render(
-                gcontainer,
-                gparameters
-            );
-            return widgetId;
-        };
+            var successCallback = function(response) {
+                self.setCaptchaModel(response);
+            };
 
-        var gparameters = {
-            'sitekey': recaptchaConfigData.properties["fd:captcha"].config.siteKey,
-            'size': recaptchaConfigData.properties["fd:captcha"].config.size,
-            'theme': recaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
-            'type': recaptchaConfigData.properties["fd:captcha"].config.type || 'image',
-            'callback': successCallback,
-            'expired-callback': expiredCallback
-        };
+            var expiredCallback = function() {
+                grecaptcha.reset(widgetId);
+                self.setCaptchaModel("");
+            };
 
-        window.onloadRecaptchaCallback = onloadCallbackInternal;
+            var onloadCallbackInternal = function() {
+                widgetId = grecaptcha.render(
+                    gcontainer,
+                    gparameters
+                );
+                return widgetId;
+            };
 
-        var runtimeLocale = this.#lang;
+            var gparameters = {
+                'sitekey': recaptchaConfigData.properties["fd:captcha"].config.siteKey,
+                'size': recaptchaConfigData.properties["fd:captcha"].config.size,
+                'theme': recaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
+                'type': recaptchaConfigData.properties["fd:captcha"].config.type || 'image',
+                'callback': successCallback,
+                'expired-callback': expiredCallback
+            };
 
-        var scr = document.createElement('script');
-        scr.src = url + "?onload=onloadRecaptchaCallback&render=explicit&hl" + runtimeLocale;
-        scr.async = true;
-        element.appendChild(scr);
+            window.onloadRecaptchaCallback = onloadCallbackInternal;
+
+            var runtimeLocale = this.#lang;
+
+            var scr = document.createElement('script');
+            scr.src = url + "?onload=onloadRecaptchaCallback&render=explicit&hl" + runtimeLocale;
+            scr.async = true;
+            element.appendChild(scr);
+        }
+
+        setCaptchaModel = function(response) {
+            this.#model.value = (response);
+        }
     }
-
-    setCaptchaModel = function(response) {
-        this.#model.value = (response);
-    }
-
-
 }

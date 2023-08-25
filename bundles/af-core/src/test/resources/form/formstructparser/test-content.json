@@ -1,32 +1,20 @@
 {
-  "jcr:primaryType": "cq:Page",
-  "jcr:content": {
-    "sling:resourceType": "myTest/components/page",
-    "jcr:title": "Test",
-    "jcr:description": "Test",
-    "jcr:primaryType": "cq:PageContent",
-    "cq:template": "/conf/myTest/settings/wcm/templates/content-page",
-    "formcontainerv2": {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "core/fd/components/form/container/v2/container",
-      "fieldType" : "form",
-      "thankyouPage": "/a/b/c",
-      "thankyouMessage": "message",
-      "clientLibRef" : "abc",
-      "datepicker": {
+  "myTestPage": {
+    "jcr:primaryType": "cq:Page",
+    "jcr:content": {
+      "sling:resourceType": "myTest/components/page",
+      "jcr:title": "Test",
+      "jcr:description": "Test",
+      "jcr:primaryType": "cq:PageContent",
+      "cq:template": "/conf/myTest/settings/wcm/templates/content-page",
+      "formcontainerv2": {
         "jcr:primaryType": "nt:unstructured",
-        "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
-        "name": "abc",
-        "jcr:title": "def",
-        "hideTitle": false,
-        "description": "dummy",
-        "visible": false
-      },
-      "container1": {
-        "jcr:primaryType": "nt:unstructured",
-        "sling:resourceType": "wcm/foundation/components/responsivegrid",
+        "sling:resourceType": "core/fd/components/form/container/v2/container",
+        "fieldType" : "form",
+        "thankyouPage": "/a/b/c",
+        "thankyouMessage": "message",
         "clientLibRef" : "abc",
-        "datepicker1": {
+        "datepicker": {
           "jcr:primaryType": "nt:unstructured",
           "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
           "name": "abc",
@@ -35,26 +23,49 @@
           "description": "dummy",
           "visible": false
         },
-        "container2": {
+        "container1": {
           "jcr:primaryType": "nt:unstructured",
           "sling:resourceType": "wcm/foundation/components/responsivegrid",
-          "text": {
+          "clientLibRef" : "abc",
+          "datepicker1": {
             "jcr:primaryType": "nt:unstructured",
-            "sling:resourceType": "myTest/components/text",
-            "text": "abc"
+            "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+            "name": "abc",
+            "jcr:title": "def",
+            "hideTitle": false,
+            "description": "dummy",
+            "visible": false
+          },
+          "container2": {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": "wcm/foundation/components/responsivegrid",
+            "text": {
+              "jcr:primaryType": "nt:unstructured",
+              "sling:resourceType": "myTest/components/text",
+              "text": "abc"
+            }
           }
-        }
+        },
+        "fragment": {
+          "jcr:primaryType": "nt:unstructured",
+          "jcr:title": "Fragment",
+          "name": "fragment-123",
+          "jcr:lastModified": "Fri Jun 02 2023 12:34:24 GMT+0530",
+          "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
+          "fieldType": "panel",
+          "fragmentPath": "/content/affragment"
+        },
+        "action": "/a/b",
+        "dataUrl": "/c/d"
       },
-      "action": "/a/b",
-      "dataUrl": "/c/d"
-    },
-    "container3": {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType": "wcm/foundation/components/responsivegrid",
-      "text1": {
+      "container3": {
         "jcr:primaryType": "nt:unstructured",
-        "sling:resourceType": "myTest/components/text",
-        "text": "test"
+        "sling:resourceType": "wcm/foundation/components/responsivegrid",
+        "text1": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType": "myTest/components/text",
+          "text": "test"
+        }
       }
     }
   }

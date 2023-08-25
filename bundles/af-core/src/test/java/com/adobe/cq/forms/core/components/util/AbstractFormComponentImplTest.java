@@ -28,6 +28,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -111,7 +112,6 @@ public class AbstractFormComponentImplTest {
         Mockito.when(sitePage.getPath()).thenReturn(PAGE_PATH);
         Mockito.when(sitePage.getPageManager()).thenReturn(pageManager);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute("embeddedAdaptiveForm", AF_PATH);
 
         class TestAbstractComponent extends AbstractComponentImpl {
             public Page getCurrentPageToTest() {
@@ -119,18 +119,32 @@ public class AbstractFormComponentImplTest {
             }
         }
         TestAbstractComponent abstractComponentImpl = new TestAbstractComponent();
-        Utils.setInternalState(abstractComponentImpl, "resource", resource);
         Utils.setInternalState(abstractComponentImpl, "request", request);
-        Utils.setInternalState(abstractComponentImpl, "currentPage", sitePage);
         Method initMethod = Utils.getPrivateMethod(AbstractComponentImpl.class, "init");
         try {
             initMethod.invoke(abstractComponentImpl);
+            assertNull(abstractComponentImpl.getCurrentPageToTest());
+            Utils.setInternalState(abstractComponentImpl, "currentPage", sitePage);
+            initMethod.invoke(abstractComponentImpl);
+            assertEquals(sitePage.getPath(), PAGE_PATH);
+            Utils.setInternalState(abstractComponentImpl, "resource", resource);
+            initMethod.invoke(abstractComponentImpl);
+            assertEquals(sitePage.getPath(), PAGE_PATH);
+            request.setAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH, AF_PATH);
+            initMethod.invoke(abstractComponentImpl);
             Page newCurrentPage = abstractComponentImpl.getCurrentPageToTest();
             assertEquals(afPage.getPath(), newCurrentPage.getPath(), "Page should be set to AF page instead of sites page.");
+
+            // If requested page is forms
+            Page page2 = Mockito.mock(Page.class);
+            Mockito.when(page2.getPath()).thenReturn("/content/forms/af/testform");
+            Utils.setInternalState(abstractComponentImpl, "currentPage", page2);
+            initMethod.invoke(abstractComponentImpl);
+            assertEquals(page2.getPath(), "/content/forms/af/testform");
+
         } catch (Exception e) {
             fail("Init method should have invoked");
         }
-
     }
 
     @Test

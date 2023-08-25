@@ -231,4 +231,17 @@ describe('Page/Form Authoring', function () {
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
         });
+
+        context("Render Forms in Disabled mode", function () {
+            const pagePath = "/content/forms/af/core-components-it/blank.html";
+
+            beforeEach(function () {
+                cy.previewForm(pagePath);
+            });
+
+            it('check wcmmode cookie deletion when disbaled mode', function () {
+                cy.getCookie('wcmmode').should('be.null');
+            });
+
+        });
 });
