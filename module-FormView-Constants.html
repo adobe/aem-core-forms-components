@@ -54,7 +54,7 @@
 			<li class="dropdown">
 				<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-FormView-Constants.html#event:FORM_CONTAINER_INITIALISED">FormView~Constants#event:FORM_CONTAINER_INITIALISED</a></li><li><a href="module-FormView-Constants.html#event:PANEL_INSTANCE_ADDED">FormView~Constants#event:PANEL_INSTANCE_ADDED</a></li><li><a href="module-FormView-Constants.html#event:PANEL_INSTANCE_REMOVED">FormView~Constants#event:PANEL_INSTANCE_REMOVED</a></li><li><a href="module-FormView-Constants.html#event:FORM_LANGUAGE_INITIALIZED">FormView~Constants#event:FORM_LANGUAGE_INITIALIZED</a></li><li><a href="module-FormView-Constants.html#event:GUIDE_BRIDGE_INITIALIZE_START">FormView~Constants#event:GUIDE_BRIDGE_INITIALIZE_START</a></li>
+					<li><a href="module-FormView-Constants.html#event:FORM_CONTAINER_INITIALISED">FormView~Constants#event:FORM_CONTAINER_INITIALISED</a></li><li><a href="module-FormView-Constants.html#event:PANEL_INSTANCE_ADDED">FormView~Constants#event:PANEL_INSTANCE_ADDED</a></li><li><a href="module-FormView-Constants.html#event:PANEL_INSTANCE_REMOVED">FormView~Constants#event:PANEL_INSTANCE_REMOVED</a></li><li><a href="module-FormView-Constants.html#event:FORM_LANGUAGE_INITIALIZED">FormView~Constants#event:FORM_LANGUAGE_INITIALIZED</a></li><li><a href="module-FormView-Constants.html#event:ELEMENT_FOCUS_CHANGED">FormView~Constants#event:ELEMENT_FOCUS_CHANGED</a></li><li><a href="module-FormView-Constants.html#event:ELEMENT_HELP_SHOWN">FormView~Constants#event:ELEMENT_HELP_SHOWN</a></li><li><a href="module-FormView-Constants.html#event:ELEMENT_ERROR_SHOWN">FormView~Constants#event:ELEMENT_ERROR_SHOWN</a></li><li><a href="module-FormView-Constants.html#event:ELEMENT_VALUE_CHANGED">FormView~Constants#event:ELEMENT_VALUE_CHANGED</a></li><li><a href="module-FormView-Constants.html#event:GUIDE_BRIDGE_INITIALIZE_START">FormView~Constants#event:GUIDE_BRIDGE_INITIALIZE_START</a></li>
 				</ul>
 			</li>
 			
@@ -2003,6 +2003,1437 @@ Value true for active, value false for inactive.</p>
      var locale = event.detail;
      // Handle the event
 });</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:ELEMENT_FOCUS_CHANGED">ELEMENT_FOCUS_CHANGED</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Event triggered when focus is changed on a form element</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event object.</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>detail</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instance of form element which is in focus</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the current field in focus</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The title of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>panelName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the panel (ie parent of the form element).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Sample usage:
+     // The following code snippet demonstrates how to use the &quot;ELEMENT_FOCUS_CHANGED&quot; event.
+     // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     const onFocusChange = (event) =&gt; {
+         console.log(event.detail.fieldId) // id of the field in focus
+         console.log(event.detail.formTitle)
+     };
+     if(window.guideBridge !== undefined){
+             bridge = window.guideBridge;
+             bridge.on(&quot;elementFocusChanged&quot;, onFocusChange);
+     } else {
+          window.addEventListener(&quot;bridgeInitializeStart&quot;, (event)=&gt;{
+              bridge = event.detail.guideBridge;
+              bridge.on(&quot;elementFocusChanged&quot;, onFocusChange);
+          });
+     }</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:ELEMENT_HELP_SHOWN">ELEMENT_HELP_SHOWN</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Event triggered when help is shown on a form element</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event object.</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>detail</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instance of form element on which help was shown.</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the field on which the help was shown.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The title of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>panelName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the panel (ie parent of the form element).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Sample usage:
+     // The following code snippet demonstrates how to use the &quot;ELEMENT_HELP_SHOWN&quot; event.
+     // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     const onHelpShown = (event) =&gt; {
+         console.log(event.detail.fieldId) // id of the field on which help was shown
+         console.log(event.detail.formTitle)
+     };
+     if(window.guideBridge !== undefined){
+             bridge = window.guideBridge;
+             bridge.on(&quot;elementHelpShown&quot;, onHelpShown);
+     } else {
+          window.addEventListener(&quot;bridgeInitializeStart&quot;, (event)=&gt;{
+              bridge = event.detail.guideBridge;
+              bridge.on(&quot;elementHelpShown&quot;, onHelpShown);
+          });
+     }</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:ELEMENT_ERROR_SHOWN">ELEMENT_ERROR_SHOWN</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Event triggered when error is shown on a form element.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event object.</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>detail</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instance of form element on which error was shown</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the field on which the error was shown.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The title of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>panelName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the panel (ie parent of the form element).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Sample usage:
+     // The following code snippet demonstrates how to use the &quot;ELEMENT_ERROR_SHOWN&quot; event.
+     // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     const onErrorShown = (event) =&gt; {
+         console.log(event.detail.fieldId) // id of the field on which error was shown
+         console.log(event.detail.formTitle)
+     };
+     if (window.guideBridge !== undefined){
+             bridge = window.guideBridge;
+             bridge.on(&quot;elementErrorShown&quot;, onErrorShown);
+     } else {
+          window.addEventListener(&quot;bridgeInitializeStart&quot;, (event)=&gt;{
+              bridge = event.detail.guideBridge;
+              bridge.on(&quot;elementErrorShown&quot;, onErrorShown);
+          });
+     }</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="event:ELEMENT_VALUE_CHANGED">ELEMENT_VALUE_CHANGED</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Event triggered when value is change of a form element</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The event object.</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>detail</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instance of form element on which error was shown</p>
+                <h6>Properties</h6>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the field on which the value has changed</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The ID of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>panelName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The name of the panel (ie parent of the form element).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formTitle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The title of the form.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prevText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Previous value of the form element</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Current value of the form element</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Sample usage:
+     // The following code snippet demonstrates how to use the &quot;ELEMENT_VALUE_CHANGED&quot; event.
+     const onValueChange = (event) =&gt; {
+         console.log(event.detail.fieldId) // id of the form element on which value has changed
+         console.log(event.detail.formTitle)
+     };
+     if (window.guideBridge !== undefined){
+             bridge = window.guideBridge;
+             bridge.on(&quot;elementValueChanged&quot;, onValueChange);
+     } else {
+          window.addEventListener(&quot;bridgeInitializeStart&quot;, (event)=&gt;{
+              bridge = event.detail.guideBridge;
+              bridge.on(&quot;elementValueChanged&quot;, onValueChange);
+          });
+     }</pre>
 
 
     
