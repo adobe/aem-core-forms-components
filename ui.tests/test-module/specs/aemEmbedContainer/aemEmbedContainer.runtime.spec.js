@@ -41,7 +41,7 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for aemembedcontainer presence inside iframe", () => {
             getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
-            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 6);
+            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 7);
         })
 
         it("test for form presence in nonIframe mode", () => {

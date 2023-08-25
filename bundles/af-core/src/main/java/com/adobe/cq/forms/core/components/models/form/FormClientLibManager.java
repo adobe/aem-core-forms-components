@@ -18,12 +18,14 @@ package com.adobe.cq.forms.core.components.models.form;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Defines the {@code FormClientLibManager} Sling Model to perform operation related to client libraries.
  *
  * @since com.adobe.cq.forms.core.components.models.form 4.5.0
  */
+@ProviderType
 public interface FormClientLibManager {
 
     /**

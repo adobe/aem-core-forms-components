@@ -38,9 +38,7 @@
          }
          //TODO: to support writing in different locales \d should be replaced by [0-9] for different locales
          #matchArray ={
-             "integer":"^[+-]?{digits}*$",
-             "decimal":"^[+-]?{digits}{leading}({decimal}{digits}{fraction})?$",
-             "float":"^[+-]?{digits}*({decimal}{digits}*)?$"
+             "integer":"^[+-]?{digits}*$"
          }
          #regex=null
          #processedValue=null
@@ -62,20 +60,20 @@
              this.#model = model;
              // initialize options for backward compatibility
              this.#options = Object.assign({}, this.#defaultOptions, this.#model._jsonModel);
-             let matchStr =  this.#matchArray[this.#options.dataType];
+             let matchStr =  this.#matchArray[this.#options.type];
              if(matchStr) {
                  let ld = this.#options.leadDigits,
                      fd = this.#options.fracDigits,
                      ldstr = ld && ld !== -1 ? "{0,"+ld+"}"
                          : "*",
                      fdstr = fd && fd !== -1 ? "{0,"+fd+"}"
-                         : "*",
-                     matchStr =  matchStr.replace("{leading}",ldstr)
-                     .replace("{fraction}",fdstr),
-                     localeStr = matchStr.replace(/{digits}/g,this.#getDigits())
-                     .replace("{decimal}",this.#escape(this.#options.decimal)),
+                         : "*";
+                 matchStr =  matchStr.replace("{leading}",ldstr)
+                     .replace("{fraction}",fdstr);
+                 let localeStr = matchStr.replace(/{digits}/g,this.#getDigits())
+                         .replace("{decimal}",this.#escape(this.#options.decimal)),
                      engStr = matchStr.replace(/{digits}/g,"[0-9]")
-                     .replace("{decimal}","\\.")
+                         .replace("{decimal}","\\.")
                  this.#processedValue = !(this.#getDigits() === "[0123456789]" && this.#options.decimal === ".")
                  this.#regex = new RegExp(localeStr, "g");
                  this.#engRegex = new RegExp(engStr, "g");
