@@ -189,6 +189,8 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
             cy.get(".dp-clear").click();
         });
+
+        cy.get(`#${datePicker7}`).find("input").should("have.value", "");
     });
 
     it("Test order of the days", () => {
