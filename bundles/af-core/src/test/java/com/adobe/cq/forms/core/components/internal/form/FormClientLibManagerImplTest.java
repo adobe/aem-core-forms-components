@@ -58,6 +58,8 @@ public class FormClientLibManagerImplTest {
         formClientLibManager = new FormClientLibManagerImpl();
         clientLibs = formClientLibManager.getClientLibRefList();
         Assertions.assertEquals(0, clientLibs.size());
+        formClientLibManager.addClientLibRef("abc");
+        Assertions.assertEquals(0, clientLibs.size());
     }
 
     private FormClientLibManager getFormClientLibManagerUnderTest() {
