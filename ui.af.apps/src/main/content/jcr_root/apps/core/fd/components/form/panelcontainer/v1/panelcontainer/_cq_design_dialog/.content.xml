@@ -20,7 +20,8 @@
     jcr:title="Container"
     sling:resourceType="cq/gui/components/authoring/dialog"
     helpPath="https://www.adobe.com/go/aem_af_cmp_panelcontainer_v1"
-    extraClientlibs="[core.wcm.components.container.v1.editor]">
+    extraClientlibs="[core.wcm.components.container.v1.editor]"
+    trackingFeature="core-components:design-dialog:adaptiveform-panelcontainer:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container"

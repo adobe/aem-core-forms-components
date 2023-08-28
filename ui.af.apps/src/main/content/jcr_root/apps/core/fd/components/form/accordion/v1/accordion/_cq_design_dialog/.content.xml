@@ -20,7 +20,8 @@
           jcr:title="Accordion"
           sling:resourceType="cq/gui/components/authoring/dialog"
           extraClientlibs="[core.wcm.components.accordion.v1.editor]"
-          helpPath="https://www.adobe.com/go/aem_cmp_accordion_v1">
+          helpPath="https://www.adobe.com/go/aem_cmp_accordion_v1"
+          trackingFeature="core-components:design-dialog:adaptiveform-accordion:v1">
     <content
             jcr:primaryType="nt:unstructured"
             granite:class="cmp-accordion__editor">

@@ -20,7 +20,8 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Field"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.base.v1.design]">
+    extraClientlibs="[core.forms.components.base.v1.design]"
+    trackingFeature="core-components:design-dialog:adaptiveform-base:v1">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
