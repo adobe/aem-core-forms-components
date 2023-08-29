@@ -290,7 +290,14 @@
             var activeTabElement = this.#getCachedTabs()[activeIndex];
             var activeChildId = activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
             var activeChildView = this.getChild(activeChildId);
-            var validationErrorList = activeChildView.getModel().validate();
+            var activeChildModel;
+            if(activeChildView) {
+                activeChildModel = activeChildView.getModel();
+            }
+            else {
+                activeChildModel = this.getModel().items.find(child => child.id === activeChildId);
+            }
+            var validationErrorList = activeChildModel.validate();
             if (validationErrorList === undefined || validationErrorList.length == 0) {
                 var tabs = this.#getCachedTabs();
                 var nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
