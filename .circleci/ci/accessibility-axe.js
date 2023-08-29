@@ -16,49 +16,38 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
-const AxeBuilder = require('@axe-core/webdriverjs');
-const WebDriver = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
+const AxePuppeteer = require('@axe-core/puppeteer');
 const { createHtmlReport } = require('axe-html-reporter');
 const accessibilityConfig = require("./accessibilityConfig.json")
 
+const { launch } = require('puppeteer');
 
 const calculateAccessibility = async () => {
 
-    const options = new chrome.Options();
-    const driver = new WebDriver.Builder().forBrowser('chrome').setChromeOptions(options).build();
     const ACCESSIBILITY_COLLATERAL_URL = "http://localhost:4502/content/dam/formsanddocuments/core-components-it/samples/accessibility/jcr:content?wcmmode=disabled"
     const aemUsername = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_USERNAME -q -DforceStdout', true);
     const aemPassword = ci.sh('mvn --file ui.tests help:evaluate -Dexpression=AEM_AUTHOR_PASSWORD -q -DforceStdout', true);
 
 
     try {
-        await driver.get(ACCESSIBILITY_COLLATERAL_URL);
+        const browser = await launch();
+        const page = await browser.newPage();
+        await page.goto(ACCESSIBILITY_COLLATERAL_URL);
+        await page.waitForSelector('#username');
+        await page.type('#username', aemUsername);
+        await page.type('#password', aemPassword);
+        await page.click('#submit-button');
+        await page.waitForNavigation();
+        const axe = await new AxePuppeteer(page);
+        const results = await axe.analyze();
 
-        await driver.wait(async () => {
-          const readyState = await driver.executeScript('return document.readyState');
-          return readyState === 'complete';
-        });
-//        await driver.findElement(WebDriver.By.xpath("//button[@aria-expanded='false']/coral-accordion-item-label[contains(text(),'Sign in locally')]")).click();
-        const usernameInput = await driver.findElement(WebDriver.By.id('username'));
-        await usernameInput.sendKeys(aemUsername);
-        const passwordInput = await driver.findElement(WebDriver.By.id('password'));
-        await passwordInput.sendKeys(aemPassword);
-        await driver.findElement(WebDriver.By.id('submit-button')).click();
-        await driver.wait(async () => {
-          const readyState = await driver.executeScript('return document.readyState');
-          return readyState === 'complete';
-        });
-        await driver.getPageSource();
-
-        const axeBuilder = new AxeBuilder(driver);
-        const results = await axeBuilder.analyze();
         const reportHTML = createHtmlReport({
-          results: results,
-          options: {
-            projectKey: "aem-core-forms-components",
-          },
+              results: results,
+              options: {
+                projectKey: "aem-core-forms-components",
+              }
         });
+
         fs.writeFileSync('accessibility-report.html', reportHTML);
 
         if (results.violations.length > 0) {

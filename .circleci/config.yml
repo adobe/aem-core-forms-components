@@ -41,11 +41,8 @@ common:
           name: Install lighthouse
           command: npm install lighthouse
       - run:
-          name: Install Web Driver
-          command: npm install selenium-webdriver
-      - run:
-          name: Install AXE Core/Webdriver
-          command: npm install @axe-core/webdriverjs
+          name: Install AXE Core/puppeteer
+          command: npm install @axe-core/puppeteer
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
