@@ -47,7 +47,7 @@ window.guideBridge = new GuideBridge();
  * @property {string} RemoveItem - The action for removing an item.
  */
 const Actions = {
-    Click, Change, Submit, Blur, AddItem, RemoveItem
+    Click, Change, Submit, Blur, AddItem, RemoveItem, CustomEvent
 }
 
 /**

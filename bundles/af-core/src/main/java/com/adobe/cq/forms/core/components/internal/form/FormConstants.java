@@ -104,7 +104,7 @@ public final class FormConstants {
     public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 
     /** The resource type for terms and conditions v1 */
-    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX + "actions/termsandconditions/v1/termsandconditions";
+    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX + "termsandconditions/v1/termsandconditions";
 
     /** The resource type for fragment v1 */
     public static final String RT_FD_FORM_FRAGMENT_V1 = RT_FD_FORM_PREFIX + "fragment/v1/fragment";

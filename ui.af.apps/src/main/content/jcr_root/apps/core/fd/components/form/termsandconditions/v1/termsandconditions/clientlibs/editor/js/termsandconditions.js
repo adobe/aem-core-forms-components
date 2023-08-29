@@ -17,6 +17,41 @@
 (function($) {
     "use strict";
 
-    console.log('Terms and Conditions Edit Dialog Loaded');
+    var Utils = window.CQ.FormsCoreComponents.Utils.v1,
+        EDIT_DIALOG = ".cmp-adaptiveform-termsandconditions__editdialog";
+
+    function handleToggleOfApprovalOptions(dialog) {
+        var approvalOption = dialog.find('coral-checkbox[name="./showApprovalOption"]')[0];
+        var showAsPopupWidget = dialog.find('coral-checkbox[name="./showAsPopup"]')[0];
+        var showAsPopup = dialog.find('coral-checkbox[name="./showAsPopup"]')[0]['checked'];
+        function toggleApprovalOption(show) {
+            if (show) {
+                approvalOption.readOnly=false;
+                approvalOption.style.opacity = "1";
+            } else {
+                approvalOption.readOnly=true;
+                approvalOption.style.opacity = "0.5"
+            }
+        }
+        if (showAsPopup) {
+            if (!approvalOption.checked) {
+                approvalOption['checked']=true;
+            }
+            toggleApprovalOption(false);
+        }
+        showAsPopupWidget.addEventListener('click', function() {
+            showAsPopup = !showAsPopup;
+            if (showAsPopup) {
+                if (!approvalOption.checked) {
+                    approvalOption.click();
+                }
+                toggleApprovalOption(false);
+            } else {
+                toggleApprovalOption(true);
+            }
+        })
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleToggleOfApprovalOptions);
 
 })(jQuery);

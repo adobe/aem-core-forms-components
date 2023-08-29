@@ -15,4 +15,4 @@
 ###############################################################################
 
 #base=css
-panelcontainerview.css
+termsandconditions.css
