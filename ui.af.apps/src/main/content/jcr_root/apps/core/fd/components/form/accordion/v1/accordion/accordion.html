@@ -29,10 +29,12 @@
      data-cmp-single-expansion="true"
      data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
 
-    <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}"
-         data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
-         data-sly-unwrap></div>
+    <div class="cmp-accordion__label-container">
+      <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}"
+          data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
+          data-sly-unwrap></div>
+    </div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
