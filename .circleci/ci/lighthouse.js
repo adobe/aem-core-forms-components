@@ -42,17 +42,17 @@ const checkLightHouse = async () => {
 
     const desktopResult = await computeMedianScores(lighthouseConfig.urls[0], options,  LHDesktopConfig) // Running lighthouse for desktop
     console.log('Lighthouse Report for desktop generated', desktopResult.lhr.finalDisplayedUrl);
-    console.log(getCommentText(desktopResult.lhr.categories, 'desktop'))
+    console.log(getCommentText(desktopResult.lhr.categories, 'desktop',  desktopResult.lhr.audits))
     const desktopReportHtml = desktopResult.report;
 
     const mobileResult = await computeMedianScores(lighthouseConfig.urls[0], options) // by default lighthouse scores are computed for mobile device
     console.log('Lighthouse Report for desktop generated', mobileResult.lhr.finalDisplayedUrl);
-    console.log(getCommentText(mobileResult.lhr.categories, 'mobile'))
+    console.log(getCommentText(mobileResult.lhr.categories, 'mobile',  mobileResult.lhr.audits))
     const mobileReportHtml = mobileResult.report;
 
     if(process.env.AEM === "addon"){ // posting lighthouse scores only in case of AEM is addon
-        await ci.postCommentToGitHubFromCI(getCommentText(desktopResult.lhr.categories, 'desktop'))
-        await ci.postCommentToGitHubFromCI(getCommentText(mobileResult.lhr.categories, 'mobile'))
+        await ci.postCommentToGitHubFromCI(getCommentText(desktopResult.lhr.categories, 'desktop',  desktopResult.lhr.audits))
+        await ci.postCommentToGitHubFromCI(getCommentText(mobileResult.lhr.categories, 'mobile',  mobileResult.lhr.audits))
     }
     ci.sh('mkdir artifacts');
     ci.dir("artifacts", () => {
@@ -92,8 +92,8 @@ const computeMedianScores = async (url, options, config) => {
     return result;
 }
 
-const getCommentText = (resultCategories, preset) => {
-  const commentText = `### Lighthouse scores (${preset})\n\n|        | Performance | Accessibility | Best-Practices | SEO |\n| ------ | ----------- | ------------- | -------------- | --- |\n| Scores |     ${resultCategories.performance.score*100}      |       ${resultCategories.accessibility.score*100}       |       ${resultCategories['best-practices'].score*100}       |  ${resultCategories.seo.score*100} |`
+const getCommentText = (resultCategories, preset, auditScores) => {
+  const commentText = `### Lighthouse scores (${preset})\n\n|        | Performance | Accessibility | Best-Practices | SEO | INP |\n| ------ | ----------- | ------------- | -------------- | --- | --- |\n| Scores |     ${resultCategories.performance.score*100}      |       ${resultCategories.accessibility.score*100}       |       ${resultCategories['best-practices'].score*100}       |  ${resultCategories.seo.score*100} | |  ${auditScores['interaction-to-next-paint'].score*100} |`
   return commentText
 }
 
