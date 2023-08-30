@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 (function (window, author, Coral, channel) {
+    "use strict";
 
     /**
      * Send a request to replace an existing component
