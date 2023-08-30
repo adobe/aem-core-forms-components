@@ -81,8 +81,12 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             }
             logger.info("AF Submission successful using custom submit service for: {}", guideContainerPath);
             result.put(GuideConstants.FORM_SUBMISSION_COMPLETE, Boolean.TRUE);
-            // adding id here so that this available in redirect parameters in final thank you page
             result.put(DataManager.UNIQUE_ID, uniqueID);
+            // adding id here so that this available in redirect parameters in final thank you page
+            Map<String, Object> redirectParamMap = new HashMap<String, Object>() {{
+                put(DataManager.UNIQUE_ID, uniqueID);
+            }};
+            result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
             logger.error("Error while using the AF Submit service", ex);
 
