@@ -24,6 +24,7 @@ console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
+const isLatestAddon = AEM === 'addon-latest';
 
 try {
     ci.stage("Integration Tests");
@@ -68,9 +69,9 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'], isLatestAddon ? true : false)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'], isLatestAddon ? true : false)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'], isLatestAddon ? true : false)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
