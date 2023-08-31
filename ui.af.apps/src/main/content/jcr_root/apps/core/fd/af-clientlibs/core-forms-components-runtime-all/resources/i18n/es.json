@@ -19,5 +19,23 @@
   "validationExpression"        :   "Please enter a valid value.",
   "maxFileSize"                 :   "File too large. Reduce size and try again.",
   "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field"
+  "defaultError"                :   "There is an error in the field",
+  "clearText"                   :   "Borrar",
+  "calendarSymbols" : {
+    "monthNames" : ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
+      "octubre", "noviembre", "diciembre"],
+    "abbrmonthNames" : ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+    "dayNames" : ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+    "abbrdayNames" : ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+    "meridiemNames" : ["AM", "PM"],
+    "eraNames" : ["a.C.", "d.C."],
+    "day": "day",
+    "days": "days",
+    "month": "month",
+    "months": "months",
+    "year": "year",
+    "years": "years",
+    "more": "more",
+    "less": "less"
+  }
 }
