@@ -62,7 +62,7 @@
                                               jcr:primaryType="nt:unstructured"
                                               sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                               name="./wrapData"
-                                              text="Wrap data in object"
+                                              text="Group child components' data on form submission"
                                               uncheckedValue="false"
                                               value="true"/>
                                             <wrapData-typehint
