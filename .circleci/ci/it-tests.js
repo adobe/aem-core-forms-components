@@ -71,7 +71,7 @@ try {
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'], isLatestAddon ? true : false)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'], isLatestAddon ? true : false)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'], isLatestAddon ? true : false)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
