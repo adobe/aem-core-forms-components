@@ -112,6 +112,7 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     color: #666666;
+    min-width:40px;
 }
 
 .datetimepicker .view ul.header li {

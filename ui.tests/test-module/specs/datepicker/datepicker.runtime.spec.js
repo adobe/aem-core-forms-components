@@ -189,7 +189,7 @@ describe("Form Runtime with Date Picker", () => {
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
         cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
-            cy.get(".header").invoke("text").should("eq", 'SMTWTFS');
+            cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
 
