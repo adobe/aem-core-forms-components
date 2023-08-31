@@ -130,7 +130,7 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetThemeClientLibRef() {
-        String path = CONTENT_ROOT;
+        String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals("def", formStructureParser.getThemeClientLibRefFromFormContainer());
 
