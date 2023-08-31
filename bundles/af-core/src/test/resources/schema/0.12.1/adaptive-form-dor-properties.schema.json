@@ -1,0 +1,91 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-dor-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "dorType": {
+      "title": "DOR Type",
+      "description": "Describes the type of Document of Record (DOR)",
+      "type": "string",
+      "enum": [
+        "generate",
+        "select"
+      ],
+      "examples": [
+        {
+          "dorType": "generate"
+        }
+      ]
+    },
+    "dorTemplateRef": {
+      "title": "DOR Template Reference",
+      "description": "Reference to the template for the Document of Record (DOR).",
+      "type": "string",
+      "examples": [
+        {
+          "dorTemplateRef": "/content/dam/formsanddocuments/acro form conversion.pdf"
+        }
+      ]
+    },
+    "dorColspan": {
+      "title": "DOR Colspan",
+      "description": "Specifies the colspan attribute for the Document of Record (DOR). This attribute controls the number of columns a form element should span.",
+      "type": "string"
+    },
+    "breakAfterText": {
+      "title": "Break After Text",
+      "description": "Indicates whether a break should occur after the text content of the Document of Record (DOR). This affects the layout and presentation of the DOR.",
+      "type": "string"
+    },
+    "breakBeforeText": {
+      "title": "Break Before Text",
+      "description": "Indicates whether a break should occur before the text content of the Document of Record (DOR). This influences the layout and presentation of the DOR.",
+      "type": "string"
+    },
+    "overflowText": {
+      "title": "Overflow Text",
+      "description": "Specifies how overflow should be handled for the text content of the Document of Record (DOR). This property controls how text exceeding the available space is displayed.",
+      "type": "string"
+    },
+    "dorLayoutType": {
+      "title": "DOR Layout Type",
+      "description": "Defines the layout type for the Document of Record (DOR). This property determines how the DOR elements are arranged and presented.",
+      "type": "string"
+    },
+    "dorNumCols": {
+      "title": "DOR Number of Columns",
+      "description": "Specifies the number of columns for the layout of the Document of Record (DOR). This property determines how the DOR elements are arranged and presented in columns.",
+      "type": "string"
+    },
+    "dorBindRef": {
+      "title": "DOR Binding Reference",
+      "description": "Specifies the binding reference for the Document of Record (DOR). This property determines how the DOR elements are bound to data.",
+      "type": "string"
+    },
+    "dorTemplateType": {
+      "title": "DOR Template Type",
+      "description": "Type of the template for the Document of Record (DOR).",
+      "enum": [
+        "acroform",
+        "xfa"
+      ],
+      "type": "string"
+    },
+    "dorExclusion": {
+      "title": "DOR Exclusion.",
+      "description": "Exclusion flag for the Document of Record (DOR).",
+      "type": "boolean"
+    },
+    "dorExcludeTitle": {
+      "title": "Exclude Title in DOR.",
+      "description": "Flag to exclude title in the Document of Record (DOR).",
+      "type": "boolean"
+    },
+    "dorExcludeDescription": {
+      "title": "Exclude Description in DOR.",
+      "description": "Flag to exclude description in the Document of Record (DOR).",
+      "type": "boolean"
+    }
+  }
+}
