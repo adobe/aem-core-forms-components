@@ -326,7 +326,7 @@
                                         <argument>chrome</argument>
                                         <argument>--headless</argument>
                                         <argument>--reporter</argument>
-                                        <argument>mocha-multi-reporters</argument>
+                                        <argument>cypress-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
                                         <argument>configFile=cypress.json</argument>
                                         <argument>--env</argument>
