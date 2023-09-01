@@ -14,6 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 (function (window, author, Coral, channel) {
+    "use strict";
 
     /**
      * Send a request to replace an existing component
@@ -54,7 +55,7 @@
                 comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
 
             // Delete properties that are not preserved
-            for (p in comData) {
+            for (let p in comData) {
                 if ((!Array.isArray(comData[p]) && typeof comData[p] === 'object') || preservedProperties.includes(p)) {
                     delete comData[p];
                 }
