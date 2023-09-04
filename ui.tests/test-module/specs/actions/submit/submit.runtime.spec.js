@@ -103,15 +103,16 @@ describe("Form with Submit Button", () => {
         });
     })
 
-
-    it("Custom Submit Action Localisation Test", () => {
-        cy.previewForm(customSubmitLocalisationPagePath);
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
-            cy.get('body')
-                .find('div.tyMessage')
-                .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
-        });
-    })
+    if (cy.af.isLatestAddon()) {
+        it("Custom Submit Action Localisation Test", () => {
+            cy.previewForm(customSubmitLocalisationPagePath);
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
+                cy.get('body')
+                    .find('div.tyMessage')
+                    .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
+            });
+        })
+    }
 
     it("Submit Action test without passing any custom submit event", () => {
         cy.previewForm(submitSuccessRulePagePath).then(p => {
