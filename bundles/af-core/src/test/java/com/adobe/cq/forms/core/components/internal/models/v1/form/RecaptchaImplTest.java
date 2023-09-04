@@ -119,10 +119,6 @@ public class RecaptchaImplTest {
 
     @Test
     void testJSONExport() throws Exception {
-        // Check if cloudConfigurationProvider is null
-        if (cloudConfigurationProvider == null) {
-            throw new NullPointerException("cloudConfigurationProvider is null");
-        }
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
     }

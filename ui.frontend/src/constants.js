@@ -84,6 +84,129 @@ export const Constants = {
     FORM_LANGUAGE_INITIALIZED: "AF_LanguageInitialised",
 
     /**
+     * Event triggered when focus is changed on a form element
+     * @event module:FormView~Constants#ELEMENT_FOCUS_CHANGED
+     * @property {object} event - The event object.
+     * @property {object} event.detail - Instance of form element which is in focus
+     * @property {string} event.detail.fieldId - The ID of the current field in focus
+     * @property {string} event.detail.formTitle - The title of the form.
+     * @property {string} event.detail.formId - The ID of the form.
+     * @property {string} event.detail.fieldName - The name of the form.
+     * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @example
+     *      // Sample usage:
+     *      // The following code snippet demonstrates how to use the "ELEMENT_FOCUS_CHANGED" event.
+     *      // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     *      const onFocusChange = (event) => {
+     *          console.log(event.detail.fieldId) // id of the field in focus
+     *          console.log(event.detail.formTitle)
+     *      };
+     *      if(window.guideBridge !== undefined){
+     *              bridge = window.guideBridge;
+     *              bridge.on("elementFocusChanged", onFocusChange);
+     *      } else {
+     *           window.addEventListener("bridgeInitializeStart", (event)=>{
+     *               bridge = event.detail.guideBridge;
+     *               bridge.on("elementFocusChanged", onFocusChange);
+     *           });
+     *      }
+     */
+    ELEMENT_FOCUS_CHANGED : "elementFocusChanged",
+
+
+    /**
+     * Event triggered when help is shown on a form element
+     * @event module:FormView~Constants#ELEMENT_HELP_SHOWN
+     * @property {object} event - The event object.
+     * @property {object} event.detail - Instance of form element on which help was shown.
+     * @property {string} event.detail.fieldId - The ID of the field on which the help was shown.
+     * @property {string} event.detail.formTitle - The title of the form.
+     * @property {string} event.detail.formId - The ID of the form.
+     * @property {string} event.detail.fieldName - The name of the form.
+     * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @example
+     *      // Sample usage:
+     *      // The following code snippet demonstrates how to use the "ELEMENT_HELP_SHOWN" event.
+     *      // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     *      const onHelpShown = (event) => {
+     *          console.log(event.detail.fieldId) // id of the field on which help was shown
+     *          console.log(event.detail.formTitle)
+     *      };
+     *      if(window.guideBridge !== undefined){
+     *              bridge = window.guideBridge;
+     *              bridge.on("elementHelpShown", onHelpShown);
+     *      } else {
+     *           window.addEventListener("bridgeInitializeStart", (event)=>{
+     *               bridge = event.detail.guideBridge;
+     *               bridge.on("elementHelpShown", onHelpShown);
+     *           });
+     *      }
+     */
+    ELEMENT_HELP_SHOWN : "elementHelpShown",
+
+
+    /**
+     * Event triggered when error is shown on a form element.
+     * @event module:FormView~Constants#ELEMENT_ERROR_SHOWN
+     * @property {object} event - The event object.
+     * @property {object} event.detail - Instance of form element on which error was shown
+     * @property {string} event.detail.fieldId - The ID of the field on which the error was shown.
+     * @property {string} event.detail.formTitle - The title of the form.
+     * @property {string} event.detail.formId - The ID of the form.
+     * @property {string} event.detail.fieldName - The name of the form.
+     * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @example
+     *      // Sample usage:
+     *      // The following code snippet demonstrates how to use the "ELEMENT_ERROR_SHOWN" event.
+     *      // For a complete example, refer to: https://github.com/adobe/aem-core-forms-components/blob/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/af-commons/v1/datalayer/datalayer.js
+     *      const onErrorShown = (event) => {
+     *          console.log(event.detail.fieldId) // id of the field on which error was shown
+     *          console.log(event.detail.formTitle)
+     *      };
+     *      if (window.guideBridge !== undefined){
+     *              bridge = window.guideBridge;
+     *              bridge.on("elementErrorShown", onErrorShown);
+     *      } else {
+     *           window.addEventListener("bridgeInitializeStart", (event)=>{
+     *               bridge = event.detail.guideBridge;
+     *               bridge.on("elementErrorShown", onErrorShown);
+     *           });
+     *      }
+     */
+    ELEMENT_ERROR_SHOWN : "elementErrorShown",
+
+    /**
+     * Event triggered when value is change of a form element
+     * @event module:FormView~Constants#ELEMENT_VALUE_CHANGED
+     * @property {object} event - The event object.
+     * @property {object} event.detail - Instance of form element on which error was shown
+     * @property {string} event.detail.fieldId - The ID of the field on which the value has changed
+     * @property {string} event.detail.formId - The ID of the form.
+     * @property {string} event.detail.fieldName - The name of the form.
+     * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @property {string} event.detail.formTitle - The title of the form.
+     * @property {string} event.detail.prevText - Previous value of the form element
+     * @property {string} event.detail.newText - Current value of the form element
+     * @example
+     *      // Sample usage:
+     *      // The following code snippet demonstrates how to use the "ELEMENT_VALUE_CHANGED" event.
+     *      const onValueChange = (event) => {
+     *          console.log(event.detail.fieldId) // id of the form element on which value has changed
+     *          console.log(event.detail.formTitle)
+     *      };
+     *      if (window.guideBridge !== undefined){
+     *              bridge = window.guideBridge;
+     *              bridge.on("elementValueChanged", onValueChange);
+     *      } else {
+     *           window.addEventListener("bridgeInitializeStart", (event)=>{
+     *               bridge = event.detail.guideBridge;
+     *               bridge.on("elementValueChanged", onValueChange);
+     *           });
+     *      }
+     */
+    ELEMENT_VALUE_CHANGED : "elementValueChanged",
+
+    /**
      * Data attribute to store the form container path. In HTML, it will be namespaced as data-{NS}-{ComponentClass}-adaptiveformcontainerPath.
      * @type {string}
      */

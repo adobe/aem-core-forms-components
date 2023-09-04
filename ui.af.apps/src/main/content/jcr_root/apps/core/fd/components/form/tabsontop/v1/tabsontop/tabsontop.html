@@ -57,7 +57,7 @@
       tabindex="0"
       class="cmp-tabs__tabpanel${item.name == tabs.activeItem ? ' cmp-tabs__tabpanel--active' : ''}"
       data-cmp-hook-adaptiveFormTabs="tabpanel"></div>
- <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+ <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
       data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
 </div>
 <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">

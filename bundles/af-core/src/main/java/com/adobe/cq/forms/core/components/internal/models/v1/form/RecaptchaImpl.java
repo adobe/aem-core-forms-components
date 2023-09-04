@@ -86,7 +86,6 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return cloudServicePath;
     }
 
-    // @Override
     @JsonIgnore
     public String getSize() {
         return size;
@@ -104,7 +103,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null;
         resource = resourceResolver.getResource(this.getPath());
-        if (resource != null) {
+        if (resource != null && cloudConfigurationProvider != null) {
             reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
             if (reCaptchaConfiguration != null) {
                 siteKey = reCaptchaConfiguration.siteKey();

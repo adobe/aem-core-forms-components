@@ -40,19 +40,40 @@ class LanguageUtils {
      * @returns {Promise<void>} A promise that resolves when the language data is loaded.
      * @fires module:FormView~Constants#FORM_LANGUAGE_INITIALIZED
      */
-    static async loadLang(lang, url) {
-        if (!(lang in this.#langData))
-        {
+    static async loadLang(lang, url, executeConfigsAndFireEvent = false) {
+        if (!(lang in this.#langData)) {
+            // todo: avoid doing this call in product json if locale not found
+            // todo: can't find a condition today, since language client library can be overlaid too
             const _langData = await HTTPAPILayer.getJson(url);
             if(_langData) {
                 console.debug("fetched language data", _langData);
                 this.#langData[lang] = _langData;
                 setCustomDefaultConstraintTypeMessages(_langData);
-                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
+            }
+            if (executeConfigsAndFireEvent) {
+                await this.#executeLanguageConfigs(lang);
+                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, {"detail": lang});
                 document.dispatchEvent(event);
             }
         }
     }
+
+    /**
+     * Execute language-specific configuration functions for the given language.
+     * @param {string} lang - The language code for which to execute configurations.
+     * @private
+     * @static
+     * @async
+     */
+    static async #executeLanguageConfigs(lang) {
+        let functionConfigs = guideBridge.getConfigsForKey(guideBridge.ConfigKeys.LOCALE_CONFIG) || [];
+        functionConfigs = functionConfigs.map(configEntry => configEntry.fn).filter(fn => typeof fn === 'function');
+        for (const fn of functionConfigs) {
+            await fn(lang);
+        }
+    }
+
+
 
     /**
      * Returns the translated string for the given language and key.

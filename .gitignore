@@ -62,4 +62,5 @@ yarn-error.log
 # UI Tests
 node/
 node_modules/
+test_results/
 ui.tests/test-module/reports

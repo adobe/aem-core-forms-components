@@ -47,19 +47,26 @@ class FormFieldBase extends FormField {
      * Event constant for element focus change.
      * @type {string}
      */
-    ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
+    ELEMENT_FOCUS_CHANGED = Constants.ELEMENT_FOCUS_CHANGED;
 
     /**
      * Event constant for element help shown.
      * @type {string}
      */
-    ELEMENT_HELP_SHOWN = "elementHelpShown";
+    ELEMENT_HELP_SHOWN = Constants.ELEMENT_HELP_SHOWN;
 
     /**
      * Event constant for element error shown.
      * @type {string}
      */
-    ELEMENT_ERROR_SHOWN = "elementErrorShown";
+    ELEMENT_ERROR_SHOWN = Constants.ELEMENT_ERROR_SHOWN;
+
+
+    /**
+     * Event constant for value change.
+     * @type {string}
+     */
+    ELEMENT_VALUE_CHANGED = Constants.ELEMENT_VALUE_CHANGED;
 
     /**
      * Gets the widget element used to capture the value from the user.
@@ -259,7 +266,7 @@ class FormFieldBase extends FormField {
      * @param {string} eventType - The event type.
      * @private
      */
-    #triggerEventOnGuideBridge(eventType) {
+    #triggerEventOnGuideBridge(eventType, originalEventPayload) {
         const formId = this.formContainer.getFormId();
         const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
@@ -270,7 +277,9 @@ class FormFieldBase extends FormField {
             formTitle,
             fieldName,
             fieldId,
-            panelName
+            panelName,
+            ...(originalEventPayload?.prevValue !== undefined ? { prevText: originalEventPayload?.prevValue } : {}),
+            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {})
         };
         const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
@@ -551,6 +560,9 @@ class FormFieldBase extends FormField {
             const changes = action.payload.changes;
             changes.forEach(change => {
                 const fn = changeHandlerName(change.propertyName);
+                if (change.propertyName === 'value') {
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_VALUE_CHANGED, change);
+                }
                 if (typeof this[fn] === "function") {
                     this[fn](change.currentValue, state);
                 } else {

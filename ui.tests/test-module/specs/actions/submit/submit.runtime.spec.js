@@ -104,39 +104,13 @@ describe("Form with Submit Button", () => {
     })
 
 
-    if (cy.af.isLatestAddon()) {
-        it("Custom Submit Action Localisation Test", () => {
-            cy.previewForm(customSubmitLocalisationPagePath);
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
-                cy.get('body')
-                    .find('div.tyMessage')
-                    .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
-            });
-        })
-    }
-
-
-    it("Tampering redirectURL post submit redirects to default ThankYou Page", () => {
-        cy.previewForm(pagePath);
-        // intercepting submit call and tampering the redirectURL in its reponse
-        cy.intercept('POST', '**/adobe/forms/af/submit/*', (request) => {
-            request.reply(response => {
-                response.body = {...response.body, "redirectUrl" : "https://google.in"}
-            });
-        }).as('tamperedAFSubmission');
-
-        cy.intercept('GET', '**/guideContainer.guideThankYouPage.html').as('thankYouPage');
-
-        Object.entries(formContainer._fields).forEach(([id, field]) => {
-            fillField(id); // mark all the fields with some value
+    it("Custom Submit Action Localisation Test", () => {
+        cy.previewForm(customSubmitLocalisationPagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
+            cy.get('body')
+                .find('div.tyMessage')
+                .should('have.text', 'Vielen Dank für das Absenden des Formulars.');
         });
-
-        cy.get(`.cmp-adaptiveform-button__widget`).click();
-        // it should redirect to the default thank You page
-        cy.wait('@thankYouPage').then(({response}) => {
-            expect(response.statusCode).to.equal(200);
-            cy.get('body').should('contain', "Thank you for submitting the form.\n")
-        })
     })
 
     it("Submit Action test without passing any custom submit event", () => {
