@@ -418,4 +418,10 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_DATAREF, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_DATAREF));
     }
+
+    @Test
+    void testValidationExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        assertEquals(null, textInput.getValidationExpression());
+    }
 }
