@@ -24,7 +24,7 @@
         static loader = "loader" ;
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            loader: "[data-" + this.NS + '-' + this.loader + '= "true" ]',
+            loader: "data-" + this.NS + "-" + this.loader,
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
@@ -63,24 +63,23 @@
 
     async function onDocumentReady() {
         const startTime = new Date().getTime();
-        let elements = document.querySelectorAll(FormContainerV2.selectors.loader);
+        let elements = document.querySelectorAll(FormContainerV2.selectors.self);
+        console.log()
         for (let i = 0; i < elements.length; i++) {
-            elements[i].classList.add(FormContainerV2.loadingClass);
+            let loader = document.querySelector("["+FormContainerV2.selectors.loader+"='"+elements[i].id+"']");
+            loader.classList.add(FormContainerV2.loadingClass);
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
+            let loader = document.querySelector("["+FormContainerV2.selectors.loader+"='"+formEl.id+"']");
             setTimeout(() => {
-                //for loop added to remove the applied loading class from the newly added Div in html
-                for (let i = 0; i < elements.length; i++) {
-                    elements[i].classList.remove(FormContainerV2.loadingClass);
-                    console.debug("Form loading started", elements[i].id);
-                }
+                loader.classList.remove(FormContainerV2.loadingClass);
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
-                }, 10);
-        }
+            }, 10);
+        }        
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
         await FormView.Utils.setupFormContainer(async ({
             _formJson, _prefillData, _path, _element
@@ -107,3 +106,6 @@
     }
 
 })();
+
+// console.log("new List before" + elements[i].querySelector(FormContainerV2.selectors.loader).classList);
+// console.log("new List after" + elements[i].querySelector(FormContainerV2.selectors.loader).classList);
