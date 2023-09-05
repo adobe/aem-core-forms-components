@@ -416,7 +416,9 @@ class GuideBridge {
         if (!this.#userConfig[key]) {
             this.#userConfig[key] = [];
         }
-        const configEntry = typeof config === 'function' ? { fn: config, this.#formContainerPath } : { ...config, this.#formContainerPath };
+        const configEntry = typeof config === 'function' ?
+            { fn: config, formContainerPath : this.#formContainerPath } :
+            { ...config, formContainerPath : this.#formContainerPath };
         this.#userConfig[key].push(configEntry);
         return this.#userConfig[key];
     }
