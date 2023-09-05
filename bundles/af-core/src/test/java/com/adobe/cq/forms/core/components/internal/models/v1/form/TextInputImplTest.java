@@ -32,6 +32,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -417,5 +419,23 @@ public class TextInputImplTest {
     void testJSONExportForBlankDataRef() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_DATAREF, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_DATAREF));
+    }
+
+    @Test
+    void testJsonSerialization() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+
+        // Serialize the TextInput object to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(textInput);
+
+        // Parse the JSON into a Map for inspection
+        Map<String, Object> jsonMap = objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {});
+
+        // Assert the behavior of the @JsonInclude annotation
+        if (!(textInput.getValidationExpression() != null && !textInput.getValidationExpression().isEmpty())) {
+            // The field should not be present or should be null in JSON
+            assertFalse(jsonMap.containsKey("validationExpression"));
+        }
     }
 }
