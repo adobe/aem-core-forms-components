@@ -86,6 +86,7 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             Map<String, Object> redirectParamMap = new HashMap<String, Object>() {{
                 put(DataManager.UNIQUE_ID, uniqueID);
             }};
+            // todo: move this to constant, once forms SDK is released
             result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
             logger.error("Error while using the AF Submit service", ex);
