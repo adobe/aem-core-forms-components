@@ -14,7 +14,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Sync with Dev Branch
+      - name: Configure Git Identity
+        run: |
+          git config --global user.email "ci-build@aemforms"
+          git config --global user.name "ci-build"
+
+      - name: Sync with Base Branch
         run: |
           git fetch origin
           git checkout ${{ github.event.pull_request.base.ref }}
