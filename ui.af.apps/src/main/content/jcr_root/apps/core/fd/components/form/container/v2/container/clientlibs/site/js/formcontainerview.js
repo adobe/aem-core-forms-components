@@ -63,14 +63,16 @@
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
         for (let i = 0; i < elements.length; i++) {
-            elements[i].classList.add(FormContainerV2.loadingClass);
+            let loaderToAdd = document.querySelector("[data-cmp-loader='"+ elements[i].id + "']");
+            loaderToAdd.classList.add(FormContainerV2.loadingClass);
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
+            let loaderToRemove = document.querySelector("[data-cmp-loader='"+ formEl.id + "']")
             setTimeout(() => {
-                formEl.classList.remove(FormContainerV2.loadingClass);
+                loaderToRemove.classList.remove(FormContainerV2.loadingClass);
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
