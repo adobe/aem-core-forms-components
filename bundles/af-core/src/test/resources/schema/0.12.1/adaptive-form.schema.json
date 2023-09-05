@@ -1368,7 +1368,16 @@
         },
         "properties": {
           "title": "An object containing custom properties that can be modified via rules as well.",
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "fd:dor": {
+              "$ref": "./adaptive-form-container-dor-properties.schema.json"
+            },
+            "fd:signerInfo": {
+              "$ref": "./adaptive-form-sign-properties.schema.json"
+            }
+          },
+          "additionalProperties": true
         },
         "rules": {
           "type": "object",

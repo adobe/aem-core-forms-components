@@ -205,9 +205,6 @@
           "properties": {
             "fd:dor": {
               "$ref": "./adaptive-form-dor-properties.schema.json"
-            },
-            "fd:signerInfo": {
-              "$ref": "./adaptive-form-sign-properties.schema.json"
             }
           },
           "additionalProperties": true
