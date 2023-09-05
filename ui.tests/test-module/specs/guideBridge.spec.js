@@ -78,4 +78,16 @@ describe('GuideBridge ', () => {
         })
         cy.expectNoConsoleErrors();
     })
+
+    it('should test the resolveNode API for a specific field', () => {
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                const targetName = "textinput_18577078541690896990322";
+                const textBox1FieldView = Object.values(formContainer._fields).find(obj => obj._model.name === targetName);
+                const qualifiedName = textBox1FieldView._model.qualifiedName;
+                expect($window.guideBridge.resolveNode(qualifiedName)).to.deep.equal(textBox1FieldView._model);
+            }
+        });
+        cy.expectNoConsoleErrors();
+    })
 })
