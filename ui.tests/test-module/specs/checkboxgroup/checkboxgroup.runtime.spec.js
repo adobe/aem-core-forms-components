@@ -184,9 +184,9 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
         const [checkBox6, checkBox6FieldView] = Object.entries(formContainer._fields)[5];
         cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
-        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option__label").contains('Item 3');
-        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option__label").contains('Item 2');
-        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option__label").contains('Item 1').should('not.exist');
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option-label").contains('Item 3');
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option-label").contains('Item 2');
+        cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option-label").contains('Item 1').should('not.exist');
 
     })
 })
