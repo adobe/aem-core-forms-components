@@ -139,6 +139,24 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
+    const verifyLoadingClass = function (formContainerEditPathSelector) {
+       
+            // Stub the necessary functions to simulate loading
+            cy.stub(cy, "openEditableToolbar");
+            cy.stub(cy, "invokeEditableAction");
+            cy.stub(cy, "document").as("documentStub");
+
+            // Simulate the form container loading by triggering "DOMContentLoaded"
+            cy.get("@documentStub").trigger("DOMContentLoaded");
+
+            // Check if loading class is initially present
+            cy.get(formContainerEditPathSelector).should("have.class", "cmp-adaptiveform-container--loading");
+
+            // Check if loading class is removed
+            cy.get(formContainerEditPathSelector).should("not.have.class", "cmp-adaptiveform-container--loading");
+       
+    };
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -176,6 +194,10 @@ describe('Page/Form Authoring', function () {
             it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
+            });
+
+            it ('Verify the loading class', function(){
+                verifyLoadingClass(formContainerEditPathSelector);
             })
         });
 
