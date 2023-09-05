@@ -461,10 +461,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @Override
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getValidationExpression() {
-        if ("".equals(validationExpression)) {
-            return null;
-        }
         return validationExpression;
     }
 }
