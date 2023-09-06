@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2023 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -26,14 +26,10 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
-import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Switch;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
@@ -46,34 +42,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class SwitchImpl extends AbstractBaseImpl implements Switch {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "value")
-    @Nullable
-    protected String value;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "onValue")
+    protected String onValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "offValue")
+    protected String offValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "icon")
     @Nullable
     private String icon;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    @Override
     @Nullable
-    private String defaultValue;
-
-    @SlingObject
-    private Resource resource;
+    public String getOffValue() {
+        return offValue;
+    }
 
     @Override
-    public String getValue() {
-        return value;
+    @Nullable
+    public String getOnValue() {
+        return onValue;
     }
 
     @Override
     public String getIcon() {
         return icon;
-    }
-
-    @Override
-    public String getDefault() {
-        return defaultValue;
     }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -98,11 +91,5 @@ public class SwitchImpl extends AbstractBaseImpl implements Switch {
     @Override
     public Map<String, Object> getProperties() {
         return super.getProperties();
-    }
-
-    @Override
-    @NotNull
-    protected FormComponentData getComponentData() {
-        return new ComponentDataImpl(this, resource);
     }
 }

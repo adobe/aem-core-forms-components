@@ -45,6 +45,26 @@ public interface Switch extends Base {
     }
 
     /**
+     * Returns the switch off display value.
+     *
+     * @return the switch on value
+     * @since com.adobe.cq.forms.core.components.models 2.1.0
+     */
+    default String getOffValue() {
+        return null;
+    }
+
+    /**
+     * Returns the switch on display value.
+     *
+     * @return the switch on value
+     * @since com.adobe.cq.forms.core.components.models 2.1.0
+     */
+    default String getOnValue() {
+        return null;
+    }
+
+    /**
      * Returns the switch default value.
      *
      * @return the switch icon identifier
