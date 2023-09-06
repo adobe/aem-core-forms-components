@@ -134,6 +134,7 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "name" : "abc",
     "jcr:title" : "def",
-    "fieldType": "text-input"
+    "fieldType": "text-input",
+    "validationExpression": ""
   }
 }
