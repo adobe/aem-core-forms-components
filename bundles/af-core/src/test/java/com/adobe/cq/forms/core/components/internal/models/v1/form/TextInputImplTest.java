@@ -32,8 +32,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -57,6 +55,7 @@ public class TextInputImplTest {
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
+    private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -422,20 +421,8 @@ public class TextInputImplTest {
     }
 
     @Test
-    void testJsonSerialization() throws Exception {
-        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-
-        // Serialize the TextInput object to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(textInput);
-
-        // Parse the JSON into a Map for inspection
-        Map<String, Object> jsonMap = objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {});
-
-        // Assert the behavior of the @JsonInclude annotation
-        if (!(textInput.getValidationExpression() != null && !textInput.getValidationExpression().isEmpty())) {
-            // The field should not be present or should be null in JSON
-            assertFalse(jsonMap.containsKey("validationExpression"));
-        }
+    void testJSONExportForEmptyValidationExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
     }
 }
