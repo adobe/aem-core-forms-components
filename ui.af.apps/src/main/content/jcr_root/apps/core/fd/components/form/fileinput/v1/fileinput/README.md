@@ -60,6 +60,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__label
+    ELEMENT cmp-adaptiveform-fileinput__label-container
     ELEMENT cmp-adaptiveform-fileinput__widget
     ELEMENT cmp-adaptiveform-fileinput__questionmark
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
@@ -70,6 +71,9 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__filedelete
     ELEMENT cmp-adaptiveform-fileinput__widgetlabel
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-fileinput__label` and `cmp-adaptiveform-fileinput__questionmark` within the `cmp-adaptiveform-fileinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 

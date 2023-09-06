@@ -55,12 +55,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-dropdown
     ELEMENT cmp-adaptiveform-dropdown__label
+    ELEMENT cmp-adaptiveform-dropdown__label-container
     ELEMENT cmp-adaptiveform-dropdown__widget
     ELEMENT cmp-adaptiveform-dropdown__questionmark
     ELEMENT cmp-adaptiveform-dropdown__shortdescription
     ELEMENT cmp-adaptiveform-dropdown__longdescription
     ELEMENT cmp-adaptiveform-dropdown__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-dropdown__label` and `cmp-adaptiveform-dropdown__questionmark` within the `cmp-adaptiveform-dropdown__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 

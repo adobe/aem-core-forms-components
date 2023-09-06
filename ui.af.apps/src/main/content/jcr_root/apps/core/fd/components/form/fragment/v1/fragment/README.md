@@ -52,12 +52,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-fragment
     ELEMENT cmp-adaptiveform-fragment__label
+    ELEMENT cmp-adaptiveform-fragment__label-container
     ELEMENT cmp-adaptiveform-fragment__widget
     ELEMENT cmp-adaptiveform-fragment__questionmark
     ELEMENT cmp-adaptiveform-fragment__shortdescription
     ELEMENT cmp-adaptiveform-fragment__longdescription
     ELEMENT cmp-adaptiveform-fragment__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-fragment__label` and `cmp-adaptiveform-fragment__questionmark` within the `cmp-adaptiveform-fragment__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 
