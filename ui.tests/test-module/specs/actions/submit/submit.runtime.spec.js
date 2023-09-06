@@ -17,6 +17,7 @@ describe("Form with Submit Button", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/actions/submit/basic.html"
     const customSubmitPagePath = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basic.html"
+    const customSubmitPagePathRequestParameters = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basicwithrequestparameters.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
     const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
     const bemBlock = 'cmp-button'
@@ -100,6 +101,16 @@ describe("Form with Submit Button", () => {
             cy.get('body').should('contain', "Thank you for submitting the form.\n")
         });
     })
+
+
+    if (cy.af.isLatestAddon()) {
+        it("Custom Submit Action With Redirect Parameter test", () => {
+            cy.previewForm(customSubmitPagePathRequestParameters);
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.url().should('include', '?prefillId');
+            });
+        })
+    }    
 
 
     it("Submit Action test without passing any custom submit event", () => {
