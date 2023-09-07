@@ -53,13 +53,11 @@ public class SwitchImpl extends AbstractBaseImpl implements Switch {
     private String icon;
 
     @Override
-    @Nullable
     public String getOffValue() {
         return offValue;
     }
 
     @Override
-    @Nullable
     public String getOnValue() {
         return onValue;
     }
