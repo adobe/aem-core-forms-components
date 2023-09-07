@@ -39,7 +39,9 @@
 
     <label class="cmp-adaptiveform-switch__label-on">${switch.onValue}</label>
     <label class="cmp-adaptiveform-switch__widget">
-        <input class="cmp-adaptiveform-switch__widget-checkbox" type="checkbox">
+        <input class="cmp-adaptiveform-switch__widget-checkbox"
+               disabled="${!switch.enabled || switch.readOnly}"
+               type="checkbox">
         <div class="slider round"></div>
     </label>
     <label class="cmp-adaptiveform-switch__label-on">${switch.offValue}</label>
