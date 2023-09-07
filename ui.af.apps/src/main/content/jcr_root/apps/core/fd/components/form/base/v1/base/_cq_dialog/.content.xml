@@ -90,6 +90,7 @@
                                                                       granite:class="cmp-adaptiveform-base__enum"
                                                                       name="./enum"
                                                                       fieldLabel="Data value"
+
                                                                       fieldDescription="Specify the content to submit, when the option is selected."
                                                                       required="{Boolean}true"/>
                                                                 <enumNames

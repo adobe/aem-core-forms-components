@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2023 Adobe
+ * Copyright 2022 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-switch__editdialog",
-        CHECKBOX_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-switch__assistprioritycustom",
-        CHECKBOX_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-switch__customtext",
-        ENUMS = EDIT_DIALOG + " .cmp-adaptiveform-switch__enums",
-        DATA_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-switch__type",
+        SWITCH_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-switch__assistprioritycustom",
+        SWITCH_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-switch__customtext",
+        SWITCH_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-switch__type",
+        SWITCH_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__value",
+        SWITCH_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -29,8 +30,8 @@
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function handleAssistPriorityChange(dialog) {
-        var assistpriority = dialog.find(CHECKBOX_ASSISTPRIORITY);
-        var customtext = dialog.find(CHECKBOX_CUSTOMTEXT);
+        var assistpriority = dialog.find(SWITCH_ASSISTPRIORITY);
+        var customtext = dialog.find(SWITCH_CUSTOMTEXT);
         var hideAndShowElements = function() {
             if(assistpriority[0].value === "custom"){
                 customtext.show();
@@ -44,51 +45,19 @@
         });
     }
 
-    /**
-     * A checkbox can specify enum implicitly by setting type property to boolean.
-     * @param dialog
-     */
-    function handleDataTypeSelectionAndValidation(dialog) {
-        var dataTypeSelect = dialog.find(DATA_TYPE + " coral-select");
-        var preselectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-        if (preselectedDataType == 'boolean') {
-            dialog.find(ENUMS).hide();
-        }
-
-        dataTypeSelect.on('change', function() {
-            var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-            if (selectedDataType == 'boolean') {
-                dialog.find(ENUMS).hide();
-            } else {
-                dialog.find(ENUMS).show();
+    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
+        SWITCH_DEFAULTVALUE,
+        SWITCH_ENUM,
+        function (dialog) {
+            var selectedValue = '';
+            var switchSaveValue = dialog.find(SWITCH_TYPE);
+            if (switchSaveValue && switchSaveValue.length > 0) {
+                selectedValue = switchSaveValue[0].selectedItem ? switchSaveValue[0].selectedItem.value : '';
             }
-        });
-
-        var registerValidator = function(selector) {
-                let validate = function() {
-                    var isValid = true;
-                    var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-                    var value = document.querySelector(selector).value;
-                    if (selectedDataType === 'number') {
-                        if (isNaN(value)) {
-                            isValid = false;
-                        }
-                    }
-                    if (!isValid) {
-                        return Granite.I18n.getMessage('Value Type Mismatch');
-                    }
-                }
-            $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
-                selector: selector,
-                validate: validate
-            });
+            return selectedValue.toLowerCase();
         }
+    );
 
-        registerValidator('input[name="./onValue"]');
-        registerValidator('input[name="./default"]');
-        registerValidator('input[name="./offValue"]')
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, handleDataTypeSelectionAndValidation);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);
 
 })(jQuery);
