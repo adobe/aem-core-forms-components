@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
-const AxePuppeteer = require('@axe-core/puppeteer');
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 const { createHtmlReport } = require('axe-html-reporter');
 const accessibilityConfig = require("./accessibilityConfig.json")
 
