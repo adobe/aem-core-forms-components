@@ -56,11 +56,7 @@
             </ol>
         </div>
 
-        <div class="cmp-adaptiveform-wizard__containerNav">
-          <div class="cmp-adaptiveform-wizard__previousNav" tabindex = 0 role="navigation" aria-label="Previous Button"></div>
-          <div class="cmp-adaptiveform-wizard__nextNav" tabindex = 0 role="navigation" aria-label="Next Button">
-          </div>
-        </div>
+  <div class="cmp-adaptiveform-wizard__previousNav" tabindex = 0 role="navigation" aria-label="Previous Button"></div>
 
         <sly data-sly-repeat="${wizard.exportedItems}">
             <div
@@ -73,7 +69,10 @@
                 </sly>
             </div>
         </sly>
-      </div>
+
+  <div class="cmp-adaptiveform-wizard__nextNav" tabindex = 0 role="navigation" aria-label="Next Button">
+  </div>
+</div>
 
         <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}">
         </sly>
