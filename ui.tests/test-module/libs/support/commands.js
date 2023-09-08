@@ -202,7 +202,8 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
+    // getting status 403 intermittently, just ignore it
+    cy.visit(baseUrl, {'failOnStatusCode': false});
     cy.login(baseUrl);
     cy.openSiteAuthoring(pagePath);
 });
