@@ -54,6 +54,8 @@
             previousButton: `.${Wizard.bemBlock}__previousNav`,
             previousButtonHidden: "cmp-adaptiveform-wizard__previousNav__hidden",
             nextButton: `.${Wizard.bemBlock}__nextNav`,
+            previousButtonV2: `.${Wizard.bemBlock}__nav--previous`,
+            nextButtonV2: `.${Wizard.bemBlock}__nav--next`,
             nextButtonHidden: "cmp-adaptiveform-wizard__nextNav__hidden",
             olTabList: `.${Wizard.bemBlock}__tabList`
         };
@@ -152,11 +154,11 @@
         }
 
         getPreviousButtonDiv() {
-            return this.element.querySelector(Wizard.selectors.previousButton);
+            return (this.element.querySelector(Wizard.selectors.previousButton) || this.element.querySelector(Wizard.selectors.previousButtonV2));
         }
 
         getNextButtonDiv() {
-            return this.element.querySelector(Wizard.selectors.nextButton);
+            return (this.element.querySelector(Wizard.selectors.nextButton) || this.element.querySelector(Wizard.selectors.nextButtonV2));
         }
 
         #getTabListElement() {

@@ -63,9 +63,13 @@ We support replace feature that allows replacing Reset Button component to any o
 ```
 BLOCK cmp-adaptiveform-telephoneinput
     ELEMENT cmp-adaptiveform-telephoneinput__label
+    ELEMENT cmp-adaptiveform-telephoneinput__label-container
     ELEMENT cmp-adaptiveform-telephoneinput__widget
     ELEMENT cmp-adaptiveform-telephoneinput__questionmark
     ELEMENT cmp-adaptiveform-telephoneinput__shortdescription
     ELEMENT cmp-adaptiveform-telephoneinput__longdescription
     ELEMENT cmp-adaptiveform-telephoneinput__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-telephoneinput__label` and `cmp-adaptiveform-telephoneinput__questionmark` within the `cmp-adaptiveform-telephoneinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
