@@ -25,6 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
 const classicFormAddonVersion = 'LATEST';
+const classicFormReleasedAddonVersion = '6.0.1016';
 
 try {
     ci.stage("Integration Tests");
@@ -35,6 +36,12 @@ try {
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
+        // Download latest add-on release from artifactory
+        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormReleasedAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+        extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
+        // The core components are already installed in the Cloud SDK
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+    } else if (AEM === 'classic-latest') {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
         extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
@@ -81,7 +88,7 @@ try {
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 
-    if (AEM === 'classic') {
+    if (AEM === 'classic' || AEM === 'classic-latest') {
         // add a sleep for 5 mins, add-on takes times to come up
         ci.sh(`sleep 5m`);
         // restart the AEM insatnce

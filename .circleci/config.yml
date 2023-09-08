@@ -95,7 +95,13 @@ executors:
       docker:
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
           <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18-load4-openjdk11
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18.0-openjdk11
+          <<: *docker_auth
+  test_executor_655_latest:
+      docker:
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+          <<: *docker_auth
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load2-openjdk11
           <<: *docker_auth
 
 jobs:
@@ -161,6 +167,16 @@ jobs:
     executor: test_executor_655
     environment:
       AEM: classic
+      TYPE: cypress
+      BROWSER: chrome
+    resource_class: large
+    working_directory: /home/circleci/build
+    <<: *cypress_test_steps
+
+  cypress-chrome-655-with-latest-addon:
+    executor: test_executor_655_latest
+    environment:
+      AEM: classic-latest
       TYPE: cypress
       BROWSER: chrome
     resource_class: large
@@ -255,6 +271,13 @@ workflows:
             tags:
               only: /.*/
       - cypress-chrome-655:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
+      - cypress-chrome-655-with-latest-addon:
           filters:
             tags:
               only: /.*/
