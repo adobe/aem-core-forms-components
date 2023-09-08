@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,71 +72,31 @@
             });
         }
 
-        updateValue(value) {
-            if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari'))) {
-                this.initializeWidget();
-            }
-            if (this.widgetObject) {
-                this.widgetObject.setValue(value);
-                super.updateEmptyStatus();
+        updateValue(modelValue) {
+            if (modelValue === this._model._jsonModel.enum[0]) {
+                this.widget.checked = true
+                this.widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
+                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
             } else {
-                super.updateValue(value);
+                this.widget.checked = false
+                this.widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
+                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
             }
+            this.widget.value = modelValue;
         }
 
         setModel(model) {
             super.setModel(model);
-            // only initialize if patterns are set
-            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari')) {
-                if (this.widgetObject == null) {
-                    this.initializeWidget();
-                }
-            } else {
-                if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
-                }
-                this.getWidget().addEventListener('blur', (e) => {
-                    this._model.value = e.target.value;
-                    if(this.element) {
-                        this.setActive(this.element, false);
-                    }
-                });
-            }
-            this.getWidget().addEventListener('focus', (e) => {
-                if (this.element) {
-                    this.setActive(this.element, true);
-                }
-            });
-        }
-
-        updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
-            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
-            let widgets = this.widget;
-            widgets.forEach(widget => {
-                if (enabled === false) {
-                    if(state.readOnly === false){
-                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
-                    }
-                } else if (state.readOnly === false) {
-                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
-                }
-            });
-        }
-
-        updateReadOnly(readonly, state) {
-            let widgets = this.widget;
-            widgets.forEach(widget => {
-                if (readonly === true) {
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                    widget.setAttribute("aria-readonly", true);
+            this._onValue = this._model._jsonModel.enum[0];
+            this._offValue = this._model._jsonModel.enum[1];
+            this.widget.addEventListener('change', (e) => {
+                if (this.widget.checked) {
+                    this._model.value = this._onValue;
                 } else {
-                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute("aria-readonly");
+                    this._model.value = this._offValue;
                 }
-            });
+            })
+
         }
     }
 
