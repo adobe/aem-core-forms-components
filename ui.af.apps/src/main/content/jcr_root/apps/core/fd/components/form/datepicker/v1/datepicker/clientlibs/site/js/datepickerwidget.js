@@ -582,6 +582,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
       this.#dp.style.top = styles.top;
       this.#dp.style.left = styles.left;
+      const localeObj = new Intl.Locale(this.#lang);
+      if(localeObj?.textInfo?.direction == "rtl") {
+        this.#dp.style.right = styles.left;
+        this.#dp.style.left = "unset"
+      }
       return this;
     }
 

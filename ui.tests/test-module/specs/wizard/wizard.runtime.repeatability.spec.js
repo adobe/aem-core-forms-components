@@ -168,8 +168,8 @@ describe('visibility of navigation buttons', function () {
     }
 
     it("navigating start to end to start", () => {
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             wizardItems = formContainer._model.items[0].items;
 
         const wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
@@ -205,8 +205,8 @@ describe('visibility of navigation buttons', function () {
         const textInputId = formContainer._model.items[1].id;
         const wizardItems = formContainer._model.items[0].items;
 
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             driverTextInput = '.cmp-adaptiveform-textinput__widget',
             wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
             wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
