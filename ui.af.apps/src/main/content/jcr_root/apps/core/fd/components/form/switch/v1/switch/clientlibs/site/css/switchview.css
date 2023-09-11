@@ -1,4 +1,4 @@
-.cmp-adaptiveform-switch__widget {
+.cmp-adaptiveform-switch__widget-container {
     position: relative;
     display: inline-block;
     width: 60px;
@@ -6,7 +6,7 @@
     margin-bottom: 5px;
 }
 
-.cmp-adaptiveform-switch__widget-checkbox {
+.cmp-adaptiveform-switch__widget {
     opacity: 0;
     width: 0;
     height: 0;
@@ -53,12 +53,4 @@ input:checked + .cmp-adaptiveform-switch__widget-slider:before {
 
 .cmp-adaptiveform-switch__widget-slider:before {
     border-radius: 50%;
-}
-
-.cmp-adaptiveform-switch__widget-off {
-
-}
-
-.cmp-adaptiveform-switch__widget-on {
-
 }

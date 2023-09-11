@@ -21,11 +21,11 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 
-<div class="cmp-adaptiveform-switch"
+<div data-sly-use.switch="com.adobe.cq.forms.core.components.models.form.Switch"
+     class="cmp-adaptiveform-switch"
      data-cmp-is="adaptiveFormSwitch"
      id="${switch.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.switch="com.adobe.cq.forms.core.components.models.form.Switch"
      data-cmp-visible="${switch.visible ? 'true' : 'false'}"
      data-cmp-enabled="${switch.enabled ? 'true' : 'false'}"
      data-cmp-required="${switch.required ? 'true': 'false'}"
@@ -38,9 +38,11 @@
     </div>
 
     <span class="cmp-adaptiveform-switch__widget-off">${switch.enumNames[0]}</span>
-    <label class="cmp-adaptiveform-switch__widget">
-        <input class="cmp-adaptiveform-switch__widget-checkbox"
-               type="checkbox">
+    <label class="cmp-adaptiveform-switch__widget-container">
+        <input class="cmp-adaptiveform-switch__widget"
+               type="checkbox"
+               disabled="${!switch.enabled || switch.readOnly}"
+               aria-readonly="${switch.readOnly ? 'true' : ''}">
         <div class="cmp-adaptiveform-switch__widget-slider"></div>
     </label>
     <span class="cmp-adaptiveform-switch__widget-on">${switch.enumNames[1]}</span>
