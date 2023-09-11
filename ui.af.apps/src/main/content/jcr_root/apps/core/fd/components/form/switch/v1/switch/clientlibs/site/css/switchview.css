@@ -6,6 +6,12 @@
     margin-bottom: 5px;
 }
 
+.cmp-adaptiveform-switch__container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .cmp-adaptiveform-switch__widget {
     opacity: 0;
     width: 0;
