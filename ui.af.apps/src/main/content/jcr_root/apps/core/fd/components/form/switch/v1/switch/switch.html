@@ -1,0 +1,64 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.renderer="${'switch.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+
+<div data-sly-use.switch="com.adobe.cq.forms.core.components.models.form.Switch"
+     class="cmp-adaptiveform-switch"
+     data-cmp-is="adaptiveFormSwitch"
+     id="${switch.id}"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-cmp-visible="${switch.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${switch.enabled ? 'true' : 'false'}"
+     data-cmp-required="${switch.required ? 'true' : 'false'}"
+     data-cmp-data-layer="${switch.data.json}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[switch.id, '_widget']}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <div class="cmp-adaptiveform-switch__label-container">
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=switch.label.value, labelVisible=switch.label.visible, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=switch.id, longDescription=switch.description, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+    </div>
+
+    <div class="cmp-adaptiveform-switch__container" id="${widgetId}">
+        <div class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--off"
+        aria-label="${switch.enumNames[1]? switch.enumNames[1] : ''}">${switch.enumNames[1]? switch.enumNames[1] : ''}</div>
+        <label class="cmp-adaptiveform-switch__widget-label">
+            <input class="cmp-adaptiveform-switch__widget"
+                   name="${switch.name}"
+                   type="checkbox"
+                   role="switch"
+                   aria-label="${switch.label.value}"
+                   disabled="${!switch.enabled || switch.readOnly}"
+                   value="${switch.default}"
+                   aria-readonly="${switch.readOnly ? 'true' : ''}">
+            <div class="cmp-adaptiveform-switch__widget-slider">
+                <div class="cmp-adaptiveform-switch__circle"></div>
+            </div>
+        </label>
+        <div class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--on"
+        aria-label="${switch.enumNames[0]}">${switch.enumNames[0]}</div>
+    </div>
+
+    <div data-sly-call="${shortDescription.shortDescription @componentId=switch.id, shortDescriptionVisible=switch.tooltipVisible, shortDescription=switch.tooltip, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap>
+    </div>
+    <div data-sly-call="${longDescription.longDescription @componentId=switch.id, longDescription=switch.description, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=switch.id, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+</div>
