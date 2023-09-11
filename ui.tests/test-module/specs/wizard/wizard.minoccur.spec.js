@@ -75,45 +75,45 @@ describe("Form with Wizard Layout Container with repeatable panel with minOccur"
             cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
             cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
             //force:true on nav buttons are required in wizard component as they are not visible without theme and runtime testcases don't run with themes.
-            cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+            cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
 
                 cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
                 cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+                cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
                     cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
                     cy.get(".cmp-adaptiveform-wizard__tab").eq(2).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                    cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+                    cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
                         cy.get(".cmp-adaptiveform-wizard__tab").eq(2).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
                         cy.get(".cmp-adaptiveform-wizard__tab").eq(3).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(2).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(3).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+                        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
                             cy.get(".cmp-adaptiveform-wizard__tab").eq(3).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
                             cy.get(".cmp-adaptiveform-wizard__tab").eq(4).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                             cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(3).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                             cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(4).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                            cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+                            cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
                                 cy.get(".cmp-adaptiveform-wizard__tab").eq(4).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
                                 cy.get(".cmp-adaptiveform-wizard__tab").eq(5).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(4).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(5).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                                cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true}).then(() => {
+                                cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
                                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(5).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(4).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                                    cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true}).then(() => {
+                                    cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
                                         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(4).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(3).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                                        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true}).then(() => {
+                                        cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
                                             cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(3).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                             cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                                            cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true}).then(() => {
+                                            cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
                                                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(2).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                                 cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                                                cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true}).then(() => {
+                                                cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
                                                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                                     cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                                                 })

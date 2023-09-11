@@ -53,6 +53,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__label
+    ELEMENT cmp-adaptiveform-checkboxgroup__label-container
     ELEMENT cmp-adaptiveform-checkboxgroup__widget
     ELEMENT cmp-adaptiveform-checkbox__widget
     ELEMENT cmp-adaptiveform-checkbox__label
@@ -61,6 +62,9 @@ BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
     ELEMENT cmp-adaptiveform-checkboxgroup__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-checkboxgroup__label` and `cmp-adaptiveform-checkboxgroup__questionmark` within the `cmp-adaptiveform-checkboxgroup__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 
