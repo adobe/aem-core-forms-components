@@ -510,7 +510,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!DatePickerWidget.#visible) {
         let date,
             validDate;
-        validDate = this.#curInstance.selectedDate;
+        
+        validDate = this.#curInstance.selectedDate || this.#model.value;
         date = validDate ? new Date(validDate) : new Date();
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
@@ -582,6 +583,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
       this.#dp.style.top = styles.top;
       this.#dp.style.left = styles.left;
+      const localeObj = new Intl.Locale(this.#lang);
+      if(localeObj?.textInfo?.direction == "rtl") {
+        this.#dp.style.right = styles.left;
+        this.#dp.style.left = "unset"
+      }
       return this;
     }
 

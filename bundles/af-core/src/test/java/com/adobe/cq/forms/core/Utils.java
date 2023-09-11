@@ -125,7 +125,7 @@ public class Utils {
         // create an instance of the JsonSchemaFactory using version flag
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.12.0/adaptive-form.schema.json");
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.12.1/adaptive-form.schema.json");
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);

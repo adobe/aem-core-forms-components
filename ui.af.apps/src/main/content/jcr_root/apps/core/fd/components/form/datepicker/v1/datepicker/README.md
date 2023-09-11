@@ -50,12 +50,16 @@ It should be added to a relevant site client library using the `embed` property.
 ```
 BLOCK cmp-adaptiveform-datepicker
     ELEMENT cmp-adaptiveform-datepicker__label
+    ELEMENT cmp-adaptiveform-datepicker__label-container
     ELEMENT cmp-adaptiveform-datepicker__widget
     ELEMENT cmp-adaptiveform-datepicker__questionmark
     ELEMENT cmp-adaptiveform-datepicker__shortdescription
     ELEMENT cmp-adaptiveform-datepicker__longdescription
     ELEMENT cmp-adaptiveform-datepicker__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-datepicker__label` and `cmp-adaptiveform-datepicker__questionmark` within the `cmp-adaptiveform-datepicker__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 

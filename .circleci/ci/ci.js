@@ -165,10 +165,13 @@ module.exports = class CI {
         return JSON.parse(configuration);
     }
 
-    addQpFileDependency(module) {
+    addQpFileDependency(module, cloud = false) {
         let output = '--install-file ';
 
         let filename = `${module.artifactId}-${module.version}`;
+        if (cloud) {
+            filename += '-cloud';
+        }
         if (module.packaging == 'content-package') {
             filename += '.zip';
         } else if (module.packaging == 'bundle') {

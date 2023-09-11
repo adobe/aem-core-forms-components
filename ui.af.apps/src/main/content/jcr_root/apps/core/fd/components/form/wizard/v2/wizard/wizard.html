@@ -1,0 +1,83 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+
+
+  <div
+  data-sly-use.wizard="com.adobe.cq.forms.core.components.models.form.Panel"
+  data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+  data-sly-use.renderer="${'core/fd/components/form/wizard/v1/wizard/wizard.js'}"
+  data-sly-use.label="${renderer.labelPath}"
+  data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+  data-sly-use.longDescription="${renderer.longDescriptionPath}"
+  data-sly-use.questionMark="${renderer.questionMarkPath}"
+  data-cmp-is="adaptiveFormWizard"
+  data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+  data-panelcontainer="wizard"
+  id="${wizard.id}"
+  class="cmp-adaptiveform-wizard cmp-adaptiveform-wizard--v2"
+  data-placeholder-text="${'Please drag Wizard components here' @ i18n}"
+  data-sly-test.widgetId="${'{0}-{1}' @ format=[wizard.id, 'widget']}">
+  <div class="cmp-adaptiveform-wizard__label-container">
+    <div data-sly-call="${label.label @componentId=widgetId, labelValue=wizard.label.value, labelVisible=wizard.label.visible, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
+  </div>
+  <div data-sly-call="${shortDescription.shortDescription @componentId=wizard.id, shortDescriptionVisible=wizard.tooltipVisible, shortDescription=wizard.tooltip, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
+  <div data-sly-call="${longDescription.longDescription @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
+
+<div class="cmp-adaptiveform-wizard__widget cmp-adaptiveform-wizard__widget--v2" id="${widgetId}">
+  <div
+      class="cmp-adaptiveform-wizard__tabs-container">
+      <ol class="cmp-adaptiveform-wizard__tabList"
+          role="tablist"
+          data-sly-list.wizardItem="${wizard.items}">
+              <li id="${wizardItem.id}_wizard-item-nav"
+                  title="${wizardItem.label.value}"
+                  role="tab"
+                  class="cmp-adaptiveform-wizard__tab"
+                  aria-controls="${wizardItem.id}__wizardpanel"
+                  tabindex="0"
+                  data-cmp-hook-adaptiveFormWizard="tab">
+                  ${wizardItem.label.value}
+              </li>
+      </ol>
+  </div>
+
+  <div class="cmp-adaptiveform-wizard__containerNav">
+    <div class="cmp-adaptiveform-wizard__nav cmp-adaptiveform-wizard__nav--previous" tabindex = 0 role="navigation" aria-label="Previous Button"></div>
+    <div class="cmp-adaptiveform-wizard__nav cmp-adaptiveform-wizard__nav--next" tabindex = 0 role="navigation" aria-label="Next Button">
+  </div>
+  </div>
+
+  <sly data-sly-repeat="${wizard.exportedItems}">
+      <div
+              role="tabpanel"
+              id="${wizard.exportedItems[item].id}__wizardpanel"
+              class="cmp-adaptiveform-wizard__wizardpanel cmp-adaptiveform-wizard__wizardpanel--v2"
+              aria-labelledby="${wizard.exportedItems[item].id}_wizard-item-nav"
+              data-cmp-hook-adaptiveFormWizard="wizardpanel">
+          <sly data-sly-resource=${item}>
+          </sly>
+      </div>
+  </sly>
+</div>
+
+  <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}">
+  </sly>
+<sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
+  <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.wizard.v1.runtime'}"/>
+</sly>
+</div>
