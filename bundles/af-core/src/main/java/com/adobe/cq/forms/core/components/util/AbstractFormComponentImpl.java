@@ -42,6 +42,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -108,6 +110,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private static final String RULES_STATUS_PROP_NAME = "validationStatus";
 
     private static final String NULL_DATA_REF = "null";
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFormComponentImpl.class);
 
     @PostConstruct
     protected void initBaseModel() {
@@ -457,8 +461,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, String> getCustomProperties() {
-        return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
-            .map(CustomPropertyInfo::getProperties)
-            .orElse(Collections.emptyMap());
+        try {
+            return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+                .map(CustomPropertyInfo::getProperties)
+                .orElse(Collections.emptyMap());
+        } catch (NoClassDefFoundError e) {
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
+            return Collections.emptyMap();
+        }
     }
 }
