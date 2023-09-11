@@ -2007,7 +2007,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             
 <hr>
 <dt>
-    <h4 class="name" id="registerConfig"><span class="type-signature"></span>registerConfig(key, config [, formContainerPath])</h4>
+    <h4 class="name" id="registerConfig"><span class="type-signature"></span>registerConfig(key, config)</h4>
     
     
 </dt>
@@ -2038,11 +2038,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -2068,19 +2064,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>The key for which to register the configuration.</p></td>
@@ -2107,65 +2091,10 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>The configuration object or function.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>formContainerPath</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-|
-
-<span class="param-type">null</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last"><p>The form container path to associate with the configuration.</p></td>
         </tr>
 
     
@@ -2258,6 +2187,145 @@ The subscriber must first be connected to GuideBridge to be able to use this API
     <pre class="sunlight-highlight-javascript">// Register a function configuration for additional behavior
 guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () =&gt; console.log(&#x27;Function config&#x27;));</pre>
 
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="resolveNode"><span class="type-signature"></span>resolveNode(qualifiedName)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Given a qualifiedName, returns the form element model having the same qualified name.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>qualifiedName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>qualified name of the Adaptive Form component</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>form element model having the same qualified name or null if not found</p>
+</div>
+
+
+
+
+        
 
     
 </dd>
@@ -4348,7 +4416,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             
 <hr>
 <dt>
-    <h4 class="name" id="registerConfig"><span class="type-signature"></span>registerConfig(key, config [, formContainerPath])</h4>
+    <h4 class="name" id="registerConfig"><span class="type-signature"></span>registerConfig(key, config)</h4>
     
     
 </dt>
@@ -4379,11 +4447,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
-        
-        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -4409,19 +4473,7 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>The key for which to register the configuration.</p></td>
@@ -4448,65 +4500,10 @@ The subscriber must first be connected to GuideBridge to be able to use this API
             </td>
 
             
-                <td class="attributes">
-                
 
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>The configuration object or function.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>formContainerPath</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-|
-
-<span class="param-type">null</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last"><p>The form container path to associate with the configuration.</p></td>
         </tr>
 
     
@@ -4599,6 +4596,145 @@ The subscriber must first be connected to GuideBridge to be able to use this API
     <pre class="sunlight-highlight-javascript">// Register a function configuration for additional behavior
 guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () =&gt; console.log(&#x27;Function config&#x27;));</pre>
 
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="resolveNode"><span class="type-signature"></span>resolveNode(qualifiedName)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Given a qualifiedName, returns the form element model having the same qualified name.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>qualifiedName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>qualified name of the Adaptive Form component</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>form element model having the same qualified name or null if not found</p>
+</div>
+
+
+
+
+        
 
     
 </dd>
