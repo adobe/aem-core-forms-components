@@ -50,7 +50,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
-    private String[] enumNames;
+    protected String[] enumNames;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "areOptionsRichText")
     @Nullable

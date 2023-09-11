@@ -17,7 +17,7 @@
 
 
     "use strict";
-    class CheckBox extends FormView.FormFieldBase {
+    class CheckBox extends FormView.FormCheckBox {
 
         static NS = FormView.Constants.NS;
         /**
@@ -67,34 +67,6 @@
 
         getTooltipDiv() {
             return this.element.querySelector(CheckBox.selectors.tooltipDiv);
-        }
-
-        setModel(model) {
-            super.setModel(model);
-            this._onValue = this._model._jsonModel.enum[0];
-            this._offValue = this._model._jsonModel.enum[1];
-            this.widget.addEventListener('change', (e) => {
-                if (this.widget.checked) {
-                    this._model.value = this._onValue;
-                } else {
-                    this._model.value = this._offValue;
-                }
-            })
-
-        }
-
-        updateValue(modelValue) {
-            if (modelValue === this._model._jsonModel.enum[0]) {
-                this.widget.checked = true
-                this.widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
-                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
-            } else {
-                this.widget.checked = false
-                this.widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
-            }
-            this.widget.value = modelValue;
-            super.updateEmptyStatus();
         }
     }
     FormView.Utils.setupField(({element, formContainer}) => {

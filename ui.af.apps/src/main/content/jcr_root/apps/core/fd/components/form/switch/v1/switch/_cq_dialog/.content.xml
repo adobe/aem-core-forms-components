@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Adaptive Form Switch"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          extraClientlibs="[core.forms.components.switch.v1.editor]"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_switch_v1"
+          trackingFeature="core-components:adaptiveform-switch:v1">
+    <content jcr:primaryType="nt:unstructured"
+             granite:class="cmp-adaptiveform-switch__editdialog"
+             sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                  maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic jcr:primaryType="nt:unstructured"
+                           jcr:title="Basic"
+                           sling:resourceType="granite/ui/components/coral/foundation/container"
+                           active="{Boolean}true"
+                           selected="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <enums jcr:primaryType="nt:unstructured"
+                                                   sling:orderBefore="bindref"
+                                                   sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                 wrapperClass="cmp-adaptiveform-switch__enums"
+                                                                 fieldDescription="Provide switch state data and display text for each option."
+                                                                 fieldLabel="Options">
+                                                    </enumOptions>
+                                                </items>
+                                            </enums>
+                                            <type jcr:primaryType="nt:unstructured"
+                                                  sling:orderBefore="visible"
+                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                  granite:class="cmp-adaptiveform-switch__type"
+                                                  fieldLabel="Data type of submitted value"
+                                                  required="{Boolean}true"
+                                                  name="./type"
+                                                  key="String"
+                                                  value="string">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                                                    <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean"/>
+                                                    <number jcr:primaryType="nt:unstructured" text="Number" value="number"/>
+                                                </items>
+                                            </type>
+                                            <enumsCustom jcr:primaryType="nt:unstructured"
+                                                       sling:orderBefore="enums"
+                                                       sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                       granite:class="cmp-adaptiveform-switch__enums">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <checkedValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:hideResource="{Boolean}true"
+                                                            name="./checkedValue"/>
+                                                    <enableUncheckedValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                            wrapperClass="cmp-adaptiveform-switch__enable-unchecked-value"
+                                                            name="./enableUncheckedValue"
+                                                            fieldLabel="Preserve Uncheck state value."
+                                                            fieldDescription="Specify the value to be returned when the switch is not on by the user."
+                                                            uncheckedValue="false"
+                                                            value="true">
+                                                    </enableUncheckedValue>
+                                                    <unCheckedValue
+                                                            sling:hideResource="{Boolean}true"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            name="./uncheckedValue"/>
+                                                </items>
+                                            </enumsCustom>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

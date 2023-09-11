@@ -23,14 +23,27 @@ import org.apache.sling.models.annotations.Model;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.Switch;
 import com.adobe.cq.forms.core.components.util.AbstractCheckboxImpl;
+
+import javax.annotation.PostConstruct;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { CheckBox.class, ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_V1 })
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class CheckBoxImpl extends AbstractCheckboxImpl implements CheckBox {}
+    adapters = { Switch.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_SWITCH_V1 })
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+public class SwitchImpl extends AbstractCheckboxImpl implements Switch {
+    @PostConstruct
+    public void initSwitchModel() {
+        if (enumNames != null) {
+            String[] enumNameArray = enumNames;
+            if (Boolean.TRUE.equals(enableUncheckedValue)) {
+                enumNames = new String[] { enumNameArray[0], enumNameArray[1] };
+            } else {
+                enumNames = new String[] { enumNameArray[0] };
+            }
+        }
+    }
+}

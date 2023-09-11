@@ -1,10 +1,10 @@
 {
-  "id": "checkbox-d98f771fbc",
+  "id": "switch-eebab31c57",
   "dataRef": "a.b",
   "fieldType": "checkbox",
-  "name": "checkbox-customized",
+  "name": "switch-customized",
   "visible": false,
-  "description": "checkbox-customized",
+  "description": "switch-customized",
   "tooltip": "test-short-description",
   "type": "string",
   "required": true,
@@ -16,7 +16,7 @@
   "enforceEnum": true,
   "label": {
     "visible": true,
-    "value": "checkbox-customized"
+    "value": "switch-customized"
   },
   "screenReaderText": "'Custom screen reader text'",
   "events": {
@@ -31,11 +31,19 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/checkbox-customized"
+    "fd:path": "/content/switch-customized"
   },
   "enum": [
-    "yes",
-    "no"
+    "0",
+    "1"
   ],
-  ":type": "core/fd/components/form/checkbox/v1/checkbox"
+  "enumNames": [
+    {
+      "value": "OFF"
+    },
+    {
+      "value": "ON"
+    }
+  ],
+  ":type": "core/fd/components/form/switch/v1/switch"
 }

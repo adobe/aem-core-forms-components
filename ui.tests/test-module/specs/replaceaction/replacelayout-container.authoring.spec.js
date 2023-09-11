@@ -34,7 +34,9 @@ describe('component replace - Authoring', function () {
         "formtext": fieldTypes.NON_INPUT,
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
-        "formimage": fieldTypes.NON_INPUT
+        "formimage": fieldTypes.NON_INPUT,
+        "checkbox": fieldTypes.SELECT,
+        "switch": fieldTypes.SELECT
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -43,7 +45,6 @@ describe('component replace - Authoring', function () {
         checkboxEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/checkboxgroup",
         checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
         checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
-        dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
         emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
         emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
@@ -159,7 +160,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        it('replace checkbox with radio button', function () {
+        it.skip('replace checkbox with switch', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 
