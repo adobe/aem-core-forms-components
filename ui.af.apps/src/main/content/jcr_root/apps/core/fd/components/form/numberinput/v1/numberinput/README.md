@@ -58,11 +58,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-numberinput
     ELEMENT cmp-adaptiveform-numberinput
+    ELEMENT cmp-adaptiveform-numberinput__label
+    ELEMENT cmp-adaptiveform-numberinput__label-container
     ELEMENT cmp-adaptiveform-numberinput__widget
     ELEMENT cmp-adaptiveform-numberinput__questionmark
     ELEMENT cmp-adaptiveform-numberinput__shortdescription
     ELEMENT cmp-adaptiveform-numberinput__longdescription
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-numberinput__label` and `cmp-adaptiveform-numberinput__questionmark` within the `cmp-adaptiveform-numberinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 
