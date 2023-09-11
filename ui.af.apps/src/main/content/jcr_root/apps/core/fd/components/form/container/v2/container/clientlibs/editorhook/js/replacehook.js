@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-'use strict';
 (function (window, author, Coral, channel) {
-
+    "use strict";
     const fieldTypes = {
         BINARY: 'binary',
         TEXT: 'text',

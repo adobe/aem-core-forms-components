@@ -59,14 +59,18 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-radiobutton
     ELEMENT cmp-adaptiveform-radiobutton__label
+    ELEMENT cmp-adaptiveform-radiobutton__label-container
     ELEMENT cmp-adaptiveform-radiobutton__option
-        ELEMENT cmp-adaptiveform-radiobutton__option__label
+        ELEMENT cmp-adaptiveform-radiobutton__option-label
         ELEMENT cmp-adaptiveform-radiobutton__option__widget
     ELEMENT cmp-adaptiveform-radiobutton__questionmark
     ELEMENT cmp-adaptiveform-radiobutton__shortdescription
     ELEMENT cmp-adaptiveform-radiobutton__longdescription
     ELEMENT cmp-adaptiveform-radiobutton__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-radiobutton__label` and `cmp-adaptiveform-radiobutton__questionmark` within the `cmp-adaptiveform-radiobutton__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 

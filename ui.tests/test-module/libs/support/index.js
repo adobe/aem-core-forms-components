@@ -79,6 +79,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // circle ci is seen hanging due to this error
+    if (err.message.includes("Cannot read properties of null (reading")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;

@@ -3,5 +3,5 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Wizard Layout"
   jcr:description="Wizard - a multi-step forms showing one step at a time"
-  sling:resourceSuperType="core/fd/components/form/wizard/v1/wizard"
+  sling:resourceSuperType="core/fd/components/form/wizard/v2/wizard"
   componentGroup="Core Components Examples - Adaptive Form"/>

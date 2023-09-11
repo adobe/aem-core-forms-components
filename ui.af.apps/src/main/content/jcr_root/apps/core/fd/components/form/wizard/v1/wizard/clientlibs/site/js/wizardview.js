@@ -16,7 +16,7 @@
 
 (function () {
 
-    var keyCodes = {
+    const keyCodes = {
         END: 35,
         HOME: 36,
         ARROW_LEFT: 37,
@@ -54,6 +54,8 @@
             previousButton: `.${Wizard.bemBlock}__previousNav`,
             previousButtonHidden: "cmp-adaptiveform-wizard__previousNav__hidden",
             nextButton: `.${Wizard.bemBlock}__nextNav`,
+            previousButtonV2: `.${Wizard.bemBlock}__nav--previous`,
+            nextButtonV2: `.${Wizard.bemBlock}__nav--next`,
             nextButtonHidden: "cmp-adaptiveform-wizard__nextNav__hidden",
             olTabList: `.${Wizard.bemBlock}__tabList`
         };
@@ -77,7 +79,7 @@
                  * - if so, route the "navigate" operation to enact a navigation of the Tabs based on index data
                  */
                 CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
-                var _self = this;
+                const _self = this;
                 CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-adaptiveform-wizard" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
@@ -97,15 +99,15 @@
         #cacheElements(wrapper) {
             this._elements = {};
             this._elements.self = wrapper;
-            var hooks = this._elements.self.querySelectorAll("[data-" + Wizard.NS + "-hook-" + Wizard.IS + "]");
+            const hooks = this._elements.self.querySelectorAll("[data-" + Wizard.NS + "-hook-" + Wizard.IS + "]");
 
-            for (var i = 0; i < hooks.length; i++) {
-                var hook = hooks[i];
+            for (let i = 0; i < hooks.length; i++) {
+                let hook = hooks[i];
                 if (hook.closest("[data-cmp-is=" + Wizard.IS + "]") === this._elements.self) { // only process own tab elements
-                    var key = hook.dataset[Wizard.NS + "Hook" + "Adaptiveformwizard"];
+                    let key = hook.dataset[Wizard.NS + "Hook" + "Adaptiveformwizard"];
                     if (this._elements[key]) {
                         if (!Array.isArray(this._elements[key])) {
-                            var tmp = this._elements[key];
+                            let tmp = this._elements[key];
                             this._elements[key] = [tmp];
                         }
                         this._elements[key].push(hook);
@@ -152,11 +154,11 @@
         }
 
         getPreviousButtonDiv() {
-            return this.element.querySelector(Wizard.selectors.previousButton);
+            return (this.element.querySelector(Wizard.selectors.previousButton) || this.element.querySelector(Wizard.selectors.previousButtonV2));
         }
 
         getNextButtonDiv() {
-            return this.element.querySelector(Wizard.selectors.nextButton);
+            return (this.element.querySelector(Wizard.selectors.nextButton) || this.element.querySelector(Wizard.selectors.nextButtonV2));
         }
 
         #getTabListElement() {
@@ -170,7 +172,7 @@
          * @private
          */
         #bindEvents() {
-            var _self = this;
+            const _self = this;
             this.getNextButtonDiv().addEventListener("click", function (event) {
                 _self.#navigateToNextTab();
             })
@@ -189,7 +191,7 @@
          */
         #getActiveIndex(tabs) {
             if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
+                for (let i = 0; i < tabs.length; i++) {
                     if (tabs[i].classList.contains(Wizard.selectors.active.tab)) {
                         return i;
                     }
@@ -212,9 +214,9 @@
          * @param {Object} event The keydown event
          */
         #onKeyDown(event) {
-            var index = this.#_active;
+            const index = this.#_active;
 
-            var lastIndex = this.#getCachedTabs().length - 1;
+            const lastIndex = this.#getCachedTabs().length - 1;
 
             switch (event.keyCode) {
                 case keyCodes.ARROW_LEFT:
@@ -250,10 +252,10 @@
          * @private
          */
         #refreshActive() {
-            var wizardPanels = this.#getCachedWizardPanels();
-            var tabs = this.#getCachedTabs();
+            const wizardPanels = this.#getCachedWizardPanels();
+            const tabs = this.#getCachedTabs();
             if (wizardPanels) {
-                for (var i = 0; i < wizardPanels.length; i++) {
+                for (let i = 0; i < wizardPanels.length; i++) {
                     if (i === parseInt(this.#_active)) {
                         wizardPanels[i].classList.add(Wizard.selectors.active.wizardpanel);
                         wizardPanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
@@ -278,22 +280,29 @@
          * @param {HTMLElement} element Element to focus
          */
         focusWithoutScroll(element) {
-            var x = window.scrollX || window.pageXOffset;
-            var y = window.scrollY || window.pageYOffset;
+            const x = window.scrollX || window.pageXOffset;
+            const y = window.scrollY || window.pageYOffset;
             element.focus();
             window.scrollTo(x, y);
         }
 
 
         #navigateToNextTab() {
-            var activeIndex = this.#_active;
-            var activeTabElement = this.#getCachedTabs()[activeIndex];
-            var activeChildId = activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
-            var activeChildView = this.getChild(activeChildId);
-            var validationErrorList = activeChildView.getModel().validate();
+            const activeIndex = this.#_active;
+            const activeTabElement = this.#getCachedTabs()[activeIndex];
+            const activeChildId = activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
+            const activeChildView = this.getChild(activeChildId);
+            let activeChildModel;
+            if(activeChildView) {
+                activeChildModel = activeChildView.getModel();
+            }
+            else {
+                activeChildModel = this.getModel().items.find(child => child.id === activeChildId);
+            }
+            const validationErrorList = activeChildModel.validate();
             if (validationErrorList === undefined || validationErrorList.length == 0) {
-                var tabs = this.#getCachedTabs();
-                var nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
+                let tabs = this.#getCachedTabs();
+                let nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
                 if (tabs && nextVisibleIndex >= 0) {
                     this.#navigateAndFocusTab(nextVisibleIndex);
                 }
@@ -303,9 +312,9 @@
 
 
         #navigateToPreviousTab() {
-            var activeIndex = this.#_active;
-            var tabs = this.#getCachedTabs();
-            var lastVisibleIndex = this.#findLastVisibleChildIndex(activeIndex);
+            const activeIndex = this.#_active;
+            const tabs = this.#getCachedTabs();
+            const lastVisibleIndex = this.#findLastVisibleChildIndex(activeIndex);
             if (tabs && lastVisibleIndex >= 0) {
                 this.#navigateAndFocusTab(lastVisibleIndex);
             }
@@ -320,10 +329,10 @@
          * @param {Number} total number of tabs
          */
         #hideUnhideNavButtons(activeTabIndex) {
-            let tabsLength = this.#getCachedTabs() ? this.#getCachedTabs().length : 0;
+            const tabsLength = this.#getCachedTabs() ? this.#getCachedTabs().length : 0;
 
-            let nextVisible = this.#findNextVisibleChildIndex(activeTabIndex);
-            let previousVisible = this.#findLastVisibleChildIndex(activeTabIndex);
+            const nextVisible = this.#findNextVisibleChildIndex(activeTabIndex);
+            const previousVisible = this.#findLastVisibleChildIndex(activeTabIndex);
 
             if(tabsLength === 0 || this.maxEnabledTab <= this.minEnabledTab) {
                 this.getPreviousButtonDiv().setAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE,"false");
@@ -347,7 +356,7 @@
         }
 
         #setNavigationRange() {
-            let wizardPanels = this.#getCachedWizardPanels();
+            const wizardPanels = this.#getCachedWizardPanels();
             if(wizardPanels) {
                 this.maxEnabledTab = wizardPanels.length-1;
                 this.minEnabledTab = 0;
@@ -375,9 +384,9 @@
         }
 
         #findNextVisibleChildIndex(currentIndex) {
-            var tabs = this.#getCachedTabs();
-            let tabsLength = tabs? tabs.length : 0;
-            for (var i = currentIndex + 1; i < tabsLength; i++) {
+            const tabs = this.#getCachedTabs();
+            const tabsLength = tabs? tabs.length : 0;
+            for (let i = currentIndex + 1; i < tabsLength; i++) {
                 let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
                 if (isVisible === null || isVisible === 'true') {
                     return i;
@@ -387,9 +396,9 @@
         }
 
         #findLastVisibleChildIndex(currentIndex) {
-            var tabs = this.#getCachedTabs();
+            const tabs = this.#getCachedTabs();
             if(tabs) {
-                for (var i = currentIndex - 1; i >= 0; i--) {
+                for (let i = currentIndex - 1; i >= 0; i--) {
                     let isVisible = tabs[i].getAttribute(Wizard.DATA_ATTRIBUTE_VISIBLE);
                     if (isVisible === null || isVisible === 'true') {
                         return i;
@@ -423,11 +432,11 @@
         }
 
         #syncWizardNavLabels() {
-            var tabs = this.#getCachedTabs();
-            var wizardPanels = this.#getCachedWizardPanels();
+            const tabs = this.#getCachedTabs();
+            const wizardPanels = this.#getCachedWizardPanels();
             if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
-                    var id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
+                for (let i = 0; i < tabs.length; i++) {
+                    let id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
                     tabs[i].id = id + Wizard.#tabIdSuffix;
                     tabs[i].setAttribute("aria-controls", id + Wizard.#wizardPanelIdSuffix);
                 }
@@ -435,10 +444,10 @@
         }
 
         #syncWizardPanels() {
-            var wizardPanels = this.#getCachedWizardPanels();
+            const wizardPanels = this.#getCachedWizardPanels();
             if (wizardPanels) {
-                for (var i = 0; i < wizardPanels.length; i++) {
-                    var id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
+                for (let i = 0; i < wizardPanels.length; i++) {
+                    let id = wizardPanels[i].querySelectorAll("[data-cmp-is]")[0].id;
                     wizardPanels[i].id = id + Wizard.#wizardPanelIdSuffix;
                     wizardPanels[i].setAttribute("aria-labelledby", id + Wizard.#tabIdSuffix);
                 }
@@ -453,30 +462,30 @@
 
         handleChildAddition(childView) {
             if (childView.getInstanceManager() != null && this._templateHTML[childView.getInstanceManager().getId()] != null) {
-                var navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab']
+                let navigationTabToBeRepeated = this._templateHTML[childView.getInstanceManager().getId()]['navigationTab']
                     .cloneNode(true);
                 navigationTabToBeRepeated.id = childView.id + Wizard.#tabIdSuffix;
                 navigationTabToBeRepeated.setAttribute("aria-controls", childView.id + Wizard.#wizardPanelIdSuffix);
-                var instanceIndex = childView.getModel().index;
-                var instanceManagerId = childView.getInstanceManager().getId()
+                let instanceIndex = childView.getModel().index;
+                let instanceManagerId = childView.getInstanceManager().getId()
                 if (instanceIndex == 0) {
-                    var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                    var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                    var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
+                    let closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                    let closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                    let indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                     if (indexToInsert == 0) {
-                        var tabListParentElement = this.#getTabListElement();
+                        let tabListParentElement = this.#getTabListElement();
                         tabListParentElement.insertBefore(navigationTabToBeRepeated, tabListParentElement.firstChild);
                     } else {
-                        var beforeElement = this.#getCachedTabs()[indexToInsert - 1];
+                        let beforeElement = this.#getCachedTabs()[indexToInsert - 1];
                         beforeElement.after(navigationTabToBeRepeated);
                     }
                 } else {
-                    var beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + Wizard.#tabIdSuffix
-                    var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
+                    let beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + Wizard.#tabIdSuffix
+                    let beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
                     beforeElement.after(navigationTabToBeRepeated);
                 }
                 this.#cacheElements(this._elements.self);
-                var repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
+                let repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
                 repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
                 this.#refreshActive();
                 this.#getTabIndexById();
@@ -487,10 +496,10 @@
         }
 
         handleChildRemoval(removedInstanceView) {
-            var removedTabPanelId = removedInstanceView.element.id + Wizard.#wizardPanelIdSuffix;
-            var removedTabNavId = removedTabPanelId.substring(0, removedTabPanelId.lastIndexOf("__")) + Wizard.#tabIdSuffix;
-            var wizardPanelElement = this.#getWizardPanelElementById(removedTabPanelId);
-            var tabNavElement = this.#getTabNavElementById(removedTabNavId);
+            let removedTabPanelId = removedInstanceView.element.id + Wizard.#wizardPanelIdSuffix;
+            let removedTabNavId = removedTabPanelId.substring(0, removedTabPanelId.lastIndexOf("__")) + Wizard.#tabIdSuffix;
+            let wizardPanelElement = this.#getWizardPanelElementById(removedTabPanelId);
+            let tabNavElement = this.#getTabNavElementById(removedTabNavId);
             tabNavElement.remove();
             wizardPanelElement.remove();
             this.children.splice(this.children.indexOf(removedInstanceView), 1);
@@ -512,8 +521,8 @@
         }
 
         getChildViewByIndex(index) {
-            var wizardPanels = this.#getCachedWizardPanels();
-            var fieldId = wizardPanels[index].id.substring(0, wizardPanels[index].id.lastIndexOf("__"));
+            let wizardPanels = this.#getCachedWizardPanels();
+            let fieldId = wizardPanels[index].id.substring(0, wizardPanels[index].id.lastIndexOf("__"));
             return this.getChild(fieldId);
         }
 
@@ -535,11 +544,11 @@
 
         #cacheTemplateHTML(childView) {
             if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
-                var tabId = childView.element.id + Wizard.#tabIdSuffix;
-                var wizardPanelId = childView.element.id + Wizard.#wizardPanelIdSuffix;
-                var instanceManagerId = childView.getInstanceManager().getId();
-                var navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
-                var wizardPanelToBeRepeated = this.#getWizardPanelElementById(wizardPanelId)
+                let tabId = childView.element.id + Wizard.#tabIdSuffix;
+                let wizardPanelId = childView.element.id + Wizard.#wizardPanelIdSuffix;
+                let instanceManagerId = childView.getInstanceManager().getId();
+                let navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
+                let wizardPanelToBeRepeated = this.#getWizardPanelElementById(wizardPanelId)
                 this._templateHTML[instanceManagerId] = {};
                 this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
                 this._templateHTML[instanceManagerId]['targetWizardPanel'] = wizardPanelToBeRepeated;
@@ -555,9 +564,9 @@
         }
 
         #getTabNavElementById(tabId) {
-            var tabs = this.#getCachedTabs();
+            let tabs = this.#getCachedTabs();
             if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
+                for (let i = 0; i < tabs.length; i++) {
                     if (tabs[i].id === tabId) {
                         return tabs[i];
                     }
@@ -566,9 +575,9 @@
         }
 
         #getWizardPanelElementById(wizardPanelId) {
-            var wizardPanels = this.#getCachedWizardPanels();
+            let wizardPanels = this.#getCachedWizardPanels();
             if (wizardPanels) {
-                for (var i = 0; i < wizardPanels.length; i++) {
+                for (let i = 0; i < wizardPanels.length; i++) {
                     if (wizardPanels[i].id === wizardPanelId) {
                         return wizardPanels[i];
                     }
@@ -577,9 +586,9 @@
         }
 
         #getTabIndexById(tabId) {
-            var tabs = this.#getCachedTabs();
+            let tabs = this.#getCachedTabs();
             if (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
+                for (let i = 0; i < tabs.length; i++) {
                     if (tabs[i].id === tabId) {
                         return i;
                     }
@@ -589,21 +598,21 @@
         }
 
         #getBeforeViewElement(instanceManager, instanceIndex) {
-            var result = {};
-            var instanceManagerId = instanceManager.getId();
+            let result = {};
+            let instanceManagerId = instanceManager.getId();
             if (instanceIndex == 0) {
-                var closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
-                var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
-                var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
-                var wizardPanels = this.#getCachedWizardPanels();
+                let closestNonRepeatableFieldId = this._templateHTML[instanceManagerId]['closestNonRepeatableFieldId'];
+                let closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
+                let indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
+                let wizardPanels = this.#getCachedWizardPanels();
                 if (indexToInsert > 0) {
                     result.beforeViewElement = this.#getWizardPanelElementById(wizardPanels[indexToInsert - 1].id);
                 } else {
                     result.beforeViewElement = this.getPreviousButtonDiv();
                 }
             } else {
-                var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
+                let previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
+                let previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
                 result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
             }
             return result;
@@ -611,7 +620,7 @@
 
         updateChildVisibility(visible, state) {
             this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
-            var activeTabNavElement = this.#getCachedTabs()[this.#_active];
+            let activeTabNavElement = this.#getCachedTabs()[this.#_active];
             this.#setNavigationRange();
             this.#hideUnhideNavButtons(this.#_active);
             if (!visible && activeTabNavElement.id === state.id + Wizard.#tabIdSuffix) {
