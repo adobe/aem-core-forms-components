@@ -66,7 +66,7 @@
                                             </type>
                                             <!--<enumOptions jcr:primaryType="nt:unstructured"
                                               sling:hideResource="{Boolean}true" />-->
-                                            <enums_123 jcr:primaryType="nt:unstructured"
+                                            <enumsCustom jcr:primaryType="nt:unstructured"
                                               sling:resourceType="granite/ui/components/coral/foundation/container"
                                               granite:class="cmp-adaptiveform-checkbox__enums">
                                                 <items jcr:primaryType="nt:unstructured">
@@ -76,20 +76,20 @@
                                                   fieldLabel="When Checked, return value"
                                                   fieldDescription="Specify the value to be returned when the checkbox is checked by the user."
                                                   name="./checkedValue"/>
-                                                <enableUncheckedValue
+                                                <preserveUncheckedStateValue
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/switch"
                                                   wrapperClass="cmp-adaptiveform-checkbox__enable-unchecked-value"
-                                                  name="./enableUncheckedValue"
-                                                  fieldLabel="Enable Uncheck."
+                                                  name="./preserveUncheckedStateValue"
+                                                  fieldLabel="Preserve Uncheck state value."
                                                   fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
                                                   uncheckedValue="false"
                                                   value="true">
-                                                </enableUncheckedValue>
-                                                <enableUncheckedValue-typehint
+                                                </preserveUncheckedStateValue>
+                                                <preserveUncheckedStateValue-typehint
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                  name="./enableUncheckedValue@TypeHint"
+                                                  name="./preserveUncheckedStateValue@TypeHint"
                                                   value="Boolean"/>
                                                 <unCheckedValue
                                                   wrapperClass="cmp-adaptiveform-checkbox__uncheckedvalue"
@@ -98,7 +98,7 @@
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                   name="./uncheckedValue"/>
                                                 </items>
-                                            </enums_123>
+                                            </enumsCustom>
                                             <defaultValue
                                               wrapperClass="cmp-adaptiveform-checkbox__value"
                                               jcr:primaryType="nt:unstructured"

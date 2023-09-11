@@ -56,7 +56,7 @@ public class CheckBoxImplTest {
 
     private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
 
-    private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
+    private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-preserveUncheckedStateValueFalse";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -336,7 +336,7 @@ public class CheckBoxImplTest {
     }
 
     @Test
-    void shouldOnlyHaveOnEnumIfEnableUncheckedValueOff() {
+    void shouldOnlyHaveOnEnumIfPreserveUncheckedStateValueOff() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDOFF);
         assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
     }

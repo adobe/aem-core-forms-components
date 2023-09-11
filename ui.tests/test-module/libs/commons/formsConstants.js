@@ -44,6 +44,7 @@ var formsConstants = {
                 "wizard": "/apps/forms-components-examples/components/form/wizard",
                 "title": "/apps/forms-components-examples/components/form/title",
                 "checkbox": "/apps/forms-components-examples/components/form/checkbox",
+                "switch": "/apps/forms-components-examples/components/form/switch",
                 "fragment": "/apps/forms-components-examples/components/form/fragment",
                 "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
             }

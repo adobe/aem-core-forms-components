@@ -48,15 +48,15 @@
 
   /**
    * The off value of a checkbox is optional, if not defined then no value will be submitted when the checkbox is not selected.
-   * To explicitly send the off value, user needs to switch the 'enableUncheckedValue' on.
+   * To explicitly send the off value, user needs to switch the 'preserveUncheckedStateValue' on.
    * @param dialog
    */
   function handleUncheckedValue(dialog) {
-    var enabledCheckedValueSwitch = $('coral-switch[name="./enableUncheckedValue"]')[0];
+    var enabledCheckedValueSwitch = $('coral-switch[name="./preserveUncheckedStateValue"]')[0];
     var isChecked = enabledCheckedValueSwitch.hasAttribute('checked');
     var uncheckedValueBox = $(UNCHECKED_VALUE);
 
-    var enableCheckedValueInput = $('input[name="./enableUncheckedValue"]')[0];
+    var enableCheckedValueInput = $('input[name="./preserveUncheckedStateValue"]')[0];
 
     enableCheckedValueInput.addEventListener("click", function() {
       isChecked = !isChecked;
@@ -118,7 +118,7 @@
     registerValidator('input[name="./default"]');
     registerValidator('input[name="./uncheckedValue"]', function() {
       var isValid = true;
-      var enabledCheckedValueSwitch = $('coral-switch[name="./enableUncheckedValue"]')[0];
+      var enabledCheckedValueSwitch = $('coral-switch[name="./preserveUncheckedStateValue"]')[0];
       var isChecked = enabledCheckedValueSwitch.hasAttribute('checked');
       if (isChecked) {
         var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
@@ -140,7 +140,7 @@
     $(switchWrapper).css({"display":"flex", "margin-bottom":"1px"});
     var label = $(switchWrapper).find('label[class="coral-Form-fieldlabel"]')[0];
     $(label).css('padding-right', '20px');
-    var switchBtn = dialog.find('coral-switch[name="./enableUncheckedValue"]')[0];
+    var switchBtn = dialog.find('coral-switch[name="./preserveUncheckedStateValue"]')[0];
     $(switchBtn).css({"width":"40px"});
   }
 
