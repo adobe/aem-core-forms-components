@@ -94,7 +94,7 @@
 
     var registerValidator = function(selector, validate) {
       if (!validate) {
-        validate = function() {
+          validate = function() {
           var isValid = true;
           var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
           var value = document.querySelector(selector).value;

@@ -54,19 +54,20 @@ describe("Form Runtime with CheckBox Input", () => {
         })
     }
 
-    // it(" should get model and view initialized properly ", () => {
-    //     expect(formContainer, "formcontainer is initialized").to.not.be.null;
-    //     expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-    //     Object.entries(formContainer._fields).forEach(([id, field]) => {
-    //         expect(field.getId()).to.equal(id)
-    //         expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-    //     });
-    // })
+    it(" should get model and view initialized properly ", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            expect(field.getId()).to.equal(id)
+            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
+        });
+    })
 
     it(" model's changes are reflected in the html ", () => {
-        debugger;
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
+        model.value = 'true'
+
         checkHTML(model.id, model.getState()).then(() => {
             return checkHTML(model.id, model.getState())
         }).then(() => {
