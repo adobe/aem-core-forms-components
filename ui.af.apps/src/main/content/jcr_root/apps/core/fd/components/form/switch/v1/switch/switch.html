@@ -21,11 +21,11 @@
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
 
-<div class="cmp-adaptiveform-switch"
+<div data-sly-use.switch="com.adobe.cq.forms.core.components.models.form.Switch"
+     class="cmp-adaptiveform-switch"
      data-cmp-is="adaptiveFormSwitch"
      id="${switch.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.switch="com.adobe.cq.forms.core.components.models.form.Switch"
      data-cmp-visible="${switch.visible ? 'true' : 'false'}"
      data-cmp-enabled="${switch.enabled ? 'true' : 'false'}"
      data-cmp-required="${switch.required ? 'true': 'false'}"

@@ -22,12 +22,13 @@
         LIST: 'list',
         DATE: 'date',
         NON_INPUT: 'nonInputReadOnly',
-        CONTAINER: 'container'
+        CONTAINER: 'container',
+        CHECKBOX: 'checkbox'
     }
     const typeMap = {
         'button': fieldTypes.NON_INPUT,
         'checkbox-group': fieldTypes.SELECT,
-        'checkbox': fieldTypes.NON_INPUT,
+        'checkbox': fieldTypes.CHECKBOX,
         'date-input': fieldTypes.TEXT,
         'drop-down': fieldTypes.SELECT,
         'email': fieldTypes.TEXT,
@@ -45,8 +46,8 @@
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
-    const cannotBeReplacedWith = ['file-input', 'checkbox'],
-        irreplaceable = ['file-input', 'checkbox'],
+    const cannotBeReplacedWith = ['file-input'],
+        irreplaceable = ['file-input'],
         editableJsonPath = '.model.json',
         componentJsonPath = '.json';
 
