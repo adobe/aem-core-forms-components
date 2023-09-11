@@ -1,0 +1,40 @@
+{
+  ":type": "core/fd/components/form/switch/v1/switch",
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "dataRef": "a.b",
+  "description": "dummy",
+  "enforceEnum": true,
+  "enum": [
+    "0",
+    "1"
+  ],
+  "enumNames": [
+    "OFF",
+    "ON"
+  ],
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "fieldType": "checkbox",
+  "id": "switch-db8ba77543",
+  "label": {
+    "value": "def"
+  },
+  "name": "abc",
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/switch"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "tooltip": "test-short-description",
+  "type": "string"
+}

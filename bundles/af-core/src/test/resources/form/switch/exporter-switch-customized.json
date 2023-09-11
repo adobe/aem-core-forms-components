@@ -1,0 +1,45 @@
+{
+  "id": "switch-eebab31c57",
+  "dataRef": "a.b",
+  "fieldType": "checkbox",
+  "name": "switch-customized",
+  "visible": false,
+  "description": "switch-customized",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": true,
+  "enabled": false,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": true,
+  "enforceEnum": true,
+  "label": {
+    "visible": true,
+    "value": "switch-customized"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/switch-customized"
+  },
+  "enum": [
+    "0",
+    "1"
+  ],
+  "enumNames": [
+    "OFF",
+    "ON"
+  ],
+  ":type": "core/fd/components/form/switch/v1/switch"
+}
