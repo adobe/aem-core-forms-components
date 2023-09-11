@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -41,7 +42,10 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -106,6 +110,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private static final String RULES_STATUS_PROP_NAME = "validationStatus";
 
     private static final String NULL_DATA_REF = "null";
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFormComponentImpl.class);
 
     @PostConstruct
     protected void initBaseModel() {
@@ -233,19 +239,23 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
+        Map<String, Object> properties = new LinkedHashMap<>();
+        Map<String, String> customProperties = getCustomProperties();
+        if (customProperties.size() > 0) {
+            customProperties.forEach(properties::putIfAbsent);
+        }
         if (getCustomLayoutProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
+            properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
         if (getDorProperties().size() > 0) {
-            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
-        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
+        properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
-            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
-        return customProperties;
+        return properties;
     }
 
     @Override
@@ -445,4 +455,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
     }
 
+    /**
+     * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
+     *
+     * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
+     */
+    private Map<String, String> getCustomProperties() {
+        try {
+            return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+                .map(CustomPropertyInfo::getProperties)
+                .orElse(Collections.emptyMap());
+        } catch (NoClassDefFoundError e) {
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
+            return Collections.emptyMap();
+        }
+    }
 }

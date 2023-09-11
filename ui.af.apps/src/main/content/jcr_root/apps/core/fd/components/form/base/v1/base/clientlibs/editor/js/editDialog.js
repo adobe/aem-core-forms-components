@@ -27,7 +27,8 @@
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
         BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
-        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path";
+        V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
     /**
@@ -102,8 +103,8 @@
     }
 
     var getFormPath = function(contentPath) {
-            return contentPath.replace(Granite.HTTP.getContextPath(), "");
-        }
+        return contentPath.replace(Granite.HTTP.getContextPath(), "");
+    }
 
     function handleAssistPriority(dialog) {
         var baseAssistPriority = dialog.find(BASE_ASSISTPRIORITY)[0];
@@ -115,21 +116,8 @@
                     baseAssistPriority.value)
             });
             checkAndDisplay(baseAssistPriorityCustomText,
-            "custom",
+                "custom",
                 baseAssistPriority.value)
-        }
-    }
-
-    /**
-     * Prefills all the multifield values in enum Names and deletes the hidden input
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function prefillEnumNames(dialog) {
-        var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
-        var hiddenEnumNames = dialog.find(BASE_ENUMNAMES_HIDDEN);
-        for (var i = 0; i < hiddenEnumNames.length; i++) {
-            visibleEnumNames[i].value = hiddenEnumNames[i].value;
-            hiddenEnumNames[i].remove();
         }
     }
 
@@ -151,8 +139,11 @@
 
     function handleDialogSubmit(dialog){
         var submitButton=dialog.find(".cq-dialog-submit")[0];
-        submitButton.addEventListener("click",_manageDialogSubmit);
-        function _manageDialogSubmit(){
+        submitButton.addEventListener("click", () => {
+            _manageEmptyEnumNames();
+        });
+
+        function _manageEmptyEnumNames() {
             var enums = dialog.find(BASE_ENUM);
             var visibleEnumNames = dialog.find(BASE_ENUMNAMES_VISIBLE);
 
@@ -179,7 +170,7 @@
             });
         }
         handleAssistPriority(dialog);
-        prefillEnumNames(dialog);
+        Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
         validateName();
         handleDialogSubmit(dialog);
