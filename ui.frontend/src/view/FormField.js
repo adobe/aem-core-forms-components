@@ -79,7 +79,11 @@ class FormField {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
         }
         if (this.parentView && this.parentView.setActive) {
-            this.parentView.setActive();
+            this.parentView.setActive(this);
+        } 
+
+        if(this.parentView) { 
+            this.parentView._model.activeChild = this._model; // updating the activeChild of the model when view is changed
         }
     }
 
