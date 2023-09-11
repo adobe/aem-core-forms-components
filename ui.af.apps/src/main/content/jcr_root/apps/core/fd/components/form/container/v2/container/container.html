@@ -39,5 +39,7 @@
              data-sly-resource="${paragraph.path @ resourceType=paragraph.resourceType, decorationTagName='div', cssClassName=paragraph.cssClass}"></sly>
         <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/responsivegrid/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
              data-sly-test="${!isAllowedApplicable && (wcmmode.edit || wcmmode.preview)}"></sly>
+        <sly data-sly-use="${'removeattribute.js' @ referencedPage }"/>
     </div>
 </form>
+

@@ -1,0 +1,52 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-aem-responsive-grid-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "allowedComponents": {
+      "$ref": "./adaptive-form-aem-allowed-components.schema.json"
+    },
+    "appliedCssClassNames": {
+      "title": "CSS classes delimited using a SPACE character",
+      "description": "Describes the style system information associated with the current form element",
+      "type": "string",
+      "examples": [
+        {
+          "appliedCssClassNames": "outlined red-border"
+        }
+      ]
+    },
+    "gridClassNames": {
+      "title": "The CSS class names to be applied to the current panel delimited using a SPACE character",
+      "description": "This is applicable only if the panel's layout is grid system.",
+      "type": "string",
+      "examples": [
+        {
+          "gridClassNames": "aem-Grid aem-Grid--12 aem-Grid--default--12"
+        }
+      ]
+    },
+    "columnClassNames": {
+      "title": "The CSS class names associated with each responsive grid column and listed by column name",
+      "description": "This is applicable only if the panel's layout is grid system.",
+      "type": "object",
+      "examples": [
+        {
+          "columnClassNames": {
+            "title_v3": "aem-GridColumn aem-GridColumn--default--12"
+          }
+        }
+      ]
+    },
+    "columnCount": {
+      "title": "The number of columns available for direct children in the panel.",
+      "description": "This is applicable only if the panel's layout is grid system.",
+      "type": "number",
+      "examples": [
+        {
+          "columnCount": 12
+        }
+      ]
+    }
+  }
+}

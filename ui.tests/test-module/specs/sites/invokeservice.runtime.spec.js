@@ -17,6 +17,15 @@ describe("Invoke Service", () => {
     const pagePath = "content/forms/sites/core-components-it/blank.html";
 
     let formContainer = null;
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
     if (cy.af.isLatestAddon()) {
         it("should execute for forms inside sites", () => {
@@ -24,7 +33,11 @@ describe("Invoke Service", () => {
             cy.previewForm(pagePath)
             cy.wait('@invokeService').then(({response}) => {
                 expect(response.statusCode).to.equal(400);
-                expect(response.body).to.contain('Invalid form data model path');
+                if (toggle_array.includes("FT_FORMS-3512")) {
+                    expect(response.body).to.contain('Invalid form data model path');
+                } else {
+                    expect(response.body).to.contain('Error During Form Submission');
+                }
             });
         })
     }

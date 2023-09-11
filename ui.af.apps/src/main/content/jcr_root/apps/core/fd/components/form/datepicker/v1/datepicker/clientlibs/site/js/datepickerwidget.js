@@ -60,9 +60,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
       width: 433,
       viewHeight: 248,
       locale: {
-        days: [1, 2, 3, 4, 5, 6, 7].map(d => new Date(2001, 0, d)),
-        months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
-            m => new Date(2000, m, 1)),
+        days: ["S","M","T","W","T","F","S"],
+        months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
         zero: "0",
         clearText: "Clear",
         name: "en_US"
@@ -156,10 +155,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
       let displayValueFn = () => {
         return model.displayValue;
       };
+      this.#localizeDateElements(this.#defaultOptions, this.#lang);
       this.#options = Object.assign(
           {editValue: editValFn, displayValue: displayValueFn},
           this.#defaultOptions, this.#model._jsonModel);
-      this.#localizeDateElements(this.#options);
 
       this.#initialiseCalenderElement();
 
@@ -511,7 +510,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!DatePickerWidget.#visible) {
         let date,
             validDate;
-        validDate = this.#curInstance.selectedDate;
+        
+        validDate = this.#curInstance.selectedDate || this.#model.value;
         date = validDate ? new Date(validDate) : new Date();
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
@@ -583,6 +583,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
       this.#dp.style.top = styles.top;
       this.#dp.style.left = styles.left;
+      const localeObj = new Intl.Locale(this.#lang);
+      if(localeObj?.textInfo?.direction == "rtl") {
+        this.#dp.style.right = styles.left;
+        this.#dp.style.left = "unset"
+      }
       return this;
     }
 
@@ -1067,19 +1072,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
     }
 
-    #localizeDateElements(options, locale) {
-      options.locale.months = options.locale.months.map(month => {
-        const parts = new Intl.DateTimeFormat(locale,
-            {month: "long"}).formatToParts(month);
-        const m = parts.find(p => p.type === 'month');
-        return m && m.value;
-      });
-      options.locale.days = options.locale.days.map(day => {
-        const parts = new Intl.DateTimeFormat(locale,
-            {weekday: 'short'}).formatToParts(day);
-        const m = parts.find(p => p.type === 'weekday');
-        return m && m.value[0];
-      });
+    #localizeDateElements(defaultOptions, locale) {
+        var calendarSymbols = FormView.LanguageUtils.getTranslatedString(locale, "calendarSymbols");
+        defaultOptions.locale.days = calendarSymbols.abbrdayNames;
+        defaultOptions.locale.months = calendarSymbols.monthNames;
+        defaultOptions.locale.clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
     }
 
     #isEditValueOrDisplayValue(value) {

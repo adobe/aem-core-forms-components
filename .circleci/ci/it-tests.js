@@ -23,7 +23,8 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
+const isLatestAddon = AEM === 'addon-latest';
 
 try {
     ci.stage("Integration Tests");
@@ -55,8 +56,11 @@ try {
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
     }
-    // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
-    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+
+    if (FT === 'true') {
+        // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+    }
 
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
@@ -65,8 +69,8 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'], isLatestAddon ? true : false)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'], isLatestAddon ? true : false)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \

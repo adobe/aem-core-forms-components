@@ -19,7 +19,8 @@
           xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
           jcr:primaryType="nt:unstructured"
           jcr:title="Adaptive Form Field"
-          sling:resourceType="cq/gui/components/authoring/dialog">
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          trackingFeature="core-components:design-dialog:adaptiveform-telephoneinput:v1">
     <content
             jcr:primaryType="nt:unstructured"
             granite:class="cmp-adaptiveform-telephoneinput__designdialog"

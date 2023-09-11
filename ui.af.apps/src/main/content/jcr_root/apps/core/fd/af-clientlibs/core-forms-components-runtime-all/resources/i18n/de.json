@@ -19,5 +19,70 @@
   "validationExpression"        :   "Please enter a valid value.",
   "maxFileSize"                 :   "File too large. Reduce size and try again.",
   "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field"
+  "defaultError"                :   "There is an error in the field",
+  "clearText"                   :   "Löschen",
+  "calendarSymbols" : {
+    "monthNames" : [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ],
+    "abbrmonthNames" : [
+      "Jan",
+      "Feb",
+      "Mrz",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dez"
+    ],
+    "dayNames" : [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag"
+    ],
+    "abbrdayNames" : [
+      "So",
+      "Mo",
+      "Di",
+      "Mi",
+      "Do",
+      "Fr",
+      "Sa"
+    ],
+    "meridiemNames" : [
+      "vorm.",
+      "nachm."
+    ],
+    "eraNames" : [
+      "v. Chr.",
+      "n. Chr."
+    ],
+    "day": "day",
+    "days": "days",
+    "month": "month",
+    "months": "months",
+    "year": "year",
+    "years": "years",
+    "more": "more",
+    "less": "less"
+  }
 }

@@ -406,20 +406,32 @@ class GuideBridge {
      * Register a configuration for a specific key.
      * @param {string} key - The key for which to register the configuration.
      * @param {Object|Function} config - The configuration object or function.
-     * @param {string|null} [formContainerPath=null] - The form container path to associate with the configuration.
      * @returns {Array} - An array of configurations associated with the key.
      * @example
      *
      * // Register a function configuration for additional behavior
      * guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () => console.log('Function config'));
      */
-    registerConfig(key, config, formContainerPath = null) {
+    registerConfig(key, config) {
         if (!this.#userConfig[key]) {
             this.#userConfig[key] = [];
         }
-        const configEntry = typeof config === 'function' ? { fn: config, formContainerPath } : { ...config, formContainerPath };
+        const configEntry = typeof config === 'function' ?
+            { fn: config, formContainerPath : this.#formContainerPath } :
+            { ...config, formContainerPath : this.#formContainerPath };
         this.#userConfig[key].push(configEntry);
         return this.#userConfig[key];
+    }
+
+
+    /**
+     * Given a qualifiedName, returns the form element model having the same qualified name.
+     * @param {string} qualifiedName qualified name of the Adaptive Form component
+     * @returns form element model having the same qualified name or null if not found
+     */
+    resolveNode(qualifiedName) {
+        let formModel = this.getFormModel();
+        return formModel.resolveQualifiedName(qualifiedName);
     }
 
     /**
