@@ -15,13 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
-import com.adobe.cq.forms.core.components.models.form.Switch;
-import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -30,15 +28,19 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
-import java.util.Map;
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.Switch;
+import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
-        adaptables = {SlingHttpServletRequest.class, Resource.class},
-        adapters = {Switch.class,
-                ComponentExporter.class},
-        resourceType = {FormConstants.RT_FD_FORM_SWITCH_V1})
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Switch.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_SWITCH_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class SwitchImpl extends AbstractOptionsFieldImpl implements Switch {
 
