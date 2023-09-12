@@ -1,0 +1,37 @@
+name: Conditional Specification Validation
+
+on:
+  pull_request:
+    paths:
+      - '**/resources/schema/**/*.json'
+
+jobs:
+  validate_specification:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Fetch Base and Head References
+        run: |
+          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
+        if: github.event_name == 'pull_request'
+
+      - name: Validate Changes and Commit Message
+        run: |
+          # Check for changes in specification files inside the resources folder
+          changed_files=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }})
+
+          # Fetch the commit messages from the PR
+          commit_messages=$(git log --pretty=oneline ${{ github.base_ref }}..${{ github.head_ref }})
+
+          # Check if any commit message contains a specific keyword or pattern (e.g., "RTC")
+          if echo "$commit_messages" | grep -q 'RTC' && echo "$changed_files" | grep -E 'resources/schema/.*\.json$'; then
+            echo "Commit message contains 'RTC' keyword, and specification files have changed. Build passed."
+          else
+            echo "Either commit message doesn't contain 'RTC' keyword or specification files haven't changed. Build failed."
+            exit 1
+          fi
+        shell: bash
