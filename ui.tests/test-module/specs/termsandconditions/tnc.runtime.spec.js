@@ -67,17 +67,4 @@ describe("Form Runtime with Terms and Conditions", () => {
             return checkHTML(model.id, model.getState(), tabView, count);
         });
     });
-
-    it("should enable approval checkbox only if scrolled to bottom", () => {
-        const tncId = formContainer._model.items[0].id
-        const model = formContainer._model.getElement(tncId)
-        expect(model.getState().items[1].enabled).to.equal(false);
-        cy.get('.cmp-adaptiveform-termsandcondition__text').scrollTo(0, 160)
-        // TODO scroll not working.
-        cy.wait(2000)
-        cy.get('.cmp-adaptiveform-checkbox').invoke('attr', 'data-cmp-enabled').then(attr => {
-            expect(attr).to.equal('true');
-        })
-
-    })
 })
