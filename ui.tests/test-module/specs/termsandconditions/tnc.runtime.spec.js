@@ -45,28 +45,28 @@ describe("Form Runtime with Terms and Conditions", () => {
         return cy.get(`#${id}`);
     };
 
-    // it(" should get model and view initialized properly and parent child relationship is set ", () => {
-    //     expect(formContainer, "formcontainer is initialized").to.not.be.null;
-    //     const fields = formContainer.getAllFields();
-    //     Object.entries(fields).forEach(([id, field]) => {
-    //         expect(field.getId()).to.equal(id);
-    //         expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel());
-    //     });
-    // });
-    //
-    // it(" model's changes are reflected in the html ", () => {
-    //     const tncId = formContainer._model.items[0].id
-    //     const model = formContainer._model.getElement(tncId)
-    //     const tabView = formContainer.getAllFields()[tncId];
-    //     const count = 3;
-    //     checkHTML(model.id, model.getState(), tabView, count).then(() => {
-    //         model.visible = false;
-    //         return checkHTML(model.id, model.getState(), tabView, count);
-    //     }).then(() => {
-    //         model.enable = false;
-    //         return checkHTML(model.id, model.getState(), tabView, count);
-    //     });
-    // });
+    it(" should get model and view initialized properly and parent child relationship is set ", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        const fields = formContainer.getAllFields();
+        Object.entries(fields).forEach(([id, field]) => {
+            expect(field.getId()).to.equal(id);
+            expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel());
+        });
+    });
+
+    it(" model's changes are reflected in the html ", () => {
+        const tncId = formContainer._model.items[0].id
+        const model = formContainer._model.getElement(tncId)
+        const tabView = formContainer.getAllFields()[tncId];
+        const count = 3;
+        checkHTML(model.id, model.getState(), tabView, count).then(() => {
+            model.visible = false;
+            return checkHTML(model.id, model.getState(), tabView, count);
+        }).then(() => {
+            model.enable = false;
+            return checkHTML(model.id, model.getState(), tabView, count);
+        });
+    });
 
     it("should enable approval checkbox only if scrolled to bottom", () => {
         const tncId = formContainer._model.items[0].id
