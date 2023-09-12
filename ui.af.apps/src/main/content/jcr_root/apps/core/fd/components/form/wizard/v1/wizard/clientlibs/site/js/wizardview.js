@@ -280,10 +280,12 @@
          * @param {HTMLElement} element Element to focus
          */
         focusWithoutScroll(element) {
-            const x = window.scrollX || window.pageXOffset;
-            const y = window.scrollY || window.pageYOffset;
-            element.focus();
-            window.scrollTo(x, y);
+            if(element) {
+                const x = window.scrollX || window.pageXOffset;
+                const y = window.scrollY || window.pageYOffset;
+                element.focus();
+                window.scrollTo(x, y);
+            }
         }
 
 

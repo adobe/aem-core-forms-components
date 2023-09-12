@@ -189,7 +189,7 @@ class FormFieldBase extends FormField {
         if (fieldType !== 'form' && this.parentView.setFocus) {
             this.parentView.setFocus(id);
         }
-        this.widget.focus();
+        this.getWidget().focus();
     }
 
     /**

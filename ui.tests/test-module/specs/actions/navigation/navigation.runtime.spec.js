@@ -25,7 +25,7 @@ describe("Next Previous Button Test", () => {
     });
     const nextButton = '#nextitemnav-1d6ec8c53f > button';
     const prevButton = '#previtemnav-12d6415369 > button';
-    const componentSelectors = ['#emailinput-d4b1212f37', '#numberinput-def5e91275', '#emailinput-a3ba3c451c', '#emailinput-142c629dd1', '#numberinput-88843055c8'] 
+    const componentSelectors = ['#emailinput-d4b1212f37', '#numberinput-def5e91275', '#datepicker-b6ae4d4266', '#emailinput-142c629dd1','#textinput-6b40c861e9'] 
 
     it('Next button navigation - (FocusOption: nextItem)',() => {
         componentSelectors.forEach((component) => {
@@ -38,7 +38,7 @@ describe("Next Previous Button Test", () => {
     // TODO: nextItemDeep test cases once implemented
 
     it('Previous button navigation - (FocusOption: previousItem)',() => {
-        cy.get(componentSelectors[4]).type(1); // setting active the last element in the form by typing
+        cy.get('#numberinput-88843055c8 > input').type(1);// setting active the last element in the form by typing
         componentSelectors.reverse().forEach((component) => {
             cy.get(prevButton).click().then(() => {
                 cy.get(component).should('be.visible').invoke('attr', 'data-cmp-active').should('eq', 'true');

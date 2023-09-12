@@ -77,14 +77,14 @@ class FormField {
     setActive() {
         if (!this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+            if(this.parentView && this.parentView._model.activeChild !== this._model) { 
+                this.parentView._model.activeChild = this._model; // updating the activeChild of the model when a field is focused in view
+            }
+            this.active = true;
         }
         if (this.parentView && this.parentView.setActive) {
-            this.parentView.setActive(this);
+            this.parentView.setActive();
         } 
-
-        if(this.parentView) { 
-            this.parentView._model.activeChild = this._model; // updating the activeChild of the model when view is changed
-        }
     }
 
     /**
@@ -93,6 +93,7 @@ class FormField {
     setInactive() {
         if (this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
+            this.active = false;
         }
         if (this.parentView && this.parentView.setInactive) {
             this.parentView.setInactive();

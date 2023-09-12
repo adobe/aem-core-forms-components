@@ -67,7 +67,7 @@
             this.widgetObject = new NumericInputWidget(this.getWidget(), this._model);
             this.getWidget().addEventListener('blur', (e) => {
                 if(this.element) {
-                    this.setActive(this.element, false);
+                    this.setInactive();
                 }
             });
         }
@@ -99,13 +99,13 @@
                 this.getWidget().addEventListener('blur', (e) => {
                     this._model.value = e.target.value;
                     if(this.element) {
-                        this.setActive(this.element, false);
+                        this.setInactive();
                     }
                 });
             }
             this.getWidget().addEventListener('focus', (e) => {
                 if (this.element) {
-                    this.setActive(this.element, true);
+                    this.setActive();
                 }
             });
         }

@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2023-09-11T11:26:11.835+05:30"
+        cq:lastModified="{Date}2023-09-12T22:55:48.325+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
@@ -104,6 +104,24 @@
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     fieldType="panel"
                     name="panelcontainer1694411768682">
+                    <datepicker
+                        jcr:created="{Date}2023-09-12T17:45:10.092+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-09-12T17:45:19.901+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        displayFormat="d/M/y"
+                        displayPatternType="d/M/y"
+                        enabled="{Boolean}true"
+                        fieldType="date-input"
+                        hideTitle="false"
+                        name="datepicker1694520910221"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true]"
+                        unboundFormElement="{Boolean}false"
+                        visible="{Boolean}true"/>
                     <emailinput
                         jcr:created="{Date}2023-09-07T11:50:06.276+05:30"
                         jcr:createdBy="admin"
@@ -175,6 +193,16 @@
                         visible="{Boolean}true"/>
                 </item_2>
             </accordion>
+            <textinput
+                jcr:created="{Date}2023-09-12T22:55:45.414+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2023-09-12T22:55:45.414+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                fieldType="text-input"
+                name="textinput1694539545495"/>
             <numberinput
                 jcr:created="{Date}2023-09-06T16:24:02.050+05:30"
                 jcr:createdBy="admin"

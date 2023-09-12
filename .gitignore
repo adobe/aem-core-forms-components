@@ -46,7 +46,6 @@ hs_err_pid*
 
 # Javascript things
 **/node_modules/**
-**/package-lock.json
 **/karma-junit/**
 **/coverage/**
 **/test-results/**
