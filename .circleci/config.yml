@@ -56,18 +56,39 @@ common:
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
-            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
+            if [ -z "$TESTFILES" ]; then
+              TESTFILES_COUNT=0
+            else
+              TESTFILES_COUNT=1
+            fi
+            echo "export TESTFILES_COUNT=$TESTFILES_COUNT" >> $BASH_ENV
+            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
       - store_test_results:
           path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
-          command: node .circleci/ci/lighthouse.js
+          command: |
+            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+              node .circleci/ci/lighthouse.js
+            else
+              echo "Skipping Lighthouse Scores calculation..."
+            fi
       - run:
           name: Check Accessibility
-          command: node .circleci/ci/accessibility-axe.js
+          command: |
+            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+              node .circleci/ci/accessibility-axe.js
+            else
+              echo "Skipping Accessibility check..."
+            fi
       - run:
           name: Stop CQ
-          command: node .circleci/ci/stop-cq.js
+          command: |
+            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+              node .circleci/ci/stop-cq.js
+            else
+              echo "Skipping stop cq ..."
+            fi
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -164,6 +185,7 @@ jobs:
       PRERELEASE: 'true'
     resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
@@ -176,6 +198,7 @@ jobs:
       FT: 'true'
     resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
@@ -188,6 +211,7 @@ jobs:
       FT: 'false'
     resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   jsdocs-deploy:
