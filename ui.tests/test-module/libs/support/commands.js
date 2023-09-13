@@ -214,7 +214,6 @@ Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', re
     clickRetry();
 });
 
-
 // Cypress command to get form JSON
 Cypress.Commands.add("getFormJson", (pagePath) => {
     const pageUrl = cy.af.getFormJsonUrl(pagePath);
