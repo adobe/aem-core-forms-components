@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const ci = new (require('./ci.js'))();
-const AxeBuilder = require('@axe-core/webdriverjs');
+const { AxeBuilder } = require('@axe-core/webdriverjs');
 const WebDriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const { createHtmlReport } = require('axe-html-reporter');
@@ -62,7 +62,8 @@ const calculateAccessibility = async () => {
         fs.writeFileSync('accessibility-report.html', reportHTML);
 
         if (results.violations.length > 0) {
-            getAccessibilityViolationsTable(results.violations)
+            console.log(getAccessibilityViolationsTable(results.violations))
+            await ci.postCommentToGitHubFromCI(getAccessibilityViolationsTable(results.violations));
            // impact can be 'critical', 'serious', 'moderate', 'minor', 'unknown'
            if (
              results.violations.some(
@@ -89,24 +90,24 @@ const calculateAccessibility = async () => {
 
 const getAccessibilityViolationsTable = (violations) => {
   const printRow = (id, description, impact) => {
-    console.log(
-      `| ${id + " ".repeat(20 - id.length)}  | ${
+  return `| ${id + " ".repeat(20 - id.length)}  | ${
         description + " ".repeat(100 - description.length)
       } | ${impact + " ".repeat(20 - impact.length)} |`
-    );
+
   };
   const printDashedLine = () => {
-    console.log(`| ${"-".repeat(22)}|${"-".repeat(102)}|${"-".repeat(22)}|`);
+    return `| ${"-".repeat(22)}|${"-".repeat(102)}|${"-".repeat(22)}|`;
   };
 
-  console.log("\n\n### Accessibility Violations Found\n");
-  printDashedLine();
-  printRow("Id", "Description", "Impact");
-  printDashedLine();
+  table += "\n\n### Accessibility Violations Found\n";
+  table += printDashedLine();
+  table += printRow("Id", "Description", "Impact");
+  table += printDashedLine();
   violations.forEach((violation) => {
-    printRow(violation.id, violation.description, violation.impact);
-    printDashedLine();
+     table += printRow(violation.id, violation.description, violation.impact);
+     table += printDashedLine();
   });
+  return table
 };
 
 calculateAccessibility()
