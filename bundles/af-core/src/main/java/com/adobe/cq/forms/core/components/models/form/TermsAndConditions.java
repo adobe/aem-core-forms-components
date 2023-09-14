@@ -21,4 +21,9 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface TermsAndConditions extends Container, ContainerConstraint {
 
+    boolean isShowApprovalOption();
+
+    boolean isShowLink();
+
+    boolean isShowAsPopup();
 }
