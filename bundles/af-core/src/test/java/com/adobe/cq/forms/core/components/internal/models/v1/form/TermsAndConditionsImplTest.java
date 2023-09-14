@@ -48,6 +48,8 @@ public class TermsAndConditionsImplTest {
 
     private static final String PATH_TNC = CONTENT_ROOT + "/termsandconditions";
 
+    private static final String PATH_NOWRAP_TNC = CONTENT_ROOT + "/termsandconditionsNoWrapData";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -108,5 +110,11 @@ public class TermsAndConditionsImplTest {
     void testJSONExport() throws Exception {
         TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
         Utils.testJSONExport(tnc, Utils.getTestExporterJSONPath(BASE, PATH_TNC));
+    }
+
+    @Test
+    void testNoWrap() {
+        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
+        Assert.assertNull(tnc.getType());
     }
 }
