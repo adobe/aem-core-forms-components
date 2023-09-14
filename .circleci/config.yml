@@ -57,8 +57,6 @@ common:
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
-      - store_test_results:
-          path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
           command: node .circleci/ci/lighthouse.js
@@ -68,6 +66,8 @@ common:
       - run:
           name: Stop CQ
           command: node .circleci/ci/stop-cq.js
+      - store_test_results:
+          path: ui.tests/test-module/target/reports
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -93,13 +93,19 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12441-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12142-openjdk11
         <<: *docker_auth
   test_executor_655:
       docker:
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
           <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18-load4-openjdk11
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18.0-openjdk11
+          <<: *docker_auth
+  test_executor_655_latest:
+      docker:
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+          <<: *docker_auth
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load2-openjdk11
           <<: *docker_auth
 
 jobs:
@@ -167,8 +173,17 @@ jobs:
       AEM: classic
       TYPE: cypress
       BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: xlarge
+    resource_class: large
+    working_directory: /home/circleci/build
+    <<: *cypress_test_steps
+
+  cypress-chrome-655-with-latest-addon:
+    executor: test_executor_655_latest
+    environment:
+      AEM: classic-latest
+      TYPE: cypress
+      BROWSER: chrome
+    resource_class: large
     working_directory: /home/circleci/build
     <<: *cypress_test_steps
 
@@ -246,55 +261,6 @@ jobs:
                 --data-binary @"$ARTIFACT" \
                 "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
             done
-      - run:
-          name: Configure git user name
-          command: |
-            git config user.email "ci-build@aemforms"
-            git config user.name "ci-build"
-      - add_ssh_keys:
-          fingerprints:
-            - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
-      - run:
-          name: Update VERSIONS.md and README.md with the new released version
-          command: |
-            RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
-            
-            # Checkout branch
-            git checkout $RELEASE_BRANCH
-            
-            # Retrieve the branch name
-            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-
-            # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
-
-            # Extract the last released from the output
-            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
-
-            # If there is no previous release, use an empty string
-            if [[ -z "$LAST_TAG" ]]; then
-              LAST_TAG=""
-            fi
-
-            # Fetch the new version
-            NEW_VERSION=$(echo ${CIRCLE_TAG} | sed 's/^core-forms-components-reactor-//')
-
-            # Fetch the last released version
-            LAST_VERSION=$(echo "${LAST_TAG}" | sed 's/core-forms-components-reactor-//')
-
-            # Fetch the wcm core component version
-            WCM_CORE_COMPONENTS_VERSION=$(mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout)
-
-            # update versions.md
-            sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
-            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
-
-            # update readme.md
-            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
-
-            git add VERSIONS.md README.md
-            git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
-            git push origin $RELEASE_BRANCH
 
 workflows:
   version: 2
@@ -309,6 +275,13 @@ workflows:
             tags:
               only: /.*/
       - cypress-chrome-655:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
+      - cypress-chrome-655-with-latest-addon:
           filters:
             tags:
               only: /.*/
