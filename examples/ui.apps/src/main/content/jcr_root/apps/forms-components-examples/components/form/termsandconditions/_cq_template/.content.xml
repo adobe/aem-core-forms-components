@@ -29,9 +29,10 @@
     <link
       jcr:primaryType="nt:unstructured"
       jcr:title="\0"
-      sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+      sling:resourceType="core/fd/components/form/links/v1/links"
       orientation="vertical"
-      enum="['yourlink']"
+      type="string[]"
+      enum="your-link-here"
       enumNames="[label for the link]"
       fieldType="checkbox-group"
       title="I agree to the terms &amp; conditions">

@@ -21,15 +21,4 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface TermsAndConditions extends Container, ContainerConstraint {
 
-    default boolean isShowApprovalOption() {
-        return false;
-    }
-
-    default boolean isShowLink() {
-        return false;
-    }
-
-    default boolean isShowAsPopup() {
-        return false;
-    }
 }

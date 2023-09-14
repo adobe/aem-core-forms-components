@@ -35,9 +35,14 @@
     </div>
     <div class="cmp-adaptiveform-termsandcondition__content-wrapper ${tnc.showAsPopup ? 'cmp-adaptiveform-termsandcondition__content-wrapper--modal' : ''}"
         data-cmp-visible="${tnc.showAsPopup ? 'false' : 'true'}">
-        <button type="button" class="cmp-adaptiveform-termsandcondition__closepopup-btn" data-sly-test="${tnc.showAsPopup && !wcmmode.edit}">
-            Close
-        </button>
+        <div class="cmp-adaptiveform-termsandcondition__modal-header" data-sly-test="${tnc.showAsPopup && !wcmmode.edit}">
+            <button type="button" class="cmp-adaptiveform-termsandcondition__closemodal-btn" >
+                X
+            </button>
+            <h3>
+                Please review the terms and conditions
+            </h3>
+        </div>
         <div class="cmp-adaptiveform-termsandcondition__content">
             <div data-sly-test="${!tnc.showLink}" class="cmp-adaptiveform-termsandcondition__text">
                 <div  data-sly-resource="${'text'}"></div>

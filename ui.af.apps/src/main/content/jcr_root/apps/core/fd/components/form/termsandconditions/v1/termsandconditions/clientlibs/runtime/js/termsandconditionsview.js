@@ -27,7 +27,7 @@
             qm: `.${TermsAndConditions.bemBlock}__questionmark`,
             tooltipDiv: `.${TermsAndConditions.bemBlock}__shortdescription`,
             tncContentWrapper: `.${TermsAndConditions.bemBlock}__content-wrapper`,
-            closePopupButton: `.${TermsAndConditions.bemBlock}__closepopup-btn`
+            closePopupButton: `.${TermsAndConditions.bemBlock}__closemodal-btn`
         };
 
         constructor(params) {
@@ -38,29 +38,19 @@
         addChild(childView) {
             super.addChild(childView);
             if (childView.getModel()._jsonModel.fieldType === 'checkbox-group') {
-                this.#replaceCheckboxGroupWithLinks(childView);
+                this.#addLinkClickListener(childView);
             }
             if (childView.getModel()._jsonModel.fieldType === 'checkbox') {
                 this.#handlePopup(childView);
             }
         }
 
-        #replaceCheckboxGroupWithLinks(childView) {
+        #addLinkClickListener(childView) {
             childView.getWidgets().querySelectorAll('label').forEach((item) => {
                 const checkboxInput = item.querySelector('input');
-                const linkToVisit = checkboxInput.value;
-                const span = item.querySelector('span');
-                const a = document.createElement('a');
-                const linkText = document.createTextNode(span.innerText);
-                a.appendChild(linkText);
-                a.title = span.innerText;
-                a.href = linkToVisit;
-                a.target = '_blank';
-                a.addEventListener('click', (e) => {
+                item.querySelector('a').addEventListener('click', (e) => {
                     checkboxInput.click();
                 })
-                span.replaceWith(a);
-                checkboxInput.style.display="none";
             })
         }
 
