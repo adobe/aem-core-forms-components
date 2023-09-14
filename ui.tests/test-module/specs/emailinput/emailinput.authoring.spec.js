@@ -38,7 +38,7 @@ describe('Page - Authoring', function () {
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Email Input", afConstants.components.forms.resourceType.formemailinput);
     cy.get('body').click( 0,0);
-  }
+  };
 
   const testEmailInputBehaviour = function(emailInputEditPathSelector, emailInputDrop, isSites) {
     const bemEditDialog = '.cmp-adaptiveform-emailinput__editdialog'
@@ -50,9 +50,9 @@ describe('Page - Authoring', function () {
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + emailInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.get(bemEditDialog).contains('Validation').click({force:true});
-    cy.get('.cq-dialog-cancel').click();
+    cy.clickDialogWithRetry();
     cy.deleteComponentByPath(emailInputDrop);
-  }
+  };
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
