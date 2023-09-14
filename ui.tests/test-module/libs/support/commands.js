@@ -196,6 +196,25 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
 });
 
 
+Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', retryCount = 3) => {
+    let currentRetry = 0;
+
+    function clickRetry() {
+        cy.get(selector)
+            .click({ multiple: true })
+            .should(($element) => {
+                if ($element.closest('.cq-dialog').is(':visible')) {
+                    if (currentRetry < retryCount - 1) {
+                        currentRetry++;
+                        clickRetry();
+                    }
+                }
+            });
+    }
+    clickRetry();
+});
+
+
 // Cypress command to get form JSON
 Cypress.Commands.add("getFormJson", (pagePath) => {
     const pageUrl = cy.af.getFormJsonUrl(pagePath);

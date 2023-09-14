@@ -56,11 +56,10 @@ common:
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
-            if [ -z "$TESTFILES" ]; then
-              TESTFILES_COUNT=0
-            else
-              TESTFILES_COUNT=1
-            fi
+            # Split the string into an array and count the elements
+            TESTFILES_ARRAY=($TESTFILES)
+            TESTFILES_COUNT=${#TESTFILES_ARRAY[@]}
+            echo "TESTFILES_COUNT: $TESTFILES_COUNT"
             echo "export TESTFILES_COUNT=$TESTFILES_COUNT" >> $BASH_ENV
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
       - store_test_results:
