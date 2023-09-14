@@ -53,21 +53,17 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
+            TEST_EXECUTED=false
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
-            # Split the string into an array and count the elements
-            TESTFILES_ARRAY=($TESTFILES)
-            TESTFILES_COUNT=${#TESTFILES_ARRAY[@]}
-            echo "TESTFILES_COUNT: $TESTFILES_COUNT"
-            echo "export TESTFILES_COUNT=$TESTFILES_COUNT" >> $BASH_ENV
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
       - store_test_results:
           path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
           command: |
-            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+            if [ "TEST_EXECUTED" = "true" ]; then
               node .circleci/ci/lighthouse.js
             else
               echo "Skipping Lighthouse Scores calculation..."
@@ -75,7 +71,7 @@ common:
       - run:
           name: Check Accessibility
           command: |
-            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+            if [ "TEST_EXECUTED" = "true" ]; then
               node .circleci/ci/accessibility-axe.js
             else
               echo "Skipping Accessibility check..."
@@ -83,7 +79,7 @@ common:
       - run:
           name: Stop CQ
           command: |
-            if [ "$TESTFILES_COUNT" -gt 0 ]; then
+            if [ "TEST_EXECUTED" = "true" ]; then
               node .circleci/ci/stop-cq.js
             else
               echo "Skipping stop cq ..."
