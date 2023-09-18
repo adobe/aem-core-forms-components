@@ -510,8 +510,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!DatePickerWidget.#visible) {
         let date,
             validDate;
-        
-        validDate = this.#curInstance.selectedDate || this.#model.value;
+        validDate = this.#curInstance.selectedDate;
         date = validDate ? new Date(validDate) : new Date();
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
