@@ -1,0 +1,60 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<sly data-sly-use.tnc="com.adobe.cq.forms.core.components.models.form.TermsAndConditions"
+     data-sly-use.renderer="${'termsandconditions.js'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}">
+</sly>
+
+<div class="cmp-adaptiveform-termsandcondition"
+     data-cmp-is="adaptiveFormTermsAndConditions"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     id="${tnc.id}"
+     title="${tnc.tooltipVisible ? '' : tnc.tooltipText}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <div class="cmp-adaptiveform-termsandcondition__label-container">
+        <div data-sly-call="${label.label @componentId=tnc.id, labelValue=tnc.label.value, labelVisible=tnc.label.visible, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
+    </div>
+    <div class="cmp-adaptiveform-termsandcondition__content-container ${!wcmmode.edit && tnc.showAsPopup ? 'cmp-adaptiveform-termsandcondition__content-container--modal' : ''}"
+         data-cmp-visible="${tnc.showAsPopup ? 'false' : 'true'}">
+        <div class="cmp-adaptiveform-termsandcondition__body">
+            <div class="cmp-adaptiveform-termsandcondition__header" data-sly-test="${tnc.showAsPopup && !wcmmode.edit}">
+                <button type="button" class="cmp-adaptiveform-termsandcondition__close-button" >
+                    X
+                </button>
+                <h3>
+                    ${"Please review the terms and conditions" @ i18n, context='html'}
+                </h3>
+            </div>
+            <div class="cmp-adaptiveform-termsandcondition__content">
+                <div data-sly-test="${!tnc.showLink}" class="cmp-adaptiveform-termsandcondition__text">
+                    <div  data-sly-resource="${'text'}"></div>
+                    <div class="cmp-adaptiveform-termsandcondition__text-intersect"></div>
+                </div>
+                <div class="cmp-adaptiveform-termsandcondition__link" data-sly-test="${tnc.showLink}" data-sly-resource="${'link'}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="cmp-adaptiveform-termsandcondition__approvalcheckbox"  data-sly-test="${tnc.showApprovalOption}"  data-sly-resource="${'approvalcheckbox'}"></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=tnc.id, shortDescriptionVisible=tnc.tooltipVisible, shortDescription=tnc.tooltip, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
+</div>
