@@ -339,7 +339,11 @@ const waitForFormInit = () => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
                     const isReady = () => {
-                        if (!($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                        if (container &&
+                            e.detail._path === $form.data("cmp-path") &&
+                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
                             resolve(e.detail);
                         }
                         setTimeout(isReady, 0)
@@ -361,8 +365,11 @@ const waitForFormInitMultipleContiners = () => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
                     const isReady = () => {
-                        if (e.detail._path === $form.data("cmp-path") &&
-                            !($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                        if (container &&
+                            e.detail._path === $form.data("cmp-path") &&
+                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
                             resolve(e.detail);
                         }
                         setTimeout(isReady, 0)
