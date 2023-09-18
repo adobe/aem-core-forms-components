@@ -1,0 +1,75 @@
+{
+  "id": "termsandconditions-dac51d5ed9",
+  "fieldType": "panel",
+  "name": "termsandconditions1694159302516",
+  "type": "object",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/termsandconditions",
+    "fd:tnc": true
+  },
+  "label": {
+    "value": "Terms And Conditions"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":itemsOrder": [
+    "text",
+    "approvalcheckbox"
+  ],
+  ":items": {
+    "text": {
+      "id": "text-37c101fc2b",
+      "fieldType": "plain-text",
+      "name": "consenttext",
+      "value": "Text related to the terms and conditions come here",
+      "richText": false,
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:path": "/content/termsandconditions/text"
+      },
+      ":type": "core/fd/components/form/text/v1/text"
+    },
+    "approvalcheckbox": {
+      "id": "checkbox-150eb94d3e",
+      "fieldType": "checkbox",
+      "name": "approvalcheckbox",
+      "type": "string",
+      "enabled": false,
+      "enforceEnum": true,
+      "label": {
+        "value": "I agree to the terms & conditions"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "afs:layout": {
+          "orientation": "horizontal"
+        },
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/termsandconditions/approvalcheckbox"
+      },
+      "enum": [
+        "true"
+      ],
+      ":type": "core/fd/components/form/checkbox/v1/checkbox"
+    }
+  },
+  ":type": "core/fd/components/form/termsandconditions/v1/termsandconditions"
+}

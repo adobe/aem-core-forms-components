@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2022 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root
+  xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+  xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+  xmlns:cq="http://www.day.com/jcr/cq/1.0"
+  xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  jcr:primaryType="nt:unstructured"
+  jcr:title="Adaptive Form Terms and Conditions"
+  sling:resourceType="cq/gui/components/authoring/dialog"
+  helpPath="https://www.adobe.com/go/aem_af_cmp_termsandconditions_v1"
+  trackingFeature="core-components:adaptiveform-termsandconditions:v1"
+  extraClientlibs="[core.forms.components.termsandconditions.v1.editor]">
+    <content
+      jcr:primaryType="nt:unstructured"
+      sling:resourceType="granite/ui/components/coral/foundation/container"
+      granite:class="cmp-adaptiveform-termsandconditions__editdialog">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/tabs"
+              maximized="{Boolean}true"
+              granite:class="cmp-adaptiveform-base__editdialogbasic">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                      jcr:primaryType="nt:unstructured"
+                      jcr:title="Basic"
+                      sling:resourceType="granite/ui/components/coral/foundation/container"
+                      margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                              margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <name
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/name"/>
+                                            <title
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/title"/>
+                                            <showApprovalOption
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                              name="./showApprovalOption"
+                                              value="true"
+                                              text="Show approval options"
+                                              checked="{Boolean}true"
+                                              uncheckedValue="{Boolean}false"
+                                              granite:class="cmp-adaptiveform-termsandconditions__showapprovaloption" />
+                                            <showAsPopUp
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                              name="./showAsPopup"
+                                              value="true"
+                                              text="Show as a pop-up"
+                                              granite:class="cmp-adaptiveform-termsandconditions__showaspopup" />
+                                            <showAsLink
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                              wrapperClass="cmp-adaptiveform-termsandconditions__showAsLink"
+                                              name="./showLink"
+                                              fieldLabel="Show Links and Hide Text Content"
+                                              fieldDescription="If unchecked, the default rendition will be text content."
+                                              uncheckedValue="false"
+                                              value="true">
+                                            </showAsLink>
+                                            <showAsLink-typehint
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                              name="./showLink@TypeHint"
+                                              value="Boolean"/>
+                                            <hideTitle
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/hideTitle"/>
+                                            <wrapData
+                                              granite:class="cmp-adaptiveform-panel__wrapData"
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                              name="./wrapData"
+                                              text="Group child components' data on form submission"
+                                              uncheckedValue="false"
+                                              value="true"/>
+                                            <wrapData-typehint
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                              name="./wrapData@TypeHint"
+                                              value="Boolean"/>
+                                            <bindref
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/bindref"/>
+                                            <visible
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/visible"/>
+                                            <visible-typehint
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/visible-typehint"/>
+                                            <enabled
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enabled"/>
+                                            <enabled-typehint
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enabled-typehint"/>
+                                            <readonly
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/readonly"/>
+                                            <readonly-typehint
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/include"
+                                              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/readonly-typehint"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <help
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="granite/ui/components/coral/foundation/include"
+                      path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/help"/>
+                    <accessibility
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="granite/ui/components/coral/foundation/include"
+                      path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/accessibility"/>
+                    <dor
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="granite/ui/components/coral/foundation/include"
+                      path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/dor"/>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
