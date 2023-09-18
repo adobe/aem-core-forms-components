@@ -1,0 +1,21 @@
+{
+  "id": "textinput-89b6d37c0b",
+  "fieldType": "text-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/textinput-blank-validationExpression"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}

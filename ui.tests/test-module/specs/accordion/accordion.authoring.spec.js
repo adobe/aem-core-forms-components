@@ -66,19 +66,18 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-    cy.get('.cq-dialog-cancel').should('be.visible').click();
-    cy.deleteComponentByPath(accordionDrop);
-  }
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(accordionDrop);
+    }
 
-
-  context('Open Forms Editor', function() {
-    const pagePath = "/content/forms/af/core-components-it/blank",
-        accordionEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/accordion",
-        accordionPathSelector = "[data-path='" + accordionEditPath + "']";
-    beforeEach(function () {
-      // this is done since cypress session results in 403 sometimes
-      cy.openAuthoring(pagePath);
-    });
+    context('Open Forms Editor', function () {
+        const pagePath = "/content/forms/af/core-components-it/blank",
+            accordionEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/accordion",
+            accordionPathSelector = "[data-path='" + accordionEditPath + "']";
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
 
         it('insert Accordion in form container', {retries: 3}, function () {
             dropAccordionInContainer();
@@ -87,28 +86,28 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Accordion', function () {
             testAccordionBehaviour(accordionPathSelector, accordionEditPath);
-        })
+        });
 
-    it ('switch accordion tabs', { retries: 3 }, function(){
-      cy.cleanTest(accordionEditPath).then(function(){
-        dropAccordionInContainer();
+        it('switch accordion tabs', {retries: 3}, function () {
+            cy.cleanTest(accordionEditPath).then(function(){
+                dropAccordionInContainer();
 
-        cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
 
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
-        cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-        cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-        cy.get("tr[data-name='item_2']").click();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
+                cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+                cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                cy.get("tr[data-name='item_2']").click();
 
-        cy.get('body').click( 0,0);
-        cy.invokeEditableAction("[data-action='PANEL_SELECT']");
-        cy.get("tr[data-name='item_2']").click();
-        cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px')
+                cy.get('body').click(0, 0);
+                cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+                cy.get("tr[data-name='item_2']").click();
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px')
 
-        cy.deleteComponentByPath(accordionEditPath);
-      });
-    });
-  })
+                cy.deleteComponentByPath(accordionEditPath);
+            });
+        });
+    })
 
     context('Open Sites Editor', function () {
         const pagePath = "/content/core-components-examples/library/adaptive-form/accordion",

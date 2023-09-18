@@ -51,12 +51,30 @@ const commons = require('../commons/commons'),
 var toggles = [];
 
 // Cypress command to login to aem page
-Cypress.Commands.add("login", (pagePath) => {
+Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
     const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
     cy.get('#username').type(username);
     cy.get('#password').type(password);
-    cy.get('#submit-button').click();
+    let retryCount = 0;
+    let maxRetries = 3;
+    // Check if the element with id 'submit-button' exists
+    cy.get('body').then(($body) => {
+        const element = $body.find('#submit-button');
+        if (element.length === 0) {
+            // Element is not present
+            retryCount++;
+            if (retryCount <= maxRetries) {
+                // Retry the visit with an exponential backoff delay
+                const delay = Math.pow(2, retryCount - 1) * 1000; // 2^n seconds
+                cy.wait(delay);
+                failurehandler();
+            }
+        } else {
+            // Element is present, click it
+            cy.wrap(element).click();
+        }
+    });
 });
 
 
@@ -69,6 +87,7 @@ function getUserInfoHome() {
     const USER_INFO_SERVLET = "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
+
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
@@ -114,8 +133,10 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
 // Cypress command to open AFv2
 Cypress.Commands.add("openAFv2TemplateEditor", () => {
     const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
-    cy.login(baseUrl);
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAFv2TemplateEditor();
+    });
     cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
 });
 
@@ -123,26 +144,9 @@ Cypress.Commands.add("openAFv2TemplateEditor", () => {
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
     const path = `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
-    cy.visit(path).then(waitForEditorToInitialize);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
 });
-
-const preventClickJacking = () => {
-    cy.window().then(win => {
-        // only if granite is defined, override the API
-        if (win.Granite) {
-            win.Granite.HTTP.handleLoginRedirect = function () {
-                if (!loginRedirected) {
-                    loginRedirected = true;
-                    //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-                    // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-                    var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-                }
-            };
-        }
-    });
-};
 
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
@@ -161,15 +165,7 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open Site authoring page
-Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
-    const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+const preventClickJacking = () => {
     cy.window().then(win => {
         // only if granite is defined, override the API
         if (win.Granite) {
@@ -184,22 +180,78 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
             };
         }
     });
+};
+
+
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
+    const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    preventClickJacking();
+});
+
+
+Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', retryCount = 3) => {
+    let currentRetry = 0;
+
+    function clickRetry() {
+        cy.get(selector)
+            .click({ multiple: true })
+            .should(($element) => {
+                if ($element.closest('.cq-dialog').is(':visible')) {
+                    if (currentRetry < retryCount - 1) {
+                        currentRetry++;
+                        clickRetry();
+                    }
+                }
+            });
+    }
+    clickRetry();
+});
+
+
+// Cypress command to get form JSON
+Cypress.Commands.add("getFormJson", (pagePath) => {
+    const pageUrl = cy.af.getFormJsonUrl(pagePath);
+    return cy.request({
+        method : 'GET',
+        url: pageUrl
+    }).its('body');
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const path = `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
+    preventClickJacking();
 });
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
-    cy.login(baseUrl);
+    // getting status 403 intermittently, just ignore it
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAuthoring(pagePath);
+    });
     cy.openSiteAuthoring(pagePath);
 });
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     if (!options.noLogin) {
+    // getting status 403 intermittently, just ignore it
         const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-        cy.visit(baseUrl);
-        cy.login(baseUrl);
+        cy.visit(baseUrl, {'failOnStatusCode': false});
+        cy.login(baseUrl, () => {
+            cy.openPage(pagePath, options);
+        });
     }
     cy.visit(pagePath, options);
 });
@@ -232,7 +284,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                             cy.get(selector).first().click({force: true});
                             cy.get(path).should('be.visible');
                         } else {
-                            cy.get(siteSelectors.overlays.self).click(0, 0); // dont click on body, always use overlay wrapper to click
+                            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
                             cy.get(selector).click({force: true});
                             cy.get(path).should('be.visible');
                         }
