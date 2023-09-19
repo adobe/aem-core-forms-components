@@ -1108,7 +1108,7 @@
             <dependency>
                 <groupId>com.adobe.aemfd</groupId>
                 <artifactId>aemfd-client-sdk</artifactId>
-                <version>6.0.1018</version>
+                <version>6.0.1038</version>
             </dependency>
 
             <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->
