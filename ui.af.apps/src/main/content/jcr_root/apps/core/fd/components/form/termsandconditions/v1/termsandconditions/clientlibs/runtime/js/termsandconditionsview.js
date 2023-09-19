@@ -26,8 +26,8 @@
             description: `.${TermsAndConditions.bemBlock}__longdescription`,
             qm: `.${TermsAndConditions.bemBlock}__questionmark`,
             tooltipDiv: `.${TermsAndConditions.bemBlock}__shortdescription`,
-            tncContentWrapper: `.${TermsAndConditions.bemBlock}__content-wrapper`,
-            closePopupButton: `.${TermsAndConditions.bemBlock}__closemodal-btn`
+            tncContentWrapper: `.${TermsAndConditions.bemBlock}__content-container`,
+            closePopupButton: `.${TermsAndConditions.bemBlock}__close-button`
         };
 
         constructor(params) {

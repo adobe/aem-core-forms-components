@@ -13,3 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
+.coral-Form-fieldwrapper.cmp-adaptiveform-termsandconditions__showAsLink {
+  display: flex;
+}
+.coral-Form-fieldwrapper.cmp-adaptiveform-termsandconditions__showAsLink label {
+  padding-right: 10px;
+}
