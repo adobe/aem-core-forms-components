@@ -1,0 +1,32 @@
+name: Automatically Sync PR with Base Branch
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.email "ci-build@aemforms"
+          git config --global user.name "ci-build"
+
+      - name: Sync with Base Branch
+        run: |
+          git fetch origin
+          git checkout ${{ github.event.pull_request.base.ref }}
+          git pull origin ${{ github.event.pull_request.base.ref }}
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git pull origin ${{ github.event.pull_request.head.ref }}
+          git rebase ${{ github.event.pull_request.base.ref }}
+          git push --force origin ${{ github.event.pull_request.head.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

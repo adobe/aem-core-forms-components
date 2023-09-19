@@ -166,9 +166,9 @@ describe("Form with Radio Button Input", () => {
 
         const [radioButton7, radioButton7FieldView] = Object.entries(formContainer._fields)[6];
         cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option").should('have.length', 2);
-        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 3');
-        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 2');
-        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option__label").contains('Item 1').should('not.exist');
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option-label").contains('Item 3');
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option-label").contains('Item 2');
+        cy.get(`#${radioButton7}`).find(".cmp-adaptiveform-radiobutton__option-label").contains('Item 1').should('not.exist');
 
     })
 

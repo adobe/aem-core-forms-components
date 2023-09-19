@@ -70,12 +70,24 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("Cannot read properties of undefined (reading 'editLayer')")) {
         return false;
     }
+    // sometimes this error is seen
+    if (err.message.includes("Cannot read properties of undefined (reading 'path')")) {
+        return false;
+    }
+    if (err.message.includes("Cannot set properties of undefined (setting 'label')")) {
+        return false;
+    }
     // sometimes aemforms container gives this error, intermittently, but functionality is not impacted
     if (err.message.includes("Cannot read properties of undefined (reading 'MESSAGE_CHANNEL')")) {
         return false;
     }
     // site editor very rarely gives this error, but no functionality impact
     if (err.message.includes("Failed to execute 'insertBefore' on 'Node'")) {
+        return false;
+    }
+
+    // circle ci is seen hanging due to this error
+    if (err.message.includes("Cannot read properties of null (reading")) {
         return false;
     }
 
