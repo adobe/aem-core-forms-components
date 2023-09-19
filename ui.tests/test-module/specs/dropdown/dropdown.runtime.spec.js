@@ -199,4 +199,12 @@ describe("Form with Dropdown", () => {
         cy.get(`#${dropdown7}`).find(".cmp-adaptiveform-dropdown__option").contains('Item 1').should('not.exist');
 
     })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
 })
