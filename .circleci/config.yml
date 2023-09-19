@@ -53,10 +53,10 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
-            echo "false" >> TEST_EXECUTION_STATUS.txt
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
+            echo "false" >> TEST_EXECUTION_STATUS.txt
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
       - store_test_results:
           path: ui.tests/test-module/test_results
