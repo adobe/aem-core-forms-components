@@ -366,6 +366,7 @@ class FormFieldBase extends FormField {
     updateReadOnly(readOnly, state) {
         if (this.widget) {
             this.toggle(readOnly, "readonly");
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
                 this.widget.setAttribute("readonly", "readonly");
             } else {
@@ -382,6 +383,7 @@ class FormFieldBase extends FormField {
     updateRequired(required, state) {
         if (this.widget) {
             this.toggle(required, "required");
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
             } else {
