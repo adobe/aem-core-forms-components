@@ -19,9 +19,9 @@ common:
           chrome-version: 116.0.5845.96 # TODO: remove when chromedriver downloads are fixed
       - run:
           command: |
-              google-chrome --version
-              chromedriver --version
-              which google-chrome
+            google-chrome --version
+            chromedriver --version
+            which google-chrome
           name: Check browser installed
       - *restore_cache
       - attach_workspace:
@@ -53,17 +53,18 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
-            TEST_EXECUTED=false
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
+            echo "false" >> TEST_EXECUTION_STATUS.txt
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
       - store_test_results:
           path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
           command: |
-            if [ "TEST_EXECUTED" = "true" ]; then
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
               node .circleci/ci/lighthouse.js
             else
               echo "Skipping Lighthouse Scores calculation..."
@@ -71,7 +72,8 @@ common:
       - run:
           name: Check Accessibility
           command: |
-            if [ "TEST_EXECUTED" = "true" ]; then
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
               node .circleci/ci/accessibility-axe.js
             else
               echo "Skipping Accessibility check..."
@@ -79,11 +81,15 @@ common:
       - run:
           name: Stop CQ
           command: |
-            if [ "TEST_EXECUTED" = "true" ]; then
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
               node .circleci/ci/stop-cq.js
             else
               echo "Skipping stop cq ..."
             fi
+      - run:
+          name: Cleanup
+          command: rm -rf TEST_EXECUTION_STATUS.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
