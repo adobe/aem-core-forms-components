@@ -64,7 +64,7 @@ try {
 
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
-    ci.sh('sed -i 's/false/true/' TEST_EXECUTION_STATUS.txt')
+    ci.sh("sed -i 's/false/true/' TEST_EXECUTION_STATUS.txt")
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
