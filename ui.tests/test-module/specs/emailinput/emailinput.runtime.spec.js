@@ -127,4 +127,15 @@ describe("Form Runtime with Email Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[0]
+      const model = formContainer._model.getElement(id)
+      const input = "value@dns.com";
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-emailinput--empty');
+      cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+          expect(model.getState().value).to.equal(input);
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-emailinput--filled');
+      });
+    });
+
 })
