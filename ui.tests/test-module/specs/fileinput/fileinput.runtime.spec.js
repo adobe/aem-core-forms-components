@@ -114,9 +114,11 @@ describe("Form with File Input - Basic Tests", () => {
                 let model = field.getModel();
                 let fileName = 'empty.pdf';
                 if (model.visible && model.enabled) {
+                    cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--empty');
                     cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
+                        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
                     })
                 }
             }
