@@ -1014,7 +1014,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if(this.selectedYear === -1 || this.selectedMonth === -1 || this.selectedDay === -1){
         return ""
       }
-      const formattedDate = this.selectedYear + "-" + this.#pad2(this.selectedMonth + 1) + "-" + this.#pad2(this.selectedDay);
+      const formattedDate = `${this.selectedYear}-${this.#pad2(this.selectedMonth + 1)}-${this.#pad2(this.selectedDay)}`;
       return formattedDate;
     }
 
