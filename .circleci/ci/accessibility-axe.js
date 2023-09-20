@@ -89,25 +89,23 @@ const calculateAccessibility = async () => {
 }
 
 const getAccessibilityViolationsTable = (violations) => {
-  const printRow = (id, description, impact) => {
-      const trimmedId = id.substring(0, 20);
-      const trimmedDescription = description.substring(0, 100);
-      return `| ${trimmedId + " ".repeat(20 - trimmedId.length)}  | ${
-        trimmedDescription + " ".repeat(100 - trimmedDescription.length)
-      } | ${impact + " ".repeat(20 - impact.length)} |`;
+  const printRow = (id, impact) => {
+      return `| ${id + " ".repeat(30 - id.length)}  | ${
+        impact + " ".repeat(25 - impact.length)
+      } |\n`;
 
   };
   const printDashedLine = () => {
-    return `| ${"-".repeat(22)}|${"-".repeat(102)}|${"-".repeat(22)}|`;
+    return `| ${"-".repeat(32)}|${"-".repeat(27)}|\n`;
   };
 
   let table = ""
   table += "\n\n### Accessibility Violations Found\n";
   table += printDashedLine();
-  table += printRow("Id", "Description", "Impact");
+  table += printRow("Id", "Impact", "Count");
   table += printDashedLine();
   violations.forEach((violation) => {
-     table += printRow(violation.id, violation.description, violation.impact);
+     table += printRow(violation.id, violation.impact, violation.count);
      table += printDashedLine();
   });
   return table
