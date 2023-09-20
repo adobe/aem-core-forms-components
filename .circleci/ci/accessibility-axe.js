@@ -101,12 +101,9 @@ const getAccessibilityViolationsTable = (violations) => {
 
   let table = ""
   table += "\n\n### Accessibility Violations Found\n";
-  table += printDashedLine();
   table += printRow("Id", "Impact", "Count");
-  table += printDashedLine();
   violations.forEach((violation) => {
      table += printRow(violation.id, violation.impact, violation.count);
-     table += printDashedLine();
   });
   return table
 };
