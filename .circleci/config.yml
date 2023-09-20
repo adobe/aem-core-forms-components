@@ -57,7 +57,7 @@ common:
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
-            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
+            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose
       - store_test_results:
           path: ui.tests/test-module/test_results
       - run:
@@ -191,7 +191,6 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon:
@@ -202,7 +201,6 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
     <<: *cypress_test_steps
 
   jsdocs-deploy:
