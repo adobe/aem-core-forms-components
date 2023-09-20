@@ -207,6 +207,8 @@ describe("Form with Number Input", () => {
       const input = "11.22";
       let model = numberInput7FieldView.getModel();
       cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--empty');
+      cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
       cy.get(`#${numberInput7}`).find("input").clear().type(input).blur().then(x => {
           expect(Number(model.getState().value)).to.equal(Number(1122));
           cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--filled');

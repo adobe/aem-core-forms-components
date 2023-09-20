@@ -204,6 +204,8 @@ describe("Form with Dropdown", () => {
       const id = formContainer?._model?._children[9]?._jsonModel?.id;
       const model = formContainer._model.getElement(id);
       cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
       cy.get(`#${id} select`).select("Item 1").then(x => {
           expect(model.value).to.equal('1');
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--filled');
