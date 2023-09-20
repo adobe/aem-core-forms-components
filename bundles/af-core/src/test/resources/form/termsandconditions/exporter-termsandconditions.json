@@ -20,9 +20,9 @@
   },
   ":itemsOrder": [
     "text",
-    "approvalcheckbox",
-    "link"
+    "approvalcheckbox"
   ],
+  ":type": "core/fd/components/form/termsandconditions/v1/termsandconditions",
   ":items": {
     "text": {
       "id": "text-37c101fc2b",
@@ -68,38 +68,6 @@
         "true"
       ],
       ":type": "core/fd/components/form/checkbox/v1/checkbox"
-    },
-    "link": {
-      "id": "checkboxgroup-6ea49f6bd4",
-      "fieldType": "checkbox-group",
-      "name": "link1694159323342",
-      "type": "string",
-      "enforceEnum": true,
-      "enumNames": [
-        "label for the link"
-      ],
-      "label": {
-        "value": ""
-      },
-      "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
-      },
-      "properties": {
-        "afs:layout": {
-          "orientation": "vertical"
-        },
-        "fd:dor": {
-          "dorExclusion": false
-        },
-        "fd:path": "/content/termsandconditions/link"
-      },
-      "enum": [
-        "yourlink"
-      ],
-      ":type": "core/fd/components/form/checkboxgroup/v1/checkboxgroup"
     }
-  },
-  ":type": "core/fd/components/form/termsandconditions/v1/termsandconditions"
+  }
 }

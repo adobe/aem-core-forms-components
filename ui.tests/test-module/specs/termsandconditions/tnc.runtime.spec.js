@@ -67,4 +67,17 @@ describe("Form Runtime with Terms and Conditions", () => {
             return checkHTML(model.id, model.getState(), tabView, count);
         });
     });
+
+
+    it("OOTB behaviour -> should enable approval checkbox only if links visited", () => {
+        const tncWithLinksID = formContainer._model.items[1].id;
+        const model = formContainer._model.getElement(tncWithLinksID)
+        expect(model.getState().items[0].enabled).to.equal(false);
+        cy.get(`#${tncWithLinksID}`).get('a').click()
+        .then(() => {
+            expect(model.getState().items[0].enabled).to.equal(true);
+        })
+
+    })
 })
+
