@@ -22,33 +22,80 @@
 
 }
 
-.cmp-adaptiveform-termsandcondition__content-wrapper {
-
+.cmp-adaptiveform-termsandcondition__content-container {
+  margin-top: 10px
 }
 
-.cmp-adaptiveform-termsandcondition__content-wrapper--modal {
+.cmp-adaptiveform-termsandcondition__content-container--modal {
   position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.cmp-adaptiveform-termsandcondition__content-container--modal .cmp-adaptiveform-termsandcondition__body{
+  background-color: #fefefe;
+  margin: auto;
+  width: 600px;
+  border-radius: 4px;
+}
+.cmp-adaptiveform-termsandcondition__content-container--modal .cmp-adaptiveform-termsandcondition__header{
+  display: flex;
+  flex-direction: row-reverse;
+  background: #afb0b5;
+  padding: 5px 20px;
+  align-items: flex-start;
+}
+.cmp-adaptiveform-termsandcondition__content-container--modal .cmp-adaptiveform-termsandcondition__header h3{
+  flex: 1;
 }
 
-.cmp-adaptiveform-termsandcondition__closepopup-btn {
+
+.cmp-adaptiveform-termsandcondition__content-container--modal .cmp-adaptiveform-termsandcondition__close-button {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
 
 }
 
-.cmp-adaptiveform-termsandcondition__content {
+.cmp-adaptiveform-termsandcondition__content-container--modal .cmp-adaptiveform-termsandcondition__content {
+  padding: 20px;
 
 }
 
 .cmp-adaptiveform-termsandcondition__text {
-  overflow-y: auto;
-  max-height: 160px;
+  background: #fff;
+  overflow: auto;
+  border-style: solid;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+  border-color: #ccc;
+  margin-bottom: .25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  font-size: .875rem;
+  line-height: 1.6;
+  color: #969696;
+  max-height: 500px;
 }
 
 .cmp-adaptiveform-termsandcondition__link {
 
+}
+
+.cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label{
+  cursor:pointer;
 }
 
 .cmp-adaptiveform-termsandcondition__approvalcheckbox {
