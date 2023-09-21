@@ -64,7 +64,9 @@
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
         for (let i = 0; i < elements.length; i++) {
             let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
+            if(loaderToAdd){
             loaderToAdd.classList.add(FormContainerV2.loadingClass);
+            }
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
@@ -72,7 +74,9 @@
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
+                if(loaderToRemove){
                 loaderToRemove.classList.remove(FormContainerV2.loadingClass);
+                }
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
