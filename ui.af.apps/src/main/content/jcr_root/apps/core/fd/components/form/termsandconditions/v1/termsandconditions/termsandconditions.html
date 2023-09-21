@@ -28,6 +28,7 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      id="${tnc.id}"
+     title="${tnc.tooltipVisible ? '' : tnc.tooltipText}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div class="cmp-adaptiveform-termsandcondition__label-container">
         <div data-sly-call="${label.label @componentId=tnc.id, labelValue=tnc.label.value, labelVisible=tnc.label.visible, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
