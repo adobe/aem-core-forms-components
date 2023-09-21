@@ -56,9 +56,9 @@ BLOCK cmp-adaptiveform-termsandcondition
     ELEMENT cmp-adaptiveform-termsandcondition__label-container
     ELEMENT cmp-adaptiveform-termsandcondition__label
     ELEMENT cmp-adaptiveform-termsandcondition__questionmark
-    ELEMENT cmp-adaptiveform-termsandcondition__content-wrapper
-      MODIFIER cmp-adaptiveform-termsandcondition__content-wrapper--modal
-    ELEMENT cmp-adaptiveform-termsandcondition__closepopup-btn
+    ELEMENT cmp-adaptiveform-termsandcondition__content-container
+      MODIFIER cmp-adaptiveform-termsandcondition__content-container--modal
+    ELEMENT cmp-adaptiveform-termsandcondition__close-button
     ELEMENT cmp-adaptiveform-termsandcondition__content
     ELEMENT cmp-adaptiveform-termsandcondition__text
     ELEMENT cmp-adaptiveform-termsandcondition__link
