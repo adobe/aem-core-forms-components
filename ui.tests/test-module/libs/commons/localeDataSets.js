@@ -13,7 +13,7 @@ const selectors = {
     PANEL: '.cmp-container__label',
     RADIO_BUTTON: '.cmp-adaptiveform-radiobutton__label',
     SUBMIT: '.submit span',
-    TELEPHONE_INPUT: 'div[class="cmp-adaptiveform-telephoneinput"] label',
+    TELEPHONE_INPUT: '.cmp-adaptiveform-telephoneinput__label',
     TEXT_INPUT: '.cmp-adaptiveform-textinput__label',
     TITLE: '.cmp-title__text',
     WIZARD: '.cmp-adaptiveform-wizard__label'

@@ -320,6 +320,14 @@ class FormPanel extends FormFieldBase {
         }
     }
 
+    /**
+     * Updates the HTML class based on the existence of a value in a field. 
+     * For the layout components, there's no need to do this, so override the updateEmptyStatus method.
+     */
+    updateEmptyStatus() {
+
+    }
+
 }
 
 export default FormPanel;

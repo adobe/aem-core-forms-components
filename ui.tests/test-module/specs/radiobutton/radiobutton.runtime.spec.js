@@ -172,5 +172,15 @@ describe("Form with Radio Button Input", () => {
 
     })
 
+    it("should add filled/empty class at container div", () => {
+      const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+      cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--empty');
+      cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+      cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
+        cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
+      })
+    })
+
 
 })

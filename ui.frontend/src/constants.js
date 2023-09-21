@@ -246,6 +246,20 @@ export const Constants = {
     DATA_ATTRIBUTE_VISIBLE : "data-cmp-visible",
 
     /**
+     * Data attribute to mark the dragged component required or not.
+     * Value true for required, value false for not required.
+     * @type {string}
+     */
+    DATA_ATTRIBUTE_REQUIRED : "data-cmp-required",
+
+    /**
+     * Data attribute to mark the dragged component readonly or not.
+     * Value true for readonly, value false for not readonly.
+     * @type {string}
+     */
+    DATA_ATTRIBUTE_READONLY : "data-cmp-readonly",
+
+    /**
      * Data attribute to mark the dragged component active or inactive.
      * Value true for active, value false for inactive.
      * @type {string}
