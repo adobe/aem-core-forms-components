@@ -34,7 +34,7 @@
  * version, is bound to this proxy component resource type.
  * </p>
  */
-@Version("4.5.0")
+@Version("4.5.1")
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.Version;
