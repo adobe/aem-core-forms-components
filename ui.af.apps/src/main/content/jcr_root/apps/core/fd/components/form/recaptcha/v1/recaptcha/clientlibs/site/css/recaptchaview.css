@@ -1,0 +1,31 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-recaptcha
+    ELEMENT cmp-adaptiveform-recaptcha__label
+    ELEMENT cmp-adaptiveform-recaptcha__widget
+    ELEMENT cmp-adaptiveform-recaptcha__errormessage
+*/
+
+.cmp-adaptiveform-recaptcha {
+
+}
+
+.cmp-adaptiveform-recaptcha__widget {
+
+}
+
+.cmp-adaptiveform-recaptcha__label {
+
+}
+
+.cmp-adaptiveform-recaptcha__errormessage {
+
+}
+
+.cmp-adaptiveform-recaptcha[data-cmp-valid=false] {
+
+}
+
+.cmp-adaptiveform-recaptcha[data-cmp-valid=false] {
+
+}

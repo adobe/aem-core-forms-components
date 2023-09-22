@@ -1,0 +1,40 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.renderer="${'recaptcha.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+
+<div class="cmp-adaptiveform-recaptcha"
+     data-cmp-is="adaptiveFormRecaptcha"
+     id="${component.id}"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.recaptcha="com.adobe.cq.forms.core.components.models.form.Captcha"
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     data-cmp-visible="${recaptcha.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${recaptcha.enabled ? 'true' : 'false'}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <div data-sly-call="${label.label @componentId=component.id, labelValue=recaptcha.label.value, labelVisible=recaptcha.label.visible, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
+
+    <div class="cmp-adaptiveform-recaptcha__widget"
+         name="${recaptcha.name}"
+         required="${recaptcha.required}"></div>
+
+    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
+</div>
