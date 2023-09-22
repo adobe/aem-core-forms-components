@@ -45,6 +45,7 @@
                    name="${switch.name}"
                    type="checkbox"
                    role="switch"
+                   aria-label="${switch.label.value}"
                    disabled="${!switch.enabled || switch.readOnly}"
                    value="${switch.default}"
                    aria-readonly="${switch.readOnly ? 'true' : ''}">
