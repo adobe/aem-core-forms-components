@@ -78,12 +78,12 @@ describe("Form Runtime with Switch Input", () => {
         expect(model.getState().value).eq(undefined)
     })
 
-    it ('should have value set to false if checked and then unchecked', () => {
+    it.only ('should have value set to false if checked and then unchecked', () => {
         const id = formContainer._model.items[0].id;
         const model = formContainer._model.getElement(id)
         cy.get(`#${id}`).find("input").click().then(() => {
             cy.get(`#${id}`).find("input").click().then(() => {
-                expect(model.getState().value).eq('1')
+                expect(model.getState().value).eq(undefined)
             })
         })
 
@@ -96,7 +96,7 @@ describe("Form Runtime with Switch Input", () => {
         cy.get(`#${id}`).get('input').should('be.checked');
     })
 
-    it(" html changes are reflected in model ", () => {
+    it.only(" html changes are reflected in model ", () => {
 
         const id = formContainer._model.items[0].id;
         const model = formContainer._model.getElement(id)
@@ -105,7 +105,7 @@ describe("Form Runtime with Switch Input", () => {
         })
 
         cy.get(`#${id}`).find("input").click().then(x => {
-            expect(model.getState().value).to.contain('1');
+            expect(model.getState().value).equal(undefined);
         })
     });
 

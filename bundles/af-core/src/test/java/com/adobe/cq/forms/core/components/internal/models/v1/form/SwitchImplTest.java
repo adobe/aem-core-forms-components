@@ -47,7 +47,7 @@ public class SwitchImplTest {
 
     private static final String PATH_SWITCH_NOENUM = CONTENT_ROOT + "/switchNoEnum";
 
-    private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/switch-preserveUncheckedStateValue";
+    private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/switch-preserveUncheckedStateValueFalse";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
