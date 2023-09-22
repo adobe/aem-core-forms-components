@@ -172,6 +172,14 @@ describe("Form with Radio Button Input", () => {
 
     })
 
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
+
     it("should add filled/empty class at container div", () => {
       const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
       cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--empty');
@@ -181,6 +189,4 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
-
-
 })

@@ -122,6 +122,14 @@ describe("Form Runtime with Telephone Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
+
     it(" should add filled/empty class at container div ", () => {
       const [id, fieldView] = Object.entries(formContainer._fields)[0]
       const model = formContainer._model.getElement(id)

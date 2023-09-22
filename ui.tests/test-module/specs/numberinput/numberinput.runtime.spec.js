@@ -200,7 +200,15 @@ describe("Form with Number Input", () => {
             expect(Number(model.getState().value)).to.equal(Number(1122));
             cy.get(`#${numberInput7}`).find('input').should('have.value', model.getState().displayValue);
         })
-    });
+    })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
 
     it(" should add filled/empty class at container div ", () => {
       const [numberInput7, numberInput7FieldView] = Object.entries(formContainer._fields)[6];
