@@ -178,17 +178,24 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // choose a different date and check if its persisted
-        cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
 
         });
+
+        // check clear option
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get(".dp-clear").click();
+        });
+
+        cy.get(`#${datePicker7}`).find("input").should("have.value", "");
     });
 
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        cy.get(`#${datePicker7}`).find(".datepicker-calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
             cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
@@ -200,5 +207,18 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
         })
     })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[0]
+      const model = formContainer._model.getElement(id)
+      const input = "2020-10-10";
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+          expect(model.getState().value).to.equal(input);
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
+      });
+    });
 
 })

@@ -180,4 +180,17 @@ describe("Form Runtime with CheckBox Input", () => {
         })
 
     })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[2]
+      const model = formContainer._model.getElement(id)
+
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkbox--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${id}`).find("input").click().then(x => {
+          expect(model.getState().value).to.contain('true');
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+      });
+    });
 })

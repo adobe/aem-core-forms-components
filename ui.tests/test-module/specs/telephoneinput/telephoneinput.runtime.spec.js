@@ -130,4 +130,16 @@ describe("Form Runtime with Telephone Input", () => {
         })
     })
 
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[0]
+      const model = formContainer._model.getElement(id)
+      const input = "value";
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+          expect(model.getState().value).to.equal(input);
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--filled');
+      });
+    });
 })

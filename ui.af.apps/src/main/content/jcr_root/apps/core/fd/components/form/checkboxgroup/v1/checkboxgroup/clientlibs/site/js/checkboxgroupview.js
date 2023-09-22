@@ -135,6 +135,7 @@
 
         updateReadOnly(readonly) {
             let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             widgets.forEach(widget => {
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
