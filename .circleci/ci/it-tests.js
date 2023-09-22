@@ -97,11 +97,13 @@ try {
             ${preleaseOpts}`);
 
         if (AEM === 'classic' || AEM === 'classic-latest') {
-            // add a sleep for 5 mins, add-on takes times to come up
-            ci.sh(`sleep 5m`);
+            // add a sleep for 10 mins, add-on takes times to come up
+            ci.sh(`sleep 10m`);
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
             ci.sh(`./qp.sh start --id author`);
+            // add a sleep for 5 mins, add-on takes times to come up
+            ci.sh(`sleep 5m`);
         }
 });
 
