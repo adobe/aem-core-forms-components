@@ -45,9 +45,9 @@ public class SwitchImplTest {
 
     private static final String PATH_SWITCH_CUSTOMIZED = CONTENT_ROOT + "/switch-customized";
 
-    private static final String PATH_SWITCH_NOENUM = CONTENT_ROOT + "/switchNoEnum";
-
     private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/switch-preserveUncheckedStateValueFalse";
+    private static final String PATH_SWITCH_ENABLEUNCHECKED_BOOLEAN = CONTENT_ROOT + "/switch-boolean";
+    private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN = CONTENT_ROOT + "/switch-preserveUncheckedStateValueFalse-boolean";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -323,6 +323,20 @@ public class SwitchImplTest {
     void shouldOnlyHaveOnEnumValueIfPreserveUncheckedStateValueOff() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH_ENABLEUNCHECKEDOFF);
         assertArrayEquals(new String[] { "ON" }, switchObj.getEnumNames());
+    }
+
+    @Test
+    void shouldOnlyHaveOnEnumAndEnumValueIfPreserveUncheckedStateValueOffBoolean() {
+        Switch switchObjBool = getSwitchUnderTest(PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN);
+        assertArrayEquals(new Boolean[] { true }, switchObjBool.getEnums());
+        assertArrayEquals(new String[] { "true" }, switchObjBool.getEnumNames());
+    }
+
+    @Test
+    void shouldOnlyHaveOnEnumAndEnumValueIfPreserveUncheckedStateValueOnBoolean() {
+        Switch switchObjBool = getSwitchUnderTest(PATH_SWITCH_ENABLEUNCHECKED_BOOLEAN);
+        assertArrayEquals(new Boolean[] { true, false }, switchObjBool.getEnums());
+        assertArrayEquals(new String[] { "true", "false" }, switchObjBool.getEnumNames());
     }
 
     private Switch getSwitchUnderTest(String resourcePath) {
