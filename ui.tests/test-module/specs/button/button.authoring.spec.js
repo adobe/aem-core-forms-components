@@ -103,16 +103,16 @@ describe('Button - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        // it('insert Button in form container', function () {
-        //     dropButtonInContainer();
-        //     cy.deleteComponentByPath(buttonDrop);
-        // });
+        it('insert Button in form container', function () {
+            dropButtonInContainer();
+            cy.deleteComponentByPath(buttonDrop);
+        });
 
-        // it ('open edit dialog of Button',{ retries: 3 }, function(){
-        //     cy.cleanTest(buttonDrop).then(function(){
-        //         testButtonBehaviour(buttonEditPathSelector, buttonDrop);
-        //     });
-        // });
+        it ('open edit dialog of Button',{ retries: 3 }, function(){
+            cy.cleanTest(buttonDrop).then(function(){
+                testButtonBehaviour(buttonEditPathSelector, buttonDrop);
+            });
+        });
 
         it.only ('open Inline edit dialog of Button',{ retries: 3 }, function(){
             cy.cleanTest(buttonDrop).then(function(){
@@ -133,14 +133,14 @@ describe('Button - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        // it('insert aem forms Button', function () {
-        //     dropButtonInSites();
-        //     cy.deleteComponentByPath(buttonDrop);
-        // });
+        it('insert aem forms Button', function () {
+            dropButtonInSites();
+            cy.deleteComponentByPath(buttonDrop);
+        });
 
-        // it('open edit dialog of aem forms Button', function() {
-        //     testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
-        // });
+        it('open edit dialog of aem forms Button', function() {
+            testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+        });
 
     });
 });
