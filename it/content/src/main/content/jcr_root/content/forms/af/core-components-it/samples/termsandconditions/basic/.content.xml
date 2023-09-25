@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2023-09-20T17:28:00.062+05:30"
+        cq:lastModified="{Date}2023-09-25T12:26:37.911+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
@@ -137,6 +137,65 @@
                         change="[if(length($field.$value) == length($field.$enum)\, dispatchEvent($parent.approvalcheckbox\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
                 </link>
             </termsandconditions_2127535044>
+            <termsandconditions_143203533
+                fd:tnc="{Boolean}true"
+                jcr:created="{Date}2023-09-25T12:26:21.805+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2023-09-25T12:26:37.891+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Terms And Conditions With Popup"
+                sling:resourceType="forms-components-examples/components/form/termsandconditions"
+                enabled="{Boolean}true"
+                fieldType="panel"
+                hideTitle="false"
+                name="popuptnc"
+                readOnly="{Boolean}false"
+                showApprovalOption="true"
+                showAsPopup="true"
+                showLink="{Boolean}false"
+                textIsRich="[true,true]"
+                visible="{Boolean}true"
+                wrapData="{Boolean}true">
+                <text
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="\0"
+                    sling:resourceType="core/fd/components/form/text/v1/text"
+                    fieldType="plain-text"
+                    hideTitle="true"
+                    name="consenttext"
+                    value="Text related to the terms and conditions come here"/>
+                <approvalcheckbox
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="I agree to the terms &amp; conditions"
+                    sling:resourceType="core/fd/components/form/checkbox/v1/checkbox"
+                    checkedValue="true"
+                    enabled="false"
+                    fieldType="checkbox"
+                    name="approvalcheckbox">
+                    <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        custom_scrollDone="\{enabled: true()}"
+                        custom_scrollInitialized="\{enabled: false()}"/>
+                </approvalcheckbox>
+                <link
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="\0"
+                    sling:resourceType="core/fd/components/form/links/v1/links"
+                    enum="your-link-here"
+                    enumNames="[label for the link]"
+                    fieldType="checkbox-group"
+                    orientation="vertical"
+                    title="I agree to the terms &amp; conditions"
+                    type="string[]">
+                    <fd:rules
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                    <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if(length($field.$value) == length($field.$enum)\, dispatchEvent($parent.approvalcheckbox\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
+                </link>
+            </termsandconditions_143203533>
         </guideContainer>
     </jcr:content>
 </jcr:root>

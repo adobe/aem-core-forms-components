@@ -47,7 +47,7 @@ The following properties are written to JCR for this Form Text component and are
 The component provides a `core.forms.components.termsandconditions.v1.runtime` client library category that contains the Javascript runtime for the component.
 It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.textinput.v1.editor` editor client library category that includes
+It also provides a `core.forms.components.termsandconditions.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description
@@ -58,9 +58,12 @@ BLOCK cmp-adaptiveform-termsandcondition
     ELEMENT cmp-adaptiveform-termsandcondition__questionmark
     ELEMENT cmp-adaptiveform-termsandcondition__content-container
       MODIFIER cmp-adaptiveform-termsandcondition__content-container--modal
+    ELEMENT cmp-adaptiveform-termsandcondition__body
+    ELEMENT cmp-adaptiveform-termsandcondition__header
     ELEMENT cmp-adaptiveform-termsandcondition__close-button
     ELEMENT cmp-adaptiveform-termsandcondition__content
     ELEMENT cmp-adaptiveform-termsandcondition__text
+    ELEMENT cmp-adaptiveform-termsandcondition__text-intersect
     ELEMENT cmp-adaptiveform-termsandcondition__link
     ELEMENT cmp-adaptiveform-termsandcondition__approvalcheckbox
     ELEMENT cmp-adaptiveform-termsandcondition__shortdescription

@@ -58,15 +58,16 @@
             const intersection = this.element.querySelector('.cmp-adaptiveform-termsandcondition__text-intersect');
             if (intersection) {
                 const self = this;
-                const onIntersection = ([{isIntersecting}]) => {
-                    if (isIntersecting) {
-                        const approvalCheckbox = self.getModel()._children.filter(child => child.fieldType === 'checkbox')[0];
-                        approvalCheckbox.dispatch(new Event('custom:scrollDone'));
-                    }
-                }
                 const io = new IntersectionObserver(onIntersection, {
                     threshold: [1],
                 })
+                function onIntersection ([{isIntersecting}]) {
+                    if (isIntersecting) {
+                        const approvalCheckbox = self.getModel()._children.filter(child => child.fieldType === 'checkbox')[0];
+                        approvalCheckbox.dispatch(new Event('custom:scrollDone'));
+                        io.unobserve(intersection);
+                    }
+                }
                 io.observe(intersection)
             }
         }

@@ -16,7 +16,6 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,9 +33,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
-import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -45,9 +42,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
     resourceType = { FormConstants.RT_FD_FORM_TERMS_AND_CONDITIONS_V1 })
 
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TermsAndConditionsImpl extends AbstractContainerImpl implements TermsAndConditions {
+public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditions {
 
     private static final String CUSTOM_TNC_PROPERTY = "fd:tnc";
+
+    private static final String FIELD_TYPE = "fieldType";
 
     @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -63,14 +62,6 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     private boolean showAsPopup;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "wrapData")
-    @Default(booleanValues = true)
-    @JsonIgnore
-    protected boolean wrapData;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    protected boolean dorExclusion;
 
     @Override
     public boolean isShowApprovalOption() {
@@ -93,15 +84,6 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     }
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public Type getType() {
-        if (wrapData || getDataRef() != null) {
-            return Type.OBJECT;
-        }
-        return null;
-    }
-
-    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         if (resource.getValueMap().containsKey(CUSTOM_TNC_PROPERTY)) {
@@ -111,22 +93,14 @@ public class TermsAndConditionsImpl extends AbstractContainerImpl implements Ter
     }
 
     @Override
-    @JsonIgnore
-    public Map<String, Object> getDorProperties() {
-        Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put("dorExclusion", dorExclusion);
-        return customDorProperties;
-    }
-
-    @Override
     protected List<Resource> getFilteredChildrenResources() {
         List<Resource> childResources = getFilteredChildrenResources(resource);
         // the tnc component will either have links or consent text based upon showLink value
         if (showLink) {
-            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get("fieldType")));
+            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get(FIELD_TYPE)));
 
         } else {
-            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get("fieldType")));
+            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get(FIELD_TYPE)));
         }
         return childResources;
     }

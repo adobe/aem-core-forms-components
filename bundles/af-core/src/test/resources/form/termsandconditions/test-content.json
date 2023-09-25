@@ -1,11 +1,12 @@
 {
   "termsandconditions": {
-    "showApprovalOption": "true",
+    "showApprovalOption": true,
     "jcr:title": "Terms And Conditions",
     "fd:tnc": true,
-    "showAsPopup": "true",
+    "showAsPopup": true,
     "name": "termsandconditions1694159302516",
     "sling:resourceType": "core/fd/components/form/termsandconditions/v1/termsandconditions",
+    "wrapData": true,
     "fieldType": "panel",
     "text": {
       "jcr:primaryType": "nt:unstructured",
@@ -42,10 +43,10 @@
     }
   },
   "termsandconditionsNoWrapData": {
-    "showApprovalOption": "true",
+    "showApprovalOption": true,
     "jcr:title": "Terms And Conditions",
     "fd:tnc": true,
-    "showAsPopup": "true",
+    "showAsPopup": true,
     "name": "termsandconditions1694159302516",
     "sling:resourceType": "core/fd/components/form/termsandconditions/v1/termsandconditions",
     "wrapData": false,

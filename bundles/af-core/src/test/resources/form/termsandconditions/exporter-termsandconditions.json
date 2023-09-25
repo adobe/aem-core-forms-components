@@ -5,7 +5,9 @@
   "type": "object",
   "properties": {
     "fd:dor": {
-      "dorExclusion": false
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
     },
     "fd:path": "/content/termsandconditions",
     "fd:tnc": true
@@ -22,7 +24,6 @@
     "text",
     "approvalcheckbox"
   ],
-  ":type": "core/fd/components/form/termsandconditions/v1/termsandconditions",
   ":items": {
     "text": {
       "id": "text-37c101fc2b",
@@ -69,5 +70,6 @@
       ],
       ":type": "core/fd/components/form/checkbox/v1/checkbox"
     }
-  }
+  },
+  ":type": "core/fd/components/form/termsandconditions/v1/termsandconditions"
 }
