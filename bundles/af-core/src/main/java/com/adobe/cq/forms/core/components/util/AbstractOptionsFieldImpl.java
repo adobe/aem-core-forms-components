@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
+import com.adobe.cq.forms.core.components.models.form.RichText;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -48,6 +49,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
     private String[] enumNames;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "richTextOptions")
+    @Nullable
+    private boolean richTextOptions;
 
     @Override
     public boolean isEnforceEnum() {
@@ -95,15 +100,23 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public String[] getEnumNames() {
+    public RichText[] getEnumNames() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> {
-                    return this.translate("enumNames", p);
+                .map(p -> new RichText() {
+                    @Override
+                    public @Nullable Boolean isRichText() {
+                        return richTextOptions;
+                    }
+
+                    @Override
+                    public @Nullable String getValue() {
+                        return translate("enumNames", p);
+                    }
                 })
-                .toArray(String[]::new);
+                .toArray(RichText[]::new);
         }
         return null;
     }

@@ -9,8 +9,14 @@
   "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
-    "Male",
-    "Female"
+    {
+      "richText": false,
+      "value": "Male"
+    },
+    {
+      "richText": false,
+      "value": "Female"
+    }
   ],
   "label": {
     "value": "Gender"
