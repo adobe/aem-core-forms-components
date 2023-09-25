@@ -83,6 +83,10 @@
             // before initializing the form container load all the locale specific json resources
             // for runtime
             const formLanguage = formContainer.getLang();
+            if (formLanguage) {
+                const localeObj = new Intl.Locale(formLanguage);
+                document.getElementsByTagName("body")[0].dir = localeObj.textInfo.direction;
+            }
             const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
             await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
             formContainer.subscribe();
