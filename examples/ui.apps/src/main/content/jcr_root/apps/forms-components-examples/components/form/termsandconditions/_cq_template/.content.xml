@@ -5,41 +5,41 @@
   fieldType="panel"
   fd:tnc="{Boolean}true"
   wrapData="{Boolean}true">
-    <text
-      name="consenttext"
+  <text
+    name="consenttext"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="\0"
+    sling:resourceType="core/fd/components/form/text/v1/text"
+    fieldType="plain-text"
+    hideTitle="true"
+    value="Text related to the terms and conditions come here"/>
+  <approvalcheckbox
+    name="approvalcheckbox"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="I agree to the terms &amp; conditions"
+    sling:resourceType="core/fd/components/form/checkbox/v1/checkbox"
+    enabled="false"
+    checkedValue="true"
+    fieldType="checkbox">
+    <fd:events
       jcr:primaryType="nt:unstructured"
-      jcr:title="\0"
-      sling:resourceType="core/fd/components/form/text/v1/text"
-      fieldType="plain-text"
-      hideTitle="true"
-      value="Text related to the terms and conditions come here"/>
-    <approvalcheckbox
-      name="approvalcheckbox"
+      custom_scrollDone="\{enabled: true()}"/>
+  </approvalcheckbox>
+  <link
+    jcr:primaryType="nt:unstructured"
+    jcr:title="\0"
+    sling:resourceType="core/fd/components/form/links/v1/links"
+    orientation="vertical"
+    type="string[]"
+    enum="your-link-here"
+    enumNames="[label for the link]"
+    fieldType="checkbox-group"
+    title="I agree to the terms &amp; conditions">
+    <fd:rules
       jcr:primaryType="nt:unstructured"
-      jcr:title="I agree to the terms &amp; conditions"
-      sling:resourceType="core/fd/components/form/checkbox/v1/checkbox"
-      enabled="false"
-      checkedValue="true"
-      fieldType="checkbox">
-        <fd:events
-          jcr:primaryType="nt:unstructured"
-          custom_scrollDone="\{enabled: true()}"/>
-    </approvalcheckbox>
-    <link
+      validationStatus="valid"/>
+    <fd:events
       jcr:primaryType="nt:unstructured"
-      jcr:title="\0"
-      sling:resourceType="core/fd/components/form/links/v1/links"
-      orientation="vertical"
-      type="string[]"
-      enum="your-link-here"
-      enumNames="[label for the link]"
-      fieldType="checkbox-group"
-      title="I agree to the terms &amp; conditions">
-        <fd:rules
-          jcr:primaryType="nt:unstructured"
-          validationStatus="valid"/>
-        <fd:events
-          jcr:primaryType="nt:unstructured"
-          change="[if(length($field.$value) == length($field.$enum)\, dispatchEvent($parent.approvalcheckbox\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
-    </link>
+      change="[if(length($field.$value) == length($field.$enum)\, dispatchEvent($parent.approvalcheckbox\, 'custom:setProperty'\, {enabled : true()})\, {})]"/>
+  </link>
 </jcr:root>
