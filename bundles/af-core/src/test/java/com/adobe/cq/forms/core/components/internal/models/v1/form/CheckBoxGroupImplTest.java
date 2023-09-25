@@ -25,6 +25,7 @@ import java.util.Set;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -294,6 +295,44 @@ public class CheckBoxGroupImplTest {
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
+        RichText richText1 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "m";
+            }
+        };
+        RichText richText2 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "f";
+            }
+        };
+        RichText richText3 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "o";
+            }
+        };
+        RichText[] richText = new RichText[] { richText1, richText2, richText3 };
+        for (int i = 0; i < checkboxGroup.getEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), checkboxGroup.getEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), checkboxGroup.getEnumNames()[i].isRichText());
+        }
     }
 
     @Test

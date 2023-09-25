@@ -25,7 +25,12 @@
         BASE_ENUMNAMES_VISIBLE = ".cmp-adaptiveform-base__enumNames",
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
-        BASE_DORBINDREF = ".cmp-adaptiveform-base__dorBindRef",
+        BASE_TITLE = ".cmp-adaptiveform-base__title",
+        BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
+        BASE_WRAPPER_RICH_TEXT_TITLE = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
+        BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
+        BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
+        BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__richTextOptions",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
@@ -156,13 +161,97 @@
     }
 
     /**
+     * hides the RTE/plain text field on the basis of rich text checkbox and
+     * resolves it's value.
+     *
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     * @param isTitleRichText is rich text checkbox selected.
+     * @param isToggled is this function being called on toggle of rich text checkbox.
+     */
+    function resolveRichText(dialog, isTitleRichText, isToggled) {
+        var title = dialog.find(BASE_TITLE)[0],
+            richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
+            richTextTitleDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
+        if(isTitleRichText.checked){
+            hideGraniteComponent(title);
+            showGraniteComponent(richTextTitle);
+            copyTextValueToRte(title, richTextTitleDiv);
+        } else {
+            hideGraniteComponent(richTextTitle);
+            showGraniteComponent(title);
+            if(isToggled){
+                title.value = $('<div>').html(richTextTitleDiv.innerHTML).text();
+            }
+        }
+    }
+
+    /**
+     * hides the RTE/plain text field on the basis of rich text checkbox and
+     * resolves it's value for enumNAmes/Options.
+     *
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     * @param areOptionsRichText is rich text checkbox selected.
+     * @param isToggled is this function being called on toggle of rich text checkbox.
+     */
+    function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
+        var enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
+            richTextEnumNames = dialog.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+            richTextEnumNamesDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
+        if(areOptionsRichText != null && areOptionsRichText.checked){
+            for (var i = 0; i < richTextEnumNames.length; i++) {
+                hideGraniteComponent(enumNames[i]);
+                showGraniteComponent(richTextEnumNames[i]);
+                copyTextValueToRte(enumNames[i], richTextEnumNamesDiv[i]);
+            }
+        } else {
+            for (var i = 0; i < richTextEnumNames.length; i++) {
+                hideGraniteComponent(richTextEnumNames[i]);
+                showGraniteComponent(enumNames[i]);
+                if(isToggled){
+                    enumNames[i].value = $('<div>').html(richTextEnumNamesDiv[i].innerHTML).text();
+                }
+            }
+        }
+    }
+
+    function copyTextValueToRte (textElem, richTextElem) {
+        richTextElem.innerHTML = window.expeditor.Utils.encodeScriptableTags(textElem.value);
+    }
+
+    //Function to hide guide component
+    function hideGraniteComponent (elem) {
+        var parentTag = $(elem).closest("div"); // elem is not jQuery object
+        $(parentTag).attr("hidden", "");
+    }
+
+    //Function to show the coral 3 based granite component
+    function showGraniteComponent (elem) {
+        var parentTag = $(elem).closest("div");
+        if ($(parentTag).is("[hidden]")) {
+            //jquery based show
+            $(parentTag).removeAttr("hidden");
+        } else {
+            //coral3 api based show
+            parentTag.show();
+        }
+    }
+
+    function changeTextValue(textValue, richTextValue) {
+        if(textValue && richTextValue) {
+            textValue.value = window.expeditor.Utils.encodeScriptableTags(richTextValue.value);
+        }
+    }
+
+    /**
      * Initialise the conditional display of the various elements of the dialog.
      *
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
     function initialise(dialog) {
         dialog = $(dialog);
-        var baseRequired = dialog.find(BASE_REQUIRED)[0];
+        var baseRequired = dialog.find(BASE_REQUIRED)[0],
+            isTitleRichText = dialog.find(BASE_IS_TITLE_RICH_TEXT)[0],
+            areOptionsRichText = dialog.find(BASE_ARE_OPTIONS_RICH_TEXT)[0];
         if (baseRequired) {
             handleRequired(dialog, baseRequired);
             baseRequired.on("change", function() {
@@ -174,6 +263,18 @@
         showHideDoRBindRefField(dialog);
         validateName();
         handleDialogSubmit(dialog);
+        if (isTitleRichText) {
+            resolveRichText(dialog, isTitleRichText, false);
+            isTitleRichText.on("change", function() {
+                resolveRichText(dialog, isTitleRichText, true);
+            });
+        }
+        if (areOptionsRichText) {
+            resolveRichTextOptions(dialog, areOptionsRichText, false);
+            areOptionsRichText.on("change", function() {
+                resolveRichTextOptions(dialog, areOptionsRichText, true);
+            });
+        }
     }
 
     channel.on("foundation-contentloaded", function(e) {
@@ -182,6 +283,55 @@
                 initialise(component);
             });
         }
+    });
+
+    /**
+     * whenever RTE value of enumName is changed, we save it's value corresponding to text value field.
+     */
+    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
+        Coral.commons.ready(e.target, function() {
+            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+                textValue = channel.find(BASE_ENUMNAMES_VISIBLE);
+            for(var i=0; i<textValue.length; i++){
+                if(textValue[i] && richTextValue[i]){
+                    changeTextValue(textValue[i], richTextValue[i]);
+                }
+            }
+        });
+    });
+
+    /**
+     * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
+     */
+    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
+        Coral.commons.ready(e.target, function() {
+            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
+                textValue = channel.find(BASE_TITLE)[0];
+            changeTextValue(textValue, richTextValue);
+        });
+    });
+
+    /**
+     * whenever we add a new option for enums,
+     * we want to hide it's RTE/plain text field on the basis rich text checkbox.
+     */
+    channel.on("click", "coral-multifield[data-granite-coral-multifield-name='./enum'] button[coral-multifield-add]", function (e) {
+        Coral.commons.ready(e.target, function() {
+            var areOptionsRichText = $(BASE_ARE_OPTIONS_RICH_TEXT)[0],
+                enumNames = $(BASE_ENUMNAMES_VISIBLE),
+                richTextEnumNames = $(BASE_WRAPPER_RICH_TEXT_ENUMNAMES);
+            if(areOptionsRichText != null && areOptionsRichText.checked){
+                for (var i = 0; i < richTextEnumNames.length; i++) {
+                    hideGraniteComponent(enumNames[i]);
+                    showGraniteComponent(richTextEnumNames[i]);
+                }
+            } else {
+                for (var i = 0; i < richTextEnumNames.length; i++) {
+                    hideGraniteComponent(richTextEnumNames[i]);
+                    showGraniteComponent(enumNames[i]);
+                }
+            }
+        });
     });
 
 })(jQuery, Granite.author, jQuery(document), Coral);

@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import com.adobe.cq.forms.core.components.models.form.RichText;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -48,6 +49,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
     private String[] enumNames;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "richTextOptions")
+    @Nullable
+    private boolean richTextOptions;
 
     @Override
     public boolean isEnforceEnum() {
@@ -95,15 +100,23 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public String[] getEnumNames() {
+    public RichText[] getEnumNames() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> {
-                    return this.translate("enumNames", p);
+                    .map(p -> new RichText() {
+                        @Override
+                        public @Nullable Boolean isRichText() {
+                            return richTextOptions;
+                        }
+
+                        @Override
+                        public @Nullable String getValue() {
+                            return translate("enumNames", p);
+                        }
                 })
-                .toArray(String[]::new);
+                .toArray(RichText[]::new);
         }
         return null;
     }

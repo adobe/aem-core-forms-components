@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -310,7 +311,33 @@ public class RadioButtonImplTest {
     @Test
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
-        assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
+        RichText richText1 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "Item 1";
+            }
+        };
+        RichText richText2 = new RichText() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return false;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "Item 2";
+            }
+        };
+        RichText[] richText = new RichText[] { richText1, richText2 };
+        for (int i = 0; i < radioButton.getEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), radioButton.getEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), radioButton.getEnumNames()[i].isRichText());
+        }
     }
 
     @Test
