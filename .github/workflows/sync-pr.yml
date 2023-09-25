@@ -21,7 +21,7 @@ jobs:
 
       - name: Sync with Base Branch
         run: |
-          if [[ ${{ github.event.review.state }} == "approved" ]]; then
+          if [ "${{ github.event.review.state }}" == "approved" ]; then
             git fetch origin
             git checkout ${{ github.event.pull_request.base.ref }}
             git pull origin ${{ github.event.pull_request.base.ref }}
