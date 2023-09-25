@@ -622,7 +622,7 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
             cy.get("#Content .toggle-sidepanel").click();
         }
     });
-    var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
+    var tabSelector = 'coral-tablist coral-tab[title="' + tab + '"]';
     cy.get(tabSelector)
         .should("be.visible")
         .click();
