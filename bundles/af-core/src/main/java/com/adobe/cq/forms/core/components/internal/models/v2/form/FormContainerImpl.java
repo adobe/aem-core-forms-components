@@ -260,6 +260,30 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    public String getDirection() {
+        if (isLangRTL()) {
+            return "rtl";
+        } else {
+            return "ltr";
+        }
+    }
+
+    private boolean isLangRTL() {
+        String language = getLang();
+        if (StringUtils.isNotEmpty(language)) {
+            language = language.split("-")[0];
+        }
+        return "ar".equalsIgnoreCase(language)
+            || "iw".equalsIgnoreCase(language)
+            || "he".equalsIgnoreCase(language)
+            || "fa".equalsIgnoreCase(language)
+            || "ur".equalsIgnoreCase(language)
+            || "ug".equalsIgnoreCase(language)
+            || "ji".equalsIgnoreCase(language)
+            || "yi".equalsIgnoreCase(language);
+    }
+
+    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         if (getSchemaType() != null) {

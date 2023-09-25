@@ -295,6 +295,11 @@ public interface FormContainer extends Container {
         return "en-US";
     }
 
+    @JsonIgnore
+    default String getDirection() {
+        return "ltr";
+    }
+
     /**
      * Returns the redirect url after form submission
      *
