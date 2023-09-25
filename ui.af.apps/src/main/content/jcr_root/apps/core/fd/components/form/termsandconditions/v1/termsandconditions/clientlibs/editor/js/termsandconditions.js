@@ -21,9 +21,9 @@
         EDIT_DIALOG = ".cmp-adaptiveform-termsandconditions__editdialog";
 
     function handleToggleOfApprovalOptions(dialog) {
-        var approvalOption = dialog.find('coral-checkbox[name="./showApprovalOption"]')[0];
-        var showAsPopupWidget = dialog.find('coral-checkbox[name="./showAsPopup"]')[0];
-        var showAsPopup = dialog.find('coral-checkbox[name="./showAsPopup"]')[0]['checked'];
+        var approvalOption = dialog.find('.cmp-adaptiveform-termsandconditions__showapprovaloption[name="./showApprovalOption"]')[0];
+        var showAsPopupWidget = dialog.find('.cmp-adaptiveform-termsandconditions__showaspopup[name="./showAsPopup"]')[0];
+        var showAsPopup = dialog.find('.cmp-adaptiveform-termsandconditions__showaspopup[name="./showAsPopup"]')[0]['checked'];
         function toggleApprovalOption(show) {
             if (show) {
                 approvalOption.readOnly=false;

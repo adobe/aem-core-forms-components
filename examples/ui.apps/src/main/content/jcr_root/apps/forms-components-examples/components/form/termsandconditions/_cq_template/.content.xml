@@ -23,8 +23,7 @@
       fieldType="checkbox">
         <fd:events
           jcr:primaryType="nt:unstructured"
-          custom_scrollDone="\{enabled: true()}"
-          custom_scrollInitialized="\{enabled: false()}"/>
+          custom_scrollDone="\{enabled: true()}"/>
     </approvalcheckbox>
     <link
       jcr:primaryType="nt:unstructured"

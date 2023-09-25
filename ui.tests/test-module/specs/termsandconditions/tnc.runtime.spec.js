@@ -40,7 +40,7 @@ describe("Form Runtime with Terms and Conditions", () => {
         cy.get(`#${id}`)
         .invoke('attr', 'data-cmp-enabled')
         .should('eq', state.enabled.toString());
-        expect(state.items.length, "model has children equal to count").to.equal(3);
+        expect(state.items.length, "model has children equal to count").to.equal(2);
         expect(view.children.length, "tab has children equal to count").to.equal(2); // this is because at any given point, either links are shown or text content is shown
         return cy.get(`#${id}`);
     };
@@ -58,7 +58,7 @@ describe("Form Runtime with Terms and Conditions", () => {
         const tncId = formContainer._model.items[0].id
         const model = formContainer._model.getElement(tncId)
         const tabView = formContainer.getAllFields()[tncId];
-        const count = 3;
+        const count = 2;
         checkHTML(model.id, model.getState(), tabView, count).then(() => {
             model.visible = false;
             return checkHTML(model.id, model.getState(), tabView, count);
@@ -78,6 +78,27 @@ describe("Form Runtime with Terms and Conditions", () => {
             expect(model.getState().items[0].enabled).to.equal(true);
         })
 
+    });
+
+    it("OOTB behaviour -> should have show popup", () => {
+        const tncWithPopup = formContainer._model.items[2].id;
+        const model = formContainer._model.getElement(tncWithPopup)
+        cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
+        .should('have.class', 'cmp-adaptiveform-termsandcondition__content-container--modal')
+        .invoke('attr', 'data-cmp-visible').should('eq', 'false')
+        expect(model.getState().items[1].enabled).to.equal(false);
+        cy.get(`#${tncWithPopup} .cmp-adaptiveform-checkbox__widget-container label`).click()
+        .then(() => {
+            // this test will also verify scrollDone scenario
+            expect(model.getState().items[1].enabled).to.equal(true);
+            cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
+                .invoke('attr', 'data-cmp-visible').should('not.exist');
+            cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__close-button`).click()
+                .then(() => {
+                    cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
+                    .invoke('attr', 'data-cmp-visible').should('eq', 'false');
+                })
+        })
     })
 })
 
