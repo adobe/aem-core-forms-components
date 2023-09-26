@@ -84,12 +84,9 @@ describe('Button - Authoring', function () {
         getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
             $span[0].textContent = '';
           });
-          cy.get('body').click( 0,0);
-          cy.get('span.sidepanel-tree-item-label label.name').as('labelElement');
-          cy.get('@labelElement').should('not.have.text', '');
-    
-
-
+          cy.get('body').click(0,0);
+          cy.get('[role="button"]').click();
+          cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
     }
 
 
@@ -114,7 +111,7 @@ describe('Button - Authoring', function () {
             });
         });
 
-        it.only ('open Inline edit dialog of Button',{ retries: 3 }, function(){
+        it ('open Inline edit dialog of Button',{ retries: 3 }, function(){
             cy.cleanTest(buttonDrop).then(function(){
                 testButtonBehaviourInilineEdit(buttonEditPathSelector, buttonDrop);
                 cy.deleteComponentByPath(buttonDrop);
