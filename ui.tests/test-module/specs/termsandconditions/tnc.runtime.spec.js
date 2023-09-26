@@ -90,14 +90,16 @@ describe("Form Runtime with Terms and Conditions", () => {
         cy.get(`#${tncWithPopup} .cmp-adaptiveform-checkbox__widget-container label`).click()
         .then(() => {
             // this test will also verify scrollDone scenario
-            expect(model.getState().items[1].enabled).to.equal(true);
+            cy.get(`#${tncWithPopup} .cmp-adaptiveform-checkbox`).invoke('attr', 'data-cmp-enabled')
+            .should('eq', 'true')
+
             cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
-                .invoke('attr', 'data-cmp-visible').should('not.exist');
+            .invoke('attr', 'data-cmp-visible').should('not.exist');
             cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__close-button`).click()
-                .then(() => {
-                    cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
-                    .invoke('attr', 'data-cmp-visible').should('eq', 'false');
-                })
+            .then(() => {
+                cy.get(`#${tncWithPopup} .cmp-adaptiveform-termsandcondition__content-container`)
+                .invoke('attr', 'data-cmp-visible').should('eq', 'false', );
+            })
         })
     })
 })
