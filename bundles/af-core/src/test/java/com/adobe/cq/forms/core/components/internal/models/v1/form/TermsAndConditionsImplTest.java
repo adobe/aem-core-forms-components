@@ -113,6 +113,12 @@ public class TermsAndConditionsImplTest {
     }
 
     @Test
+    void testJSONExport_showLink() throws Exception {
+        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
+        Utils.testJSONExport(tnc, Utils.getTestExporterJSONPath(BASE, PATH_NOWRAP_TNC));
+    }
+
+    @Test
     void testNoWrap() {
         TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
         Assert.assertNull(tnc.getType());
