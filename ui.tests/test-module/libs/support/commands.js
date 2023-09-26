@@ -338,6 +338,7 @@ const waitForFormInit = () => {
         cy.get('form').then(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
                     const isReady = () => {
                         const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
                         if (container &&
@@ -349,6 +350,7 @@ const waitForFormInit = () => {
                         setTimeout(isReady, 0)
                     }
                     isReady();
+                }
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
@@ -364,6 +366,7 @@ const waitForFormInitMultipleContiners = () => {
         cy.get('form').each(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
                     const isReady = () => {
                         const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
                         if (container &&
@@ -375,6 +378,7 @@ const waitForFormInitMultipleContiners = () => {
                         setTimeout(isReady, 0)
                     }
                     isReady();
+                }
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
