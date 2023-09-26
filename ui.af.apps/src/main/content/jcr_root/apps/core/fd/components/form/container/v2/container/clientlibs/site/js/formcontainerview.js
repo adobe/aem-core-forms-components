@@ -68,6 +68,9 @@
         }
         function onInit(e) {
             let formContainer =  e.detail;
+            if (formContainer._element && !formContainer._element.dir && formLanguage) {
+                formContainer._element.dir = new Intl.Locale(formLanguage).textInfo.direction;
+            }
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 formEl.classList.remove(FormContainerV2.loadingClass);
