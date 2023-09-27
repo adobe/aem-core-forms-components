@@ -49,7 +49,7 @@
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                         aria-readonly="${radioButton.readOnly ? 'true' : ''}"/>
-                  <span>${radioButton.enumNames[itemList.index].value @ context = radioButton.enumNames[itemList.index].richText ? 'html' : 'text'}</span>
+                  <span>${radioButton.richTextEnumNames[itemList.index].value @ context = radioButton.richTextEnumNames[itemList.index].richText ? 'html' : 'text'}</span>
               </label>
           </div>
       </div>

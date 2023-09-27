@@ -334,9 +334,9 @@ public class RadioButtonImplTest {
             }
         };
         RichText[] richText = new RichText[] { richText1, richText2 };
-        for (int i = 0; i < radioButton.getEnumNames().length; i++) {
-            assertEquals(richText[i].getValue(), radioButton.getEnumNames()[i].getValue());
-            assertEquals(richText[i].isRichText(), radioButton.getEnumNames()[i].isRichText());
+        for (int i = 0; i < radioButton.getRichTextEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), radioButton.getRichTextEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), radioButton.getRichTextEnumNames()[i].isRichText());
         }
     }
 
@@ -347,8 +347,9 @@ public class RadioButtonImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        String[] radioButtonValues = Arrays.stream(radioButton.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[radioButton
-            .getEnumNames().length]);
+        String[] radioButtonValues = Arrays.stream(radioButton.getRichTextEnumNames()).map(d -> d.getValue()).toArray(
+            size -> new String[radioButton
+                .getRichTextEnumNames().length]);
         assertArrayEquals(map.values().toArray(new String[0]), radioButtonValues);
     }
 
@@ -417,8 +418,9 @@ public class RadioButtonImplTest {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_FOR_INSERTION_ORDER);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        String[] radioButtonValues = Arrays.stream(radioButton.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[radioButton
-            .getEnumNames().length]);
+        String[] radioButtonValues = Arrays.stream(radioButton.getRichTextEnumNames()).map(d -> d.getValue()).toArray(
+            size -> new String[radioButton
+                .getRichTextEnumNames().length]);
         assertArrayEquals(set.toArray(new String[0]), radioButtonValues);
     }
 }
