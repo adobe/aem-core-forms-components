@@ -304,6 +304,17 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * Returns the direction in which the form will render
+     *
+     * @return the direction of content of the form
+     * @since com.adobe.cq.forms.core.components.models.form 5.2.0
+     */
+    @JsonIgnore
+    default String getDirection() {
+        return "ltr";
+    }
+
+    /**
      * Returns the redirect url after form submission
      *
      * @return the redirect url of the form
