@@ -49,10 +49,10 @@
         <option data-sly-test="${!isPlaceHolderSet}" role="none" style="display: none;"></option>
         <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
-            <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
+            <div data-sly-test="${dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
                 <option value="${dropdown.enums[enumNameList.index].toString}"
                         class="cmp-adaptiveform-dropdown__option"
-                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName}</option>
+                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName.value}</option>
             </div>
         </div>
     </select>
