@@ -20,7 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import com.adobe.cq.forms.core.components.models.form.RichText;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -30,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
+import com.adobe.cq.forms.core.components.models.form.RichText;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -105,16 +105,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                    .map(p -> new RichText() {
-                        @Override
-                        public @Nullable Boolean isRichText() {
-                            return richTextOptions;
-                        }
+                .map(p -> new RichText() {
+                    @Override
+                    public @Nullable Boolean isRichText() {
+                        return richTextOptions;
+                    }
 
-                        @Override
-                        public @Nullable String getValue() {
-                            return translate("enumNames", p);
-                        }
+                    @Override
+                    public @Nullable String getValue() {
+                        return translate("enumNames", p);
+                    }
                 })
                 .toArray(RichText[]::new);
         }

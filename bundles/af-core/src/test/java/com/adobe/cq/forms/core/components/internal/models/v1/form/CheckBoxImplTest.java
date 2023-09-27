@@ -18,10 +18,8 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Collections;
 import java.util.Map;
 
-import com.adobe.cq.forms.core.components.models.form.*;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +27,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
