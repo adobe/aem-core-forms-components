@@ -294,7 +294,6 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
         RichText richText1 = new RichText() {
             @Override
             public @Nullable Boolean isRichText() {
@@ -342,7 +341,8 @@ public class CheckBoxGroupImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        assertArrayEquals(map.values().toArray(new String[0]), checkboxGroup.getEnumNames());
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[checkboxGroup.getEnumNames().length]);
+        assertArrayEquals(map.values().toArray(new String[0]), checkboxGroupValues);
     }
 
     @Test
@@ -415,6 +415,7 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[checkboxGroup.getEnumNames().length]);
+        assertArrayEquals(set.toArray(new String[0]), checkboxGroupValues);
     }
 }

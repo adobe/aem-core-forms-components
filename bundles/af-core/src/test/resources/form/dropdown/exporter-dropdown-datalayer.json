@@ -9,8 +9,14 @@
   "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
-    "Owl",
-    "Wolf"
+    {
+      "richText": false,
+      "value": "Owl"
+    },
+    {
+      "richText": false,
+      "value": "Wolf"
+    }
   ],
   "label": {
     "value": "Favorite Animal"

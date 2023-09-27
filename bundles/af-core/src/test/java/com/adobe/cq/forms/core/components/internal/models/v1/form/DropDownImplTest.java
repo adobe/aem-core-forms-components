@@ -426,7 +426,8 @@ public class DropDownImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        assertArrayEquals(map.values().toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown.getEnumNames().length]);
+        assertArrayEquals(map.values().toArray(new String[0]), dropdownValues);
     }
 
     @Test
@@ -475,6 +476,7 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_INSERTION_ORDER, DropDown.class, context);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        assertArrayEquals(set.toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown.getEnumNames().length]);
+        assertArrayEquals(set.toArray(new String[0]), dropdownValues);
     }
 }

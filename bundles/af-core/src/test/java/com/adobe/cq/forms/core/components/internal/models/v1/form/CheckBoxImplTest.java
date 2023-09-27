@@ -307,35 +307,11 @@ public class CheckBoxImplTest {
     }
 
     @Test
-    void testGetEnumNames() {
+    void testGetNullEnumNames() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        RichText richText1 = new RichText() {
-            @Override
-            public @Nullable Boolean isRichText() {
-                return false;
-            }
-
-            @Override
-            public @Nullable String getValue() {
-                return "yes";
-            }
-        };
-        RichText richText2 = new RichText() {
-            @Override
-            public @Nullable Boolean isRichText() {
-                return false;
-            }
-
-            @Override
-            public @Nullable String getValue() {
-                return "no";
-            }
-        };
-        RichText[] richText = new RichText[] { richText1, richText2 };
-        for (int i = 0; i < checkbox.getEnumNames().length; i++) {
-            assertEquals(richText[i].getValue(), checkbox.getEnumNames()[i].getValue());
-            assertEquals(richText[i].isRichText(), checkbox.getEnumNames()[i].isRichText());
-        }
+        assertNull(checkbox.getEnumNames());
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnumNames());
     }
 
     @Test
