@@ -370,4 +370,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
