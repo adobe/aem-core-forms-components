@@ -85,7 +85,6 @@ describe('Button - Authoring', function () {
             $span[0].textContent = '';
           });
           cy.get('body').click(0,0);
-          cy.get('[role="button"]').click();
           cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
     }
 
