@@ -66,3 +66,5 @@ BLOCK cmp-adaptiveform-container
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform-container` block to enable initialization of the JavaScript component.
+
+Applying `data-cmp-adaptiveform-container-loader` attribute to the div specifically for applying the loader class on it, it is to ensure that the loading icon should not appear over components.
