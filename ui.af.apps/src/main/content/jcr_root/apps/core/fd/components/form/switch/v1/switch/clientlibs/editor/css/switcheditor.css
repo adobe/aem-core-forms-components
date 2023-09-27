@@ -1,0 +1,15 @@
+.cmp-adaptiveform-switch__enums button {
+    display: none;
+}
+.cmp-adaptiveform-switch__enums coral-multifield-item {
+    padding-right: 0px;
+}
+.coral-Form-fieldwrapper .cmp-adaptiveform-switch__enable-unchecked-value {
+    display:flex;
+    margin-bottom:1px;
+    width:40px;
+}
+
+.cmp-adaptiveform-switch__enable-unchecked-value .coral-Form-fieldlabel {
+    padding-right: 20px;
+}
