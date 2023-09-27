@@ -281,7 +281,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private boolean isLangRTL() {
         String language = getLang();
         if (StringUtils.isNotEmpty(language)) {
-            language = language.split("-")[0];
+            language = language.split("-|_")[0];
         }
         return "ar".equalsIgnoreCase(language)
             || "iw".equalsIgnoreCase(language)
