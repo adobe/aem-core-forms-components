@@ -40,6 +40,15 @@ describe('Button - Authoring', function () {
         cy.get('body').click( 0,0);
     }
 
+    const getContentIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+      }
+    
     const testButtonBehaviour = function(buttonEditPathSelector, buttonDrop, isSites) {
         if (isSites) {
             dropButtonInSites();
@@ -63,6 +72,22 @@ describe('Button - Authoring', function () {
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(buttonDrop);
     }
+
+    const testButtonBehaviourInilineEdit = function(buttonEditPathSelector, buttonDrop, isSites) {
+        if (isSites) {
+            dropButtonInSites();
+        } else {
+            dropButtonInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
+            $span[0].textContent = '';
+          });
+          cy.get('body').click(0,0);
+          cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
+    }
+
 
     context('Open Forms Editor', function() {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -103,6 +128,13 @@ describe('Button - Authoring', function () {
             cy.get(".rte-toolbar").should('be.visible');
             cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
             cy.deleteComponentByPath(buttonDrop);
+        });
+
+        it ('open Inline edit dialog of Button',{ retries: 3 }, function(){
+            cy.cleanTest(buttonDrop).then(function(){
+                testButtonBehaviourInilineEdit(buttonEditPathSelector, buttonDrop);
+                cy.deleteComponentByPath(buttonDrop);
+            });
         });
     });
 
