@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>1.1.25-rtl-3</version>
+        <version>1.1.25-rtl-5-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
