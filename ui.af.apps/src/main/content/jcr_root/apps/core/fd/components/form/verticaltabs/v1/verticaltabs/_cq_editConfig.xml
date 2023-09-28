@@ -34,7 +34,7 @@
             text="Edit Rules"/>
         <replace
                 jcr:primaryType="nt:unstructured"
-                handler="CQ.FormsCoreComponents.editorhooks.replace"
+                handler="CQ.FormsCoreComponents.editorhooks.replaceV2Components"
                 text="Replace"/>
         <qualifiedName
                 jcr:primaryType="nt:unstructured"

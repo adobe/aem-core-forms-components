@@ -46,6 +46,6 @@
     }
 
     window.CQ.FormsCoreComponents.editorhooks.embedFragment = function (editable) {
-        window.CQ.FormsCoreComponents.editorhooks.openCmpSelectionDialog(editable, "Embed Fragment", embedFragmentHandler);
+        guidelib.author.editConfigListeners.openCmpSelectionDialog(editable, "Embed Fragment", embedFragmentHandler);
     }
 })(Granite.author);

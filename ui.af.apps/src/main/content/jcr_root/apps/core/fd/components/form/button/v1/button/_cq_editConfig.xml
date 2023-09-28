@@ -15,7 +15,7 @@
         <replace
                 jcr:primaryType="nt:unstructured"
                 condition="CQ.FormsCoreComponents.editorhooks.isReplaceable"
-                handler="CQ.FormsCoreComponents.editorhooks.replace"
+                handler="CQ.FormsCoreComponents.editorhooks.replaceV2Components"
                 icon="shuffle"
                 text="Replace"/>
         <qualifiedName
