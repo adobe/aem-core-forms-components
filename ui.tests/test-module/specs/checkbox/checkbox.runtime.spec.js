@@ -171,4 +171,26 @@ describe("Form Runtime with CheckBox Input", () => {
             })
         })
     })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", "cmp-adaptiveform-checkbox");
+        })
+
+    })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[2]
+      const model = formContainer._model.getElement(id)
+
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkbox--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${id}`).find("input").click().then(x => {
+          expect(model.getState().value).to.contain('true');
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+      });
+    });
 })

@@ -116,7 +116,7 @@
                         <dependency>
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-apps</name>
-                            <version>(1.1.6,)</version>
+                            <version>(1.0.52,)</version>
                         </dependency>
                     </dependencies>
                 </configuration>
