@@ -17,7 +17,7 @@
   "use strict";
 
   const EDIT_DIALOG = ".cmp-adaptiveform-switch__editdialog",
-      ENABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__enable-unchecked-value",
+      ENABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__enable-unchecked-value coral-switch",
       ENUM_OPTION = ".cmp-adaptiveform-switch__enums coral-multifield-item",
       SWITCH_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-switch__type",
       SWITCH_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__value",
