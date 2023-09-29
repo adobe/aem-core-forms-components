@@ -189,4 +189,25 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option-label").contains('Item 1').should('not.exist');
 
     })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+
+    })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[2]
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkboxgroup--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+      cy.get(`#${checkBox2}`).find("input").check(["0","3"])
+      cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkboxgroup--filled');
+      });
+    });
 })

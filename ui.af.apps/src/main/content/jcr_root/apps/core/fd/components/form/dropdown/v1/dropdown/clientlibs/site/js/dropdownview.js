@@ -96,6 +96,7 @@
 
         updateReadOnly(readonly) {
             let widget = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             if (readonly === true) {
                 widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                 widget.setAttribute("aria-readonly", true);

@@ -156,9 +156,9 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-submit').should('not.exist')
         });
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().contains('Item 3');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().contains('Item 2');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().contains('Item 1').should('not.exist');
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
