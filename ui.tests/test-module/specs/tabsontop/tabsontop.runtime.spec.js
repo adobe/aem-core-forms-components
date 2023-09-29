@@ -234,11 +234,18 @@ describe("setFocus of tabs using rules", () => {
       tab1().should('have.attr', 'aria-selected', 'true');
       tab2().should('have.attr', 'aria-selected', 'false');
 
-      cy.get(".cmp-adaptiveform-button__widget").click().then(() => {
+      cy.get("#button-f87f60cb51-widget").click().then(() => {
           // panel 2 active
           tab2().should('have.class', 'cmp-tabs__tab--active');
           tab2().should('have.attr', 'aria-selected', 'true');
           tab1().should('have.attr', 'aria-selected', 'false');
       });
+
+      cy.get("#button-959d5f5dfc-widget").click().then(() => {
+        // panel 1 active
+        tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.attr', 'aria-selected', 'true');
+        tab2().should('have.attr', 'aria-selected', 'false');
+    });
   });
 });
