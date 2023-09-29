@@ -25,7 +25,7 @@ Adaptive Form Switch component written in HTL.
 * Styles
 
 ### Use Object
-The Form switch component uses the `com.adobe.cq.forms.core.components.models.form.Switch` Sling Model for its Use-object.
+The Form switch component uses the `com.adobe.cq.forms.core.components.models.form.Switch` extends `com.adobe.cq.forms.core.components.models.form.CheckBox` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this Form Switch component and are expected to be available as `Resource` properties:
@@ -51,11 +51,15 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-switch
-    ELEMENT cmp-adaptiveform-switch__label
+    ELEMENT cmp-adaptiveform-switch__label--container
+    ELEMENT cmp-adaptiveform-switch__container
+    ELEMENT cmp-adaptiveform-switch__option
+    ELEMENT cmp-adaptiveform-switch__option--off
+    ELEMENT cmp-adaptiveform-switch__option--on
     ELEMENT cmp-adaptiveform-switch__widget
-    ELEMENT cmp-adaptiveform-switch__widget-checkbox
-    ELEMENT cmp-adaptiveform-switch__widget-off
-    ELEMENT cmp-adaptiveform-switch__widget-on
+    ELEMENT cmp-adaptiveform-switch__widget--label
+    ELEMENT cmp-adaptiveform-switch__widget--slider
+    ELEMENT cmp-adaptiveform-switch__circle--indicator
     ELEMENT cmp-adaptiveform-switch__questionmark
     ELEMENT cmp-adaptiveform-switch__shortdescription
     ELEMENT cmp-adaptiveform-switch__longdescription

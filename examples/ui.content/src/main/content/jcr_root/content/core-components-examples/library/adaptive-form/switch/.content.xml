@@ -34,7 +34,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>A switch in an Adaptive Form allows users to select one of two options. Each switch is represented by a Data Value (value used to process items of a switch) and display value (value to be sent to backend)&lt;/p>"
+                        text="&lt;p>A switch in an Adaptive Form allows users to select one of two options. Each switch is represented by a Data Value (value to be sent to backend) and display value&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"

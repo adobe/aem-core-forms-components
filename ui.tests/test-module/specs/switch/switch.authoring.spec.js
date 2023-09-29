@@ -47,7 +47,7 @@ describe('Page - Authoring', function () {
       dropSwitchInContainer();
     }
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
-    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
     cy.get("[name='./name']")
     .should("exist");
 

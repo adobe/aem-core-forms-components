@@ -1,5 +1,3 @@
-import FormPanel from "./FormPanel";
-
 /*******************************************************************************
  * Copyright 2023 Adobe
  *
@@ -19,8 +17,8 @@ import FormPanel from "./FormPanel";
 import FormFieldBase from "./FormFieldBase.js";
 
 /**
- * Class representing components baed on CheckBox.
- * @extends module:FormView~FormPanel
+ * Class representing components based on CheckBox.
+ * @extends module:FormView~FormCheckBox
  */
 class FormCheckBox extends FormFieldBase {
 

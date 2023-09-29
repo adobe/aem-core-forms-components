@@ -21,7 +21,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing Form Component replace behaviour in authoring
  */
 describe('component replace - Authoring', function () {
-    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly'}
+    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly', CHECKBOX: 'checkbox'}
     const typeMap = {
         "formbutton": fieldTypes.NON_INPUT,
         "formcheckboxgroup": fieldTypes.SELECT,
@@ -35,8 +35,8 @@ describe('component replace - Authoring', function () {
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
         "formimage": fieldTypes.NON_INPUT,
-        "checkbox": fieldTypes.SELECT,
-        "switch": fieldTypes.SELECT
+        "checkbox": fieldTypes.CHECKBOX,
+        "switch": fieldTypes.CHECKBOX
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -160,7 +160,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        it.skip('replace checkbox with switch', function () {
+        it('replace checkbox with switch', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 

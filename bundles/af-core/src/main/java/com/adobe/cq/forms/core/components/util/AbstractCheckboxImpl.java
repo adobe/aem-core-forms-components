@@ -55,7 +55,6 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
         }
     }
 
-
     @Override
     public Object[] getEnums() {
         if (enums == null) {
