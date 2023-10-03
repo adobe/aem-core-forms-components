@@ -413,9 +413,9 @@ public class DropDownImplTest {
             }
         };
         RichText[] richText = new RichText[] { richText1, richText2, richText3 };
-        for (int i = 0; i < dropdown.getEnumNames().length; i++) {
-            assertEquals(richText[i].getValue(), dropdown.getEnumNames()[i].getValue());
-            assertEquals(richText[i].isRichText(), dropdown.getEnumNames()[i].isRichText());
+        for (int i = 0; i < dropdown.getRichTextEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), dropdown.getRichTextEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), dropdown.getRichTextEnumNames()[i].isRichText());
         }
     }
 
@@ -426,8 +426,8 @@ public class DropDownImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        String[] dropdownValues = Arrays.stream(dropdown.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
-            .getEnumNames().length]);
+        String[] dropdownValues = Arrays.stream(dropdown.getRichTextEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
+            .getRichTextEnumNames().length]);
         assertArrayEquals(map.values().toArray(new String[0]), dropdownValues);
     }
 
@@ -477,8 +477,8 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_INSERTION_ORDER, DropDown.class, context);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        String[] dropdownValues = Arrays.stream(dropdown.getEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
-            .getEnumNames().length]);
+        String[] dropdownValues = Arrays.stream(dropdown.getRichTextEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
+            .getRichTextEnumNames().length]);
         assertArrayEquals(set.toArray(new String[0]), dropdownValues);
     }
 }

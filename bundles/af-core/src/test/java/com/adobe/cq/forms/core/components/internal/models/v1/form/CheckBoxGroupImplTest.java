@@ -328,9 +328,9 @@ public class CheckBoxGroupImplTest {
             }
         };
         RichText[] richText = new RichText[] { richText1, richText2, richText3 };
-        for (int i = 0; i < checkboxGroup.getEnumNames().length; i++) {
-            assertEquals(richText[i].getValue(), checkboxGroup.getEnumNames()[i].getValue());
-            assertEquals(richText[i].isRichText(), checkboxGroup.getEnumNames()[i].isRichText());
+        for (int i = 0; i < checkboxGroup.getRichTextEnumNames().length; i++) {
+            assertEquals(richText[i].getValue(), checkboxGroup.getRichTextEnumNames()[i].getValue());
+            assertEquals(richText[i].isRichText(), checkboxGroup.getRichTextEnumNames()[i].isRichText());
         }
     }
 
@@ -341,8 +341,8 @@ public class CheckBoxGroupImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNames()).map(d -> d.getValue()).toArray(
-            size -> new String[checkboxGroup.getEnumNames().length]);
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getRichTextEnumNames()).map(d -> d.getValue()).toArray(
+            size -> new String[checkboxGroup.getRichTextEnumNames().length]);
         assertArrayEquals(map.values().toArray(new String[0]), checkboxGroupValues);
     }
 
@@ -416,8 +416,8 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNames()).map(d -> d.getValue()).toArray(
-            size -> new String[checkboxGroup.getEnumNames().length]);
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getRichTextEnumNames()).map(d -> d.getValue()).toArray(
+            size -> new String[checkboxGroup.getRichTextEnumNames().length]);
         assertArrayEquals(set.toArray(new String[0]), checkboxGroupValues);
     }
 }

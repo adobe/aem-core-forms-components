@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Interface for a label
  *
- * @since com.adobe.cq.forms.core.components.models.form 5.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 4.6.0
  */
 @ConsumerType
 public interface Label extends RichText {

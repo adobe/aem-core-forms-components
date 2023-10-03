@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 import com.adobe.cq.forms.core.components.models.form.RichText;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -100,7 +101,23 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public RichText[] getEnumNames() {
+    @Deprecated
+    @JsonIgnore
+    public String[] getEnumNames() {
+        if (enumNames != null) {
+            Map<Object, String> map = removeDuplicates();
+            String[] enumName = map.values().toArray(new String[0]);
+            return Arrays.stream(enumName)
+                .map(p -> {
+                    return this.translate("enumNames", p);
+                })
+                .toArray(String[]::new);
+        }
+        return null;
+    }
+
+    @Override
+    public RichText[] getRichTextEnumNames() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
