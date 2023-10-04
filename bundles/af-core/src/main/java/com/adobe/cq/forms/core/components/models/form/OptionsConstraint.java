@@ -57,5 +57,16 @@ public interface OptionsConstraint {
      * @return the list of enum names
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @Deprecated
     String[] getEnumNames();
+
+    /**
+     * Returns a list of RichText to be displayed to the end user.
+     * The length of enum and enumNames array must match
+     *
+     * @return the list of enum names
+     * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+     */
+    @JsonProperty("enumNames")
+    RichText[] getRichTextEnumNames();
 }
