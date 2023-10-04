@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function (window, author, Coral, channel) {
+(function (window, author, Coral) {
     "use strict";
     /**
      * Get Qualified name for a component
@@ -23,7 +23,6 @@
         const componentQualifiedName = await author.afUtils.getQualifiedName(component);
         const localisedQualifiedNameMessage = CQ.I18n.getMessage('Qualified Name'),
             localizedWaringMessageForQualifiedName = CQ.I18n.getMessage("A Qualified Name is based on the position of the component. It changes if a component is moved.");
-        $('#getQualifiedNameDialog').remove();
         const dialog = new Coral.Dialog().set({
             id : 'getQualifiedNameDialog',
             header : {
@@ -38,7 +37,7 @@
         });
         document.body.appendChild(dialog);
 
-        $('#getQualifiedNameDialog')[0].show();
+        dialog.show();
     };
 
-})(window, Granite.author, Coral, jQuery(document));
+})(window, Granite.author, Coral);
