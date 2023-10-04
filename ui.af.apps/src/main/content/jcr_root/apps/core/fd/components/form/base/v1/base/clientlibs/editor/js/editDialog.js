@@ -215,7 +215,7 @@
     }
 
     function copyTextValueToRte (textElem, richTextElem) {
-        richTextElem.innerHTML = window.expeditor.Utils.encodeScriptableTags(textElem.value);
+        richTextElem.innerHTML = Utils.encodeScriptableTags(textElem.value);
     }
 
     //Function to hide guide component
@@ -238,7 +238,7 @@
 
     function changeTextValue(textValue, richTextValue) {
         if(textValue && richTextValue) {
-            textValue.value = window.expeditor.Utils.encodeScriptableTags(richTextValue.value);
+            textValue.value = Utils.encodeScriptableTags(richTextValue.value);
         }
     }
 
