@@ -309,6 +309,12 @@ public class RadioButtonImplTest {
     }
 
     @Test
+    void testDeprecatedGetEnumNames() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
+        assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
+    }
+
+    @Test
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
         RichText richText1 = new RichText() {
