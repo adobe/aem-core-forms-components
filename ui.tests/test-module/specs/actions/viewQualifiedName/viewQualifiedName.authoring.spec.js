@@ -170,7 +170,7 @@ describe("View Qualified Name Tests", () => {
             testQualifiedName(imageEditPathSelector, imageDrop);
         });
 
-        it.only('Test Qualified for File Input', function () {
+        it('Test Qualified for File Input', function () {
             testQualifiedName(fileInputEditPathSelector, fileInputDrop);
         });
     })
