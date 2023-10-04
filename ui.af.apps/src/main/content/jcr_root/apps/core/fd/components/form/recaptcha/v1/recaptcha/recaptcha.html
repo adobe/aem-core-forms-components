@@ -29,6 +29,8 @@
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      data-cmp-visible="${recaptcha.visible ? 'true' : 'false'}"
      data-cmp-enabled="${recaptcha.enabled ? 'true' : 'false'}"
+     data-cmp-required="${recaptcha.required ? 'true': 'false'}"
+     data-cmp-readonly="${recaptcha.readOnly ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div data-sly-call="${label.label @componentId=component.id, labelValue=recaptcha.label.value, labelVisible=recaptcha.label.visible, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
 

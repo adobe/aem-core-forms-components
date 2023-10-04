@@ -152,7 +152,7 @@
     border: 1px dashed black;
 }
 
-.datepicker-calendar-icon {
+.cmp-adaptiveform-datepicker__calendar-icon {
     position: absolute;
     top: 45px;
     right: 30px;
@@ -163,6 +163,6 @@
     height: 24px;
 }
 
-.datefieldwidget.widgetreadonly .datepicker-calendar-icon {
+.datefieldwidget.widgetreadonly .cmp-adaptiveform-datepicker__calendar-icon {
     display: none;
 }
