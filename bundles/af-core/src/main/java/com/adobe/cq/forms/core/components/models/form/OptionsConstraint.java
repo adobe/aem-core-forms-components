@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.osgi.annotation.versioning.ProviderType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -58,6 +59,7 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Deprecated
+    @JsonIgnore
     String[] getEnumNames();
 
     /**
@@ -68,5 +70,5 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 4.6.0
      */
     @JsonProperty("enumNames")
-    RichText[] getRichTextEnumNames();
+    TextContent[] getEnumNamesAsTextContent();
 }

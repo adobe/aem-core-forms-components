@@ -10,11 +10,9 @@
   "enforceEnum": true,
   "enumNames": [
     {
-      "richText": false,
       "value": "Cat Person"
     },
     {
-      "richText": false,
       "value": "Dog Person"
     }
   ],

@@ -14,7 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 (function (ns) {
-
     "use strict";
     var _superSitesEditorAppendButton = ns.edit.Toolbar.prototype.appendButton;
 
@@ -34,7 +33,7 @@
         };
     };
 
-    function _correctEditableEditorType(editable, name) {
+    const _correctEditableEditorType = function (editable, name) {
         if (name == "EDIT") {
             var hasRichTextLabel = editable.dom.find("[class$='__label']")[0] && editable.dom.find("[class$='__label']")[0].getAttribute("data-richtext") != null,
                 hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null;

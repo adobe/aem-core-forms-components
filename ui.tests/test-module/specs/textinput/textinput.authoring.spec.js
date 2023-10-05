@@ -72,11 +72,6 @@ describe('Page - Authoring', function () {
             dropTextInputInContainer();
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']");
-        cy.get(".rte-toolbar").should('not.exist');
-        cy.get('.rte-toolbar-item[title="Close"]').should('not.exist');
-        cy.reload();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 

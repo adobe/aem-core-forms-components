@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 4.6.0
  */
 @ConsumerType
-public interface Label extends RichText {
+public interface Label extends TextContent {
 
     /**
      * Returns {@code true} if label should be visible, otherwise {@code false}.

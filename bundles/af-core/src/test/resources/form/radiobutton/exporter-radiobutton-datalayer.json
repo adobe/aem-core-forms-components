@@ -10,11 +10,9 @@
   "enforceEnum": true,
   "enumNames": [
     {
-      "richText": false,
       "value": "Male"
     },
     {
-      "richText": false,
       "value": "Female"
     }
   ],

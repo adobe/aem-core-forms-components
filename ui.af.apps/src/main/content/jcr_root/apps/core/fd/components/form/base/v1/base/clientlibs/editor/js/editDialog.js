@@ -30,7 +30,7 @@
         BASE_WRAPPER_RICH_TEXT_TITLE = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
         BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
         BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
-        BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__richTextOptions",
+        BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__areOptionsRichText",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;

@@ -349,11 +349,11 @@
                                                                granite:class="cmp-adaptiveform-base__enumNamesHidden"
                                                                granite:hidden="true"/>
                                                     </enumNames>
-                                                    <richTextOptions
+                                                    <areOptionsRichText
                                                             jcr:primaryType="nt:unstructured"
-                                                            granite:class="cmp-adaptiveform-base__richTextOptions"
+                                                            granite:class="cmp-adaptiveform-base__areOptionsRichText"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                            name="./richTextOptions"
+                                                            name="./areOptionsRichText"
                                                             text="Allow Rich Text for Options"
                                                             value="true"/>
                                                 </items>

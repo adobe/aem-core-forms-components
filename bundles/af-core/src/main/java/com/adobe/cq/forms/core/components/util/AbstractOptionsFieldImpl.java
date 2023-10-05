@@ -29,8 +29,9 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
-import com.adobe.cq.forms.core.components.models.form.RichText;
+import com.adobe.cq.forms.core.components.models.form.TextContent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -51,9 +52,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Nullable
     private String[] enumNames;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "richTextOptions")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "areOptionsRichText")
     @Nullable
-    private boolean richTextOptions;
+    private Boolean areOptionsRichText;
 
     @Override
     public boolean isEnforceEnum() {
@@ -117,15 +118,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public RichText[] getRichTextEnumNames() {
+    public TextContent[] getEnumNamesAsTextContent() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> new RichText() {
+                .map(p -> new TextContent() {
                     @Override
+                    @JsonInclude(JsonInclude.Include.NON_NULL)
                     public @Nullable Boolean isRichText() {
-                        return richTextOptions;
+                        return areOptionsRichText;
                     }
 
                     @Override
@@ -133,7 +135,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                         return translate("enumNames", p);
                     }
                 })
-                .toArray(RichText[]::new);
+                .toArray(TextContent[]::new);
         }
         return null;
     }

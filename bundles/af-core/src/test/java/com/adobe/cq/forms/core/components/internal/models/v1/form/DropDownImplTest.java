@@ -379,10 +379,11 @@ public class DropDownImplTest {
     @Test
     void testGetEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
-        RichText richText1 = new RichText() {
+        assertArrayEquals(new String[] { "m", "f", "o" }, dropdown.getEnumNames());
+        TextContent textContent1 = new TextContent() {
             @Override
             public @Nullable Boolean isRichText() {
-                return false;
+                return null;
             }
 
             @Override
@@ -390,10 +391,10 @@ public class DropDownImplTest {
                 return "m";
             }
         };
-        RichText richText2 = new RichText() {
+        TextContent textContent2 = new TextContent() {
             @Override
             public @Nullable Boolean isRichText() {
-                return false;
+                return null;
             }
 
             @Override
@@ -401,10 +402,10 @@ public class DropDownImplTest {
                 return "f";
             }
         };
-        RichText richText3 = new RichText() {
+        TextContent textContent3 = new TextContent() {
             @Override
             public @Nullable Boolean isRichText() {
-                return false;
+                return null;
             }
 
             @Override
@@ -412,10 +413,10 @@ public class DropDownImplTest {
                 return "o";
             }
         };
-        RichText[] richText = new RichText[] { richText1, richText2, richText3 };
-        for (int i = 0; i < dropdown.getRichTextEnumNames().length; i++) {
-            assertEquals(richText[i].getValue(), dropdown.getRichTextEnumNames()[i].getValue());
-            assertEquals(richText[i].isRichText(), dropdown.getRichTextEnumNames()[i].isRichText());
+        TextContent[] textContent = new TextContent[] { textContent1, textContent2, textContent3 };
+        for (int i = 0; i < dropdown.getEnumNamesAsTextContent().length; i++) {
+            assertEquals(textContent[i].getValue(), dropdown.getEnumNamesAsTextContent()[i].getValue());
+            assertEquals(textContent[i].isRichText(), dropdown.getEnumNamesAsTextContent()[i].isRichText());
         }
     }
 
@@ -426,8 +427,10 @@ public class DropDownImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
-        String[] dropdownValues = Arrays.stream(dropdown.getRichTextEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
-            .getRichTextEnumNames().length]);
+        assertArrayEquals(map.values().toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[dropdown
+                .getEnumNamesAsTextContent().length]);
         assertArrayEquals(map.values().toArray(new String[0]), dropdownValues);
     }
 
@@ -477,8 +480,10 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_INSERTION_ORDER, DropDown.class, context);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
-        String[] dropdownValues = Arrays.stream(dropdown.getRichTextEnumNames()).map(d -> d.getValue()).toArray(size -> new String[dropdown
-            .getRichTextEnumNames().length]);
+        assertArrayEquals(set.toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[dropdown
+                .getEnumNamesAsTextContent().length]);
         assertArrayEquals(set.toArray(new String[0]), dropdownValues);
     }
 }

@@ -6,15 +6,12 @@
   "enforceEnum": true,
   "enumNames": [
     {
-      "richText": false,
       "value": "m"
     },
     {
-      "richText": false,
       "value": "f"
     },
     {
-      "richText": false,
       "value": "o"
     }
   ],

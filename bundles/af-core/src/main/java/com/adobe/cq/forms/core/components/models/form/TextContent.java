@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @since com.adobe.cq.forms.core.components.models.form 4.6.0
  */
 @ProviderType
-public interface RichText {
+public interface TextContent {
 
     /**
      * Returns {@code true} if text is rich, otherwise {@code false}.
