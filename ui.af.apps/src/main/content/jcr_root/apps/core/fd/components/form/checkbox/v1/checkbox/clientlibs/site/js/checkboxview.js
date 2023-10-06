@@ -94,6 +94,7 @@
                 this.widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
             }
             this.widget.value = modelValue;
+            super.updateEmptyStatus();
         }
     }
     FormView.Utils.setupField(({element, formContainer}) => {
