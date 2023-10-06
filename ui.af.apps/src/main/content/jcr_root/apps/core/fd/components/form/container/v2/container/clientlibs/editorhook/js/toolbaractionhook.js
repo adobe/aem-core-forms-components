@@ -15,25 +15,30 @@
  ******************************************************************************/
 (function (ns) {
     "use strict";
-    var _superSitesEditorAppendButton = ns.edit.Toolbar.prototype.appendButton;
+    let superSitesEditorAppendButton = ns.edit.Toolbar.prototype.appendButton;
 
     /**
      * @override
      */
     ns.edit.Toolbar.prototype.appendButton = function (editable, name, action) {
-        _correctEditableEditorType(editable, name);
-        _superSitesEditorAppendButton.apply(this, [editable, name, action]);
+        correctEditableEditorType(editable, name);
+        superSitesEditorAppendButton.apply(this, [editable, name, action]);
     };
 
+    /**
+     * @override
+     * In case of forms editor we are overriding sites toolbar actions and has a custom toolbar implementation.
+     * Therefore, needs a special handling.
+     */
     if(window.guidelib){
-        var _superFormsEditorAppendButton = window.guidelib.touchlib.editToolbar.prototype.appendButton;
+        var superFormsEditorAppendButton = window.guidelib.touchlib.editToolbar.prototype.appendButton;
         window.guidelib.touchlib.editToolbar.prototype.appendButton = function (editable, name, action) {
-            _correctEditableEditorType(editable, name);
-            _superFormsEditorAppendButton.apply(this, [editable, name, action]);
+            correctEditableEditorType(editable, name);
+            superFormsEditorAppendButton.apply(this, [editable, name, action]);
         };
     };
 
-    const _correctEditableEditorType = function (editable, name) {
+    const correctEditableEditorType = function (editable, name) {
         if (name == "EDIT") {
             var hasRichTextLabel = editable.dom.find("[class$='__label']")[0] && editable.dom.find("[class$='__label']")[0].getAttribute("data-richtext") != null,
                 hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null;

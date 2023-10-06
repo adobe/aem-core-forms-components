@@ -168,9 +168,17 @@ describe('Page - Authoring', function () {
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 
-        // check rich text selector and see if RTE is visible.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+        // check rich text selector and see if RTE is visible for title.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView();
+        cy.get("div[name='richTextTitle']").should('be.visible');
+
+        // check rich text selector and see if RTE is visible for enum names.
+        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+        cy.get("div[name='richTextEnumNames']").then(($el) => {
+            $el[0].scrollIntoView();
+        })
+        cy.get("div[name='richTextEnumNames']").first().should('be.visible');
         cy.get('.cq-dialog-submit').click();
     });
 

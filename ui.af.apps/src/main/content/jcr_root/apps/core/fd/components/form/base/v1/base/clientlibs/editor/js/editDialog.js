@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, ns, channel, Coral) {
+(function($, ns, channel) {
     "use strict";
 
-    var EDIT_DIALOG = ".cmp-adaptiveform-base__editdialogbasic",
+    let EDIT_DIALOG = ".cmp-adaptiveform-base__editdialogbasic",
         BASE_REQUIRED = ".cmp-adaptiveform-base__required",
         BASE_ASSISTPRIORITY = ".cmp-adaptiveform-base__assistpriority",
         BASE_VISIBLE = ".cmp-adaptiveform-base__visible",
@@ -26,13 +26,18 @@
         BASE_ENUMNAMES_HIDDEN = ".cmp-adaptiveform-base__enumNamesHidden",
         BASE_ASSISTPRIORITY_CUSTOMTEXT = ".cmp-adaptiveform-base__assistpriority-customtext",
         BASE_TITLE = ".cmp-adaptiveform-base__title",
-        BASE_RICH_TEXT_TITLE = ".cmp-adaptiveform-base__richtexttitle",
-        BASE_WRAPPER_RICH_TEXT_TITLE = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']",
+        BASE_RICH_TEXT_TITLE_NAME = "cmp-adaptiveform-base__richtexttitle",
+        BASE_RICH_TEXT_TITLE = "."+ BASE_RICH_TEXT_TITLE_NAME,
+        BASE_WRAPPER_INPUT_RICH_TEXT_TITLE = "[data-cq-richtext-input='true'][data-wrapperclass='" + BASE_RICH_TEXT_TITLE_NAME + "']",
+        BASE_WRAPPER_VALUE_RICH_TEXT_TITLE = "[data-cq-richtext-editable='true'][data-wrapperclass='" + BASE_RICH_TEXT_TITLE_NAME + "']",
         BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
-        BASE_WRAPPER_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']",
+        BASE_RICH_TEXT_ENUMNAMES_NAME = "cmp-adaptiveform-base__richTextEnumNames",
+        BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='" + BASE_RICH_TEXT_ENUMNAMES_NAME + "']",
+        BASE_WRAPPER_VALUE_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-editable='true'][data-wrapperclass='" + BASE_RICH_TEXT_ENUMNAMES_NAME + "']",
         BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__areOptionsRichText",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
+        BASE_ENUM_MULTIFIELD_ADD_BUTTON = "coral-multifield[data-granite-coral-multifield-name='./enum'] button[coral-multifield-add]",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -169,16 +174,16 @@
      * @param isToggled is this function being called on toggle of rich text checkbox.
      */
     function resolveRichText(dialog, isTitleRichText, isToggled) {
-        var title = dialog.find(BASE_TITLE)[0],
+        let title = dialog.find(BASE_TITLE)[0],
             richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
             richTextTitleDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
         if(isTitleRichText.checked){
-            hideGraniteComponent(title);
-            showGraniteComponent(richTextTitle);
+            Utils.hideComponent(title, "div");
+            Utils.showComponent(richTextTitle, "div");
             copyTextValueToRte(title, richTextTitleDiv);
         } else {
-            hideGraniteComponent(richTextTitle);
-            showGraniteComponent(title);
+            Utils.hideComponent(richTextTitle, "div");
+            Utils.showComponent(title, "div");
             if(isToggled){
                 title.value = $('<div>').html(richTextTitleDiv.innerHTML).text();
             }
@@ -194,19 +199,19 @@
      * @param isToggled is this function being called on toggle of rich text checkbox.
      */
     function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
-        var enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
-            richTextEnumNames = dialog.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+        let enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
+            richTextEnumNames = dialog.find(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES),
             richTextEnumNamesDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
         if(areOptionsRichText != null && areOptionsRichText.checked){
-            for (var i = 0; i < richTextEnumNames.length; i++) {
-                hideGraniteComponent(enumNames[i]);
-                showGraniteComponent(richTextEnumNames[i]);
+            for (let i = 0; i < richTextEnumNames.length; i++) {
+                Utils.hideComponent(enumNames[i], "div");
+                Utils.showComponent(richTextEnumNames[i], "div");
                 copyTextValueToRte(enumNames[i], richTextEnumNamesDiv[i]);
             }
         } else {
-            for (var i = 0; i < richTextEnumNames.length; i++) {
-                hideGraniteComponent(richTextEnumNames[i]);
-                showGraniteComponent(enumNames[i]);
+            for (let i = 0; i < richTextEnumNames.length; i++) {
+                Utils.hideComponent(richTextEnumNames[i], "div");
+                Utils.showComponent(enumNames[i], "div");
                 if(isToggled){
                     enumNames[i].value = $('<div>').html(richTextEnumNamesDiv[i].innerHTML).text();
                 }
@@ -216,24 +221,6 @@
 
     function copyTextValueToRte (textElem, richTextElem) {
         richTextElem.innerHTML = Utils.encodeScriptableTags(textElem.value);
-    }
-
-    //Function to hide guide component
-    function hideGraniteComponent (elem) {
-        var parentTag = $(elem).closest("div"); // elem is not jQuery object
-        $(parentTag).attr("hidden", "");
-    }
-
-    //Function to show the coral 3 based granite component
-    function showGraniteComponent (elem) {
-        var parentTag = $(elem).closest("div");
-        if ($(parentTag).is("[hidden]")) {
-            //jquery based show
-            $(parentTag).removeAttr("hidden");
-        } else {
-            //coral3 api based show
-            parentTag.show();
-        }
     }
 
     function changeTextValue(textValue, richTextValue) {
@@ -249,7 +236,7 @@
      */
     function initialise(dialog) {
         dialog = $(dialog);
-        var baseRequired = dialog.find(BASE_REQUIRED)[0],
+        let baseRequired = dialog.find(BASE_REQUIRED)[0],
             isTitleRichText = dialog.find(BASE_IS_TITLE_RICH_TEXT)[0],
             areOptionsRichText = dialog.find(BASE_ARE_OPTIONS_RICH_TEXT)[0];
         if (baseRequired) {
@@ -277,61 +264,55 @@
         }
     }
 
-    channel.on("foundation-contentloaded", function(e) {
-        if ($(e.target).find(EDIT_DIALOG).length > 0) {
-            Coral.commons.ready(e.target, function(component) {
-                initialise(component);
-            });
-        }
-    });
-
     /**
      * whenever RTE value of enumName is changed, we save it's value corresponding to text value field.
      */
-    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']", function (e) {
-        Coral.commons.ready(e.target, function() {
-            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_ENUMNAMES),
+    function updateEnumNamesOnChange(){
+        channel.on("change", BASE_WRAPPER_VALUE_RICH_TEXT_ENUMNAMES, function (e) {
+            let richTextValue = channel.find(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES),
                 textValue = channel.find(BASE_ENUMNAMES_VISIBLE);
-            for(var i=0; i<textValue.length; i++){
+            for(let i=0; i<textValue.length; i++){
                 if(textValue[i] && richTextValue[i]){
                     changeTextValue(textValue[i], richTextValue[i]);
                 }
             }
         });
-    });
+    };
 
     /**
      * whenever RTE value of richTextTitle is changed, we save it's value to corresponding text value field.
      */
-    channel.on("change", "[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']", function (e) {
-        Coral.commons.ready(e.target, function() {
-            var richTextValue = channel.find(BASE_WRAPPER_RICH_TEXT_TITLE)[0],
+    function updateRichTextTitleOnChange() {
+        channel.on("change", BASE_WRAPPER_VALUE_RICH_TEXT_TITLE, function (e) {
+            var richTextValue = channel.find(BASE_WRAPPER_INPUT_RICH_TEXT_TITLE)[0],
                 textValue = channel.find(BASE_TITLE)[0];
             changeTextValue(textValue, richTextValue);
         });
-    });
+    };
 
     /**
      * whenever we add a new option for enums,
      * we want to hide it's RTE/plain text field on the basis rich text checkbox.
      */
-    channel.on("click", "coral-multifield[data-granite-coral-multifield-name='./enum'] button[coral-multifield-add]", function (e) {
-        Coral.commons.ready(e.target, function() {
-            var areOptionsRichText = $(BASE_ARE_OPTIONS_RICH_TEXT)[0],
+    function updateEnumNamesOnAdd() {
+        channel.on("click", BASE_ENUM_MULTIFIELD_ADD_BUTTON, function (e) {
+            let areOptionsRichText = $(BASE_ARE_OPTIONS_RICH_TEXT)[0],
                 enumNames = $(BASE_ENUMNAMES_VISIBLE),
-                richTextEnumNames = $(BASE_WRAPPER_RICH_TEXT_ENUMNAMES);
+                richTextEnumNames = $(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES);
             if(areOptionsRichText != null && areOptionsRichText.checked){
-                for (var i = 0; i < richTextEnumNames.length; i++) {
-                    hideGraniteComponent(enumNames[i]);
-                    showGraniteComponent(richTextEnumNames[i]);
+                for (let i = 0; i < richTextEnumNames.length; i++) {
+                    Utils.hideComponent(enumNames[i], "div");
+                    Utils.showComponent(richTextEnumNames[i], "div");
                 }
             } else {
-                for (var i = 0; i < richTextEnumNames.length; i++) {
-                    hideGraniteComponent(richTextEnumNames[i]);
-                    showGraniteComponent(enumNames[i]);
+                for (let i = 0; i < richTextEnumNames.length; i++) {
+                    Utils.hideComponent(richTextEnumNames[i], "div");
+                    Utils.showComponent(enumNames[i], "div");
                 }
             }
         });
-    });
+    };
 
-})(jQuery, Granite.author, jQuery(document), Coral);
+    Utils.initializeEditDialog(EDIT_DIALOG)(initialise, updateRichTextTitleOnChange, updateEnumNamesOnAdd, updateEnumNamesOnChange);
+
+})(jQuery, Granite.author, jQuery(document));
