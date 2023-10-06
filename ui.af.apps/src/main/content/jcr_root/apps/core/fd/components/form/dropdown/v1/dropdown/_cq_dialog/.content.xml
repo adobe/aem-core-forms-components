@@ -69,10 +69,53 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./type"/>
                                             <enums jcr:primaryType="nt:unstructured"
-                                                   sling:resourceType="granite/ui/components/coral/foundation/include"
-                                                   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enums"
-                                                   sling:orderBefore="placeholder"
-                                                   sling:hideResource="{Boolean}false"/>
+                                                   sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                   sling:orderBefore="bindref">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                                                 sling:orderBefore="bindref"
+                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                 fieldDescription="Provide the pair of enum (data value) and enumName (display text) for each option."
+                                                                 fieldLabel="Options">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                               name="./enum">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <enum jcr:primaryType="nt:unstructured"
+                                                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                      granite:class="cmp-adaptiveform-base__enum"
+                                                                      name="./enum"
+                                                                      fieldLabel="Data value"
+                                                                      fieldDescription="Specify the content to submit, when the option is selected."
+                                                                      required="{Boolean}true"/>
+                                                                <enumNames
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        granite:class="cmp-adaptiveform-base__enumNames"
+                                                                        name="./enumNames"
+                                                                        fieldLabel="Display text"
+                                                                        fieldDescription="Specify the content to display in the adaptive form."
+                                                                        required="{Boolean}false"/>
+                                                                <richTextEnumNames
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:hideResource="{Boolean}true"/>
+                                                            </items>
+                                                        </field>
+                                                    </enumOptions>
+                                                    <enumNames jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                               granite:hidden="true">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                               name="./enumNames"
+                                                               granite:class="cmp-adaptiveform-base__enumNamesHidden"
+                                                               granite:hidden="true"/>
+                                                    </enumNames>
+                                                    <areOptionsRichText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:hideResource="true"/>
+                                                </items>
+                                            </enums>
                                             <multiSelect
                                                     granite:class="cmp-adaptiveform-dropdown__allowmultiselect"
                                                     jcr:primaryType="nt:unstructured"
