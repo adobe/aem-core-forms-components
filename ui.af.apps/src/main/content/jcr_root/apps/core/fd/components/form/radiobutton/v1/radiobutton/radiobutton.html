@@ -34,7 +34,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[radioButton.id, 'widget']}">
     <div class="cmp-adaptiveform-radiobutton__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, labelRichText=radioButton.label.richText, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
     </div>
     <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}" id="${widgetId}">
@@ -49,7 +49,7 @@
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                         aria-readonly="${radioButton.readOnly ? 'true' : ''}"/>
-                  <span>${radioButton.enumNames[itemList.index]}</span>
+                  <span>${radioButton.enumNamesAsTextContent[itemList.index].value @ context = radioButton.enumNamesAsTextContent[itemList.index].richText ? 'html' : 'text'}</span>
               </label>
           </div>
       </div>
