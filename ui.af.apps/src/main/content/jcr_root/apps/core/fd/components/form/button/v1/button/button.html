@@ -39,7 +39,7 @@
       data-cmp-data-layer="${button.data.json}"
       aria-label="${button.label.visible != false ? '' : button.label.value}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
-    <span data-sly-test="${button.label.value && button.label.visible != false}" class="cmp-adaptiveform-button__text">${button.label.value}</span>
+    <span data-sly-test="${button.label.value && button.label.visible != false}" class="cmp-adaptiveform-button__text" data-richtext="${button.label.richText}">${button.label.value @ context = button.label.richText ? 'html' : 'text'}</span>
   </button>
   <div data-sly-call="${shortDescription.shortDescription @componentId=button.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap>
   </div>

@@ -32,7 +32,7 @@
         data-placeholder-text="${'Please drag Wizard components here' @ i18n}"
         data-sly-test.widgetId="${'{0}-{1}' @ format=[wizard.id, 'widget']}">
         <div class="cmp-adaptiveform-wizard__label-container">
-          <div data-sly-call="${label.label @componentId=widgetId, labelValue=wizard.label.value, labelVisible=wizard.label.visible, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
+          <div data-sly-call="${label.label @componentId=widgetId, labelValue=wizard.label.value, labelVisible=wizard.label.visible, labelRichText=wizard.label.richText, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
           <div data-sly-call="${questionMark.questionMark @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         </div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=wizard.id, shortDescriptionVisible=wizard.tooltipVisible, shortDescription=wizard.tooltip, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
