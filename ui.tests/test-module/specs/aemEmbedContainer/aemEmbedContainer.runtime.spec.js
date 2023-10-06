@@ -125,4 +125,81 @@ describe("Sites with Aem Embed Container", () => {
             })
         })
     })
+
+    context('embed multiple form in site ', function () {
+
+      before(() => {
+        cy.attachConsoleErrorSpy();
+      });
+
+      const pagePath = "/content/forms/sites/core-components-it/aemembedmutipleform.html";
+      let formContainer = [];
+
+      beforeEach(function () {
+          cy.previewForm(pagePath, {multipleContainers: true}).then(p => {
+              formContainer = p;
+          })
+      })
+
+      const checkHTML = (id, state) => {
+        const visible = state.visible;
+        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const value = state.value == null ? '' : state.value;
+        cy.get(`#${id}`)
+            .should(passVisibleCheck)
+            .invoke('attr', 'data-cmp-visible')
+            .should('eq', visible.toString());
+        cy.get(`#${id}`)
+            .invoke('attr', 'data-cmp-enabled')
+            .should('eq', state.enabled.toString());
+        return cy.get(`#${id}`).within((root) => {
+            cy.get('*').should(passVisibleCheck)
+            cy.get('input')
+                .should(passDisabledAttributeCheck, 'disabled');
+            cy.get('input').should('have.value', value)
+        })
+      }
+
+      it("should render two form", () => {
+        expect(formContainer.length).to.equal(2);
+      });
+
+      it("form 1 model initialized properly", () => {
+          expect(formContainer[0], "formcontainer is initialized").to.not.be.null;
+          expect(Object.keys(formContainer[0]._fields).length).to.equal(11);
+      });
+
+      it("form 2 model initialized properly", () => {
+        expect(formContainer[1], "formcontainer is initialized").to.not.be.null;
+        expect(Object.keys(formContainer[1]._fields).length).to.equal(4);
+      });
+
+      it(" model's changes are reflected in the html  for form1", () => {
+        const [id, fieldView] = Object.entries(formContainer[0]._fields)[0]
+        const model = formContainer[0]._model.getElement(id)
+        model.value = "some other value"
+        checkHTML(model.id, model.getState()).then(() => {
+            model.visible = false
+            return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.enabled = false
+            return checkHTML(model.id, model.getState())
+        })
+        cy.expectNoConsoleErrors();
+      });
+
+      it(" model's changes are reflected in the html for form 2", () => {
+        const [id, fieldView] = Object.entries(formContainer[1]._fields)[0]
+        const model = formContainer[1]._model.getElement(id)
+        model.value = "some other value"
+        checkHTML(model.id, model.getState()).then(() => {
+            model.visible = false
+            return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.enabled = false
+            return checkHTML(model.id, model.getState())
+        })
+    });
+  })
 })

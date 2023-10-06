@@ -117,8 +117,10 @@ class Utils {
     static #createFormContainerFields(fieldElements, fieldCreator, formContainer) {
         for (let i = 0; i < fieldElements.length; i++) {
             const elementId = fieldElements[i].id;
+            const fieldPath = fieldElements[i].getAttribute('data-cmp-adaptiveformcontainer-path');
+            const formPath = formContainer.getFormElement().getAttribute('data-cmp-path');
             //check if field is already created, to avoid creating a new field for same id
-            if (formContainer.getField(elementId) == null) {
+            if (formContainer.getField(elementId) == null && fieldPath == formPath) {
                 let field = fieldCreator({
                     "element" : fieldElements[i],
                     "formContainer" : formContainer
