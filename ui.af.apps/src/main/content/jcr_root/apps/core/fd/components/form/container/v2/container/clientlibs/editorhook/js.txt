@@ -20,4 +20,5 @@ componentutils.js
 replacehook.js
 dorhook.js
 copypastehook.js
+toolbaractionhook.js
 qualifiedNameHook.js
