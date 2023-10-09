@@ -11,5 +11,5 @@
         />
     <fd:events
             jcr:primaryType="nt:unstructured"
-            click="[setFocus(null\, 'previousItem')]"/>
+            click="[setFocus($parent\, 'previousItem')]"/>
 </jcr:root> 

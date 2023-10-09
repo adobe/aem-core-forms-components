@@ -229,7 +229,7 @@
                 <fd:rules jcr:primaryType="nt:unstructured"/>
                 <fd:events
                     jcr:primaryType="nt:unstructured"
-                    click="[setFocus(null\, 'nextItem')]"/>
+                    click="[setFocus($parent\, 'nextItem')]"/>
             </nextitemnav>
             <previtemnav
                 jcr:created="{Date}2023-09-07T19:45:35.215+05:30"
@@ -247,7 +247,7 @@
                 <fd:rules jcr:primaryType="nt:unstructured"/>
                 <fd:events
                     jcr:primaryType="nt:unstructured"
-                    click="[setFocus(null\, 'previousItem')]"/>
+                    click="[setFocus($parent\, 'previousItem')]"/>
             </previtemnav>
         </guideContainer>
     </jcr:content>
