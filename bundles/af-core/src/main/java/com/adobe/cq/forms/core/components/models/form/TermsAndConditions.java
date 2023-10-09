@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ConsumerType;
  * Defines the form {@code TermsAndConditions} Sling Model used for the
  * {@code /apps/core/fd/components/form/termsandconditions/v1/termsandconditions} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 4.5.0
+ * @since com.adobe.cq.forms.core.components.models.form 4.7.0
  */
 @ConsumerType
 public interface TermsAndConditions extends Container, ContainerConstraint {
