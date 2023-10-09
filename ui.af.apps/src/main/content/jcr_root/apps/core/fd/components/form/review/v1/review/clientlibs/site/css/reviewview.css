@@ -1,0 +1,55 @@
+/*******************************************************************************
+ * Copyright 2023 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+ .cmp-adaptiveform-review {
+
+ }
+ .cmp-adaptiveform-review__container {
+    width: 500px;
+    font-size: 16px;
+    color: #000;
+ }
+ .cmp-adaptiveform-review__panel{
+  margin-top: 44px;
+   display: flex;
+ }
+ .cmp-adaptiveform-review__panel:first-of-type{
+  margin-top: 12px;
+ }
+ .cmp-adaptiveform-review__field{
+   display: flex;
+   margin: 12px 0;
+   display: flex;
+   font-size: 18px;
+   color: rgba(0, 0, 0, 0.40);
+ }
+ .cmp-adaptiveform-review__label{
+   flex: 1;
+ }
+ .cmp-adaptiveform-review__value{
+   flex: 1;
+   color: #000;
+ }
+ .cmp-adaptiveform-review__edit-button{
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxOCAxOCIgd2lkdGg9IjE2Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmZpbGwgewogICAgICAgIGZpbGw6ICM0NjQ2NDY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDx0aXRsZT5TIEVkaXQgMTggTjwvdGl0bGU+CiAgPHJlY3QgaWQ9IkNhbnZhcyIgZmlsbD0iI2ZmMTNkYyIgb3BhY2l0eT0iMCIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiAvPjxwYXRoIGNsYXNzPSJmaWxsIiBkPSJNMTYuNzgzNSw0LjEsMTMuOSwxLjIxNmEuNjA3NTEuNjA3NTEsMCwwLDAtLjQzMy0uMTc2NUgxMy40NWEuNjg1NS42ODU1LDAsMCwwLS40NjM1LjIwM0wyLjU0MiwxMS42ODZhLjQ5NDk0LjQ5NDk0LDAsMCwwLS4xMjU1LjIxMUwxLjAyNzUsMTYuNTVjLS4wNTcuMTg4NS4yMjk1LjQyNTUuMzkxNS40MjU1YS4xMjU0NC4xMjU0NCwwLDAsMCwuMDMxLS4wMDM1Yy4xMzgtLjAzMTUsMy45MzMtMS4xNzIsNC42NTU1LTEuMzg5YS40ODYuNDg2LDAsMCwwLC4yMDctLjEyNDVMMTYuNzU2NSw1LjAxNGEuNjg2LjY4NiwwLDAsMCwuMi0uNDQxNUEuNjEwNDkuNjEwNDksMCwwLDAsMTYuNzgzNSw0LjFaTTUuNywxNC42NThjLTEuMDgwNS4zMjQ1LTIuNDMxLjczMjUtMy4zNjQ1LDEuMDExTDMuMzQsMTIuMzA0WiIgLz4KPC9zdmc+) 14%/1rem 1rem no-repeat;
+    padding: 4px 16px;
+    border-radius: 100px;
+    border: 2px solid #E4E4E4;
+ }
+ .cmp-adaptiveform-review__edit-button::after{
+  content: 'Edit';
+  padding-left: 10px;
+ }

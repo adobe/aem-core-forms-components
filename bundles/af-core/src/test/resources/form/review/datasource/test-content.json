@@ -1,0 +1,55 @@
+{
+  "formcontainer": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/container/v2/container",
+    "dorType": "none",
+    "fd:version": "2.1",
+    "fieldType": "form",
+    "thankYouOption": "page",
+    "themeRef": "/libs/fd/af/themes/canvas",
+    "title": "test-review",
+    "wizard": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:createdBy": "admin",
+      "jcr:title": "Wizard",
+      "jcr:lastModifiedBy": "admin",
+      "jcr:created": "Wed Aug 16 2023 11:21:29 GMT+0530",
+      "name": "wizard1692165089931",
+      "jcr:lastModified": "Wed Aug 16 2023 11:21:29 GMT+0530",
+      "sling:resourceType": "core/fd/components/form/wizard/v1/wizard",
+      "fieldType": "panel",
+      "panel1": {
+        "fieldType": "panel",
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Item 1",
+        "layout": "responsiveGrid",
+        "name": "item_1",
+        "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+        "textinput": {
+          "fieldType": "text-input",
+          "jcr:primaryType": "nt:unstructured",
+          "jcr:title": "Text Input",
+          "name": "textinput1692165103863",
+          "sling:resourceType": "core/fd/components/form/textinput/v1/textinput"
+        }
+      },
+      "panel2": {
+        "fieldType": "panel",
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Item 2",
+        "layout": "responsiveGrid",
+        "name": "item_2",
+        "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+        "review": {
+          "editAction": "field",
+          "fieldType": "plain-text",
+          "hideTitle": "false",
+          "jcr:primaryType": "nt:unstructured",
+          "jcr:title": "Review",
+          "name": "textinput1692165103863",
+          "sling:resourceType": "core/fd/components/form/review/v1/review"
+        }
+      }
+    }
+  }
+}

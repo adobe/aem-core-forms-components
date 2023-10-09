@@ -115,4 +115,10 @@ public final class FormConstants {
     public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
 
     public static final String PROP_FRAGMENT_PATH = "fragmentPath";
+
+    /** The resource type for review v1 */
+    public static final String RT_FD_FORM_REVIEW_V1 = RT_FD_FORM_PREFIX + "review/v1/review";
+
+    /* The resource type for the pre-selected the linked panel */
+    public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
 }
