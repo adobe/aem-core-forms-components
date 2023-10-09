@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Defines the {@code Switch} Sling Model used for the {@code /apps/core/fd/components/form/switch} component.
  *
- * @since com.adobe.cq.forms.core.components.models 4.6.1
+ * @since com.adobe.cq.forms.core.components.models 4.7.0
  */
 @ConsumerType
 public interface Switch extends CheckBox {}
