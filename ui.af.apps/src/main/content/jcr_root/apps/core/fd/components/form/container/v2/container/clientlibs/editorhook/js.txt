@@ -21,3 +21,4 @@ replacehook.js
 dorhook.js
 copypastehook.js
 toolbaractionhook.js
+addpaneltoolbarhook.js
