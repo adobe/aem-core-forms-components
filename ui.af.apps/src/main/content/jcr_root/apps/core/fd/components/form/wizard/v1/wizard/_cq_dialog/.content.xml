@@ -61,23 +61,15 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/include"
                                                     path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/hideTitle"/>
                                             <wrapData
-                                                    granite:class="cmp-adaptiveform-panel__wrapData"
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    name="./wrapData"
-                                                    text="Group child components' data on form submission"
-                                                    uncheckedValue="false"
-                                                    value="true"/>
+                                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                    path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/wrapData"/>
                                             <wrapData-typehint
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                    name="./wrapData@TypeHint"
-                                                    value="Boolean"/>
+                                                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                    path="core/fd/components/form/panelcontainer/v1/panelcontainer/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/wrapData-typehint"/>
                                             <layout
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                    fieldLabel="Layout"
-                                                    name="./layout"
                                                     granite:hide="{Boolean}true"/>
                                             <bindref
                                                     jcr:primaryType="nt:unstructured"
