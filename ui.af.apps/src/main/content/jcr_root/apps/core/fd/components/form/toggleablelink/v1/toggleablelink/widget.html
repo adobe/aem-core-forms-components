@@ -26,7 +26,9 @@
                  checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                  disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                  aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"/>
-          <a class="cmp-adaptiveform-checkboxgroup__links" title="${checkboxgroup.enumNames[itemList.index]}" href="${checkboxgroup.enums[itemList.index].toString@context='uri'}" target="_blank">${checkboxgroup.enumNames[itemList.index]}</a>
+          <a class="cmp-adaptiveform-checkboxgroup__links" title="${checkboxgroup.enumNames[itemList.index]}" href="${checkboxgroup.enums[itemList.index].toString@context='uri'}" target="_blank">
+            ${checkboxgroup.enumNamesAsTextContent[itemList.index].value @ context = checkboxgroup.enumNamesAsTextContent[itemList.index].richText ? 'html' : 'text'}
+          </a>
         </label>
       </div>
     </div>
