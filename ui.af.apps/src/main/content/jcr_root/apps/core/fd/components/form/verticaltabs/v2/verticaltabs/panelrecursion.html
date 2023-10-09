@@ -1,0 +1,42 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<!-- panelrecursion.html -->
+<template data-sly-template.panelRecur="${@ panel, label, widgetId, tabs, questionMark, items}">
+  <sly data-sly-repeat.item="${items}">
+    <sly data-sly-test.isActive="${item.name == tabs.activeItem}"/>
+    <sly data-sly-test="${!item.isTreeStyleTab}">
+      <div id="${item.id}__tabpanel"
+           role="tabpanel"
+           aria-labelledby="${item.id}__tab"
+           tabindex="0"
+           class="cmp-verticaltabs__tabpanel${isActive ? ' cmp-verticaltabs__tabpanel--active' : ''}"
+           data-cmp-hook-adaptiveFormVerticalTabs="tabpanel">
+        <!-- Place the label container inside the tab panel -->
+        <div class="cmp-verticaltabs__label-container">
+          <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+          <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+        </div>
+        <div data-sly-resource="${item.path @ decorationTagName='div'}" data-sly-unwrap></div>
+        <sly data-sly-resource="${resource.parent.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+             data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
+      </div>
+    </sly>
+    <sly data-sly-test="${item.isTreeStyleTab}">
+      <sly data-sly-use.panelrecursion="panelrecursion.html"
+           data-sly-call="${panelrecursion.panelRecur @ panel=panel, label=label, widgetId=widgetId, tabs=tabs, questionMark=questionMark, items=item.childrenOfVerticalTab}" data-sly-unwrap></sly>
+    </sly>
+  </sly>
+</template>

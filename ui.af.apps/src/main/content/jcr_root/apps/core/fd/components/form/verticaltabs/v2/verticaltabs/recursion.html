@@ -1,0 +1,51 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<!-- recursion.html -->
+<template data-sly-template.tabsRecur="${@ panel, items, tabs}">
+    <sly data-sly-list.child="${items}">
+        <sly data-sly-test.isActive="${child.name == tabs.activeItem}"/>
+        <!-- Parent Vertical Tab -->
+        <sly data-sly-test.test="${!child.isTreeStyleTab}">
+            <li role="tab"
+                id="${child.id}__tab"
+                class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}"
+                title="${panel.tooltipVisible ? '' : panel.tooltipText}"
+                aria-controls="${child.id}__tabpanel"
+                data-cmp-hook-adaptiveFormVerticalTabs="tab">${child.panelItemTitle}</li>
+        </sly>
+        <!-- Child Vertical Tab -->
+        <sly data-sly-test="${child.isTreeStyleTab}">
+            <div id="${child.id}"
+                 class="cmp-verticaltabs"
+                 data-panelcontainer="${wcmmode.edit && 'verticaltabs'}"
+                 data-cmp-is="adaptiveFormVerticalTabs"
+                 data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+                 data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}" data-sly-unwrap>
+                <li role="tab"
+                    id="${child.id}__tab"
+                    class="cmp-verticaltabs__tab"
+                    title="${panel.tooltipVisible ? '' : panel.tooltipText}">${child.panelItemTitle}</li>
+                <ol role="tablist"
+                    class="cmp-verticaltabs__tablist"
+                    aria-label="${tabs.accessibilityLabel}"
+                    aria-multiselectable="false">
+                    <sly data-sly-use.childRecursion="recursion.html"
+                         data-sly-call="${childRecursion.tabsRecur @ panel=panel, items=child.childrenOfVerticalTab, tabs=tabs}" data-sly-unwrap></sly>
+                </ol>
+            </div>
+        </sly>
+    </sly>
+</template>
