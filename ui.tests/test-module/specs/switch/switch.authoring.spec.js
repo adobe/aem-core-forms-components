@@ -46,7 +46,7 @@ describe('Page - Authoring', function () {
     } else {
       dropSwitchInContainer();
     }
-    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+    cy.get(switchEditPathSelector).click();
     cy.invokeEditableAction("[data-action='CONFIGURE']");
     cy.get("[name='./name']")
     .should("exist");
@@ -55,8 +55,6 @@ describe('Page - Authoring', function () {
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(switchDrop);
   }
-
-  // ***** //
 
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
@@ -75,20 +73,20 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(switchDrop);
     });
 
-    it.skip('when enableUnchecked is false hides off field', function () {
+    it('when enableUnchecked is false hides off field', function () {
       // todo: Fix edit dialog bug before enabling this test
       dropSwitchInContainer();
       const pagePath = "/content/forms/af/core-components-it/blank",
       switchEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/switch",
       switchEditPathSelector = "[data-path='" + switchEditPath + "']";
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+      cy.get(switchEditPathSelector).click();
       cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
       cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).should('not.be.visible')
       const enableUnchecked = '[name="./enableUncheckedValue"]';
       cy.get(enableUnchecked).eq(0).click().then(() => {
-        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).scrollIntoView().should('be.visible')
+        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
       })
-      cy.get('.cq-dialog-cancel').click();
+      cy.get('.cq-dialog-cancel').click({force: true});
       cy.deleteComponentByPath(switchDrop);
     });
 
@@ -113,7 +111,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(switchDrop);
     });
 
-    it.skip('when enableUnchecked is false hides off field', function () {
+    it('when enableUnchecked is false hides off field', function () {
       // todo: Fix edit dialog bug before enabling this test
       dropSwitchInSites();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
@@ -121,9 +119,9 @@ describe('Page - Authoring', function () {
       cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).should('not.be.visible');
       const enableUnchecked = '[name="./enableUncheckedValue"]';
       cy.get(enableUnchecked).eq(0).click().then(() => {
-        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).scrollIntoView().should('be.visible')
+        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
       })
-      cy.get('.cq-dialog-cancel').click();
+      cy.get('.cq-dialog-cancel').click({force: true});
       cy.deleteComponentByPath(switchDrop);
     });
 

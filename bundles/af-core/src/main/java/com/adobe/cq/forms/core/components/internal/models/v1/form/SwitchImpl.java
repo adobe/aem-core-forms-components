@@ -39,11 +39,8 @@ public class SwitchImpl extends AbstractCheckboxImpl implements Switch {
     public void initSwitchModel() {
         if (enumNames != null) {
             String[] enumNameArray = enumNames;
-            if (Boolean.TRUE.equals(enableUncheckedValue)) {
-                enumNames = new String[] { enumNameArray[0], enumNameArray[1] };
-            } else {
-                enumNames = new String[] { enumNameArray[0] };
-            }
+            enumNames = Boolean.TRUE.equals(enableUncheckedValue) ? new String[] { enumNameArray[0], enumNameArray[1] }
+                : new String[] { enumNameArray[0] };
         }
     }
 }

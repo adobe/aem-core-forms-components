@@ -51,15 +51,17 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-switch
-    ELEMENT cmp-adaptiveform-switch__label--container
+    ELEMENT cmp-adaptiveform-switch__label-container
     ELEMENT cmp-adaptiveform-switch__container
     ELEMENT cmp-adaptiveform-switch__option
     ELEMENT cmp-adaptiveform-switch__option--off
     ELEMENT cmp-adaptiveform-switch__option--on
     ELEMENT cmp-adaptiveform-switch__widget
-    ELEMENT cmp-adaptiveform-switch__widget--label
-    ELEMENT cmp-adaptiveform-switch__widget--slider
-    ELEMENT cmp-adaptiveform-switch__circle--indicator
+    ELEMENT cmp-adaptiveform-switch__widget-label
+    ELEMENT cmp-adaptiveform-switch__widget-slider
+    ELEMENT cmp-adaptiveform-switch__circle-indicator
+    ELEMENT cmp-adaptiveform-switch__hide-labels
+    ELEMENT cmp-adaptiveform-switch__unhide-labels
     ELEMENT cmp-adaptiveform-switch__questionmark
     ELEMENT cmp-adaptiveform-switch__shortdescription
     ELEMENT cmp-adaptiveform-switch__longdescription
