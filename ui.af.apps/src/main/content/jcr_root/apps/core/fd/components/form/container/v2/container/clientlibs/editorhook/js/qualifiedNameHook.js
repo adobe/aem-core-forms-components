@@ -15,29 +15,30 @@
  ******************************************************************************/
 (function (window, author, Coral) {
     "use strict";
+
     /**
      * Get Qualified name for a component
      * @param {Object} component The component that has to be instantiated
      */
-    window.CQ.FormsCoreComponents.editorhooks.viewQualifiedName = async function (component) {
-        const componentQualifiedName = await author.afUtils.getQualifiedName(component);
-        const localisedQualifiedNameMessage = CQ.I18n.getMessage('Qualified Name'),
-            localizedWaringMessageForQualifiedName = CQ.I18n.getMessage("A Qualified Name is based on the position of the component. It changes if a component is moved.");
-        const dialog = new Coral.Dialog().set({
-            id : 'getQualifiedNameDialog',
-            header : {
-                innerHTML : localisedQualifiedNameMessage
-            },
-            content : {
-                innerHTML : componentQualifiedName + '<br/> <br/>' + "<strong>*</strong>" + localizedWaringMessageForQualifiedName
-            },
-            footer : {
-            },
-            closable : "on"
-        });
-        document.body.appendChild(dialog);
+    window.CQ.FormsCoreComponents.editorhooks.viewQualifiedName = function (component) {
+        author.afUtils.getQualifiedName(component).then(function (componentQualifiedName) {
+            const localisedQualifiedNameMessage = CQ.I18n.getMessage('Qualified Name');
+            const localizedWaringMessageForQualifiedName = CQ.I18n.getMessage("A Qualified Name is based on the position of the component. It changes if a component is moved.");
+            const dialog = new Coral.Dialog().set({
+                id: 'getQualifiedNameDialog',
+                header: {
+                    innerHTML: localisedQualifiedNameMessage
+                },
+                content: {
+                    innerHTML: componentQualifiedName + '<br/> <br/>' + "<strong>*</strong>" + localizedWaringMessageForQualifiedName
+                },
+                footer: {},
+                closable: "on"
+            });
+            document.body.appendChild(dialog);
 
-        dialog.show();
+            dialog.show();
+        });
     };
 
 })(window, Granite.author, Coral);
