@@ -89,7 +89,6 @@
                             *
                         </Import-Package>
                         <Embed-Dependency>
-                            core.wcm.components.core;
                             jsoup;
                         </Embed-Dependency>
                     </instructions>
