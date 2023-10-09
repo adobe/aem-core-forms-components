@@ -36,4 +36,5 @@ public interface Panel extends Container, ContainerConstraint {
     default Boolean isReadOnly() {
         return null;
     }
+
 }

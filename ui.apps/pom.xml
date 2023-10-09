@@ -268,7 +268,7 @@
                             <execution>
                                 <phase>prepare-package</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
 
@@ -277,7 +277,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v1/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v2/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>

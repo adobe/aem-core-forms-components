@@ -85,6 +85,8 @@ public final class FormConstants {
 
     public static final String RT_FD_FORM_VERTICAL_TABS_V1 = RT_FD_FORM_PREFIX + "verticaltabs/v1/verticaltabs";
 
+    public static final String RT_FD_FORM_VERTICAL_TABS_V2 = RT_FD_FORM_PREFIX + "verticaltabs/v2/verticaltabs";
+
     /* The resource type prefix for the form container related datasources */
     public final static String RT_FD_FORM_CONTAINER_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "container/v1/datasource";
 
