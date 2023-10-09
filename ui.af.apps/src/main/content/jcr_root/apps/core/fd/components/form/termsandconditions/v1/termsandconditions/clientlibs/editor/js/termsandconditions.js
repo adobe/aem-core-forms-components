@@ -20,6 +20,10 @@
     const Utils = window.CQ.FormsCoreComponents.Utils.v1,
         EDIT_DIALOG = ".cmp-adaptiveform-termsandconditions__editdialog";
 
+    /**
+     * Automatically enables approvalOption is shoAsPopup is selected
+     * @param dialog
+     */
     function handleToggleOfApprovalOptions(dialog) {
         const approvalOption = dialog.find('.cmp-adaptiveform-termsandconditions__showapprovaloption[name="./showApprovalOption"]')[0];
         const showAsPopupWidget = dialog.find('.cmp-adaptiveform-termsandconditions__showaspopup[name="./showAsPopup"]')[0];
