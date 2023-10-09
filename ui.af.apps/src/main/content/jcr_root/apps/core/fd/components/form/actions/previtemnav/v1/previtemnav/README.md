@@ -25,10 +25,10 @@ Adaptive Form Submit Button component written in HTL.
 * Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
-The submit button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
+The Back button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this submit button component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this back button component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./name` - defines the name of the field, which will be submitted with the form data
