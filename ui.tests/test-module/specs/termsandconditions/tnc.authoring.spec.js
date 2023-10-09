@@ -61,7 +61,10 @@ describe('Page - Authoring', function () {
           cy.get("coral-checkbox[name='./showApprovalOption']")
           .should('have.attr', 'checked');
         })
-    })
+    });
+
+    cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+    cy.get("div[name='richTextTitle']").should('be.visible');
 
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(tncDrop);
