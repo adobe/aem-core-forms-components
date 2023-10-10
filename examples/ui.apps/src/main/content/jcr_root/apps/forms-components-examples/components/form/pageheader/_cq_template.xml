@@ -20,9 +20,7 @@
     fieldType="page-header">
     <image
         jcr:primaryType="nt:unstructured"
-        jcr:title="Logo"
-        sling:resourceType="wcm/foundation/components/image"
-        name="logoImage"/>
+        sling:resourceType="core/wcm/components/image/v3/image"/>
     <text
         jcr:primaryType="nt:unstructured"
         sling:resourceType="wcm/foundation/components/text"
