@@ -133,44 +133,64 @@ describe("View Qualified Name Tests", () => {
             });
         });
 
-        it('Test Qualified name for Button', function () {
-            testQualifiedName(buttonEditPathSelector, buttonDrop);
+        it('Test Qualified name for Button',{retries: 3}, function () {
+            cy.cleanTest(buttonEditPath).then(function () {
+                testQualifiedName(buttonEditPathSelector, buttonDrop);
+            });
         });
 
-        it('Test Qualified for Checkbox',  function () {
-            testQualifiedName(checkboxEditPathSelector, checkboxDrop);
+        it('Test Qualified for Checkbox', {retries: 3},  function () {
+            cy.cleanTest(checkboxEditPath).then(function () {
+                testQualifiedName(checkboxEditPathSelector, checkboxDrop);
+            });
         });
 
-        it('Test Qualified for Email',  function () {
-            testQualifiedName(emailinputEditPathSelector, emailinputDrop);
+        it('Test Qualified for Email', {retries: 3},  function () {
+            cy.cleanTest(emailinputEditPath).then(function () {
+                testQualifiedName(emailinputEditPathSelector, emailinputDrop);
+            });
         });
 
-        it('Test Qualified for Panel', function () {
-            testQualifiedName(containerEditPathSelector, containerDrop);
+        it('Test Qualified for Panel', {retries: 3}, function () {
+            cy.cleanTest(containerEditPath).then(function () {
+                testQualifiedName(containerEditPathSelector, containerDrop);
+            });
         });
 
-        it('Test Qualified for Accordion', function () {
-            testQualifiedName(accordionEditPathSelector, accordionDrop);
+        it('Test Qualified for Accordion', {retries: 3}, function () {
+            cy.cleanTest(accordionEditPath).then(function () {
+                testQualifiedName(accordionEditPathSelector, accordionDrop);
+            })
         });
 
-        it('Test Qualified for Wizard', function () {
-            testQualifiedName(wizardEditPathSelector, wizardDrop);
+        it('Test Qualified for Wizard', {retries: 3}, function () {
+            cy.cleanTest(wizardEditPath).then(function () {
+                testQualifiedName(wizardEditPathSelector, wizardDrop);
+            })
         });
 
-        it('Test Qualified for Vertical tabs', function () {
-            testQualifiedName(verticaltabsEditPathSelector, verticaltabsDrop);
+        it('Test Qualified for Vertical tabs', {retries: 3}, function () {
+            cy.cleanTest(verticaltabsEditPath).then(function () {
+                testQualifiedName(verticaltabsEditPathSelector, verticaltabsDrop);
+            });
         });
 
-        it('Test Qualified for Tabs on top', function () {
-            testQualifiedName(tabsontopEditPathSelector, tabsontopDrop);
+        it('Test Qualified for Tabs on top', {retries: 3}, function () {
+            cy.cleanTest(tabsontopEditPath).then(() => {
+                testQualifiedName(tabsontopEditPathSelector, tabsontopDrop);
+            });
         });
 
-        it('Test Qualified for Image', function () {
-            testQualifiedName(imageEditPathSelector, imageDrop);
+        it('Test Qualified for Image', {retries: 3}, function () {
+            cy.cleanTest(imageEditPath).then(() => {
+                testQualifiedName(imageEditPathSelector, imageDrop);
+            })
         });
 
-        it('Test Qualified for File Input', function () {
-            testQualifiedName(fileInputEditPathSelector, fileInputDrop);
+        it('Test Qualified for File Input', {retries: 3}, function () {
+            cy.cleanTest(fileInputEditPath).then(() => {
+                testQualifiedName(fileInputEditPathSelector, fileInputDrop);
+            })
         });
     })
 
