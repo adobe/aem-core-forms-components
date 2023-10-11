@@ -6,8 +6,7 @@
   "tooltip": "test-short-description",
   "properties": {
     "afs:layout" : {
-      "tooltipVisible": false,
-      "orientation" : "horizontal"
+      "tooltipVisible": false
     },
     "fd:dor": {
       "dorExclusion":false
