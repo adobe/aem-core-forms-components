@@ -57,9 +57,6 @@
         ]
       },
       "properties": {
-        "afs:layout": {
-          "orientation": "horizontal"
-        },
         "fd:dor": {
           "dorExclusion": false
         },
