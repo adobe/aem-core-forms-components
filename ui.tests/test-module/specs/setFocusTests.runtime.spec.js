@@ -1,34 +1,5 @@
-// describe("Form with Multiple components", () => {
-
-//     const pagePath = "content/forms/af/core-components-it/samples/setfocus.html";
-//     const childBemBlock = 'cmp-accordion__item';
-//     const bemBlock = "cmp-accordion";
-//     let formContainer = null
-
-
-//     beforeEach(() => {
-//         cy.log('asdfsad')
-//         cy.previewForm(pagePath).then(p => {
-//             formContainer = p;
-//         })
-//     });
-
-//     const firstChildComponentId = formContainer._model.items[0].items[0].id;
-
-//     it("check if first tab activated if focus call from other tab", () => {
-//         // cy.get(`#${firstChildComponentButtonId}`).then(() => {
-//         //             formContainer.setFocus(id);
-//         // cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
-//         // });
-//     })
-
-
-// });
-
-
-
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Form with Accordion Container", () => {
+describe("Form with multipe components", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/setfocus.html";
-    const childBemBlock = 'cmp-accordion__item';
-    const bemBlock = "cmp-accordion";
     let formContainer = null
 
 
