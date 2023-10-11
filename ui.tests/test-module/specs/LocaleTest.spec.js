@@ -47,7 +47,7 @@ describe('Verify constants are changing for each language', function () {
                 cy.openPage(languageUrl + currentLang).then(waitForLangDataToLoad);
             }
             Object.entries(currLanguage.TRANSLATION).forEach(component => {
-                if(component[0] === 'CHECK_BOX_ITEM1') {
+                if(component[0] === 'CHECK_BOX1_ITEM1' || component[0] === 'CHECK_BOX2_ITEM1') {
                     cy.get(dataSet.selectors[component[0]]).eq(0).invoke('text').should('eq', component[1]);
                 }
                 else {
