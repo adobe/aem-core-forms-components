@@ -129,6 +129,21 @@
         jcr:primaryType="nt:folder"
         sling:key="guideContainer##wizard##jcr:title##299"
         sling:message="Hechicero"/>
+    <a6492758-b569-4c76-aaa1-29bf4b30cdfd
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##jcr:title##3329"
+        sling:message="&lt;p>&lt;b>Seleccionar animal&lt;/b>&lt;/p>"/>
+    <f51e320e-140a-4850-a65f-296944b9fabe
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##0"
+        sling:message="&lt;p>&lt;i>Perro&lt;/i>&lt;/p>"/>
+    <_x0031_33de41e-050d-4628-8b22-34b8b6dfa9fa
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##1"
+        sling:message="&lt;p>&lt;u>Gato&lt;/u>&lt;/p>"/>
     <bb998be9-c330-493c-a5d3-e252a9ab8cc7
         jcr:mixinTypes="[sling:Message]"
         jcr:primaryType="nt:folder"
