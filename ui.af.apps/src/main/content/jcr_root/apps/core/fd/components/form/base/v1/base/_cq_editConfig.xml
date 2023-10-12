@@ -18,6 +18,11 @@
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 icon="shuffle"
                 text="Replace"/>
+        <qualifiedName
+            jcr:primaryType="nt:unstructured"
+            handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
+            icon="viewSOMExpression"
+            text="View Qualified Name"/>
     </cq:actionConfigs>
     <cq:inplaceEditing
             jcr:primaryType="cq:InplaceEditingConfig"
