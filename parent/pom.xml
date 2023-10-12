@@ -1119,7 +1119,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2023.09.06.04-230800</version>
+                <version>2023.10.09.00-230901</version>
             </dependency>
 
             <dependency>
