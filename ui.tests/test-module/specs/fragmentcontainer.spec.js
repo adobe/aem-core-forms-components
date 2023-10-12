@@ -53,7 +53,7 @@ describe('Fragment Authoring', function () {
 
         //click save without selecting the fdm model, error should be displayed
         cy.get(".cq-dialog-submit").click();
-        cy.get(".coral-Form-errorlabel").should("be.visible");
+        cy.get("coral-icon[icon=\"alert\"]").should("be.visible");
 
         //select fdm and save it
         cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();

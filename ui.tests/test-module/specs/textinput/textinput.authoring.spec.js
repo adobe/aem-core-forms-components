@@ -159,7 +159,7 @@ describe('Page - Authoring', function () {
             cy.get("#af-rule-editor").should("be.visible");
             cy.get("#af-rule-editor")
                 .invoke("css", "z-index")
-                .should("equal", '10');
+                .should("equal", '1000');
             getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
             getRuleEditorIframe().find("#create-rule-button").should("be.visible");
             cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
