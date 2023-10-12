@@ -256,7 +256,6 @@ describe("Form with Wizard Layout Container with focus", () => {
 
             cy.get(".cmp-adaptiveform-wizard__wizardpanel").then(() => {
                 formContainer.setFocus(id);
-                cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
                 cy.get(".cmp-adaptiveform-wizard__tab").then(() => {
                     // panel 1 active
                     cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');

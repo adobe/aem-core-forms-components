@@ -44,11 +44,10 @@ describe("Form with multipe components", () => {
     };
 
     it("check if first tab activated if focus call from other tab", () => {
-        const firstChildComponentId = formContainer._model.items[0].id;
-        cy.log("check here "+ formContainer._model);
-        const firstChildComponentButtonId = firstChildComponentId ;
+        const firstChildComponentId = formContainer._model.items[7].items[1].items[0].id;
+        const firstChildComponentButtonId = formContainer._model.items[0].id ;
                 cy.get(`#${firstChildComponentButtonId}`).click();
-                cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
+                cy.get(`#${firstChildComponentId}`).isElementInViewport().should("eq", true);
             })
         
    

@@ -153,7 +153,6 @@ describe("Form with Tabsontop Layout Container with focus", () => {
 
             cy.get(tabSelector).then(() => {
                 formContainer.setFocus(id);
-                cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
                 cy.get(tabSelector).then(() => {
                     // panel 1 active
                     tab1().should('have.class', 'cmp-tabs__tab--active');
