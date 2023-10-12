@@ -98,7 +98,7 @@ describe("View Qualified Name Tests", () => {
     const containerDataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*";
     const submitBtnSelector = ".cq-dialog-submit";
 
-    const dropComponenAndSetName = function (componentEditPathSelector, name, isSites = false) {
+    const dropComponentAndSetName = function (componentEditPathSelector, name, isSites = false) {
         if(isSites) {
             dropComponent(componentEditPathSelector, sitesDataPath);
         } else {
@@ -114,7 +114,7 @@ describe("View Qualified Name Tests", () => {
     const testQualifiedName = (componentEditPathSelector, componentDrop, isSites) => {
         const name = "abc"
         const qualifiedName = `$form.${name}`;
-        dropComponenAndSetName(componentEditPathSelector, name, isSites);
+        dropComponentAndSetName(componentEditPathSelector, name, isSites);
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='qualifiedName']");
         cy.get('#getQualifiedNameDialog').should('be.visible');
