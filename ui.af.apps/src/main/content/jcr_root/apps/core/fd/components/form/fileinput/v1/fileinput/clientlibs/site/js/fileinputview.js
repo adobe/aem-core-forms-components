@@ -36,15 +36,28 @@
             errorDiv: `.${FileInput.bemBlock}__errormessage`,
             tooltipDiv: `.${FileInput.bemBlock}__shortdescription`,
             fileListDiv : `.${FileInput.bemBlock}__filelist`,
-            attachButtonLabel : `.${FileInput.bemBlock}__widgetlabel`
+            attachButtonLabel : `.${FileInput.bemBlock}__widgetlabel`,
+            dragArea: `.${FileInput.bemBlock}__dragarea`
         };
 
         constructor(params) {
             super(params);
         }
 
+        widgetFields = {
+            widget: this.getWidget(),
+            fileListDiv: this.getFileListDiv(),
+            model: () => this._model,
+            dragArea: this.getDragArea()
+        };
+
         getWidget() {
             return this.element.querySelector(FileInput.selectors.widget);
+        }
+
+
+        getDragArea() {
+            return this.element.querySelector(FileInput.selectors.dragArea);
         }
 
         getDescription() {
@@ -77,7 +90,7 @@
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
@@ -86,7 +99,7 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
         }
 

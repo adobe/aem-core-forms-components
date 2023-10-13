@@ -63,6 +63,20 @@
                                                     fieldLabel="Button title"
                                                     name="./buttonText">
                                             </buttonText>
+                                            <allowDragAndDrop
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    sling:orderBefore="fieldLayout"
+                                                    name="./allowDragAndDrop"
+                                                    text="Allow Drag and Drop"
+                                                    value="true"/>
+                                            <fileInputDragDropText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                                    fieldLabel="File Input Drag Drop Text"
+                                                    fieldDescription="File Input Drag Drop Description"
+                                                    name="./fileInputDragDropText"
+                                                    useFixedInlineToolbar="{Boolean}true"/>
                                             <type jcr:primaryType="nt:unstructured"
                                                   wrapperClass="cmp-adaptiveform-fileinput__type"
                                                   granite:class="cmp-adaptiveform-fileinput__type"

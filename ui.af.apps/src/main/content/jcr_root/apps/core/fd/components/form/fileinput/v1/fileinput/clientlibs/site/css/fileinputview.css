@@ -37,6 +37,8 @@ BLOCK cmp-adaptiveform-fileinput
 }
 
 .cmp-adaptiveform-fileinput__fileitem {
+    border-bottom: 1px solid #666;
+    border-top: none !important;
 }
 
 .cmp-adaptiveform-fileinput__filename {
@@ -47,4 +49,29 @@ BLOCK cmp-adaptiveform-fileinput
 }
 
 .cmp-adaptiveform-fileinput__filedelete {
+}
+
+.cmp-adaptiveform-fileinput__container {
+}
+
+.cmp-adaptiveform-fileinput__dragarea {
+    border: 1px dashed #666;
+    border-radius: 5px;
+    padding: 10px 5px;
+}
+
+.cmp-adaptiveform-fileinput__dragtext {
+    padding-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.cmp-adaptiveform-fileinput__icon {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/002/387/782/small/paperclip-icon-free-vector.jpg');
+}
+
+.cmp-adaptiveform-fileinput__dragarea.active {
+    border: 1px dashed #42c0e0;
 }

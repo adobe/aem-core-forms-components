@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -27,12 +28,14 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -42,9 +45,19 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
+    private static final String ALLOW_DRAG_DROP = "allowDragDrop";
+    private static final String FILE_INPUT_DRAG_DROP_TEXT = "fileInputDragDropText";
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelection")
     @Default(booleanValues = false)
     protected boolean multiSelection;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fileInputDragDropText")
+    protected String fileInputDragDropText;
+
+    @JsonIgnore
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "allowDragAndDrop")
+    protected Boolean allowDragAndDrop;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxFileSize")
     protected String maxFileSize;
@@ -55,6 +68,14 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = FileInput.DEFAULT_BUTTON_TEXT)
     protected String buttonText;
+
+    public String getFileInputDragDropText() {
+        return fileInputDragDropText;
+    }
+
+    public Boolean getAllowDragAndDrop() {
+        return allowDragAndDrop;
+    }
 
     @Override
     public Integer getMinItems() {
@@ -101,5 +122,13 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
         return Optional.ofNullable(accept)
             .map(Arrays::asList)
             .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = super.getProperties();
+        customProperties.put(ALLOW_DRAG_DROP, getAllowDragAndDrop());
+        customProperties.put(FILE_INPUT_DRAG_DROP_TEXT, getFileInputDragDropText());
+        return customProperties;
     }
 }

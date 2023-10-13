@@ -36,18 +36,18 @@ class FileInputWidget {
     }
     #initialFileValueFileNameMap;
 
-    constructor(widget, fileList, model) {
+    constructor(widgetFields) {
         // initialize the widget and model
-        this.#widget = widget;
-        this.#model = model;
-        this.#fileList = fileList;
+        this.#widget = widgetFields.widget;
+        this.#model = widgetFields.model();
+        this.#fileList = widgetFields.fileListDiv;
         // get the current lang
         this.#lang = this.#model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
         // initialize options for backward compatibility
         this.#options = Object.assign({}, {
             "contextPath" : ""
         }, this.#model._jsonModel);
-        this.#attachEventHandlers(widget);
+        this.#attachEventHandlers(widgetFields?.widget, widgetFields?.dragArea);
         // initialize the regex initially
         this.#regexMimeTypeList  = this.#options.accept.map(function (value, i) {
             try {
@@ -62,9 +62,24 @@ class FileInputWidget {
         });
     }
 
-    #attachEventHandlers(widget, model) {
+    #attachEventHandlers(widget, dragArea, model) {
         widget.addEventListener('change', (e)=> {
-            this.#handleChange(e);
+            this.#handleChange(e?.target?.files);
+        });
+        const dragText = dragArea.querySelector(".cmp-adaptiveform-fileinput__dragtext");
+        dragArea.addEventListener("dragover", (event)=>{
+            event.preventDefault();
+        });
+        dragArea.addEventListener("dragleave", ()=>{
+            dragText.textContent = "Drag & Drop to Upload File";
+          });
+        dragArea.addEventListener("drop", (event)=>{
+          event.preventDefault(); 
+          this.#handleChange(event?.dataTransfer?.files);
+        });
+        dragArea.addEventListener("paste", (event)=>{
+            event.preventDefault();
+            this.#handleChange(event?.clipboardData?.files);
         });
     }
 
@@ -212,7 +227,17 @@ class FileInputWidget {
 
     }
 
-    #fileItem(fileName, comment, fileUrl) {
+    #formatBytes(bytes, decimals = 0) {
+        if (!+bytes) return '0 Bytes'
+        const k = 1024
+        const dm = decimals < 0 ? 0 : decimals
+        const sizes = ['bytes', 'kb', 'mb', 'gb', 'tb', 'pb']
+        const i = Math.floor(Math.log(bytes) / Math.log(k))
+    
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    }
+
+    #fileItem(fileName, fileSize, comment, fileUrl) {
         let self = this;
         let fileItem = document.createElement('li');
         fileItem.setAttribute("class", "cmp-adaptiveform-fileinput__fileitem");
@@ -238,7 +263,7 @@ class FileInputWidget {
         fileClose.setAttribute('class', "cmp-adaptiveform-fileinput__filedelete");
         fileClose.setAttribute('aria-label', FormView.LanguageUtils.getTranslatedString(this.#lang, "FileCloseAccessText") + fileName);
         fileClose.setAttribute('role', 'button');
-        fileClose.textContent = "x";
+        fileClose.textContent = this.#formatBytes(fileSize) + " x";
         fileClose.addEventListener('keypress', function(e) {
             if (e.keyCode === 13 || e.charCode === 32) {
                 e.target.click();
@@ -255,7 +280,7 @@ class FileInputWidget {
         return this.#options.type === "file[]" || this.#options.type === "string[]";
     }
 
-    #showFileList(fileName, comment, fileUrl) {
+    #showFileList(fileName, fileSize, comment, fileUrl) {
         if(!this.#isMultiSelect() || fileName === null || typeof fileName === "undefined") {
             // if not multiselect, remove all the children of file list
             while (this.#fileList.lastElementChild) {
@@ -267,7 +292,7 @@ class FileInputWidget {
         // On click of close, remove the element and update the model
         // handle on click of preview button
         if(fileName != null) {
-           this.#fileList.append(this.#fileItem(fileName, comment, fileUrl));
+           this.#fileList.append(this.#fileItem(fileName, fileSize, comment, fileUrl));
         }
     }
 
@@ -373,11 +398,12 @@ class FileInputWidget {
                     let isFileObject= window.File ? file.data instanceof window.File : false,
                         fileName = typeof file === "string" ? file : file.name,
                         fileUrl = typeof file === "string" ? file : (isFileObject ? "" : file.data),
+                        fileSize = file.size,
                         fileUploadUrl = fileUrl;
                     if (oldUrls[fileName]) {
                         fileUploadUrl = oldUrls[fileName];
                     }
-                    self.#showFileList(fileName, null, fileUploadUrl);
+                    self.#showFileList(fileName, fileSize, null, fileUploadUrl);
                     return fileName;
                 });
                 this.#fileArr = [...value];
@@ -385,14 +411,13 @@ class FileInputWidget {
         }
     }
 
-    #handleChange(evnt) {
+    #handleChange(filesUploaded) {
         if (!this.#isFileUpdate) {
             let currFileName = '',
                 inValidSizefileNames = '',
                 inValidNamefileNames = '',
                 inValidMimeTypefileNames = '',
-                elem = evnt.target,
-                files = elem.files;
+                files = filesUploaded;
             // Initially set the invalid flag to false
             let isInvalidSize = false,
                 isInvalidFileName = false,

@@ -4,5 +4,7 @@
     jcr:title="File Attachment"
     buttonText="Attach"
     fieldType="file-input"
+    fileInputDragDropText="Drag and drop to Upload"
+    allowDragAndDrop="true"
     accept="[audio/*, video/*, image/*, text/*, application/pdf]">
 </jcr:root>
