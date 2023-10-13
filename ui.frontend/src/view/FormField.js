@@ -77,9 +77,11 @@ class FormField {
     setActive() {
         if (!this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
+            this.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         if (this.parentView && this.parentView.setActive) {
             this.parentView.setActive();
+            this.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
 
