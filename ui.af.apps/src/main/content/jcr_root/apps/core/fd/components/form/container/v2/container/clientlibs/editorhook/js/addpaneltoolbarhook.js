@@ -20,23 +20,51 @@
      * Adds the toolbar component as a child of the panel 
      * @param {Object} component The component that has to be instantiated
      */
-     window.CQ.FormsCoreComponents.editorhooks.addPanelToolbar = function (component) {
-        console.log(component);
-        let toolbarJson = {
-            'name'                  : 'toolbar',
-            'sling:resourceType'    : 'forms-components-examples/components/form/toolbar'
-        };
-        const options = {
-            ':content' : JSON.stringify(toolbarJson),
-            ':operation' : 'import',
-            ':contentType' : 'json',
-            ':replace' : true,
-            ':replaceProperties' : true
-        };
-        let result = $.ajax({
-            type: 'POST',
-            async: false,
-            url: Granite.HTTP.externalize(temp1.path + "/toolbar")
-        })
+     window.CQ.FormsCoreComponents.editorhooks.addPanelToolbar = function (panel) {
+        if(!containsToolbarChild(panel)) {
+            console.log(panel);
+            /*
+            let toolbarJson = {
+                'sling:resourceType'    :   'forms-components-examples/components/form/toolbar',
+                'jcr:title'             :   'Toolbar',
+                'name'                  :   'toolbar'
+            }
+            */
+
+            // fetch cq:template toolbarJson
+
+            let toolbarJson = $.ajax({
+                type: 'GET',
+                url : '/apps/forms-components-examples/components/form/toolbar/cq:template.-1.json',
+                async: false
+            }).responseJSON;
+
+            const options = {
+                ':content' : JSON.stringify(toolbarJson),
+                ':operation' : 'import',
+                ':contentType' : 'json',
+                ':replace' : true,
+                ':replaceProperties' : true
+            };
+
+            // const options = {
+            //     './@CopyFrom' : '/apps/forms-components-examples/components/toolbar/cq:template',
+            //     './sling:resourceType' : 'forms-components-examples/components/form/toolbar'
+            // };
+
+            let result = $.ajax({
+                type: 'POST',
+                async: false,
+                data: options,
+                url: Granite.HTTP.externalize(panel.path + "/toolbar")
+            }).done(() => {
+                panel.refresh();
+            });
+        } 
     };
+
+    const containsToolbarChild = function (panel) {
+        return panel.getChildren().some(child => child.getNodeName() === 'toolbar');
+    }
+    
 })(Granite.author);
