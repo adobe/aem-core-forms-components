@@ -33,13 +33,13 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[switch.id, '_widget']}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div class="cmp-adaptiveform-switch__label-container">
-        <div data-sly-call="${label.label @componentId=widgetId, labelValue=switch.label.value, labelVisible=switch.label.visible, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=switch.label.value, labelVisible=switch.label.visible, labelRichText=switch.label.richText, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=switch.id, longDescription=switch.description, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
     </div>
 
     <div class="cmp-adaptiveform-switch__container" id="${widgetId}">
-        <div class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--off"
-        aria-label="${switch.enumNames[1]? switch.enumNames[1] : ''}">${switch.enumNames[1]? switch.enumNames[1] : ''}</div>
+        <span class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--off"
+        aria-label="${switch.enumNames[1]? switch.enumNames[1] : ''}">${switch.enumNamesAsTextContent[1].value @ context = switch.enumNamesAsTextContent[1].richText ? 'html' : 'text'}</span>
         <label class="cmp-adaptiveform-switch__widget-label">
             <input class="cmp-adaptiveform-switch__widget"
                    name="${switch.name}"
@@ -53,8 +53,8 @@
                 <div class="cmp-adaptiveform-switch__circle-indicator"></div>
             </div>
         </label>
-        <div class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--on"
-        aria-label="${switch.enumNames[0]}">${switch.enumNames[0]}</div>
+        <span class="cmp-adaptiveform-switch__option cmp-adaptiveform-switch__option--on"
+        aria-label="${switch.enumNames[0]}">${switch.enumNamesAsTextContent[0].value @ context = switch.enumNamesAsTextContent[0].richText ? 'html' : 'text'}</span>
     </div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=switch.id, shortDescriptionVisible=switch.tooltipVisible, shortDescription=switch.tooltip, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap>

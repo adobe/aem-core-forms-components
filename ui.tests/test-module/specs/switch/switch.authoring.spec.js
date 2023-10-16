@@ -80,10 +80,10 @@ describe('Page - Authoring', function () {
             switchEditPathSelector = "[data-path='" + switchEditPath + "']";
         cy.get(switchEditPathSelector).click();
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).should('not.be.visible')
+        cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item").eq(1).should('not.be.visible')
         const enableUnchecked = '[name="./enableUncheckedValue"]';
         cy.get(enableUnchecked).eq(0).click().then(() => {
-          cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
+          cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
         })
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(switchDrop);
@@ -94,6 +94,26 @@ describe('Page - Authoring', function () {
       cy.cleanTest(switchDrop).then(() => {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, false);
       });
+    });
+
+    it('check rich text support for label', function(){
+      dropSwitchInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+      // check rich text selector and see if RTE is visible.
+      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+      cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+      cy.get('.cq-dialog-submit').click();
+    });
+
+    it('check rich text inline editor is present', function(){
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+      cy.invokeEditableAction("[data-action='EDIT']");
+      cy.get(".rte-toolbar").should('be.visible');
+      cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+      cy.deleteComponentByPath(switchDrop);
     });
   })
 
@@ -118,10 +138,10 @@ describe('Page - Authoring', function () {
         dropSwitchInSites();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-        cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item").eq(1).should('not.be.visible');
+        cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item").eq(1).should('not.be.visible');
         const enableUnchecked = '[name="./enableUncheckedValue"]';
         cy.get(enableUnchecked).eq(0).click().then(() => {
-          cy.get(".cmp-adaptiveform-switch__enums coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
+          cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
           cy.get('.cq-dialog-cancel').click();
           cy.deleteComponentByPath(switchDrop);
         })
@@ -133,6 +153,26 @@ describe('Page - Authoring', function () {
       cy.cleanTest(switchDrop).then(() => {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, true);
       });
+    });
+
+    it('check rich text support for label', function(){
+      dropSwitchInSites();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+      // check rich text selector and see if RTE is visible.
+      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+      cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+      cy.get('.cq-dialog-submit').click();
+    });
+
+    it('check rich text inline editor is present', function(){
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+      cy.invokeEditableAction("[data-action='EDIT']");
+      cy.get(".rte-toolbar").should('be.visible');
+      cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+      cy.deleteComponentByPath(switchDrop);
     });
   })
 });

@@ -46,16 +46,27 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <enableUncheckedValue
+                                                    sling:orderBefore="enums"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                                                    wrapperClass="cmp-adaptiveform-switch__enable-unchecked-value"
+                                                    name="./enableUncheckedValue"
+                                                    fieldLabel="Preserve Uncheck state value."
+                                                    fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
+                                                    uncheckedValue="false"
+                                                    value="true">
+                                            </enableUncheckedValue>
                                             <enums jcr:primaryType="nt:unstructured"
                                                    sling:orderBefore="bindref"
                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <enumOptions jcr:primaryType="nt:unstructured"
-                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                                 wrapperClass="cmp-adaptiveform-switch__enums"
-                                                                 fieldDescription="Provide switch state data and display text for each option."
-                                                                 fieldLabel="Options">
-                                                    </enumOptions>
+                                                <enumOptions jcr:primaryType="nt:unstructured"
+                                                             sling:orderBefore="bindref"
+                                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                             fieldDescription="Provide the pair of enum (data value) and enumName (display text) for each option."
+                                                             fieldLabel="Options">
+                                                </enumOptions>
                                                 </items>
                                             </enums>
                                             <type jcr:primaryType="nt:unstructured"
@@ -74,29 +85,8 @@
                                                 </items>
                                             </type>
                                             <enumsCustom jcr:primaryType="nt:unstructured"
-                                                       sling:orderBefore="enums"
-                                                       sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                       granite:class="cmp-adaptiveform-switch__enums">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <checkedValue
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:hideResource="{Boolean}true"
-                                                            name="./checkedValue"/>
-                                                    <enableUncheckedValue
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/switch"
-                                                            wrapperClass="cmp-adaptiveform-switch__enable--unchecked--value"
-                                                            name="./enableUncheckedValue"
-                                                            fieldLabel="Preserve Uncheck state value."
-                                                            fieldDescription="Specify the value to be returned when the switch is not on by the user."
-                                                            uncheckedValue="false"
-                                                            value="true">
-                                                    </enableUncheckedValue>
-                                                    <unCheckedValue
-                                                            sling:hideResource="{Boolean}true"
-                                                            jcr:primaryType="nt:unstructured"
-                                                            name="./uncheckedValue"/>
-                                                </items>
+                                                         sling:hideResource="{Boolean}true"
+                                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                             </enumsCustom>
                                         </items>
                                     </column>

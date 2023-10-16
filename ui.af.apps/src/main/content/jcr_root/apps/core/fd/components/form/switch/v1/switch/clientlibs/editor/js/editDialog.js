@@ -17,11 +17,12 @@
   "use strict";
 
   const EDIT_DIALOG = ".cmp-adaptiveform-switch__editdialog",
-      ENABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__enable--unchecked--value coral-switch",
-      ENUM_OPTION = ".cmp-adaptiveform-switch__enums coral-multifield-item",
+      ENABLE_UNCHECKED_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__enable-unchecked-value coral-switch",
+      ENUM_OPTION = EDIT_DIALOG + " coral-multifield-item",
       SWITCH_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-switch__type",
       SWITCH_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__value",
       SWITCH_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
+
       Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
   var registerDialogValidator = Utils.registerDialogDataTypeValidators(
@@ -63,12 +64,16 @@
         // For every multifield item, we have enum, enumName and richTextEnumName
         let onDataValueLabel = $($(ENUM_OPTION + ' label'))[0],
             onDisplayTextLabel = $($(ENUM_OPTION + ' label'))[1],
+            onDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[2],
             offDataValueLabel = $($(ENUM_OPTION + ' label'))[3],
-            offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[4];
+            offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[4],
+            offDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[5];
         onDataValueLabel.innerHTML = 'ON Data Value *';
         onDisplayTextLabel.innerHTML = 'ON Display text *';
+        onDisplayTextLabelRich.innerHTML = 'ON Display text *';
         offDataValueLabel.innerHTML = 'OFF Data Value *';
         offDisplayTextLabel.innerHTML = 'OFF Display text *';
+        offDisplayTextLabelRich.innerHTML = 'OFF Display text *';
     }
 
   Utils.initializeEditDialog(EDIT_DIALOG)(handleOffFieldVisibility, registerDialogValidator, setDataAndDisplayTextFieldLabel);
