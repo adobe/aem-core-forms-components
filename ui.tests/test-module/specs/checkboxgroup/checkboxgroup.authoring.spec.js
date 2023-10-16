@@ -44,9 +44,9 @@ describe('Page - Authoring', function () {
     // get the iframe > document > body
     // and retry until the body element is not empty
     return cy
-        .get('iframe#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
+    .get('iframe#ContentFrame')
+    .its('0.contentDocument.body').should('not.be.empty')
+    .then(cy.wrap)
   }
 
   const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
@@ -103,87 +103,119 @@ describe('Page - Authoring', function () {
     });
 
     it('insert CheckBoxGroup in form container', function () {
-        dropCheckBoxGroupInContainer();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+      dropCheckBoxGroupInContainer();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
     it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
-        cy.cleanTest(checkBoxGroupDrop).then(function() {
-            testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
-        });
+      cy.cleanTest(checkBoxGroupDrop).then(function() {
+        testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
+      });
     });
 
     it ('check value type validations', function() {
-        // For Number Type
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-        cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+      // For Number Type
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+      cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
 
-        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
-        cy.get('.cq-dialog-submit').click();
-        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
 
-        // For Boolean
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-        cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+      // For Boolean
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+      cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
 
-        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
-        cy.get('.cq-dialog-submit').click();
-        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+      cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+      cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
+      cy.get('.cq-dialog-submit').click();
+      cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
     })
 
     it ('check for duplicate enum values', function() {
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
-        cy.get('input[name="./enum"]').last().invoke('val','0');
-        cy.get('input[name="./enumNames"]').last().invoke('val','Item 3');
-        cy.get('.cq-dialog-submit').click().then(() => {
-            cy.get('.cq-dialog-submit').should('not.exist')
-        });
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
+      cy.get('input[name="./enum"]').last().invoke('val','0');
+      cy.get('input[name="./enumNames"]').last().invoke('val','Item 3');
+      cy.get('.cq-dialog-submit').click().then(() => {
+        cy.get('.cq-dialog-submit').should('not.exist')
+      });
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
+      cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
+    it('check rich text support for label', function(){
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get("div[name='richTextTitle']").should('not.be.visible');
 
-  })
-/*
-  context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
-        textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+      // check rich text selector and see if RTE is visible for title.
+      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
+      cy.get("div[name='richTextTitle']").scrollIntoView();
+      cy.get("div[name='richTextTitle']").should('be.visible');
 
-    beforeEach(function () {
-      // this is done since cypress session results in 403 sometimes
-      cy.openAuthoring(pagePath);
+      // check rich text selector and see if RTE is visible for enum names.
+      cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
+      cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+      cy.get("div[name='richTextEnumNames']").then(($el) => {
+        $el[0].scrollIntoView();
+      })
+      cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
+      cy.get("div[name='richTextEnumNames']").first().should('be.visible');
+      cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
+      cy.get('.cq-dialog-submit').click();
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
+      getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
     });
 
-    it('insert aem forms TextInput', function () {
-      dropTextInputInSites();
-      cy.deleteComponentByPath(textInputDrop);
+    it('check rich text inline editor is present', function(){
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='EDIT']");
+      cy.get(".rte-toolbar").should('be.visible');
+      cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+      cy.deleteComponentByPath(checkBoxGroupDrop);
     });
+  });
+  /*
+    context('Open Sites Editor', function () {
+      const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+          textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
+          textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+          textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
-    it('open edit dialog of aem forms TextInput', function() {
-      testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
-    });
+      beforeEach(function () {
+        // this is done since cypress session results in 403 sometimes
+        cy.openAuthoring(pagePath);
+      });
 
-  });*/
+      it('insert aem forms TextInput', function () {
+        dropTextInputInSites();
+        cy.deleteComponentByPath(textInputDrop);
+      });
+
+      it('open edit dialog of aem forms TextInput', function() {
+        testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
+      });
+
+    });*/
 });
