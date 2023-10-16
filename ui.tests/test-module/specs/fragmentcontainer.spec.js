@@ -57,7 +57,7 @@ describe('Fragment Authoring', function () {
 
         //select fdm and save it
         cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();
-        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/portal-unified-storage-form-data-model']").contains('Portal Unified Storage Form Data Model').should('be.visible').click();
+        cy.get("coral-selectlist-item").eq(1).should('be.visible').click();
         cy.get(".cq-dialog-submit").click();
     };
 
@@ -73,7 +73,7 @@ describe('Fragment Authoring', function () {
         cy.get(".cmp-adaptiveform-container__selectformmodel").should("not.have.attr", "disabled");
         cy.get(".cmp-adaptiveform-container__fdmselector").click();
 
-        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/forms-ootb-usc-workflow-fdm']").contains('Workflow Unified Storage Form Data Model').should('be.visible').click();
+        cy.get("coral-selectlist-item").eq(2).should('be.visible').click();
         cy.get("#formModelChange").should("be.visible");
         cy.get("#formModelDialogAcceptButton").click();
         // Not undo the changes

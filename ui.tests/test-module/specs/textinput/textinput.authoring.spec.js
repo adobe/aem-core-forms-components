@@ -177,7 +177,7 @@ describe('Page - Authoring', function () {
           cy.get("#af-rule-editor").should("be.visible");
           cy.get("#af-rule-editor")
               .invoke("css", "z-index")
-              .should("equal", '10');
+              .should("equal", '1000');
           getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
           // check if navigation tree is showing the text input
           getRuleEditorIframe().find("#objectNavigationTree " + textInputInsideSitesContainerEditPathSelector).should("be.visible");

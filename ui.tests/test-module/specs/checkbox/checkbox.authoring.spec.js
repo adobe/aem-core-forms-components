@@ -97,7 +97,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkboxDrop);
     });
 
-    it('open edit dialog of aem forms Checkbpx', function() {
+    it('open edit dialog of aem forms Checkbox', function() {
       testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
     });
   })
