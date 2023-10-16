@@ -48,9 +48,11 @@ describe("Form Runtime with Recaptcha Input", () => {
 
     // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
     beforeEach(() => {
-        cy.previewForm(pagePath).then((p) => {
-            formContainer = p;
-        });
+        if (toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
+            cy.previewForm(pagePath).then((p) => {
+                formContainer = p;
+            });
+        }
     });
 
     const checkHTML = (id, state) => {
