@@ -15,9 +15,15 @@
   },
   "enforceEnum": true,
   "enumNames": [
-    "m",
-    "f",
-    "o"
+    {
+      "value": "m"
+    },
+    {
+      "value": "f"
+    },
+    {
+      "value": "o"
+    }
   ],
   "default": [
     0,
