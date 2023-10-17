@@ -23,6 +23,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
 
+  const unhideLabelsCss = '.cmp-adaptiveform-switch__unhide-labels';
 
   const dropSwitchInSites = function() {
     const dataPath = "/content/core-components-examples/library/adaptive-form/switch/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
@@ -115,6 +116,26 @@ describe('Page - Authoring', function () {
       cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
       cy.deleteComponentByPath(switchDrop);
     });
+
+    it('labels can hide and unhide with styles', function(){
+      const styleSelector = '[action="/content/forms/af/core-components-it/blank/_jcr_content/guideContainer/switch"] coral-selectlist-item';
+      cy.cleanTest(switchDrop).then(() => {
+        dropSwitchInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+        cy.invokeEditableAction("[data-action='STYLE']");
+        cy.get(styleSelector).eq(1).click().then(() => {
+          cy.get('body').click(0, 0);
+          cy.getContentIframeBody().find(unhideLabelsCss).should('have.length', 1);
+        });
+        cy.invokeEditableAction("[data-action='STYLE']");
+        cy.get(styleSelector).eq(0).click().then(() => {
+          cy.get('body').click(0, 0);
+          cy.getContentIframeBody().find(unhideLabelsCss).should('have.length', 0);
+        });
+        cy.deleteComponentByPath(switchDrop);
+      });
+    });
+
   })
 
   context('Open Sites Editor', function() {
@@ -173,6 +194,25 @@ describe('Page - Authoring', function () {
       cy.get(".rte-toolbar").should('be.visible');
       cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
       cy.deleteComponentByPath(switchDrop);
+    });
+
+    it('labels can hide and unhide with styles', {retries: 3}, function(){
+      const styleSelector = '[action="/content/core-components-examples/library/adaptive-form/switch/_jcr_content/root/responsivegrid/demo/component/guideContainer/switch"] coral-selectlist-item';
+      cy.cleanTest(switchDrop).then(() => {
+        dropSwitchInSites();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+        cy.invokeEditableAction("[data-action='STYLE']");
+        cy.get(styleSelector).eq(1).click({force: true}).then(() => {
+          cy.get('body').click(0, 0);
+          cy.getContentIframeBody().find(unhideLabelsCss).scrollIntoView().should('have.length', 1);
+        });
+        cy.invokeEditableAction("[data-action='STYLE']");
+        cy.get(styleSelector).eq(1).click({force: true}).then(() => {
+          cy.get('body').click(0, 0);
+          cy.getContentIframeBody().find(unhideLabelsCss).should('have.length', 0);
+        });
+        cy.deleteComponentByPath(switchDrop);
+      });
     });
   })
 });
