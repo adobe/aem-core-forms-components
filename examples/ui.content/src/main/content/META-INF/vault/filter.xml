@@ -11,6 +11,7 @@
     <filter root="/conf/core-components-examples/settings/wcm/templates/af-blank-v2" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/afv2frag-template" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/policies/jcr:content/root/responsivegrid/core-components-examples/components/form/container" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/policies/jcr:content/root/responsivegrid/core-components-examples/components/form/switch" mode="update"/>
     <filter root="/content/core-components-examples/library/forms-and-communications-portal" mode="update"/>
     <filter root="/content/core-components-examples/library/adaptive-form" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/structure/jcr:content/root/sidebar/accordion"  mode="update"/>
