@@ -10,6 +10,8 @@
 @silver: #ccc;
 @panel-bg-color: #efefef;
 @wizard-bg-color: #fafafa;
+@chinese-silver: #ccc;
+@dark-blue: #2196f3;
 
 // ====== font size======
 @font-xlg: 1.5rem;
@@ -170,4 +172,16 @@
     background: url(./resources/tick_hover.svg) 0.5rem 50% / 0.8125rem no-repeat,@very-light-gray;
     background-size: 12px;
   }
+}
+
+.termsAndConditionsText() {
+  color: @light-gray;
+  max-height: 160px;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  margin-bottom: .25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: .875rem;
+  overflow: auto
 }
