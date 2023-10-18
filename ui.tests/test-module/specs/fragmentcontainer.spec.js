@@ -73,7 +73,7 @@ describe('Fragment Authoring', function () {
         cy.get(".cmp-adaptiveform-container__selectformmodel").should("not.have.attr", "disabled");
         cy.get(".cmp-adaptiveform-container__fdmselector").click();
 
-        cy.get(".cmp-adaptiveform-container__fdmselector coral-selectlist-item").eq(1).should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__fdmselector coral-selectlist-item").eq(2).should('be.visible').click();
         cy.get("#formModelChange").should("be.visible");
         cy.get("#formModelDialogAcceptButton").click();
         // Not undo the changes
