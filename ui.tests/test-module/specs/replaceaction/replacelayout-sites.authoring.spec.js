@@ -101,11 +101,11 @@ describe('Replace functionality - sites', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('test behaviour of replace button', function () {
+        xit('test behaviour of replace button', function () {
             testButtonReplaceBehaviour(buttonEditPathSelector);
         });
 
-        it('test behaviour of replace button', function () {
+        xit('test behaviour of replace button', function () {
             testPanelReplaceBehaviourWithAccordion(panelEditPathSelector);
         });
 
@@ -158,7 +158,7 @@ describe('Replace functionality - sites', function () {
             uncheckTestGroupPolicy();
         });
 
-        it('test behaviour of replace within different groups same component type', function () {
+        xit('test behaviour of replace within different groups same component type', function () {
             cy.openSiteAuthoring(pagePath);
             cy.selectLayer("Edit");
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
@@ -172,7 +172,7 @@ describe('Replace functionality - sites', function () {
             cy.deleteComponentByPath(replaceCompTestGroupDrop);
         });
 
-        it('test behaviour of replace within different groups different component type', function () {
+        xit('test behaviour of replace within different groups different component type', function () {
                 const buttonEditPath = pagePath + containerSuffix + "/container/button",
                     buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
 

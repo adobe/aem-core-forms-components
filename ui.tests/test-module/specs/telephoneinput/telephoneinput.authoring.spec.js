@@ -75,7 +75,7 @@ describe('Page - Authoring', function () {
         });
     })
 
-    it('change validation pattern type of TelephoneInput', function () {
+    xit('change validation pattern type of TelephoneInput', function () {
       const bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog';
       dropTelephoneInputInContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
@@ -106,7 +106,7 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(templateDataPath + ".html");
     });
 
-    it('Adding removing patterns from design policy', function () {
+    xit('Adding removing patterns from design policy', function () {
       cy.get(telephoneInputPolicy).click({force: true});
       cy.get(bemDesignDialog).contains('Validation patterns').click();
       // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();

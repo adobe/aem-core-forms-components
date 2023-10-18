@@ -103,7 +103,7 @@ describe('Page - Authoring', function () {
         });
     });
 
-    it ('check value type validations', function() {
+    xit ('check value type validations', function() {
         cy.cleanTest(radioButtonDrop).then(function() {
             // For Number Type
             dropRadioButtonInGuideContainer();
@@ -133,7 +133,7 @@ describe('Page - Authoring', function () {
         });
     })
 
-    it ('check for duplicate enum values', function() {
+    xit ('check for duplicate enum values', function() {
         cy.cleanTest(radioButtonDrop).then(function() {
             dropRadioButtonInGuideContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);

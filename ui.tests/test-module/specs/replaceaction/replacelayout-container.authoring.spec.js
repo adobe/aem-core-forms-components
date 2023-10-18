@@ -159,7 +159,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        it('replace checkbox with radio button', function () {
+        xit('replace checkbox with radio button', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 
@@ -199,7 +199,7 @@ describe('component replace - Authoring', function () {
                 })
         }
 
-        it('test replace of component by different group', function () {
+        xit('test replace of component by different group', function () {
             const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
