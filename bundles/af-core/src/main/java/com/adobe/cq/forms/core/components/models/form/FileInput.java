@@ -28,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public interface FileInput extends Field, FileConstraint, ContainerConstraint {
     String DEFAULT_BUTTON_TEXT = "Attach";
 
+    String DEFAULT_DRAGDROP_TEXT = "Drag and Drop To Upload";
+
     /**
      * Returns {@code true} if multiple files can be selected, {@code false} otherwise
      *
