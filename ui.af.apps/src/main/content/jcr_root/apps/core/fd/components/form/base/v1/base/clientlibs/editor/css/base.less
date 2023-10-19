@@ -52,3 +52,11 @@
 .cmp-adaptiveform-textinput__shortdescription {
     &:extend(.base__shortdescription);
 }
+/**
+ * overriding default height of rte editor text area
+ */
+[class*='cmp-adaptiveform'] .cq-RichText-editable {
+    height: 6.1rem;
+    max-height: 6.1rem;
+    overflow-y: auto;
+}
