@@ -211,3 +211,24 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
       });
     });
 })
+
+describe("setFocus on checkboxgroup via rules", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/focustest.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should focus on checkbox group when button is clicked", () => {
+        const [button] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='button')[0];
+        const [radioButton] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='checkbox-group')[0];
+        cy.get(`#${radioButton}`).find("input").eq(0).should('not.have.focus');
+        cy.get(`#${button}-widget`).click().then(() => {
+            cy.get(`#${radioButton}`).find("input").eq(0).should('have.focus')
+        })
+    })
+})
