@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInput extends FormView.FormFileInput {
+    class FileInputV2 extends FormView.FormFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -29,61 +29,66 @@
         static bemBlock = 'cmp-adaptiveform-fileinput'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${FileInput.bemBlock}__widget`,
-            label: `.${FileInput.bemBlock}__label`,
-            description: `.${FileInput.bemBlock}__longdescription`,
-            qm: `.${FileInput.bemBlock}__questionmark`,
-            errorDiv: `.${FileInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${FileInput.bemBlock}__shortdescription`,
-            fileListDiv : `.${FileInput.bemBlock}__filelist`,
-            attachButtonLabel : `.${FileInput.bemBlock}__widgetlabel`
+            widget: `.${FileInputV2.bemBlock}__widget`,
+            label: `.${FileInputV2.bemBlock}__label`,
+            description: `.${FileInputV2.bemBlock}__longdescription`,
+            qm: `.${FileInputV2.bemBlock}__questionmark`,
+            errorDiv: `.${FileInputV2.bemBlock}__errormessage`,
+            tooltipDiv: `.${FileInputV2.bemBlock}__shortdescription`,
+            fileListDiv : `.${FileInputV2.bemBlock}__filelist`,
+            attachButtonLabel : `.${FileInputV2.bemBlock}__widgetlabel`,
+            dragArea: `.${FileInputV2.bemBlock}__dragarea`
         };
 
         constructor(params) {
             super(params);
         }
-
         widgetFields = {
             widget: this.getWidget(),
             fileListDiv: this.getFileListDiv(),
-            model: () => this._model
+            model: () => this._model,
+            dragArea: this.getDragArea()
         };
-
+        
         getWidget() {
-            return this.element.querySelector(FileInput.selectors.widget);
+            return this.element.querySelector(FileInputV2.selectors.widget);
+        }
+
+        getDragArea() {
+            return this.element.querySelector(FileInputV2.selectors.dragArea);
         }
 
         getDescription() {
-            return this.element.querySelector(FileInput.selectors.description);
+            return this.element.querySelector(FileInputV2.selectors.description);
         }
 
         getLabel() {
-            return this.element.querySelector(FileInput.selectors.label);
+            return this.element.querySelector(FileInputV2.selectors.label);
         }
 
         getErrorDiv() {
-            return this.element.querySelector(FileInput.selectors.errorDiv);
+            return this.element.querySelector(FileInputV2.selectors.errorDiv);
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(FileInput.selectors.tooltipDiv);
+            return this.element.querySelector(FileInputV2.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return this.element.querySelector(FileInput.selectors.qm);
+            return this.element.querySelector(FileInputV2.selectors.qm);
         }
 
         getFileListDiv() {
-            return this.element.querySelector(FileInput.selectors.fileListDiv);
+            return this.element.querySelector(FileInputV2.selectors.fileListDiv);
         }
 
         getAttachButtonLabel() {
-            return this.element.querySelector(FileInput.selectors.attachButtonLabel);
+            return this.element.querySelector(FileInputV2.selectors.attachButtonLabel);
         }
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields)
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
@@ -92,15 +97,13 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields)
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
         }
-
-
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new FileInput({element, formContainer})
-    }, FileInput.selectors.self);
+        return new FileInputV2({element, formContainer})
+    }, FileInputV2.selectors.self);
 
 })();

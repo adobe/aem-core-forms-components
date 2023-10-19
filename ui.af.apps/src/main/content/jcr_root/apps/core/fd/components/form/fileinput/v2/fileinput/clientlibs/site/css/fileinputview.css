@@ -1,0 +1,68 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-fileinput
+    ELEMENT cmp-adaptiveform-fileinput__label
+    ELEMENT cmp-adaptiveform-fileinput__widget
+    ELEMENT cmp-adaptiveform-fileinput__questionmark
+    ELEMENT cmp-adaptiveform-fileinput__shortdescription
+    ELEMENT cmp-adaptiveform-fileinput__longdescription
+*/
+
+.cmp-adaptiveform-fileinput {
+
+}
+
+.cmp-adaptiveform-fileinput__widget {
+
+}
+
+.cmp-adaptiveform-fileinput__label {
+
+}
+.cmp-adaptiveform-fileinput__label-container{
+  
+}
+
+.cmp-adaptiveform-fileinput__longdescription {
+
+}
+
+.cmp-adaptiveform-fileinput__shortdescription {
+
+}
+
+.cmp-adaptiveform-fileinput__questionmark {
+  
+}
+
+.cmp-adaptiveform-fileinput__filelist {
+
+}
+
+.cmp-adaptiveform-fileinput__fileitem {
+}
+
+.cmp-adaptiveform-fileinput__filename {
+}
+
+.cmp-adaptiveform-fileinput__widgetlabel {
+  
+}
+
+.cmp-adaptiveform-fileinput__filedelete {
+}
+
+.cmp-adaptiveform-fileinput__dragarea {
+}
+
+.cmp-adaptiveform-fileinput__dragtext {
+}
+
+.cmp-adaptiveform-fileinput__icon {
+}
+
+.cmp-adaptiveform-fileinput__filesize {
+}
+
+.cmp-adaptiveform-fileinput__fileendcontainer {
+}
