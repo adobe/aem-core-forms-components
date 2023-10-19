@@ -189,11 +189,13 @@ class FormFieldBase extends FormField {
         if (fieldType !== 'form' && this.parentView.setFocus) {
             this.parentView.setFocus(id);
         }
+        // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
         if (this.widget.length > 0) {
-                 this.widget[0].focus()
-          } else {
-                this.widget.focus();
-            }
+            this.widget[0].focus();
+        } else {
+            this.widget.focus();
+        }
+
     }
 
     /**
