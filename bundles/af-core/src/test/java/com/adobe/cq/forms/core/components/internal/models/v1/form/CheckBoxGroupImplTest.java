@@ -56,6 +56,8 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/checkboxgroup-duplicate-enum";
     private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
 
+    private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -368,6 +370,13 @@ public class CheckBoxGroupImplTest {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
         Set<Object> set = new LinkedHashSet<>(Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L,
             15L, 16L, 17L, 18L, 19L, 20L));
+        assertArrayEquals(set.toArray(new Object[0]), checkboxGroup.getEnums());
+    }
+
+    @Test
+    void testForBooleanType() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_BOOLEAN);
+        Set<Object> set = new LinkedHashSet<>(Arrays.asList(true, false));
         assertArrayEquals(set.toArray(new Object[0]), checkboxGroup.getEnums());
     }
 
