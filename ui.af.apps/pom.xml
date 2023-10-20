@@ -321,7 +321,6 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/pageheader/v1/pageheader/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragment/v1/fragment/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragmentcontainer/v1/fragmentcontainer/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/switch/v1/switch/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/checkbox/v1/checkbox/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </tasks>
