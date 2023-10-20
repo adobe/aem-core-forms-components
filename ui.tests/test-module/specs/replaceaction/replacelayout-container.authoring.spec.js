@@ -21,7 +21,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing Form Component replace behaviour in authoring
  */
 describe('component replace - Authoring', function () {
-    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly'}
+    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly', CHECKBOX: 'checkbox'}
     const typeMap = {
         "formbutton": fieldTypes.NON_INPUT,
         "formcheckboxgroup": fieldTypes.SELECT,
@@ -34,7 +34,8 @@ describe('component replace - Authoring', function () {
         "formtext": fieldTypes.NON_INPUT,
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
-        "formimage": fieldTypes.NON_INPUT
+        "formimage": fieldTypes.NON_INPUT,
+        "checkbox": fieldTypes.CHECKBOX
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -43,7 +44,6 @@ describe('component replace - Authoring', function () {
         checkboxEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/checkboxgroup",
         checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
         checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
-        dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
         emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
         emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
@@ -107,16 +107,16 @@ describe('component replace - Authoring', function () {
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == containerEditPathSelector) {
             cy.get(horizontalTabs)
-                .should("exist");
+            .should("exist");
             cy.get(accordion)
-                .should("exist");
+            .should("exist");
             cy.get(wizard)
-                .should("exist");
+            .should("exist");
             cy.get(accordion)
-                .click();
+            .click();
             // check if default panels of accordion's template are not visible
             cy.get('[data-path="/content/forms/af/af2/jcr:content/guideContainer/accordion/item_1"]')
-                .should('not.exist');
+            .should('not.exist');
             cy.deleteComponentByPath(componentDrop);
         } else {
             var replacedComponentName, currentType, replacementComp;
@@ -182,21 +182,21 @@ describe('component replace - Authoring', function () {
 
         const updateAllowedComponent = function (allow) {
             cy.get('[title="Adaptive Form Container [Root]"]').click()
-                .then(() => {
-                    cy.get('.cq-editable-action').eq(0).click().then(() => {
-                        cy.get('[value="group:replace test group"]').eq(0)
-                            .invoke('attr', 'checked').then(isChecked => {
-                            if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
-                                cy.log('clicking now');
-                                cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
-                                    cy.get('[title="Done"]').scrollIntoView().click();
-                                });
-                            } else {
+            .then(() => {
+                cy.get('.cq-editable-action').eq(0).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0)
+                    .invoke('attr', 'checked').then(isChecked => {
+                        if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
+                            cy.log('clicking now');
+                            cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
                                 cy.get('[title="Done"]').scrollIntoView().click();
-                            }
-                        })
-                    });
-                })
+                            });
+                        } else {
+                            cy.get('[title="Done"]').scrollIntoView().click();
+                        }
+                    })
+                });
+            })
         }
 
         it('test replace of component by different group', function () {
