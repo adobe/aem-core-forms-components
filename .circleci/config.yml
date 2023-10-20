@@ -330,6 +330,12 @@ jobs:
             # update readme.md
             sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
 
+            # Check if package-lock.json is modified
+            if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
+              # Discard the changes to package-lock.json (if needed)
+              git checkout -- '**/package-lock.json'
+            fi
+
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
             git push origin $RELEASE_BRANCH

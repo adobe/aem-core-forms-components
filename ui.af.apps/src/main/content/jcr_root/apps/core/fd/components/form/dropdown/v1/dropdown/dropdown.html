@@ -33,7 +33,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[dropdown.id, 'widget']}">
     <div class="cmp-adaptiveform-dropdown__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, labelRichText=dropdown.label.richText, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     </div>
     <select class="cmp-adaptiveform-dropdown__widget"
@@ -48,11 +48,11 @@
         <div data-sly-test.isPlaceHolderSet="${dropdown.placeHolder != null}" data-sly-unwrap></div>
         <option data-sly-test="${!isPlaceHolderSet}" role="none" style="display: none;"></option>
         <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
-        <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
-            <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
+        <div data-sly-list.enumName="${dropdown.enumNamesAsTextContent}" data-sly-unwrap>
+            <div data-sly-test="${dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
                 <option value="${dropdown.enums[enumNameList.index].toString}"
                         class="cmp-adaptiveform-dropdown__option"
-                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName}</option>
+                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName.value}</option>
             </div>
         </div>
     </select>
