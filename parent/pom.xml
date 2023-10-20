@@ -88,8 +88,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.22.12</core.wcm.components.version>
-        <core.wcm.components.library.version>2.22.12</core.wcm.components.library.version>
+        <core.wcm.components.version>2.23.2</core.wcm.components.version>
+        <core.wcm.components.library.version>2.23.2</core.wcm.components.library.version>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1108,7 +1108,7 @@
             <dependency>
                 <groupId>com.adobe.aemfd</groupId>
                 <artifactId>aemfd-client-sdk</artifactId>
-                <version>6.0.882</version>
+                <version>6.0.1038</version>
             </dependency>
 
             <!-- We need this dependency, since we require classes at runtime compiled in java 8 -->

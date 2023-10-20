@@ -14,7 +14,19 @@
  * limitations under the License.
  ******************************************************************************/
 import {createFormInstance} from "@aemforms/af-core";
-export default class FormContainer {
+
+/**
+ * @module FormView
+ */
+
+/**
+ * Represents a FormContainer class.
+ */
+class FormContainer {
+    /**
+     * Creates an instance of the FormContainer class.
+     * @param {object} params - The parameters for constructing the FormContainer instance.
+     */
     constructor(params) {
         // bug in af-core, if data is set to empty object, model is not created correctly
         let prefillData = ((params._prefillData.data && Object.keys(params._prefillData.data).length === 0) ? null: params._prefillData.data);
@@ -26,16 +38,17 @@ export default class FormContainer {
     }
 
     /**
-     * Adds instance manger view to fields of formContainer
-     * @param instanceManager
+     * Adds an instance manager view to the fields of the formContainer.
+     * @param {object} instanceManager - The instance manager view to be added.
      */
     addInstanceManager(instanceManager) {
         this._fields[instanceManager.id] = instanceManager;
     }
 
     /**
-     * returns the form field view
-     * @param fieldId
+     * Returns the form field view with the specified field ID.
+     * @param {string} fieldId - The ID of the form field.
+     * @returns {object|null} The form field view, or null if not found.
      */
     getField(fieldId) {
         if (this._fields.hasOwnProperty(fieldId)) {
@@ -44,25 +57,38 @@ export default class FormContainer {
         return null;
     }
 
+    /**
+     * Returns the model with the specified ID. If no ID is provided, returns the entire model.
+     * @param {string} [id] - The ID of the model element.
+     * @returns {object} The model element or the entire model.
+     */
     getModel(id) {
         return id ? this._model.getElement(id) : this._model;
     }
 
     // todo: fix this once exposed in af-core
+    /**
+     * Returns the language code of the form.
+     * @returns {string} The language code (e.g., "en").
+     */
     getLang() {
         return this._model._jsonModel.lang || "en";
     }
 
     /**
-     * Returns id of form element present in HTML as parent
-     * @param model
-     * @returns parent id
+     * Returns the ID of the form element's parent in the HTML structure.
+     * @param {object} model - The form element model.
+     * @returns {string} The parent ID.
      */
     getParentFormElementId(model) {
         const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
         return parentModel.id;
     }
 
+    /**
+     * Adds a field view to the form container.
+     * @param {object} fieldView - The field view to be added.
+     */
     addField(fieldView) {
         if (fieldView.getFormContainerPath() === this._path) {
             let fieldId = fieldView.getId();
@@ -99,6 +125,10 @@ export default class FormContainer {
         }
     }
 
+    /**
+     * Sets the focus on the specified field ID.
+     * @param {string} id - The ID of the field to set the focus on.
+     */
     setFocus(id) {
         if (id) {
             let fieldView = this._fields[id];
@@ -116,23 +146,73 @@ export default class FormContainer {
         }
     }
 
+    /**
+     * Returns the ID of the form.
+     * @returns {string} The form ID.
+     */
     getFormId() {
         return this._model._jsonModel.id;
     }
 
+    /**
+     * Returns the title of the form.
+     * @returns {string} The form title.
+     */
     getFormTitle() {
         return this._model._jsonModel.title;
     }
 
+    /**
+     * Returns the path of the form container.
+     * @returns {string} The form container path.
+     */
     getPath() {
         return this._path;
     }
 
+    /**
+     * Returns the form element associated with the form container.
+     * @returns {HTMLElement} The form element.
+     */
     getFormElement() {
         return this._element;
     }
 
+    /**
+     * Returns all fields of the form container.
+     * @returns {object} An object containing all fields of the form container.
+     */
     getAllFields() {
         return this._fields;
     }
+
+    /**
+       * Updates the active child of the form container.
+       * @param {Object} activeChild - The active child.
+    */
+    updateActiveChild(activeChild) {
+      this.setFocus(activeChild?._activeChild?.id || activeChild?.id);
+    }
+
+    /**
+       * Subscribes to model changes and updates the corresponding properties in the view.
+       * @override
+     */
+    subscribe() {
+        const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
+        this._model.subscribe((action) => {
+            let state = action.target.getState();
+            const changes = action.payload.changes;
+            changes.forEach(change => {
+                const fn = changeHandlerName(change.propertyName);
+                if (typeof this[fn] === "function") {
+                    this[fn](change.currentValue, state);
+                } else {
+                    console.warn(`changes to ${change.propertyName} are not supported at form. Please raise an issue`)
+                }
+            })
+        });
+    }
 }
+
+export default FormContainer;

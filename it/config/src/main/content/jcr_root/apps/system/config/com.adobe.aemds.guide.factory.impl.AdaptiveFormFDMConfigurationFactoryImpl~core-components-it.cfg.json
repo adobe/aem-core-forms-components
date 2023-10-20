@@ -1,0 +1,4 @@
+{
+    "getContentPathPattern": "/content/forms/sites/(.*)",
+    "getFormDataModelPathPattern" : "/content/dam/formsanddocuments-fdm/dummy/(.*)"
+}

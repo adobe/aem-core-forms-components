@@ -18,12 +18,63 @@ import {Constants} from "./constants.js";
 import Response from "./Response.js";
 import AfFormData from "./FormData.js";
 
-export default class GuideBridge {
+/**
+ * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
+ */
+class GuideBridge {
 
+    /**
+     * Map to store the form container views.
+     * @member {Object}
+     * @private
+     * @memberof GuideBridge
+     * @instance
+     */
     #formContainerViewMap = {};
+    /**
+     * Array to store the guide bridge connect handlers.
+     * @member {Array}
+     * @private
+     * @memberof GuideBridge
+     * @instance
+     */
     #guideBridgeConnectHandlers = [];
+    /**
+     * Path of the form container.
+     * @member {string}
+     * @private
+     * @memberof GuideBridge
+     * @instance
+     */
     #formContainerPath = "";
 
+
+    /**
+     * Object to store user configurations.
+     * @member {Object}
+     * @private
+     * @memberof GuideBridge
+     * @instance
+     */
+    #userConfig = {};
+
+
+    /**
+     * Predefined key values for user configurations.
+     * @member {Object}
+     * @memberof GuideBridge
+     * @instance
+     */
+    ConfigKeys = {
+        LOCALE_CONFIG: 'localeConfig',
+        RENDER_CONFIG: 'renderConfig', // todo: needs to be added
+        SUBMIT_CONFIG: 'submitConfig'  // todo: needs to be added
+    };
+
+    /**
+     * Constructs a new GuideBridge instance.
+     * @constructor GuideBridge
+     */
     constructor() {
         let customEvent = document.createEvent("CustomEvent");
         customEvent.initCustomEvent(Constants.GUIDE_BRIDGE_INITIALIZE_START, true, true, {"guideBridge": this});
@@ -53,11 +104,14 @@ export default class GuideBridge {
         });
     }
 
+
     /**
-     * returns string representation of form data
-     * @param {object} options input to the getFormDataString API
-     * @param {function} [options.success] callback which receives the result of the API
-     * in case of success.
+     * Returns the string representation of the form data.
+     *
+     * @param {Object} options - Input options for the getFormDataString API.
+     * @param {Function} [options.success] - Callback function that receives the result of the API in case of success.
+     * @method
+     * @memberof GuideBridge
      */
     getFormDataString(options) {
         let formModel = this.getFormModel();
@@ -76,11 +130,14 @@ export default class GuideBridge {
         }
     }
 
+
     /**
-     * Returns FormData object {@link AfFormData} containing form data and attachments
-     * @param {object} options input to the getFormDataObject API
-     * @param {function} [options.success] callback which receives the result of the API
-     * in case of success.
+     * Returns a FormData object containing form data and attachments.
+     *
+     * @param {Object} options - Input options for the getFormDataObject API.
+     * @param {Function} [options.success] - Callback function that receives the result of the API in case of success.
+     * @method
+     * @memberof GuideBridge
      */
     getFormDataObject(options) {
         this.getFormDataString({success: function (resultObject) {
@@ -91,9 +148,12 @@ export default class GuideBridge {
     }
 
     /**
-     * returns the Form Instance associated with the GuideBridge.
-     * Can return null, if no form instance is found.
-     * @returns {null|object}
+     * Returns the Form Instance associated with the GuideBridge.
+     * Can return null if no form instance is found.
+     *
+     * @returns {null|Object} - The Form Instance associated with the GuideBridge.
+     * @method
+     * @memberof GuideBridge
      */
     getFormModel() {
         if (this.#formContainerPath) {
@@ -106,6 +166,13 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * Retrieves the path of the form container.
+     * @returns {string} The path of the form container.
+     * @method
+     * @memberof GuideBridge
+     * @private
+     */
     #getFormContainerPath() {
         let actualFormContainerPath = this.#formContainerPath;
         if (!actualFormContainerPath) {
@@ -120,7 +187,10 @@ export default class GuideBridge {
 
     /**
      * Validates the Adaptive Form.
-     * @returns {boolean} true if the form was valid, false otherwise
+     *
+     * @returns {boolean} - True if the form is valid, false otherwise.
+     * @method
+     * @memberof GuideBridge
      */
     validate() {
         let formModel = this.getFormModel();
@@ -152,6 +222,9 @@ export default class GuideBridge {
      * guideBridge.connect(function() {
      *    console.log("Hurrah! Guide Bridge Activated");
      * })
+     *
+     * @method
+     * @memberof GuideBridge
      */
     connect(handler, context, formContainerPath) {
         context = context || this;
@@ -179,6 +252,8 @@ export default class GuideBridge {
      * @summary Whether the Adaptive Form has been initialized or not
      *
      * @returns {boolean} true if the Adaptive Form is ready for interaction, false otherwise
+     * @method
+     * @memberof GuideBridge
      */
     isConnected() {
         return !!this.getFormModel();
@@ -186,6 +261,8 @@ export default class GuideBridge {
 
     /**
      * @summary Disables the adaptive form, i.e. it disables all the fields and buttons.
+     * @method
+     * @memberof GuideBridge
      */
     disableForm() {
         let formModel = this.getFormModel();
@@ -196,6 +273,11 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * Resets the adaptive form, clearing all entered values.
+     * @method
+     * @memberof GuideBridge
+     */
     reset() {
         let formModel = this.getFormModel();
         if (formModel) {
@@ -207,6 +289,8 @@ export default class GuideBridge {
 
     /**
      * @summary Hides all the submit buttons present in the Adaptive Form
+     * @method
+     * @memberof GuideBridge
      *
      */
     hideSubmitButtons() {
@@ -218,8 +302,9 @@ export default class GuideBridge {
     }
 
     /**
-     * @summary Hides all the reset buttons present in the Adaptive Form
-     *
+     * @summary Hides all the reset buttons present in the Adaptive Form.
+     * @method
+     * @memberof GuideBridge
      */
     hideResetButtons() {
         if (this.isConnected()) {
@@ -229,6 +314,14 @@ export default class GuideBridge {
         }
     }
 
+    /**
+     * Hides buttons of the specified type in the Adaptive Form.
+     *
+     * @param {string} buttonType - The type of buttons to hide (e.g., 'submit', 'reset').
+     * @private
+     * @method
+     * @memberof GuideBridge
+     */
     #hideButtons(buttonType) {
         let formModel = this.getFormModel();
         formModel.visit((field) => {
@@ -247,19 +340,33 @@ export default class GuideBridge {
         })
     }
 
+    /**
+     * Hides all the save buttons present in the Adaptive Form.
+     * @method
+     * @memberof GuideBridge
+     */
     hideSaveButtons() {
         //TODO: implement it later. NO-OP for now.
     }
 
+    /**
+     * Hides the summary panel in the Adaptive Form.
+     * @method
+     * @memberof GuideBridge
+     */
     hideSummaryPanel() {
         //TODO: implement it later. NO-OP for now.
     }
 
     /**
+     * Triggers an event on the GuideBridge object.
      *
-     * @param eventName name of the event to trigger on GuideBridge
-     * @param eventPayload
-     * @param formContainerPath if no argument passed, use any form container
+     * @param {string} eventName - The name of the event to trigger on GuideBridge.
+     * @param {any} eventPayload - The payload to be passed with the event.
+     * @param {string} [formContainerPath] - If no argument is passed, use any form container.
+     *
+     * @method
+     * @memberof GuideBridge
      */
     trigger(eventName, eventPayload, formContainerPath) {
         let formContainer;
@@ -275,10 +382,13 @@ export default class GuideBridge {
     }
 
     /**
-     * The API can be used to add an event listener for events triggered by GuideBridge object
-     * Subscriber must first be connected to GuideBridge to be able to use this API
-     * @param eventName
-     * @param handler
+     * @method
+     * @memberof GuideBridge
+     * @summary Adds an event listener for events triggered by the GuideBridge object.
+     * The subscriber must first be connected to GuideBridge to be able to use this API.
+     *
+     * @param {string} eventName - The name of the event to listen for.
+     * @param {Function} handler - The event handler function.
      */
     on(eventName, handler) {
         if (this.isConnected()) {
@@ -291,6 +401,49 @@ export default class GuideBridge {
             throw new Error("GuideBridge is not connected");
         }
     }
-}
+
+    /**
+     * Register a configuration for a specific key.
+     * @param {string} key - The key for which to register the configuration.
+     * @param {Object|Function} config - The configuration object or function.
+     * @returns {Array} - An array of configurations associated with the key.
+     * @example
+     *
+     * // Register a function configuration for additional behavior
+     * guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () => console.log('Function config'));
+     */
+    registerConfig(key, config) {
+        if (!this.#userConfig[key]) {
+            this.#userConfig[key] = [];
+        }
+        const configEntry = typeof config === 'function' ?
+            { fn: config, formContainerPath : this.#formContainerPath } :
+            { ...config, formContainerPath : this.#formContainerPath };
+        this.#userConfig[key].push(configEntry);
+        return this.#userConfig[key];
+    }
+
+
+    /**
+     * Given a qualifiedName, returns the form element model having the same qualified name.
+     * @param {string} qualifiedName qualified name of the Adaptive Form component
+     * @returns form element model having the same qualified name or null if not found
+     */
+    resolveNode(qualifiedName) {
+        let formModel = this.getFormModel();
+        return formModel.resolveQualifiedName(qualifiedName);
+    }
+
+    /**
+     * Get configurations associated with a specific key.
+     * @param {string} key - The key for which to retrieve configurations.
+     * @returns {Array} - An array of configurations associated with the key.
+     */
+    getConfigsForKey(key) {
+        return this.#userConfig[key] || [];
+    }
+};
+
+export default GuideBridge;
 
 

@@ -64,9 +64,13 @@ We support replace feature that allows replacing Reset Button component to any o
 ```
 BLOCK cmp-adaptiveform-emailinput
     ELEMENT cmp-adaptiveform-emailinput__label
+    ELEMENT cmp-adaptiveform-emailinput__label-container
     ELEMENT cmp-adaptiveform-emailinput__widget
     ELEMENT cmp-adaptiveform-emailinput__questionmark
     ELEMENT cmp-adaptiveform-emailinput__shortdescription
     ELEMENT cmp-adaptiveform-emailinput__longdescription
     ELEMENT cmp-adaptiveform-emailinput__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-emailinput__label` and `cmp-adaptiveform-emailinput__questionmark` within the `cmp-adaptiveform-emailinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.

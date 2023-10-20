@@ -29,22 +29,24 @@
      data-cmp-single-expansion="true"
      data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
 
-    <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}"
-         data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
-         data-sly-unwrap></div>
+    <div class="cmp-accordion__label-container">
+      <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, bemBlock='cmp-accordion'}"
+          data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
+          data-sly-unwrap></div>
+    </div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
 
     <div data-sly-test="${accordion.items.size > 0}"
-         data-sly-repeat="${accordion.exportedItems}"
-         class="cmp-accordion__item"
-         id="${accordion.exportedItems[item].id}-item"
-         data-cmp-hook-adaptiveFormAccordion="item"
-         data-cmp-expanded="${itemList.first}">
-        <h3 class="cmp-accordion__header">
+        data-sly-repeat="${accordion.exportedItems}"
+        class="cmp-accordion__item"
+        id="${accordion.exportedItems[item].id}-item"
+        data-cmp-hook-adaptiveFormAccordion="item"
+        data-cmp-expanded="${itemList.first}">
+        <div class="cmp-accordion__header">
             <button id="${accordion.exportedItems[item].id}-button"
                     class="cmp-accordion__button${itemList.first ? ' cmp-accordion__button--expanded' : ''}"
                     title="${accordion.tooltipVisible ? '' : accordion.tooltipText}"
@@ -54,29 +56,31 @@
                 <span class="cmp-accordion__title">${accordion.exportedItems[item].label.value}</span>
                 <span class="cmp-accordion__icon"></span>
             </button>
-            <div 
-              data-sly-test="${accordion.exportedItems[item].repeatable}" 
+          <div
+              data-sly-test="${accordion.exportedItems[item].repeatable}"
               class="cmp-accordion__repeatable-buttons"
               data-cmp-hook-adaptiveFormAccordion="repeatableButton">
-              <button 
+              <button
                 class="cmp-accordion__add-button"
                 data-cmp-hook-add-instance="${accordion.exportedItems[item].id}"
+                title="Add Panel"
                 type="button"></button>
-              <button 
+              <button
                 class="cmp-accordion__remove-button"
                 data-cmp-hook-remove-instance="${accordion.exportedItems[item].id}"
+                title="Remove Panel"
                 type="button"></button>
             </div>
-        </h3>
+        </div>
         <div data-sly-resource="${item @ decorationTagName='div'}"
-             data-cmp-hook-adaptiveFormAccordion="panel"
-             id="${accordion.exportedItems[item].id}-panel"
-             class="cmp-accordion__panel${itemList.first ? ' cmp-accordion__panel--expanded' : ' cmp-accordion__panel--hidden'}"
-             role="region"
-             aria-labelledby="${accordion.exportedItems[item].id}-button">
+            data-cmp-hook-adaptiveFormAccordion="panel"
+            id="${accordion.exportedItems[item].id}-panel"
+            class="cmp-accordion__panel${itemList.first ? ' cmp-accordion__panel--expanded' : ' cmp-accordion__panel--hidden'}"
+            role="region"
+            aria-labelledby="${accordion.exportedItems[item].id}-button">
         </div>
     </div>
-    <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+    <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}"></sly>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
         <sly data-sly-test="${wcmmode.edit}"

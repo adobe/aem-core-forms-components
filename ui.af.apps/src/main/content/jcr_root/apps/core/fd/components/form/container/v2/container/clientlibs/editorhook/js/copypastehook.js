@@ -15,6 +15,8 @@
  ******************************************************************************/
 (function(author){
 
+    "use strict";
+
     const FORM_CONTAINER_SELECTOR = ".cmp-adaptiveform-container";
 
     var _superPrepareCopyParagraph = author.persistence.PostRequest.prototype.prepareCopyParagraph;
@@ -24,10 +26,11 @@
      * @param config
      */
     author.persistence.PostRequest.prototype.prepareCopyParagraph = function (config) {
-        var request = _superPrepareCopyParagraph.apply(this, [config]);
+        var request = _superPrepareCopyParagraph.apply(this, [config]),
+            nodeNameToCopy = config.path.substring(config.path.lastIndexOf("/") + 1);
         if (config.parentPath 
             && author.editables.find(config.parentPath)[0].dom.closest(FORM_CONTAINER_SELECTOR).length > 0) {
-            var uniqueName = getUniqueName(config.parentPath, config.path);
+            var uniqueName = getUniqueName(config.parentPath, nodeNameToCopy);
             return (
                 this.setParam("./name", uniqueName)
                     .setParam("./dataRef@Delete", "deleted value")
@@ -39,8 +42,8 @@
         }
     };
 
-    getUniqueName = function (path, nodePathToCopy) {
-        var resourceExistSelector = ".fdResourceExists.json?nodePathToCopy=" + nodePathToCopy,
+    const getUniqueName = function (path, nodeNameToCopy) {
+        var resourceExistSelector = ".fdResourceExists.json?childNodeName=" + nodeNameToCopy,
             url = path + resourceExistSelector,
             response = CQ.shared.HTTP.get(url);
         return JSON.parse(response.responseText).uniqueName;

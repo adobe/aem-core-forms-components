@@ -20,6 +20,10 @@ describe("Form with Wizard Layout Container", () => {
 
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -37,6 +41,7 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Next Navigation Button Functionality", () => {
@@ -46,7 +51,7 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
 
         cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
@@ -54,13 +59,14 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
 
         cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.expectNoConsoleErrors();
     });
 
     it("verify Prev Navigation Button Functionality", () => {
@@ -70,7 +76,7 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
+        cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true});
 
         cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
@@ -79,20 +85,21 @@ describe("Form with Wizard Layout Container", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true});
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
 
-        cy.get(".cmp-adaptiveform-wizard__previousNav").click({force: true});
+        cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true});
 
         cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
         cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
 
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-
+        cy.expectNoConsoleErrors();
     });
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
+        cy.expectNoConsoleErrors();
     })
 
 });
@@ -127,11 +134,11 @@ describe("Form with Wizard Layout Container With Validation", () => {
     }
 
     const getNextButton = () => {
-        return cy.get(".cmp-adaptiveform-wizard__nextNav");
+        return cy.get(".cmp-adaptiveform-wizard__nav--next");
     }
 
     const getPreviousButton = () => {
-        return cy.get(".cmp-adaptiveform-wizard__previousNav");
+        return cy.get(".cmp-adaptiveform-wizard__nav--previous");
     }
 
     it("check if first tab validation is stopping from going to next tab", () => {
@@ -240,7 +247,7 @@ describe("Form with Wizard Layout Container with focus", () => {
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
 
-        cy.get(".cmp-adaptiveform-wizard__nextNav").click({force: true}).then(() => {
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
             // panel 2 active
             cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
             cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
@@ -308,17 +315,17 @@ describe("Form with wizard Layout Container with Hidden Children", () => {
         const textInputId = formContainer._model.items[1].id;
         cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().type('b').blur().then(() => {
             cy.get(`#${textInputId}`).find('.cmp-adaptiveform-textinput__widget').focus().clear().type('a').blur().then(() => {
-                cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
+                cy.get('.cmp-adaptiveform-wizard__nav--next').click({force: true}).then(() => {
                     const thirdItemNavOfWizardId = formContainer._model.items[0].items[2].id + "_wizard-item-nav";
                     const thirdItemOfWizardId = formContainer._model.items[0].items[2].id + "__wizardpanel";
                     cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                     cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                    cy.get('.cmp-adaptiveform-wizard__previousNav').click({force: true}).then(() => {
+                    cy.get('.cmp-adaptiveform-wizard__nav--previous').click({force: true}).then(() => {
                         const firstItemNavOfWizardId = formContainer._model.items[0].items[0].id + "_wizard-item-nav";
                         const firstItemOfWizardId = formContainer._model.items[0].items[0].id + "__wizardpanel";
                         cy.get(`#${firstItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                         cy.get(`#${firstItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
-                        cy.get('.cmp-adaptiveform-wizard__nextNav').click({force: true}).then(() => {
+                        cy.get('.cmp-adaptiveform-wizard__nav--next').click({force: true}).then(() => {
                             cy.get(`#${thirdItemNavOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
                             cy.get(`#${thirdItemOfWizardId}`).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
                         })
@@ -348,8 +355,8 @@ describe('visibility of navigation buttons', function () {
             secondItemNavOfWizardId = wizardItems[1].id + "_wizard-item-nav",
             secondItemOfWizardId = wizardItems[1].id + "__wizardpanel";
 
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             driverTextInput = '.cmp-adaptiveform-textinput__widget',
             wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
             wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
@@ -409,8 +416,8 @@ describe('visibility of navigation buttons with 0 and 1 tabs', function () {
     });
 
     it("test wizard with no tabs", () => {
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav';
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next';
 
         cy.get(previousNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
         cy.get(nextNavButton).eq(1).should('have.attr', 'data-cmp-visible', 'false');
@@ -422,8 +429,8 @@ describe('visibility of navigation buttons with 0 and 1 tabs', function () {
         const firstItemNavOfWizardId = wizardItems[0].id + "_wizard-item-nav",
             firstItemOfWizardId = wizardItems[0].id + "__wizardpanel";
 
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
             wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
 

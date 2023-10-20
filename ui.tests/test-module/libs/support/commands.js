@@ -48,14 +48,33 @@ const commons = require('../commons/commons'),
     siteConstants = require('../commons/sitesConstants'),
     guideSelectors = require('../commons/guideSelectors'),
     guideConstants = require('../commons/formsConstants');
+var toggles = [];
 
 // Cypress command to login to aem page
-Cypress.Commands.add("login", (pagePath) => {
+Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
     const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
     cy.get('#username').type(username);
     cy.get('#password').type(password);
-    cy.get('#submit-button').click();
+    let retryCount = 0;
+    let maxRetries = 3;
+    // Check if the element with id 'submit-button' exists
+    cy.get('body').then(($body) => {
+        const element = $body.find('#submit-button');
+        if (element.length === 0) {
+            // Element is not present
+            retryCount++;
+            if (retryCount <= maxRetries) {
+                // Retry the visit with an exponential backoff delay
+                const delay = Math.pow(2, retryCount - 1) * 1000; // 2^n seconds
+                cy.wait(delay);
+                failurehandler();
+            }
+        } else {
+            // Element is present, click it
+            cy.wrap(element).click();
+        }
+    });
 });
 
 
@@ -68,6 +87,7 @@ function getUserInfoHome() {
     const USER_INFO_SERVLET = "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
+
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
@@ -110,6 +130,24 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
     });
 });
 
+// Cypress command to open AFv2
+Cypress.Commands.add("openAFv2TemplateEditor", () => {
+    const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAFv2TemplateEditor();
+    });
+    cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const path = `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
+    preventClickJacking();
+});
+
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
     cy.window().then((win) => {
@@ -127,15 +165,7 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open Site authoring page
-Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
-    const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+const preventClickJacking = () => {
     cy.window().then(win => {
         // only if granite is defined, override the API
         if (win.Granite) {
@@ -150,22 +180,78 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
             };
         }
     });
+};
+
+
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
+    const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    preventClickJacking();
+});
+
+
+Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', retryCount = 3) => {
+    let currentRetry = 0;
+
+    function clickRetry() {
+        cy.get(selector)
+            .click({ multiple: true })
+            .should(($element) => {
+                if ($element.closest('.cq-dialog').is(':visible')) {
+                    if (currentRetry < retryCount - 1) {
+                        currentRetry++;
+                        clickRetry();
+                    }
+                }
+            });
+    }
+    clickRetry();
+});
+
+
+// Cypress command to get form JSON
+Cypress.Commands.add("getFormJson", (pagePath) => {
+    const pageUrl = cy.af.getFormJsonUrl(pagePath);
+    return cy.request({
+        method : 'GET',
+        url: pageUrl
+    }).its('body');
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const path = `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
+    preventClickJacking();
 });
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
     const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
-    cy.login(baseUrl);
+    // getting status 403 intermittently, just ignore it
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAuthoring(pagePath);
+    });
     cy.openSiteAuthoring(pagePath);
 });
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     if (!options.noLogin) {
+    // getting status 403 intermittently, just ignore it
         const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-        cy.visit(baseUrl);
-        cy.login(baseUrl);
+        cy.visit(baseUrl, {'failOnStatusCode': false});
+        cy.login(baseUrl, () => {
+            cy.openPage(pagePath, options);
+        });
     }
     cy.visit(pagePath, options);
 });
@@ -198,7 +284,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                             cy.get(selector).first().click({force: true});
                             cy.get(path).should('be.visible');
                         } else {
-                            cy.get(siteSelectors.overlays.self).click(0, 0); // dont click on body, always use overlay wrapper to click
+                            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
                             cy.get(selector).click({force: true});
                             cy.get(path).should('be.visible');
                         }
@@ -253,17 +339,54 @@ const waitForFormInit = () => {
         cy.get('form').then(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
                     const isReady = () => {
-                        if (!($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
+                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                        if (container &&
+                            e.detail._path === $form.data("cmp-path") &&
+                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
                             resolve(e.detail);
                         }
                         setTimeout(isReady, 0)
                     }
                     isReady();
                 }
+                }
                 document.addEventListener(INIT_EVENT, listener1);
             })
             return promise
+        });
+    })
+}
+
+const waitForFormInitMultipleContiners = () => {
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        const promiseArray = []
+        cy.get('form').each(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
+                    const isReady = () => {
+                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                        if (container &&
+                            e.detail._path === $form.data("cmp-path") &&
+                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
+                            resolve(e.detail);
+                        }
+                        setTimeout(isReady, 0)
+                    }
+                    isReady();
+                }
+                }
+                document.addEventListener(INIT_EVENT, listener1);
+            })
+
+            promiseArray.push(promise)
+        }).then(($lis) => {
+           return Promise.all(promiseArray)
         });
     })
 }
@@ -295,6 +418,23 @@ Cypress.Commands.add("getFormData", () => {
 });
 
 
+Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, cursor = "", limit = 20) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?cursor=${cursor}&limit=${limit}`).then(({body}) => {
+        // We need its ID to continue nesting below it
+        let retVal = body.items.find(collection => collection.path === formPath);
+        if (retVal) {
+            return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+        } else {
+            console.log("fetching the list of forms again");
+            if (body.cursor) {
+                cursor = body.cursor;
+            }
+            return cy.getFromDefinitionUsingOpenAPIUsingCursor(formPath, cursor, limit);
+        }
+    });
+});
+
+// this API is deprecated, this is not to be used anymore
 Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
     return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
         // We need its ID to continue nesting below it
@@ -315,9 +455,15 @@ Cypress.Commands.add("previewForm", (formPath, options = {}) => {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
     }
+    if(options?.multipleContainers) {
+        return cy.openPage(pagePath, options).then(waitForFormInitMultipleContiners)
+    }
     return cy.openPage(pagePath, options).then(waitForFormInit)
 })
 
+Cypress.Commands.add("fetchFeatureToggles",()=>{
+    return cy.request('/etc.clientlibs/toggles.json')
+})
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
@@ -487,11 +633,39 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
             cy.get("#Content .toggle-sidepanel").click();
         }
     });
-    var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
+    var tabSelector = 'coral-tablist coral-tab[title="' + tab + '"]';
     cy.get(tabSelector)
         .should("be.visible")
         .click();
     cy.get(tabSelector + ".is-selected").should("exist");
 })
 
+
+/**
+ * This will attach a listener to console.error calls,
+ * that will help in checking if errors were logged or not.
+ *
+ * This is supposed to be called in the before hook of a test, like this:
+ * before(() => {
+     *     cy.attachConsoleErrorSpy();
+     * });
+ */
+Cypress.Commands.add("attachConsoleErrorSpy", () => {
+    Cypress.on('window:before:load', (win) => {
+        cy.spy(win.console, 'error');
+    });
+});
+
+
+
+/**
+ * This checks if any console.errors were logged or not,
+ * after the spy was attached (see above command).
+ * So make sure to attach the spy function first!
+ */
+Cypress.Commands.add("expectNoConsoleErrors", () => {
+    return cy.window().then(win => {
+        expect(win.console.error).to.have.callCount(0);
+    });
+});
 

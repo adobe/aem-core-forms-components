@@ -54,6 +54,8 @@ public class TextInputImplTest {
 
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
+    private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
+    private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -410,5 +412,17 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
         FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DATALAYER));
+    }
+
+    @Test
+    void testJSONExportForBlankDataRef() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_DATAREF, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_DATAREF));
+    }
+
+    @Test
+    void testJSONExportForEmptyValidationExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
     }
 }

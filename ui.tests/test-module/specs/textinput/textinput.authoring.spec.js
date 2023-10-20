@@ -127,63 +127,64 @@ describe('Page - Authoring', function () {
         })
     })
 
-    context('Open Sites Editor', function () {
-        const pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
-            textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
-            textInputInsideSitesContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/container/textinput_demo",
-            textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
-            textInputInsideSitesContainerEditPathSelector = "[data-path='" + textInputInsideSitesContainerEditPath + "']",
-            textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
+  context('Open Sites Editor', function () {
+    const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
+        textInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/textinput",
+        textInputInsideSitesContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/container/textinput_demo",
+        textInputEditPathSelector = "[data-path='" + textInputEditPath + "']",
+        textInputInsideSitesContainerEditPathSelector = "[data-path='" + textInputInsideSitesContainerEditPath + "']",
+        textInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formtextinput.split("/").pop();
 
-        beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(pagePath);
-        });
+    beforeEach(function () {
+      // this is done since cypress session results in 403 sometimes
+      cy.openAuthoring(pagePath);
+    });
 
-        it('insert aem forms TextInput', function () {
+    it('insert aem forms TextInput', function () {
+      dropTextInputInSites();
+      cy.deleteComponentByPath(textInputDrop);
+    });
+
+    it('open edit dialog of aem forms TextInput', function() {
+      testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
+    });
+
+    // conditionally run the test on latest addon
+    //if (cy.af.isLatestAddon()) {
+        it('Test z-index of Rule editor iframe', function () {
             dropTextInputInSites();
+            cy.openSidePanelTab("Content Tree");
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='editexpression']");
+            cy.get("#af-rule-editor").should("be.visible");
+            cy.get("#af-rule-editor")
+                .invoke("css", "z-index")
+                .should("equal", '1000');
+            getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+            getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+            cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
+            getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
             cy.deleteComponentByPath(textInputDrop);
         });
+    //}
 
-        it('open edit dialog of aem forms TextInput', function () {
-            testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
-        });
-
-        // conditionally run the test on latest addon
-        //if (cy.af.isLatestAddon()) {
-            it('Test z-index of Rule editor iframe', function () {
-                dropTextInputInSites();
-                cy.openSidePanelTab("Content Tree");
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-                cy.invokeEditableAction("[data-action='editexpression']");
-                cy.get("#af-rule-editor").should("be.visible");
-                cy.get("#af-rule-editor")
-                    .invoke("css", "z-index")
-                    .should("equal", '1000');
-                getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-                getRuleEditorIframe().find("#create-rule-button").should("be.visible");
-                cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
-                getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
-                cy.deleteComponentByPath(textInputDrop);
-            });
-        //}
-
-        if (cy.af.isLatestAddon()) {
-            it('Test z-index of Rule editor iframe for components inside site container', function () {
-                cy.openSidePanelTab("Content Tree");
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
-                cy.invokeEditableAction("[data-action='editexpression']");
-                cy.get("#af-rule-editor").should("be.visible");
-                cy.get("#af-rule-editor")
-                    .invoke("css", "z-index")
-                    .should("equal", '1000');
-                getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-                // check if navigation tree is showing the text input
-                getRuleEditorIframe().find("#objectNavigationTree " + textInputInsideSitesContainerEditPathSelector).should("be.visible");
-                getRuleEditorIframe().find("#create-rule-button").should("be.visible");
-                cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
-                getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
-            });
-        }
-    });
+    // not yet in available publicly released april far
+    //if (cy.af.isLatestAddon()) {
+      it('Test z-index of Rule editor iframe for components inside site container', function () {
+          cy.openSidePanelTab("Content Tree");
+          cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputInsideSitesContainerEditPathSelector);
+          cy.invokeEditableAction("[data-action='editexpression']");
+          cy.get("#af-rule-editor").should("be.visible");
+          cy.get("#af-rule-editor")
+              .invoke("css", "z-index")
+              .should("equal", '1000');
+          getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+          // check if navigation tree is showing the text input
+          getRuleEditorIframe().find("#objectNavigationTree " + textInputInsideSitesContainerEditPathSelector).should("be.visible");
+          getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+          cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
+          getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+      });
+    //}
+  });
 });

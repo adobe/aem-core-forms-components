@@ -22,8 +22,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
@@ -39,7 +42,10 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
@@ -105,6 +111,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private static final String NULL_DATA_REF = "null";
 
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFormComponentImpl.class);
+
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
@@ -115,6 +123,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
+        getName();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
@@ -154,6 +163,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
+            // setting the default name if name is null.
             name = getDefaultName();
         }
         return name;
@@ -193,10 +203,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
-        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
-        // we anyways dont need to rely on wcmmode while fetching form definition.
-        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        if (request != null && request.getPathInfo() != null) {
+            String pathInfo = request.getPathInfo();
+            boolean matches = Pattern.matches(".+model.*\\.json$", pathInfo);
+            // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+            // we anyways dont need to rely on wcmmode while fetching form definition.
+            if (!matches) {
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+            }
         }
         return editMode;
     }
@@ -212,7 +226,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
-    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     /**
      * Predicate to check if a map entry is non empty
@@ -226,19 +239,23 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
+        Map<String, Object> properties = new LinkedHashMap<>();
+        Map<String, String> customProperties = getCustomProperties();
+        if (customProperties.size() > 0) {
+            customProperties.forEach(properties::putIfAbsent);
+        }
         if (getCustomLayoutProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
+            properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
         if (getDorProperties().size() > 0) {
-            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
-        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
+        properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
-            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
-        return customProperties;
+        return properties;
     }
 
     @Override
@@ -311,7 +328,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
             Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
@@ -431,6 +448,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 jsonGenerator.writeString(s);
             }
         }
+
+        @Override
+        public boolean isEmpty(SerializerProvider provider, String value) {
+            return (StringUtils.isEmpty(value));
+        }
     }
 
+    /**
+     * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
+     *
+     * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
+     */
+    private Map<String, String> getCustomProperties() {
+        try {
+            return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+                .map(CustomPropertyInfo::getProperties)
+                .orElse(Collections.emptyMap());
+        } catch (NoClassDefFoundError e) {
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
+            return Collections.emptyMap();
+        }
+    }
 }

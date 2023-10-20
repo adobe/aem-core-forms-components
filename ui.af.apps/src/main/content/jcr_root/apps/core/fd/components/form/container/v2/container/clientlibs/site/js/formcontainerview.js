@@ -41,13 +41,7 @@
                 let body = action.payload?.body;
                 if (body) {
                     if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
-                        let redirectElement = document.querySelector('[name=":redirect"]');
-                        // check to prevent tampering of redirectURL from client
-                        if(redirectElement && redirectElement.value === body.redirectUrl) {
-                            redirectURL = body.redirectUrl;
-                        }
-                        window.location.href = redirectURL;
+                        window.location.href = encodeURI(body.redirectUrl);
                     } else if (body.thankYouMessage) {
                         let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
                         let thankYouMessage = document.createElement("div");
@@ -69,28 +63,43 @@
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
         for (let i = 0; i < elements.length; i++) {
-            elements[i].classList.add(FormContainerV2.loadingClass);
+            let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
+            if(loaderToAdd){
+                loaderToAdd.classList.add(FormContainerV2.loadingClass);
+            }
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
-                formEl.classList.remove(FormContainerV2.loadingClass);
+                let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
+                if(loaderToRemove){
+                    loaderToRemove.classList.remove(FormContainerV2.loadingClass);
+                }
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
         }
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
-        const formContainer = FormView.Utils.setupFormContainer(({
+        await FormView.Utils.setupFormContainer(async ({
             _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path, _element});
-        }, FormContainerV2.selectors.self, FormContainerV2.IS)
+            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            // before initializing the form container load all the locale specific json resources
+            // for runtime
+            const formLanguage = formContainer.getLang();
+            const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
+            await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
+            formContainer.subscribe();
+            return formContainer;
+        }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }
 
-
-
+    // This is to ensure that the there is no WCM Mode cookie when Form Container is rendered.
+    // max-age=0 ensures that the cookie is deleted.
+    document.cookie="wcmmode=disabled; max-age=0; path=/";
+    
     if (document.readyState !== "loading") {
         onDocumentReady();
     } else {

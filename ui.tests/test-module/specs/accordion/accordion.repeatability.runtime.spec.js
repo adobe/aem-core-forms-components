@@ -20,6 +20,10 @@ describe("Form with Accordion Container with repeatable elements", () => {
     const bemBlock = "cmp-accordion";
     let formContainer = null
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -102,6 +106,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 }
             })
         }
+        cy.expectNoConsoleErrors();
     })
 
     it("test repeatedTab instance html", () => {
@@ -122,6 +127,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
             getAccordionPanelsAtIndex(1).should('have.class', 'cmp-accordion__panel--expanded');
             getAccordionPanelsAtIndex(1).should('have.attr', 'aria-labelledby');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in tab", () => {
@@ -146,6 +152,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--expanded');
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at any position within instance manager other than first in tab", () => {
@@ -165,6 +172,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
             getAccordionItemAtIndex(5).should('have.attr', 'data-cmp-expanded');
             getAccordionButtonsAtIndex(5).should('have.class', 'cmp-accordion__button--expanded');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when multiple removable repeatable panels appear before it in view", () => {
@@ -186,6 +194,7 @@ describe("Form with Accordion Container with repeatable elements", () => {
                 })
             })
         })
+        cy.expectNoConsoleErrors();
     })
 })
 

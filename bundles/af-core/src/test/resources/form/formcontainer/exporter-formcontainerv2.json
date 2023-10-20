@@ -9,7 +9,8 @@
       "dorTemplateRef": "xyz"
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
-    "fd:schemaType": "BASIC"
+    "fd:schemaType": "BASIC",
+    "fd:formDataEnabled" : true
   },
   ":items": {
     "textinput": {
@@ -47,6 +48,6 @@
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0"
   },
-  "adaptiveform": "0.12.0",
+  "adaptiveform": "0.12.1",
   ":type": "core/fd/components/form/container/v2/container"
 }

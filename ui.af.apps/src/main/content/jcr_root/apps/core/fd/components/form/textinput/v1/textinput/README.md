@@ -52,12 +52,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__label
+    ELEMENT cmp-adaptiveform-textinput__label-container
     ELEMENT cmp-adaptiveform-textinput__widget
     ELEMENT cmp-adaptiveform-textinput__questionmark
     ELEMENT cmp-adaptiveform-textinput__shortdescription
     ELEMENT cmp-adaptiveform-textinput__longdescription
     ELEMENT cmp-adaptiveform-textinput__errormessage
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-textinput__label` and `cmp-adaptiveform-textinput__questionmark` within the `cmp-adaptiveform-textinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

@@ -114,9 +114,13 @@ describe("Form with File Input - Basic Tests", () => {
                 let model = field.getModel();
                 let fileName = 'empty.pdf';
                 if (model.visible && model.enabled) {
+                    cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--empty');
+                    cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+                    cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
                     cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
+                        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
                     })
                 }
             }
@@ -126,6 +130,14 @@ describe("Form with File Input - Basic Tests", () => {
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'fileinput_tooltip_scenario_test');
+    })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
     })
 })
 
@@ -158,16 +170,26 @@ describe("Form with File Input - Prefill & Submit tests", () => {
         })
     };
 
+    const deleteSelectedFiles = (component, fileNames) => {
+        cy.get(component).then(() => {
+            fileNames.forEach((fileName) => {
+                cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().click();
+            })
+        });
+    };
+
     const checkFilePreviewInFileAttachment = (component) => {
         cy.get(component).then(() => {
-            cy.get(".cmp-adaptiveform-fileinput__filename").eq(0).click();
-            cy.window().its('open').should('be.called');
+            cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
+                cy.wrap($file).click();
+                cy.window().its('open').should('be.called');
+            })
         });
     };
 
     const checkFileNamesInFileAttachmentView = (component, fileNames) => {
         // check if file present in view
-        cy.get(component).then((fileInputs) => {
+        cy.get(component).then(() => {
             fileNames.forEach((fileName) => {
                 cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName)
             })
@@ -175,9 +197,13 @@ describe("Form with File Input - Prefill & Submit tests", () => {
     }
 
     const fileInputs = [{
-        type: "Single Select", selector: singleSelectFileInput2
+        type: "Single Select",
+        selector: singleSelectFileInput2,
+        fileNames: ['empty.pdf'], multiple: false
         }, {
-        type: "Multi Select", selector: multiSelectFileInput1
+        type: "Multi Select",
+        selector: multiSelectFileInput1,
+        fileNames: ['empty.pdf', 'sample.txt'], multiple: true
     }];
 
     fileInputs.forEach((fileInput, idx) => {
@@ -187,15 +213,22 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                     cy.stub(win, 'open'); // creating a stub to check file preview
                 }
             });
-            const fileName = "empty.pdf";
+
             // attach the file
-            cy.get(fileInput.selector).attachFile(fileName);
+            cy.get(fileInput.selector).attachFile(fileInput.fileNames);
+            if(fileInput.multiple)
+                cy.get(fileInput.selector).attachFile('sample2.txt');
 
             // check for successful attachment of file in the view
-            checkFileNamesInFileAttachmentView(fileInput.selector, ['empty.pdf']);
+            checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
+            if(fileInput.multiple)
+                checkFileNamesInFileAttachmentView(fileInput.selector, ['sample2.txt']);
 
             // check preview of the file
-            checkFilePreviewInFileAttachment(fileInput.selector)
+            checkFilePreviewInFileAttachment(fileInput.selector);
+
+            if(fileInput.multiple)
+                deleteSelectedFiles(fileInput.selector, ['sample2.txt']);
 
             // submit the form
             cy.get(".cmp-adaptiveform-button__widget").click();
@@ -214,19 +247,19 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                 });
 
                 // check if files were prefilled
-                checkFileNamesInFileAttachmentView(fileInput.selector, ['empty.pdf']);
+                checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
 
                 // check if guideBridge API returns file attachments correctly
-                getFormObjTest(['empty.pdf']);
+                getFormObjTest(['empty.pdf', ...(fileInput.multiple ? ['sample.txt']: []) ]);
 
                 // check the preview of the file attachment
                 checkFilePreviewInFileAttachment(fileInput.selector);
 
                 // add new files after preview to both the component
-                cy.get(fileInput.selector).attachFile(['sample.txt'])
+                cy.get(fileInput.selector).attachFile(['sample2.txt'])
 
                 // check if guideBridge API returns correctly after prefill and attaching more files
-                getFormObjTest(['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
+                getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ]);
 
                 // submit the form
                 cy.get(".cmp-adaptiveform-button__widget").click();
@@ -246,8 +279,8 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                 });
 
                 // check if files were prefilled
-                checkFileNamesInFileAttachmentView(fileInput.selector, ['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
-                getFormObjTest(['sample.txt', ...(fileInput.type === "Multi Select" ? ['empty.pdf']: []) ]);
+                checkFileNamesInFileAttachmentView(fileInput.selector, ['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ]);
+                getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ]);
 
                 // check if file preview works fine after prefill
                 checkFilePreviewInFileAttachment(fileInput.selector);

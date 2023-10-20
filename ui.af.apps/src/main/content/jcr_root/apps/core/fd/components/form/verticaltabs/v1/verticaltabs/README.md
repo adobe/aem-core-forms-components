@@ -44,6 +44,8 @@ The following properties are written to JCR for this Accordion component and are
 ```
 BLOCK cmp-verticaltabs
     ELEMENT cmp-verticaltabs__tablist
+    ELEMENT cmp-verticaltabs__label
+    ELEMENT cmp-verticaltabs__label-container
     ELEMENT cmp-verticaltabs__tab
         MOD cmp-verticaltabs__tab--active
     ELEMENT cmp-verticaltabs__title
@@ -53,6 +55,10 @@ BLOCK cmp-verticaltabs
     ELEMENT cmp-verticaltabs__longdescription
     ELEMENT cmp-verticaltabs__questionmark
 ```
+
+### Note
+By placing the class names `cmp-verticaltabs__label` and `cmp-verticaltabs__questionmark` within the `cmp-verticaltabs__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
 ## Client Libraries
 The component provides a `core.forms.components.verticaltabs.v1.runtime` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.

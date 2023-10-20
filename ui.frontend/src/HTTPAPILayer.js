@@ -16,10 +16,27 @@
 import {Constants} from "./constants.js";
 import Utils from "./utils.js";
 
-export default class HTTPAPILayer {
+/**
+ * @module FormView
+ */
 
+/**
+ * HTTP API layer for interacting with server-side APIs.
+ */
+class HTTPAPILayer {
+
+    /**
+     * Retrieves the form model for the specified form container path using the open api
+     * @param {string} formContainerPath - The path of the form container.
+     * @returns {Promise<Object|null>} - A Promise that resolves to the form model or null if there was an error.
+     * @see {@link https://opensource.adobe.com/aem-forms-af-runtime/api/#tag/Get-Form-Definition} - API documentation
+     */
     static async getForm(formContainerPath) {
-        const _formPath = formContainerPath.substring(0, formContainerPath.indexOf("/jcr:content/guideContainer"));
+        const guideContainerIndex = formContainerPath.indexOf("/jcr:content/guideContainer");
+        let _formPath = formContainerPath;
+        if (guideContainerIndex !== -1) {
+            _formPath = formContainerPath.substring(0, guideContainerIndex);
+        }
         const _formsList =  await this.#getFormsList();
         if (_formsList) {
             return await this.#findForm(_formPath, _formsList);
@@ -29,6 +46,11 @@ export default class HTTPAPILayer {
         }
     }
 
+    /**
+     * Retrieves the form definition for the specified form container path using the json exporter API
+     * @param {string} formContainerPath - The path of the form container.
+     * @returns {Promise<Object>} - A Promise that resolves to the form definition.
+     */
     static async getFormDefinition(formContainerPath) {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
@@ -45,12 +67,19 @@ export default class HTTPAPILayer {
         return await this.getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
     }
 
+    /**
+     * Recursive function to find a specific form in the forms list.
+     * @param {string} formPath - The path of the form.
+     * @param {Object} formsList - The list of forms.
+     * @returns {Promise<Object|null>} - A Promise that resolves to the found form or null if not found.
+     * @private
+     */
     static async #findForm(formPath, formsList) {
         const _form = formsList.items.find((form) => {return form.path === formPath});
         if (_form) {
             return _form;
-        } else if (formsList._links && formsList._links.next) {
-            const _nextList = await this.getJson(formsList._links.next);
+        } else if (formsList.cursor) {
+            const _nextList = await this.#getFormsList(formsList.cursor);
             return await this.#findForm(formPath, _nextList);
         } else {
             //TODO: throw errors once API is available on Circle CI set up
@@ -58,14 +87,31 @@ export default class HTTPAPILayer {
         }
     }
 
-    static async #getFormsList() {
-        return await this.getJson(Constants.API_PATH_PREFIX + "/listforms");
+    /**
+     * Retrieves the list of forms.
+     * @returns {Promise<Object>} - A Promise that resolves to the list of forms.
+     * @private
+     */
+    static async #getFormsList(cursor = "") {
+        return await this.getJson(`${Constants.API_PATH_PREFIX}/listforms?cursor=${cursor}`);
     }
 
+    /**
+     * Retrieves the prefill data for the specified form and parameters.
+     * @param {string} formId - The ID of the form.
+     * @param {Object} params - The parameters for prefilling the form.
+     * @returns {Promise<Object>} - A Promise that resolves to the prefill data.
+     * @see {@link https://opensource.adobe.com/aem-forms-af-runtime/api/#tag/Get-Form-Data} - API documentation
+     */
     static async getPrefillData(formId, params) {
         return await this.getJson(Constants.API_PATH_PREFIX + "/data/" + formId + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"));
     }
 
+    /**
+     * Retrieves JSON data from the specified URL.
+     * @param {string} url - The URL to fetch JSON data from.
+     * @returns {Promise<Object|null>} - A Promise that resolves to the fetched JSON data or null if there was an error.
+     */
     static async getJson(url) {
         // prefix context path in url
         let urlWithContextPath = `${Utils.getContextPath()}${url}`
@@ -84,4 +130,15 @@ export default class HTTPAPILayer {
             xhr.send();
         });
     }
-}
+
+    /**
+     * Retrieves the custom function configuration for the specified form ID.
+     * @param {string} formId - The ID of the form.
+     * @returns {Promise<Object>} - A Promise that resolves to the custom function configuration.
+     */
+    static async getCustomFunctionConfig(formId) {
+        return await this.getJson(Constants.API_PATH_PREFIX + "/customfunctions/" + formId);
+    }
+};
+
+export default HTTPAPILayer;

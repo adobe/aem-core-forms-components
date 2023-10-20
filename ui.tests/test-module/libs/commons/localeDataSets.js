@@ -1,7 +1,7 @@
 const selectors = {
-    ACCORDION: '.cmp-accordion > label',
+    ACCORDION: '.cmp-accordion > .cmp-accordion__label-container > label',
     BUTTON: '.button.base:not(.submit):not(.reset) span',
-    CHECK_BOX: '.cmp-adaptiveform-checkboxgroup > label',
+    CHECK_BOX: '.cmp-adaptiveform-checkboxgroup .cmp-adaptiveform-checkboxgroup__label-container > label',
     CHECK_BOX_ITEM1: '.cmp-adaptiveform-checkboxgroup > div > div > label > span',
     DATE_INPUT: '.cmp-adaptiveform-datepicker label',
     DROPDOWN: '.cmp-adaptiveform-dropdown label',
@@ -13,7 +13,7 @@ const selectors = {
     PANEL: '.cmp-container__label',
     RADIO_BUTTON: '.cmp-adaptiveform-radiobutton__label',
     SUBMIT: '.submit span',
-    TELEPHONE_INPUT: 'div[class="cmp-adaptiveform-telephoneinput"] label',
+    TELEPHONE_INPUT: '.cmp-adaptiveform-telephoneinput__label',
     TEXT_INPUT: '.cmp-adaptiveform-textinput__label',
     WIZARD: '.cmp-adaptiveform-wizard__label'
 }

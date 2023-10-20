@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
@@ -91,6 +92,8 @@ public abstract class AbstractComponentImpl implements Component {
 
     protected I18n i18n = null;
 
+    protected static final String REQ_ATTR_RESOURCE_CALLER_PATH = "resourceCallerPath";
+
     /**
      * Flag indicating if the data layer is enabled.
      */
@@ -112,7 +115,7 @@ public abstract class AbstractComponentImpl implements Component {
 
     /**
      * Setter for current page.
-     * 
+     *
      * @param currentPage The {@link Page} to set
      */
     protected void setCurrentPage(Page currentPage) {
@@ -122,10 +125,11 @@ public abstract class AbstractComponentImpl implements Component {
     @PostConstruct
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
-        if (currentPage != null && resource != null) {
+        if (currentPage != null && resource != null && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
-                Page resourcePage = pageManager.getContainingPage(resource);
+                String pagePath = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
+                Page resourcePage = pageManager.getContainingPage(pagePath);
                 if (resourcePage != null && !StringUtils.equals(currentPage.getPath(), resourcePage.getPath())) {
                     setCurrentPage(resourcePage);
                 }
@@ -137,7 +141,8 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            this.id = ComponentUtils.getId(this.resource, this.currentPage, null, this.componentContext);
+            String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
+            this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
     }

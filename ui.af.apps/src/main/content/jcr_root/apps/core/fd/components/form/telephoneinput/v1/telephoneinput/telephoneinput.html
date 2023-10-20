@@ -27,12 +27,18 @@
      data-cmp-is="adaptiveFormTelephoneInput"
      data-cmp-visible="${telText.visible ? 'true' : 'false'}"
      data-cmp-enabled="${telText.enabled ? 'true' : 'false'}"
+     data-cmp-required="${telText.required ? 'true': 'false'}"
+     data-cmp-readonly="${telText.readOnly ? 'true' : 'false'}"
      id="${telText.id}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=telText.id, labelValue=telText.label.value, labelVisible=telText.label.visible, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[telText.id, 'widget']}">
+    <div class="cmp-adaptiveform-telephoneinput__label-container">
+      <div data-sly-call="${label.label @componentId=widgetIdd, labelValue=telText.label.value, labelVisible=telText.label.visible, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+    </div>
     <input title="${telText.tooltipVisible ? '' : telText.tooltipText}"
            class="cmp-adaptiveform-telephoneinput__widget"
-           aria-label="${telText.label.visible && telText.label.value}"
+           id="${widgetId}"
            type="tel"
            name="${telText.name}"
            data-cmp-data-layer="${telText.data.json}"
@@ -43,7 +49,6 @@
            placeholder="${telText.placeHolder}"
            minlength="${telText.minLength}"
            maxlength="${telText.maxLength}"/>
-    <div data-sly-call="${questionMark.questionMark @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=telText.id, shortDescriptionVisible=telText.tooltipVisible, shortDescription=telText.tooltip, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>

@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
 const classicFormAddonVersion = 'LATEST';
 const classicFormReleasedAddonVersion = '6.0.1016';
 
@@ -67,6 +67,14 @@ try {
         }
     }
 
+    if (FT === 'true') {
+        // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+    }
+
+    // Set an environment variable indicating test was executed
+    // this is used in case of re-run failed test scenario
+    ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
@@ -74,9 +82,9 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
@@ -88,13 +96,15 @@ try {
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 
-    if (AEM === 'classic' || AEM === 'classic-latest') {
-        // add a sleep for 5 mins, add-on takes times to come up
-        ci.sh(`sleep 5m`);
-        // restart the AEM insatnce
-        ci.sh(`./qp.sh stop --id author`);
-        ci.sh(`./qp.sh start --id author`);
-    }
+        if (AEM === 'classic' || AEM === 'classic-latest') {
+            // add a sleep for 10 mins, add-on takes times to come up
+            ci.sh(`sleep 10m`);
+            // restart the AEM insatnce
+            ci.sh(`./qp.sh stop --id author`);
+            ci.sh(`./qp.sh start --id author`);
+            // add a sleep for 5 mins, add-on takes times to come up
+            ci.sh(`sleep 5m`);
+        }
 });
 
     // Run integration tests
@@ -145,7 +155,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} finally { // Always download logs from AEM container
+} finally {
+    // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.

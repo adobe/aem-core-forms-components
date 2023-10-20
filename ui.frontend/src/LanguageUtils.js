@@ -18,33 +18,69 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {setCustomDefaultConstraintTypeMessages} from "@aemforms/af-core";
 
-export default class LanguageUtils {
+/**
+ * @module FormView
+ */
+
+/**
+ * Utility class for language-related operations.
+ */
+class LanguageUtils {
+    /**
+     * Internal map to store loaded language data.
+     * @type {Object.<string, Object>}
+     * @private
+     */
     static #langData = {};
 
     /**
-     * Load language data from the given URL
-     * @param lang language
-     * @param url  url of the language strings
+     * Load language data from the given URL.
+     * @param {string} lang - The language.
+     * @param {string} url - The URL of the language strings.
+     * @returns {Promise<void>} A promise that resolves when the language data is loaded.
+     * @fires module:FormView~Constants#FORM_LANGUAGE_INITIALIZED
      */
-    static async loadLang(lang, url) {
-        if (!(lang in this.#langData))
-        {
+    static async loadLang(lang, url, executeConfigsAndFireEvent = false) {
+        if (!(lang in this.#langData)) {
+            // todo: avoid doing this call in product json if locale not found
+            // todo: can't find a condition today, since language client library can be overlaid too
             const _langData = await HTTPAPILayer.getJson(url);
             if(_langData) {
                 console.debug("fetched language data", _langData);
                 this.#langData[lang] = _langData;
                 setCustomDefaultConstraintTypeMessages(_langData);
-                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, { "detail": lang });
+            }
+            if (executeConfigsAndFireEvent) {
+                await this.#executeLanguageConfigs(lang);
+                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, {"detail": lang});
                 document.dispatchEvent(event);
             }
         }
     }
 
     /**
-     * Returns the translated string for the given language
-     * @param lang      language
-     * @param key       key for which translation needs to be fetched
-     * @param snippets  comma separated list of template value
+     * Execute language-specific configuration functions for the given language.
+     * @param {string} lang - The language code for which to execute configurations.
+     * @private
+     * @static
+     * @async
+     */
+    static async #executeLanguageConfigs(lang) {
+        let functionConfigs = guideBridge.getConfigsForKey(guideBridge.ConfigKeys.LOCALE_CONFIG) || [];
+        functionConfigs = functionConfigs.map(configEntry => configEntry.fn).filter(fn => typeof fn === 'function');
+        for (const fn of functionConfigs) {
+            await fn(lang);
+        }
+    }
+
+
+
+    /**
+     * Returns the translated string for the given language and key.
+     * @param {string} lang - The language.
+     * @param {string} key - The key for which the translation needs to be fetched.
+     * @param {string[]} snippets - An array of template values.
+     * @returns {string} The translated string.
      */
     static getTranslatedString(lang, key, snippets) {
         let translatedText = "";
@@ -64,3 +100,5 @@ export default class LanguageUtils {
     }
 
 }
+
+export default LanguageUtils;

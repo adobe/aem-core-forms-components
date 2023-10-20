@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -40,10 +42,11 @@ import static org.junit.Assert.*;
 @ExtendWith(AemContextExtension.class)
 public class FormStructureParserImplTest {
     private static final String BASE = "/form/formstructparser";
-    private static final String CONTENT_ROOT = "/content/myTestPage";
-    private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/jcr:content";
+    private static final String CONTENT_ROOT = "/content";
+    private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/myTestPage/jcr:content";
 
     private static final String FORM_CONTAINER_PATH = JCR_CONTENT_PATH + "/formcontainerv2";
+    private static final String FRAGMENT_PATH = JCR_CONTENT_PATH + "/affragment";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -83,6 +86,12 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testFormContainerPathEmbedWithoutIframe() {
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
+        assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
     void testFormContainerPathInsideContainers() {
         String path = FORM_CONTAINER_PATH + "/container1";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
@@ -110,7 +119,7 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetClientLibRef() {
-        String path = CONTENT_ROOT;
+        String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals("abc", formStructureParser.getClientLibRefFromFormContainer());
 
@@ -121,7 +130,7 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetThemeClientLibRef() {
-        String path = CONTENT_ROOT;
+        String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals("def", formStructureParser.getThemeClientLibRefFromFormContainer());
 
@@ -150,5 +159,14 @@ public class FormStructureParserImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.getResource().adaptTo(FormStructureParser.class);
+    }
+
+    private FormStructureParser getFormStructureParserUnderTest(String resourcePath, String requestAttribute) {
+        context.currentResource(resourcePath);
+        MockSlingHttpServletRequest request = context.request();
+        if (StringUtils.isNotEmpty(requestAttribute)) {
+            request.setAttribute(FormConstants.REQ_ATTR_FORMCONTAINER_PATH, requestAttribute);
+        }
+        return request.adaptTo(FormStructureParser.class);
     }
 }

@@ -33,6 +33,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -48,9 +49,25 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
     protected String orientationJcr;
     private Orientation orientation;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String checkedValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String uncheckedValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean enableUncheckedValue;
+
     @PostConstruct
     private void initCheckBoxModel() {
         orientation = Orientation.fromString(orientationJcr);
+        if (!Type.BOOLEAN.equals(type)) {
+            if (Boolean.TRUE.equals(enableUncheckedValue)) {
+                enums = new String[] { checkedValue, uncheckedValue };
+            } else {
+                enums = new String[] { checkedValue };
+            }
+        }
     }
 
     @Override
@@ -67,4 +84,12 @@ public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
         return orientation;
     }
 
+    @Override
+    public Object[] getEnums() {
+        if (enums == null) {
+            return null;
+        } else {
+            return ComponentUtils.coerce(type, enums);
+        }
+    }
 }

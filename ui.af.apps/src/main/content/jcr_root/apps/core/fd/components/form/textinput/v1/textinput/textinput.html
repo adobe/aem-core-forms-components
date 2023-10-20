@@ -27,12 +27,18 @@
      data-cmp-is="adaptiveFormTextInput"
      data-cmp-visible="${text.visible ? 'true' : 'false'}"
      data-cmp-enabled="${text.enabled ? 'true' : 'false'}"
+     data-cmp-required="${text.required ? 'true': 'false'}"
+     data-cmp-readonly="${text.readOnly ? 'true' : 'false'}"
      id="${text.id}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=text.id, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[text.id, 'widget']}">
+    <div class="cmp-adaptiveform-textinput__label-container">
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=text.label.value, labelVisible=text.label.visible, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
+    </div>
     <textarea data-sly-test.useTextarea="${text.multiLine}"
               title="${text.tooltipVisible ? '' : text.tooltipText}"
-              aria-label="${text.label.visible && text.label.value}"
+              id="${widgetId}"
               class="cmp-adaptiveform-textinput__widget"
               name="${text.name}"
               data-cmp-data-layer="${text.data.json}"
@@ -45,7 +51,7 @@
     <input data-sly-test="${!useTextarea}"
            title="${text.tooltipVisible ? '' : text.tooltipText}"
            class="cmp-adaptiveform-textinput__widget"
-           aria-label="${text.label.visible && text.label.value}"
+           id="${widgetId}"
            type="text"
            name="${text.name}"
            data-cmp-data-layer="${text.data.json}"
@@ -56,7 +62,6 @@
            placeholder="${text.placeHolder}"
            minlength="${text.minLength}"
            maxlength="${text.maxLength}"/>
-    <div data-sly-call="${questionMark.questionMark @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=text.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>

@@ -19,6 +19,7 @@ Adaptive Form container written in HTL.
 
 ## Features
 * Form submit actions like sending emails, submit to rest end point
+* Pre-filling of Form
 * Configurable list of allowed components
 * Thank you page
 * Thank you message
@@ -50,6 +51,12 @@ It should be added to a relevant site client library using the `embed` property.
 The component provides a `core.forms.components.container.v2.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
+## Pre-filling of Form using Form Data Servlet
+
+The form is pre-filled based on the `fd:formDataEnabled` property, which is set when the prefill service is enabled or when the `dataRef` is provided in the request parameter.
+This approach is implemented to optimize performance by avoiding additional network call.
+
+
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-container
@@ -59,3 +66,5 @@ BLOCK cmp-adaptiveform-container
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform-container` block to enable initialization of the JavaScript component.
+
+Applying `data-cmp-adaptiveform-container-loader` attribute to the div specifically for applying the loader class on it, it is to ensure that the loading icon should not appear over components.

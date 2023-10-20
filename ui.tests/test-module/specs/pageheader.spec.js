@@ -24,7 +24,7 @@ describe('Page - Authoring', function () {
     // we can use these values to log in
 
 const dropPageHeaderInContainer = function() {
-    const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/parsys1/*", 
+    const responsiveGridDropZone = "/content/forms/af/core-components-it/blank/jcr:content/container1/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, "Header", afConstants.components.forms.resourceType.pageheader);
@@ -45,6 +45,7 @@ context('Drag drop the pageheader', function() {
     pageheaderDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop(),
     imageDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/image',
     textDrop = pagePath + afConstants.FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.pageheader.split("/").pop()+'/text';
+
     beforeEach(function () {
         // this is done since cypress session results in 403 sometimes
         cy.openAuthoring(pagePath);
@@ -55,16 +56,13 @@ context('Drag drop the pageheader', function() {
         cy.deleteComponentByPath(pageheaderDrop);
     });
 
-    it('deleting image from the pageheader', function () {
+    it('deleting image and text from the pageheader', function () {
         dropPageHeaderInContainer();
         cy.deleteComponentByPath(imageDrop);
+        cy.deleteComponentByPath(textDrop);
+        cy.deleteComponentByPath(pageheaderDrop);
     });
 
-    it('deleting text from the pageheader', function () {
-        dropPageHeaderInContainer();
-        cy.deleteComponentByPath(textDrop);
-    });
-    
      // no edit dialogue for text editor, no test for that
     })
 

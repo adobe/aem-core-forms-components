@@ -103,8 +103,43 @@ describe("Form Runtime with Telephone Input", () => {
         cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.text', 'validation picture clause error message!');
     });
 
+    it("Validate different validation patterns", () => {
+        const internationalInvalid = '+123456789012345',
+            UkInvalid = '+123';
+        // Validating international pattern
+        const [telephoneInput6, fieldView] = Object.entries(formContainer._fields)[5];
+        cy.get(`#${telephoneInput6}`).find("input").clear().type(internationalInvalid).blur().then(() => {
+            cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.text', 'Please match the format requested.');
+        })
+        // Validating UK pattern
+        const [telephoneInput7, fieldView1] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${telephoneInput7}`).find("input").clear().type(UkInvalid).blur().then(() => {
+            cy.get(`#${telephoneInput7} > div.${bemBlock}__errormessage`).should('have.text', 'Please match the format requested.');
+        })
+    });
+
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[0]
+      const model = formContainer._model.getElement(id)
+      const input = "value";
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+          expect(model.getState().value).to.equal(input);
+          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--filled');
+      });
+    });
 })

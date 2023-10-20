@@ -18,6 +18,10 @@ describe("Form with Wizard Container", () => {
     const bemBlock = 'cmp-tabs';
     let formContainer = null;
 
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
@@ -55,6 +59,7 @@ describe("Form with Wizard Container", () => {
                 })
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("testing max instance addition", () => {
@@ -69,6 +74,7 @@ describe("Form with Wizard Container", () => {
                 getWizardPanels().should('have.length', length);
             })
         }
+        cy.expectNoConsoleErrors();
     })
 
     it("test repeatedTab instance html", () => {
@@ -84,6 +90,7 @@ describe("Form with Wizard Container", () => {
             getWizardPanelAtIndex(1).should('have.attr', 'aria-labelledby');
             getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in tab", () => {
@@ -106,6 +113,7 @@ describe("Form with Wizard Container", () => {
                 getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
             })
         })
+        cy.expectNoConsoleErrors();
     })
 
     it("test addedPanel position when inserted at first position in instanceManager", () => {
@@ -127,6 +135,7 @@ describe("Form with Wizard Container", () => {
             })
 
         })
+        cy.expectNoConsoleErrors();
     })
 
 
@@ -159,8 +168,8 @@ describe('visibility of navigation buttons', function () {
     }
 
     it("navigating start to end to start", () => {
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             wizardItems = formContainer._model.items[0].items;
 
         const wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';
@@ -196,8 +205,8 @@ describe('visibility of navigation buttons', function () {
         const textInputId = formContainer._model.items[1].id;
         const wizardItems = formContainer._model.items[0].items;
 
-        const previousNavButton = '.cmp-adaptiveform-wizard__previousNav',
-            nextNavButton = '.cmp-adaptiveform-wizard__nextNav',
+        const previousNavButton = '.cmp-adaptiveform-wizard__nav--previous',
+            nextNavButton = '.cmp-adaptiveform-wizard__nav--next',
             driverTextInput = '.cmp-adaptiveform-textinput__widget',
             wizardTabActive = 'cmp-adaptiveform-wizard__tab--active',
             wizardPanelActive = 'cmp-adaptiveform-wizard__wizardpanel--active';

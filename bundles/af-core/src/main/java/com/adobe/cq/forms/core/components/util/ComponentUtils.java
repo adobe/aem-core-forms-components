@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -30,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
@@ -61,7 +64,7 @@ public class ComponentUtils {
 
     /**
      * Checks if the given resource if a core adaptive form container
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return true, if it is an adaptive form container, false otherwise
      */
@@ -73,7 +76,7 @@ public class ComponentUtils {
 
     /**
      * Returns the form container resource
-     * 
+     *
      * @param resource reference to the {@link Resource}
      * @return form container resource, null if no form container found
      */
@@ -89,7 +92,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property
@@ -105,7 +108,7 @@ public class ComponentUtils {
 
     /**
      * Translates the given property as per the {@link I18n} object passed
-     * 
+     *
      * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
      *            index)
      * @param propertyName name of the property
@@ -129,7 +132,6 @@ public class ComponentUtils {
      * @param date date
      * @return clone of date object
      */
-    @NotNull
     public static Date clone(@Nullable Date date) {
         return Optional.ofNullable(date)
             .map(Date::getTime)
@@ -164,6 +166,18 @@ public class ComponentUtils {
             policy = policyManager.getPolicy(contentResource);
         }
         return policy;
+    }
+
+    public static Resource getFragmentContainer(ResourceResolver resourceResolver, @NotNull String fragmentPath) {
+        String fragmentRef = fragmentPath;
+        if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
+        }
+        return resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+    }
+
+    public static boolean isFragmentComponent(Resource resource) {
+        return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
     }
 
 }
