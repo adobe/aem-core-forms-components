@@ -271,7 +271,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getLanguageDirection() {
-        return GuideUtils.getLanguageDirection(getLang());
+        return "ltr";
+        //return GuideUtils.getLanguageDirection(getLang());
     }
 
     @Override
