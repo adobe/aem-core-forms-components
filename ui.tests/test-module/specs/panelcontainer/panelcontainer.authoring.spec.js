@@ -94,11 +94,22 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(panelEditPath);
         });
 
-        it('open edit dialog of Panel', { retries: 3 },function () {
-            cy.cleanTest(panelEditPath).then(function() {
-                testPanelBehaviour(panelContainerPathSelector, panelEditPath);
-            });
-        })
+        it('open edit dialog of Panel', function () {
+            testPanelBehaviour(panelContainerPathSelector, panelEditPath);
+        });
+
+        it('check rich text support for label', function(){
+            dropPanelInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+            // check rich text selector and see if RTE is visible.
+            cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+            cy.get("div[name='richTextTitle']").should('be.visible');
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(panelEditPath);
+        });
     })
 
     context('Open Sites Editor', function () {

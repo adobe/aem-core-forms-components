@@ -304,6 +304,17 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * API to give direction of content in HTML for a given language.
+     *
+     * @return one of the constants "rtl" or "ltr" depending on direction of given language
+     * @since com.adobe.cq.forms.core.components.models.form 4.5.0
+     */
+    @JsonIgnore
+    default String getLanguageDirection() {
+        return "ltr";
+    }
+
+    /**
      * Returns the redirect url after form submission
      *
      * @return the redirect url of the form

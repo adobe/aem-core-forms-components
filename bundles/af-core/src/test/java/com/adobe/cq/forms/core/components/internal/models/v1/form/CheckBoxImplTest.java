@@ -27,12 +27,8 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -307,6 +303,16 @@ public class CheckBoxImplTest {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertArrayEquals(new String[] { "on", "off" }, checkbox.getEnums());
 
+    }
+
+    @Test
+    void testGetNullEnumNames() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertNull(checkbox.getEnumNamesAsTextContent());
+        assertNull(checkbox.getEnumNames());
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnumNamesAsTextContent());
+        assertNull(noEnumCheckbox.getEnumNames());
     }
 
     @Test

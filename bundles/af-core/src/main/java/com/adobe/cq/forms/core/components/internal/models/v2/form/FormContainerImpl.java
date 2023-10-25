@@ -270,6 +270,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    public String getLanguageDirection() {
+        return GuideUtils.getLanguageDirection(getLang());
+    }
+
+    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         if (getSchemaType() != null) {
