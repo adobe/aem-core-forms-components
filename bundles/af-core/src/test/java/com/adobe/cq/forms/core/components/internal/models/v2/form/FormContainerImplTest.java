@@ -410,7 +410,7 @@ public class FormContainerImplTest {
     @Test
     public void testGetLanguageDirection() throws Exception {
         FormContainer formContainer = getFormContainerWithRTLLocaleUnderTest(PATH_FORM_1);
-        //assertEquals("rtl", formContainer.getLanguageDirection());
+        // assertEquals("rtl", formContainer.getLanguageDirection());
 
         FormContainer formContainerLtr = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         assertEquals("ltr", formContainer.getLanguageDirection());
