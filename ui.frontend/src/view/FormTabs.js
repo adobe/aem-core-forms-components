@@ -494,6 +494,15 @@ class FormTabs extends FormPanel {
     }
 
     /**
+     * Gets the cached toolbar.
+     * @returns {NodeList} The cached toolbar.
+     * @private
+     */
+    #getCachedToolbar() {
+        return this._elements["toolbar"];
+    }
+
+    /**
      * Adds unique HTML for an added instance corresponding to the requirements of different types of repeatable parents.
      * @param {Object} instanceManager - The instance manager of the repeated component.
      * @param {Object} addedModel - The added model of the repeated component.
@@ -544,8 +553,10 @@ class FormTabs extends FormPanel {
      * @override
      */
     getChildViewByIndex(index) {
-        var allTabPanels = this.#getCachedTabPanels();
-        var fieldId = allTabPanels[index].id.substring(0, allTabPanels[index].id.lastIndexOf("__"));
+        let allTabPanels = this.#getCachedTabPanels();
+        let toolbar = this.#getCachedToolbar();
+        let allChildren = toolbar ? allTabPanels.concat(toolbar) : allTabPanels;
+        let fieldId = allChildren[index].id.substring(0, allChildren[index].id.lastIndexOf("__"));
         return this.getChild(fieldId);
     }
 

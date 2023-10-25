@@ -187,7 +187,7 @@ class FormFieldBase extends FormField {
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+            this.parentView.setFocus(this.getId());
         }
         this.getWidget().focus();
     }
