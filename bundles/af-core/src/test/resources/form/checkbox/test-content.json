@@ -39,6 +39,7 @@
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
     "type" : "string",
+    "enum" : [true, false],
     "fieldType": "checkbox",
     "checkedValue":  "yes",
     "uncheckedValue": "no",

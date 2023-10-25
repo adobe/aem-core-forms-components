@@ -206,35 +206,6 @@
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
                 </panelcontainer>
-                <switch jcr:primaryType="nt:unstructured">
-                    <default
-                            jcr:lastModified="{Date}2023-10-05T12:36:42.398+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Switch-label-visibility-policy"
-                            cq:styleDefaultClasses="cmp-adaptiveform-switch__hide-labels"
-                            sling:resourceType="wcm/core/components/policy/policy">
-                        <jcr:content jcr:primaryType="nt:unstructured"/>
-                        <cq:styleGroups jcr:primaryType="nt:unstructured">
-                            <item0
-                                    cq:styleGroupLabel="Hide labels"
-                                    jcr:primaryType="nt:unstructured">
-                                <cq:styles jcr:primaryType="nt:unstructured">
-                                    <item0
-                                            cq:styleClasses="cmp-adaptiveform-switch__hide-labels"
-                                            cq:styleId="1696489484081"
-                                            cq:styleLabel="Hide Labels"
-                                            jcr:primaryType="nt:unstructured"/>
-                                    <item1
-                                            cq:styleClasses="cmp-adaptiveform-switch__unhide-labels"
-                                            cq:styleId="1696489594671"
-                                            cq:styleLabel="Unhide Labels"
-                                            jcr:primaryType="nt:unstructured"/>
-                                </cq:styles>
-                            </item0>
-                        </cq:styleGroups>
-                    </default>
-                </switch>
             </form>
             <page jcr:primaryType="nt:unstructured">
                 <default

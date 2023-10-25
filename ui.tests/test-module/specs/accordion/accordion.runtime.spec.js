@@ -200,7 +200,6 @@ describe("Form with Accordion Layout Container with focus", () => {
 
             cy.get(`#${firstChildComponentButtonId}`).then(() => {
                 formContainer.setFocus(id);
-                cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
                 cy.get(`#${firstChildComponentButtonId}`).then(() => {
                     // panel 1 active
                     cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');

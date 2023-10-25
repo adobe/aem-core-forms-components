@@ -9,12 +9,8 @@
   "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
-    {
-      "value": "Cat Person"
-    },
-    {
-      "value": "Dog Person"
-    }
+    "Cat Person",
+    "Dog Person"
   ],
   "label": {
     "value": "Personality"

@@ -26,7 +26,8 @@
   },
   "properties": {
     "afs:layout": {
-      "tooltipVisible": false
+      "tooltipVisible": false,
+      "orientation": "horizontal"
     },
     "fd:dor": {
       "dorExclusion": false

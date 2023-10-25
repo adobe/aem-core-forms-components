@@ -668,13 +668,3 @@ Cypress.Commands.add("expectNoConsoleErrors", () => {
     });
 });
 
-Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
-    const rect = subject[0].getBoundingClientRect();
-  
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= Cypress.config("viewportHeight") &&
-      rect.right <= Cypress.config("viewportWidth")
-    );
-  });
