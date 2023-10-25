@@ -66,7 +66,7 @@
                                             </type>
                                             <!--<enumOptions jcr:primaryType="nt:unstructured"
                                               sling:hideResource="{Boolean}true" />-->
-                                            <enumsCustom jcr:primaryType="nt:unstructured"
+                                            <enums_123 jcr:primaryType="nt:unstructured"
                                               sling:resourceType="granite/ui/components/coral/foundation/container"
                                               granite:class="cmp-adaptiveform-checkbox__enums">
                                                 <items jcr:primaryType="nt:unstructured">
@@ -81,7 +81,7 @@
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/switch"
                                                   wrapperClass="cmp-adaptiveform-checkbox__enable-unchecked-value"
                                                   name="./enableUncheckedValue"
-                                                  fieldLabel="Preserve Uncheck state value."
+                                                  fieldLabel="Enable Uncheck."
                                                   fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
                                                   uncheckedValue="false"
                                                   value="true">
@@ -98,7 +98,7 @@
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                   name="./uncheckedValue"/>
                                                 </items>
-                                            </enumsCustom>
+                                            </enums_123>
                                             <defaultValue
                                               wrapperClass="cmp-adaptiveform-checkbox__value"
                                               jcr:primaryType="nt:unstructured"

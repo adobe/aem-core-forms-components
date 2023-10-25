@@ -13,8 +13,8 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-/* global jQuery, Coral, Granite */
-(function ($, Coral, Granite) {
+/* global jQuery, Coral */
+(function ($, Coral) {
     var initQueryParametersTab = function () {
         var btn = $('.cmp-formsportal-link--editor-parameters > ._coral-Button')[0];
         var multifield = $('.cmp-formsportal-link--editor-parameters')[0];
@@ -25,7 +25,7 @@
                 // overrides the default multi-field button
                 btn.set({
                     label: {
-                        innerHTML: Granite.I18n.get("Add Item")
+                        innerHTML: "Add Item"
                     },
                     icon: "add"
                 });
@@ -48,4 +48,4 @@
     $(document).on("dialog-ready", function () {
         initQueryParametersTab();
     });
-}(jQuery, Coral, Granite));
+}(jQuery, Coral));
