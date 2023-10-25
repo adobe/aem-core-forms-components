@@ -44,8 +44,8 @@
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
         'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
 
-    const cannotBeReplacedWith = ['file-input', 'checkbox'],
-        irreplaceable = ['file-input', 'checkbox'],
+    const cannotBeReplacedWith = ['file-input', 'checkBox'],
+        irreplaceable = ['file-input'],
         editableJsonPath = '.model.json',
         componentJsonPath = '.json';
 

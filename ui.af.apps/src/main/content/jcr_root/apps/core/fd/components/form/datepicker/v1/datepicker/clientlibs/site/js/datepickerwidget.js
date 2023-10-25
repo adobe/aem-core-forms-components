@@ -1075,9 +1075,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #localizeDateElements(defaultOptions, locale) {
         var calendarSymbols = FormView.LanguageUtils.getTranslatedString(locale, "calendarSymbols");
-        defaultOptions.locale.days = calendarSymbols.abbrdayNames;
-        defaultOptions.locale.months = calendarSymbols.monthNames;
-        defaultOptions.locale.clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
+        if (calendarSymbols && calendarSymbols.abbrdayNames) {
+            defaultOptions.locale.days = calendarSymbols.abbrdayNames;
+        }
+        if (calendarSymbols && calendarSymbols.abbrdayNames) {
+            defaultOptions.locale.months = calendarSymbols.monthNames;
+        }
+        var clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
+        if (clearText) {
+            defaultOptions.locale.clearText = clearText;
+        }
     }
 
     #isEditValueOrDisplayValue(value) {

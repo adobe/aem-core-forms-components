@@ -32,6 +32,12 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <richTextTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="true"/>
+                                            <isTitleRichText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="true"/>
                                             <hideTitle
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="true"/>

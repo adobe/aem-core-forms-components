@@ -162,8 +162,40 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
+    it('check rich text support for label', function(){
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("div[name='richTextTitle']").should('not.be.visible');
 
-  })
+        // check rich text selector and see if RTE is visible for title.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView();
+        cy.get("div[name='richTextTitle']").should('be.visible');
+
+        // check rich text selector and see if RTE is visible for enum names.
+        cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
+        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+        cy.get("div[name='richTextEnumNames']").then(($el) => {
+            $el[0].scrollIntoView();
+        })
+        cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
+        cy.get("div[name='richTextEnumNames']").first().should('be.visible');
+        cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
+        cy.get('.cq-dialog-submit').click();
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+    });
+
+    it('check rich text inline editor is present', function(){
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get(".rte-toolbar").should('be.visible');
+        cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
+  });
 /*
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",
