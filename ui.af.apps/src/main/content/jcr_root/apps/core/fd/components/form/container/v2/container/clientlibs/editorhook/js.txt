@@ -22,3 +22,5 @@ dorhook.js
 copypastehook.js
 toolbaractionhook.js
 addpaneltoolbarhook.js
+qualifiedNameHook.js
+

@@ -108,6 +108,9 @@ public final class FormConstants {
 
     public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX + "fragmentcontainer/v1/fragmentcontainer";
 
+    /** The resource type for terms and conditions v1 */
+    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX + "termsandconditions/v1/termsandconditions";
+
     public static final String FORM_FIELD_TYPE = "form";
 
     public static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";

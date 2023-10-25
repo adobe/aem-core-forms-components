@@ -36,10 +36,15 @@
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 text="Replace"/>
+        <qualifiedName
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
+                icon="viewSOMExpression"
+                text="View Qualified Name"/>
         <addpaneltoolbar
-            jcr:primaryType="nt:unstructured"
-            handler="CQ.FormsCoreComponents.editorhooks.addPanelToolbar"
-            icon="addPanelToolbar"
-            text="Add Panel Toolbar"/>
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.addPanelToolbar"
+                icon="addPanelToolbar"
+                text="Add Panel Toolbar"/>
     </cq:actionConfigs>
 </jcr:root>

@@ -37,10 +37,10 @@
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 icon="shuffle"
                 text="Replace"/>
-        <addpaneltoolbar
-            jcr:primaryType="nt:unstructured"
-            handler="CQ.FormsCoreComponents.editorhooks.addPanelToolbar"
-            icon="addPanelToolbar"
-            text="Add Panel Toolbar"/>
+        <qualifiedName
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
+                icon="viewSOMExpression"
+                text="View Qualified Name"/>
     </cq:actionConfigs>
 </jcr:root>
