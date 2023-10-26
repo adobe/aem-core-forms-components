@@ -74,11 +74,6 @@
                     <embeddedTarget>/apps/bundles/install</embeddedTarget>
                     <embeddeds>
                         <embedded>
-                            <groupId>com.adobe.cq</groupId>
-                            <artifactId>core.wcm.components.core</artifactId>
-                            <filter>true</filter>
-                        </embedded>
-                        <embedded>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-core</artifactId>
                             <filter>true</filter>
@@ -115,10 +110,6 @@
     <!-- D E P E N D E N C I E S                                                -->
     <!-- ====================================================================== -->
     <dependencies>
-        <dependency>
-            <groupId>com.adobe.cq</groupId>
-            <artifactId>core.wcm.components.core</artifactId>
-        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>core-forms-components-core</artifactId>
