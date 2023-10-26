@@ -25,7 +25,7 @@
         jcr:title="Back"
         buttonType="back"
         fieldType="button"
-        sling:resourceType="core/fd/components/form/actions/nextitemnav/v1/previtemnav"
+        sling:resourceType="core/fd/components/form/actions/previtemnav/v1/previtemnav"
         type="button">
         <fd:rules jcr:primaryType="nt:unstructured"/>
         <fd:events

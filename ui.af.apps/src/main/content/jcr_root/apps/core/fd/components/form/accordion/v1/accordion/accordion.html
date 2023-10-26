@@ -85,7 +85,8 @@
         <sly data-sly-test="${accordion.exportedItems[item].FDToolbar}">
             <div data-sly-resource="${item @ decorationTagName='div'}"
                  id="${accordion.exportedItems[item].id}-panel"
-                 role="${accordion.exportedItems[item].role}">
+                 role="${accordion.exportedItems[item].role}"
+                 data-cmp-hook-adaptiveFormAccordion="toolbar">
             </div>
         </sly>
     </sly>

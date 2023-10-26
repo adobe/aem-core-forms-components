@@ -41,7 +41,8 @@
         static cacheKeys = {
             buttonKey: "button",
             panelKey: "panel",
-            itemKey: "item"
+            itemKey: "item",
+            toolbar: "toolbar"
         }
 
         static cssClasses = {
@@ -491,8 +492,10 @@
         }
 
         getChildViewByIndex(index) {
-            var accordionPanels = this.#getCachedPanels();
-            var fieldId = accordionPanels[index].id.substring(0, accordionPanels[index].id.lastIndexOf("-"));
+            let accordionPanels = this.#getCachedPanels();
+            let toolbar = this.#getCachedToolbar();
+            let allChildren = toolbar ? accordionPanels.concat(toolbar) : accordionPanels;
+            var fieldId = allChildren[index].id.substring(0, allChildren[index].id.lastIndexOf("-"));
             return this.getChild(fieldId);
         }
 
@@ -586,6 +589,11 @@
         #getCachedButtons() {
             return this._elements[Accordion.cacheKeys.buttonKey]
         }
+
+        #getCachedToolbar() {
+            return this._elements[Accordion.cacheKeys.toolbar];
+        }
+
 
         #getItemById(itemId) {
             var items = this.#getCachedItems();

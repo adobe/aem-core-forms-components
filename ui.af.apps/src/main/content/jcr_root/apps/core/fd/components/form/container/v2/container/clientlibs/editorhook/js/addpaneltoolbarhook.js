@@ -22,20 +22,11 @@
      */
      window.CQ.FormsCoreComponents.editorhooks.addPanelToolbar = function (panel) {
         if(!containsToolbarChild(panel)) {
-            console.log(panel);
-            /*
-            let toolbarJson = {
-                'sling:resourceType'    :   'forms-components-examples/components/form/toolbar',
-                'jcr:title'             :   'Toolbar',
-                'name'                  :   'toolbar'
-            }
-            */
-
             // fetch cq:template toolbarJson
-
+            // TODO: cq:template path needs to be changed to /libs once part of far
             let toolbarJson = $.ajax({
                 type: 'GET',
-                url : '/apps/forms-components-examples/components/form/toolbar/cq:template.-1.json',
+                url : '/apps/core/fd/components/form/toolbar/v1/toolbar/cq:template.-1.json',
                 async: false
             }).responseJSON;
 
@@ -47,12 +38,8 @@
                 ':replaceProperties' : true
             };
 
-            // const options = {
-            //     './@CopyFrom' : '/apps/forms-components-examples/components/toolbar/cq:template',
-            //     './sling:resourceType' : 'forms-components-examples/components/form/toolbar'
-            // };
-
-            let result = $.ajax({
+            // creating toolbar
+           $.ajax({
                 type: 'POST',
                 async: false,
                 data: options,
