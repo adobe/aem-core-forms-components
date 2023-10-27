@@ -105,6 +105,14 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="family-name"
                                                             value="family-name"/>
+                                                    <organization
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="organization"
+                                                            value="organization"/>
+                                                    <organization-title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="organization-title"
+                                                            value="organization-title"/>
                                                     <address-line1
                                                             jcr:primaryType="nt:unstructured"
                                                             text="address-line1"
@@ -113,6 +121,10 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="address-line2"
                                                             value="address-line2"/>
+                                                    <address-line3
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-line3"
+                                                            value="address-line3"/>
                                                     <address-level1
                                                             jcr:primaryType="nt:unstructured"
                                                             text="address-level1"
@@ -121,14 +133,38 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="address-level2"
                                                             value="address-level2"/>
+                                                    <address-level3
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-level3"
+                                                            value="address-level3"/>
+                                                    <address-level4
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="address-level4"
+                                                            value="address-level4"/>
                                                     <country
                                                             jcr:primaryType="nt:unstructured"
                                                             text="country"
                                                             value="country"/>
+                                                    <country-name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="country-name"
+                                                            value="country-name"/>
                                                     <cc-name
                                                             jcr:primaryType="nt:unstructured"
                                                             text="cc-name"
                                                             value="cc-name"/>
+                                                    <cc-given-name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-given-name"
+                                                            value="cc-given-name"/>
+                                                    <cc-additional-name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-additional-name"
+                                                            value="cc-additional-name"/>
+                                                    <cc-family-name
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="cc-family-name"
+                                                            value="cc-family-name"/>
                                                     <cc-number
                                                             jcr:primaryType="nt:unstructured"
                                                             text="cc-number"
