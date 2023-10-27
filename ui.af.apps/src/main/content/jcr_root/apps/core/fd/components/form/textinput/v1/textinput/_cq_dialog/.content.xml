@@ -58,7 +58,6 @@
                                                     text="Allow multiple lines"
                                                     value="true"/>
                                             <autocomplete
-                                                    wrapperClass="cmp-adaptiveform-textinput__autofillfieldkeyword"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
                                                     fieldLabel="Autofill attribute"
