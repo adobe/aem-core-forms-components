@@ -99,16 +99,17 @@ try {
         if (AEM === 'classic' || AEM === 'classic-latest') {
             // add a sleep for 10 mins, add-on takes times to come up
             ci.sh(`sleep 10m`);
+            ci.sh("ps -ef | grep java");
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
+            ci.sh(`sleep 1m`);
+            ci.sh(`./qp.sh kill --id author`);
+            ci.sh("ps -ef | grep java");
+            ci.sh(`sleep 1m`);
             ci.sh(`./qp.sh start --id author`);
-            // add a sleep for 5 mins, add-on takes times to come up
-            ci.sh(`sleep 5m`);
-            // restart the AEM insatnce
-            ci.sh(`./qp.sh stop --id author`);
-            ci.sh(`./qp.sh start --id author`);
-            // add a sleep for 5 mins, add-on takes times to come up
-            ci.sh(`sleep 5m`);
+            ci.sh("ps -ef | grep java");
+            // add a sleep for 10 mins, add-on takes times to come up
+            ci.sh(`sleep 10m`);
         }
 });
 
