@@ -104,6 +104,11 @@ try {
             ci.sh(`./qp.sh start --id author`);
             // add a sleep for 5 mins, add-on takes times to come up
             ci.sh(`sleep 5m`);
+            // restart the AEM insatnce
+            ci.sh(`./qp.sh stop --id author`);
+            ci.sh(`./qp.sh start --id author`);
+            // add a sleep for 5 mins, add-on takes times to come up
+            ci.sh(`sleep 5m`);
         }
 });
 
