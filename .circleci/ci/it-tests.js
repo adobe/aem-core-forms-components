@@ -103,10 +103,7 @@ try {
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
             ci.sh(`sleep 1m`);
-            ci.sh(`./qp.sh kill --id author`);
-            ci.sh("ps -ef | grep java");
-            ci.sh(`sleep 1m`);
-            ci.sh(`./qp.sh start --id author`);
+            ci.sh(`./qp.sh start --vm-options '-Xmx4096m' --id author `);
             ci.sh("ps -ef | grep java");
             // add a sleep for 10 mins, add-on takes times to come up
             ci.sh(`sleep 10m`);
