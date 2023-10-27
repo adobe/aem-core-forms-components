@@ -72,6 +72,11 @@ class FormTabs extends FormPanel {
      */
     #tabPanelIdSuffix = "__tabpanel";
     /**
+     * Suffix for toolbar IDs.
+     * @type {string}
+     */
+    #toolbarIdSuffix = "__toolbar";
+    /**
      * Template HTML object.
      * @type {object}
      */
@@ -329,6 +334,22 @@ class FormTabs extends FormPanel {
     }
 
     /**
+     * Synchronizes tab toolbar
+     * Updates the ID and aria-labelledby attribute toolbar.
+     * @private
+     */
+    #syncTabToolbar() {
+        let toolbar = this.#getCachedToolbar();
+        if (toolbar) {
+            toolbar.forEach((element) => {
+                let childViewId = element.querySelectorAll("[data-cmp-is]")[0].id
+                element.id = childViewId + this.#toolbarIdSuffix;
+                element.setAttribute("aria-labelledby", childViewId + this.#toolbarIdSuffix);
+            })
+        }
+    }
+
+    /**
      * Synchronizes the markup with the component model.
      * Calls the syncMarkupWithModel method of the superclass.
      * Calls #syncTabLabels and #syncTabPanels methods.
@@ -337,6 +358,7 @@ class FormTabs extends FormPanel {
         super.syncMarkupWithModel();
         this.#syncTabLabels();
         this.#syncTabPanels();
+        this.#syncTabToolbar();
     }
 
     /**

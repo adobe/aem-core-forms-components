@@ -84,7 +84,7 @@
          data-sly-repeat="${accordion.exportedItems}">
         <sly data-sly-test="${accordion.exportedItems[item].FDToolbar}">
             <div data-sly-resource="${item @ decorationTagName='div'}"
-                 id="${accordion.exportedItems[item].id}-panel"
+                 id="${accordion.exportedItems[item].id}-toolbar"
                  role="${accordion.exportedItems[item].role}"
                  data-cmp-hook-adaptiveFormAccordion="toolbar">
             </div>

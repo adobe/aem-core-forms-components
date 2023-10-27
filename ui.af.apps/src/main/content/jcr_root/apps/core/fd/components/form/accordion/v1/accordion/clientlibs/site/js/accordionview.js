@@ -35,7 +35,8 @@
         static idSuffixes = {
             item: "-item",
             button: "-button",
-            panel: "-panel"
+            panel: "-panel",
+            toolbar: "-toolbar"
         }
 
         static cacheKeys = {
@@ -483,12 +484,24 @@
           }
         }
 
+        #syncAccordionToolbar() {
+            let toolbar = this.#getCachedToolbar();
+            if(toolbar) {
+                toolbar.forEach((element) => {
+                    let childViewId = element.querySelectorAll("[data-cmp-is]")[0].id
+                    element.id = childViewId + Accordion.idSuffixes.toolbar;
+                    element.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.toolbar);
+                })
+            }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
+            this.#syncAccordionToolbar();
         }
 
         getChildViewByIndex(index) {
