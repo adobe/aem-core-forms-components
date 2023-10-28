@@ -20,6 +20,7 @@ const commons = require('../../libs/commons/commons'),
     sitesConstants = require('../../libs/commons/sitesConstants'),
     guideSelectors = require('../../libs/commons/guideSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const {recurse} = require("cypress-recurse");
 
 /**
  * Testing Tabs on top Container with Sites Editor
@@ -83,6 +84,50 @@ describe.only('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsContainerDrop);
     }
 
+    const insertComponentCE = function (componentString, componentType) {
+        const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
+            insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
+        cy.get("[data-cmp-hook-childreneditor='add']").click();
+        recurse(
+            // the commands to repeat, and they yield the input element
+            () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+            // the predicate takes the output of the above commands
+            // and returns a boolean. If it returns true, the recursion stops
+            ($input) => $input.val() === componentString,
+        )
+        cy.get(insertComponentDialog_searchField).type('{enter}');
+        cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
+        // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
+        cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+    }
+
+    const addComponentsUsingChildrenEditor = function (componentEditPath) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPath);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        //open Items tab
+        cy.get('.cmp-adaptiveform-base__editdialogbasic').contains('Items').click({force:true});
+        insertComponentCE("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+        cy.get(".cmp-childreneditor__item-title").eq(0)
+            .type("Text Input 123");
+
+        insertComponentCE("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+        cy.get(".cmp-childreneditor__item-title").eq(1)
+            .type("Panel 123");
+        cy.get(".cq-dialog-submit").click();
+    }
+
+    const testComponentAddedUsingChildEditor = function (componentEditPath) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPath);
+        cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
+            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+            // In select panel, text will be in format : <component type>: <title>
+            cy.get("table.cmp-panelselector__table tr").eq(0)
+                .should("contain.text", "Adaptive Form Text Box: Text Input 123");
+            cy.get("table.cmp-panelselector__table tr").eq(1)
+                .should("contain.text", "Adaptive Form Panel: Panel 123");
+        })
+    }
+
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             tabsPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/tabsontop",
@@ -117,6 +162,10 @@ describe.only('Page - Authoring', function () {
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table tr").eq(0)
+                        .should("contain.text", "Adaptive Form Text Box: Text Input");
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Date Picker: Date Input");
                     const datePickerPath = tabsPath + "/datepicker";
                     cy.get(`[data-id="${datePickerPath}`).click().then(() => {
                         cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');
@@ -125,6 +174,17 @@ describe.only('Page - Authoring', function () {
                 })
             });
         });
+
+        it('add element using children editor', function() {
+            dropTabsInContainer();
+            addComponentsUsingChildrenEditor(tabsContainerPathSelector)
+            // Validating title in the next test as due to frame brusting tests becomes flaky
+        })
+
+        it("test component added using childeditor", function() {
+           testComponentAddedUsingChildEditor(tabsContainerPathSelector)
+            cy.deleteComponentByPath(tabsPath);
+        })
 
         it('open edit dialog of Tab on top', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
@@ -155,5 +215,18 @@ describe.only('Page - Authoring', function () {
             });
         });
 
+        it('add element using children editor', function() {
+            dropTabsInSites();
+            addComponentsUsingChildrenEditor(tabsEditPathSelector);
+            // Validating title in the next test as due to frame brusting tests becomes flaky
+        })
+
+        it("test component added using childreneditor", function() {
+            testComponentAddedUsingChildEditor(tabsEditPathSelector)
+            cy.get("[data-type='Editable']" + tabsEditPathSelector).scrollIntoView()
+                .should('be.visible')
+                .click();
+            cy.deleteComponentByPath(panelContainerEditPath);
+        })
     });
 });

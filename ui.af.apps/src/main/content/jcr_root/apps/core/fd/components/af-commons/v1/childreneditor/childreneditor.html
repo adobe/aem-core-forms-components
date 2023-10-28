@@ -1,0 +1,68 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2018 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<!-- This code snippet is extended from wcm repo :
+    https://github.com/adobe/aem-core-wcm-components/blob/main/content/src/content/jcr_root/apps/core/wcm/components/commons/editor/dialog/childreneditor/v1/childreneditor/childreneditor.html -->
+<coral-multifield data-sly-use.childrenEditor="com.adobe.cq.wcm.core.components.commons.editor.dialog.childreneditor.Editor"
+                  data-sly-use.iconTemplate="icon.html"
+                  data-cmp-is="childrenEditor"
+                  class="cmp-childreneditor"
+                  data-container-path = "${childrenEditor.container.path}">
+    <coral-multifield-item data-sly-repeat.item="${childrenEditor.items}" data-name="${item.name}">
+        <div class="cmp-childreneditor__item">
+            <coral-icon data-sly-test.isLiveCopy="${item.isLiveCopy}"
+                        class="coral-Form-fieldinfo coral3-Icon coral3-Icon--infoCircle coral3-Icon--sizeS"
+                        icon="infoCircle"
+                        tabindex="0"
+                        size="S"
+                        role="img"
+                        aria-label="description"></coral-icon>
+            <coral-tooltip data-sly-test="${isLiveCopy}"
+                           target="_prev"
+                           placement="right"
+                           class="coral3-Tooltip coral3-Tooltip--info coral3-Tooltip--arrowLeft"
+                           aria-hidden="true"
+                           variant="info"
+                           tabindex="-1"
+                           role="tooltip"
+                           style="z-index: 10020; max-width: 1070px; left: 205px; top: -3px;">
+                <coral-tooltip-content>You have to cancel the inheritance for the panel in order to change its title.</coral-tooltip-content>
+            </coral-tooltip>
+            <sly data-sly-call="${iconTemplate.icon @ item=item}"></sly>
+            <input is="coral-textfield"
+                   class="cmp-childreneditor__item-title"
+                   data-cmp-hook-childreneditor="itemTitle"
+                   name="./${item.name}/jcr:title"
+                   value="${item.value}"
+                   data-sly-attribute.disabled="${item.isLiveCopy}"
+                   placeholder="${item.title}" required>
+        </div>
+    </coral-multifield-item>
+    <input type="hidden" name="itemOrder" data-cmp-hook-childreneditor="order">
+    <input type="hidden" name="deletedItems" data-cmp-hook-childreneditor="delete">
+    <button data-cmp-hook-childreneditor="add" type="button" is="coral-button">${'Add' @ i18n}</button>
+    <template coral-multifield-template="">
+        <div class="cmp-childreneditor__item">
+            <span class="cmp-childreneditor__item-icon"
+                  data-cmp-hook-childreneditor="itemIcon"></span>
+            <input is="coral-textfield"
+                   class="cmp-childreneditor__item-title"
+                   data-titlepropertyname="jcr:title"
+                   data-cmp-hook-childreneditor="itemTitle" required>
+            <input type="hidden" data-cmp-hook-childreneditor="itemResourceType">
+            <input type="hidden" data-cmp-hook-childreneditor="itemTemplatePath">
+        </div>
+    </template>
+</coral-multifield>

@@ -17,6 +17,7 @@
 const afConstants = require("../../libs/commons/formsConstants");
 const sitesSelectors = require("../../libs/commons/sitesSelectors");
 const guideSelectors = require("../../libs/commons/guideSelectors");
+const {recurse} = require("cypress-recurse");
 
 describe('Page - Authoring', function () {
     // we can use these values to log in
@@ -44,6 +45,50 @@ describe('Page - Authoring', function () {
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Wizard Layout", afConstants.components.forms.resourceType.wizard);
         cy.get('body').click(0, 0);
+    }
+
+    const insertComponentCE = function (componentString, componentType) {
+        const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
+            insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
+        cy.get("[data-cmp-hook-childreneditor='add']").click();
+        recurse(
+            // the commands to repeat, and they yield the input element
+            () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+            // the predicate takes the output of the above commands
+            // and returns a boolean. If it returns true, the recursion stops
+            ($input) => $input.val() === componentString,
+        )
+        cy.get(insertComponentDialog_searchField).type('{enter}');
+        cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
+        // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
+        cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+    }
+
+    const addComponentsUsingChildrenEditor = function (componentEditPath) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPath);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        //open Items tab
+        cy.get('.cmp-adaptiveform-wizard__editdialog').contains('Items').click({force:true});
+        insertComponentCE("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+        cy.get(".cmp-childreneditor__item-title").eq(0)
+            .type("Text Input 123");
+
+        insertComponentCE("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+        cy.get(".cmp-childreneditor__item-title").eq(1)
+            .type("Panel 123");
+        cy.get(".cq-dialog-submit").click();
+    }
+
+    const testComponentAddedUsingChildEditor = function (componentEditPath) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPath);
+        cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
+            cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+            // In select panel, text will be in format : <component type>: <title>
+            cy.get("table.cmp-panelselector__table tr").eq(0)
+                .should("contain.text", "Adaptive Form Text Box: Text Input 123");
+            cy.get("table.cmp-panelselector__table tr").eq(1)
+                .should("contain.text", "Adaptive Form Panel: Panel 123");
+        })
     }
 
 
@@ -107,6 +152,17 @@ describe('Page - Authoring', function () {
                 });
             });
         });
+
+        it('add element using children editor', function() {
+            dropWizardInContainer();
+            addComponentsUsingChildrenEditor(wizardEditPathSelector)
+            // Validating title in the next test as due to frame brusting tests becomes flaky
+        })
+
+        it("test component added using childeditor", function() {
+            testComponentAddedUsingChildEditor(wizardEditPathSelector)
+            cy.deleteComponentByPath(wizardLayoutDrop);
+        })
     });
 
     context('Open Sites Editor', function () {
