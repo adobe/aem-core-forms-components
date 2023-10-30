@@ -117,6 +117,11 @@ describe.only('Page - Authoring', function () {
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    // In select panel, text will be in format: <component type>: <title>
+                    cy.get("table.cmp-panelselector__table tr").eq(0)
+                        .should("contain.text", "Adaptive Form Text Box: Text Input");
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Date Picker: Date Input");
                     const datePickerPath = tabsPath + "/datepicker";
                     cy.get(`[data-id="${datePickerPath}`).click().then(() => {
                         cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');

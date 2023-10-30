@@ -96,6 +96,11 @@ describe('Page - Authoring', function () {
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
                 cy.wait(2000).then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    // In select panel, text will be in format: <component type>: <title>
+                    cy.get("table.cmp-panelselector__table tr").eq(0)
+                        .should("contain.text", "Adaptive Form Number Input: Number Input");
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Text Box: Text Input");
                     cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + numberInputDataPath).should('not.be.visible');
