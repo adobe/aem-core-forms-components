@@ -6,6 +6,7 @@
 
 # AEM Forms Core Components
 
+
 The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data. 
 
 This project is intended to be used in conjunction with the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). AEM Forms Core Components use the AEM Sites Core Components as a foundation where possible and extending them.
