@@ -66,7 +66,7 @@
                                                     fieldLabel="Autofill attribute"
                                                     forceSelection="{Boolean}true"
                                                     name="./autocomplete"
-                                                    value="off">
+                                                    value="">
                                                 <options
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
@@ -79,6 +79,10 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="off"
                                                             value="off"/>
+                                                    <on
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="on"
+                                                            value="on"/>
                                                     <tel
                                                             jcr:primaryType="nt:unstructured"
                                                             text="tel"
