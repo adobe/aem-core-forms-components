@@ -99,14 +99,9 @@ try {
         if (AEM === 'classic' || AEM === 'classic-latest') {
             // add a sleep for 10 mins, add-on takes times to come up
             ci.sh(`sleep 10m`);
-            ci.sh("ps -ef | grep java");
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
-            ci.sh(`sleep 1m`);
-            ci.sh(`./qp.sh start --vm-options '-Xmx4096m' --id author `);
-            ci.sh("ps -ef | grep java");
-            // add a sleep for 10 mins, add-on takes times to come up
-            ci.sh(`sleep 10m`);
+            ci.sh(`./qp.sh start --id author --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" `);
         }
 });
 
