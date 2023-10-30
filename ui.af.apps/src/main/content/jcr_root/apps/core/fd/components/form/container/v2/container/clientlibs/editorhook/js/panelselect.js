@@ -15,28 +15,30 @@
  ******************************************************************************/
 
 (function(ns) {
+    "use strict";
 
-    var PanelSelector = CQ.CoreComponents.PanelSelector;
+    var PanelSelector = CQ?.CoreComponents?.PanelSelector;
 
     if (PanelSelector) {
         var getPanelTitle = PanelSelector.prototype.getTitle;
-        PanelSelector.prototype.getTitle = function (editable, item, index) {
-            var title = "<span class='foundation-layout-util-subtletext cmp-panelselector__indexMarker'>" + index + "</span>&nbsp;&nbsp;";
-            var subTitle = "";
+        if(getPanelTitle) {
+            PanelSelector.prototype.getTitle = function (editable, item, index) {
+                var title = "<span class='foundation-layout-util-subtletext cmp-panelselector__indexMarker'>" + index + "</span>&nbsp;&nbsp;";
+                var subTitle = "";
 
-            title = title + " " + Granite.I18n.getVar(ns.editableHelper.getEditableDisplayableName(editable));
+                title = title + " " + Granite.I18n.getVar(ns.editableHelper.getEditableDisplayableName(editable));
 
-            if (item && item.label && item.label.value) {
-                subTitle = item.label.value;
+                if (item && item.label && item.label.value) {
+                    subTitle = item.label.value;
+                }
+
+                if (subTitle) {
+                    title = title + ": <span class='foundation-layout-util-subtletext'>" + subTitle + "</span>";
+                } else {
+                    return getPanelTitle.call(this, editable, item, index);
+                }
+                return title;
             }
-
-            if (subTitle) {
-                title = title + ": <span class='foundation-layout-util-subtletext'>" + subTitle + "</span>";
-            } else {
-                return getPanelTitle.call(this, editable, item, index);
-            }
-            return title;
         }
     }
-
 })(Granite.author);
