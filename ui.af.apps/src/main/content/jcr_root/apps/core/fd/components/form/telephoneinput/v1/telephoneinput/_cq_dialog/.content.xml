@@ -71,6 +71,10 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
                                                 <items jcr:primaryType="nt:unstructured">
+                                                    <empty
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text=""
+                                                            value=""/>
                                                     <off
                                                             jcr:primaryType="nt:unstructured"
                                                             text="off"
