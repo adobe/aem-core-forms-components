@@ -84,9 +84,17 @@ describe("Form Runtime with Email Input", () => {
 
     it(" Invalid email ID generates error message ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const input = "invalidEmail"
-        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('exist');
+        const notAllowed = "invalidEmail"
+        cy.get(`#${id}`).find("input").clear().type(notAllowed).blur().then(x => {
+            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('be.visible');
+        })
+        const invalidEmailPattern = "invalidEmail@domain"
+        cy.get(`#${id}`).find("input").clear().type(invalidEmailPattern).blur().then(x => {
+            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('be.visible');
+        })
+        const validEmailPattern = "validEmail@domain.com"
+        cy.get(`#${id}`).find("input").clear().type(validEmailPattern).blur().then(x => {
+            cy.get('.cmp-adaptiveform-emailinput__errormessage').should('not.be.visible');
         })
     });
 

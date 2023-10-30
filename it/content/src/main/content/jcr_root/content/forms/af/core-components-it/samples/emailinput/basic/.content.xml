@@ -20,7 +20,7 @@
                 jcr:primaryType="nt:unstructured"
                 name="emailinput1"
                 jcr:title="Email Input 1"
-                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$"
+                pattern="^(([^&lt;&gt;()\\[\\]\\\\.,;:\\s@&quot;]+(\\.[^&lt;&gt;()\\[\\]\\\\.,;:\\s@&quot;]+)*)|(&quot;.+&quot;))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
                 validatePictureClauseMessage="validation picture clause error message!"
                 sling:resourceType="forms-components-examples/components/form/emailinput"/>
             <emailinput2

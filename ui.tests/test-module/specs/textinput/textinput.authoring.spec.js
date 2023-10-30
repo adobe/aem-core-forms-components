@@ -65,6 +65,29 @@ describe('Page - Authoring', function () {
         })
     }
 
+    const testRichTextDialog = function (textInputEditPathSelector, textInputDrop, isSites) {
+        if (isSites) {
+            dropTextInputInSites();
+        } else {
+            dropTextInputInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+        // check rich text selector and see if RTE is visible.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+        cy.get('.cq-dialog-submit').click();
+        cy.reload();
+
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get(".rte-toolbar").should('be.visible');
+        cy.get('.rte-toolbar-item[title="Close"]').scrollIntoView().should('be.visible').click();
+        cy.deleteComponentByPath(textInputDrop);
+    };
+
     const testCopyPasteComponent = function (textInputEditPathSelector, textInputEditPathSelectorCopy, textInputDrop) {
         dropTextInputInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
@@ -120,11 +143,15 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of TextInput', function () {
             testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
-        })
+        });
 
         it.skip('pasted component should have unique name', function () {
             testCopyPasteComponent(textInputEditPathSelector, textInputEditPathSelectorCopy, textInputDrop);
-        })
+        });
+
+        it('check rich text support for label', function(){
+            testRichTextDialog(textInputEditPathSelector, textInputDrop);
+        });
     })
 
   context('Open Sites Editor', function () {
@@ -147,6 +174,10 @@ describe('Page - Authoring', function () {
 
     it('open edit dialog of aem forms TextInput', function() {
       testTextInputBehaviour(textInputEditPathSelector, textInputDrop, true);
+    });
+
+    it('check rich text support for label in sites', function(){
+        testRichTextDialog(textInputEditPathSelector, textInputDrop, true);
     });
 
     // conditionally run the test on latest addon
