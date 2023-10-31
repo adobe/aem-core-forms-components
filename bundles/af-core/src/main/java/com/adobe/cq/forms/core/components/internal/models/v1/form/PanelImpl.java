@@ -143,17 +143,33 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
         return customDorProperties;
     }
 
+    @JsonIgnore
     public boolean isTreeStyleTab() {
         // Determine if this panel is a tree-style vertical tab, incase of v3 that also needs to be added here
         return resource.isResourceType(FormConstants.RT_FD_FORM_VERTICAL_TABS_V2);
     }
 
+    @JsonIgnore
+    public boolean isParentnotTreeStyleTab() {
+        // Ensure that resource.getParent() is not null
+        Resource parentResource = resource.getParent();
+        if (parentResource != null) {
+            // Determine if this panel is a tree-style vertical tab
+            return !parentResource.isResourceType(FormConstants.RT_FD_FORM_VERTICAL_TABS_V2);
+        } else {
+            // Handle the case where resource.getParent() is null
+            return true;
+        }
+    }
+
+    @JsonIgnore
     public List<ComponentExporter> getChildrenOfVerticalTab() {
         List<ComponentExporter> children = new ArrayList<>();
         collectChildrenOfVerticalTab(this, children);
         return children;
     }
 
+    @JsonIgnore
     private void collectChildrenOfVerticalTab(ComponentExporter container, List<ComponentExporter> children) {
         if (container instanceof PanelImpl) {
             PanelImpl panel = (PanelImpl) container;

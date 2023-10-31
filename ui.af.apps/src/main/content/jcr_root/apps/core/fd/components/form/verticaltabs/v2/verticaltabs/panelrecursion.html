@@ -17,7 +17,6 @@
 <template data-sly-template.panelRecur="${@ panel, label, widgetId, tabs, questionMark, items}">
   <sly data-sly-repeat.item="${items}">
     <sly data-sly-test.isActive="${item.name == tabs.activeItem}"/>
-    <sly data-sly-test="${!item.isTreeStyleTab}">
       <div id="${item.id}__tabpanel"
            role="tabpanel"
            aria-labelledby="${item.id}__tab"
@@ -33,7 +32,6 @@
         <sly data-sly-resource="${resource.parent.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
              data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
       </div>
-    </sly>
     <sly data-sly-test="${item.isTreeStyleTab}">
       <sly data-sly-use.panelrecursion="panelrecursion.html"
            data-sly-call="${panelrecursion.panelRecur @ panel=panel, label=label, widgetId=widgetId, tabs=tabs, questionMark=questionMark, items=item.childrenOfVerticalTab}" data-sly-unwrap></sly>
