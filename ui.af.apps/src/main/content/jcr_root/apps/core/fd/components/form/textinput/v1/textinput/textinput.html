@@ -61,7 +61,8 @@
            required="${text.required}"
            placeholder="${text.placeHolder}"
            minlength="${text.minLength}"
-           maxlength="${text.maxLength}"/>
+           maxlength="${text.maxLength}"
+           dir="auto"/>
     <div data-sly-call="${shortDescription.shortDescription @componentId=text.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
