@@ -79,15 +79,15 @@ common:
             else
               echo "Skipping Accessibility check..."
             fi
-      - run:
-          name: Stop CQ
-          command: |
-            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
-            if [[ $test_execution_status == "true" ]]; then
-              node .circleci/ci/stop-cq.js
-            else
-              echo "Skipping stop cq ..."
-            fi
+      #- run:
+      #    name: Stop CQ
+      #    command: |
+      #      test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+      #      if [[ $test_execution_status == "true" ]]; then
+      #        node .circleci/ci/stop-cq.js
+      #      else
+      #        echo "Skipping stop cq ..."
+      #      fi
       - run:
           name: Cleanup
           command: rm -rf TEST_EXECUTION_STATUS.txt

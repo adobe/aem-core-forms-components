@@ -98,11 +98,11 @@ try {
 
         if (AEM === 'classic' || AEM === 'classic-latest') {
             // add a sleep for 10 mins, add-on takes times to come up
-            ci.sh(`sleep 15m`);
+            ci.sh(`sleep 12m`);
             // restart the AEM insatnce
             //ci.sh(`echo "Running: curl -i -X POST -u ***:*** http://localhost:4502/system/console/vmstat --data 'shutdown_type=Restart' --compressed"`);
-            ci.sh(`curl -i -X POST -u admin:admin http://localhost:4502/system/console/vmstat --data 'shutdown_type=Restart' --max-time 300 --retry 2 --retry-delay 10 --retry-max-time 300 --compressed`);
-            ci.sh(`sleep 5m`);
+            ci.restartAem();
+            ci.sh(`sleep 3m`);
             //ci.sh(`./qp.sh stop --id author`);
             //ci.sh(`./qp.sh start --id author --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" `);
         }

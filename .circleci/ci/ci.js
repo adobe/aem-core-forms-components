@@ -96,6 +96,24 @@ module.exports = class CI {
         }
     };
 
+    restartAem() {
+        // Retry the Curl command with the specified maxRetries
+        for (let i = 1; i <= 5; i++) {
+            let retryInterval = 5;  // Number of seconds to wait between retries
+            console.log(`Attempt ${i}:`);
+            const curlCommand = `curl -i -X POST -u admin:admin http://localhost:4502/system/console/vmstat --data 'shutdown_type=Restart' --max-time 300 --retry 2 --retry-delay 10 --retry-max-time 300 --compressed`;
+            const curlResult = e.spawnSync(curlCommand, {shell: true, stdio: 'inherit', encoding : 'utf8'});
+
+            if (curlResult.status === 0) {
+                console.log('Curl Success!');
+                break;  // Break out of the loop if Curl is successful
+            } else {
+                console.log('aem restart failed. Retrying in', retryInterval, 'seconds...');
+                setTimeout(() => {}, retryInterval * 1000);
+            }
+        }
+    }
+
     /**
      * Configure git credentials for the scope of the given function.
      */
