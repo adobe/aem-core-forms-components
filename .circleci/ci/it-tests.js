@@ -102,7 +102,7 @@ try {
             // restart the AEM insatnce
             //ci.sh(`echo "Running: curl -i -X POST -u ***:*** http://localhost:4502/system/console/vmstat --data 'shutdown_type=Restart' --compressed"`);
             ci.restartAem();
-            ci.sh(`sleep 3m`);
+            //ci.sh(`sleep 3m`);
             //ci.sh(`./qp.sh stop --id author`);
             //ci.sh(`./qp.sh start --id author --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" `);
         }

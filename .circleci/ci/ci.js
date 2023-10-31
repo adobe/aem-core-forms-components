@@ -112,6 +112,36 @@ module.exports = class CI {
                 setTimeout(() => {}, retryInterval * 1000);
             }
         }
+
+        // check if rest api code is working
+        // Retry the request with the specified maxRetries
+        for (let i = 1; i <= 5; i++) {
+            try {
+                console.log(`Attempt ${i}:`);
+                const curlCommand = `curl -i -X GET -u admin:admin http://localhost:4502/adobe/forms/af/L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L2JsYW5r --max-time 300`;
+                const curlResult = e.spawnSync(curlCommand, { encoding: 'utf8' });
+
+                if (curlResult.includes('HTTP/1.1 200 OK')) {
+                    console.log('URL returned a 200 status code.');
+
+                    // Parse JSON from the response
+                    const jsonResponse = curlResult.split('\r\n\r\n')[1];
+                    const responseObj = JSON.parse(jsonResponse);
+
+                    if (responseObj && responseObj.afModelDefinition && typeof responseObj.afModelDefinition === 'object') {
+                        console.log('afModelDefinition key with object value found in JSON response.');
+                        break; // Break out of the loop if the conditions are met
+                    }
+                } else {
+                    console.log('rest api failed. Retrying in 5 mins');
+                    await new Promise(resolve => setTimeout(resolve, 300000)); // Wait 5 minutes before retrying
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+                console.log('Retrying in 300 seconds...'); // Wait 5 minutes before retrying
+                await new Promise(resolve => setTimeout(resolve, 300000)); // Wait 5 minutes before retrying
+            }
+        }
     }
 
     /**
