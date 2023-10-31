@@ -103,6 +103,26 @@ describe('Page - Authoring', function () {
         });
     });
 
+    it('check rich text support for label', function(){
+        dropRadioButtonInGuideContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("div[name='richTextTitle']").should('not.be.visible');
+
+        // check rich text selector and see if RTE is visible.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+        cy.get('.cq-dialog-submit').click();
+    });
+
+    it('check rich text inline editor is present', function(){
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get(".rte-toolbar").should('be.visible');
+        cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+        cy.deleteComponentByPath(radioButtonDrop);
+    });
+
     it ('check value type validations', function() {
         cy.cleanTest(radioButtonDrop).then(function() {
             // For Number Type
@@ -145,12 +165,11 @@ describe('Page - Authoring', function () {
                 cy.get('.cq-dialog-submit').should('not.exist')
             });
             getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option').should('have.length', 2);
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().contains('Item 3');
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().contains('Item 2');
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().contains('Item 1').should('not.exist');
+            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 3');
+            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 2');
+            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 1').should('not.exist');
             cy.deleteComponentByPath(radioButtonDrop);
         })
-
     })
   })
 });

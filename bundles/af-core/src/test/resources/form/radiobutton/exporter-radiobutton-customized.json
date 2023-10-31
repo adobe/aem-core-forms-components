@@ -16,8 +16,14 @@
   },
   "enforceEnum": true,
   "enumNames": [
-    "Item 1",
-    "Item 2"
+    {
+      "richText": true,
+      "value": "<p>Item 1</p>"
+    },
+    {
+      "richText": true,
+      "value": "<p>Item 2</p>"
+    }
   ],
   "default": "0",
   "screenReaderText": "'custom text'",

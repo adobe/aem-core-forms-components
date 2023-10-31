@@ -114,9 +114,13 @@ describe("Form with File Input - Basic Tests", () => {
                 let model = field.getModel();
                 let fileName = 'empty.pdf';
                 if (model.visible && model.enabled) {
+                    cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--empty');
+                    cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+                    cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
                     cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
+                        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
                     })
                 }
             }
@@ -126,6 +130,14 @@ describe("Form with File Input - Basic Tests", () => {
 
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'fileinput_tooltip_scenario_test');
+    })
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
     })
 })
 

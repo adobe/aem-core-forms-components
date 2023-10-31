@@ -22,7 +22,8 @@
       data-cmp-is="adaptiveFormContainer"
       data-cmp-context-path="${request.contextPath}"
       data-cmp-path="${resource.path}"
-      class="cmp-adaptiveform-container cmp-container">
+      class="cmp-adaptiveform-container cmp-container"
+      dir="${container.languageDirection}">
 
     <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
          data-sly-use.allowedTemplate="allowedcomponents.html"
@@ -42,4 +43,4 @@
         <sly data-sly-use="${'removeattribute.js' @ referencedPage }"/>
     </div>
 </form>
-
+<div data-cmp-adaptiveform-container-loader="${container.id}"></div>

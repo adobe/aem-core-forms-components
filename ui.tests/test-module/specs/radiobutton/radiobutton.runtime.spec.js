@@ -172,5 +172,42 @@ describe("Form with Radio Button Input", () => {
 
     })
 
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+    })
 
+    it("should add filled/empty class at container div", () => {
+      const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+      cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--empty');
+      cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+      cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
+        cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
+      })
+    })
+})
+
+describe("setFocus on radiobutton via rules", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/focustest.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should focus on radio button when button is clicked", () => {
+        const [button] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='button')[0];
+        const [radioButton] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='radio-group')[0];
+        cy.get(`#${radioButton}`).find("input").eq(0).should('not.have.focus');
+        cy.get(`#${button}-widget`).click().then(() => {
+            cy.get(`#${radioButton}`).find("input").eq(0).should('have.focus')
+        })
+    })
 })

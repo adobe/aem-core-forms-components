@@ -189,4 +189,54 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox6}`).find(".cmp-adaptiveform-checkboxgroup__option-label").contains('Item 1').should('not.exist');
 
     })
+
+    it("rich text should render correctly", () => {
+        const [checkBox7, checkBox7FieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Select Animal').should('have.css', 'font-weight', '700');
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
+    });
+
+    it("decoration element should not have same class name", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const id = formContainer._model._children[0].id;
+            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+        })
+
+    })
+
+    it(" should add filled/empty class at container div ", () => {
+      const [id, fieldView] = Object.entries(formContainer._fields)[2]
+      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkboxgroup--empty');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+      const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+      cy.get(`#${checkBox2}`).find("input").check(["0","3"])
+      cy.get(`#${id}`).find("input").eq(1).click().then(x => {
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkboxgroup--filled');
+      });
+    });
+})
+
+describe("setFocus on checkboxgroup via rules", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/focustest.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should focus on checkbox group when button is clicked", () => {
+        const [button] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='button')[0];
+        const [radioButton] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='checkbox-group')[0];
+        cy.get(`#${radioButton}`).find("input").eq(0).should('not.have.focus');
+        cy.get(`#${button}-widget`).click().then(() => {
+            cy.get(`#${radioButton}`).find("input").eq(0).should('have.focus')
+        })
+    })
 })

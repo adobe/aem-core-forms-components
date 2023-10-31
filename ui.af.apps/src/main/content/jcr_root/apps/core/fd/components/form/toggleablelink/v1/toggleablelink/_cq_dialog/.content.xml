@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form Toggleable Link field"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.checkboxgroup.v1.editor]">
+    <content
+        granite:class="cmp-adaptiveform-checkboxgroup__editdialog"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/tabs"
+              maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                      jcr:primaryType="nt:unstructured"
+                      jcr:title="Basic"
+                      sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                              margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <placeholder
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:hideResource="{Boolean}true" />
+                                            <type
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:hideResource="{Boolean}true" />
+                                            <value
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:hideResource="{Boolean}true" />
+                                            <alignment
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:hideResource="{Boolean}true" />
+                                            <enums jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <enumOptions jcr:primaryType="nt:unstructured"
+                                                      sling:orderBefore="bindref"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                      fieldDescription="Enter the display text with link."
+                                                      fieldLabel="Links">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                          name="./enum">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <enum jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                  granite:class="cmp-adaptiveform-base__enum"
+                                                                  name="./enum"
+                                                                  fieldLabel="Link"
+                                                                  fieldDescription="Enter the link."
+                                                                  required="{Boolean}true"/>
+                                                                <enumNames
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                  granite:class="cmp-adaptiveform-base__enumNames"
+                                                                  name="./enumNames"
+                                                                  fieldLabel="Display text"
+                                                                  fieldDescription="Specify the content to display in the adaptive form."
+                                                                  required="{Boolean}false"/>
+                                                            </items>
+                                                        </field>
+                                                    </enumOptions>
+                                                    <enumNames jcr:primaryType="nt:unstructured"
+                                                      sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                      granite:hidden="true">
+                                                        <field jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                          name="./enumNames"
+                                                          granite:class="cmp-adaptiveform-base__enumNamesHidden"
+                                                          granite:hidden="true"/>
+                                                    </enumNames>
+                                                </items>
+                                            </enums>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

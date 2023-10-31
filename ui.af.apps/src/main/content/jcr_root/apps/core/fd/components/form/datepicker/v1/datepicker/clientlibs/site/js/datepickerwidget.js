@@ -306,7 +306,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
       if (options.showCalendarIcon) {
         let calendarIcon = document.createElement("div");
-        calendarIcon.classList.add("datepicker-calendar-icon");
+        calendarIcon.classList.add("cmp-adaptiveform-datepicker__calendar-icon");
 
         widget.parentNode.insertBefore(calendarIcon, widget.nextSibling);
 
@@ -402,7 +402,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
           break;
         case 32: //space
         case 13: // enter
-          if (evnt.target.classList.contains("datepicker-calendar-icon")) {
+          if (evnt.target.classList.contains("cmp-adaptiveform-datepicker__calendar-icon")) {
             if (!DatePickerWidget.#visible) {
               this.#show();
               return;
@@ -995,9 +995,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     #clearDate(view) {
-      this.setValue("");
-      let existingSelectedItem = this['$'
-      + view.toLowerCase()].getElementsByClassName("dp-selected")[0];
+      this.#model.value = "";
+      let existingSelectedItem = this['$' + view.toLowerCase()].getElementsByClassName("dp-selected")[0];
       if (existingSelectedItem) {
         existingSelectedItem.classList.remove("dp-selected");
       }
@@ -1012,8 +1011,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     toString() {
-      return this.selectedYear + "-" + this.#pad2(this.selectedMonth + 1) + "-"
-          + this.#pad2(this.selectedDay);
+      if(this.selectedYear === -1 || this.selectedMonth === -1 || this.selectedDay === -1){
+        return "";
+      }
+      const formattedDate = `${this.selectedYear}-${this.#pad2(this.selectedMonth + 1)}-${this.#pad2(this.selectedDay)}`;
+      return formattedDate;
     }
 
     #selectDate(evnt) {
@@ -1074,9 +1076,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #localizeDateElements(defaultOptions, locale) {
         var calendarSymbols = FormView.LanguageUtils.getTranslatedString(locale, "calendarSymbols");
-        defaultOptions.locale.days = calendarSymbols.abbrdayNames;
-        defaultOptions.locale.months = calendarSymbols.monthNames;
-        defaultOptions.locale.clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
+        if (calendarSymbols && calendarSymbols.abbrdayNames) {
+            defaultOptions.locale.days = calendarSymbols.abbrdayNames;
+        }
+        if (calendarSymbols && calendarSymbols.abbrdayNames) {
+            defaultOptions.locale.months = calendarSymbols.monthNames;
+        }
+        var clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
+        if (clearText) {
+            defaultOptions.locale.clearText = clearText;
+        }
     }
 
     #isEditValueOrDisplayValue(value) {

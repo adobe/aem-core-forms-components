@@ -189,7 +189,13 @@ class FormFieldBase extends FormField {
         if (fieldType !== 'form' && this.parentView.setFocus) {
             this.parentView.setFocus(id);
         }
-        this.widget.focus();
+        // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
+        if (this.widget.length > 0) {
+            this.widget[0].focus();
+        } else {
+            this.widget.focus();
+        }
+
     }
 
     /**
@@ -366,6 +372,7 @@ class FormFieldBase extends FormField {
     updateReadOnly(readOnly, state) {
         if (this.widget) {
             this.toggle(readOnly, "readonly");
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
                 this.widget.setAttribute("readonly", "readonly");
             } else {
@@ -382,6 +389,7 @@ class FormFieldBase extends FormField {
     updateRequired(required, state) {
         if (this.widget) {
             this.toggle(required, "required");
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
             } else {
@@ -463,24 +471,22 @@ class FormFieldBase extends FormField {
      * Updates the HTML class based on the existence of a value in a field.
      */
     updateEmptyStatus() {
-        if (!this.getWidget())
-            return;
-
-        const updateModifierClass = (widget, newValue) => {
-            const widgetBemClass = widget.className.split(/\s+/).filter(bemClass => bemClass.endsWith("__widget"))[0];
-            const filledModifierClass = `${widgetBemClass}--filled`;
-            const emptyModifierClass = `${widgetBemClass}--empty`;
-
-            widget.classList.add(newValue ? filledModifierClass : emptyModifierClass);
-            widget.classList.remove(newValue ? emptyModifierClass : filledModifierClass);
-        };
-
+        if (!this.getWidget()){
+          return;
+        }
+        let value = '';
+        const checkedWidget = ['radio', 'checkbox'];
         // radiobutton, checkbox, datefield(AFv1, not datepicker), etc. have multiple widgets in the form of a NodeList
         if (this.widget instanceof NodeList) {
-            this.widget.forEach((widget) => updateModifierClass(widget, (widget.type === "radio" || widget.type === "checkbox") ? widget.checked : widget.value))
+          value = Array.from(this.widget).map((widget) => checkedWidget.includes(widget.type) ? widget.checked : widget.value).find(value => value);
         } else {
-            updateModifierClass(this.widget, this.widget.value)
+          value = checkedWidget.includes(this.widget.type) ? this.widget.checked : this.widget.value;
         }
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0]
+        const filledModifierClass = `${bemClass}--filled`;
+        const emptyModifierClass = `${bemClass}--empty`;
+        this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
     }
 
     /**
