@@ -159,7 +159,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        xit('replace checkbox with radio button', function () {
+        it('replace checkbox with radio button', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 
@@ -177,13 +177,21 @@ describe('component replace - Authoring', function () {
     })
 
     context('Group independent replace action test', function () {
-        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
-            replaceCompPageUrl = replaceCompPagePath;
+        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic";
 
         const updateAllowedComponent = function (allow) {
-            cy.get('[title="Adaptive Form Container [Root]"]').click()
+            cy.get('[title="Adaptive Form Container [Root]"]').trigger ('mouseover').then(() => {
+                cy.get('[title="Adaptive Form Container [Root]"]').click();
+            })
+                // .should('have.attr', 'title', 'Adaptive Form Container [Root]')
+                // .click({force: false})
                 .then(() => {
-                    cy.get('.cq-editable-action').eq(0).click().then(() => {
+                    cy.get("body").then($body => {
+                        if ($body.find(".cq-editable-action").length > 0) {
+                            cy.get('.cq-editable-action').eq(0).click()
+                        }
+                    })
+                        .then(() => {
                         cy.get('[value="group:replace test group"]').eq(0)
                             .invoke('attr', 'checked').then(isChecked => {
                             if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
@@ -199,7 +207,7 @@ describe('component replace - Authoring', function () {
                 })
         }
 
-        xit('test replace of component by different group', function () {
+        it('test replace of component by different group', function () {
             const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
@@ -211,7 +219,7 @@ describe('component replace - Authoring', function () {
             cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
             updateAllowedComponent(true);
 
-            cy.openSiteAuthoring(replaceCompPageUrl);
+            cy.openSiteAuthoring(replaceCompPagePath);
             cy.selectLayer("Edit");
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
@@ -219,8 +227,6 @@ describe('component replace - Authoring', function () {
             const replacementComp = "[value='" + replaceCompTestGroup + "']";
             cy.get(replacementComp).click();
             cy.deleteComponentByPath(replaceCompDrop);
-            cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
-            updateAllowedComponent(false);
         });
     });
 });

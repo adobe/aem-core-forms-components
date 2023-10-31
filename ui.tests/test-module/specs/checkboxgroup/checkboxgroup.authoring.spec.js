@@ -146,7 +146,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkBoxGroupDrop);
     })
 
-    xit ('check for duplicate enum values', function() {
+    it ('check for duplicate enum values', function() {
         dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");

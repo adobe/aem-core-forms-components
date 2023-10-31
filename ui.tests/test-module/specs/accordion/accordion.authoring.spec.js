@@ -66,10 +66,14 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-        cy.get('.cq-dialog-cancel').should("exist").focus().click({ force: true }).then(() => {
-            cy.get('.cq-dialog-cancel').should("not.exist").then(() => {
-                cy.deleteComponentByPath(accordionDrop);
-            });
+        cy.get('.cq-dialog-cancel').should("exist").focus().click({ force: true });
+        cy.get('.cq-dialog-cancel').then(($el) => {
+            if ($el.length) {
+                cy.get($el).click();
+                cy.get('.cq-dialog-cancel').should("not.exist").then(() => {
+                    cy.deleteComponentByPath(accordionDrop);
+                });
+            }
         });
     }
 
@@ -87,7 +91,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(accordionEditPath);
         });
 
-        xit('open edit dialog of Accordion', function () {
+        it('open edit dialog of Accordion', function () {
             testAccordionBehaviour(accordionPathSelector, accordionEditPath);
         });
 
@@ -130,8 +134,7 @@ describe('Page - Authoring', function () {
             });
         });
 
-        // todo: intermittent failure
-        xit('open edit dialog of aem forms Accordion', {retries: 3}, function () {
+        it('open edit dialog of aem forms Accordion', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function () {
                 testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);
             });

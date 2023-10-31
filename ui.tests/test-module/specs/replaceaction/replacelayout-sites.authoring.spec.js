@@ -101,11 +101,11 @@ describe('Replace functionality - sites', function () {
             cy.openAuthoring(pagePath);
         });
 
-        xit('test behaviour of replace button', function () {
+        it('test behaviour of replace button', function () {
             testButtonReplaceBehaviour(buttonEditPathSelector);
         });
 
-        xit('test behaviour of replace button', function () {
+        it('test behaviour of replace button', function () {
             testPanelReplaceBehaviourWithAccordion(panelEditPathSelector);
         });
 
@@ -136,8 +136,6 @@ describe('Replace functionality - sites', function () {
     }
 
     context('Test replace action within different groups', function () {
-        const templatePath = "/conf/core-components-examples/settings/wcm/templates/content-page/structure";
-
         const   pagePath = "/content/forms/sites/core-components-it/blank",
             replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
             image = "[value='"+replaceCompTestGroup+"']",
@@ -158,7 +156,7 @@ describe('Replace functionality - sites', function () {
             uncheckTestGroupPolicy();
         });
 
-        xit('test behaviour of replace within different groups same component type', function () {
+        it('test behaviour of replace within different groups same component type', function () {
             cy.openSiteAuthoring(pagePath);
             cy.selectLayer("Edit");
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
@@ -172,7 +170,7 @@ describe('Replace functionality - sites', function () {
             cy.deleteComponentByPath(replaceCompTestGroupDrop);
         });
 
-        xit('test behaviour of replace within different groups different component type', function () {
+        it('test behaviour of replace within different groups different component type', function () {
                 const buttonEditPath = pagePath + containerSuffix + "/container/button",
                     buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
 
