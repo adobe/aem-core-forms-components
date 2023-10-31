@@ -96,7 +96,7 @@ module.exports = class CI {
         }
     };
 
-    restartAem() {
+    async restartAem() {
         // Retry the Curl command with the specified maxRetries
         for (let i = 1; i <= 5; i++) {
             let retryInterval = 5;  // Number of seconds to wait between retries
@@ -109,7 +109,7 @@ module.exports = class CI {
                 break;  // Break out of the loop if Curl is successful
             } else {
                 console.log('aem restart failed. Retrying in', retryInterval, 'seconds...');
-                setTimeout(() => {}, retryInterval * 1000);
+                await new Promise(resolve => setTimeout(resolve, retryInterval * 1000));
             }
         }
 
@@ -119,7 +119,7 @@ module.exports = class CI {
             try {
                 console.log(`Attempt ${i}:`);
                 const curlCommand = `curl -i -X GET -u admin:admin http://localhost:4502/adobe/forms/af/L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L2JsYW5r --max-time 300`;
-                const curlResult = e.spawnSync(curlCommand, { encoding: 'utf8' });
+                const curlResult = e.execSync(curlCommand, { encoding: 'utf8' });
 
                 if (curlResult.includes('HTTP/1.1 200 OK')) {
                     console.log('URL returned a 200 status code.');
@@ -128,18 +128,18 @@ module.exports = class CI {
                     const jsonResponse = curlResult.split('\r\n\r\n')[1];
                     const responseObj = JSON.parse(jsonResponse);
 
-                    if (responseObj && responseObj.afModelDefinition && typeof responseObj.afModelDefinition === 'object') {
+                    if (responseObj && responseObj.afModelDefinition && typeof responseObj.afModelDefinition === 'object' && Object.keys(responseObj.afModelDefinition).length > 0) {
                         console.log('afModelDefinition key with object value found in JSON response.');
                         break; // Break out of the loop if the conditions are met
                     }
                 } else {
                     console.log('rest api failed. Retrying in 5 mins');
-                    setTimeout(() => {}, 300000);; // Wait 5 minutes before retrying
+                    await new Promise(resolve => setTimeout(resolve, 300000));
                 }
             } catch (error) {
                 console.error('Error:', error.message);
                 console.log('Retrying in 300 seconds...'); // Wait 5 minutes before retrying
-                setTimeout(() => {}, 300000); // Wait 5 minutes before retrying
+                await new Promise(resolve => setTimeout(resolve, 300000));
             }
         }
     }
