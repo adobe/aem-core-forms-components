@@ -45,6 +45,8 @@ describe('Replace functionality - sites', function () {
         dropComponentInSites(buttonName, buttonResourceType);
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
         cy.invokeEditableAction("[data-action='replace']"); // this line is causing frame busting which is causing cypress to fail
+
+        cy.get('.cmp-replace-dialog-search-components').should('exist');
         // Check If Dialog Options Are Visible
         cy.get(textInput)
             .should("not.exist");
