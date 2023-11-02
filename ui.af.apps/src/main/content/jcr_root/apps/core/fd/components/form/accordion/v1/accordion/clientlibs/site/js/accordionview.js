@@ -99,7 +99,7 @@
                 window.CQ.CoreComponents.MESSAGE_CHANNEL = window.CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
                 var _self = this;
                 window.CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
-                    if (message.data && message.data.type === "cmp-accordion" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
+                    if (message.data && message.data.type === "cmp-adaptiveform-accordion" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
                         if (message.data.operation === "navigate") {
                             _self.#toggle(_self.#getCachedItems()[message.data.index].id);
                             _self.#collapseAllOtherItems(_self.#getCachedItems()[message.data.index].id);
