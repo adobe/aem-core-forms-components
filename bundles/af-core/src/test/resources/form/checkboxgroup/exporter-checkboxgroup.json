@@ -16,15 +16,9 @@
   "readOnly": true,
   "enforceEnum": true,
   "enumNames": [
-    {
-      "value": "m"
-    },
-    {
-      "value": "f"
-    },
-    {
-      "value": "o"
-    }
+    "m",
+    "f",
+    "o"
   ],
   "default": [
     0,
