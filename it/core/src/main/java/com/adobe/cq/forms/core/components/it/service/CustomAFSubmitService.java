@@ -90,7 +90,8 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
             logger.error("Error while using the AF Submit service", ex);
-
+            // todo: have to fix this
+            result.put(GuideConstants.FORM_SUBMISSION_ERROR, Boolean.TRUE);
         }
         return result;
     }
