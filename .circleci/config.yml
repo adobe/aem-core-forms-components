@@ -118,17 +118,17 @@ executors:
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:1209202301-openjdk11
         <<: *docker_auth
-  test_executor_655:
-      docker:
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-          <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18.0-openjdk11
-          <<: *docker_auth
+#  test_executor_655:
+#      docker:
+#        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+#          <<: *docker_auth
+#        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18.0-openjdk11
+#          <<: *docker_auth
   test_executor_655_latest:
       docker:
         - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
           <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load2-openjdk11
+        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load9-openjdk11
           <<: *docker_auth
 
 jobs:
@@ -190,15 +190,15 @@ jobs:
       - store_artifacts:
           path: test-results/junit
 
-  cypress-chrome-655:
-    executor: test_executor_655
-    environment:
-      AEM: classic
-      TYPE: cypress
-      BROWSER: chrome
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    <<: *cypress_test_steps
+#  cypress-chrome-655:
+#    executor: test_executor_655
+#    environment:
+#      AEM: classic
+#      TYPE: cypress
+#      BROWSER: chrome
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon:
     executor: test_executor_655_latest
@@ -352,13 +352,13 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - cypress-chrome-655:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
+#      - cypress-chrome-655:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
       - cypress-chrome-655-with-latest-addon:
           filters:
             tags:
