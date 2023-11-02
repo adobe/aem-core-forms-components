@@ -24,11 +24,11 @@ describe("Form with VerticalTabs Container", () => {
     })
 
     const getTabs = () => {
-        return cy.get(".cmp-verticaltabs__tab");
+        return cy.get(".cmp-adaptiveform-verticaltabs__tab");
     }
 
     const getTabPanels = () => {
-        return cy.get(".cmp-verticaltabs__tabpanel");
+        return cy.get(".cmp-adaptiveform-verticaltabs__tabpanel");
     }
 
     const getTabAtIndex = (index) => {
@@ -78,20 +78,20 @@ describe("Form with VerticalTabs Container", () => {
             getTabPanels().should('have.length', 5);
             getTabAtIndex(1).should('have.attr', 'aria-controls');
             getTabAtIndex(1).should('have.attr', 'id');
-            getTabAtIndex(1).should('have.class', 'cmp-verticaltabs__tab--active');
+            getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
             getTabPanelAtIndex(1).should('have.attr', 'id');
             getTabPanelAtIndex(1).should('have.attr', 'aria-labelledby');
-            getTabPanelAtIndex(1).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+            getTabPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
         })
     })
 
     it("test addedPanel position when inserted at first position in tab", () => {
         getTabs().should('have.length', 4);
         getTabPanels().should('have.length', 4);
-        getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--active');
-        getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--active');
-        getTabAtIndex(1).should('not.have.class', 'cmp-verticaltabs__tab--active');
-        getTabPanelAtIndex(1).should('not.have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
+        getTabPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
+        getTabAtIndex(1).should('not.have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
+        getTabPanelAtIndex(1).should('not.have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
         getTabPanelAtIndex(1).find('.cmp-adaptiveform-numberinput');
         cy.get("button").contains("-R1").click().then(() => {
             getTabs().should('have.length', 3);
@@ -101,8 +101,8 @@ describe("Form with VerticalTabs Container", () => {
             cy.get("button").contains("+R1").click().then(() => {
                 //check that the panel is indeed added at 0th index and is active
                 getTabPanelAtIndex(0).find('.cmp-adaptiveform-textinput');
-                getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--active');
-                getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+                getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
+                getTabPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
             })
         })
     })
@@ -110,8 +110,8 @@ describe("Form with VerticalTabs Container", () => {
     it("test addedPanel position when inserted at first position in instanceManager", () => {
         getTabs().should('have.length', 4);
         getTabPanels().should('have.length', 4);
-        getTabAtIndex(2).should('not.have.class', 'cmp-verticaltabs__tab--active');
-        getTabPanelAtIndex(2).should('not.have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(2).should('not.have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
+        getTabPanelAtIndex(2).should('not.have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
         getTabPanelAtIndex(2).find('.cmp-adaptiveform-datepicker');
         //remove the instance of panel
         cy.get("button").contains("-R2").click().then(() => {
@@ -123,8 +123,8 @@ describe("Form with VerticalTabs Container", () => {
             cy.get("button").contains("+R2").click().then(() => {
                 //check that the panel is indeed added again at the 2nd index and is active
                 getTabPanelAtIndex(2).find('.cmp-adaptiveform-datepicker');
-                getTabAtIndex(2).should('have.class', 'cmp-verticaltabs__tab--active');
-                getTabPanelAtIndex(2).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+                getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-verticaltabs__tab--active');
+                getTabPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-verticaltabs__tabpanel--active');
             })
 
         })
