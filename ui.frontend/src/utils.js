@@ -286,13 +286,14 @@ class Utils {
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
             const _path = dataset["path"];
+            const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
                 Utils.setContextPath(dataset['contextPath']);
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
                 const urlSearchParams = new URLSearchParams(window.location.search);
