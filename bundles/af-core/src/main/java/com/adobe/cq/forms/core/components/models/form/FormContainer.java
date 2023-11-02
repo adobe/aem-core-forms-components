@@ -304,6 +304,17 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * Returns the language of the containing page
+     *
+     * @return the language of the containing page
+     * @since com.adobe.cq.forms.core.components.models.form 4.7.1
+     */
+    @JsonIgnore
+    default String getContainingPageLang() {
+        return getLang();
+    }
+
+    /**
      * Returns the redirect url after form submission
      *
      * @return the redirect url of the form
