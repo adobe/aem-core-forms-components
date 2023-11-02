@@ -32,7 +32,6 @@
         BASE_WRAPPER_VALUE_RICH_TEXT_TITLE = "[data-cq-richtext-editable='true'][data-wrapperclass='" + BASE_RICH_TEXT_TITLE_NAME + "']",
         BASE_IS_TITLE_RICH_TEXT = ".cmp-adaptiveform-base__istitlerichtext",
         BASE_RICH_TEXT_ENUMNAMES_NAME = "cmp-adaptiveform-base__richTextEnumNames",
-        BASE_RICH_TEXT_ENUMNAMES = "." + BASE_RICH_TEXT_ENUMNAMES_NAME,
         BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-input='true'][data-wrapperclass='" + BASE_RICH_TEXT_ENUMNAMES_NAME + "']",
         BASE_WRAPPER_VALUE_RICH_TEXT_ENUMNAMES = "[data-cq-richtext-editable='true'][data-wrapperclass='" + BASE_RICH_TEXT_ENUMNAMES_NAME + "']",
         BASE_ARE_OPTIONS_RICH_TEXT = ".cmp-adaptiveform-base__areOptionsRichText",
@@ -201,7 +200,7 @@
      */
     function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
         let enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
-            richTextEnumNames = dialog.find(BASE_RICH_TEXT_ENUMNAMES),
+            richTextEnumNames = dialog.find(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES),
             richTextEnumNamesDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
         if(areOptionsRichText != null && areOptionsRichText.checked){
             for (let i = 0; i < richTextEnumNames.length; i++) {
@@ -299,7 +298,7 @@
         channel.on("click", BASE_ENUM_MULTIFIELD_ADD_BUTTON, function (e) {
             let areOptionsRichText = $(BASE_ARE_OPTIONS_RICH_TEXT)[0],
                 enumNames = $(BASE_ENUMNAMES_VISIBLE),
-                richTextEnumNames = $(BASE_RICH_TEXT_ENUMNAMES);
+                richTextEnumNames = $(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES);
             if(areOptionsRichText != null && areOptionsRichText.checked){
                 for (let i = 0; i < richTextEnumNames.length; i++) {
                     Utils.hideComponent(enumNames[i], "div");
