@@ -135,13 +135,13 @@ module.exports = class CI {
                     }
                 } else {
                     console.log('rest api failed. Retrying in 5 mins');
-                    this.sh(`sleep 5m`);
+                    this.sh(`sleep 8m`);
                     //await new Promise(resolve => setTimeout(resolve, 300000));
                 }
             } catch (error) {
                 console.error('Error:', error.message);
                 console.log('Retrying in 300 seconds...'); // Wait 5 minutes before retrying
-                this.sh(`sleep 5m`);
+                this.sh(`sleep 8m`);
                 //await new Promise(resolve => setTimeout(resolve, 300000));
             }
         }

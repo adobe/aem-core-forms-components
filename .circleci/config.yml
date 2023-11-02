@@ -51,7 +51,7 @@ common:
           command: npm install axe-html-reporter
       - run:
           name: UI tests
-          no_output_timeout: 20m
+          no_output_timeout: 50m
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
             cd ui.tests/test-module
