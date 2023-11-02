@@ -177,7 +177,7 @@
     function resolveRichText(dialog, isTitleRichText, isToggled) {
         let title = dialog.find(BASE_TITLE)[0],
             richTextTitle = dialog.find(BASE_RICH_TEXT_TITLE)[0],
-            richTextTitleDiv = dialog.find(BASE_WRAPPER_VALUE_RICH_TEXT_TITLE)[0];
+            richTextTitleDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richtexttitle']")[0];
         if(isTitleRichText.checked){
             Utils.hideComponent(title, "div");
             Utils.showComponent(richTextTitle, "div");
@@ -202,14 +202,12 @@
     function resolveRichTextOptions(dialog, areOptionsRichText, isToggled) {
         let enumNames = dialog.find(BASE_ENUMNAMES_VISIBLE),
             richTextEnumNames = dialog.find(BASE_RICH_TEXT_ENUMNAMES),
-            richTextEnumNamesInput = dialog.find(BASE_WRAPPER_INPUT_RICH_TEXT_ENUMNAMES),
-            richTextEnumNamesDiv = dialog.find(BASE_WRAPPER_VALUE_RICH_TEXT_ENUMNAMES);
+            richTextEnumNamesDiv = dialog.find("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']");
         if(areOptionsRichText != null && areOptionsRichText.checked){
             for (let i = 0; i < richTextEnumNames.length; i++) {
                 Utils.hideComponent(enumNames[i], "div");
                 Utils.showComponent(richTextEnumNames[i], "div");
                 copyTextValueToRte(enumNames[i], richTextEnumNamesDiv[i]);
-                richTextEnumNamesInput[i].value = enumNames[i].value;
             }
         } else {
             for (let i = 0; i < richTextEnumNames.length; i++) {

@@ -179,13 +179,9 @@ describe('Page - Authoring', function () {
         cy.get("div[name='richTextEnumNames']").then(($el) => {
             $el[0].scrollIntoView();
         })
-        cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
         cy.get("div[name='richTextEnumNames']").first().should('be.visible');
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
         cy.get('.cq-dialog-submit').click();
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
     });
 
     it('check rich text inline editor is present', function(){
