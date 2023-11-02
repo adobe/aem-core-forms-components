@@ -33,10 +33,7 @@
     if(window.guidelib){
         var superFormsEditorAppendButton = window.guidelib.touchlib.editToolbar.prototype.appendButton;
         window.guidelib.touchlib.editToolbar.prototype.appendButton = function (editable, name, action) {
-            //adding this check because we don't want to change editorType for v1 forms.
-            if(window.guidelib.touchlib.utils.checkIfCoreComponentsBasedForm()){
-                correctEditableEditorType(editable, name);
-            }
+            correctEditableEditorType(editable, name);
             superFormsEditorAppendButton.apply(this, [editable, name, action]);
         };
     };
