@@ -22,29 +22,29 @@
   data-sly-use.longDescription="${renderer.longDescriptionPath}"
   data-sly-use.questionMark="${renderer.questionMarkPath}"
   id="${panel.id}"
-  class="cmp-verticaltabs"
+  class="cmp-adaptiveform-verticaltabs"
   data-panelcontainer="${wcmmode.edit && 'verticaltabs'}"
   data-cmp-is="adaptiveFormVerticalTabs"
   data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
   data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}"
   data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}">
-     <div class="cmp-verticaltabs__label-container">
-        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-        <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+     <div class="cmp-adaptiveform-verticaltabs__label-container">
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-adaptiveform-verticaltabs'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-verticaltabs'}" data-sly-unwrap></div>
      </div>
-     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-<div class="cmp-verticaltabs__tabs-container" id="${widgetId}">
+     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-adaptiveform-verticaltabs'}" data-sly-unwrap></div>
+     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-verticaltabs'}" data-sly-unwrap></div>
+<div class="cmp-adaptiveform-verticaltabs__tabs-container" id="${widgetId}">
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
      data-sly-list.tab="${tabs.items}"
      role="tablist"
-     class="cmp-verticaltabs__tablist"
+     class="cmp-adaptiveform-verticaltabs__tablist"
      aria-label="${tabs.accessibilityLabel}"
      aria-multiselectable="false">
      <sly data-sly-test.isActive="${tab.name == tabs.activeItem}"/>
      <li role="tab"
          id="${tab.id}__tab"
-         class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}"
+         class="cmp-adaptiveform-verticaltabs__tab${isActive ? ' cmp-adaptiveform-verticaltabs__tab--active' : ''}"
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          aria-controls="${tab.id}__tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
@@ -56,7 +56,7 @@
       role="tabpanel"
       aria-labelledby="${item.id}__tab"
       tabindex="0"
-      class="cmp-verticaltabs__tabpanel${item.name == tabs.activeItem ? ' cmp-verticaltabs__tabpanel--active' : ''}"
+      class="cmp-adaptiveform-verticaltabs__tabpanel${item.name == tabs.activeItem ? ' cmp-adaptiveform-verticaltabs__tabpanel--active' : ''}"
       data-cmp-hook-adaptiveFormVerticalTabs="tabpanel"></div>
 
 </div>
