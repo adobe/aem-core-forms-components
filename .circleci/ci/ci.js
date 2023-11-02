@@ -109,7 +109,8 @@ module.exports = class CI {
                 break;  // Break out of the loop if Curl is successful
             } else {
                 console.log('aem restart failed. Retrying in', retryInterval, 'seconds...');
-                await new Promise(resolve => setTimeout(resolve, retryInterval * 1000));
+                this.sh(`sleep 1m`);
+                //await new Promise(resolve => setTimeout(resolve, retryInterval * 1000));
             }
         }
 
@@ -117,10 +118,10 @@ module.exports = class CI {
         // Retry the request with the specified maxRetries
         for (let i = 1; i <= 5; i++) {
             try {
-                console.log(`Attempt ${i}:`);
+                console.log(`Rest API attempt ${i}:`);
                 const curlCommand = `curl -i -X GET -u admin:admin http://localhost:4502/adobe/forms/af/L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L2JsYW5r --max-time 300`;
                 const curlResult = e.execSync(curlCommand, { encoding: 'utf8' });
-
+                console.log(curlResult);
                 if (curlResult.includes('HTTP/1.1 200 OK')) {
                     console.log('URL returned a 200 status code.');
 
@@ -134,12 +135,14 @@ module.exports = class CI {
                     }
                 } else {
                     console.log('rest api failed. Retrying in 5 mins');
-                    await new Promise(resolve => setTimeout(resolve, 300000));
+                    this.sh(`sleep 5m`);
+                    //await new Promise(resolve => setTimeout(resolve, 300000));
                 }
             } catch (error) {
                 console.error('Error:', error.message);
                 console.log('Retrying in 300 seconds...'); // Wait 5 minutes before retrying
-                await new Promise(resolve => setTimeout(resolve, 300000));
+                this.sh(`sleep 5m`);
+                //await new Promise(resolve => setTimeout(resolve, 300000));
             }
         }
     }
