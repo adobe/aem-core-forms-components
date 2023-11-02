@@ -6,7 +6,7 @@
 
 # AEM Forms Core Components
 
-The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data. 
+The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data.
 
 This project is intended to be used in conjunction with the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). AEM Forms Core Components use the AEM Sites Core Components as a foundation where possible and extending them.
 
@@ -61,7 +61,7 @@ For a list of requirements for previous versions, see [Historical System Require
 
 ### AEM Sites Core Components
 
-This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.  
+This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.
 
 ## Building
 
@@ -103,7 +103,7 @@ The hostname and port of the instance can be changed with the following user def
 We have a set of example proxy components to demonstrate how the existing components can be customized or
 new components can be added. The `examples` module contains the code for all the components
 
-To build and install that, from the examples directory (or from the root directory), 
+To build and install that, from the examples directory (or from the root directory),
 run the following command
 
 ```shell
@@ -111,13 +111,13 @@ mvn clean install -PautoInstallExamples,include-wcm-components-examples
 ```
 
 ### AEM as a Cloud Service SDK
-When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
-(in conjunction with previously documented profiles) to generate cloud-ready artifacts 
-(with components located in `/libs` instead of `/apps`). 
+When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile
+(in conjunction with previously documented profiles) to generate cloud-ready artifacts
+(with components located in `/libs` instead of `/apps`).
 To allow recompilation of the HTL scripts, you should disable `aem-precompiled-scripts` bundle.
 
-Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365), 
-please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
+Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365),
+please only use `autoInstallPackage` and `autoInstallPackagePublish` when
 working with the AEM as a Cloud Service SDK!
 
 ### UberJar

@@ -293,7 +293,7 @@
                                         <filter>
                                             <root>/libs/core/fd/components</root>
                                         </filter>
-                                         <filter>
+                                        <filter>
                                             <root>/libs/core/fd/clientlibs</root>
                                         </filter>
                                     </filters>

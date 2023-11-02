@@ -35,9 +35,9 @@ describe('Page - Authoring', function () {
     // get the iframe > document > body
     // and retry until the body element is not empty
     return cy
-        .get('iframe#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
+    .get('iframe#ContentFrame')
+    .its('0.contentDocument.body').should('not.be.empty')
+    .then(cy.wrap)
   }
 
   const testRadioButtonBehaviour = function(radioButtonEditPathSelector, radioButtonDrop) {
@@ -47,11 +47,11 @@ describe('Page - Authoring', function () {
 
     // Check If Dialog Options Are Visible
     cy.get("[name='./type@Delete']")
-        .should("exist");
+    .should("exist");
     cy.get("[name='./enum@Delete']")
-        .should("exist");
+    .should("exist");
     cy.get("[name='./enumNames@Delete']")
-        .should("exist");
+    .should("exist");
 
     // Checking some dynamic behaviours
     cy.get("[name='./required'][type=\"checkbox\"]").should("exist");
@@ -91,19 +91,19 @@ describe('Page - Authoring', function () {
     });
 
     it('insert radio button in form container', function () {
-        cy.cleanTest(radioButtonDrop).then(function() {
-            dropRadioButtonInGuideContainer();
-            cy.deleteComponentByPath(radioButtonDrop);
-        });
+      cy.cleanTest(radioButtonDrop).then(function() {
+        dropRadioButtonInGuideContainer();
+        cy.deleteComponentByPath(radioButtonDrop);
+      });
     });
 
     it ('open edit dialog of Radio Button', function(){
-        cy.cleanTest(radioButtonDrop).then(function() {
-            testRadioButtonBehaviour(radioButtonEditPathSelector, radioButtonDrop);
-        });
+      cy.cleanTest(radioButtonDrop).then(function() {
+        testRadioButtonBehaviour(radioButtonEditPathSelector, radioButtonDrop);
+      });
     });
 
-  it('check rich text support for label', function(){
+    it('check rich text support for label', function(){
       dropRadioButtonInGuideContainer();
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
       cy.invokeEditableAction("[data-action='CONFIGURE']");
@@ -113,63 +113,63 @@ describe('Page - Authoring', function () {
       cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
       cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
       cy.get('.cq-dialog-submit').click();
-  });
+    });
 
-  it('check rich text inline editor is present', function(){
+    it('check rich text inline editor is present', function(){
       cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
       cy.invokeEditableAction("[data-action='EDIT']");
       cy.get(".rte-toolbar").should('be.visible');
       cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
       cy.deleteComponentByPath(radioButtonDrop);
-  });
+    });
 
     xit ('check value type validations', function() {
-        cy.cleanTest(radioButtonDrop).then(function() {
-            // For Number Type
-            dropRadioButtonInGuideContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get('.cmp-adaptiveform-radiobutton__type').click();
-            cy.get("coral-selectlist-item").contains('Number').should('be.visible').click({force: true});
-            cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Number');
-            cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+      cy.cleanTest(radioButtonDrop).then(function() {
+        // For Number Type
+        dropRadioButtonInGuideContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-radiobutton__type').click();
+        cy.get("coral-selectlist-item").contains('Number').should('be.visible').click({force: true});
+        cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Number');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
-            cy.deleteComponentByPath(radioButtonDrop);
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(radioButtonDrop);
 
-            // For Boolean
-            dropRadioButtonInGuideContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get('.cmp-adaptiveform-radiobutton__type').click();
-            cy.get("coral-selectlist-item").contains('Boolean').should('be.visible').click({force: true});
-            cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Boolean');
-            cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+        // For Boolean
+        dropRadioButtonInGuideContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-radiobutton__type').click();
+        cy.get("coral-selectlist-item").contains('Boolean').should('be.visible').click({force: true});
+        cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Boolean');
+        cy.get('.cq-dialog-submit').click();
+        cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
-            cy.deleteComponentByPath(radioButtonDrop);
-        });
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(radioButtonDrop);
+      });
     })
 
     it ('check for duplicate enum values', function() {
-        cy.cleanTest(radioButtonDrop).then(function() {
-            dropRadioButtonInGuideContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
-            cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force: true});
-            cy.get('input[name="./enum"]').last().invoke('val', '0');
-            cy.get('input[name="./enumNames"]').last().invoke('val', 'Item 3');
-            cy.get('.cq-dialog-submit').click().then(() => {
-                cy.get('.cq-dialog-submit').should('not.exist')
-            });
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option').should('have.length', 2);
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 3');
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 2');
-            getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 1').should('not.exist');
-            cy.deleteComponentByPath(radioButtonDrop);
-        })
+      cy.cleanTest(radioButtonDrop).then(function() {
+        dropRadioButtonInGuideContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force: true});
+        cy.get('input[name="./enum"]').last().invoke('val', '0');
+        cy.get('input[name="./enumNames"]').last().invoke('val', 'Item 3');
+        cy.get('.cq-dialog-submit').click().then(() => {
+          cy.get('.cq-dialog-submit').should('not.exist')
+        });
+        getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton__option').should('have.length', 2);
+        getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 3');
+        getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 2');
+        getPreviewIframeBody().find('.cmp-adaptiveform-radiobutton').parent().parent().contains('Item 1').should('not.exist');
+        cy.deleteComponentByPath(radioButtonDrop);
+      })
     })
   })
 });
