@@ -42,22 +42,22 @@ The following properties are written to JCR for this Accordion component and are
 
 ## BEM Description
 ```
-BLOCK cmp-verticaltabs
-    ELEMENT cmp-verticaltabs__tablist
-    ELEMENT cmp-verticaltabs__label
-    ELEMENT cmp-verticaltabs__label-container
-    ELEMENT cmp-verticaltabs__tab
-        MOD cmp-verticaltabs__tab--active
-    ELEMENT cmp-verticaltabs__title
-    ELEMENT cmp-verticaltabs__icon
-    ELEMENT cmp-verticaltabs__label
-    ELEMENT cmp-verticaltabs__shortdescription
-    ELEMENT cmp-verticaltabs__longdescription
-    ELEMENT cmp-verticaltabs__questionmark
+BLOCK cmp-adaptiveform-verticaltabs
+    ELEMENT cmp-adaptiveform-verticaltabs__tablist
+    ELEMENT cmp-adaptiveform-verticaltabs__label
+    ELEMENT cmp-adaptiveform-verticaltabs__label-container
+    ELEMENT cmp-adaptiveform-verticaltabs__tab
+        MOD cmp-adaptiveform-verticaltabs__tab--active
+    ELEMENT cmp-adaptiveform-verticaltabs__title
+    ELEMENT cmp-adaptiveform-verticaltabs__icon
+    ELEMENT cmp-adaptiveform-verticaltabs__label
+    ELEMENT cmp-adaptiveform-verticaltabs__shortdescription
+    ELEMENT cmp-adaptiveform-verticaltabs__longdescription
+    ELEMENT cmp-adaptiveform-verticaltabs__questionmark
 ```
 
 ### Note
-By placing the class names `cmp-verticaltabs__label` and `cmp-verticaltabs__questionmark` within the `cmp-verticaltabs__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+By placing the class names `cmp-adaptiveform-verticaltabs__label` and `cmp-adaptiveform-verticaltabs__questionmark` within the `cmp-adaptiveform-verticaltabs__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## Client Libraries
 The component provides a `core.forms.components.verticaltabs.v1.runtime` client library category that contains a JavaScript

@@ -17,7 +17,7 @@
 
     const pagePath = "content/forms/af/core-components-it/samples/verticaltabs/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
-    const bemBlock = 'cmp-verticaltabs';
+    const bemBlock = 'cmp-adaptiveform-verticaltabs';
     let formContainer = null;
 
     beforeEach(() => {
@@ -87,11 +87,11 @@
     }
     it("switch tab in runtime", () => {
         tab2().click();
-        tab2().should('have.class','cmp-verticaltabs__tab--active');
+        tab2().should('have.class','cmp-adaptiveform-verticaltabs__tab--active');
         tab2().should('have.attr','aria-selected','true');
         tab1().should('have.attr','aria-selected','false');
         tab1().click();
-        tab1().should('have.class','cmp-verticaltabs__tab--active');
+        tab1().should('have.class','cmp-adaptiveform-verticaltabs__tab--active');
         tab1().should('have.attr','aria-selected','true');
         tab2().should('have.attr','aria-selected','false');
     });
@@ -102,14 +102,14 @@
             keyCode: 40
         });
 
-        tab2().should('have.class','cmp-verticaltabs__tab--active');
+        tab2().should('have.class','cmp-adaptiveform-verticaltabs__tab--active');
         tab2().should('have.attr','aria-selected','true');
         tab1().should('have.attr','aria-selected','false');
 
         tab2().trigger('keydown',{
             keyCode: 38
         });
-        tab1().should('have.class','cmp-verticaltabs__tab--active');
+        tab1().should('have.class','cmp-adaptiveform-verticaltabs__tab--active');
         tab1().should('have.attr','aria-selected','true');
         tab2().should('have.attr','aria-selected','false');
     });
