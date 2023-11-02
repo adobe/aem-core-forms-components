@@ -29,9 +29,9 @@ jobs:
 
           # Check if any commit message contains a specific keyword or pattern (e.g., "RTC")
           if echo "$commit_messages" | grep -q 'RTC' && echo "$changed_files" | grep -E 'resources/schema/.*\.json$'; then
-            echo "Commit message contains 'RTC' keyword, and specification files have changed. Build passed."
+            echo "Commit message contains 'RTC' keyword, and specification files have changed. Build passed. Please check if your changes are working in visual rule editor"
           else
-            echo "Either commit message doesn't contain 'RTC' keyword or specification files haven't changed. Build failed."
+            echo "Either commit message doesn't contain 'RTC' keyword or specification files haven't changed. Build failed. Please check if your changes are working in visual rule editor"
             exit 1
           fi
         shell: bash
