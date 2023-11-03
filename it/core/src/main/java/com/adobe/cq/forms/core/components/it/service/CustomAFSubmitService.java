@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.it.service;
 
 
+import com.adobe.aemds.guide.common.GuideValidationResult;
 import com.adobe.aemds.guide.model.FormSubmitInfo;
 import com.adobe.aemds.guide.service.FormSubmitActionService;
 import com.adobe.aemds.guide.utils.GuideConstants;
@@ -90,8 +91,10 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
             logger.error("Error while using the AF Submit service", ex);
-            // todo: have to fix this
-            result.put(GuideConstants.FORM_SUBMISSION_ERROR, Boolean.TRUE);
+            GuideValidationResult guideValidationResult = new GuideValidationResult();
+            guideValidationResult.setOriginCode("500");
+            guideValidationResult.setErrorMessage("Internal server error");
+            result.put(GuideConstants.FORM_SUBMISSION_ERROR, guideValidationResult);
         }
         return result;
     }
