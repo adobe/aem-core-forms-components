@@ -36,6 +36,7 @@
         static bemBlock = "cmp-adaptiveform-wizard";
         static #tabIdSuffix = "_wizard-item-nav";
         static #wizardPanelIdSuffix = "__wizardpanel";
+        static #toolbarIdSuffix = "__toolbar";
         maxEnabledTab = 0;
         minEnabledTab = 0;
         static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
@@ -456,10 +457,22 @@
             }
         }
 
+        #syncWizardToolbar() {
+            let toolbar = this.#getCachedToolbar();
+            if(toolbar) {
+                toolbar.forEach((element) => {
+                    let childViewId = element.querySelectorAll("[data-cmp-is]")[0].id
+                    element.id = childViewId + Wizard.#toolbarIdSuffix;
+                    element.setAttribute("aria-labelledby", childViewId + Wizard.#toolbarIdSuffix);
+                })
+            }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncWizardNavLabels();
             this.#syncWizardPanels();
+            this.#syncWizardToolbar();
         }
 
         handleChildAddition(childView) {
@@ -524,7 +537,9 @@
 
         getChildViewByIndex(index) {
             let wizardPanels = this.#getCachedWizardPanels();
-            let fieldId = wizardPanels[index].id.substring(0, wizardPanels[index].id.lastIndexOf("__"));
+            let toolbar = this.#getCachedToolbar();
+            let allChildren = toolbar ? wizardPanels.concat(toolbar) : wizardPanels;
+            let fieldId = allChildren[index].id.substring(0, allChildren[index].id.lastIndexOf("__"));
             return this.getChild(fieldId);
         }
 
@@ -563,6 +578,10 @@
 
         #getCachedWizardPanels() {
             return this._elements["wizardpanel"]
+        }
+
+        #getCachedToolbar() {
+            return this._elements["toolbar"];
         }
 
         #getTabNavElementById(tabId) {
