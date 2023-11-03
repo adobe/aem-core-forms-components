@@ -40,6 +40,7 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -129,9 +130,26 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return Arrays.copyOf(exportedItemsOrder, exportedItemsOrder.length);
     }
 
+    private List<Resource> rearrangeToolbar(List<Resource> resources) {
+        int toolbarIndex = -1;
+        for (int i = 0; i < resources.size(); i++) {
+            Panel panel = resources.get(i).adaptTo(Panel.class);
+            if (panel != null && panel.getFDToolbar()) {
+                toolbarIndex = i;
+                break;
+            }
+        }
+        // rearranging toolbar to the end if present
+        if (toolbarIndex != -1) {
+            Resource toolbar = resources.remove(toolbarIndex);
+            resources.add(toolbar);
+        }
+        return resources;
+    }
+
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
         List<Resource> filteredChildrenResources = getFilteredChildrenResources();
-        return getChildrenModels(request, modelClass, filteredChildrenResources);
+        return getChildrenModels(request, modelClass, rearrangeToolbar(filteredChildrenResources));
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass,

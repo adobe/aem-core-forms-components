@@ -14,44 +14,20 @@
  * limitations under the License.
  ******************************************************************************/
 (function(author){
-
     "use strict";
     /**
      * Adds the toolbar component as a child of the panel 
-     * @param {Object} component The component that has to be instantiated
+     * @param {Object} panel The component for which the toolbar has to be added
      */
      window.CQ.FormsCoreComponents.editorhooks.addPanelToolbar = function (panel) {
         if(!containsToolbarChild(panel)) {
-            // fetch cq:template toolbarJson
-            // TODO: cq:template path needs to be changed to /libs once part of far
-            let toolbarJson = $.ajax({
-                type: 'GET',
-                url : '/apps/core/fd/components/form/toolbar/v1/toolbar/cq:template.-1.json',
-                async: false
-            }).responseJSON;
-
-            const options = {
-                ':content' : JSON.stringify(toolbarJson),
-                ':operation' : 'import',
-                ':contentType' : 'json',
-                ':replace' : true,
-                ':replaceProperties' : true
-            };
-
-            // creating toolbar
-           $.ajax({
-                type: 'POST',
-                async: false,
-                data: options,
-                url: Granite.HTTP.externalize(panel.path + "/toolbar")
-            }).done(() => {
+            author.afUtils.addToolbar(panel.path).then(() => {
                 panel.refresh();
-            });
-        } 
+            })
+        };
     };
 
     const containsToolbarChild = function (panel) {
         return panel.getChildren().some(child => child.getNodeName() === 'toolbar');
     }
-    
 })(Granite.author);

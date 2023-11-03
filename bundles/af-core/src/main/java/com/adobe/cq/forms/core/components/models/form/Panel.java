@@ -36,4 +36,8 @@ public interface Panel extends Container, ContainerConstraint {
     default Boolean isReadOnly() {
         return null;
     }
+
+    default Boolean getFDToolbar() {
+        return false;
+    }
 }

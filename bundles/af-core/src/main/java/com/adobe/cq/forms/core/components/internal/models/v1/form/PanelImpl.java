@@ -145,7 +145,6 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
         return customDorProperties;
     }
 
-    @JsonIgnore
     public Boolean getFDToolbar() {
         return fdToolbar ? fdToolbar : false;
     }

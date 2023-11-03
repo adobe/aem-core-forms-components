@@ -6,7 +6,7 @@
     fieldType="panel"
     hideTitle="true"
     fd:toolbar="{Boolean}true"
-    sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+    sling:resourceType="core/fd/components/form/toolbar/v1/toolbar"
     roleAttribute="toolbar">
     <nextitemnav
         jcr:primaryType="nt:unstructured"
