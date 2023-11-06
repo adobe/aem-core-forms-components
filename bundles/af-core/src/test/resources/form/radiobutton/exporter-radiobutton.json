@@ -5,14 +5,8 @@
   "type": "string",
   "enforceEnum": true,
   "enumNames": [
-    {
-      "richText": true,
-      "value": "<p>Item 1</p>"
-    },
-    {
-      "richText": true,
-      "value": "<p>Item 2</p>"
-    }
+    "Item 1",
+    "Item 2"
   ],
   "label": {
     "value": "Radio Button"

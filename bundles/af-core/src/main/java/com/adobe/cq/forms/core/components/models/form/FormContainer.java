@@ -304,6 +304,17 @@ public interface FormContainer extends Container {
     }
 
     /**
+     * Returns the language of the containing page
+     *
+     * @return the language of the containing page
+     * @since com.adobe.cq.forms.core.components.models.form 4.7.1
+     */
+    @JsonIgnore
+    default String getContainingPageLang() {
+        return getLang();
+    }
+
+    /**
      * API to give direction of content in HTML for a given language.
      *
      * @return one of the constants "rtl" or "ltr" depending on direction of given language
