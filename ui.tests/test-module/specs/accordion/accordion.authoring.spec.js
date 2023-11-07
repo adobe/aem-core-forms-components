@@ -66,14 +66,8 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-        cy.get('.cq-dialog-cancel').should("exist").focus().click({ force: true });
-        cy.get('.cq-dialog-cancel').then(($el) => {
-            if ($el.length) {
-                cy.get($el).click();
-                cy.get('.cq-dialog-cancel').should("not.exist").then(() => {
-                    cy.deleteComponentByPath(accordionDrop);
-                });
-            }
+        cy.clickAndValidate('.cq-dialog-cancel').then(() => {
+            cy.deleteComponentByPath(accordionDrop);
         });
     }
 

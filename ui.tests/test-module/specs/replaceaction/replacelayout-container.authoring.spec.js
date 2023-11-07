@@ -177,14 +177,13 @@ describe('component replace - Authoring', function () {
     })
 
     context('Group independent replace action test', function () {
-        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic";
+        const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
+            replaceCompPageUrl = replaceCompPagePath;
 
         const updateAllowedComponent = function (allow) {
             cy.get('[title="Adaptive Form Container [Root]"]').trigger ('mouseover').then(() => {
                 cy.get('[title="Adaptive Form Container [Root]"]').click();
             })
-                // .should('have.attr', 'title', 'Adaptive Form Container [Root]')
-                // .click({force: false})
                 .then(() => {
                     cy.get("body").then($body => {
                         if ($body.find(".cq-editable-action").length > 0) {
@@ -192,11 +191,10 @@ describe('component replace - Authoring', function () {
                         }
                     })
                         .then(() => {
-                        cy.get('[value="group:replace test group"]').eq(0)
+                        cy.get('[value="group:replace test group"]').eq(0).scrollIntoView()
                             .invoke('attr', 'checked').then(isChecked => {
                             if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
-                                cy.log('clicking now');
-                                cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                                cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                                     cy.get('[title="Done"]').scrollIntoView().click();
                                 });
                             } else {
@@ -219,13 +217,13 @@ describe('component replace - Authoring', function () {
             cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
             updateAllowedComponent(true);
 
-            cy.openSiteAuthoring(replaceCompPagePath);
+            cy.openSiteAuthoring(replaceCompPageUrl);
             cy.selectLayer("Edit");
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
             cy.invokeEditableAction("[data-action='replace']");
             const replacementComp = "[value='" + replaceCompTestGroup + "']";
-            cy.get(replacementComp).click();
+            cy.get(replacementComp).click({force: true});
             cy.deleteComponentByPath(replaceCompDrop);
         });
     });

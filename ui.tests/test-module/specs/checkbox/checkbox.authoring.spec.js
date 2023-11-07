@@ -52,7 +52,7 @@ describe('Page - Authoring', function () {
     .should("exist");
 
 
-    cy.get('.cq-dialog-cancel').click();
+    cy.clickAndValidate('.cq-dialog-cancel');
     cy.deleteComponentByPath(checkboxDrop);
   }
 

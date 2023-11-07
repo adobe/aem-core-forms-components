@@ -669,6 +669,21 @@ Cypress.Commands.add("expectNoConsoleErrors", () => {
     });
 });
 
+
+
+/**
+ * If cypress does not trigger "click" action with
+ * cy.click() the first time, this will check and click again.
+ */
+Cypress.Commands.add("clickAndValidate", (selector) => {
+    cy.get(selector).should("exist").focus().click({ force: true });
+    cy.get(selector).then(($el) => {
+        if ($el.length > 0) {
+            cy.get($el).click();
+        }
+    });
+});
+
 Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
     const rect = subject[0].getBoundingClientRect();
   

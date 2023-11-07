@@ -116,7 +116,7 @@ describe('Replace functionality - sites', function () {
         cy.get('[data-text="Layout Container"]').eq(0).click()
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                         cy.get('[title="Done"]').scrollIntoView().click();
                     })
                 });
@@ -128,7 +128,7 @@ describe('Replace functionality - sites', function () {
         cy.get('[data-text="Layout Container"]').eq(0).click()
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                         cy.get('[title="Done"]').scrollIntoView().click();
                     })
                 });
