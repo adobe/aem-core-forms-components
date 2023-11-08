@@ -284,14 +284,15 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <phase>prepare-package</phase>
                                 <configuration>
-                                    <tasks>
-                                        <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
+                                    <target>
+                                    <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
 
-                                        <!-- Should uncomment once core components are part of far -->
+                                    <!-- Should uncomment once core components are part of far -->
 
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Content" />
@@ -321,7 +322,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/pageheader/v1/pageheader/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragment/v1/fragment/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragmentcontainer/v1/fragmentcontainer/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
