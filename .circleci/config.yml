@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  maven: circleci/maven@3.8.7
   codecov: codecov/codecov@1.0.5
   browser-tools: circleci/browser-tools@1.4.3
 
