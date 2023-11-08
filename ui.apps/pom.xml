@@ -269,10 +269,10 @@
                             <execution>
                                 <phase>prepare-package</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
