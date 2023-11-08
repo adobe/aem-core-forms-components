@@ -69,7 +69,10 @@ public class FormContainerImplTest {
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
+    protected static final String SITES_LANG_PATH = "/content/th/exampleSite";
     protected static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH + "/jcr:content/root/sitecontainer/formcontainer";
+    protected static final String FORM_CONTAINER_PATH_WITH_LANGUAGE_IN_SITES = SITES_LANG_PATH
+        + "/jcr:content/root/sitecontainer/formcontainer";
 
     protected static final String AF_PATH = "/content/forms/af/testAf";
 
@@ -82,7 +85,8 @@ public class FormContainerImplTest {
                                                                                   // resource up to find page
         context.load().json(BASE + "/test-lib-form-container.json", LIB_FORM_CONTAINER); // required since v2 container resource type should
                                                                                          // be v1 for localization to work
-        context.load().json(BASE + "/test-forms-in-sites.json", "/content/exampleSite");
+        context.load().json(BASE + "/test-forms-in-sites.json", SITES_PATH);
+        context.load().json(BASE + "/test-forms-in-sites.json", SITES_LANG_PATH);
         context.load().json(BASE + "/test-content.json", CONTENT_FORM_WITHOUT_PREFILL_ROOT);
 
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
@@ -131,6 +135,13 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
         assertNotNull(formContainer.getId());
         assertEquals("L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=", formContainer.getId());
+    }
+
+    @Test
+    void testGetPageLangForSitePage() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_WITH_LANGUAGE_IN_SITES, FormContainer.class, context);
+        assertNotNull(formContainer.getContainingPageLang());
+        assertEquals("th", formContainer.getContainingPageLang());
     }
 
     @Test
@@ -312,6 +323,28 @@ public class FormContainerImplTest {
         return request.adaptTo(FormContainer.class);
     }
 
+    private FormContainer getFormContainerWithRTLLocaleUnderTest(String resourcePath) throws Exception {
+        context.currentResource(resourcePath);
+        // added this since AF API expects this to be present
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
+            mock(GuideLocalizationService.class));
+        Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "ar-ae" });
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundleRTL = (MockResourceBundle) bundleProvider.getResourceBundle(
+            "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("ar-ae"));
+        resourceBundleRTL.putAll(new HashMap<String, String>() {
+            {
+                put("guideContainer##textinput##description##5648", "dummy 1");
+            }
+        });
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "ar-ae");
+        request.setParameterMap(paramMap);
+        context.currentResource().adaptTo(FormContainer.class);
+        return request.adaptTo(FormContainer.class);
+    }
+
     @Test
     void testGetName() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
@@ -382,6 +415,15 @@ public class FormContainerImplTest {
         List<String> clientLibs = formClientLibManager.getClientLibRefList();
         assertEquals(1, clientLibs.size());
         assertEquals("abc", clientLibs.get(0));
+    }
+
+    @Test
+    public void testGetLanguageDirection() throws Exception {
+        FormContainer formContainer = getFormContainerWithRTLLocaleUnderTest(PATH_FORM_1);
+        assertEquals("rtl", formContainer.getLanguageDirection());
+
+        FormContainer formContainerLtr = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
+        assertEquals("ltr", formContainer.getLanguageDirection());
     }
 
 }

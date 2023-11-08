@@ -28,7 +28,7 @@
   data-placeholder-text="${wcmmode.edit && 'Please drag Tab components here' @ i18n}"
   data-sly-test.widgetId="${'{0}-{1}' @ format=[tabs.id, 'widget']}">
      <div class="cmp-tabs__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=tabs.label.value, labelVisible=tabs.label.visible, labelRichText=tabs.label.richText, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=tabs.label.value, labelVisible=tabs.label.visible, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=tabs.id, longDescription=tabs.description, bemBlock='cmp-tabs'}" data-sly-unwrap></div>
      </div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=tabs.id, shortDescriptionVisible=tabs.tooltipVisible, shortDescription=tabs.tooltip, bemBlock='cmp-tabs'}" data-sly-unwrap></div>

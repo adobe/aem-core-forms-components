@@ -21,10 +21,21 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Interface for a label
  *
- * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+ * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface Label extends TextContent {
+public interface Label {
+
+    /**
+     * Returns {@code true} if label is rich text, otherwise {@code false}.
+     *
+     * @return {@code true} if label is rich text, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default Boolean isRichText() {
+        return null;
+    }
 
     /**
      * Returns {@code true} if label should be visible, otherwise {@code false}.
@@ -34,6 +45,17 @@ public interface Label extends TextContent {
      */
     @Nullable
     default Boolean isVisible() {
+        return null;
+    }
+
+    /**
+     * Returns the value of this label.
+     *
+     * @return the value of this label
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getValue() {
         return null;
     }
 
