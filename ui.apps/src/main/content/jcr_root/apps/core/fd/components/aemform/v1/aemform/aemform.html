@@ -42,7 +42,7 @@
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
-    <sly data-sly-set.dataRef="${request.requestParameterMap['dataRef']!=null ? request.requestParameterMap['dataRef'][0].toString :'' @ context='attribute'}"/>
+    <sly data-sly-set.dataRef="${request.requestParameterMap['dataRef']!=null ? request.requestParameterMap['dataRef'][0].toString :'' @ context='unsafe'}"/>
     <sly data-sly-set.wcmmode="${!wcmmode.edit?'wcmmode={0}':'' @ format=[wcmmode.toString]}"/>
 
     <sly data-sly-set.urlParams="${dataRef}${dataRef && wcmmode ? '&' :''}${wcmmode}"/>
