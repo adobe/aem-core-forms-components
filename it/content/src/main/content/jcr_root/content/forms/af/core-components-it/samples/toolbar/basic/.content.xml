@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:deviceGroups="[/etc/mobile/groups/responsive]"
+            cq:lastModified="{Date}2023-11-08T15:28:02.352+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="toolbarTest"
+            sling:configRef="/conf/forms/toolbar/test/"
+            sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+                fd:version="2.1"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                dorType="none"
+                fieldType="form"
+                thankYouOption="page"
+                themeRef="/libs/fd/af/themes/canvas"
+                title="test">
+            <panelcontainer
+                    jcr:created="{Date}2023-11-08T15:22:28.426+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-08T15:22:28.426+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    name="panelcontainer1699437148483">
+                <textinput
+                        jcr:created="{Date}2023-11-08T15:22:33.792+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-08T15:22:33.792+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1699437153844"/>
+                <emailinput
+                        jcr:created="{Date}2023-11-08T15:22:41.407+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-08T15:22:41.407+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        fieldType="email"
+                        name="emailinput1699437161443"/>
+                <numberinput
+                        jcr:created="{Date}2023-11-08T15:22:46.273+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-08T15:22:46.273+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1699437166328"/>
+            </panelcontainer>
+            <accordion
+                    jcr:created="{Date}2023-11-06T22:27:53.617+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-06T22:27:53.617+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Accordion"
+                    sling:resourceType="forms-components-examples/components/form/accordion"
+                    fieldType="panel"
+                    name="accordion1699289873831">
+                <item_1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Item 1"
+                        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                        fieldType="panel"
+                        layout="responsiveGrid"
+                        name="item_1">
+                    <textinput
+                            jcr:created="{Date}2023-11-06T22:28:07.867+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2023-11-06T22:28:07.867+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Text Input"
+                            sling:resourceType="forms-components-examples/components/form/textinput"
+                            fieldType="text-input"
+                            name="textinput1699289887975"/>
+                </item_1>
+                <item_2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Item 2"
+                        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                        fieldType="panel"
+                        layout="responsiveGrid"
+                        name="item_2">
+                    <datepicker
+                            jcr:created="{Date}2023-11-06T22:28:20.425+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2023-11-06T22:28:20.425+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Date Input"
+                            sling:resourceType="forms-components-examples/components/form/datepicker"
+                            fieldType="date-input"
+                            name="datepicker1699289900467"/>
+                </item_2>
+            </accordion>
+            <verticaltabs
+                    jcr:created="{Date}2023-11-06T22:29:16.805+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-08T15:23:42.221+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Vertical Tabs"
+                    sling:resourceType="forms-components-examples/components/form/verticaltabs"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    name="verticaltabs1699289956915"
+                    readOnly="{Boolean}false"
+                    repeatable="false"
+                    textIsRich="[true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                <emailinput
+                        cq:panelTitle="Email Input"
+                        jcr:created="{Date}2023-11-06T22:29:26.496+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:29:26.496+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        fieldType="email"
+                        name="emailinput1699289966583"/>
+                <numberinput
+                        cq:panelTitle="Number Input"
+                        jcr:created="{Date}2023-11-06T22:29:45.008+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:29:45.008+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1699289985107"/>
+                <datepicker
+                        cq:panelTitle="Date Input"
+                        jcr:created="{Date}2023-11-06T22:29:54.729+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:29:54.729+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        fieldType="date-input"
+                        name="datepicker1699289994789"/>
+            </verticaltabs>
+            <tabsontop
+                    jcr:created="{Date}2023-11-06T22:30:27.275+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-08T15:22:06.929+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Tabs on top"
+                    sling:resourceType="forms-components-examples/components/form/tabsontop"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    name="tabsontop1699290027364"
+                    readOnly="{Boolean}false"
+                    repeatable="false"
+                    textIsRich="[true,true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                <datepicker
+                        cq:panelTitle="Date Input"
+                        jcr:created="{Date}2023-11-06T22:30:44.659+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:30:44.659+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        fieldType="date-input"
+                        name="datepicker1699290044724"/>
+                <emailinput
+                        cq:panelTitle="Email Input"
+                        jcr:created="{Date}2023-11-06T22:31:09.619+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:31:09.619+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        fieldType="email"
+                        name="emailinput1699290069687"/>
+                <numberinput
+                        cq:panelTitle="Number Input"
+                        jcr:created="{Date}2023-11-06T22:48:33.359+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:48:33.359+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Number Input"
+                        sling:resourceType="forms-components-examples/components/form/numberinput"
+                        fieldType="number-input"
+                        name="numberinput1699291113403"/>
+            </tabsontop>
+            <wizard
+                    jcr:created="{Date}2023-11-06T22:31:24.104+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-06T22:31:24.104+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="wizard"
+                    sling:resourceType="forms-components-examples/components/form/wizard"
+                    fieldType="panel"
+                    name="wizard1699290084144">
+                <textinput
+                        jcr:created="{Date}2023-11-06T22:31:36.494+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:31:36.494+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1699290096536"/>
+                <emailinput
+                        jcr:created="{Date}2023-11-06T22:31:48.585+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:31:48.585+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        fieldType="email"
+                        name="emailinput1699290108748"/>
+                <datepicker
+                        jcr:created="{Date}2023-11-06T22:31:42.590+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2023-11-06T22:31:42.590+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        fieldType="date-input"
+                        name="datepicker1699290102644"/>
+            </wizard>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
