@@ -45,10 +45,14 @@
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
+    <sly data-sly-set.dataRef="${request.requestParameterMap['dataRef']!=null ? request.requestParameterMap['dataRef'][0].toString :'' @ context='unsafe'}"/>
+    <sly data-sly-set.wcmmode="${!wcmmode.edit?'wcmmode={0}':'' @ format=[wcmmode.toString]}"/>
+
+    <sly data-sly-set.urlParams="${dataRef}${dataRef && wcmmode ? '&' :''}${wcmmode}"/>
         <iframe class="cmp-aemform__iframecontent"
-            src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
-            width="100%;"
-            data-form-page-path="${form.formEditPagePath}"></iframe>
+        src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html${urlParams ? '?' + urlParams : ''}"
+                width="100%;"
+                data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
          data-sly-call="${clientLib.all @ categories=['core.forms.components.aemform.v2.iframeResizer']}"/>
 </sly>
