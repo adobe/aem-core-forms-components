@@ -64,8 +64,8 @@ describe('Button - Authoring', function () {
             .should("exist");
         cy.get("coral-checkbox[name='./enabled']")
             .should("exist");
-        // cy.get("[name='./icon']")
-        //     .should("exist");
+        cy.get("[name='./readOnly']")
+            .should("not.exist");
 
 
         // Checking some dynamic behaviours
