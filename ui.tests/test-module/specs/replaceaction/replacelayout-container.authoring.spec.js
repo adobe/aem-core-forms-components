@@ -159,7 +159,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        xit('replace checkbox with radio button', function () {
+        it('replace checkbox with radio button', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 
@@ -181,14 +181,20 @@ describe('component replace - Authoring', function () {
             replaceCompPageUrl = replaceCompPagePath;
 
         const updateAllowedComponent = function (allow) {
-            cy.get('[title="Adaptive Form Container [Root]"]').click()
+            cy.get('[title="Adaptive Form Container [Root]"]').trigger ('mouseover').then(() => {
+                cy.get('[title="Adaptive Form Container [Root]"]').click();
+            })
                 .then(() => {
-                    cy.get('.cq-editable-action').eq(0).click().then(() => {
-                        cy.get('[value="group:replace test group"]').eq(0)
+                    cy.get("body").then($body => {
+                        if ($body.find(".cq-editable-action").length > 0) {
+                            cy.get('.cq-editable-action').eq(0).click()
+                        }
+                    })
+                        .then(() => {
+                        cy.get('[value="group:replace test group"]').eq(0).scrollIntoView()
                             .invoke('attr', 'checked').then(isChecked => {
                             if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
-                                cy.log('clicking now');
-                                cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                                cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                                     cy.get('[title="Done"]').scrollIntoView().click();
                                 });
                             } else {
@@ -199,7 +205,7 @@ describe('component replace - Authoring', function () {
                 })
         }
 
-        xit('test replace of component by different group', function () {
+        it('test replace of component by different group', function () {
             const testGroupCompDataPath = replaceCompPagePath+"/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + testGroupCompDataPath + "']";
 
@@ -217,10 +223,8 @@ describe('component replace - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + replaceCompEditPathSelector);
             cy.invokeEditableAction("[data-action='replace']");
             const replacementComp = "[value='" + replaceCompTestGroup + "']";
-            cy.get(replacementComp).click();
+            cy.get(replacementComp).click({force: true});
             cy.deleteComponentByPath(replaceCompDrop);
-            cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure");
-            updateAllowedComponent(false);
         });
     });
 });
