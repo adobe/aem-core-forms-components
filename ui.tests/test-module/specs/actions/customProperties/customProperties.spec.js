@@ -17,7 +17,7 @@ const sitesSelectors = require("../../../libs/commons/sitesSelectors");
  ******************************************************************************/
 describe("Custom Properties Tests", () => {
 
-    // if (cy.af.isLatestAddon()) {
+    if (cy.af.isLatestAddon()) {
         const dropTextInputInContainer = function () {
             const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
                 responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -102,5 +102,5 @@ describe("Custom Properties Tests", () => {
                 })
             });
         })
-    // }
+    }
 })
