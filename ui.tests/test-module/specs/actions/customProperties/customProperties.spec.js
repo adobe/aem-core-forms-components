@@ -96,8 +96,8 @@ describe("Custom Properties Tests", () => {
                 cy.get('.cq-dialog').should('be.visible');
                 cy.get(tabSelector).contains("Custom Properties").click({force: true});
                 cy.get(".fd-CustomProperties-multifield coral-multifield-item[role='listitem'] button[icon='delete']").eq(1).click().then(() => {
-                    cy.get('._coral-Dialog').should('be.visible');
-                    cy.get("._coral-Button--warning").contains("Delete").click({force: true});
+                    cy.get('coral-dialog[role="dialog"]').should('be.visible');
+                    cy.get("coral-dialog-footer button[variant='warning']").contains("Delete").click({force: true});
                     cy.get(submitBtnSelector).click({force: true});
                 })
             });
