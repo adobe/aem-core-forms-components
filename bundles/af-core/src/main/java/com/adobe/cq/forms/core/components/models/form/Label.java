@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Interface for a label
  *
- * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+ * @since com.adobe.cq.forms.core.components.models.form 4.8.0
  */
 @ConsumerType
 public interface Label extends TextContent {
