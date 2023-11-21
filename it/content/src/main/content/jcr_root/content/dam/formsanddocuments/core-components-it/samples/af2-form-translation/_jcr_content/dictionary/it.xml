@@ -129,4 +129,19 @@
         jcr:primaryType="nt:folder"
         sling:key="guideContainer##wizard##jcr:title##299"
         sling:message="mago"/>
+    <_x0038_fa19b1d-324d-453f-895f-60c86adb001c
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##jcr:title##3329"
+        sling:message="&lt;p>&lt;b>Seleziona animale&lt;/b>&lt;/p>"/>
+    <_x0030_ac73bc4-9c29-470f-9a99-a1c7f685a5b9
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##0"
+        sling:message="&lt;p>&lt;i>Cane&lt;/i>&lt;/p>"/>
+    <_x0038_23d3ccb-d875-4a8d-9ff9-2a2859d7bdbd
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##1"
+        sling:message="&lt;p>&lt;u>Gatto&lt;/u>&lt;/p>"/>
 </jcr:root>
