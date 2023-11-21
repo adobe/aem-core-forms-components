@@ -16,7 +16,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:EditConfig"
-    cq:actions="[edit,-,copymove,delete,-,insert,-]"
+    cq:actions="[editannotate,-,copymove,delete,-,insert,-]"
     cq:dialogMode="floating"
     cq:layout="editbar"
     cq:disableTargeting="{Boolean}true">
