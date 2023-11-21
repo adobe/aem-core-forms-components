@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * Interface to represent text as rich content
  *
- * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+ * @since com.adobe.cq.forms.core.components.models.form 4.8.0
  */
 @ProviderType
 public interface TextContent {
@@ -30,7 +30,7 @@ public interface TextContent {
      * Returns {@code true} if text is rich, otherwise {@code false}.
      *
      * @return {@code true} if text is rich, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+     * @since com.adobe.cq.forms.core.components.models.form 4.8.0
      */
     @Nullable
     default Boolean isRichText() {
@@ -41,7 +41,7 @@ public interface TextContent {
      * Returns a user friendly text to display for the possible options to be shown to the end user.
      *
      * @return the content of this text
-     * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+     * @since com.adobe.cq.forms.core.components.models.form 4.8.0
      */
     @Nullable
     default String getValue() {

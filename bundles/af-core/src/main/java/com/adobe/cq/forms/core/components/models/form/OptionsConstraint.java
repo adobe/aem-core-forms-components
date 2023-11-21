@@ -67,7 +67,7 @@ public interface OptionsConstraint {
      * The length of enum and enumNames array must match
      *
      * @return the list of enum names
-     * @since com.adobe.cq.forms.core.components.models.form 4.6.0
+     * @since com.adobe.cq.forms.core.components.models.form 4.8.0
      */
     @JsonProperty("enumNames")
     TextContent[] getEnumNamesAsTextContent();
