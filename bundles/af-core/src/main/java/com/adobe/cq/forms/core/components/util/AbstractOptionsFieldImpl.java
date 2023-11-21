@@ -29,6 +29,9 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
+import com.adobe.cq.forms.core.components.models.form.TextContent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Abstract class which can be used as base class for options {@link Field} implementations.
@@ -48,6 +51,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
     @Nullable
     protected String[] enumNames;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "areOptionsRichText")
+    @Nullable
+    private Boolean areOptionsRichText;
 
     @Override
     public boolean isEnforceEnum() {
@@ -95,6 +102,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
+    @Deprecated
+    @JsonIgnore
     public String[] getEnumNames() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
@@ -104,6 +113,29 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                     return this.translate("enumNames", p);
                 })
                 .toArray(String[]::new);
+        }
+        return null;
+    }
+
+    @Override
+    public TextContent[] getEnumNamesAsTextContent() {
+        if (enumNames != null) {
+            Map<Object, String> map = removeDuplicates();
+            String[] enumName = map.values().toArray(new String[0]);
+            return Arrays.stream(enumName)
+                .map(p -> new TextContent() {
+                    @Override
+                    @JsonInclude(JsonInclude.Include.NON_NULL)
+                    public @Nullable Boolean isRichText() {
+                        return areOptionsRichText;
+                    }
+
+                    @Override
+                    public @Nullable String getValue() {
+                        return translate("enumNames", p);
+                    }
+                })
+                .toArray(TextContent[]::new);
         }
         return null;
     }

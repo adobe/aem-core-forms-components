@@ -44,7 +44,7 @@
             value="${checkbox.default[0]}"
             disabled="${!checkbox.enabled}" />
 
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, labelRichText=checkbox.label.richText, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
     </div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=checkbox.id, shortDescriptionVisible=checkbox.tooltipVisible, shortDescription=checkbox.tooltip, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap>
