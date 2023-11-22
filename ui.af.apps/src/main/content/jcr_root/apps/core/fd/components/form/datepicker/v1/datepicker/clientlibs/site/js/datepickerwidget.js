@@ -510,7 +510,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!DatePickerWidget.#visible) {
         let date,
             validDate;
-        
+
         validDate = this.#curInstance.selectedDate || this.#model.value;
         date = validDate ? new Date(validDate) : new Date();
         this.selectedDay = this.currentDay = date.getDate();
@@ -630,11 +630,12 @@ if (typeof window.DatePickerWidget === 'undefined') {
           day1 = new Date(this.currentYear, this.currentMonth, 1).getDay(),
           rowsReq = Math.ceil((day1 + maxDay) / 7) + 1,
           data, display;
+          var localizedYear = this.#getLocalizedYear(curDate);
 
       this.#tabulateView(
           {
             caption: this.#options.locale.months[this.currentMonth] + ", "
-                + this.#convertNumberToLocale(this.currentYear),
+                + this.#convertNumberToLocale(localizedYear),
             header: this.#options.locale.days,
             numRows: rowsReq,
             numColumns: 7,
@@ -700,9 +701,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
           curDate = new Date(this.currentYear, 0), //can't omit month, if only one param present it is treated as millisecond
           data,
           month;
+          var localizedYear = this.#getLocalizedYear(curDate);
       this.#tabulateView(
           {
-            caption: this.#convertNumberToLocale(this.currentYear),
+            caption: this.#convertNumberToLocale(localizedYear),
             numRows: 4,
             numColumns: 3,
             elementAt: function (row, col) {
@@ -724,6 +726,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
           });
     }
 
+    #getLocalizedYear(date) {
+        const dateFormat = new Intl.DateTimeFormat(this.#lang, {
+            year: 'numeric'
+        });
+        const dateParts = dateFormat.formatToParts(date);
+        const yearObject = dateParts.find(yearObject => yearObject.type === "year");
+        const localizedYear = yearObject.value;
+        return Number(localizedYear);
+    }
+
     /*
      * show the year set view
      */
@@ -736,17 +748,20 @@ if (typeof window.DatePickerWidget === 'undefined') {
           curDate = new Date(),
           data,
           self = this;
+      var localizedYear = this.#getLocalizedYear(new Date(this.currentYear, 0)),
+          localizedYearSet = this.#getLocalizedYear(new Date(self.currentYear, 0));
+
       this.#tabulateView(
           {
             caption: this.#convertNumberToLocale(
-                    this.currentYear - this.#options.yearsPerView / 2) + "-"
+                    localizedYear - this.#options.yearsPerView / 2) + "-"
                 + this.#convertNumberToLocale(
-                    this.currentYear - this.#options.yearsPerView / 2
+                    localizedYear - this.#options.yearsPerView / 2
                     + this.#options.yearsPerView - 1),
             numRows: 4,
             numColumns: 4,
             elementAt: function (row, col) {
-              data = year = self.currentYear - 8 + (row * 4 + col);
+              data = year = localizedYearSet - 8 + (row * 4 + col);
               let gridId = "year-" + data;
               curDate.setFullYear(year);
               if ((minDate && curDate < minDate) || (maxDate && curDate
@@ -1086,6 +1101,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (clearText) {
             defaultOptions.locale.clearText = clearText;
         }
+        var zero = FormView.LanguageUtils.getTranslatedString(locale, "0");
+        if (zero) {
+            defaultOptions.locale.zero = zero;
+        }
     }
 
     #isEditValueOrDisplayValue(value) {
@@ -1128,7 +1147,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
 
     setValue(value) {
-      let currDate = new Date(value);
+      let currDate =  new Date(value);
+
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
