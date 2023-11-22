@@ -26,8 +26,6 @@ describe("Form with multipe components", () => {
     });
 
     it("check if first tab activated if focus call from other tab", () => {
-        cy.log("test"+formContainer._model.items[10]);
-        console.log(formContainer._model.items[10]);
         const firstChildComponentId = formContainer._model.items[8].items[2].items[0].id;
         const firstChildComponentButtonId = formContainer._model.items[0].id ;
                 cy.get(`#${firstChildComponentButtonId}`).click();
