@@ -35,7 +35,9 @@
             description: `.${RadioButton.bemBlock}__longdescription`,
             qm: `.${RadioButton.bemBlock}__questionmark`,
             errorDiv: `.${RadioButton.bemBlock}__errormessage`,
-            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`
+            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`,
+            option: `.${RadioButton.bemBlock}__option`,
+            optionLabel: `.${RadioButton.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -69,6 +71,10 @@
 
         getErrorDiv() {
             return this.element.querySelector(RadioButton.selectors.errorDiv);
+        }
+
+        getOptions() {
+            return this.element.querySelectorAll(RadioButton.selectors.option);
         }
 
         setModel(model) {
@@ -125,6 +131,72 @@
                 }
             }, this)
             super.updateEmptyStatus();
+        }
+
+        #createRadioOption(value, itemLabel) {
+            let option = document.createElement('div');
+            option.classList.add(RadioButton.selectors.option.slice(1));
+            let label = document.createElement('label');
+            label.classList.add(RadioButton.selectors.optionLabel.slice(1));
+
+            let input = document.createElement('input');
+            input.type = 'radio';
+            input.classList.add(RadioButton.selectors.widget.slice(1));
+            input.value = value;
+
+            let span = document.createElement('span');
+            span.textContent = itemLabel;
+
+            label.appendChild(input);
+            label.appendChild(span);
+            option.appendChild(label);
+            return option;
+        }
+
+        updateEnum(newEnums) {
+            let currentEnumSize = this.getWidget().length;
+            if(currentEnumSize === 0) {         // case 1: create option with new enums
+                newEnums.forEach(value => {
+                    this.getWidgets().appendChild(this.#createRadioOption(value, value));
+                });
+            } else if(currentEnumSize === newEnums.length) {    // case 2: replace existing enums
+                this.widget.forEach((input, index) => {
+                    input.value = newEnums[index];
+                })
+            } else if(currentEnumSize < newEnums.length) {  // case 3: replace existing enums and create options with remaining
+                this.widget.forEach((input, index) => {
+                    input.value = newEnums[index];
+                })
+
+                newEnums.forEach((value, index) => {
+                    if(index > currentEnumSize - 1) {
+                        this.getWidgets().appendChild(this.#createRadioOption(value, value));
+                    }
+                });
+            } else {
+                this.widget.forEach((input, index) => {  // case 4: replace existing enums and remove extra ones
+                    if(index < newEnums.length){
+                        input.value = newEnums[index];
+                    } else {
+                        let optionToRemove = input.parentElement.parentElement;
+                        this.getWidgets().removeChild(optionToRemove);
+                    }
+                })
+            }
+        }
+
+        updateEnumNames(newEnumNames) {
+            let currentEnumNameSize = this.getWidget().length;
+            if(currentEnumNameSize === 0) {
+                newEnumNames.forEach((value) => {
+                    this.getWidgets().appendChild(this.#createRadioOption(value, value));
+                })
+            } else {
+                [...this.getOptions()].forEach((option, index) => {
+                    let span = option.querySelector('span');
+                    span.textContent = newEnumNames[index];
+                });
+            }
         }
 
     }
