@@ -427,7 +427,8 @@ if (typeof window.FileInputWidget === 'undefined') {
                         }
 
                         // if the file is not invalid, show it and push it to internal array
-                        if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
+                        if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType
+                            && !this.#isFileDuplicate(file)) {
                             this.#showFileList(currFileName);
                             if(this.#isMultiSelect()) {
                                 this.#values.push(currFileName);
@@ -459,6 +460,12 @@ if (typeof window.FileInputWidget === 'undefined') {
                     this.#showInvalidMessage(inValidMimeTypefileNames.substring(0, inValidMimeTypefileNames.lastIndexOf(',')), this.#invalidFeature.MIMETYPE);
                 }
             }
+        }
+
+        #isFileDuplicate(currFile) {
+            return this.#fileArr.filter(tmpFile => tmpFile.name === currFile.name)
+                .filter(tmpFile => tmpFile.data.lastModified === currFile.lastModified)
+                .filter(tmpFile => tmpFile.size === currFile.size).length !== 0;
         }
     }
 }
