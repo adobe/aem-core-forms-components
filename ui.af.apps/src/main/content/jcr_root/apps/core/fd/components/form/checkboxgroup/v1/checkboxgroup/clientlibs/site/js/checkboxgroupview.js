@@ -38,7 +38,9 @@
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
             errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
-            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`
+            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`,
+            item:  `.${CheckBoxGroup.bemBlock}-item`,
+            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -73,6 +75,10 @@
 
         getTooltipDiv() {
             return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
+        }
+
+        getOptions() {
+            return this.element.querySelectorAll(CheckBoxGroup.selectors.item);
         }
 
         setModel(model) {
@@ -114,6 +120,71 @@
                 }
             }, this)
             super.updateEmptyStatus();
+        }
+        #createCheckBoxItem(value, itemLabel) {
+            let option = document.createElement('div');
+            option.classList.add(CheckBoxGroup.selectors.item.slice(1));
+            let label = document.createElement('label');
+            label.classList.add(CheckBoxGroup.selectors.optionLabel.slice(1));
+
+            let input = document.createElement('input');
+            input.type = 'checkbox';
+            input.classList.add(CheckBoxGroup.selectors.widget.slice(1));
+            input.value = value;
+
+            let span = document.createElement('span');
+            span.textContent = itemLabel;
+
+            label.appendChild(input);
+            label.appendChild(span);
+            option.appendChild(label);
+            return option;
+        }
+        updateEnum(newEnums) {
+            let currentEnumSize = this.getWidget().length;
+            if(currentEnumSize === 0) {  // case 1: create option with new enums
+                newEnums.forEach(value => {
+                    this.getWidgets().appendChild(this.#createCheckBoxItem(value, value));
+                });
+            } else if(currentEnumSize === newEnums.length) {  // case 2: replace existing enums
+                this.widget.forEach((option, index) => {
+                    option.value = newEnums[index];
+                })
+            } else if(currentEnumSize < newEnums.length) { // case 3: replace existing enums and create new options with remaining
+                this.widget.forEach((option, index) => {
+                    option.value = newEnums[index];
+                })
+
+                newEnums.forEach((value, index) => {
+                    if(index > currentEnumSize - 1) {
+                        let newOption = this.#createCheckBoxItem(value, value);
+                        this.getWidgets().appendChild(newOption);
+                    }
+                })
+            } else {
+                this.widget.forEach((option, index) => {  // case 4: replace existing enums and remove extra ones
+                    if(index < newEnums.length){
+                        option.value = newEnums[index];
+                    } else {
+                        let optionToRemove = option.parentElement.parentElement;
+                        this.getWidgets().removeChild(optionToRemove);
+                    }
+                })
+            }
+        }
+
+        updateEnumNames(newEnumNames) {
+            let currentEnumNameSize = this.getWidget().length;
+            if(currentEnumNameSize === 0) {
+                newEnumNames.forEach((value) => {
+                    this.getWidgets().appendChild(this.#createCheckBoxItem(value, value));
+                })
+            } else {
+                [...this.getOptions()].forEach((option, index) => {
+                    let span = option.querySelector('span');
+                    span.textContent = newEnumNames[index];
+                });
+            }
         }
 
         updateEnabled(enabled, state) {
