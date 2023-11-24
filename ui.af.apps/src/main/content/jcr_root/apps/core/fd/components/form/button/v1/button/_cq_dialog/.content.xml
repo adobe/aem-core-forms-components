@@ -70,6 +70,9 @@
                                 sling:orderBefore ="bindref"
                                 granite:hide="{Boolean}true"
                                 name="./icon"/>
+                        <readonly
+                                jcr:primaryType="nt:unstructured"
+                                sling:hideResource="{Boolean}true" />
                       </items>
                     </column>
                   </items>

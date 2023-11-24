@@ -37,9 +37,8 @@ The following properties are written to JCR for this Form CheckBox component and
 5. `./description` - defines a help message that can be rendered in the field as a hint for the user
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./type` - defines the data type of the value
-10. `./enum` - defines the two set of possible values for this field. (On or Off)
+8. `./type` - defines the data type of the value
+9. `./enum` - defines the two set of possible values for this field. (On or Off)
 
 ## Enum
 Checkbox component can have only one of two state i.e. ON and OFF. Since the enums are stored as array, the enum at index '0' is assumed to be ON(i.e. checkbox is 'checked''), and enum at index '1' is OFF
