@@ -35,13 +35,15 @@
         static idSuffixes = {
             item: "-item",
             button: "-button",
-            panel: "-panel"
+            panel: "-panel",
+            toolbar: "-toolbar"
         }
 
         static cacheKeys = {
             buttonKey: "button",
             panelKey: "panel",
-            itemKey: "item"
+            itemKey: "item",
+            toolbar: "toolbar"
         }
 
         static cssClasses = {
@@ -482,17 +484,31 @@
           }
         }
 
+        #syncAccordionToolbar() {
+            let toolbar = this.#getCachedToolbar();
+            if(toolbar) {
+                toolbar.forEach((element) => {
+                    let childViewId = element.querySelectorAll("[data-cmp-is]")[0].id
+                    element.id = childViewId + Accordion.idSuffixes.toolbar;
+                    element.setAttribute("aria-labelledby", childViewId + Accordion.idSuffixes.toolbar);
+                })
+            }
+        }
+
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncLabel();
             for (var itemDiv of this.#getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
+            this.#syncAccordionToolbar();
         }
 
         getChildViewByIndex(index) {
-            var accordionPanels = this.#getCachedPanels();
-            var fieldId = accordionPanels[index].id.substring(0, accordionPanels[index].id.lastIndexOf("-"));
+            let accordionPanels = this.#getCachedPanels();
+            let toolbar = this.#getCachedToolbar();
+            let allChildren = toolbar ? accordionPanels.concat(toolbar) : accordionPanels;
+            var fieldId = allChildren[index].id.substring(0, allChildren[index].id.lastIndexOf("-"));
             return this.getChild(fieldId);
         }
 
@@ -586,6 +602,11 @@
         #getCachedButtons() {
             return this._elements[Accordion.cacheKeys.buttonKey]
         }
+
+        #getCachedToolbar() {
+            return this._elements[Accordion.cacheKeys.toolbar];
+        }
+
 
         #getItemById(itemId) {
             var items = this.#getCachedItems();

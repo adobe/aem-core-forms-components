@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    jcr:primaryType="nt:unstructured"
+    cq:icon="actions"
+    name="toolbar"
+    fieldType="panel"
+    hideTitle="true"
+    fd:toolbar="{Boolean}true"
+    sling:resourceType="core/fd/components/form/toolbar/v1/toolbar"
+    roleAttribute="toolbar">
+    <nextitemnav
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Next"
+        buttonType="next"
+        fieldType="button"
+        sling:resourceType="core/fd/components/form/actions/nextitemnav/v1/nextitemnav"
+        type="button">
+        <fd:rules jcr:primaryType="nt:unstructured"/>
+        <fd:events
+            jcr:primaryType="nt:unstructured"
+            click="[setFocus($parent.$parent\, 'nextItem')]"/>
+    </nextitemnav>
+    <previtemnav
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Back"
+        buttonType="back"
+        fieldType="button"
+        sling:resourceType="core/fd/components/form/actions/previtemnav/v1/previtemnav"
+        type="button">
+        <fd:rules jcr:primaryType="nt:unstructured"/>
+        <fd:events
+            jcr:primaryType="nt:unstructured"
+            click="[setFocus($parent.$parent\, 'previousItem')]"/>
+    </previtemnav>
+</jcr:root>

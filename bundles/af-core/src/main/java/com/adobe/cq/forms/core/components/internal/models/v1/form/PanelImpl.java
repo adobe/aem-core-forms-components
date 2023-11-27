@@ -87,6 +87,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @JsonIgnore
     protected boolean wrapData;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:toolbar")
+    @JsonIgnore
+    protected boolean fdToolbar;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Boolean readOnly;
@@ -139,6 +143,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
             customDorProperties.put(DOR_LAYOUT_TYPE, dorLayoutType);
         }
         return customDorProperties;
+    }
+
+    public Boolean getFDToolbar() {
+        return fdToolbar ? fdToolbar : false;
     }
 
 }

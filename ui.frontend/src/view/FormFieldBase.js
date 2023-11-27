@@ -187,8 +187,10 @@ class FormFieldBase extends FormField {
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+            this.parentView.setFocus(this.getId());
         }
+        // updating to the latest widget in case of datepicker widget with a formatter
+        this.widget = this.getWidget();
         // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
         if (this.widget.length > 0) {
             this.widget[0].focus();
