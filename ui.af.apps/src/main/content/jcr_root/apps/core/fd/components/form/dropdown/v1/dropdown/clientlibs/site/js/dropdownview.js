@@ -134,6 +134,12 @@
             return option
         }
 
+        #removeAllOptions() {
+            while(this.getOptions().length !== 0) {
+                this.getWidget().remove(this.getOptions().length) // not removing the blank option
+            }
+        }
+
         updateEnum(newEnums) {
             let options = this.getOptions();
             let currentEnumSize = options.length;
@@ -142,11 +148,13 @@
                 newEnums.forEach(value => {
                     this.getWidget().add(this.#createDropDownOptions(value, value));
                 });
-            } else if(currentEnumSize === newEnums.length) {    // case 2: replace existing enums
+            } else if(newEnums.length === 0) {  // case 2: remove all options
+                this.#removeAllOptions();
+            } else if(currentEnumSize === newEnums.length) { // case 3: replace existing enums
                 options.forEach((option, index) => {
                     option.value = newEnums[index];
                 });
-            } else if(currentEnumSize < newEnums.length) {  // case 3: replace existing enums and create new options with remaining
+            } else if(currentEnumSize < newEnums.length) {  // case 4: replace existing enums and create new options with remaining
                 options.forEach((option, index) => {
                     option.value = newEnums[index];
                 });
@@ -156,7 +164,7 @@
                     }
                 });
             } else {
-                options.forEach((option, index) => {    // case 4: replace existing enums and remove extra options
+                options.forEach((option, index) => {    // case 5: replace existing enums and remove extra options
                     if(index < newEnums.length) {
                         option.value = newEnums[index];
                     } else {
@@ -169,11 +177,21 @@
         updateEnumNames(newEnumNames) {
             let options = this.getOptions();
             let currentEnumNameSize = options.length;
-            if(currentEnumNameSize === 0) {
+            if(currentEnumNameSize === 0) {  // case 1: Create all dropdown new options
                 newEnumNames.forEach((value) => {
-                    this.getWidget().add(this.#createDropDownOptions((value, value)));
+                    this.getWidget().add(this.#createDropDownOptions(value, value));
                 })
-            } else {
+            } else if(currentEnumNameSize > newEnumNames.length) {  // case 2: Replace existing enumNames, remaining enumNames = enums
+                newEnumNames.forEach((value, index) => {
+                    options[index].text = value;
+                });
+
+                options.forEach((option, index) => {
+                    if(index >= newEnumNames.length) {
+                        option.text = option.value;
+                    }
+                })
+            } else {    // case 3: Replace all existing enumNames
                 options.forEach((option, index) => {
                     option.text = newEnumNames[index];
                 });

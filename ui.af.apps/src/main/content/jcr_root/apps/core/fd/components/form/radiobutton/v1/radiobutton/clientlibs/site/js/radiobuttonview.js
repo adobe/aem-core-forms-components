@@ -191,6 +191,16 @@
                 newEnumNames.forEach((value) => {
                     this.getWidgets().appendChild(this.#createRadioOption(value, value));
                 })
+            } else if(currentEnumNameSize > newEnumNames.length) {
+                [...this.getOptions()].forEach((option, index) => {
+                    let span = option.querySelector('span');
+                    let input = option.querySelector('input');
+                    if(index < newEnumNames.length) {
+                        span.textContent = newEnumNames[index];
+                    } else {
+                        span.textContent = input.value;
+                    }
+                });
             } else {
                 [...this.getOptions()].forEach((option, index) => {
                     let span = option.querySelector('span');
