@@ -189,7 +189,7 @@
                 jcr:title="len(current options) &lt; len(enums/enumNames)"
                 sling:resourceType="forms-components-examples/components/form/radiobutton"
                 enabled="{Boolean}true"
-                enum="[1 ,2]"
+                enum="[1,2]"
                 enumNames="[country1,country2]"
                 fieldType="radio-group"
                 hideTitle="false"

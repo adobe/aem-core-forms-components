@@ -16,7 +16,7 @@
  * from Adobe Systems Incorporated.
  */
 
-describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
+describe('Test UpdateEnum, UpdateEnumName for Checkbox', () => {
     const pagePath = "/content/forms/af/core-components-it/samples/customfunctions/populate-checkbox.html";
     let formContainer = null;
 
