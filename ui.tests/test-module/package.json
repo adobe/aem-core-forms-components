@@ -14,8 +14,8 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.8.0",
     "async": "^3.2.2",
-    "cypress": "^9.6.1",
-    "cypress-image-diff-js": "^1.31.0",
+    "cypress": "^7.7.0",
+    "cypress-image-diff-js": "^1.10.3",
     "cypress-circleci-reporter": "0.2.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-iframe": "1.0.1",
