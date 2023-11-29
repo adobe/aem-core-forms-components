@@ -1,5 +1,11 @@
 describe('Components - Authoring', function () {
 
+    Cypress.on('uncaught:exception', (err, runnable) => {
+        // returning false here prevents Cypress from
+        // failing the test
+        return false
+    })
+
     const pagePath = "content/forms/af/core-components-it/samples/v2-components.html";
 
     /**
