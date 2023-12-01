@@ -256,10 +256,12 @@ class FormTabs extends FormPanel {
      * @param {HTMLElement} element - Element to focus.
      */
     focusWithoutScroll(element) {
-        var x = window.scrollX || window.pageXOffset;
-        var y = window.scrollY || window.pageYOffset;
-        element.focus();
-        window.scrollTo(x, y);
+        if(element) {
+            var x = window.scrollX || window.pageXOffset;
+            var y = window.scrollY || window.pageYOffset;
+            element.focus();
+            window.scrollTo(x, y);
+        }
     }
 
     /**
