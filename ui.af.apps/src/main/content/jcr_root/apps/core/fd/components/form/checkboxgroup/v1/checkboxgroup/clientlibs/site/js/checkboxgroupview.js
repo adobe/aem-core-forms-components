@@ -141,60 +141,11 @@
             return option;
         }
         updateEnum(newEnums) {
-            let currentEnumSize = this.getWidget().length;
-            if(currentEnumSize === 0) {  // case 1: create option with new enums
-                newEnums.forEach(value => {
-                    this.getWidgets().appendChild(this.#createCheckBoxItem(value, value));
-                });
-            } else if(currentEnumSize === newEnums.length) {  // case 2: replace existing enums
-                this.widget.forEach((option, index) => {
-                    option.value = newEnums[index];
-                })
-            } else if(currentEnumSize < newEnums.length) { // case 3: replace existing enums and create new options with remaining
-                this.widget.forEach((option, index) => {
-                    option.value = newEnums[index];
-                })
-
-                newEnums.forEach((value, index) => {
-                    if(index > currentEnumSize - 1) {
-                        let newOption = this.#createCheckBoxItem(value, value);
-                        this.getWidgets().appendChild(newOption);
-                    }
-                })
-            } else {
-                this.widget.forEach((option, index) => {  // case 4: replace existing enums and remove extra ones
-                    if(index < newEnums.length){
-                        option.value = newEnums[index];
-                    } else {
-                        let optionToRemove = option.parentElement.parentElement;
-                        this.getWidgets().removeChild(optionToRemove);
-                    }
-                })
-            }
+            super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createCheckBoxItem);
         }
 
         updateEnumNames(newEnumNames) {
-            let currentEnumNameSize = this.getWidget().length;
-            if(currentEnumNameSize === 0) {
-                newEnumNames.forEach((value) => {
-                    this.getWidgets().appendChild(this.#createCheckBoxItem(value, value));
-                })
-            } else if(currentEnumNameSize > newEnumNames.length) {
-                [...this.getOptions()].forEach((option, index) => {
-                    let span = option.querySelector('span');
-                    let input = option.querySelector('input');
-                    if(index < newEnumNames.length) {
-                        span.textContent = newEnumNames[index];
-                    } else {
-                        span.textContent = input.value;
-                    }
-                });
-            } else {
-                [...this.getOptions()].forEach((option, index) => {
-                    let span = option.querySelector('span');
-                    span.textContent = newEnumNames[index];
-                });
-            }
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createCheckBoxItem);
         }
 
         updateEnabled(enabled, state) {
