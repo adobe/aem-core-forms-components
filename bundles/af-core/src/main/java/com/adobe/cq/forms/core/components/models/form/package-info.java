@@ -34,7 +34,7 @@
  * version, is bound to this proxy component resource type.
  * </p>
  */
-@Version("4.7.1")
+@Version("5.2.0") // aligning this with release/650 since af2-rest-api is compiled with 5.2.0 in release/650
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.Version;

@@ -13,3 +13,6 @@
 .cmp-replace-dialog-search-components {
     padding: 0;
 }
+.cmp-replace-dialog-search > input {
+    width: 100%;
+}
