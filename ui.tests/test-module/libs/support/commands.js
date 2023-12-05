@@ -43,12 +43,14 @@
 import 'cypress-file-upload';
 import {recurse} from 'cypress-recurse'
 
+const compareSnapshotCommand = require('cypress-image-diff-js/dist/command')
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
     siteConstants = require('../commons/sitesConstants'),
     guideSelectors = require('../commons/guideSelectors'),
     guideConstants = require('../commons/formsConstants');
 var toggles = [];
+compareSnapshotCommand()
 
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {

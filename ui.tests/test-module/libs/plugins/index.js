@@ -36,6 +36,8 @@ const path = require('path');
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+    const getCompareSnapshotsPlugin = require('cypress-image-diff-js/dist/plugin')
+    getCompareSnapshotsPlugin(on, config)
     const options = {
         outputRoot: config.projectRoot + '/target/',
         // Used to trim the base path of specs and reduce nesting in the

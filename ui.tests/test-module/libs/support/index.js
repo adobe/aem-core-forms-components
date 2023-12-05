@@ -32,6 +32,7 @@
 // Import commands.js using ES2015 syntax:
 import './functions'
 import './commands'
+import 'cypress-image-diff-js/dist/command';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -95,3 +96,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // errors, so we let them fail the test
     return true;
 });
+
+after(() => {
+    cy.task('generateReport')
+})
