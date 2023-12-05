@@ -35,8 +35,7 @@ describe('component replace - Authoring', function () {
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
         "formimage": fieldTypes.NON_INPUT,
-        "checkbox": fieldTypes.CHECKBOX,
-        "switch": fieldTypes.CHECKBOX
+        "checkbox": fieldTypes.CHECKBOX
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -160,7 +159,7 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(buttonEditPathSelector, buttonDrop);
         })
 
-        it('replace checkbox with switch', function () {
+        it('replace checkbox with radio button', function () {
             testComponentReplaceBehaviour(checkboxEditPathSelector, checkboxDrop);
         })
 

@@ -63,7 +63,9 @@
                 })
                 function onIntersection ([{isIntersecting}]) {
                     if (isIntersecting) {
-                        self.children.filter(c => c.getModel()._jsonModel.fieldType === 'checkbox').forEach(cb => cb.updateEnabled(true))
+                        self.children.filter(c => c.getModel()._jsonModel.fieldType === 'checkbox').forEach(cb => {
+                            cb.getModel().enabled = true;
+                        })
                         io.unobserve(intersection);
                     }
                 }

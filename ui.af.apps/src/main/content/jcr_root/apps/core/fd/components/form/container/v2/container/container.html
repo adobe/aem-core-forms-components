@@ -21,8 +21,10 @@
       id="${container.id}"
       data-cmp-is="adaptiveFormContainer"
       data-cmp-context-path="${request.contextPath}"
+      data-cmp-page-lang="${container.containingPageLang}"
       data-cmp-path="${resource.path}"
-      class="cmp-adaptiveform-container cmp-container">
+      class="cmp-adaptiveform-container cmp-container"
+      dir="${container.languageDirection}">
 
     <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
          data-sly-use.allowedTemplate="allowedcomponents.html"
