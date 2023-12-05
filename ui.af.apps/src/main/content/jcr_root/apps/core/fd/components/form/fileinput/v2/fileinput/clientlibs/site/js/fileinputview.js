@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInputV2 extends FormView.FormFieldBase {
+    class FileInputV2 extends FormView.FormFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -49,7 +49,7 @@
             model: () => this._model,
             dragArea: this.getDragArea()
         };
-
+        
         getWidget() {
             return this.element.querySelector(FileInputV2.selectors.widget);
         }
@@ -82,13 +82,13 @@
             return this.element.querySelector(FileInputV2.selectors.fileListDiv);
         }
 
-        #getAttachButtonLabel() {
+        getAttachButtonLabel() {
             return this.element.querySelector(FileInputV2.selectors.attachButtonLabel);
         }
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidgetV2(this.widgetFields);
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
@@ -97,35 +97,8 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidgetV2(this.widgetFields);
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
-        }
-
-        #syncWidget() {
-            let widgetElement = this.getWidget ? this.getWidget() : null;
-            if (widgetElement) {
-                widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
-            }
-
-        }
-
-        /*
-          We are overriding the syncLabel method of the FormFieldBase class because for all components, 
-          we pass the widgetId in 'for' attribute. However, for the file input component, 
-          we already have a widget, so we should not pass the widgetId twice
-        */
-        #syncLabel() {
-          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-          if (labelElement) {
-              labelElement.setAttribute('for', this.getId());
-          }
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncWidget();
-            this.#syncLabel();
         }
     }
 
