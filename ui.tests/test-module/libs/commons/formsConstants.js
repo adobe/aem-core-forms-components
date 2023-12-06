@@ -46,7 +46,8 @@ var formsConstants = {
                 "checkbox": "/apps/forms-components-examples/components/form/checkbox",
                 "fragment": "/apps/forms-components-examples/components/form/fragment",
                 "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
-                "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions"
+                "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
+                "dynamiccontainer": "/apps/forms-components-examples/components/form/dynamiccontainer"
             }
         },
         resourceType : {

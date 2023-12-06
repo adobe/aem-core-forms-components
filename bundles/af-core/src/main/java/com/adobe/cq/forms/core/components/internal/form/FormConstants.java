@@ -81,6 +81,8 @@ public final class FormConstants {
 
     public static final String RT_FD_FORM_PANEL_CONTAINER_V1 = RT_FD_FORM_PREFIX + "panelcontainer/v1/panelcontainer";
 
+    public final static String RT_FD_FORM_DYNAMIC_CONTAINER_V1 = RT_FD_FORM_PREFIX + "dynamiccontainer/v1/dynamiccontainer";
+
     public static final String RT_FD_FORM_TABS_ON_TOP_V1 = RT_FD_FORM_PREFIX + "tabsontop/v1/tabsontop";
 
     public static final String RT_FD_FORM_VERTICAL_TABS_V1 = RT_FD_FORM_PREFIX + "verticaltabs/v1/verticaltabs";
