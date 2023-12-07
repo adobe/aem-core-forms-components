@@ -38,6 +38,9 @@ public final class FormConstants {
     /** The resource type for text input v1 */
     public static final String RT_FD_FORM_TEXT_V1 = RT_FD_FORM_PREFIX + "textinput/v1/textinput";
 
+    /** The resource type for text input v1 */
+    public static final String RT_FD_FORM_IDENTITYVERIFIER_V1 = RT_FD_FORM_PREFIX + "identityverifier/v1/identityverifier";
+
     /** The resource type for telephone input v1 */
     public static final String RT_FD_FORM_TELEPHONE_V1 = RT_FD_FORM_PREFIX + "telephoneinput/v1/telephoneinput";
 
