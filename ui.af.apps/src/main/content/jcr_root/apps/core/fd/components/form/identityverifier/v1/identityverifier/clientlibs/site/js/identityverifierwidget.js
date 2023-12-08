@@ -23,6 +23,7 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
         constructor(widget, identityVerifierElements) {
             this.#attachEventHandlers(widget, identityVerifierElements);
         }
+        sessionId = "";
 
         #attachEventHandlers(widget, identityVerifierElements) {
             const {
@@ -37,7 +38,12 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 submit,
                 identityProvider,
                 otpContainer,
-                verifiedContainer
+                verifiedContainer,
+                verifyOTP,
+                otp,
+                requiredText,
+                invalidText,
+                invalidOTP
             } = identityVerifierElements;
 
             const payload = {};
@@ -66,15 +72,124 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
             phone?.addEventListener('change', (e)=> {
                 payload.phone = e.target.value;
             });
-            submit?.addEventListener('click', (e)=> {
-                otpContainer.style.display = "block";
-                identityProvider.style.display = "none";
+            otp?.addEventListener('change', (e)=> {
+                payload.otp = e.target.value;
             });
-            otpContainer?.querySelector('.cmp-adaptiveform-identityverifier_verifyotp').addEventListener('click', () => {
-                otpContainer.style.display = "none";
-                verifiedContainer.style.display = "block";
-            })
-        }
+            submit?.addEventListener('click', async(e)=> {
+                let data = {};
+                let provider = "";
+                if(aadhar) {
+                    data = {
+                        "aadhaarNumber": payload.aadhar
+                    }
+                    provider="aadhaar";
+                } else {
+                    data = {
+                        "firstName": payload.firstName,
+                        "lastName": payload.lastName,
+                        "phoneNumber": payload.phone,
+                        "zip": payload.zipCode,
+                        "address": payload.address,
+                        "city": payload.city,
+                        "ssn": payload.ssn
+                    }
+                    provider="ssn";
+                }
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
+                var raw = JSON.stringify({
+                "provider": provider,
+                "data": data
+                });
+                var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+                };
+                fetch("http://localhost:4502/adobe/forms/af/idp/initiate", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    otpContainer.style.display = "block";
+                    identityProvider.style.display = "none";
+                    this.sessionId= result?.data?.sessionId;
+                })
+                .catch((error) => {
+                    invalidText.style.display="block";
+                });
+            });
 
+
+            verifyOTP?.addEventListener('click', () => {
+
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
+                let provider = "";
+                if(aadhar) {
+                    provider="aadhaar"
+                } else {
+                    provider="ssn"
+                }
+
+                var raw = JSON.stringify({
+                "provider": provider,
+                "data": {
+                    "sessionId": this.sessionId,
+                    "otp": payload.otp
+                }
+                });
+                
+                var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+                };
+                
+                fetch("http://localhost:4502/adobe/forms/af/idp/verify", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    if(result?.data?.code === 200) {
+                        otpContainer.style.display = "none";
+                        verifiedContainer.style.display = "block";
+                    } else{
+                        throw error;
+                    }
+                })
+                .catch(error => {
+                    invalidOTP.style.display = "block";
+                });
+            })
+
+            const fields = [firstName, lastName, address, city, zipCode, ssn, aadhar, phone].filter(field => field);
+
+            otp?.addEventListener('change', () => {
+                verifyOTP.disabled = !(otp?.value.trim() !== '');
+            });
+
+            fields.forEach(input => {
+                input.addEventListener('change', function() {
+                  const allFieldsFilled = firstName?.value.trim() !== '' &&
+                                          lastName?.value.trim() !== '' &&
+                                          city?.value.trim() !== '' &&
+                                          zipCode?.value.trim() !== '' &&
+                                          ssn?.value.trim() !== '' &&
+                                          aadhar?.value.trim() !== '' &&
+                                          phone?.value.trim() !== '' &&
+                                          address?.value.trim() !== '';
+
+                  // Enable or disable the submit button based on the condition
+                  submit.disabled = !allFieldsFilled;
+                  invalidOTP.style.display = "none";
+                  invalidText.style.display = "none";
+                  requiredText.style.display = allFieldsFilled ? "none" : "block";
+                });
+            });
+        }
     }
 }
+
+
+

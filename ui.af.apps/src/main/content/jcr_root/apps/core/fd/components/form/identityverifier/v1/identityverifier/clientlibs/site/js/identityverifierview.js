@@ -42,6 +42,11 @@
             identityprovider: `.${IdentityVerifier.bemBlock}_identityprovider`,
             otpcontainer: `.${IdentityVerifier.bemBlock}_otpcontainer`,
             verfiedcontainer: `.${IdentityVerifier.bemBlock}_verifiedcontainer`,
+            otp: `.${IdentityVerifier.bemBlock}_otp`,
+            verifyotp: `.${IdentityVerifier.bemBlock}_verifyotp`,
+            requiredtext: `.${IdentityVerifier.bemBlock}_required`,
+            invalidtext: `.${IdentityVerifier.bemBlock}_invalididentity`,
+            invalidotp: `.${IdentityVerifier.bemBlock}_invalidotp`, 
         };
 
         constructor(params) {
@@ -61,7 +66,12 @@
                 submit: this.element.querySelector(IdentityVerifier.selectors.submit),
                 identityProvider: this.element.querySelector(IdentityVerifier.selectors.identityprovider),
                 otpContainer: this.element.querySelector(IdentityVerifier.selectors.otpcontainer),
-                verifiedContainer: this.element.querySelector(IdentityVerifier.selectors.verfiedcontainer)
+                verifiedContainer: this.element.querySelector(IdentityVerifier.selectors.verfiedcontainer),
+                otp: this.element.querySelector(IdentityVerifier.selectors.otp),
+                verifyOTP: this.element.querySelector(IdentityVerifier.selectors.verifyotp),
+                requiredText: this.element.querySelector(IdentityVerifier.selectors.requiredtext),
+                invalidText: this.element.querySelector(IdentityVerifier.selectors.invalidtext),
+                invalidOTP: this.element.querySelector(IdentityVerifier.selectors.invalidotp),
             }
         }
 

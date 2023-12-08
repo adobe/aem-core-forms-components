@@ -58,6 +58,22 @@ textarea.cmp-adaptiveform-textinput__widget{
     margin-top: 30px;
 }
 
+.cmp-adaptiveform-identityverifier_required {
+    display: none;
+}
+
+.cmp-adaptiveform-identityverifier_verifyotp:disabled{
+    background-color: #ccc; /* Change the background color for disabled state */
+    color: #d85e5e; /* Change the text color for disabled state */
+    cursor: not-allowed; /* Change the cursor style for disabled state */
+}
+
+.cmp-adaptiveform-identityverifier_submit:disabled {
+    background-color: #ccc; /* Change the background color for disabled state */
+    color: #d85e5e; /* Change the text color for disabled state */
+    cursor: not-allowed; /* Change the cursor style for disabled state */
+}
+
 .cmp-adaptiveform-identityverifier__input {
     border-radius: 0.25rem;
     border: 1px solid darkgray;
@@ -70,10 +86,24 @@ textarea.cmp-adaptiveform-textinput__widget{
     color: rgb(5 170 14);
     display: none;
 }
+
 .cmp-adaptiveform-identityverifier__verifiedcontainer_icon {
     width: 90px; 
     height: 90px;
     display: block;
     background-size: cover !important;
     background-image: url('https://gifdb.com/images/high/green-circle-ok-check-mark-6uvrba3bd0fi8ue9.gif')
+}
+
+.cmp-adaptiveform-identityverifier_required {
+    color: red;
+    display: block;
+}
+.cmp-adaptiveform-identityverifier_invalididentity{
+    color: red;
+    display: none;
+}
+.cmp-adaptiveform-identityverifier_invalidotp {
+    color: red;
+    display: none;
 }
