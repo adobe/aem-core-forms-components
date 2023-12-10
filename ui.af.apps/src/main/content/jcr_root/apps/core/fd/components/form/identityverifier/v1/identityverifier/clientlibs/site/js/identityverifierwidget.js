@@ -108,7 +108,7 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 body: raw,
                 redirect: "follow"
                 };
-                fetch("http://localhost:4502/adobe/forms/af/idp/initiate", requestOptions)
+                fetch("/adobe/forms/af/idp/initiate", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     otpContainer.style.display = "block";
@@ -148,7 +148,7 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 redirect: 'follow'
                 };
                 
-                fetch("http://localhost:4502/adobe/forms/af/idp/verify", requestOptions)
+                fetch("/adobe/forms/af/idp/verify", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if(result?.data?.code === 200) {
