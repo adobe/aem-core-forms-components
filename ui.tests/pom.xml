@@ -161,7 +161,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>ci</arguments>
+                                    <arguments>install --force</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -237,7 +237,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>ci</arguments>
+                                    <arguments>install --foce</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -305,7 +305,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>ci</arguments>
+                                    <arguments>install --force</arguments>
                                 </configuration>
                             </execution>
                         </executions>
