@@ -135,7 +135,7 @@
 
         #createRadioOption(value, itemLabel) {
             const optionTemplate = `
-            <div class="${RadioButton.selectors.item.slice(1)}">
+            <div class="${RadioButton.selectors.option.slice(1)}">
                 <label class="${RadioButton.selectors.optionLabel.slice(1)}">
                     <input type="checkbox" class="${RadioButton.selectors.widget.slice(1)}" value="${value}">
                     <span>${itemLabel}</span>

@@ -127,7 +127,10 @@
         }
 
         #createDropDownOptions(value, label) {
-            return `<option value="${value}" className="${DropDown.selectors.options.slice(1)}">${label}</option>`
+            const optionTemplate = `<option value="${value}" className="${DropDown.selectors.options.slice(1)}">${label}</option>`;
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
         }
 
         #removeAllOptions() {
