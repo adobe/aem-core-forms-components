@@ -22,8 +22,10 @@
   ></sly>
  <div class="cmp-adaptiveform-identityverifier__widget" data-cmp-is="adaptiveFormIdentityVerifier"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+     <div class="cmp-adaptiveform-identityverifier_loader"></div>
      <div class="cmp-adaptiveform-identityverifier_identityprovider">
      <form class="cmp-adaptiveform-identityverifier_form">
+          <div>
           <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
                class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_firstname"
                id="firstName"
@@ -36,6 +38,7 @@
                type="text"
                required
                placeholder="Last Name">
+          </div>
           <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
                class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_phone"
                id="phoneNumber"
@@ -43,22 +46,24 @@
                required
                placeholder="Phone Number">
           <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
-               class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_zip"
-               id="zipCode"
-               type="number"
-               placeholder="Zip Code">
-          <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
                class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_address"
                id="address"
                type="text"
                required
                placeholder="Address">
+          <div>
           <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
                class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_city"
                id="city"
                type="text"
                required
                placeholder="City">
+          <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
+               class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_zip"
+               id="zipCode"
+               type="number"
+               placeholder="Zip Code">
+          </div>
           <input data-sly-test="${idverifier.identityProvider == 'ssn'}"
                class="cmp-adaptiveform-textinput__widget cmp-adaptiveform-identityverifier_ssn"
                id="ssn"

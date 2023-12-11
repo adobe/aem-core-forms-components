@@ -46,7 +46,8 @@
             verifyotp: `.${IdentityVerifier.bemBlock}_verifyotp`,
             requiredtext: `.${IdentityVerifier.bemBlock}_required`,
             invalidtext: `.${IdentityVerifier.bemBlock}_invalididentity`,
-            invalidotp: `.${IdentityVerifier.bemBlock}_invalidotp`, 
+            invalidotp: `.${IdentityVerifier.bemBlock}_invalidotp`,
+            loader: `.${IdentityVerifier.bemBlock}_loader`,
         };
 
         constructor(params) {
@@ -72,6 +73,7 @@
                 requiredText: this.element.querySelector(IdentityVerifier.selectors.requiredtext),
                 invalidText: this.element.querySelector(IdentityVerifier.selectors.invalidtext),
                 invalidOTP: this.element.querySelector(IdentityVerifier.selectors.invalidotp),
+                loader: this.element.querySelector(IdentityVerifier.selectors.loader),
             }
         }
 

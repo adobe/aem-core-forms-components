@@ -48,6 +48,7 @@ textarea.cmp-adaptiveform-textinput__widget{
 .cmp-adaptiveform-identityverifier_identityprovider {
     display: flex;
     flex-direction: column;
+    width: 30%;
 }
 
 .cmp-adaptiveform-identityverifier_otpcontainer {
@@ -56,6 +57,7 @@ textarea.cmp-adaptiveform-textinput__widget{
 
 .cmp-adaptiveform-identityverifier_submit{
     margin-top: 30px;
+    width: 100%;
 }
 
 .cmp-adaptiveform-identityverifier_required {
@@ -63,15 +65,15 @@ textarea.cmp-adaptiveform-textinput__widget{
 }
 
 .cmp-adaptiveform-identityverifier_verifyotp:disabled{
-    background-color: #ccc; /* Change the background color for disabled state */
-    color: #d85e5e; /* Change the text color for disabled state */
-    cursor: not-allowed; /* Change the cursor style for disabled state */
+    background-color: #ccc;
+    color: #d85e5e;
+    cursor: not-allowed;
 }
 
 .cmp-adaptiveform-identityverifier_submit:disabled {
-    background-color: #ccc; /* Change the background color for disabled state */
-    color: #d85e5e; /* Change the text color for disabled state */
-    cursor: not-allowed; /* Change the cursor style for disabled state */
+    background-color: #ccc; 
+    color: #d85e5e;
+    cursor: not-allowed;
 }
 
 .cmp-adaptiveform-identityverifier__input {
@@ -106,4 +108,54 @@ textarea.cmp-adaptiveform-textinput__widget{
 .cmp-adaptiveform-identityverifier_invalidotp {
     color: red;
     display: none;
+}
+
+.cmp-adaptiveform-identityverifier_firstname {
+    width: 49%;
+}
+
+.cmp-adaptiveform-identityverifier_lastname {
+    width: 50%;
+}
+
+.cmp-adaptiveform-identityverifier_phone {
+    width: 100%;
+}
+.cmp-adaptiveform-identityverifier_address{
+    width: 100%;
+}
+.cmp-adaptiveform-identityverifier_ssn {
+    width: 100%;
+}
+.cmp-adaptiveform-identityverifier_aadhar {
+    width: 100%;
+}
+
+.cmp-adaptiveform-identityverifier_city {
+    width: 49%;
+}
+
+.cmp-adaptiveform-identityverifier_zip {
+    width: 50%;
+}
+
+input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        display: none;
+      }
+
+.cmp-adaptiveform-identityverifier_loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 170px;
+  height: 170px;
+  margin: 65px;
+  animation: spin 2s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -24,7 +24,6 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
             this.#attachEventHandlers(widget, identityVerifierElements);
         }
         sessionId = "";
-
         #attachEventHandlers(widget, identityVerifierElements) {
             const {
                 firstName,
@@ -43,7 +42,8 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 otp,
                 requiredText,
                 invalidText,
-                invalidOTP
+                invalidOTP,
+                loader
             } = identityVerifierElements;
 
             const payload = {};
@@ -78,6 +78,8 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
             submit?.addEventListener('click', async(e)=> {
                 let data = {};
                 let provider = "";
+                loader.style.display = "block";
+                identityProvider.style.display = "none";
                 if(aadhar) {
                     data = {
                         "aadhaarNumber": payload.aadhar
@@ -95,14 +97,14 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                     }
                     provider="ssn";
                 }
-                var myHeaders = new Headers();
+                let myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
                 myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
                 var raw = JSON.stringify({
                 "provider": provider,
                 "data": data
                 });
-                var requestOptions = {
+                let requestOptions = {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
@@ -111,19 +113,26 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 fetch("http://localhost:4502/adobe/forms/af/idp/initiate", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    if(result.data.status === "error") {
+                        throw error;
+                    }
                     otpContainer.style.display = "block";
                     identityProvider.style.display = "none";
                     this.sessionId= result?.data?.sessionId;
+                    loader.style.display = "none";
                 })
                 .catch((error) => {
                     invalidText.style.display="block";
+                    loader.style.display = "none";
+                    identityProvider.style.display = "block";
                 });
             });
 
 
             verifyOTP?.addEventListener('click', () => {
-
-                var myHeaders = new Headers();
+                let myHeaders = new Headers();
+                loader.style.display = "block";
+                otpContainer.style.display = "none";
                 myHeaders.append("Content-Type", "application/json");
                 myHeaders.append("Authorization", "Basic YWRtaW46YWRtaW4=");
                 let provider = "";
@@ -141,7 +150,7 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 }
                 });
                 
-                var requestOptions = {
+                let requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
                 body: raw,
@@ -151,15 +160,20 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                 fetch("http://localhost:4502/adobe/forms/af/idp/verify", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    if(result?.data?.code === 200) {
+                    if(result?.data?.code === 200 || result?.data?.code === "success") {
                         otpContainer.style.display = "none";
                         verifiedContainer.style.display = "block";
+                        loader.style.display = "none";
                     } else{
+                        loader.style.display = "none";
+                        otpContainer.style.display = "block";
                         throw error;
                     }
                 })
                 .catch(error => {
+                    loader.style.display = false;
                     invalidOTP.style.display = "block";
+                    otpContainer.style.display = "block";
                 });
             })
 
@@ -180,7 +194,6 @@ if (typeof window.IdentityVerifierWidget === 'undefined') {
                                           phone?.value.trim() !== '' &&
                                           address?.value.trim() !== '';
 
-                  // Enable or disable the submit button based on the condition
                   submit.disabled = !allFieldsFilled;
                   invalidOTP.style.display = "none";
                   invalidText.style.display = "none";
