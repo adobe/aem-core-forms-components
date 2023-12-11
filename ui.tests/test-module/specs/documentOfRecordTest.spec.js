@@ -60,7 +60,7 @@ describe('Document of Record Test', () => {
           body: formdata,
           redirect: 'follow'
         };
-        if (cy.af.isLatestAddon()) {
+        if (true) {
           // use cursor based API if latest AddOn
           return getFormId(formPath)
           .then(formId => {
