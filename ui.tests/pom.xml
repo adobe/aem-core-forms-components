@@ -160,6 +160,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>ci</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -234,6 +237,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
+                                    <arguments>ci</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -300,6 +304,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>ci</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
