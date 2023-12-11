@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class DropDown extends FormView.FormFieldBase {
+    class DropDown extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -127,11 +127,7 @@
         }
 
         #createDropDownOptions(value, label) {
-            let option = document.createElement('option');
-            option.value = value;
-            option.text = label;
-            option.classList.add(DropDown.selectors.options.slice(1));
-            return option
+            return `<option value="${value}" className="${DropDown.selectors.options.slice(1)}">${label}</option>`
         }
 
         #removeAllOptions() {

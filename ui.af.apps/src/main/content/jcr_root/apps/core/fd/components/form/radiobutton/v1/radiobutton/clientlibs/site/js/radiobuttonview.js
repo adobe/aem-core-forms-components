@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class RadioButton extends FormView.FormFieldBase {
+    class RadioButton extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -134,23 +134,17 @@
         }
 
         #createRadioOption(value, itemLabel) {
-            let option = document.createElement('div');
-            option.classList.add(RadioButton.selectors.option.slice(1));
-            let label = document.createElement('label');
-            label.classList.add(RadioButton.selectors.optionLabel.slice(1));
+            const optionTemplate = `
+            <div class="${RadioButton.selectors.item.slice(1)}">
+                <label class="${RadioButton.selectors.optionLabel.slice(1)}">
+                    <input type="checkbox" class="${RadioButton.selectors.widget.slice(1)}" value="${value}">
+                    <span>${itemLabel}</span>
+                </label>
+            </div>`;
 
-            let input = document.createElement('input');
-            input.type = 'radio';
-            input.classList.add(RadioButton.selectors.widget.slice(1));
-            input.value = value;
-
-            let span = document.createElement('span');
-            span.textContent = itemLabel;
-
-            label.appendChild(input);
-            label.appendChild(span);
-            option.appendChild(label);
-            return option;
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
         }
 
         updateEnum(newEnums) {
