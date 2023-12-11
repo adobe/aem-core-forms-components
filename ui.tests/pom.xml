@@ -35,8 +35,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <node.version>v10.0.0</node.version>
-        <npm.version>7.5.4</npm.version>
+        <node.version>v19.7.0</node.version>
+        <npm.version>9.5.0</npm.version>
 
         <HEADLESS_BROWSER>false</HEADLESS_BROWSER>
 
@@ -160,6 +160,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>install --force</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -234,6 +237,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
+                                    <arguments>install --force</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -300,6 +304,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>install --force</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
