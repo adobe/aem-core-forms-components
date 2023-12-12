@@ -158,7 +158,7 @@
                     jcr:title="Text Input 10"
                     enabled="{Boolean}true"
                     readOnly="{Boolean}false"
-                    autocomplete="off"
+                    autocomplete="given-name"
                     name="textinput_18577078541690896990322"
                     visible="{Boolean}true"
                     hideTitle="false"

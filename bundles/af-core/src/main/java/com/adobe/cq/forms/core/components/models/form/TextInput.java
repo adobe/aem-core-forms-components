@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
@@ -45,6 +46,7 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
      *
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
+    @JsonProperty("autocomplete")
     @Nullable
     default String getAutoComplete() {
         return null;
