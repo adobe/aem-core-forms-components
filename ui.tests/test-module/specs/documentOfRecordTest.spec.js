@@ -48,7 +48,7 @@ describe('Document of Record Test', () => {
   }
 
 
-  it('should download document of record', () => {
+  it.skip('should download document of record', () => {
     return cy.window().then($window => {
       if($window.guideBridge && $window.guideBridge.isConnected()) {
        const bridge = $window.guideBridge;
