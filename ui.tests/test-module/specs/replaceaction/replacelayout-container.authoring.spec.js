@@ -104,6 +104,8 @@ describe('component replace - Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']");
 
+        cy.get('.cmp-replace-dialog-search-components').should('exist');
+
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == containerEditPathSelector) {
             cy.get(horizontalTabs)
