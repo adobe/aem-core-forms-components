@@ -262,6 +262,17 @@ describe("Form Runtime with Text Input", () => {
         })
 
     })
+
+    it("autocomplete attribute", () => {
+        const [textbox9, textBox9FieldView] = Object.entries(formContainer._fields)[8];
+        const [textbox10, textBox10FieldView] = Object.entries(formContainer._fields)[9];
+        cy.get(`#${textbox9}`).find("input")
+            .invoke('attr', 'autocomplete')
+            .should("eq", "off");
+        cy.get(`#${textbox10}`).find("input")
+            .invoke('attr', 'autocomplete')
+            .should("eq", "given-name");
+    })
 })
 
 describe("Form Runtime with Text Input For Different locale", () => {
