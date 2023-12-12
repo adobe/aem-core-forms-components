@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class DropDown extends FormView.FormFieldBase {
+    class DropDown extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -65,6 +65,10 @@
 
         getTooltipDiv() {
             return this.element.querySelector(DropDown.selectors.tooltipDiv);
+        }
+
+        getOptions() {
+            return this.element.querySelectorAll(DropDown.selectors.options);
         }
 
          #checkIfEqual = function(value, optionValue, multiSelect) {
@@ -122,6 +126,76 @@
             super.updateEmptyStatus();
         }
 
+        #createDropDownOptions(value, label) {
+            const optionTemplate = `<option value="${value}" class="${DropDown.selectors.options.slice(1)}">${label}</option>`;
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+
+        #removeAllOptions() {
+            while(this.getOptions().length !== 0) {
+                this.getWidget().remove(this.getOptions().length) // not removing the blank option
+            }
+        }
+
+        updateEnum(newEnums) {
+            let options = this.getOptions();
+            let currentEnumSize = options.length;
+
+            if(currentEnumSize === 0) { // case 1: create option with new enums
+                newEnums.forEach(value => {
+                    this.getWidget().add(this.#createDropDownOptions(value, value));
+                });
+            } else if(newEnums.length === 0) {  // case 2: remove all options
+                this.#removeAllOptions();
+            } else if(currentEnumSize === newEnums.length) { // case 3: replace existing enums
+                options.forEach((option, index) => {
+                    option.value = newEnums[index];
+                });
+            } else if(currentEnumSize < newEnums.length) {  // case 4: replace existing enums and create new options with remaining
+                options.forEach((option, index) => {
+                    option.value = newEnums[index];
+                });
+                newEnums.forEach((value, index) => {
+                    if(index > currentEnumSize - 1) {
+                        this.getWidget().add(this.#createDropDownOptions(value, value));
+                    }
+                });
+            } else {
+                options.forEach((option, index) => {    // case 5: replace existing enums and remove extra options
+                    if(index < newEnums.length) {
+                        option.value = newEnums[index];
+                    } else {
+                        this.getWidget().remove(index + 1); // accounting for the blank option in dropdown
+                    }
+                });
+            }
+        }
+
+        updateEnumNames(newEnumNames) {
+            let options = this.getOptions();
+            let currentEnumNameSize = options.length;
+            if(currentEnumNameSize === 0) {  // case 1: Create all dropdown new options
+                newEnumNames.forEach((value) => {
+                    this.getWidget().add(this.#createDropDownOptions(value, value));
+                })
+            } else if(currentEnumNameSize > newEnumNames.length) {  // case 2: Replace existing enumNames, remaining enumNames = enums
+                newEnumNames.forEach((value, index) => {
+                    options[index].text = value;
+                });
+
+                options.forEach((option, index) => {
+                    if(index >= newEnumNames.length) {
+                        option.text = option.value;
+                    }
+                })
+            } else {    // case 3: Replace all existing enumNames
+                options.forEach((option, index) => {
+                    option.text = newEnumNames[index];
+                });
+            }
+        }
 
         setModel(model) {
             super.setModel(model);
