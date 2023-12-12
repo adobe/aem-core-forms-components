@@ -106,6 +106,19 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(datePickerDrop);
         });
 
+
+        it('default value showing in authoring', function () {
+            dropDatePickerInContainer();
+            const validDate = "2021-12-12";
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('[name="./default"]').clear().focus().type(validDate, {force: true});
+            cy.get('.cq-dialog-submit').should('be.visible').click();
+            cy.getContentIFrameBody().find(".cmp-adaptiveform-datepicker__widget")
+                .should("have.attr", "value", "2021-12-12");
+            cy.deleteComponentByPath(datePickerDrop);
+        });
+
         it('open edit dialog of DatePicker', function () {
             testDatePickerEditDialog(datePickerEditPathSelector, datePickerDrop);
         });
