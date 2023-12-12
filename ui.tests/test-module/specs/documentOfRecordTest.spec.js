@@ -49,22 +49,22 @@ describe('Document of Record Test', () => {
 
 
   it('should download document of record', () => {
-    cy.window().then($window => {
+    return cy.window().then($window => {
       if($window.guideBridge && $window.guideBridge.isConnected()) {
        const bridge = $window.guideBridge;
-        const data = bridge.getFormModel().exportData();
-        const formdata = new FormData();
-        formdata.append("data", JSON.stringify(data));
-        var requestOptions = {
+       const data = bridge.getFormModel().exportData();
+       const formdata = new FormData();
+       formdata.append("data", JSON.stringify(data));
+       const requestOptions = {
           method: 'POST',
           body: formdata,
           redirect: 'follow'
         };
-        if (true) {
+        if (cy.af.isLatestAddon()) {
           // use cursor based API if latest AddOn
           return getFormId(formPath)
           .then(formId => {
-            fetch(`/adobe/forms/af/dor/${formId}`, requestOptions)
+            return fetch(`/adobe/forms/af/dor/${formId}`, requestOptions)
             .then(response => {
               const contentType = response.headers.get('Content-Type');
               expect(contentType).to.equal("application/pdf")
