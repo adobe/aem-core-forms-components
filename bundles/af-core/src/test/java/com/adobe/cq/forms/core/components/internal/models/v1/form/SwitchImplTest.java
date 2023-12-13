@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -344,33 +343,5 @@ public class SwitchImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(Switch.class);
-    }
-
-    @Test
-    void testGetEnumNames() {
-        Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertArrayEquals(new String[] { "OFF", "ON" }, switchObj.getEnumNames());
-        TextContent textContent1 = createTextContentObj(null, "OFF");
-        TextContent textContent2 = createTextContentObj(null, "ON");
-
-        TextContent[] textContent = new TextContent[] { textContent1, textContent2 };
-        for (int i = 0; i < switchObj.getEnumNamesAsTextContent().length; i++) {
-            assertEquals(textContent[i].getValue(), switchObj.getEnumNamesAsTextContent()[i].getValue());
-            assertEquals(textContent[i].isRichText(), switchObj.getEnumNamesAsTextContent()[i].isRichText());
-        }
-    }
-
-    private TextContent createTextContentObj(Boolean isRichText, String value) {
-        return new TextContent() {
-            @Override
-            public @Nullable Boolean isRichText() {
-                return isRichText;
-            }
-
-            @Override
-            public @Nullable String getValue() {
-                return value;
-            }
-        };
     }
 }

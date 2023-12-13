@@ -95,26 +95,6 @@ describe('Page - Authoring', function () {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, false);
       });
     });
-
-    it('check rich text support for label', function(){
-      dropSwitchInContainer();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get("div[name='richTextTitle']").should('not.be.visible');
-
-      // check rich text selector and see if RTE is visible.
-      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-      cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
-      cy.get('.cq-dialog-submit').click();
-    });
-
-    it('check rich text inline editor is present', function(){
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
-      cy.invokeEditableAction("[data-action='EDIT']");
-      cy.get(".rte-toolbar").should('be.visible');
-      cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
-      cy.deleteComponentByPath(switchDrop);
-    });
   })
 
   context('Open Sites Editor', function() {
@@ -153,26 +133,6 @@ describe('Page - Authoring', function () {
       cy.cleanTest(switchDrop).then(() => {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, true);
       });
-    });
-
-    it('check rich text support for label', function(){
-      dropSwitchInSites();
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
-      cy.invokeEditableAction("[data-action='CONFIGURE']");
-      cy.get("div[name='richTextTitle']").should('not.be.visible');
-
-      // check rich text selector and see if RTE is visible.
-      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-      cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
-      cy.get('.cq-dialog-submit').click();
-    });
-
-    it('check rich text inline editor is present', function(){
-      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
-      cy.invokeEditableAction("[data-action='EDIT']");
-      cy.get(".rte-toolbar").should('be.visible');
-      cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
-      cy.deleteComponentByPath(switchDrop);
     });
   })
 });

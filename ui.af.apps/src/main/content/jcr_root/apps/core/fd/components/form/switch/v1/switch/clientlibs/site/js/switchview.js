@@ -15,6 +15,7 @@
  ******************************************************************************/
 (function() {
 
+
     "use strict";
     class Switch extends FormView.FormCheckBox {
 
@@ -33,6 +34,7 @@
 
         constructor(params) {
             super(params);
+            this.qm = this.element.querySelector(Switch.selectors.qm)
         }
 
         getClass() {
@@ -67,4 +69,5 @@
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Switch({element,formContainer})
     }, Switch.selectors.self);
+
 })();

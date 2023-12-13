@@ -228,7 +228,7 @@
                                     <item1
                                             cq:styleClasses="cmp-adaptiveform-switch__unhide-labels"
                                             cq:styleId="1696489594671"
-                                            cq:styleLabel="Unhide Labels"
+                                            cq:styleLabel="Show Labels"
                                             jcr:primaryType="nt:unstructured"/>
                                 </cq:styles>
                             </item0>

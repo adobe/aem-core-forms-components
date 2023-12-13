@@ -38,12 +38,8 @@
     "1"
   ],
   "enumNames": [
-    {
-      "value": "OFF"
-    },
-    {
-      "value": "ON"
-    }
+    "OFF",
+    "ON"
   ],
   ":type": "core/fd/components/form/switch/v1/switch"
 }
