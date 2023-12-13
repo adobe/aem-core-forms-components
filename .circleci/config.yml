@@ -50,6 +50,23 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
+          name: Install doc service docker
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD docker2-granite-release-local.dr-uw2.adobeitc.com
+            docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+            docker run -d \
+              --name aem-formsdocservice-container \
+              -e REGION_NAME=local \
+              -e ENVIRONMENT_NAME=CI \
+              -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
+              -e HSM_SERVER_IP=10.0.2.12 \
+              -e HSM_PASS=docservices \
+              -e HSM_USER=docservices \
+              -e KEYSTORE_PASS=password \
+              -e TRUSTSTORE_PASS=password \
+              -p 8081:8080 \
+              docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+      - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
@@ -116,8 +133,6 @@ executors:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
-        <<: *docker_auth
-      - image: docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
         <<: *docker_auth
 
 jobs:
