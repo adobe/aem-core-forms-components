@@ -117,6 +117,8 @@ executors:
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
         <<: *docker_auth
+      - image: docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+        <<: *docker_auth
 
 jobs:
   build-java-11:
