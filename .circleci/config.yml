@@ -59,11 +59,6 @@ common:
               -e REGION_NAME=local \
               -e ENVIRONMENT_NAME=CI \
               -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
-              -e HSM_SERVER_IP=10.0.2.12 \
-              -e HSM_PASS=docservices \
-              -e HSM_USER=docservices \
-              -e KEYSTORE_PASS=password \
-              -e TRUSTSTORE_PASS=password \
               -p 8081:8080 \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
       - run:
