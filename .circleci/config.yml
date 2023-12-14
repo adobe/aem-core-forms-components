@@ -63,6 +63,7 @@ common:
               -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
               -p 8081:8080 \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+      - run: docker ps -a
       - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
