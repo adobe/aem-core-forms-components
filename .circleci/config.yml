@@ -50,6 +50,12 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
+          name: Set Docker Daemon Host
+          command: echo "DOCKER_OPTS=\"--host=unix:///var/run/docker.sock\"" | sudo tee -a /etc/default/docker
+      - run:
+          name: Restart Docker Service
+          command: sudo service docker restart
+      - run:
           name: Install doc service docker
           command: |
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
