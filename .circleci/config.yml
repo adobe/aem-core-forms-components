@@ -52,8 +52,9 @@ common:
       - run:
           name: Install doc service docker
           command: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD docker2-granite-release-local.dr-uw2.adobeitc.com
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
             docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+            docker stop aem-formsdocservice-container && docker rm aem-formsdocservice-container || true
             docker run -d \
               --name aem-formsdocservice-container \
               -e REGION_NAME=local \
