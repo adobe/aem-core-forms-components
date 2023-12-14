@@ -55,7 +55,16 @@ common:
           command: |
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
             docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+            docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
             docker stop aem-formsdocservice-container && docker rm aem-formsdocservice-container || true
+            docker stop aem-formsdocservice-native && docker rm aem-formsdocservice-native || true
+            docker run -d \
+              --name aem-formsdocservice-native \
+              -e REGION_NAME=local \
+              -e ENVIRONMENT_NAME=CI \
+              -p 8007:8007 \
+              -p 8008:8008 \
+              docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
             docker run -d \
               --name aem-formsdocservice-container \
               -e REGION_NAME=local \
