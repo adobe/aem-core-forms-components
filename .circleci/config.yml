@@ -49,12 +49,7 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
-      - run:
-          name: Set Docker Daemon Host
-          command: echo "DOCKER_OPTS=\"--host=unix:///var/run/docker.sock\"" | sudo tee -a /etc/default/docker
-      - run:
-          name: Restart Docker Service
-          command: sudo service docker restart
+      - setup_remote_docker
       - run:
           name: Install doc service docker
           command: |
