@@ -49,6 +49,10 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+      - run:
+          name: Set Environment Variable
+          command: echo "export FORMS_DOCUMENT_SERVICE=forms-docservice-java:8080" >> $BASH_ENV
+          when: always
       - setup_remote_docker
       - run:
           name: Install doc service docker
@@ -77,6 +81,7 @@ common:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
+            source $BASH_ENV
             cd ui.tests/test-module
             TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
             cd ../../
