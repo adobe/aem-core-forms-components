@@ -102,7 +102,10 @@
     function handleRepeat(dialogElement) {
         const isRepeatable = function() {
                 let repeat = dialogElement.querySelector("input[name='./repeatable']");
-                return repeat.checked;
+                if (repeat) {
+                    return repeat.checked
+                }
+                return false;
             };
         const makeWrapDataReadOnly = function(status) {
                 let checkbox = dialogElement.querySelector(".cmp-adaptiveform-panel__wrapData");
@@ -125,7 +128,7 @@
         const isRepeat = isRepeatable();
         const bindRef = dialogElement.querySelector("input[name='./dataRef']");
         const maxRepeat = dialogElement.querySelector("coral-numberinput[name='./maxOccur']");
-        if (maxRepeat.value == -1) {
+        if (maxRepeat && maxRepeat.value == -1) {
             maxRepeat.value = '';
         }
         markMinMaxDisabled(!isRepeat);
@@ -142,11 +145,13 @@
         }
 
         const repeatSwitch = dialogElement.querySelector(".cmp-adaptiveform-panelcontainer__repeatable coral-switch");
-        repeatSwitch.addEventListener("change", function () {
-            const isRepeat = isRepeatable();
-            makeWrapDataReadOnly(isRepeat);
-            markMinMaxDisabled(!isRepeat);
-        });
+        if (repeatSwitch) {
+            repeatSwitch.addEventListener("change", function () {
+                const isRepeat = isRepeatable();
+                makeWrapDataReadOnly(isRepeat);
+                markMinMaxDisabled(!isRepeat);
+            });
+        }
     }
 
 })(jQuery);
