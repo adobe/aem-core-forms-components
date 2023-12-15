@@ -75,6 +75,8 @@
             super.setModel(model);
             let widgets = this.widget;
             widgets.forEach(widget => {
+                widget.name = model.id;
+                widget.dataset.afName = model.name;
                 widget.addEventListener('change', (e) => {
                     this._model.value = e.target.value;
                 });
