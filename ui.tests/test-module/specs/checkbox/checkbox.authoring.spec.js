@@ -49,7 +49,9 @@ describe('Page - Authoring', function () {
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkboxEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.get("[name='./name']")
-    .should("exist");
+        .should("exist");
+    cy.get("[name='./readOnly']")
+        .should("not.exist");
 
 
     cy.get('.cq-dialog-cancel').click();

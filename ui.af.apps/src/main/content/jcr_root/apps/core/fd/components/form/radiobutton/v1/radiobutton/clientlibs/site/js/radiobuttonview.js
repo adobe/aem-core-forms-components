@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class RadioButton extends FormView.FormFieldBase {
+    class RadioButton extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -35,7 +35,9 @@
             description: `.${RadioButton.bemBlock}__longdescription`,
             qm: `.${RadioButton.bemBlock}__questionmark`,
             errorDiv: `.${RadioButton.bemBlock}__errormessage`,
-            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`
+            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`,
+            option: `.${RadioButton.bemBlock}__option`,
+            optionLabel: `.${RadioButton.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -69,6 +71,10 @@
 
         getErrorDiv() {
             return this.element.querySelector(RadioButton.selectors.errorDiv);
+        }
+
+        getOptions() {
+            return this.element.querySelectorAll(RadioButton.selectors.option);
         }
 
         setModel(model) {
@@ -114,7 +120,7 @@
 
         updateValue(modelValue) {
             this.widget.forEach(widget => {
-                if (modelValue && widget.value != null && modelValue.toString() == widget.value.toString()) {
+                if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
                     widget.checked = true;
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
                     widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
@@ -127,6 +133,27 @@
             super.updateEmptyStatus();
         }
 
+        #createRadioOption(value, itemLabel) {
+            const optionTemplate = `
+            <div class="${RadioButton.selectors.option.slice(1)}">
+                <label class="${RadioButton.selectors.optionLabel.slice(1)}">
+                    <input type="checkbox" class="${RadioButton.selectors.widget.slice(1)}" value="${value}">
+                    <span>${itemLabel}</span>
+                </label>
+            </div>`;
+
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+
+        updateEnum(newEnums) {
+            super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createRadioOption);
+        }
+
+        updateEnumNames(newEnumNames) {
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

@@ -88,8 +88,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.23.2</core.wcm.components.version>
-        <core.wcm.components.library.version>2.23.2</core.wcm.components.library.version>
+        <core.wcm.components.version>2.23.4</core.wcm.components.version>
+        <core.wcm.components.library.version>2.23.4</core.wcm.components.library.version>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -808,7 +808,16 @@
                 <plugin>
                     <groupId>net.revelc.code</groupId>
                     <artifactId>impsort-maven-plugin</artifactId>
-                    <version>1.4.1</version>
+                    <version>1.6.2</version>
+                    <dependencies>
+                        <!-- Needed because of maven 3.9.0 backward compatibility issue,
+                             See : https://github.com/revelc/impsort-maven-plugin/issues/64 -->
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-utils</artifactId>
+                            <version>3.5.1</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
                         <groups>java, javax, org</groups>
                         <staticGroups>*</staticGroups>
