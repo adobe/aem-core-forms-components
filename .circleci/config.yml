@@ -70,7 +70,7 @@ common:
               -e REGION_NAME=local \
               -e ENVIRONMENT_NAME=CI \
               -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
-              -p 8081:8080 \
+              -p 8080:8080 \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
       - run: docker ps -a
       - run:
