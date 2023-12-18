@@ -684,6 +684,13 @@ Cypress.Commands.add("clickAndValidate", (selector) => {
     });
 });
 
+Cypress.Commands.add("getContentIFrameBody", () => {
+    return cy
+        .get('iframe#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
 Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
     const rect = subject[0].getBoundingClientRect();
   
