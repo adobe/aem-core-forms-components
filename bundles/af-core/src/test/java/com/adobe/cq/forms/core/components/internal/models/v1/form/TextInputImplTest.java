@@ -56,6 +56,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
+    private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -424,5 +425,13 @@ public class TextInputImplTest {
     void testJSONExportForEmptyValidationExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
+    }
+
+    @Test
+    void testPlaceholderAndAutocomplete() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE));
+        assertEquals("given-name", textInput.getAutoComplete());
+        assertEquals("test-placeholder", textInput.getPlaceHolder());
     }
 }

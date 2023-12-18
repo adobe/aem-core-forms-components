@@ -21,6 +21,7 @@ import FormTabs from "./FormTabs.js";
 import FormCheckBox from "./FormCheckBox.js";
 import FormFileInput from "./FormFileInput.js";
 import FormFileInputWidget from "./FormFileInputWidget.js";
+import FormOptionFieldBase from "./FormOptionFieldBase";
 
 
-export {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormCheckBox, FormFileInput, FormFileInputWidget }
+export {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormCheckBox, FormOptionFieldBase, FormFileInput, FormFileInputWidget }

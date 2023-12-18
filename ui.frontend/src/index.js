@@ -16,7 +16,7 @@
 import Utils from "./utils.js";
 import LanguageUtils from "./LanguageUtils.js";
 import {createFormInstance, FileObject, extractFileInfo, Click, Change, Submit, Blur, AddItem, RemoveItem, CustomEvent} from "@aemforms/af-core";
-import {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormFileInput, FormCheckBox, FormFileInputWidget} from "./view/index.js";
+import {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormFileInput, FormOptionFieldBase, FormCheckBox, FormFileInputWidget} from "./view/index.js";
 import {Constants} from "./constants.js";
 import GuideBridge from "./GuideBridge.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
@@ -77,4 +77,4 @@ const FileAttachmentUtils = {
  */
 
 
-export {createFormInstance, FormTabs, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils, FunctionRuntime, FormCheckBox, FormFileInput, FormFileInputWidget};
+export {createFormInstance, FormTabs, FormField, FormFieldBase, FormPanel, FormContainer, Constants, Utils, Actions, HTTPAPILayer, FileAttachmentUtils, Formatters, LanguageUtils, FunctionRuntime, FormCheckBox, FormOptionFieldBase, FormFileInput, FormFileInputWidget};
