@@ -64,6 +64,7 @@ common:
               -e ENVIRONMENT_NAME=CI \
               -p 8007:8007 \
               -p 8008:8008 \
+              -v /tmp:/mnt/shared \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
             docker run -d \
               --name aem-formsdocservice-java \
@@ -71,6 +72,7 @@ common:
               -e ENVIRONMENT_NAME=CI \
               -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
               -p 8080:8080 \
+              -v /tmp:/mnt/shared \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
       - run: docker ps -a
       - run:
