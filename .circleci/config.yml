@@ -50,6 +50,7 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - setup_remote_docker
+          docker_layer_caching: true
       - run:
           name: Install doc service docker
           command: |
@@ -74,6 +75,13 @@ common:
               -p 8080:8080 \
               -v /tmp:/mnt/shared \
               docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+            # Get the IP address of the host machine
+            HOST_IP=$(ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+')
+            # Pass the host IP to your main job as an environment variable
+            echo "HOST_IP=${HOST_IP}" >> $BASH_ENV
+            echo "export HOST_IP" >> $BASH_ENV
+            source $BASH_ENV
+            echo $HOST_IP >> HOST_IP.txt
       - run: docker ps -a
       - run:
           name: UI tests
@@ -115,7 +123,9 @@ common:
             fi
       - run:
           name: Cleanup
-          command: rm -rf TEST_EXECUTION_STATUS.txt
+          command: |
+            rm -rf TEST_EXECUTION_STATUS.txt
+            rm -rf HOST_IP.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
