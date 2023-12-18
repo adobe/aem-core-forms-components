@@ -18,9 +18,6 @@ common:
       - browser-tools/install-browser-tools:
           chrome-version: 116.0.5845.96 # TODO: remove when chromedriver downloads are fixed
       - run:
-          name: Start docker service
-          command: 'sudo docker info >/dev/null 2>&1 || sudo service docker start; '
-      - run:
           command: |
             google-chrome --version
             chromedriver --version
@@ -52,6 +49,9 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+      - run:
+          name: Start docker service
+          command: 'sudo docker info >/dev/null 2>&1 || sudo service docker start; '
       - run:
           name: Install doc service docker
           command: |
@@ -206,8 +206,6 @@ jobs:
           path: test-results/junit
 
   cypress-chrome-cloudready-with-addon:
-    machine:
-      image: ubuntu-2204:2022.04.2
     executor: test_executor_cloudready
     environment:
       AEM: addon
@@ -220,8 +218,6 @@ jobs:
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
-    machine:
-      image: ubuntu-2204:2022.04.2
     executor: test_executor_cloudready
     environment:
       AEM: addon-latest
@@ -235,8 +231,6 @@ jobs:
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
-    machine:
-      image: ubuntu-2204:2022.04.2
     executor: test_executor_cloudready
     environment:
       AEM: addon-latest
