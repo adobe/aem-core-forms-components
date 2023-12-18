@@ -49,9 +49,7 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
-      - run:
-          name: Start docker service
-          command: 'sudo docker info >/dev/null 2>&1 || sudo service docker start; '
+      - setup_remote_docker
       - run:
           name: Install doc service docker
           command: |
