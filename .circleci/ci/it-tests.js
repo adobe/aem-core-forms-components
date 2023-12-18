@@ -30,6 +30,8 @@ try {
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     let hostIp = ci.sh('cat /home/circleci/build/HOST_IP.txt', true);
+    // Set FORMS_DOCUMENT_SERVICE environment variable
+    process.env.FORMS_DOCUMENT_SERVICE = `${hostIp}:8080`;
     console.log("host ip: ", hostIp);
     ci.dir(qpPath, () => {
         // Connect to QP
