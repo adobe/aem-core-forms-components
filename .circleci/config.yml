@@ -21,17 +21,17 @@ common:
           name: Start docker service
           command: 'sudo docker info >/dev/null 2>&1 || sudo service docker start; '
       - run:
-        name: Start qp and aem docker
-        command: |
-          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
-          docker pull docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-          docker pull docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
-          docker run -d \
-            --name my-circleci-qp-container \
-            docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-          docker run -d \
-            --name my-circleci-aem-cloudready-container \
-            docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
+          name: Start qp and aem docker
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+            docker pull docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+            docker pull docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
+            docker run -d \
+              --name my-circleci-qp-container \
+              docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+            docker run -d \
+              --name my-circleci-aem-cloudready-container \
+              docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
       - run:
           command: |
             google-chrome --version
