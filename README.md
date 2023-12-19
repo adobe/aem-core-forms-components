@@ -15,6 +15,10 @@ This project is intended to be used in conjunction with the [AEM Sites Core Comp
 
 See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html) for usage and configuration instructions of the AEM Forms Core Components.
 
+## JavaScript Documentation
+
+https://opensource.adobe.com/aem-core-forms-components/
+
 ## Available Components
 
 ### Page Authoring Components
