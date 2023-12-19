@@ -28,7 +28,7 @@ services:
     # Add any additional configurations or environment variables if needed
     volumes:
       - /cq:/home/circleci/cq
-    entrypoint: /bin/bash  # Set the entry point to a shell
+    entrypoint: tail -f /dev/null  # Keeps the container running
 
   circleci-aem-cloudready:
     image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
