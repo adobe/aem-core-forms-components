@@ -29,7 +29,7 @@ common:
           command: |
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
-            docker-compose -f docker-compose.yml up -d
+            docker-compose -f .circleci/docker-compose.yml up -d
       - attach_workspace:
           at: /home/circleci/build
       - run:
