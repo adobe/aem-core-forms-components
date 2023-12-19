@@ -24,6 +24,12 @@ common:
             which google-chrome
           name: Check browser installed
       - *restore_cache
+      - run:
+          name: Docker compose
+          command: |
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+            docker-compose -f docker-compose.yml up -d
       - attach_workspace:
           at: /home/circleci/build
       - run:
@@ -49,12 +55,6 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
-      - run:
-          name: Docker compose
-          command: |
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
-            docker-compose -f docker-compose.yml up -d
       - run: docker ps -a
       - run:
           name: UI tests
