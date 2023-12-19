@@ -121,7 +121,7 @@ executors:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
     machine:
-      - image: ubuntu-2204:2023.10.1
+      image: ubuntu-2204:2023.10.1
 
 jobs:
   build-java-11:
