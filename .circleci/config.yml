@@ -49,39 +49,12 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run:
-          name: Install doc service docker
+          name: Docker compose
           command: |
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
-            docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
-            docker pull docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
-            docker stop aem-formsdocservice-java && docker rm aem-formsdocservice-java || true
-            docker stop aem-formsdocservice-native && docker rm aem-formsdocservice-native || true
-            docker run -d \
-              --name aem-formsdocservice-native \
-              -e REGION_NAME=local \
-              -e ENVIRONMENT_NAME=CI \
-              -p 8007:8007 \
-              -p 8008:8008 \
-              -v /tmp:/mnt/shared \
-              docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
-            docker run -d \
-              --name aem-formsdocservice-java \
-              -e REGION_NAME=local \
-              -e ENVIRONMENT_NAME=CI \
-              -e NATIVE_SERVICE_HOST=aem-formsdocservice-native \
-              -p 8080:8080 \
-              -v /tmp:/mnt/shared \
-              docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
-            # Get the IP address of the host machine
-            HOST_IP=$(ifconfig docker0 | grep -Po 'inet \K[\d.]+')
-            # Pass the host IP to your main job as an environment variable
-            echo "HOST_IP=${HOST_IP}" >> $BASH_ENV
-            echo "export HOST_IP" >> $BASH_ENV
-            source $BASH_ENV
-            echo $HOST_IP >> HOST_IP.txt
+            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+            docker-compose -f docker-compose.yml up -d
       - run: docker ps -a
       - run:
           name: UI tests
@@ -125,7 +98,6 @@ common:
           name: Cleanup
           command: |
             rm -rf TEST_EXECUTION_STATUS.txt
-            rm -rf HOST_IP.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -148,11 +120,8 @@ executors:
     docker:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
-    docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-        <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
-        <<: *docker_auth
+    machine:
+      - image: ubuntu-2204:2023.10.1
 
 jobs:
   build-java-11:

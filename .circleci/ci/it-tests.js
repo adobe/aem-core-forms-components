@@ -29,10 +29,6 @@ const isLatestAddon = AEM === 'addon-latest';
 try {
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-    let hostIp = ci.sh('cat /home/circleci/build/HOST_IP.txt', true);
-    // Set FORMS_DOCUMENT_SERVICE environment variable
-    process.env.FORMS_DOCUMENT_SERVICE = `${hostIp}:8080`;
-    console.log("host ip: ", hostIp);
     ci.dir(qpPath, () => {
         // Connect to QP
         ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
@@ -86,7 +82,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -DFORMS_DOCUMENT_SERVICE=${hostIp}:8080 -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 });
 
