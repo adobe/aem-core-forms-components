@@ -27,7 +27,7 @@ services:
     image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
     # Add any additional configurations or environment variables if needed
     volumes:
-      - /cq:/home/circleci/cq
+      - /home/circleci/cq:/cq
     entrypoint: tail -f /dev/null  # Keeps the container running
 
   circleci-aem-cloudready:
