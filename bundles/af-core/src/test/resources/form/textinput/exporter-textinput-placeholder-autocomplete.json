@@ -1,0 +1,23 @@
+{
+  "id": "textinput-f19a8d2f9e",
+  "fieldType": "text-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/textinput-placeholder-autocomplete"
+  },
+  "placeholder": "test-placeholder",
+  "autocomplete": "given-name",
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}

@@ -60,6 +60,39 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true">
                                             </autocomplete>
+                                            <autocomplete-tel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                                    fieldLabel="Autofill attribute"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./autocomplete"
+                                                    value="">
+                                                <options
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <empty
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text=""
+                                                            value=""/>
+                                                    <off
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="off"
+                                                            value="off"/>
+                                                    <on
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="on"
+                                                            value="on"/>
+                                                    <tel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="tel"
+                                                            value="tel"/>
+                                                    <tel-national
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="tel-national"
+                                                            value="tel-national"/>
+                                                </items>
+                                            </autocomplete-tel>
                                         </items>
                                     </column>
                                 </items>
