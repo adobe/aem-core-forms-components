@@ -134,6 +134,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
+} catch(ex) {
+    console.log(ex);
 } finally {
     // Always download logs from AEM container
     ci.sh('mkdir logs');
