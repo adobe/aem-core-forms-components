@@ -291,8 +291,7 @@
                                 <configuration>
                                     <target>
                                         <!-- Only beta customers should see this, to enable form container create proxy unless GA -->
-
-                                        <!-- Should uncomment once core components are part of far -->
+                                    <!-- Should uncomment once core components are part of far -->
 
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Content" />
