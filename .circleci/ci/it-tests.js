@@ -28,10 +28,10 @@ const isLatestAddon = AEM === 'addon-latest';
 
 try {
     // # Define the image name
-    //let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
-    //let containerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
-    //console.log("container id for qp ", containerId);
-    //ci.sh(`docker cp ${containerId}:/cq ${qpPath}`);
+    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
+    let containerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for qp ", containerId);
+    ci.sh(`docker cp ${containerId}:/home/circleci/cq ${qpPath}`);
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.dir(qpPath, () => {
