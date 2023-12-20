@@ -25,6 +25,9 @@ services:
 
   circleci-qp:
     image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+    ports:
+      - "55555:55555"
+      - "55556:55556"
     entrypoint: tail -f /dev/null  # Keeps the container running
 
   circleci-aem-cloudready:
