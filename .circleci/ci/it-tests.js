@@ -40,7 +40,7 @@ try {
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
         // Connect to QP
-        ci.sh(`docker exec -it ${qpContainerId} ./qp.sh -v bind --server-hostname localhost --server-port 55555`);
+        ci.sh(`docker exec ${qpContainerId} ./qp.sh -v bind --server-hostname localhost --server-port 55555`);
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
@@ -75,7 +75,7 @@ try {
     // this is used in case of re-run failed test scenario
     ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
     // Start CQ
-    ci.sh(`docker exec -it ${aemContainerId} ./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
+    ci.sh(`docker exec ${aemContainerId} ./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
