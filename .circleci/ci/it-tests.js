@@ -39,7 +39,6 @@ try {
     //ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-    ci.dir(qpPath, () => {
         // Connect to QP
         ci.sh(`docker exec -it ${qpContainerId} ./qp.sh -v bind --server-hostname localhost --server-port 55555`);
 
@@ -94,7 +93,6 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
-});
 
     // Run integration tests
     /*
