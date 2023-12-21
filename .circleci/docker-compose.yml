@@ -1,8 +1,26 @@
 version: '3'
 
 services:
+  circleci-qp:
+    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+    #ports:
+    #  - "55555:55555"
+    #  - "55556:55556"
+    entrypoint: tail -f /dev/null  # Keeps the container running
+
+  circleci-aem-cloudready:
+    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
+    depends_on:
+      - circleci-qp
+    # Add any additional configurations or environment variables if needed
+    #ports:
+    #  - "3000:3000"
+    #  - "4502:4502"
+
   aem-formsdocservice-native:
     image: docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-native:1.0.158
+    depends_on:
+      - circleci-aem-cloudready
     environment:
       - REGION_NAME=local
       - ENVIRONMENT_NAME=CI
@@ -14,6 +32,8 @@ services:
 
   aem-formsdocservice-java:
     image: docker2-granite-release-local.dr-uw2.adobeitc.com/aem-ethos/formsdocservice-java:10.0.214
+    depends_on:
+      - aem-formsdocservice-native
     environment:
       - REGION_NAME=local
       - ENVIRONMENT_NAME=CI
@@ -22,17 +42,3 @@ services:
       - "8080:8080"
     volumes:
       - /tmp:/mnt/shared
-
-  circleci-qp:
-    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-    ports:
-      - "55555:55555"
-      - "55556:55556"
-    entrypoint: tail -f /dev/null  # Keeps the container running
-
-  circleci-aem-cloudready:
-    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
-    # Add any additional configurations or environment variables if needed
-    ports:
-      - "3000:3000"
-      - "4502:4502"

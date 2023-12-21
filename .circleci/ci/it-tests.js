@@ -29,14 +29,19 @@ const isLatestAddon = AEM === 'addon-latest';
 try {
     // # Define the image name
     let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
-    let containerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
-    console.log("container id for qp ", containerId);
-    ci.sh(`docker cp ${containerId}:/home/circleci/cq ${qpPath}`);
+    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for qp ", qpContainerId);
+    image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11";
+    let aemContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for aem ", aemContainerId);
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`docker cp ${aemContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
     ci.stage("Integration Tests");
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.dir(qpPath, () => {
         // Connect to QP
-        ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
+        ci.sh(`./qp.sh -v bind --server-hostname localhost --server-port 55555`);
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
