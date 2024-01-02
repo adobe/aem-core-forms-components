@@ -237,7 +237,7 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             submitTest();
         })
 
-        it.only(`${fileInput.type} - attach files using drag and drop, check model, view, preview attachment and submit the form`, () => {
+        it(`${fileInput.type} - attach files using drag and drop, check model, view, preview attachment and submit the form`, () => {
             cy.previewForm(pagePath, {
                 onBeforeLoad : (win) => {
                     cy.stub(win, 'open'); // creating a stub to check file preview
