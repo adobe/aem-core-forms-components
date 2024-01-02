@@ -34,12 +34,21 @@ try {
     image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11";
     let aemContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
     console.log("container id for aem ", aemContainerId);
+
+    // moving the qp docker content and environment variable to host machine
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
     //ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
     //ci.sh(`docker cp ${aemContainerId}:/home/circleci/cq ${qpPath}`);
-    ci.sh(`docker exec ${aemContainerId} ./start.sh`);
-    ci.stage("Integration Tests");
+    //ci.sh(`docker exec ${aemContainerId} ./start.sh`);
+    ci.sh(`ENV_VARS=$(docker inspect -f '{{range .Config.Env}}{{.}}{{"\n"}}{{end}}' ${qpContainerId})`);
+    ci.sh(`echo "$ENV_VARS" | grep -E '^.*=.*$' | sed 's/^/export /' > environment_variables.sh`);
+    ci.sh(`source environment_variables.sh`);
+
+    // end of moving the qp docker content and environment variable to host machine
+
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
         ci.sh(`./qp.sh -v bind --server-hostname localhost --server-port 55555`);
