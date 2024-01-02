@@ -13,6 +13,8 @@ services:
     ports:
       - "3000:3000"
       - "4502:4502"
+      - "55555:55555"
+      - "55556:55556"
     volumes:
       - /home/circleci/build:/home/circleci/build
 
