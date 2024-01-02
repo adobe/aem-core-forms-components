@@ -41,7 +41,7 @@ try {
     //ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
     //ci.sh(`docker cp ${aemContainerId}:/home/circleci/cq ${qpPath}`);
     //ci.sh(`docker exec ${aemContainerId} ./start.sh`);
-    ci.sh(`ENV_VARS=$(docker inspect -f \"{{range .Config.Env}}{{.}}{{\"\\n\"}}{{end}}\" ${qpContainerId})`);
+    ci.sh(`ENV_VARS=$(docker inspect -f '{{range .Config.Env}}{{.}}{{"\\n"}}{{end}}' ${qpContainerId})`);
     ci.sh(`echo "$ENV_VARS" | grep -E '^.*=.*$' | sed 's/^/export /' > environment_variables.sh`);
     ci.sh(`source environment_variables.sh`);
 
