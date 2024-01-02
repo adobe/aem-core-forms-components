@@ -35,7 +35,7 @@ try {
     let aemContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
     console.log("container id for aem ", aemContainerId);
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
-    ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
+    //ci.sh(`mv /home/circleci/cq/cq/* ${qpPath}`);
     //ci.sh(`docker cp ${aemContainerId}:/home/circleci/cq ${qpPath}`);
     ci.sh(`docker exec ${aemContainerId} ./start.sh`);
     ci.stage("Integration Tests");
