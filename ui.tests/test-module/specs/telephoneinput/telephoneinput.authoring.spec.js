@@ -49,6 +49,8 @@ describe('Page - Authoring', function () {
     }
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+    cy.get("[name='./autocomplete']")
+        .should("exist");
     cy.get(bemEditDialog).contains('Validation').click({force:true});
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(telephoneInputDrop);

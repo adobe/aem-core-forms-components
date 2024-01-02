@@ -44,12 +44,13 @@
            value="${email.default}"
            disabled="${!email.enabled}"
            readonly="${email.readOnly}"
-           autocomplete="on"
            required="${email.required}"
            data-cmp-data-layer="${email.data.json}"
            placeholder="${email.placeHolder}"
+           autocomplete="${email.autoComplete}"
            minlength="${email.minLength}"
-           maxlength="${email.maxLength}"/>
+           maxlength="${email.maxLength}"
+           dir="auto"/>
     <div data-sly-call="${shortDescription.shortDescription @componentId=email.id, shortDescriptionVisible=email.tooltipVisible, shortDescription=email.tooltip, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=email.id, longDescription=email.description, bemBlock='cmp-adaptiveform-emailinput'}" data-sly-unwrap></div>

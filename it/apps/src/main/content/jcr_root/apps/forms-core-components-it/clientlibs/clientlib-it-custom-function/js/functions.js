@@ -24,3 +24,44 @@ function testFunction1()
 {
     return "test";
 }
+
+/**
+ * Returns 3 enum values
+ * @name getEnum1 Get_Enum_1
+ * @return {OPTIONS}
+ */
+function getEnum1() {
+    var enums = [];
+    enums[0] = 'one';
+    enums[1] = 'two';
+    enums[2] = 'three';
+    return enums;
+}
+
+/**
+ * Return 3 enum Name values
+ * @name getEnumNames1 Get_Enum_Names_1
+ * @return {OPTIONS}
+ */
+function getEnumNames1() {
+    var enumNames = [];
+    enumNames[0] = 'India';
+    enumNames[1] = 'US';
+    enumNames[2] = 'Singapore';
+    return enumNames;
+}
+
+/**
+ * clears the enums
+ * @name clearEnums clear_enum
+ * @return {OPTIONS}
+ */
+function clearEnums() {
+    var enums = [];
+    return enums;
+}
+
+
+
+
+

@@ -30,6 +30,7 @@
     <radiobutton/>
     <resetbutton/>
     <submitbutton/>
+    <switch/>
     <tabsontop/>
     <telephoneinput/>
     <text/>

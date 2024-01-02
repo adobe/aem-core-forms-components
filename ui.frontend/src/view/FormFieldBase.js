@@ -506,6 +506,7 @@ class FormFieldBase extends FormField {
         }
     }
 
+
     /**
      * Updates the active child of the form container.
      * @param {Object} activeChild - The active child.

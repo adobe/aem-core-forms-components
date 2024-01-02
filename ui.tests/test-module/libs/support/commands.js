@@ -201,15 +201,15 @@ Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', re
 
     function clickRetry() {
         cy.get(selector)
-            .click({ multiple: true })
-            .should(($element) => {
-                if ($element.closest('.cq-dialog').is(':visible')) {
-                    if (currentRetry < retryCount - 1) {
-                        currentRetry++;
-                        clickRetry();
-                    }
+        .click({ multiple: true })
+        .should(($element) => {
+            if ($element.closest('.cq-dialog').is(':visible')) {
+                if (currentRetry < retryCount - 1) {
+                    currentRetry++;
+                    clickRetry();
                 }
-            });
+            }
+        });
     }
     clickRetry();
 });
@@ -246,7 +246,7 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     if (!options.noLogin) {
-    // getting status 403 intermittently, just ignore it
+        // getting status 403 intermittently, just ignore it
         const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         cy.visit(baseUrl, {'failOnStatusCode': false});
         cy.login(baseUrl, () => {
@@ -268,30 +268,30 @@ Cypress.Commands.add("selectLayer", (layer) => {
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
     cy.get(selector) // adding assertion does implicit retry
-        .invoke('attr', 'data-path')
-        .then(($path) => {
-            const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-            cy.get("body").then($body => {
-                if ($body.find(path).length === 0) {
-                    //evaluates as true if toolbar doesnt exists at all
-                    //you get here only if toolbar is visible
-                    cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                    // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                    cy.get(path).should('be.visible');
-                } else {
-                    cy.get(path).then($header => {
-                        if (!$header.is(':visible')) {
-                            cy.get(selector).first().click({force: true});
-                            cy.get(path).should('be.visible');
-                        } else {
-                            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
-                            cy.get(selector).click({force: true});
-                            cy.get(path).should('be.visible');
-                        }
-                    });
-                }
-            });
-        })
+    .invoke('attr', 'data-path')
+    .then(($path) => {
+        const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
+        cy.get("body").then($body => {
+            if ($body.find(path).length === 0) {
+                //evaluates as true if toolbar doesnt exists at all
+                //you get here only if toolbar is visible
+                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
+                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
+                cy.get(path).should('be.visible');
+            } else {
+                cy.get(path).then($header => {
+                    if (!$header.is(':visible')) {
+                        cy.get(selector).first().click({force: true});
+                        cy.get(path).should('be.visible');
+                    } else {
+                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                        cy.get(selector).click({force: true});
+                        cy.get(path).should('be.visible');
+                    }
+                });
+            }
+        });
+    })
 });
 
 // cypress command to invoke an editable action
@@ -339,18 +339,18 @@ const waitForFormInit = () => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
                     if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
-                    const isReady = () => {
-                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
-                        if (container &&
-                            e.detail._path === $form.data("cmp-path") &&
-                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
 
-                            resolve(e.detail);
+                                resolve(e.detail);
+                            }
+                            setTimeout(isReady, 0)
                         }
-                        setTimeout(isReady, 0)
+                        isReady();
                     }
-                    isReady();
-                }
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
@@ -367,41 +367,41 @@ const waitForFormInitMultipleContiners = () => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
                     if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
-                    const isReady = () => {
-                        const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
-                        if (container &&
-                            e.detail._path === $form.data("cmp-path") &&
-                            !container.classList.contains("cmp-adaptiveform-container--loading")) {
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
 
-                            resolve(e.detail);
+                                resolve(e.detail);
+                            }
+                            setTimeout(isReady, 0)
                         }
-                        setTimeout(isReady, 0)
+                        isReady();
                     }
-                    isReady();
-                }
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
 
             promiseArray.push(promise)
         }).then(($lis) => {
-           return Promise.all(promiseArray)
+            return Promise.all(promiseArray)
         });
     })
 }
 
 const waitForChildViewAddition = () => {
     return cy.get('[data-cmp-is="adaptiveFormContainer"]')
-        .then((el) => {
-            const ADD_EVENT = "AF_PanelInstanceAdded";
-            const promise = new Cypress.Promise((resolve, reject) => {
-                const listener1 = e => {
-                    resolve(e.detail.formContainer);
-                };
-                el[0].addEventListener(ADD_EVENT, listener1);
-            })
-            return promise;
-        });
+    .then((el) => {
+        const ADD_EVENT = "AF_PanelInstanceAdded";
+        const promise = new Cypress.Promise((resolve, reject) => {
+            const listener1 = e => {
+                resolve(e.detail.formContainer);
+            };
+            el[0].addEventListener(ADD_EVENT, listener1);
+        })
+        return promise;
+    });
 }
 
 Cypress.Commands.add("getFormData", () => {
@@ -610,19 +610,19 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
         longDescriptionText = 'This is long description';
     }
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible=false')
-        .should('not.exist');
+    .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`)
-        .should('contain.text', shortDescriptionText);
+    .should('contain.text', shortDescriptionText);
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
-        .should('not.exist');
+    .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`)
-        .should('contain.text', longDescriptionText);
+    .should('contain.text', longDescriptionText);
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
-        .should('eq', 'false');
+    .should('eq', 'false');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
@@ -634,8 +634,8 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
     });
     var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
     cy.get(tabSelector)
-        .should("be.visible")
-        .click();
+    .should("be.visible")
+    .click();
     cy.get(tabSelector + ".is-selected").should("exist");
 })
 
@@ -646,8 +646,8 @@ Cypress.Commands.add("openSidePanelTab", (tab) => {
  *
  * This is supposed to be called in the before hook of a test, like this:
  * before(() => {
-     *     cy.attachConsoleErrorSpy();
-     * });
+ *     cy.attachConsoleErrorSpy();
+ * });
  */
 Cypress.Commands.add("attachConsoleErrorSpy", () => {
     Cypress.on('window:before:load', (win) => {
@@ -668,13 +668,32 @@ Cypress.Commands.add("expectNoConsoleErrors", () => {
     });
 });
 
+Cypress.Commands.add("getContentIFrameBody", () => {
+    return cy
+        .get('iframe#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
 Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
     const rect = subject[0].getBoundingClientRect();
-  
+
     return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= Cypress.config("viewportHeight") &&
-      rect.right <= Cypress.config("viewportWidth")
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= Cypress.config("viewportHeight") &&
+        rect.right <= Cypress.config("viewportWidth")
     );
-  });
+});
+
+
+/**
+ * This function is used to fetch elements from ContentFrame iframe which are not accessible.
+ * Without this, the element will not be returned due to browser's cross-origin security feature.
+ */
+Cypress.Commands.add("getContentIframeBody", () => {
+    return cy
+        .get('#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+})
