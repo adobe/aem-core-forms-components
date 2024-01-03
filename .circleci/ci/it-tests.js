@@ -43,7 +43,7 @@ try {
     //ci.sh(`docker exec ${aemContainerId} ./start.sh`);
     ci.sh(`ENV_VARS=$(docker inspect -f '{{range .Config.Env}}{{.}}{{"\\n"}}{{end}}' ${qpContainerId})`);
     ci.sh(`echo "$ENV_VARS" | grep -E '^.*=.*$' | sed 's/^/export /' > environment_variables.sh`);
-    ci.sh(`source environment_variables.sh`);
+    ci.sh(`. environment_variables.sh`);
 
     // end of moving the qp docker content and environment variable to host machine
 
