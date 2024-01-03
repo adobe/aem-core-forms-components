@@ -71,7 +71,7 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        #getAttachButtonLabel() {
+        getAttachButtonLabel() {
             return this.element.querySelector(FileInput.selectors.attachButtonLabel);
         }
 
@@ -88,13 +88,19 @@
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
             }
+            this.getAttachButtonLabel().addEventListener('focus', () => {
+                this.setActive();
+            })
+            this.getAttachButtonLabel().addEventListener('blur', () => {
+                this.setInactive();
+            })
         }
 
         #syncWidget() {
             let widgetElement = this.getWidget ? this.getWidget() : null;
             if (widgetElement) {
                 widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
+                this.getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
             }
 
         }

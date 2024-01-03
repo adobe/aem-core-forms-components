@@ -90,6 +90,12 @@
                 widget.addEventListener('change', (e) => {
                     this.#updateModelValue(self);
                 });
+                widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
+                widget.addEventListener('blur', (e) => {
+                    this.setInactive();
+                });
             })
         }
 
