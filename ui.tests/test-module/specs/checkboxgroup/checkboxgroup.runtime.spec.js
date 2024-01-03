@@ -174,7 +174,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
         // Make checkbox3 visible
         cy.get(`#${checkBox2}`).find("input").check(["0", "3"])
-        cy.get(`#${checkBox3}`).find("input").check("1").blur().then(x => {
+        cy.get(`#${checkBox3}`).find("input").check("1").then(x => {
             cy.get(`#${checkBox5}`).find("input").should('be.checked')
             cy.get(`#${checkBox2}`).find("input").should('not.be.checked')
         })

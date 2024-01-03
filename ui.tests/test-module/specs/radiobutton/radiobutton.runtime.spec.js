@@ -127,7 +127,7 @@ describe("Form with Radio Button Input", () => {
         const [radioButton2, radioButton2FieldView] = Object.entries(formContainer._fields)[1];
         const [radioButton4, radioButton4FieldView] = Object.entries(formContainer._fields)[3];
 
-        cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
+        cy.get(`#${radioButton1}`).find("input").check("1").then(x => {
             cy.get(`#${radioButton4}`).find("input").should('be.enabled')
             cy.get(`#${radioButton2}`).find("input").should('not.be.enabled')
         })
@@ -185,7 +185,7 @@ describe("Form with Radio Button Input", () => {
       cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--empty');
       cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
       cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-      cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
+      cy.get(`#${radioButton1}`).find("input").check("1").then(x => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
