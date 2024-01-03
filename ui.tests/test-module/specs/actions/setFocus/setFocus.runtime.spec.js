@@ -38,7 +38,7 @@ describe("SetFocus Test", () => {
     });
 
     it('Check if setting focus by clicking/typing in view is reflected in model', () => {
-        cy.get('[data-cmp-is="adaptiveFormNumberInput"]').type('123').then(() => {
+        cy.get('[data-cmp-is="adaptiveFormNumberInput"] > input').type('123').then(() => {
             cy.get(nextBtn).click().then(() => {
                 cy.get('[data-cmp-is="adaptiveFormTelephoneInput"]').should('have.attr', 'data-cmp-active', 'true');
             })
