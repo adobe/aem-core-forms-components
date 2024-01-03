@@ -98,6 +98,8 @@ common:
           name: Cleanup
           command: |
             rm -rf TEST_EXECUTION_STATUS.txt
+            docker-compose -f .circleci/docker-compose.yml down -v
+            docker system prune -af
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target

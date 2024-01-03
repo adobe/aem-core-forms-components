@@ -40,11 +40,6 @@ try {
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
 
-    // todo: not doing this, since the environment variable set in child process won't be available in parent process
-    //ci.sh(`ENV_VARS=$(docker inspect -f '{{range .Config.Env}}{{.}}{{"\\n"}}{{end}}' ${qpContainerId});echo "$ENV_VARS" | grep -E '^.*=.*$' | sed 's/^/export /' > environment_variables.sh;. ${buildPath}/environment_variables.sh`, false, true, '/bin/bash');
-
-    // end of moving the qp docker content and environment variable to host machine
-
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
