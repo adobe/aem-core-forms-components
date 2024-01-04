@@ -134,13 +134,15 @@ describe("Form with Submit Button", () => {
             });
         });
 
-       cy.intercept('GET', '**abc.html**', (req) => {
-            req.reply({statusCode: 200, body: "Test succeeded"});
-        }).as('redirected');
+        // Intercept the form submission
+        cy.intercept('POST', '**af/submit**').as('formSubmit');
 
         cy.get(`.cmp-adaptiveform-button__widget`).click();
 
-        // To Fix: this is failing the test saying waiting for page load
-        //cy.wait('@redirected');
+        // Wait for the form submission interception to occur
+        //cy.wait('@formSubmit');
+
+        // Assert that the URL has changed after form submission
+        cy.url().should('include', 'abc.html');
     })
 })
