@@ -32,9 +32,6 @@ try {
     let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
     let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
     console.log("container id for qp ", qpContainerId);
-    image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11";
-    let aemContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
-    console.log("container id for aem ", aemContainerId);
 
     // moving the qp docker content and environment variable to host machine
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
@@ -147,8 +144,6 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} catch(ex) {
-    console.log(ex);
 } finally {
     // Always download logs from AEM container
     ci.sh('mkdir logs');
