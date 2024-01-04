@@ -192,7 +192,7 @@ class FormFieldBase extends FormField {
         this.widget = this.getWidget(); // updating to the latest widget in case of datepicker widget with a formatter
         if (this.widget instanceof NodeList) {
             this.widget[0].focus(); // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
-        } else if(this.widget.type === 'file') {
+        } else if(this.getClass() === 'adaptiveFormFileInput') {
             this.getAttachButtonLabel().focus();
         } else {
             this.widget.focus();

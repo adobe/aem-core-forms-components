@@ -27,7 +27,7 @@ describe("SetFocus Test", () => {
     const focusTnC = '#button-61a837277a-widget';
 
     it('Check setFocus for all components' ,() => {
-        cy.get('[data-cmp-is="adaptiveFormPanel"]').find('[data-cmp-is]:not(div.parentClass cmp-adaptiveform-termsandcondition)').each(($component) => {
+        cy.get('[data-cmp-is="adaptiveFormPanel"]').find('[data-cmp-is]').each(($component) => {
             cy.get(nextBtn).click().then(() => {
                     cy.wrap($component).should('have.attr', 'data-cmp-active', 'true');
             });
