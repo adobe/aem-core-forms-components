@@ -467,13 +467,22 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
     return cy.get("body").then($body => {
-        return new Cypress.Promise((resolve, reject) => {
-            // do something custom here
-            const selector12 = "[data-path='" + editPath + "']";
-            if ($body.find(selector12).length > 0) {
-                cy.deleteComponentByPath(editPath);
-            }
-            resolve(editPath);
+        return cy.window().then((win) => {
+            return new Cypress.Promise((resolve, reject) => {
+                const isReady = () => {
+                    if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
+                        // do something custom here
+                        const selector12 = "[data-path='" + editPath + "']";
+                        if ($body.find(selector12).length > 0) {
+                            cy.deleteComponentByPath(editPath);
+                        }
+                        resolve(editPath);
+                    } else {
+                        setTimeout(isReady, 0);
+                    }
+                };
+                isReady();
+            });
         });
     });
 })
