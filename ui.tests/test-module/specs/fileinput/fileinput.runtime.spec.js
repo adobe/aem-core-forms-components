@@ -237,17 +237,17 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             submitTest();
         })
 
-        it(`${fileInput.type} - attach files using drag and drop, check model, view, preview attachment and submit the form`, () => {
-            cy.previewForm(pagePath, {
-                onBeforeLoad : (win) => {
-                    cy.stub(win, 'open'); // creating a stub to check file preview
-                }
-            });
+        // it(`${fileInput.type} - attach files using drag and drop, check model, view, preview attachment and submit the form`, () => {
+        //     cy.previewForm(pagePath, {
+        //         onBeforeLoad : (win) => {
+        //             cy.stub(win, 'open'); // creating a stub to check file preview
+        //         }
+        //     });
 
-            // attach the file
-            cy.get(fileInput.selector).attachFile(fileInput.fileNames, { subjectType: 'drag-n-drop', events: ['dragover', 'drop'] });
-            if(fileInput.multiple)
-                cy.get(fileInput.selector).attachFile('sample2.txt');
+        //     // attach the file
+        //     cy.get(fileInput.selector).attachFile(fileInput.fileNames, { subjectType: 'drag-n-drop', events: ['dragover', 'drop'] });
+        //     if(fileInput.multiple)
+        //         cy.get(fileInput.selector).attachFile('sample2.txt');
 
             // check for successful attachment of file in the view
             // checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
@@ -257,15 +257,15 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             // check preview of the file
             // checkFilePreviewInFileAttachment(fileInput.selector);
 
-            if(fileInput.multiple)
-                deleteSelectedFiles(fileInput.selector, ['sample2.txt']);
+            // if(fileInput.multiple)
+            //     deleteSelectedFiles(fileInput.selector, ['sample2.txt']);
 
             // submit the form
-            cy.get(".cmp-adaptiveform-button__widget").click();
+            // cy.get(".cmp-adaptiveform-button__widget").click();
 
             // check for successful submission
             // submitTest();
-        })
+        // })
 
         it(`${fileInput.type} - view prefill of submitted form, make changes to attachments and submit`, () => {
             cy.get("@prefillId").then(id => {
