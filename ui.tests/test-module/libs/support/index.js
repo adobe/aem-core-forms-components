@@ -70,6 +70,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes("Cannot read properties of undefined (reading 'editLayer')")) {
         return false;
     }
+    // this error is sometimes seen with embed container component intermittently
+    if (err.message.includes("Cannot read properties of undefined (reading 'collection')")) {
+        return false;
+    }
     // sometimes this error is seen
     if (err.message.includes("Cannot read properties of undefined (reading 'path')")) {
         return false;

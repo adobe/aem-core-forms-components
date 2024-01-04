@@ -134,7 +134,7 @@ describe("Form with Submit Button", () => {
             });
         });
 
-       cy.intercept('GET', '**google.com**', (req) => {
+       cy.intercept('GET', '**abc.html**', (req) => {
             req.reply({statusCode: 200, body: "Test succeeded"});
         }).as('redirected');
 
