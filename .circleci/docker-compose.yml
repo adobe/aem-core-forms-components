@@ -10,6 +10,8 @@ services:
     depends_on:
       - circleci-qp
     # Add any additional configurations or environment variables if needed
+    environment:
+      - FORMS_DOCUMENT_SERVICE=aem-formsdocservice-java:8080
     ports:
       - "3000:3000"
       - "4502:4502"
