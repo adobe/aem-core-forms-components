@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class DatePicker extends FormView.FormFieldBase {
+    class DatePicker extends FormView.FormDatePicker {
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
@@ -60,10 +60,11 @@
         }
 
         updateValue(value) {
-            if (this.widgetObject) {
+            if (value.trim() != '' && this.widgetObject) {
                 if (this.isActive()) {
                     this.widgetObject.setValue(value);
                 } else {
+                    this._model.value = this.widgetObject.getValue();
                     this.widgetObject.setDisplayValue(value);
                 }
             } else {
@@ -78,18 +79,20 @@
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
                 if (this.widgetObject.getValue() !== '') {
-                    this._model.value = this.widgetObject.getValue();
+                    super.updateFormattedDate(this.widgetObject.getValue());
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
-                    this._model.value = this.widgetObject.getValue();
+                    const {target:{value}} = e;
+                    super.updateFormattedDate(value);
 
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
-                    this.widgetObject.setDisplayValue(this._model.value);
+                    this.widgetObject.setDisplayValue(value);
 
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
-                    this.widgetObject.setValue(e.target.value);
+                    const value = this._model.value;
+                    this.widgetObject.setValue(value);
                     this.setActive();
                 }, this.getWidget());
             } else {
