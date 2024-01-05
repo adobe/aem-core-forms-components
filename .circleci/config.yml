@@ -24,6 +24,21 @@ common:
             which google-chrome
           name: Check browser installed
       - *restore_cache
+      # Step to identify the process using the port
+      - run:
+          name: Identify Process using Port 55556
+          command: |
+            sudo lsof -i :55556 || true
+            # Save the process ID to an environment variable
+            export CONFLICTING_PID=$(sudo lsof -t -i :55556 || true)
+
+      # Step to stop the conflicting process if it exists
+      - run:
+          name: Stop Conflicting Process using port 55556
+          command: |
+            if [ -n "$CONFLICTING_PID" ]; then
+              sudo kill $CONFLICTING_PID
+            fi
       - run:
           name: Docker compose
           command: |
