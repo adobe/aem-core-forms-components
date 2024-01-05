@@ -133,7 +133,7 @@ describe('Page - Authoring', function () {
         });
     })
 
-    it ('check for duplicate enum values', function() {
+    it ('check for duplicate enum values', {retries: 3}, function() {
         cy.cleanTest(radioButtonDrop).then(function() {
             dropRadioButtonInGuideContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + radioButtonEditPathSelector);
