@@ -470,7 +470,7 @@ Cypress.Commands.add("cleanTest", (editPath) => {
         return cy.window().then((win) => {
             return new Cypress.Promise((resolve, reject) => {
                 const isReady = () => {
-                    if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
+                    if ((win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) && $body.find('#OverlayWrapper').length > 0) {
                         // do something custom here
                         const selector12 = "[data-path='" + editPath + "']";
                         if ($body.find(selector12).length > 0) {
