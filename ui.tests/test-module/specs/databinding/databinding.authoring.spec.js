@@ -130,7 +130,7 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(textInputDrop).then(function() {
                     configureDataModel(formContainerEditPathSelector);
                     dropTextInputInSites();
-                    testDataBindingBehaviour(textInputEditPathSelector)
+                    testDataBindingBehaviour(textInputEditPathSelector);
                     cy.openSiteAuthoring(pagePath);
                     testBindingPersistence(textInputEditPathSelector);
                     cy.deleteComponentByPath(textInputDrop);
