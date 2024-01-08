@@ -56,14 +56,18 @@ module.exports = class CI {
     /**
      * Run shell command and attach to process stdio.
      */
-    sh(command, returnStdout = false, print = true) {
+    sh(command, returnStdout = false, print = true, shellStr = '') {
         if (print) {
             console.log(command);
         }
         if (returnStdout) {
             return e.execSync(command).toString().trim();
         }
-        return e.execSync(command, {stdio: 'inherit'});
+        if (shellStr) {
+            return e.execSync(command, {stdio: 'inherit', shell: shellStr});
+        } else {
+            return e.execSync(command, {stdio: 'inherit'});
+        }
     };
 
     /**
