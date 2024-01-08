@@ -78,13 +78,13 @@ describe('Page - Authoring', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             switchEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/switch",
             switchEditPathSelector = "[data-path='" + switchEditPath + "']";
-        cy.get(switchEditPathSelector).click();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-        cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item").eq(1).should('not.be.visible')
+        cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item").eq(1).should('not.be.visible');
         const enableUnchecked = '[name="./enableUncheckedValue"]';
         cy.get(enableUnchecked).eq(0).click().then(() => {
           cy.get(".cmp-adaptiveform-switch__editdialog coral-multifield-item-content label").eq(3).scrollIntoView().should('be.visible');
-        })
+        });
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(switchDrop);
       });
