@@ -2823,7 +2823,7 @@
                             validationStatus="valid"/>
                         <fd:events
                             jcr:primaryType="nt:unstructured"
-                            click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                            click="[submitForm()]"/>
                     </submit>
                 </panelcontainer_136878698>
             </verticaltabs>

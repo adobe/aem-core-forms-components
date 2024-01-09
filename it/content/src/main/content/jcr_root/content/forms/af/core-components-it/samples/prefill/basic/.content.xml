@@ -101,7 +101,7 @@
                         validationStatus="valid"/>
                 <fd:events
                         jcr:primaryType="nt:unstructured"
-                        click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                        click="[submitForm()]"/>
             </button>
         </guideContainer>
     </jcr:content>

@@ -43,7 +43,7 @@
                         jcr:primaryType="nt:unstructured"/>
                 <fd:events
                         jcr:primaryType="nt:unstructured"
-                        click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                        click="[submitForm()]"/>
             </submit>
             <textinput
                     jcr:lastModified="{Date}2023-01-18T17:47:33.769+05:30"

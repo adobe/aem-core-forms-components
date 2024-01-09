@@ -170,7 +170,7 @@
                     jcr:primaryType="nt:unstructured"/>
                 <fd:events
                     jcr:primaryType="nt:unstructured"
-                    click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                    click="[submitForm()]"/>
             </submit>
             <telephoneinput
                 fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##telephoneinput##jcr:title##8743&quot;}"

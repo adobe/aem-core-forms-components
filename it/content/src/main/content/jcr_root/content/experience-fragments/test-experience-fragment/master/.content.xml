@@ -53,7 +53,7 @@
                             jcr:primaryType="nt:unstructured"/>
                         <fd:events
                             jcr:primaryType="nt:unstructured"
-                            click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                            click="[submitForm()]"/>
                     </submit>
                     <contentfragment
                         jcr:lastModified="{Date}2023-05-25T11:31:45.564+05:30"

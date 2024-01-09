@@ -250,7 +250,7 @@
                                                 jcr:primaryType="nt:unstructured"/>
                                             <fd:events
                                                 jcr:primaryType="nt:unstructured"
-                                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                                                click="[submitForm()]"/>
                                         </submit>
                                     </panelcontainer_20874>
                                 </accordion_demo>

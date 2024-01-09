@@ -90,7 +90,7 @@
                                 jcr:primaryType="nt:unstructured"/>
                         <fd:events
                                 jcr:primaryType="nt:unstructured"
-                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                                click="[submitForm()]"/>
                     </submit>
                     <reset
                             jcr:lastModified="{Date}2023-02-10T16:15:23.790+05:30"
@@ -358,7 +358,7 @@
                                 jcr:primaryType="nt:unstructured"/>
                         <fd:events
                                 jcr:primaryType="nt:unstructured"
-                                click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+                                click="[submitForm()]"/>
                     </submit>
                 </tabsontop>
                 <datepicker
