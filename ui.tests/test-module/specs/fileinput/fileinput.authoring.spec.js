@@ -53,6 +53,7 @@ describe('Page - Authoring', function () {
     .should("exist");
     cy.get("[name='./accept']")
     .should("exist");
+    cy.get("[name='./dragDropText']").should("exist");
 
     // Checking some dynamic behaviours
     cy.get("[name='./multiSelection'][type=\"checkbox\"]").should("exist").check();
