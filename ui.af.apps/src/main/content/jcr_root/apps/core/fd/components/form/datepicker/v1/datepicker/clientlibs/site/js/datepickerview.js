@@ -60,7 +60,7 @@
         }
 
         updateValue(value) {
-            if (value.trim() != '' && this.widgetObject) {
+            if (value && value.trim() != '' && this.widgetObject) {
                 if (this.isActive()) {
                     this.widgetObject.setValue(value);
                 } else {
