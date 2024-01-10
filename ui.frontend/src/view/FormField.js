@@ -91,7 +91,6 @@ class FormField {
         if (this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, false);
         }
-        this.active = false;
     }
 
     /**
@@ -99,7 +98,7 @@ class FormField {
      * @returns {boolean} True if the form field is active, false otherwise.
      */
     isActive() {
-        return this.active;
+        return this.element.getAttribute(Constants.DATA_ATTRIBUTE_ACTIVE) === 'true';
     }
 
     /**
