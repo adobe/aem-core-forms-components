@@ -127,6 +127,7 @@
                         <exclude>frontend-maven-plugin/**/*</exclude>
                         <exclude>it/**/*</exclude>
                         <exclude>ui.tests/**/*</exclude>
+                        <exclude>nodejs-output</exclude>
                     </excludes>
                 </configuration>
             </plugin>
