@@ -147,7 +147,7 @@ jobs:
           command: |
             NODE_VERSION=$(cat nodejs-output | grep 'node-version' | cut -d '=' -f 2)
             BASE_URL=https://nodejs.org/dist/v$NODE_VERSION
-            TARGET_DIR=$(cat nodejs-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/repository/com/github/eirslett/node/$NODE_VERSION
+            TARGET_DIR=$(cat nodejs-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/com/github/eirslett/node/$NODE_VERSION
             echo "target-dir=$TARGET_DIR" >> nodejs-output
             echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
             echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
@@ -156,8 +156,7 @@ jobs:
           command: |
             mkdir -p $(cat ./nodejs-output | grep 'target-dir' | cut -d '=' -f 2)
             cat ./nodejs-output
-            wget "$(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2)" -O "$(cat ./nodejs-output | grep 'target' | cut -d '=' -f 2)"
-          when: always
+            wget $(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./nodejs-output | grep '^target=' | cut -d '=' -f 2)
       - restore_cache:
           keys:
             - maven-repo-v1-{{ checksum "pom.xml" }}
