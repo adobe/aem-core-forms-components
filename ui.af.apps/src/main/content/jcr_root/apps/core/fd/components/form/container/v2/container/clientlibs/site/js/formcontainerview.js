@@ -56,6 +56,11 @@
                 let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
                 window.alert(defaultSubmissionError);
             }, "submitFailure");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                window.alert(defaultSubmissionError);
+            }, "submitError");
         }
     }
 
