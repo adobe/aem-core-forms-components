@@ -72,6 +72,14 @@ By placing the class names `cmp-adaptiveform-dropdown__label` and `cmp-adaptivef
 The following attributes must be added for the initialization of the dropdown-list component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+ 3. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+ 4. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
+
+The following are optional attributes that can to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:
