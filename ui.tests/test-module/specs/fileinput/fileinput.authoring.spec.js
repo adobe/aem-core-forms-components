@@ -101,7 +101,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(fileInputDrop);
     });
 
-    it.only('open edit dialog of aem forms FileInput', function() {
+    it('open edit dialog of aem forms FileInput', function() {
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop, true);
     });
 
