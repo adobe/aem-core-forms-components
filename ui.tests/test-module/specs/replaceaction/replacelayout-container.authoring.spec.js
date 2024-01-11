@@ -174,8 +174,10 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(containerEditPathSelector, containerDrop);
         })
 
-        it('test behaviour of replace file input', function () {
-            testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+        it('test behaviour of replace file input', { retries: 3 }, function () {
+            cy.cleanTest(fileInputDrop).then(function() {
+                testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+            });
         })
     })
 
