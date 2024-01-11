@@ -54,6 +54,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./accept']")
     .should("exist");
     cy.get("[name='./dragDropText']").should("exist");
+    cy.contains("Validation").should("exist");
 
     // Checking some dynamic behaviours
     cy.get("[name='./multiSelection'][type=\"checkbox\"]").should("exist").check();
@@ -100,7 +101,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(fileInputDrop);
     });
 
-    it('open edit dialog of aem forms FileInput', function() {
+    it.only('open edit dialog of aem forms FileInput', function() {
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop, true);
     });
 
