@@ -185,7 +185,7 @@ describe("Form with Radio Button Input", () => {
       cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--empty');
       cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
       cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-      cy.get(`#${radioButton1}`).find("input").check("1").then(x => {
+      cy.get(`#${radioButton1}`).find("input").check("1").blur().then(x => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
