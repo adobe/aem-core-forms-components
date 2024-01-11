@@ -162,7 +162,8 @@ jobs:
           name: Cache Node.js distribution
           command: |
             mkdir -p $(cat ./nodejs-output | grep 'target-dir' | cut -d '=' -f 2)
-            wget $(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./nodejs-output | grep 'target' | cut -d '=' -f 2)
+            cat ./nodejs-output
+            wget "$(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2)" -O "$(cat ./nodejs-output | grep 'target' | cut -d '=' -f 2)"
           when: always
       - restore_cache:
           keys:
