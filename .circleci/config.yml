@@ -148,16 +148,9 @@ jobs:
             NODE_VERSION=$(cat nodejs-output | grep 'node-version' | cut -d '=' -f 2)
             BASE_URL=https://nodejs.org/dist/v$NODE_VERSION
             TARGET_DIR=$(cat nodejs-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/repository/com/github/eirslett/node/$NODE_VERSION
-
             echo "target-dir=$TARGET_DIR" >> nodejs-output
-
-            if [ "$CIRCLE_JOB" == "build-linux" ]; then
-              echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
-              echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
-            elif [ "$CIRCLE_JOB" == "build-windows" ]; then
-              echo "src=$BASE_URL/win-x64/node.exe" >> nodejs-output
-              echo "target=$TARGET_DIR/node-$NODE_VERSION-win-x64.exe" >> nodejs-output
-            fi
+            echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
+            echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
       - run:
           name: Cache Node.js distribution
           command: |
