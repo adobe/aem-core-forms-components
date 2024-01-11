@@ -111,6 +111,15 @@
                 textIsRich="[true,true]"
                 unboundFormElement="{Boolean}false"
                 visible="{Boolean}true"/>
+            <dateinput8
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input 8 (Edit format with display format)"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    displayFormat="MMMM d, y"
+                    editFormat="d/M/y"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    name="dateinput8"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

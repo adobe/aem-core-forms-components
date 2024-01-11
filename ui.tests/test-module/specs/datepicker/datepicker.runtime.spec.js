@@ -221,4 +221,29 @@ describe("Form Runtime with Date Picker", () => {
       });
     });
 
+    it.only("input given as per edit pattern should be valid", () => {
+        const [datePicker8, fieldView] = Object.entries(formContainer._fields)[7]
+        const incorrectInput = "01-01-2023";
+        const correctInput = "25/2/2023";
+        cy.get(`#${datePicker8}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Specify the value in allowed format : date.")
+        });
+        cy.get(`#${datePicker8}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+        });
+    });
+
+    it("Display pattern transforms to edit format when focused", () => {
+        const [datePicker8, fieldView] = Object.entries(formContainer._fields)[7]
+        const input = "25/2/2023", displayFormat = "February 25, 2023";
+        cy.get(`#${datePicker8}`).should('have.class', 'cmp-adaptiveform-datepicker--empty');
+        cy.get(`#${datePicker8}`).find("input").clear().type(input).blur().then(() => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+            cy.get(`#${datePicker8}`).find("input").should('have.value', displayFormat);
+            cy.get(`#${datePicker8}`).find("input").click().then(() => {
+                cy.get(`#${datePicker8}`).find("input").should('have.value',input);
+                })
+        });
+    });
+
 })
