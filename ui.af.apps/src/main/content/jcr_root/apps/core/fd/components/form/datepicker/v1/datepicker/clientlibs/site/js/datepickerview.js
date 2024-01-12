@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class DatePicker extends FormView.FormDatePicker {
+    class DatePicker extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormDatePicker";
@@ -72,6 +72,20 @@
             }
         }
 
+        getFormattedDate(value) {
+            if(!value || value.trim() === '') {
+                return '';
+            }
+            let editFormat = this._model.editFormat;
+            if(editFormat === 'date|short') {
+                editFormat = 'date|yyyy/mm/dd';
+            }
+            let currDate = FormView.Formatters.parse(value.toString(), this._model.locale, editFormat, null, false);
+            if (currDate && !isNaN(currDate) && value != null) {
+                return currDate.getFullYear() + "-" + (currDate.getMonth() + 1) +"-"+ currDate.getDate() + "";
+            } else return value;
+        }
+
         setModel(model) {
             super.setModel(model);
             if (!this.#noFormats()) {
@@ -79,11 +93,11 @@
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
                 if (this.widgetObject.getValue() !== '') {
-                    super.updateFormattedDate(this.widgetObject.getValue());
+                    this._model.value = this.getFormattedDate(this.widgetObject.getValue());
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
                     const {target:{value}} = e;
-                    super.updateFormattedDate(value);
+                    this._model.value = this.getFormattedDate(value);
 
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(value);
