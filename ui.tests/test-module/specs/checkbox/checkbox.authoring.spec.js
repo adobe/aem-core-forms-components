@@ -78,8 +78,10 @@ describe('Page - Authoring', function () {
       });
     });
 
-    it('open edit dialog of aem forms Checkbox', function() {
-      testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
+    it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
+        });
     });
   })
 
@@ -99,8 +101,10 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkboxDrop);
     });
 
-    it('open edit dialog of aem forms Checkbpx', function() {
-      testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
+    it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
+        });
     });
   })
 });
