@@ -212,6 +212,18 @@ jobs:
     parallelism: 8
     <<: *cypress_test_steps
 
+  cypress-chrome-655-with-latest-addon-context-path:
+    executor: test_executor_655_latest
+    environment:
+      AEM: classic-latest
+      TYPE: cypress
+      BROWSER: chrome
+      CONTEXTPATH: lc
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
   jsdocs-deploy:
     docker:
       - image: node:8.10.0

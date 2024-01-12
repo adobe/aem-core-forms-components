@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH } = process.env;
 const classicFormAddonVersion = 'LATEST';
 const classicFormReleasedAddonVersion = '6.0.1016';
 
@@ -34,7 +34,7 @@ try {
         // Connect to QP
         ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
 
-    let extras = ``, preleaseOpts = ``;
+    let extras = ``, preleaseOpts = ``, contextPathOpts = ``;
     if (AEM === 'classic') {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormReleasedAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
@@ -64,6 +64,10 @@ try {
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+        }
+        if (CONTEXTPATH != null) {
+            // enable context path settings
+            contextPathOpts = `--cmd-options "-contextpath ${CONTEXTPATH}"`;
         }
     }
 
