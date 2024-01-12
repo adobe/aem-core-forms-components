@@ -178,7 +178,8 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // choose a different date and check if its persisted
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
@@ -186,7 +187,8 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // check clear option
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get(".dp-clear").click();
         });
 
@@ -195,7 +197,8 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
