@@ -136,7 +136,17 @@ jobs:
     working_directory: /home/circleci/build
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - maven-repo-v1-{{ checksum "pom.xml" }}
+            - maven-repo-v1-
       - run:
+          name: Update permissions
+          command: sudo chown -R circleci /usr/local/lib/node_modules
+      - run:
+          name: Build
+          command: node .circleci/ci/build.js # this is important, since this is used during UI test run too
+       - run:
           name: Get project settings
           command: |
             echo "node-version=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout -pl=ui.tests | cut -d 'v' -f 2)" >> nodejs-output
@@ -157,16 +167,6 @@ jobs:
             mkdir -p $(cat ./nodejs-output | grep 'target-dir' | cut -d '=' -f 2)
             cat ./nodejs-output
             wget $(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./nodejs-output | grep '^target=' | cut -d '=' -f 2)
-      - restore_cache:
-          keys:
-            - maven-repo-v1-{{ checksum "pom.xml" }}
-            - maven-repo-v1-
-      - run:
-          name: Update permissions
-          command: sudo chown -R circleci /usr/local/lib/node_modules
-      - run:
-          name: Build
-          command: node .circleci/ci/build.js # this is important, since this is used during UI test run too
       - save_cache:
           paths:
             - ~/.m2
