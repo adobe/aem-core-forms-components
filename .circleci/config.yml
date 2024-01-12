@@ -149,24 +149,24 @@ jobs:
       - run:
           name: Get project settings
           command: |
-            echo "node-version=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout -pl=ui.tests | cut -d 'v' -f 2)" >> nodejs-output
-            echo "npm-version=$(mvn help:evaluate -Dexpression=npm.version -q -DforceStdout -pl=ui.tests)" >> nodejs-output
-            echo "maven-cache-dir=$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)" >> nodejs-output
+            echo "node-version=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout -pl=ui.tests | cut -d 'v' -f 2)" >> node-js-output
+            echo "npm-version=$(mvn help:evaluate -Dexpression=npm.version -q -DforceStdout -pl=ui.tests)" >> node-js-output
+            echo "maven-cache-dir=$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)" >> node-js-output
       - run:
           name: Determine Node.js download paths
           command: |
-            NODE_VERSION=$(cat nodejs-output | grep 'node-version' | cut -d '=' -f 2)
+            NODE_VERSION=$(cat node-js-output | grep 'node-version' | cut -d '=' -f 2)
             BASE_URL=https://nodejs.org/dist/v$NODE_VERSION
-            TARGET_DIR=$(cat nodejs-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/com/github/eirslett/node/$NODE_VERSION
-            echo "target-dir=$TARGET_DIR" >> nodejs-output
-            echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
-            echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> nodejs-output
+            TARGET_DIR=$(cat node-js-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/com/github/eirslett/node/$NODE_VERSION
+            echo "target-dir=$TARGET_DIR" >> node-js-output
+            echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> node-js-output
+            echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> node-js-output
       - run:
           name: Cache Node.js distribution
           command: |
-            mkdir -p $(cat ./nodejs-output | grep 'target-dir' | cut -d '=' -f 2)
-            cat ./nodejs-output
-            wget $(cat ./nodejs-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./nodejs-output | grep '^target=' | cut -d '=' -f 2)
+            mkdir -p $(cat ./node-js-output | grep 'target-dir' | cut -d '=' -f 2)
+            cat ./node-js-output
+            wget $(cat ./node-js-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./node-js-output | grep '^target=' | cut -d '=' -f 2)
       - save_cache:
           paths:
             - ~/.m2
@@ -187,7 +187,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
-            - nodejs-output
+            - node-js-output
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
