@@ -414,10 +414,14 @@
                             // check if file names are valid (ie) there are no control characters in file names
                             isInvalidFileName = isCurrentInvalidFileName = true;
                             inValidNamefileNames = currFileName + "," + inValidNamefileNames;
-                        } else if (file.type) {
-                            let isMatch = this.regexMimeTypeList.some(function (rx) {
-                                return rx.test(file.type);
-                            });
+                        } else{
+                            let isMatch=false;
+                            if (file.type) {
+                                isMatch = this.regexMimeTypeList.some(function (rx) {
+                                    return rx.test(file.type);
+                                });
+
+                            }
                             if (!isMatch) {
                                 isInvalidMimeType = isCurrentInvalidMimeType = true;
                                 inValidMimeTypefileNames = currFileName + "," + inValidMimeTypefileNames;
