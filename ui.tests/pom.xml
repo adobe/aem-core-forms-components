@@ -92,6 +92,43 @@
     </build>
 
     <profiles>
+        <!-- Profile to run on CI so that build artifacts are cached and parallel test run -->
+        <profile>
+            <id>build-cypress</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.14.2</version>
+                        <configuration>
+                            <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
+                            <workingDirectory>test-module</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- Profile to run for debugging cypress test -->
         <profile>
             <id>cypress</id>
