@@ -8,8 +8,8 @@ common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
@@ -146,31 +146,10 @@ jobs:
       - run:
           name: Build
           command: node .circleci/ci/build.js # this is important, since this is used during UI test run too
-      - run:
-          name: Get project settings
-          command: |
-            echo "node-version=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout -pl=ui.tests | cut -d 'v' -f 2)" >> node-js-output
-            echo "npm-version=$(mvn help:evaluate -Dexpression=npm.version -q -DforceStdout -pl=ui.tests)" >> node-js-output
-            echo "maven-cache-dir=$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)" >> node-js-output
-      - run:
-          name: Determine Node.js download paths
-          command: |
-            NODE_VERSION=$(cat node-js-output | grep 'node-version' | cut -d '=' -f 2)
-            BASE_URL=https://nodejs.org/dist/v$NODE_VERSION
-            TARGET_DIR=$(cat node-js-output | grep 'maven-cache-dir' | cut -d '=' -f 2)/com/github/eirslett/node/$NODE_VERSION
-            echo "target-dir=$TARGET_DIR" >> node-js-output
-            echo "src=$BASE_URL/node-v$NODE_VERSION-linux-x64.tar.gz" >> node-js-output
-            echo "target=$TARGET_DIR/node-$NODE_VERSION-linux-x64.tar.gz" >> node-js-output
-      - run:
-          name: Cache Node.js distribution
-          command: |
-            mkdir -p $(cat ./node-js-output | grep 'target-dir' | cut -d '=' -f 2)
-            cat ./node-js-output
-            wget $(cat ./node-js-output | grep 'src' | cut -d '=' -f 2) -O $(cat ./node-js-output | grep '^target=' | cut -d '=' -f 2)
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -187,7 +166,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
-            - node-js-output
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
