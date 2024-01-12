@@ -146,7 +146,7 @@ jobs:
       - run:
           name: Build
           command: node .circleci/ci/build.js # this is important, since this is used during UI test run too
-       - run:
+      - run:
           name: Get project settings
           command: |
             echo "node-version=$(mvn help:evaluate -Dexpression=node.version -q -DforceStdout -pl=ui.tests | cut -d 'v' -f 2)" >> nodejs-output
