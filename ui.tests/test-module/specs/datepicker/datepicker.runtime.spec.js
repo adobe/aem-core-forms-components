@@ -221,8 +221,8 @@ describe("Form Runtime with Date Picker", () => {
       });
     });
 
-    it.only("input given as per edit pattern should be valid", () => {
-        const [datePicker8, fieldView] = Object.entries(formContainer._fields)[7]
+    it("input given as per edit pattern should be valid", () => {
+        const [datePicker8] = Object.entries(formContainer._fields)[7]
         const incorrectInput = "01-01-2023";
         const correctInput = "25/2/2023";
         cy.get(`#${datePicker8}`).find("input").clear().type(incorrectInput).blur().then(x => {
@@ -243,6 +243,24 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker8}`).find("input").click().then(() => {
                 cy.get(`#${datePicker8}`).find("input").should('have.value',input);
                 })
+        });
+    });
+
+    it("Test changing dates in datePicker then typing manually updates model", () => {
+        const [datePicker7] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
+            cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Tuesday, 2 January, 2024");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/1/2024");
+        });
+
+        // choose a different date and check if its persisted
+        const date = '23/1/2024';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Tuesday, 23 January, 2024");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value",date);
         });
     });
 
