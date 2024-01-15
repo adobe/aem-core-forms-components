@@ -380,6 +380,13 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
+      - cypress-chrome-655-with-latest-addon-context-path:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
       - jsdocs-deploy:
           requires:
             - build-java-11
