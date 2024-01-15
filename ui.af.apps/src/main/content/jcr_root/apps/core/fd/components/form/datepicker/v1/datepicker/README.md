@@ -41,6 +41,7 @@ The following properties are written to JCR for this Form Date component and are
 10. `./editFormat` - defines the format in which the value will be edited by the user
 11. `./minimumDate` - define the minimum date input allowed for the field
 12. `./maximumDate` - define the maximum date input allowed for the field
+13. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)).
 
 ## Client Libraries
 The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 

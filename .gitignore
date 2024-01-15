@@ -64,3 +64,4 @@ node/
 node_modules/
 test_results/
 ui.tests/test-module/reports
+ui.tests/test-module/cypress

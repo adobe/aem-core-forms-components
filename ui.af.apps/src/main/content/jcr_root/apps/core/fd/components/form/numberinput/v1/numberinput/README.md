@@ -45,6 +45,7 @@ The following properties are written to JCR for this Form Text component and are
 12. `./maximumMessage` - the message showed to the user if the entered value is more than the maximum value
 13. `./leadDigits` - the max no of digits before decimal that can be entered if the type of field is Decimal.
 14. `./fracDigits` - the max no of digits after decimal that can be entered if the type of field is Decimal.
+15. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns)).
 
 ## Client Libraries
 The component provides a `core.forms.components.numberinput.v1.runtime` client library category that contains the Javascript runtime for the component. 

@@ -50,6 +50,9 @@ public final class FormConstants {
     /** The resource type for checkbox v1 */
     public static final String RT_FD_FORM_CHECKBOX_V1 = RT_FD_FORM_PREFIX + "checkbox/v1/checkbox";
 
+    /** The resource type for switch v1 */
+    public static final String RT_FD_FORM_SWITCH_V1 = RT_FD_FORM_PREFIX + "switch/v1/switch";
+
     /** The resource type for date picker v1 */
     public static final String RT_FD_FORM_DATE_PICKER_V1 = RT_FD_FORM_PREFIX + "datepicker/v1/datepicker";
 
@@ -61,6 +64,9 @@ public final class FormConstants {
 
     /** The resource type for file input v1 */
     public static final String RT_FD_FORM_FILE_INPUT_V1 = RT_FD_FORM_PREFIX + "fileinput/v1/fileinput";
+
+    /** The resource type for file input v2 */
+    public static final String RT_FD_FORM_FILE_INPUT_V2 = RT_FD_FORM_PREFIX + "fileinput/v2/fileinput";
 
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";

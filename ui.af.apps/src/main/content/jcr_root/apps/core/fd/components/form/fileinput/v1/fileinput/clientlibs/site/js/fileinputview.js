@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInput extends FormView.FormFieldBase {
+    class FileInput extends FormView.FormFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -42,6 +42,12 @@
         constructor(params) {
             super(params);
         }
+
+        widgetFields = {
+            widget: this.getWidget(),
+            fileListDiv: this.getFileListDiv(),
+            model: () => this._model
+        };
 
         getWidget() {
             return this.element.querySelector(FileInput.selectors.widget);
@@ -71,13 +77,13 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        #getAttachButtonLabel() {
+        getAttachButtonLabel() {
             return this.element.querySelector(FileInput.selectors.attachButtonLabel);
         }
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields)
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
@@ -86,36 +92,11 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields)
             }
         }
 
-        #syncWidget() {
-            let widgetElement = this.getWidget ? this.getWidget() : null;
-            if (widgetElement) {
-                widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
-            }
 
-        }
-
-        /*
-          We are overriding the syncLabel method of the FormFieldBase class because for all components, 
-          we pass the widgetId in 'for' attribute. However, for the file input component, 
-          we already have a widget, so we should not pass the widgetId twice
-        */
-        #syncLabel() {
-          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-          if (labelElement) {
-              labelElement.setAttribute('for', this.getId());
-          }
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncWidget();
-            this.#syncLabel();
-        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
