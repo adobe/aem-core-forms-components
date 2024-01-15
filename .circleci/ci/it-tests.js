@@ -98,7 +98,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-            ${preleaseOpts}`);
+            ${preleaseOpts} ${contextPathOpts}`);
 
         if (AEM === 'classic' || AEM === 'classic-latest') {
             // add a sleep for 10 mins, add-on takes times to come up
