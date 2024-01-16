@@ -244,7 +244,7 @@ describe('Page/Form Authoring', function () {
             });
 
             it('check method post is available on form container\'s form HTML element', function () {
-                cy.get('form [method="post"]').should("exist");
+                cy.get('form[method="post"]').should('exist');
             });
 
         });
