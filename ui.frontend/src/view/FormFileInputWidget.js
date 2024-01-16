@@ -71,9 +71,19 @@ class FormFileInputWidget {
         }
 
         attachEventHandlers(widget, model) {
+            widget.addEventListener('click', (e)=> {
+                this.clearElementValue();
+            });
             widget.addEventListener('change', (e)=> {
                 this.handleChange(e?.target?.files);
             });
+        }
+
+        /*
+         * This function clears the value of fileinput element after the files are copied to fileArr
+         */
+        clearElementValue(){
+            this.widget.value = null;
         }
 
         // checks if file name is valid or not to prevent security threats
