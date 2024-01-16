@@ -243,5 +243,9 @@ describe('Page/Form Authoring', function () {
                 cy.getCookie('wcmmode').should('be.null');
             });
 
+            it('check method post is available on form container\'s form HTML element', function () {
+                cy.get('form[method="post"]').should('exist');
+            });
+
         });
 });
