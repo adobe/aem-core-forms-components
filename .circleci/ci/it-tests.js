@@ -47,6 +47,10 @@ try {
         extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
         // The core components are already installed in the Cloud SDK
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+        if (CONTEXTPATH != null) {
+            // enable context path settings
+            contextPathOpts = `--cmd-options "-contextpath ${CONTEXTPATH}"`;
+        }
     } else if (AEM === 'addon') {
         // Download the forms Add-On
         ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
@@ -64,10 +68,6 @@ try {
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
-        }
-        if (CONTEXTPATH != null) {
-            // enable context path settings
-            contextPathOpts = `--cmd-options "-contextpath ${CONTEXTPATH}"`;
         }
     }
 
