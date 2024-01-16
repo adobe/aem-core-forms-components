@@ -144,7 +144,7 @@
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>open</argument>
                                         <argument>--env</argument>
-                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR}</argument>
+                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},crx.contextPath=${aem.contextpath}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -332,7 +332,7 @@
                                         <argument>configFile=cypress.json</argument>
                                         <argument>--env</argument>
                                         <!-- value of forms.far is addon or addon-latest -->
-                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR}</argument>
+                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},crx.contextPath=${aem.contextpath}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
