@@ -143,7 +143,7 @@ Cypress.Commands.add("openAFv2TemplateEditor", () => {
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    const path = `${contextPath}editor.html${templatePath}`;
+    const path = `${contextPath}/editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -228,7 +228,7 @@ Cypress.Commands.add("getFormJson", (pagePath) => {
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    const path = `${contextPath}editor.html${templatePath}`;
+    const path = `${contextPath}/editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -453,7 +453,7 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 
 Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    let pagePath = `${contextPath}${formPath}?wcmmode=disabled`;
+    let pagePath = `${contextPath}/${formPath}?wcmmode=disabled`;
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
