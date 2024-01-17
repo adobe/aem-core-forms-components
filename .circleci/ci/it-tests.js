@@ -49,7 +49,7 @@ try {
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (CONTEXTPATH != null) {
             // enable context path settings
-            contextPathOpts = `--cmd-options \\\"-contextpath=${CONTEXTPATH}\\\"`;
+            contextPathOpts = `--cmd-options \\\"-c ${CONTEXTPATH}\\\"`;
         }
     } else if (AEM === 'addon') {
         // Download the forms Add-On
