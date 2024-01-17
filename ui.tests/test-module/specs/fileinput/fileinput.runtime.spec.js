@@ -39,6 +39,23 @@ const getFormObjTest = (fileList) => {
     });
 };
 
+const checkFilePreviewInFileAttachment = (component) => {
+    cy.get(component).then(() => {
+        cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
+            cy.wrap($file).click();
+            cy.window().its('open').should('be.called');
+        })
+    });
+};
+
+const deleteSelectedFiles = (component, fileNames) => {
+    cy.get(component).then(() => {
+        fileNames.forEach((fileName) => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().find('.cmp-adaptiveform-fileinput__filedelete').click();
+        })
+    });
+};
+
 describe("Form with File Input - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/fileinput/basic.html"
@@ -50,9 +67,13 @@ describe("Form with File Input - Basic Tests", () => {
     let formContainer = null
 
     beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
+        cy.previewForm(pagePath, {
+            onBeforeLoad : (win) => {
+                cy.stub(win, 'open'); // creating a stub to check file preview
+            }
+        }).then(p => {
             formContainer = p;
-        })
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -139,6 +160,20 @@ describe("Form with File Input - Basic Tests", () => {
             cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
         })
     })
+
+    it("check preview and delete functionality of duplicate files", () => {
+        let sampleFileNames = ['sample2.txt','sample.txt','sample2.txt'];
+        const fileInput = "input[name='fileinput1']";
+        cy.get(fileInput).attachFile(sampleFileNames[0]);
+        cy.get(fileInput).attachFile(sampleFileNames[1]);
+        cy.get(fileInput).attachFile(sampleFileNames[0]);
+        checkFilePreviewInFileAttachment(fileInput);
+
+        deleteSelectedFiles(fileInput, sampleFileNames)
+
+        cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
+    })
+
 })
 
 describe("Form with File Input - Prefill & Submit tests", () => {
@@ -168,23 +203,6 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             prefillId = body.metadata.prefillId;
             cy.wrap(prefillId).as("prefillId");
         })
-    };
-
-    const deleteSelectedFiles = (component, fileNames) => {
-        cy.get(component).then(() => {
-            fileNames.forEach((fileName) => {
-                cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().find('.cmp-adaptiveform-fileinput__filedelete').click();
-            })
-        });
-    };
-
-    const checkFilePreviewInFileAttachment = (component) => {
-        cy.get(component).then(() => {
-            cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
-                cy.wrap($file).click();
-                cy.window().its('open').should('be.called');
-            })
-        });
     };
 
     const checkFileNamesInFileAttachmentView = (component, fileNames) => {

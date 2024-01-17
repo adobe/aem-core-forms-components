@@ -103,7 +103,8 @@
                     if(elem && isDuplicatePresent){
                         // now check if duplicate present and get its correct index
                         // today all files are wrapped under .guide-fu-fileItem node
-                        index = elem.closest(self.fileItemSelector).index();
+                        let fileEntry = elem.parentNode.parentNode;
+                        index = Array.prototype.indexOf.call(fileEntry.parentNode.children, fileEntry);
                     }
                     // check if there is a duplicate
                     // this is to just break the loop
