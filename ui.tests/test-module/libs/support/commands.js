@@ -78,14 +78,12 @@ Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
 });
 
 
-function getCSRFToken() {
-    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+function getCSRFToken(contextPath) {
     const TOKEN_SERVLET = contextPath + '/libs/granite/csrf/token.json';
     cy.request(TOKEN_SERVLET).its('body.token').as("token")
 }
 
-function getUserInfoHome() {
-    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+function getUserInfoHome(contextPath) {
     const USER_INFO_SERVLET = contextPath + "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
@@ -93,8 +91,9 @@ function getUserInfoHome() {
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
-    getCSRFToken();
-    getUserInfoHome();
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    getCSRFToken(contextPath);
+    getUserInfoHome(contextPath);
     let preferences = {};
     if (!enable) {
         preferences = {
@@ -123,7 +122,6 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         preferences[":cq_csrf_token"] = token;
     });
     cy.get("@home").then(home => {
-        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         const url = contextPath + home + '/preferences';
         //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
         cy.window().then(win => {
@@ -455,7 +453,7 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 
 Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    let pagePath = contextPath + `${formPath}?wcmmode=disabled`;
+    let pagePath = `${contextPath}${formPath}?wcmmode=disabled`;
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
