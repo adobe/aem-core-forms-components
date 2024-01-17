@@ -80,7 +80,7 @@ try {
     // this is used in case of re-run failed test scenario
     ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
     // Start CQ
-    ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
+    ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 -contextpath ${CONTEXTPATH} --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
@@ -98,7 +98,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-            ${preleaseOpts} ${contextPathOpts}`);
+            ${preleaseOpts}`);
 
         if (AEM === 'classic' || AEM === 'classic-latest') {
             // add a sleep for 10 mins, add-on takes times to come up
