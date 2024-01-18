@@ -58,6 +58,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    protected String customFunctionUrl;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     @Named("fd:formtype")
     protected String dorTemplateType;
 
