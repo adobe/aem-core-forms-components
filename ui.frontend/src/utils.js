@@ -19,7 +19,6 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
-
 /**
  * @module FormView
  */
@@ -296,6 +295,7 @@ class Utils {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctionsByUrl(_formJson);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -310,8 +310,25 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
-                const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
+                const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, {"detail": formContainer});
                 document.dispatchEvent(event);
+            }
+        }
+    }
+
+    static async registerCustomFunctionsByUrl(formDef) {
+        const url = formDef?.properties['fd:customFunctionUrl'];
+        if (url != null && url.trim().length > 0) {
+            const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+            const keys = Object.keys(customFunctionModule);
+            for (let i = 0; i < keys.length; i++) {
+                const name = keys[i];
+                const funcDef = customFunctionModule[keys[i]];
+                if (typeof funcDef === 'function') {
+                    const functions = [];
+                    functions[name] = funcDef;
+                    FunctionRuntime.registerFunctions(functions);
+                }
             }
         }
     }
