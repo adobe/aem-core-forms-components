@@ -248,7 +248,7 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    let path = contextPath ? `${contextPath}/${pagePath}` : pagePath;
+    let path = ((contextPath && !pagePath.startsWith(contextPath)) ? `${contextPath}${pagePath.startsWith('/') ? '' : '/'}${pagePath}` : pagePath);
     if (!options.noLogin) {
     // getting status 403 intermittently, just ignore it
         const baseUrl = contextPath;
@@ -455,7 +455,7 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 
 Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-    let pagePath = contextPath ? `${contextPath}/${formPath}?wcmmode=disabled` : `${formPath}?wcmmode=disabled`;
+    let pagePath = contextPath ? `${contextPath}${formPath.startsWith('/') ? '' : '/'}${formPath}?wcmmode=disabled` : `${formPath}?wcmmode=disabled`;
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
