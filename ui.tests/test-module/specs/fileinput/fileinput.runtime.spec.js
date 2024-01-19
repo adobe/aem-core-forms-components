@@ -145,6 +145,7 @@ describe("Form with File Input - Prefill & Submit tests", () => {
     let prefillId;
     const multiSelectFileInput1 = "input[name='fileinput1']";
     const singleSelectFileInput2 = "input[name='fileinput2']";
+    const singleSelectFileInput4 = "input[name='fileinput4']";
 
     const submitBtn = "submit1673953138924";
     const pagePath = "content/forms/af/core-components-it/samples/fileinput/basic.html"
@@ -196,20 +197,55 @@ describe("Form with File Input - Prefill & Submit tests", () => {
         });
     }
 
-    const fileInputs = [{
-        type: "Single Select",
-        selector: singleSelectFileInput2,
-        fileNames: ['empty.pdf'], multiple: false
-        }, {
-        type: "Multi Select",
-        selector: multiSelectFileInput1,
-        fileNames: ['empty.pdf', 'sample.txt'], multiple: true
-    }];
+    const fileInputs = [
+        {
+            type: "Single Select",
+            selector: singleSelectFileInput2,
+            fileNames: ['empty.pdf'], multiple: false
+        },
+        {
+            type: "Multi Select",
+            selector: multiSelectFileInput1,
+            fileNames: ['empty.pdf', 'sample.txt'], multiple: true
+        }
+    ];
+
+    const unknownMimetypesFileInputs = [
+        {
+            type: "Single Select",
+            selector: singleSelectFileInput4,
+            fileNames: ['test.bat'], multiple: false
+
+        },
+        {
+            type: "Single Select",
+            selector: singleSelectFileInput4,
+            fileNames: ['test.msg'], multiple: false
+        }]
+
+    unknownMimetypesFileInputs.forEach((fileInput, idx) => {
+        it(`${fileInput.type} - attach files, check model, view, preview attachment and submit the form with bat and msg extension files`, () => {
+            cy.previewForm(pagePath, {
+                onBeforeLoad: (win) => {
+                    cy.stub(win, 'open'); // creating a stub to check file preview
+                }
+            });
+
+            // attach the file
+            cy.get(fileInput.selector).attachFile(fileInput.fileNames);
+
+            // check for successful attachment of file in the view
+            checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
+
+            // check preview of the file
+            checkFilePreviewInFileAttachment(fileInput.selector);
+        })
+    })
 
     fileInputs.forEach((fileInput, idx) => {
         it(`${fileInput.type} - attach files, check model, view, preview attachment and submit the form`, () => {
             cy.previewForm(pagePath, {
-                onBeforeLoad : (win) => {
+                onBeforeLoad: (win) => {
                     cy.stub(win, 'open'); // creating a stub to check file preview
                 }
             });
