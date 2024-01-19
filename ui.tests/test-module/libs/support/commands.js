@@ -682,9 +682,9 @@ Cypress.Commands.add("expectNoConsoleErrors", () => {
 
 Cypress.Commands.add("getContentIFrameBody", () => {
     return cy
-        .get('iframe#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
+    .get('iframe#ContentFrame')
+    .its('0.contentDocument.body').should('not.be.empty')
+    .then(cy.wrap)
 });
 
 Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
@@ -705,7 +705,7 @@ Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => 
  */
 Cypress.Commands.add("getContentIframeBody", () => {
     return cy
-        .get('#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
+    .get('#ContentFrame')
+    .its('0.contentDocument.body').should('not.be.empty')
+    .then(cy.wrap)
 })

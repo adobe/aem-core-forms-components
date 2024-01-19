@@ -51,11 +51,11 @@ describe('Document of Record Test', () => {
   it('should download document of record', () => {
     return cy.window().then($window => {
       if($window.guideBridge && $window.guideBridge.isConnected()) {
-       const bridge = $window.guideBridge;
-       const data = bridge.getFormModel().exportData();
-       const formdata = new FormData();
-       formdata.append("data", JSON.stringify(data));
-       const requestOptions = {
+        const bridge = $window.guideBridge;
+        const data = bridge.getFormModel().exportData();
+        const formdata = new FormData();
+        formdata.append("data", JSON.stringify(data));
+        const requestOptions = {
           method: 'POST',
           body: formdata,
           redirect: 'follow'
