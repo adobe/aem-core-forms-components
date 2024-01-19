@@ -74,3 +74,20 @@ BLOCK cmp-adaptiveform-emailinput
 
 ### Note
 By placing the class names `cmp-adaptiveform-emailinput__label` and `cmp-adaptiveform-emailinput__questionmark` within the `cmp-adaptiveform-emailinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
+
+## JavaScript Data Attribute Bindings
+
+The following attributes must be added for the initialization of the email input component in the form view:
+1. `data-cmp-is="adaptiveFormEmailInput"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not

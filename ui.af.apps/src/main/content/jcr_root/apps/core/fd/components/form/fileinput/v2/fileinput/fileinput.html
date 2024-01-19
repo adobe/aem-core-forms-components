@@ -39,7 +39,7 @@
       <div class="cmp-adaptiveform-fileinput__dragarea">
            <div class="cmp-adaptiveform-fileinput__icon"></div>
            <div class="cmp-adaptiveform-fileinput__dragtext">${file.dragDropText @context='html'}</div>
-           <label data-sly-test="${file.buttonText}" for="${file.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
+           <label data-sly-test="${file.buttonText}" for="${file.id}_widget" tabindex="0" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
            <input class="cmp-adaptiveform-fileinput__widget"
                 data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
                 style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"

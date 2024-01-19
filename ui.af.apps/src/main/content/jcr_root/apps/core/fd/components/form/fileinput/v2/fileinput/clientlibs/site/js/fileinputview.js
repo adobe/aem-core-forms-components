@@ -99,6 +99,12 @@
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.widgetFields);
             }
+            this.getAttachButtonLabel().addEventListener('focus', () => {
+                this.setActive();
+            })
+            this.getAttachButtonLabel().addEventListener('blur', () => {
+                this.setInactive();
+            })
         }
     }
 

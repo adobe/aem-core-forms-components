@@ -27,14 +27,7 @@ console.log(configuration);
 ci.stage('Build Project');
 // done to solve this, https://github.com/eirslett/frontend-maven-plugin/issues/882
 ci.sh(`rm -rf ${eirslettM2Repository}`);
-try {
-    ci.sh('mvn -B clean install -Pcloud');
-} catch (ex) {
-    console.log(ex);
-    ci.stage('Retrying build due to eirslett flaky ci issue');
-    ci.sh('mvn -B clean install -Pcloud');
-}
-
+ci.sh('mvn -B clean install -Pcloud,build-cypress');
 ci.stage('Collect test results');
 const testFolder = path.resolve(process.cwd(), 'test-results/junit');
 ci.sh(`mkdir -p ${testFolder}`);
