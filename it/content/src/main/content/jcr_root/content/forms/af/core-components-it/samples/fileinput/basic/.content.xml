@@ -64,7 +64,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 4"
                     sling:resourceType="forms-components-examples/components/form/fileinput"
-                    accept="[application/x-msdownload,application/vnd.ms-outlook]"
+                    accept="[application/x-msdownload,application/vnd.ms-outlook,application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
                     id="fileinput_unknown_mimetype_test"

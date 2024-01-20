@@ -125,7 +125,7 @@ describe("Form with File Input - Basic Tests", () => {
                 }
             }
         });
-        getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf'])
+        getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
     it("should toggle description and tooltip", () => {
