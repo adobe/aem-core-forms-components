@@ -18,33 +18,41 @@
  * This class is responsible for interacting with the file input widget. It implements the file preview,
  * file list, handling invalid file size, file name, file mime type functionality
  */
-    class FormFileInputWidget {
-        fileItemSelector='.cmp-adaptiveform-fileinput__fileitem'
-        widget=null
-        fileArr=[]
-        fileList=null
-        lang="en"
-        model=null // passed by reference
-        isFileUpdate=false // handle safari state
-        options=null // initialize options
-        regexMimeTypeList=[] // initialize
-        values=[] // initialize
-        invalidFeature={
-            "SIZE":1,
-            "NAME":2,
-            "MIMETYPE":3
-        }
-        initialFileValueFileNameMap;
+class FormFileInputWidget {
+    fileItemSelector = '.cmp-adaptiveform-fileinput__fileitem'
+    widget = null
+    fileArr = []
+    fileList = null
+    lang = "en"
+    model = null // passed by reference
+    isFileUpdate = false // handle safari state
+    options = null // initialize options
+    regexMimeTypeList = [] // initialize
+    values = [] // initialize
+    invalidFeature = {
+        "SIZE": 1,
+        "NAME": 2,
+        "MIMETYPE": 3
+    }
+    extensionToMimeTypeMap = {
+        "bat": "application/x-msdownload",
+        "com": "application/x-msdownload",
+        "dll": "application/x-msdownload",
+        "exe": "application/x-msdownload",
+        "msi": "application/x-msdownload",
+        "msg": "application/vnd.ms-outlook"
+    }
+    initialFileValueFileNameMap;
 
-        constructor(widgetFields) {
-            // initialize the widget and model
-            this.widget = widgetFields.widget;
-            this.model = widgetFields.model();
-            this.fileList = widgetFields.fileListDiv;
-            // get the current lang
-            this.lang = this.model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
-            // initialize options for backward compatibility
-            this.options = Object.assign({}, {
+    constructor(widgetFields) {
+        // initialize the widget and model
+        this.widget = widgetFields.widget;
+        this.model = widgetFields.model();
+        this.fileList = widgetFields.fileListDiv;
+        // get the current lang
+        this.lang = this.model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
+        // initialize options for backward compatibility
+        this.options = Object.assign({}, {
             "contextPath": ""
             }, this.model._jsonModel);
             this.attachEventHandlers(widgetFields?.widget, widgetFields?.dragArea);
@@ -391,6 +399,7 @@
                     inValidSizefileNames = '',
                     inValidNamefileNames = '',
                     inValidMimeTypefileNames = '',
+                    self = this,
                     files = filesUploaded;
                 // Initially set the invalid flag to false
                 let isInvalidSize = false,
@@ -414,10 +423,15 @@
                             // check if file names are valid (ie) there are no control characters in file names
                             isInvalidFileName = isCurrentInvalidFileName = true;
                             inValidNamefileNames = currFileName + "," + inValidNamefileNames;
-                        } else if (file.type) {
-                            let isMatch = this.regexMimeTypeList.some(function (rx) {
-                                return rx.test(file.type);
-                            });
+                        } else {
+                            let isMatch = false;
+                            let extension = currFileName.split('.').pop();
+                            let mimeType = (file.type) ? file.type : self.extensionToMimeTypeMap[extension];
+                            if (mimeType != undefined && mimeType.trim().length > 0) {
+                                isMatch = this.regexMimeTypeList.some(function (rx) {
+                                    return rx.test(mimeType);
+                                });
+                            }
                             if (!isMatch) {
                                 isInvalidMimeType = isCurrentInvalidMimeType = true;
                                 inValidMimeTypefileNames = currFileName + "," + inValidMimeTypefileNames;
