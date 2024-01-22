@@ -78,21 +78,22 @@ Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
 });
 
 
-function getCSRFToken() {
-    const TOKEN_SERVLET = '/libs/granite/csrf/token.json';
+function getCSRFToken(contextPath) {
+    const TOKEN_SERVLET = contextPath + '/libs/granite/csrf/token.json';
     cy.request(TOKEN_SERVLET).its('body.token').as("token")
 }
 
-function getUserInfoHome() {
-    const USER_INFO_SERVLET = "/libs/cq/security/userinfo.json";
+function getUserInfoHome(contextPath) {
+    const USER_INFO_SERVLET = contextPath + "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
 
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
-    getCSRFToken();
-    getUserInfoHome();
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    getCSRFToken(contextPath);
+    getUserInfoHome(contextPath);
     let preferences = {};
     if (!enable) {
         preferences = {
@@ -121,7 +122,6 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         preferences[":cq_csrf_token"] = token;
     });
     cy.get("@home").then(home => {
-        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         const url = contextPath + home + '/preferences';
         //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
         cy.window().then(win => {
@@ -142,7 +142,8 @@ Cypress.Commands.add("openAFv2TemplateEditor", () => {
 
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
-    const path = `editor.html${templatePath}`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -226,7 +227,8 @@ Cypress.Commands.add("getFormJson", (pagePath) => {
 
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
-    const path = `editor.html${templatePath}`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -245,15 +247,17 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let path = ((contextPath && !pagePath.startsWith(contextPath)) ? `${contextPath}${pagePath.startsWith('/') ? '' : '/'}${pagePath}` : pagePath);
     if (!options.noLogin) {
     // getting status 403 intermittently, just ignore it
-        const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+        const baseUrl = contextPath;
         cy.visit(baseUrl, {'failOnStatusCode': false});
         cy.login(baseUrl, () => {
-            cy.openPage(pagePath, options);
+            cy.openPage(path, options);
         });
     }
-    cy.visit(pagePath, options);
+    cy.visit(path, options);
 });
 
 // cypress command to select layer in authoring
@@ -450,7 +454,8 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 
 
 Cypress.Commands.add("previewForm", (formPath, options = {}) => {
-    let pagePath = `${formPath}?wcmmode=disabled`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let pagePath = contextPath ? `${contextPath}${formPath.startsWith('/') ? '' : '/'}${formPath}?wcmmode=disabled` : `${formPath}?wcmmode=disabled`;
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
@@ -462,7 +467,8 @@ Cypress.Commands.add("previewForm", (formPath, options = {}) => {
 })
 
 Cypress.Commands.add("fetchFeatureToggles",()=>{
-    return cy.request('/etc.clientlibs/toggles.json')
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    return cy.request(`${contextPath}/etc.clientlibs/toggles.json`)
 })
 
 Cypress.Commands.add("cleanTest", (editPath) => {
