@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:lastModified="{Date}2023-06-26T11:25:22.331+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+                fd:version="2.1"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form">
+            <switch1
+                    jcr:lastModified="{Date}2023-06-23T16:58:54.738+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Switch 1"
+                    sling:resourceType="core/fd/components/form/switch/v1/switch"
+                    description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    mandatoryMessage="this is a required field"
+                    name="switch1662722663424"
+                    readOnly="{Boolean}false"
+                    tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                    tooltipVisible="true"
+                    type="string"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
+            <switch2
+                    jcr:lastModified="{Date}2023-01-23T12:23:13.884+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Switch 2"
+                    sling:resourceType="core/fd/components/form/switch/v1/switch"
+                    default="0"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    name="switch166272266df24"
+                    type="string"
+                    visible="{Boolean}true"/>
+            <switch3
+                    jcr:lastModified="{Date}2023-06-23T16:55:50.978+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Switch 3"
+                    sling:resourceType="core/fd/components/form/switch/v1/switch"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    mandatoryMessage="This is a custom required switch"
+                    name="switch166272sdf63424"
+                    readOnly="{Boolean}false"
+                    required="true"
+                    textIsRich="[true,true]"
+                    type="string"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
+            <switch4
+                    jcr:lastModified="{Date}2023-06-23T17:16:21.188+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Show Hide SampleSwitch"
+                    sling:resourceType="forms-components-examples/components/form/switch"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    name="switch1687520681298"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.switch1687520681298&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;switch1687520681298&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.sampleswitch&quot;\,&quot;displayName&quot;:&quot;Sample Check Box&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Sample Check Box/&quot;\,&quot;name&quot;:&quot;sampleswitch&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'true'\, dispatchEvent(sampleswitch\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.switch1687520681298&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;switch1687520681298&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.sampleswitch&quot;\,&quot;displayName&quot;:&quot;Sample Check Box&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Sample Check Box/&quot;\,&quot;name&quot;:&quot;sampleswitch&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field == 'false'\, dispatchEvent(sampleswitch\, 'custom:setProperty'\, {visible : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == '0'\, dispatchEvent(sampleswitch\, 'custom:setProperty'\, {visible : true()})\, {}),if($field == '1'\, dispatchEvent(sampleswitch\, 'custom:setProperty'\, {visible : false()})\, {})]"/>
+            </switch4>
+            <switch5
+                    jcr:lastModified="{Date}2023-06-23T17:17:50.729+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Sample Check Box"
+                    sling:resourceType="forms-components-examples/components/form/switch"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    name="sampleswitch"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}false"/>
+            <switch_970636639
+                    jcr:lastModified="{Date}2023-06-26T11:23:56.599+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Enable or Disable a switch 5"
+                    sling:resourceType="forms-components-examples/components/form/switch"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    name="enabledisable"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.enabledisable&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;enabledisable&quot;}},{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}},{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}]},&quot;nested&quot;:false},{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null},{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.cb5&quot;\,&quot;displayName&quot;:&quot;Check Box 5&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box 5/&quot;\,&quot;name&quot;:&quot;cb5&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}],&quot;isValid&quot;:true,&quot;enabled&quot;:true,&quot;version&quot;:1,&quot;script&quot;:[&quot;if($field.$value == &quot;0&quot;\, dispatchEvent(cb5, &quot;custom:setProperty&quot;\, {enabled : true()}), {})&quot;],&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.enabledisable&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;enabledisable&quot;}},{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}},{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]},&quot;nested&quot;:false},{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null},{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.cb5&quot;\,&quot;displayName&quot;:&quot;Check Box 5&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box 5/&quot;\,&quot;name&quot;:&quot;cb5&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}],&quot;isValid&quot;:true,&quot;enabled&quot;:true,&quot;version&quot;:1,&quot;script&quot;:[&quot;if($field.$value == &quot;1&quot;\, dispatchEvent(cb5, &quot;custom:setProperty&quot;\, {enabled : false()}), {})&quot;],&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if($field == '0'\, dispatchEvent(cb5\, 'custom:setProperty'\, {enabled : true()})\, {}),if($field == '1'\, dispatchEvent(cb5\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+            </switch_970636639>
+            <switch_887779806
+                    jcr:lastModified="{Date}2023-06-26T11:24:07.837+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box 5"
+                    sling:resourceType="forms-components-examples/components/form/switch"
+                    enabled="{Boolean}false"
+                    enum="[0,1]"
+                    enumNames="[OFF,ON]"
+                    enableUncheckedValue="{Boolean}true"
+                    fieldType="checkbox"
+                    hideTitle="false"
+                    name="cb5"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
