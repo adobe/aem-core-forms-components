@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Adaptive Forms (Core Components) Class: Response</title>
+	<title>Adaptive Forms (Core Components) Class: FormOptionFieldBase</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,18 +86,16 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Response</h1>
+	<h1 class="page-title">Class: FormOptionFieldBase</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-FormView.html">FormView</a>~</span>
-        
-        Response
+        FormOptionFieldBase
         </h2>
         
-            <div class="class-description"><p>Represents a response object with message and error information.</p></div>
+            <div class="class-description"><p>Class containing common view code for dropdown, checkboxgroup and radiobutton</p></div>
         
     
 </header>
@@ -109,123 +107,19 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="Response"><span class="type-signature"></span>new Response(params)</h4>
+    <h4 class="name" id="FormOptionFieldBase"><span class="type-signature"></span>new FormOptionFieldBase()</h4>
     
     
 </dt>
 <dd>
 
     
-    <div class="description">
-        <p>Constructs a new Response object.</p>
-    </div>
-    
 
     
 
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The parameters for constructing the Response.</p>
-                <h6 class="method-params-label method-subparams-label">Properties</h6>
-                
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The data associated with the Response.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -285,6 +179,17 @@
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>module:FormView~FormOptionFieldBase</li>
+    </ul>
+
 
     
 
@@ -305,7 +210,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="addMessage"><span class="type-signature"></span>addMessage(code, msg, som)</h4>
+    <h4 class="name" id="updateEnumForRadioButtonAndCheckbox"><span class="type-signature"></span>updateEnumForRadioButtonAndCheckbox(newEnums, createItemCallback)</h4>
     
     
 </dt>
@@ -313,7 +218,7 @@
 
     
     <div class="description">
-        <p>Adds a message to the response.</p>
+        <p>Common method to update the enums of checkbox and radiobutton</p>
     </div>
     
 
@@ -348,13 +253,13 @@
 
         <tr>
             
-                <td class="name"><code>code</code></td>
+                <td class="name"><code>newEnums</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Array</span>
 
 
 
@@ -365,20 +270,20 @@
 
             
 
-            <td class="description last"><p>The error code.</p></td>
+            <td class="description last"><p>updated enum values</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>msg</code></td>
+                <td class="name"><code>createItemCallback</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">CallableFunction</span>
 
 
 
@@ -389,31 +294,7 @@
 
             
 
-            <td class="description last"><p>The message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>som</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The SOM expression. (deprecated)</p></td>
+            <td class="description last"><p>function to create options</p></td>
         </tr>
 
     
@@ -481,7 +362,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="getNextMessage"><span class="type-signature"></span>getNextMessage()</h4>
+    <h4 class="name" id="updateEnumNamesForRadioButtonAndCheckbox"><span class="type-signature"></span>updateEnumNamesForRadioButtonAndCheckbox(newEnumsNames, createItemCallback)</h4>
     
     
 </dt>
@@ -489,7 +370,7 @@
 
     
     <div class="description">
-        <p>Retrieves the next message from the response.</p>
+        <p>Common method to update the enums Names of checkbox and radiobutton</p>
     </div>
     
 
@@ -498,6 +379,80 @@
     
 
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newEnumsNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>updated enum Names values</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>createItemCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">CallableFunction</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function to create options</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
     
 
     
@@ -551,34 +506,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>An object containing the error code, SOM expression (deprecated),
-qualified name, and message; or null if there are no more messages.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-|
-
-<span class="param-type">null</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
