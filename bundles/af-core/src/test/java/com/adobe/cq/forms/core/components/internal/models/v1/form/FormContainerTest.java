@@ -85,4 +85,11 @@ public class FormContainerTest {
         assertEquals(ArrayUtils.EMPTY_STRING_ARRAY, formContainerMock.getExportedItemsOrder());
     }
 
+    @Test
+    void testGetLanguageDirection() {
+        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        Mockito.when(formContainerMock.getLanguageDirection()).thenCallRealMethod();
+        assertEquals("ltr", formContainerMock.getLanguageDirection());
+    }
+
 }

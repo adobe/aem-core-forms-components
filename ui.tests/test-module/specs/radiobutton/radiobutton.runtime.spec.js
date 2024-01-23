@@ -189,4 +189,36 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
+
+    it("radiobutton with boolean type selection should happen in first click", () => {
+        const [radioButton8, radioButton1FieldView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${radioButton8}`).find("input").check("true").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="true"]').should("be.checked");
+        })
+
+        cy.get(`#${radioButton8}`).find("input").check("false").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
+        })
+    })
+})
+
+describe("setFocus on radiobutton via rules", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/focustest.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should focus on radio button when button is clicked", () => {
+        const [button] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='button')[0];
+        const [radioButton] = Object.entries(formContainer._fields).filter(it => it[1].getModel()._jsonModel.fieldType==='radio-group')[0];
+        cy.get(`#${radioButton}`).find("input").eq(0).should('not.have.focus');
+        cy.get(`#${button}-widget`).click().then(() => {
+            cy.get(`#${radioButton}`).find("input").eq(0).should('have.focus')
+        })
+    })
 })

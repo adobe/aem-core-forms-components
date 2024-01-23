@@ -1,0 +1,176 @@
+{
+  "switch" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "string",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "OFF",
+      "ON"
+    ],
+    "enableUncheckedValue": true,
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "switch-customized" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "switch-customized",
+    "jcr:title" : "switch-customized",
+    "description" : "switch-customized",
+    "visible" : false,
+    "enabled" : false,
+    "required" : true,
+    "readOnly" : true,
+    "hideTitle" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "string",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "OFF",
+      "ON"
+    ],
+    "fieldType": "checkbox",
+    "enableUncheckedValue": true,
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "switchNoEnum" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "boolean",
+    "fieldType": "checkbox",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "OFF",
+      "ON"
+    ],
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "switch-enableUncheckedValueFalse" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "string",
+    "enum": [
+      "1"
+    ],
+    "enumNames": [
+      "ON"
+    ],
+    "enableUncheckedValue": false,
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "switch-boolean" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "boolean",
+    "enum": [
+      true,
+      false
+    ],
+    "enumNames": [
+      "true",
+      "false"
+    ],
+    "enableUncheckedValue": true,
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
+  "switch-enableUncheckedValueFalse-boolean" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/switch/v1/switch",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "boolean",
+    "enum": [
+      true
+    ],
+    "enumNames": [
+      "ON"
+    ],
+    "enableUncheckedValue": false,
+    "fieldType": "checkbox",
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  }
+}

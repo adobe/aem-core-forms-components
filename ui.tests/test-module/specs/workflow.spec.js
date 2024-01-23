@@ -21,7 +21,7 @@ describe('Workflow Testing ', () => {
     const modelPath = "/conf/global/settings/workflow/models/core-component-it-test";
 
     // uncomment it once fixed in AEM
-    it.skip(' should not have any console errors in the editor', function () {
+    it(' should not have any console errors in the editor', function () {
         cy.openAuthoring(modelPath);
     });
 

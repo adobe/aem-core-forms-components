@@ -45,6 +45,7 @@ The following properties are written to JCR for this Form Text component and are
 12. `./maximumMessage` - the message showed to the user if the entered value is more than the maximum value
 13. `./leadDigits` - the max no of digits before decimal that can be entered if the type of field is Decimal.
 14. `./fracDigits` - the max no of digits after decimal that can be entered if the type of field is Decimal.
+15. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns)).
 
 ## Client Libraries
 The component provides a `core.forms.components.numberinput.v1.runtime` client library category that contains the Javascript runtime for the component. 
@@ -74,6 +75,16 @@ By placing the class names `cmp-adaptiveform-numberinput__label` and `cmp-adapti
 The following attributes must be added for the initialization of the number-input component in the form view:
 1. `data-cmp-is="adaptiveFormButton"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

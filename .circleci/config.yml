@@ -8,8 +8,8 @@ common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
@@ -24,6 +24,18 @@ common:
             which google-chrome
           name: Check browser installed
       - *restore_cache
+      - run:
+          name: Docker compose
+          command: |
+            set +e  # Disable exit on error
+            for i in $(seq 3); do
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+              docker-compose -f .circleci/docker-compose.yml down -v
+              docker-compose -f .circleci/docker-compose.yml up -d && break
+              sleep 10  # Add a delay between retries
+            done
+            set -e  # Enable exit on error
       - attach_workspace:
           at: /home/circleci/build
       - run:
@@ -49,6 +61,7 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+      - run: docker ps -a
       - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
@@ -89,7 +102,8 @@ common:
             fi
       - run:
           name: Cleanup
-          command: rm -rf TEST_EXECUTION_STATUS.txt
+          command: |
+            rm -rf TEST_EXECUTION_STATUS.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -112,11 +126,9 @@ executors:
     docker:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
-    docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-        <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:1209202301-openjdk11
-        <<: *docker_auth
+    machine:
+      image: ubuntu-2204:2023.10.1
+      docker_layer_caching: true
 
 jobs:
   build-java-11:
@@ -137,7 +149,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -154,6 +166,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:

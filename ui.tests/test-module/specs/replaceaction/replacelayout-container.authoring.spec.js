@@ -21,7 +21,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing Form Component replace behaviour in authoring
  */
 describe('component replace - Authoring', function () {
-    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly'}
+    const fieldTypes = {TEXT: 'text', SELECT: 'select', NON_INPUT: 'nonInputReadOnly', CHECKBOX: 'checkbox'}
     const typeMap = {
         "formbutton": fieldTypes.NON_INPUT,
         "formcheckboxgroup": fieldTypes.SELECT,
@@ -34,7 +34,9 @@ describe('component replace - Authoring', function () {
         "formtext": fieldTypes.NON_INPUT,
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
-        "formimage": fieldTypes.NON_INPUT
+        "formimage": fieldTypes.NON_INPUT,
+        "checkbox": fieldTypes.CHECKBOX,
+        "switch": fieldTypes.CHECKBOX
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -43,7 +45,6 @@ describe('component replace - Authoring', function () {
         checkboxEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/checkboxgroup",
         checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
         checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
-        dataPath = "/content/core-components-examples/library/adaptive-form/emailinput/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
         emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
         emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
@@ -103,6 +104,8 @@ describe('component replace - Authoring', function () {
 
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']");
+
+        cy.get('.cmp-replace-dialog-search-components').should('exist');
 
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == containerEditPathSelector) {
@@ -171,8 +174,10 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(containerEditPathSelector, containerDrop);
         })
 
-        it('test behaviour of replace file input', function () {
-            testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+        it('test behaviour of replace file input', { retries: 3 }, function () {
+            cy.cleanTest(fileInputDrop).then(function() {
+                testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+            });
         })
     })
 

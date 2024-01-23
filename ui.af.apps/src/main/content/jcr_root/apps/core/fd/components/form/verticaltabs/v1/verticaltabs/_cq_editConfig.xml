@@ -36,5 +36,10 @@
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 text="Replace"/>
+        <qualifiedName
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
+                icon="viewSOMExpression"
+                text="View Qualified Name"/>
     </cq:actionConfigs>
 </jcr:root>

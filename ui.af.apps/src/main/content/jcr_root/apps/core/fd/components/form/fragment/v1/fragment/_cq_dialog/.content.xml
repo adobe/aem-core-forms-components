@@ -19,7 +19,7 @@
     jcr:title="Adaptive Form Fragment"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.fragment.v1.editor]"
-    helpPath="https://www.adobe.com/go/aem_af_cmp_textinput_v1"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_fragments_v2"
     trackingFeature="core-components:adaptiveform-fragment:v1">
     <content
         granite:class="cmp-adaptiveform-fragment__editdialog"

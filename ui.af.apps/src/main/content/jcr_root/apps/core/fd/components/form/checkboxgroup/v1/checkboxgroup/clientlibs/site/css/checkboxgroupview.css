@@ -40,3 +40,6 @@ BLOCK cmp-adaptiveform-checkboxgroup
 
 .cmp-adaptiveform-checkboxgroup-item {
 }
+
+.cmp-adaptiveform-checkboxgroup__option__widget:focus{
+}

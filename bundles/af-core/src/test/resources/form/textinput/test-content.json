@@ -92,7 +92,6 @@
     "required": true,
     "enabled": true,
     "readOnly": false,
-    "autoComplete": "off",
     "label": {
       "value": "Full Name"
     },
@@ -136,5 +135,14 @@
     "jcr:title" : "def",
     "fieldType": "text-input",
     "validationExpression": ""
+  },
+  "textinput-placeholder-autocomplete" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "text-input",
+    "placeholder": "test-placeholder",
+    "autocomplete": "given-name"
   }
 }

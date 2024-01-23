@@ -25,13 +25,23 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
 const isLatestAddon = AEM === 'addon-latest';
+const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
 
 try {
-    ci.stage("Integration Tests");
+    // # Define the image name
+    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
+    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for qp ", qpContainerId);
+
+    // moving the qp docker content and environment variable to host machine
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
+
     let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
-        ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
+        ci.sh(`./qp.sh -v bind --server-hostname localhost --server-port 55555`);
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
@@ -64,7 +74,7 @@ try {
 
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
-    ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
+    ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
@@ -82,7 +92,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 });
 

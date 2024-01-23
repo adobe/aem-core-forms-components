@@ -49,6 +49,7 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -257,6 +258,31 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         } else {
             return FormContainer.super.getLang();
         }
+    }
+
+    @Override
+    public String getContainingPageLang() {
+        // todo: right now it is copy of aem form because app is part of far, and af-apps is not pare of far
+        if (request != null) {
+            Page currentPage = getCurrentPage();
+            if (!GuideWCMUtils.isForms(currentPage.getPath())) {
+                String pagePath = currentPage.getPath(), pageLocaleRoot = LanguageUtil.getLanguageRoot(pagePath), locale = "";
+                if (StringUtils.isNotBlank(pageLocaleRoot)) {
+                    int localeStartIndex = StringUtils.lastIndexOf(pageLocaleRoot, '/');
+                    locale = StringUtils.substring(pageLocaleRoot, localeStartIndex + 1);
+                }
+                return locale;
+            } else {
+                return FormContainer.super.getContainingPageLang();
+            }
+        } else {
+            return FormContainer.super.getContainingPageLang();
+        }
+    }
+
+    @Override
+    public String getLanguageDirection() {
+        return GuideUtils.getLanguageDirection(getLang());
     }
 
     @Override

@@ -21,3 +21,6 @@
 }
 .cmp-adaptiveform-radiobutton__option.VERTICAL{
 }
+
+.cmp-adaptiveform-radiobutton__option__widget:focus {
+}
