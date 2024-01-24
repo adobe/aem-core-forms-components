@@ -127,8 +127,8 @@
                     event: FASTTRACK_ANALYTICS_EVENT,
                     eventInfo: {
                         type: FormEvents.SUBMIT,
-                        target: event.detail.fieldId,
-                        originalTarget: event.detail.fieldId,
+                        target: containerState[formContainerPath].formPath,
+                        originalTarget: containerState[formContainerPath].formPath,
                         payload: {
                             fieldTitle: containerState[formContainerPath].fieldTitle,
                             fieldType: containerState[formContainerPath].fieldType,
@@ -163,7 +163,7 @@
             bridge.on('elementFocusChanged', onElementFocusChanged);
             bridge.on('elementHelpShown', onElementHelpShown);
             bridge.on('elementErrorShown', onElementErrorShown);
-            bridge.on('submitStart', onSubmitStart);
+            bridge.getFormModel().subscribe(onSubmitStart, 'submit');
             window.addEventListener('beforeunload', onBeforeunload );
             
         }, null, formContainerPath);
