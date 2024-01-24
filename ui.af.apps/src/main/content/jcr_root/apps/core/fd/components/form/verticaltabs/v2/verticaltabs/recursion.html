@@ -20,10 +20,17 @@
         <!-- Parent Vertical Tab -->
         <li role="tab"
             id="${child.id}__tab"
-            class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}"
+            class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}${child.isTreeStyleTab ? ' cmp-verticaltabs__tab--vertical' : ''}"
             title="${panel.tooltipVisible ? '' : panel.tooltipText}"
             aria-controls="${child.id}__tabpanel"
-            data-cmp-hook-adaptiveFormVerticalTabs="tab">${child.panelItemTitle}</li>
+            data-cmp-hook-adaptiveFormVerticalTabs="tab"
+            tabindex="${isActive ? '0' : '-1'}">
+            ${child.panelItemTitle}
+            <sly data-sly-test="${child.isTreeStyleTab}">
+                <!-- If it's a Tree Style Tab, add a dropdown indicator -->
+                <span class="cmp-verticaltabs__dropdown-indicator">▼</span>
+            </sly>
+        </li>
 
         <!-- Child Vertical Tab -->
         <sly data-sly-test="${child.isTreeStyleTab}">
@@ -37,3 +44,4 @@
         </sly>
     </sly>
 </template>
+<script src="toggleDropdown.js"></script>
