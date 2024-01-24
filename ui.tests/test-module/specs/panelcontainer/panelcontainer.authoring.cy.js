@@ -149,7 +149,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(panelEditPath);
         });
 
-        it.only('Check placeholder text in Panel ', function () {
+        it('Check placeholder text in Panel ', function () {
             dropPanelInContainer();
             cy.get(panelContainerPathSelector).get("[data-text='Please drag Panel components here']").should("exist");;
         });
