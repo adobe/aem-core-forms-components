@@ -30,9 +30,14 @@ if (typeof window.FileInputWidget === 'undefined') {
             super.attachEventHandlers(widget, model)
             dragArea?.addEventListener("dragover", (event)=>{
                 event.preventDefault();
+                dragArea.classList.add("cmp-adaptiveform-fileinput__dragarea--active");
+            });
+            dragArea?.addEventListener("dragleave", (event)=>{
+                dragArea.classList.remove("cmp-adaptiveform-fileinput__dragarea--active");
             });
             dragArea?.addEventListener("drop", (event)=>{
             event.preventDefault(); 
+            dragArea.classList.remove("cmp-adaptiveform-fileinput__dragarea--active");
             this.handleChange(event?.dataTransfer?.files);
             });
             dragArea?.addEventListener("paste", (event)=>{
@@ -140,7 +145,7 @@ if (typeof window.FileInputWidget === 'undefined') {
         fileItem(fileName, fileSize, comment, fileUrl) {
             let self = this;
             let fileItem = document.createElement('li');
-            fileItem.setAttribute("class", "cmp-adaptiveform-fileinput__fileitem");
+            fileItem.setAttribute("class", "cmp-adaptiveform-fileinput__fileitemV2");
             let fileNameDom = document.createElement('span');
             let fileSizeDom = document.createElement('span');
 
