@@ -145,7 +145,7 @@ if (typeof window.FileInputWidget === 'undefined') {
         fileItem(fileName, fileSize, comment, fileUrl) {
             let self = this;
             let fileItem = document.createElement('li');
-            fileItem.setAttribute("class", "cmp-adaptiveform-fileinput__fileitemV2");
+            fileItem.setAttribute("class", "cmp-adaptiveform-fileinput__fileitem");
             let fileNameDom = document.createElement('span');
             let fileSizeDom = document.createElement('span');
 
