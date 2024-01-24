@@ -310,10 +310,13 @@ jobs:
               echo "Attempt $retry_count to create the release..."
 
               RESPONSE=$(create_release)
+              echo "RESPONSE: $RESPONSE"
               UPLOAD_URL=$(extract_upload_url "$RESPONSE")
+              echo "UPLOAD_URL: $UPLOAD_URL"
 
               # Check if UPLOAD_URL is not null or empty
               if [ -n "$UPLOAD_URL" ] && [ "$UPLOAD_URL" != "null" ]; then
+                echo "Release successfully created."
                 break  # Successful response, exit the loop
               elif [ "$retry_count" -lt "$MAX_RETRIES" ]; then
                 echo "Failed to create release. Retrying..."
