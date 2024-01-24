@@ -150,16 +150,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     }
 
     @JsonIgnore
-    public boolean isParentnotTreeStyleTab() {
-        // Ensure that resource.getParent() is not null
+    public boolean isParentTreeStyleTab() {
+        // Determine if the parent panel is a tree-style vertical tab for v2, incase of v3 that also needs to be added here
         Resource parentResource = resource.getParent();
-        if (parentResource != null) {
-            // Determine if this panel is a tree-style vertical tab
-            return !parentResource.isResourceType(FormConstants.RT_FD_FORM_VERTICAL_TABS_V2);
-        } else {
-            // Handle the case where resource.getParent() is null
-            return true;
-        }
+        return parentResource != null && parentResource.isResourceType(FormConstants.RT_FD_FORM_VERTICAL_TABS_V2);
     }
 
     @JsonIgnore

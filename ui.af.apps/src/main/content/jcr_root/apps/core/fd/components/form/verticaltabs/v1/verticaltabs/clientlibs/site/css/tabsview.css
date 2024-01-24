@@ -36,3 +36,13 @@
 .cmp-verticaltabs__questionmark{
 
 }
+.cmp-verticaltabs__tablist {
+    display: none; /* Hide by default */
+}
+
+.cmp-verticaltabs__tablist--active {
+    display: block; /* Show when active */
+}
+.cmp-verticaltabs__tablist--firstlevel {
+    display: block !important; /* Show always */
+}

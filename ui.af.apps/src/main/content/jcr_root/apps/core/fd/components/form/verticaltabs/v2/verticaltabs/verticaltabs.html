@@ -29,12 +29,17 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}">
+
+    <div class="cmp-verticaltabs__label-container">
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+    </div>
+
     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-    <sly data-sly-test="${panel.isParentnotTreeStyleTab}">
         <div class="cmp-verticaltabs__tabs-container" id="${widgetId}">
             <ol role="tablist"
-                class="cmp-verticaltabs__tablist"
+                class="cmp-verticaltabs__tablist cmp-verticaltabs__tablist--firstlevel"
                 aria-label="${tabs.accessibilityLabel}"
                 aria-multiselectable="false">
                 <sly data-sly-use.recursion="recursion.html"
@@ -42,9 +47,9 @@
             </ol>
 
             <sly data-sly-use.panelrecursion="panelrecursion.html"
-                 data-sly-call="${panelrecursion.panelRecur @ panel=panel, label=label, widgetId=widgetId, tabs=tabs, questionMark=questionMark, items=panel.childrenOfVerticalTab}" data-sly-unwrap></sly>
+                 data-sly-call="${panelrecursion.panelRecur @ panel=panel, label=label, widgetId=widgetId, tabs=tabs, questionMark=questionMark, items=panel.childrenOfVerticalTab, shortDescription=shortDescription, longDescription=longDescription}" data-sly-unwrap></sly>
         </div>
-    </sly>
+
     <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
 </div>
