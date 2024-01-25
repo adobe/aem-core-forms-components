@@ -385,7 +385,14 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - cypress-chrome-655-with-latest-addon:
+      - cypress-chrome-655-with-latest-addon-with-ft:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
+      - cypress-chrome-655-with-latest-addon-without-ft:
           filters:
             tags:
               only: /.*/
