@@ -43,7 +43,7 @@ describe('Custom Prefill Test', function () {
 
     const validatePrefill = (prefillId) => {
         // preview the form by passing the prefillId parameter in the URL
-        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`);
+        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`, {'retryOnStatusCodeFailure' : true});
 
         // validating the prefilled data
         cy.get(nameTextBox).should("have.value", "John Doe");

@@ -257,7 +257,12 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
             cy.openPage(path, options);
         });
     }
-    cy.visit(path, options);
+    const defaultOptions = {
+        retryOnStatusCodeFailure: true,
+        ...options
+    };
+
+    cy.visit(path, defaultOptions);
 });
 
 // cypress command to select layer in authoring
