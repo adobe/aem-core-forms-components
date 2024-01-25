@@ -47,8 +47,10 @@
            readonly="${telText.readOnly}"
            required="${telText.required}"
            placeholder="${telText.placeHolder}"
+           autocomplete="${telText.autoComplete}"
            minlength="${telText.minLength}"
-           maxlength="${telText.maxLength}"/>
+           maxlength="${telText.maxLength}"
+           dir="auto"/>
     <div data-sly-call="${shortDescription.shortDescription @componentId=telText.id, shortDescriptionVisible=telText.tooltipVisible, shortDescription=telText.tooltip, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>

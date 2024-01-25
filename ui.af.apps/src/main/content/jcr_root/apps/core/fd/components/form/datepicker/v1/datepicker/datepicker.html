@@ -41,6 +41,7 @@
             disabled="${!datePicker.enabled}"
             readonly="${datePicker.readOnly}"
             required="${datePicker.required}"
+            value="${datePicker.default? datePicker.default : ''}"
             data-cmp-data-layer="${datePicker.data.json}"
             title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
             id="${widgetId}"

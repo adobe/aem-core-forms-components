@@ -3,4 +3,5 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Email Input"
     pattern="^(([^&lt;&gt;()\\[\\]\\\\.,;:\\s@&quot;]+(\\.[^&lt;&gt;()\\[\\]\\\\.,;:\\s@&quot;]+)*)|(&quot;.+&quot;))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
+    autocomplete="email"
     fieldType="email"/>

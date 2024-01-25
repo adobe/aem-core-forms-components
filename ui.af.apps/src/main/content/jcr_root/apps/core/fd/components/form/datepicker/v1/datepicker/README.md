@@ -41,6 +41,7 @@ The following properties are written to JCR for this Form Date component and are
 10. `./editFormat` - defines the format in which the value will be edited by the user
 11. `./minimumDate` - define the minimum date input allowed for the field
 12. `./maximumDate` - define the maximum date input allowed for the field
+13. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)).
 
 ## Client Libraries
 The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 
@@ -66,6 +67,15 @@ By placing the class names `cmp-adaptiveform-datepicker__label` and `cmp-adaptiv
 The following attributes must be added for the initialization of the date-picker component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

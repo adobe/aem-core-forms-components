@@ -60,6 +60,7 @@
 
             setFocus() {
                 this.setActive();
+                this.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             updateValue(value) {

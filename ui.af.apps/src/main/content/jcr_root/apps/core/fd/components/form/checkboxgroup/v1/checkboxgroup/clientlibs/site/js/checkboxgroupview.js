@@ -17,7 +17,7 @@
 
 
     "use strict";
-    class CheckBoxGroup extends FormView.FormFieldBase {
+    class CheckBoxGroup extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -38,7 +38,9 @@
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
             errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
-            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`
+            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`,
+            item:  `.${CheckBoxGroup.bemBlock}-item`,
+            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -75,6 +77,10 @@
             return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
         }
 
+        getOptions() {
+            return this.element.querySelectorAll(CheckBoxGroup.selectors.item);
+        }
+
         setModel(model) {
             super.setModel(model);
             let widgets = this.widget;
@@ -83,6 +89,12 @@
                 this.#updateModelValue(self);
                 widget.addEventListener('change', (e) => {
                     this.#updateModelValue(self);
+                });
+                widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
+                widget.addEventListener('blur', (e) => {
+                    this.setInactive();
                 });
             })
         }
@@ -114,6 +126,27 @@
                 }
             }, this)
             super.updateEmptyStatus();
+        }
+
+        #createCheckBoxItem(value, itemLabel) {
+            const optionTemplate = `
+            <div class="${CheckBoxGroup.selectors.item.slice(1)}">
+                <label class="${CheckBoxGroup.selectors.optionLabel.slice(1)}">
+                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" value="${value}">
+                    <span>${itemLabel}</span>
+                </label>
+            </div>`;
+
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+        updateEnum(newEnums) {
+            super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createCheckBoxItem);
+        }
+
+        updateEnumNames(newEnumNames) {
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createCheckBoxItem);
         }
 
         updateEnabled(enabled, state) {

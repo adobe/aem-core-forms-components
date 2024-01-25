@@ -29,7 +29,6 @@
      data-cmp-visible="${checkbox.visible ? 'true' : 'false'}"
      data-cmp-enabled="${checkbox.enabled ? 'true' : 'false'}"
      data-cmp-required="${checkbox.required ? 'true': 'false'}"
-     data-cmp-readonly="${checkbox.readOnly ? 'true' : 'false'}"
      data-cmp-data-layer="${checkbox.data.json}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[component.id, '_widget']}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
@@ -42,9 +41,8 @@
             id="${checkbox.id}_widget"
             title="${checkbox.tooltipVisible ? '' : checkbox.tooltipText}"
             name="${checkbox.name}"
-            aria-readonly="${checkbox.readOnly ? 'true' : 'false'}"
             value="${checkbox.default[0]}"
-            disabled="${!checkbox.enabled || checkbox.readOnly}" />
+            disabled="${!checkbox.enabled}" />
 
       <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkbox.label.value, labelVisible=checkbox.label.visible, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
     </div>

@@ -68,6 +68,9 @@
                                             <enabled-typehint
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
+                                            <readonly
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true" />
                                         </items>
                                     </column>
                                 </items>

@@ -55,6 +55,10 @@ describe('Page - Authoring', function () {
     .should("exist");
     cy.get("[name='./altText']")
      .should("exist");
+    cy.get("[name='./name']")
+      .should("exist");
+    cy.get("[name='./readOnly']")
+        .should("not.exist");
     cy.get("[name='./visible'][type=\"checkbox\"]").should("exist").check();
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(imageDrop);

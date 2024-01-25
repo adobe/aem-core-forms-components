@@ -43,6 +43,7 @@ The following properties are written to JCR for this Form Dropdown component and
 9. `./type` - defines the type of values(string, boolean, number) which can be accepted
 10. `./enum` - an array[] of type that defines  the available values for selection
 11. `./enumNames` - an array[] of strings that defines the display value of the enum
+12. `./multiSelect` - a configuration option that enables the selection of multiple values in dropdown
 
 ## Client Libraries
 The component provides a `core.forms.components.dropdown.v1.runtime` client library category that contains the Javascript runtime for the component. 
@@ -71,6 +72,15 @@ By placing the class names `cmp-adaptiveform-dropdown__label` and `cmp-adaptivef
 The following attributes must be added for the initialization of the dropdown-list component in the form view:  
  1. `data-cmp-is="adaptiveFormDatePicker"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

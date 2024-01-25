@@ -187,15 +187,18 @@ class FormFieldBase extends FormField {
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+            this.parentView.setFocus(this.getId());
         }
-        // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
-        if (this.widget.length > 0) {
-            this.widget[0].focus();
-        } else {
-            this.widget.focus();
+        if(!this.isActive()) {
+            this.widget = this.getWidget(); // updating to the latest widget in case of datepicker widget with a formatter
+            if (this.widget instanceof NodeList) { // only checkbox and radiobutton returns NodeList
+                this.widget[0].focus(); // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
+            } else if(this.getClass() === 'adaptiveFormFileInput') {
+                this.getAttachButtonLabel().focus();
+            } else {
+                this.widget.focus();
+            }
         }
-
     }
 
     /**
@@ -505,6 +508,7 @@ class FormFieldBase extends FormField {
         }
     }
 
+
     /**
      * Updates the active child of the form container.
      * @param {Object} activeChild - The active child.
@@ -524,6 +528,8 @@ class FormFieldBase extends FormField {
             //TODO: handle the case when description is not present initially.
         }
     }
+
+
 
 
     /**

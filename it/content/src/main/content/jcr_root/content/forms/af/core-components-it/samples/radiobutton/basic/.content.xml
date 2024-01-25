@@ -171,6 +171,26 @@
                     textIsRich="[true,true]"
                     type="string"
                     visible="{Boolean}true"/>
+            <radiobutton_1450421672
+                    jcr:created="{Date}2023-11-15T14:50:14.454+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-11-15T14:50:51.632+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Radio Button 8"
+                    sling:resourceType="forms-components-examples/components/form/radiobutton"
+                    enabled="{Boolean}true"
+                    enum="[true,false]"
+                    enumNames="[True,False]"
+                    fieldType="radio-group"
+                    hideTitle="false"
+                    name="radiobutton_14504216721700040014495"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="boolean"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

@@ -35,7 +35,8 @@ describe('component replace - Authoring', function () {
         "formtextinput": fieldTypes.TEXT,
         "title": fieldTypes.NON_INPUT,
         "formimage": fieldTypes.NON_INPUT,
-        "checkbox": fieldTypes.CHECKBOX
+        "checkbox": fieldTypes.CHECKBOX,
+        "switch": fieldTypes.CHECKBOX
     }
     const pagePath = "/content/forms/af/core-components-it/blank",
         buttonEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/button",
@@ -104,6 +105,8 @@ describe('component replace - Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + componentEditPathSelector);
         cy.invokeEditableAction("[data-action='replace']");
 
+        cy.get('.cmp-replace-dialog-search-components').should('exist');
+
         // Check If Dialog Options Are Visible
         if (componentEditPathSelector == containerEditPathSelector) {
             cy.get(horizontalTabs)
@@ -171,8 +174,10 @@ describe('component replace - Authoring', function () {
             testComponentReplaceBehaviour(containerEditPathSelector, containerDrop);
         })
 
-        it('test behaviour of replace file input', function () {
-            testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+        it('test behaviour of replace file input', { retries: 3 }, function () {
+            cy.cleanTest(fileInputDrop).then(function() {
+                testReplaceForFileInput(fileInputEditPathSelector, fileInputDrop);
+            });
         })
     })
 
