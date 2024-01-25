@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
 const classicFormAddonVersion = 'LATEST';
 const classicFormReleasedAddonVersion = '6.0.1016';
 
@@ -131,7 +131,8 @@ try {
         // start running the tests
         ci.dir('ui.tests', () => {
             const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} -DspecFiles="${testSuites}"`;
+            const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} ${disableToggleOption} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
     }

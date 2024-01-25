@@ -201,12 +201,24 @@ jobs:
     parallelism: 8
     <<: *cypress_test_steps
 
-  cypress-chrome-655-with-latest-addon:
+  cypress-chrome-655-with-latest-addon-with-ft:
     executor: test_executor_655_latest
     environment:
       AEM: classic-latest
       TYPE: cypress
       BROWSER: chrome
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
+  cypress-chrome-655-with-latest-addon-without-ft:
+    executor: test_executor_655_latest
+    environment:
+      AEM: classic-latest
+      TYPE: cypress
+      BROWSER: chrome
+      FTCONFIG: false
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 8
