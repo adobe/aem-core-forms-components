@@ -151,13 +151,20 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
-    cy.window().then((win) => {
+    return cy.window().then((win) => {
         // keeps rechecking "editables"
         return new Cypress.Promise((resolve, reject) => {
+            const timeoutDuration = 10000; // 10 seconds
+            const startTime = Date.now();
             const isReady = () => {
                 // temporary added this to check if editor is loaded
                 if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
                     return resolve()
+                }
+                const currentTime = Date.now();
+                if (currentTime - startTime >= timeoutDuration) {
+                    // Reject the promise if the timeout has occurred
+                    return reject(new Error('Editor initialization timed out'));
                 }
                 setTimeout(isReady, 0)
             };
