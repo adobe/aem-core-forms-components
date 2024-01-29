@@ -96,76 +96,34 @@ class FormTabs extends FormPanel {
         this.#refreshActive();
         this.#bindEvents();
     }
-
-    /**
-     * Refreshes the cache of tabs.
-     * @private
-     */
-    #refreshCache() {
-        this._elements.tab = Array.from(this._elements.self.querySelectorAll(this.#_selectors.self));
-
-        // Cache nested tabs
-        var nestedTabs = this._elements.self.querySelectorAll(this.#_selectors.self + ' ' + this.#_selectors.self);
-        nestedTabs.forEach(nestedTab => {
-            this._elements.tab.push(nestedTab);
-        });
-    }
-
-    /**
-     * Handles the addition of a child view.
-     * @param {Object} childView - The child view being added.
-     * @override
-     */
-    handleChildAddition(childView) {
-        // ...
-
-        // Refresh the cache after a new child view is added
-        this.#refreshCache();
-    }
-
     /**
      * Refreshes the tab markup based on the current active index.
      * @private
      */
     #refreshActive() {
-        var tabpanels = this.#getCachedTabPanels();
-        var tabs = this.#getCachedTabs();
-        if (!tabs || tabs.length === 0) {
-            console.error('No tabs found');
-            return;
-        }
-        var activeTabFound = false;
-        for (var i = 0; i < tabs.length; i++) {
-            if (tabs[i].id === this.#_active) {
-                // Existing active tab found
-                activeTabFound = true;
-                break;
-            }
-        }
+    var tabpanels = this.#getCachedTabPanels();
+    var tabs = this.#getCachedTabs();
 
-        if (!activeTabFound) {
-            // No active tab found, so set the first tab as active
-            this.#_active = tabs[0].id;
-        }
-
-        if (tabpanels) {
-            for (var i = 0; i < tabpanels.length; i++) {
-                if (tabs[i].id === this.#_active) {
-                    tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
-                    tabpanels[i].removeAttribute(Constants.ARIA_HIDDEN);
-                    tabs[i].classList.add(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, true);
-                    tabs[i].setAttribute(Constants.TABINDEX, "0");
-                } else {
-                    tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
-                    tabpanels[i].setAttribute(Constants.ARIA_HIDDEN, true);
+    if (tabpanels) {
+        for (var i = 0; i < tabpanels.length; i++) {
+            if (tabs[i] && tabs[i].id === this.#_active) {
+                tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
+                tabpanels[i].removeAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_HIDDEN);
+                tabs[i].classList.add(this.#_selectors.active.tab);
+                tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_SELECTED, true);
+                tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.TABINDEX, "0");
+            } else {
+                tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
+                tabpanels[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_HIDDEN, true);
+                if (tabs[i]) {
                     tabs[i].classList.remove(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, false);
-                    tabs[i].setAttribute(Constants.TABINDEX, "-1");
+                    tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_SELECTED, false);
+                    tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.TABINDEX, "-1");
                 }
             }
         }
     }
+}
 
     /**
      * Binds Tabs event handling.
@@ -196,14 +154,6 @@ class FormTabs extends FormPanel {
      */
     #cacheElements(wrapper) {
         this._elements = {};
-        this._elements.tab = Array.from(wrapper.querySelectorAll(this.#_selectors.self));
-
-        // Cache nested tabs
-        var nestedTabs = wrapper.querySelectorAll(this.#_selectors.self + ' ' + this.#_selectors.self);
-        nestedTabs.forEach(nestedTab => {
-            this._elements.tab.push(nestedTab);
-        });
-
         this._elements.self = wrapper;
         var hooks = this._elements.self.querySelectorAll("[data-" + this.#_NS + "-hook-" + this.#_IS + "]");
 
@@ -334,7 +284,7 @@ class FormTabs extends FormPanel {
      * @returns {Number} Id of the active tab, 0th element id if none is active
      */
     getActiveTabId(tabs) {
-        if (tabs && tabs.length > 0) {
+        if (tabs) {
             var result = tabs[0].id;
             for (var i = 0; i < tabs.length; i++) {
                 if (tabs[i].classList.contains(this.#_selectors.active.tab)) {
@@ -343,10 +293,6 @@ class FormTabs extends FormPanel {
                 }
             }
             return result;
-        } else {
-            // Handle the case when tabs is an empty array
-            console.warn("No tabs found.");
-            return null;
         }
     }
 
@@ -423,10 +369,6 @@ class FormTabs extends FormPanel {
                 var beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
                 beforeElement.after(navigationTabToBeRepeated);
             }
-
-            // Refresh the cache after a new child view is added
-            this.#refreshCache();
-
             this.#cacheElements(this._elements.self);
             var repeatedTabPanel = this.#getTabPanelElementById(childView.id + this.#tabPanelIdSuffix);
             repeatedTabPanel.setAttribute("aria-labelledby", childView.id + this.#tabIdSuffix);

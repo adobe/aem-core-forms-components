@@ -13,35 +13,30 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!-- recursion.html -->
+<!-- tabrecursion.html -->
 <template data-sly-template.tabsRecur="${@ panel, items, tabs, widgetId}">
     <sly data-sly-list.child="${items}">
         <sly data-sly-test.isActive="${child.name == tabs.activeItem}"/>
         <!-- Parent Vertical Tab -->
         <li role="tab"
             id="${child.id}__tab"
-            class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}${child.isTreeStyleTab ? ' cmp-verticaltabs__tab--vertical' : ''}"
+            class="cmp-verticaltabs__tab${isActive ? ' cmp-verticaltabs__tab--active' : ''}${child.isVerticalTab ? ' cmp-verticaltabs__tab--vertical' : ''}"
             title="${panel.tooltipVisible ? '' : panel.tooltipText}"
             aria-controls="${child.id}__tabpanel"
             data-cmp-hook-adaptiveFormVerticalTabs="tab"
             tabindex="${isActive ? '0' : '-1'}">
             ${child.panelItemTitle}
-            <sly data-sly-test="${child.isTreeStyleTab}">
-                <!-- If it's a Tree Style Tab, add a dropdown indicator -->
-                <span class="cmp-verticaltabs__dropdown-indicator">▼</span>
-            </sly>
         </li>
 
         <!-- Child Vertical Tab -->
-        <sly data-sly-test="${child.isTreeStyleTab}">
-                <ol role="tablist"
-                    class="cmp-verticaltabs__tablist"
-                    aria-label="${tabs.accessibilityLabel}"
-                    aria-multiselectable="false">
-                    <sly data-sly-use.childRecursion="recursion.html"
-                         data-sly-call="${childRecursion.tabsRecur @ panel=panel, items=child.childrenOfVerticalTab, tabs=tabs}" data-sly-unwrap></sly>
-                </ol>
+        <sly data-sly-test="${child.isVerticalTab}">
+            <ol role="tablist"
+                class="cmp-verticaltabs__tablist"
+                aria-label="${tabs.accessibilityLabel}"
+                aria-multiselectable="false">
+                <sly data-sly-use.childRecursion="tabrecursion.html"
+                     data-sly-call="${childRecursion.tabsRecur @ panel=panel, items=child.childrenOfVerticalTab, tabs=tabs}" data-sly-unwrap></sly>
+            </ol>
         </sly>
     </sly>
 </template>
-<script src="toggleDropdown.js"></script>
