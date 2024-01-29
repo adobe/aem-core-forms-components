@@ -10,7 +10,8 @@
             jcr:primaryType="cq:PageContent"
             jcr:title="basic"
             sling:configRef="/conf/forms/core-components-it/samples/recaptcha/basic"
-            sling:resourceType="forms-components-examples/components/page">
+            sling:resourceType="forms-components-examples/components/page"
+            cq:conf="/conf/core-components-it/samples/recaptcha/basic">
         <guideContainer
                 fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
