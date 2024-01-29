@@ -189,7 +189,25 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
     cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    const maxRetries = 3; // Maximum number of retry attempts
+    let retryCount = 0;
+    const visitAndRetry = () => {
+        retryCount++;
+        return cy.visit(editorPageUrl).then(() => {
+                // Wait for the editor to initialize
+                return waitForEditorToInitialize().catch((error) => {
+                    // Handle timeout or other errors from waitForEditorToInitialize
+                    if (retryCount < maxRetries) {
+                        // Retry by calling visitAndRetry again
+                        return visitAndRetry();
+                    } else {
+                        // Maximum retries reached, throw the error
+                        throw error;
+                    }
+                });
+        });
+    };
+    visitAndRetry();
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
     // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
     // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
