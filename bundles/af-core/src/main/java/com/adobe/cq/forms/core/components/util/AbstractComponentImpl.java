@@ -23,6 +23,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -43,6 +44,7 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // this class is copied from WCM, since for forms adapting via slingRequest is optional
 
@@ -219,6 +221,12 @@ public abstract class AbstractComponentImpl implements Component {
             return null;
         }
         return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
+    }
+
+    @JsonIgnore
+    public String getPanelItemTitle() {
+        ValueMap panelProperties = this.resource.getValueMap();
+        return panelProperties.get("jcr:title", StringUtils.EMPTY);
     }
 
 }

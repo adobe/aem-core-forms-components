@@ -96,32 +96,34 @@ class FormTabs extends FormPanel {
         this.#refreshActive();
         this.#bindEvents();
     }
-
     /**
      * Refreshes the tab markup based on the current active index.
      * @private
      */
     #refreshActive() {
-        var tabpanels = this.#getCachedTabPanels();
-        var tabs = this.#getCachedTabs();
-        if (tabpanels) {
-            for (var i = 0; i < tabpanels.length; i++) {
-                if (tabs[i].id === this.#_active) {
-                    tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
-                    tabpanels[i].removeAttribute(Constants.ARIA_HIDDEN);
-                    tabs[i].classList.add(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, true);
-                    tabs[i].setAttribute(Constants.TABINDEX, "0");
-                } else {
-                    tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
-                    tabpanels[i].setAttribute(Constants.ARIA_HIDDEN, true);
+    var tabpanels = this.#getCachedTabPanels();
+    var tabs = this.#getCachedTabs();
+
+    if (tabpanels) {
+        for (var i = 0; i < tabpanels.length; i++) {
+            if (tabs[i] && tabs[i].id === this.#_active) {
+                tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
+                tabpanels[i].removeAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_HIDDEN);
+                tabs[i].classList.add(this.#_selectors.active.tab);
+                tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_SELECTED, true);
+                tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.TABINDEX, "0");
+            } else {
+                tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
+                tabpanels[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_HIDDEN, true);
+                if (tabs[i]) {
                     tabs[i].classList.remove(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, false);
-                    tabs[i].setAttribute(Constants.TABINDEX, "-1");
+                    tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.ARIA_SELECTED, false);
+                    tabs[i].setAttribute(_constants_js__WEBPACK_IMPORTED_MODULE_0__.Constants.TABINDEX, "-1");
                 }
             }
         }
     }
+}
 
     /**
      * Binds Tabs event handling.
