@@ -31,4 +31,11 @@ describe("Forms In Sites Runtime Test", () => {
     cy.get(`.cmp-adaptiveform-textinput`).find(`.cmp-adaptiveform-textinput__longdescription`)
     .should('contain.text', 'This is long description');
   })
+
+  it("captcha should render when form is embedded in site", () => {
+    const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
+    cy.previewForm(pagePath).then(p => {
+      formContainer = p;
+    })
+  })
 })
