@@ -126,15 +126,15 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
+        if (disableToggleOption) {
+            ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
             const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';
-            const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
-            if (disableToggleOption) {
-                ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
-            }
             const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
