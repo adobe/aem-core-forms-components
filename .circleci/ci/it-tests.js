@@ -106,8 +106,8 @@ try {
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
             ci.sh(`./qp.sh start --id author`);
-            // add a sleep for 5 mins, add-on takes times to come up
-            ci.sh(`sleep 5m`);
+            // add a sleep for 7 mins, add-on takes times to come up
+            ci.sh(`sleep 7m`);
         }
 });
 
@@ -132,7 +132,10 @@ try {
         ci.dir('ui.tests', () => {
             const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';
             const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} ${disableToggleOption} -DspecFiles="${testSuites}"`;
+            if (disableToggleOption) {
+                ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
+            }
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
     }
