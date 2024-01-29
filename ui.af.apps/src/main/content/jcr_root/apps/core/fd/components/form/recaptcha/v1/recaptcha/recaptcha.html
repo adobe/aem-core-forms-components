@@ -23,7 +23,7 @@
 
 <div class="cmp-adaptiveform-recaptcha"
      data-cmp-is="adaptiveFormRecaptcha"
-     id="${component.id}"
+     id="${recaptcha.id}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.recaptcha="com.adobe.cq.forms.core.components.models.form.Captcha"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
@@ -38,5 +38,5 @@
          name="${recaptcha.name}"
          required="${recaptcha.required}"></div>
 
-    <div data-sly-call="${errorMessage.errorMessage @componentId=component.id, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=recaptcha.id, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
 </div>
