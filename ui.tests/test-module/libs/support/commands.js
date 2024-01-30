@@ -151,9 +151,8 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
-    return cy.window().then((win) => {
-        // keeps rechecking "editables"
-        return new Cypress.Promise((resolve, reject) => {
+    return new Cypress.Promise((resolve, reject) => {
+        cy.window().then(win => {
             const timeoutDuration = 10000; // 10 seconds
             const startTime = Date.now();
             const isReady = () => {
@@ -169,7 +168,7 @@ const waitForEditorToInitialize = () => {
                 setTimeout(isReady, 0)
             };
             isReady()
-        })
+       });
     });
 };
 
