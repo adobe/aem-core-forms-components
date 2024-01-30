@@ -93,6 +93,7 @@ export const Constants = {
      * @property {string} event.detail.formId - The ID of the form.
      * @property {string} event.detail.fieldName - The name of the form.
      * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @property {string} event.detail.fieldQualifiedName - The qualified name of the field
      * @example
      *      // Sample usage:
      *      // The following code snippet demonstrates how to use the "ELEMENT_FOCUS_CHANGED" event.
@@ -124,6 +125,7 @@ export const Constants = {
      * @property {string} event.detail.formId - The ID of the form.
      * @property {string} event.detail.fieldName - The name of the form.
      * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @property {string} event.detail.fieldQualifiedName - The qualified name of the field
      * @example
      *      // Sample usage:
      *      // The following code snippet demonstrates how to use the "ELEMENT_HELP_SHOWN" event.
@@ -155,6 +157,9 @@ export const Constants = {
      * @property {string} event.detail.formId - The ID of the form.
      * @property {string} event.detail.fieldName - The name of the form.
      * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
+     * @property {string} event.detail.fieldQualifiedName - The qualified name of the field
+     * @property {string} event.detail.validationMessage - The validation message shown on the field
+     * @property {string} event.detail.validationType    - The type of validation which failed on field as per, https://opensource.adobe.com/aem-forms-af-runtime/js-docs/README.html#constrainttype
      * @example
      *      // Sample usage:
      *      // The following code snippet demonstrates how to use the "ELEMENT_ERROR_SHOWN" event.
@@ -185,6 +190,7 @@ export const Constants = {
      * @property {string} event.detail.fieldName - The name of the form.
      * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
      * @property {string} event.detail.formTitle - The title of the form.
+     * @property {string} event.detail.fieldQualifiedName - The qualified name of the field
      * @property {string} event.detail.prevText - Previous value of the form element
      * @property {string} event.detail.newText - Current value of the form element
      * @example

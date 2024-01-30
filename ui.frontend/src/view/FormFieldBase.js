@@ -281,14 +281,17 @@ class FormFieldBase extends FormField {
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
         const fieldId = this._model.id;
+        const fieldQualifiedName = this._model.qualifiedName;
         const eventPayload = {
             formId,
             formTitle,
             fieldName,
             fieldId,
             panelName,
+            fieldQualifiedName,
             ...(originalEventPayload?.prevValue !== undefined ? { prevText: originalEventPayload?.prevValue } : {}),
-            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {})
+            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {}),
+            ...((typeof originalEventPayload === 'object' && originalEventPayload !== null) ? originalEventPayload : {})
         };
         const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
@@ -448,7 +451,9 @@ class FormFieldBase extends FormField {
         if (this.errorDiv) {
             this.errorDiv.innerHTML = state.validationMessage;
             if (state.validity.valid === false) {
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
+                // Find the first key whose value is true
+                const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
+                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {'validationMessage' : state.validationMessage, 'validationType': validationType});
                 // if there is no error message in model, set a default error in the view
                 if (!state.validationMessage) {
                     this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
