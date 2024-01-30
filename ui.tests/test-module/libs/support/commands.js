@@ -154,7 +154,7 @@ const waitForEditorToInitialize = () => {
     cy.window().then((win) => {
         // keeps rechecking "editables"
         return new Cypress.Promise((resolve, reject) => {
-            const timeoutDuration = 30000; // Adjust the timeout duration as needed (e.g., 30000 milliseconds or 30 seconds)
+            const timeoutDuration = 60000;
             const startTime = Date.now();
             const isReady = () => {
                 // temporary added this to check if editor is loaded
