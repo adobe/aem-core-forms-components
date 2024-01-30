@@ -159,7 +159,7 @@ export const Constants = {
      * @property {string} event.detail.panelName - The name of the panel (ie parent of the form element).
      * @property {string} event.detail.fieldQualifiedName - The qualified name of the field
      * @property {string} event.detail.validationMessage - The validation message shown on the field
-     * @property {string} event.detail.validationType    - The type of validation which failed on field as per, https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+     * @property {string} event.detail.validationType    - The type of validation which failed on field as per, https://opensource.adobe.com/aem-forms-af-runtime/js-docs/README.html#constrainttype
      * @example
      *      // Sample usage:
      *      // The following code snippet demonstrates how to use the "ELEMENT_ERROR_SHOWN" event.
