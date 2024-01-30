@@ -8,7 +8,7 @@
   "videosFolder" : "target/videos",
   "videoUploadOnPasses" : false,
   "video" : true,
-  "chromeWebSecurity" :true,
+  "chromeWebSecurity" :false,
   "viewportHeight" : 900,
   "viewportWidth" : 1440,
   "pageLoadTimeout" : 200000,

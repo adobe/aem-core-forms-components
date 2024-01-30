@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
 const classicFormAddonVersion = 'LATEST';
 const classicFormReleasedAddonVersion = '6.0.1016';
 
@@ -106,8 +106,8 @@ try {
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
             ci.sh(`./qp.sh start --id author`);
-            // add a sleep for 5 mins, add-on takes times to come up
-            ci.sh(`sleep 5m`);
+            // add a sleep for 7 mins, add-on takes times to come up
+            ci.sh(`sleep 7m`);
         }
 });
 
@@ -126,6 +126,10 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
+        if (disableToggleOption) {
+            ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests

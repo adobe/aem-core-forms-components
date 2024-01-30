@@ -154,10 +154,17 @@ const waitForEditorToInitialize = () => {
     cy.window().then((win) => {
         // keeps rechecking "editables"
         return new Cypress.Promise((resolve, reject) => {
+            const timeoutDuration = 60000;
+            const startTime = Date.now();
             const isReady = () => {
                 // temporary added this to check if editor is loaded
                 if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
                     return resolve()
+                }
+                const currentTime = Date.now();
+                if (currentTime - startTime >= timeoutDuration) {
+                    // Reject the promise if the timeout has occurred
+                    return reject(new Error('Editor initialization timed out'));
                 }
                 setTimeout(isReady, 0)
             };
@@ -189,7 +196,7 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
     const editorPageUrl = cy.af.getEditorUrl(pagePath);
     const isEventComplete = {};
     cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    cy.visit(editorPageUrl, {'retryOnNetworkFailure' : true, 'retryOnStatusCodeFailure' : true}).then(waitForEditorToInitialize);
     // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
     // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
     // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
@@ -257,7 +264,12 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
             cy.openPage(path, options);
         });
     }
-    cy.visit(path, options);
+    const defaultOptions = {
+        retryOnStatusCodeFailure: true,
+        ...options
+    };
+
+    cy.visit(path, defaultOptions);
 });
 
 // cypress command to select layer in authoring
