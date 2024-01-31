@@ -299,7 +299,10 @@
             else {
                 activeChildModel = this.getModel().items.find(child => child.id === activeChildId);
             }
-            const validationErrorList = activeChildModel.validate();
+            let validationErrorList;
+            if (!this.#isAuthoring()) {
+                validationErrorList =  activeChildModel.validate();
+            }
             if (validationErrorList === undefined || validationErrorList.length == 0) {
                 let tabs = this.#getCachedTabs();
                 let nextVisibleIndex = this.#findNextVisibleChildIndex(activeIndex);
@@ -310,6 +313,9 @@
             this.#hideUnhideNavButtons(this.#_active);
         }
 
+        #isAuthoring() {
+            return window.Granite && window.Granite.author;
+        }
 
         #navigateToPreviousTab() {
             const activeIndex = this.#_active;
