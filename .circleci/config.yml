@@ -8,8 +8,8 @@ common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
@@ -149,7 +149,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -166,6 +166,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -230,6 +231,7 @@ jobs:
   jsdocs-deploy:
     docker:
       - image: node:8.10.0
+    working_directory: /home/circleci/build
     steps:
       - checkout
       - attach_workspace:

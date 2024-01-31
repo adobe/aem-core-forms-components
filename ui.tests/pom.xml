@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>2.0.100-SNAPSHOT</version>
+        <version>2.0.77-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
@@ -92,6 +92,43 @@
     </build>
 
     <profiles>
+        <!-- Profile to run on CI so that build artifacts are cached and parallel test run -->
+        <profile>
+            <id>build-cypress</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.14.2</version>
+                        <configuration>
+                            <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
+                            <workingDirectory>test-module</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- Profile to run for debugging cypress test -->
         <profile>
             <id>cypress</id>
@@ -176,10 +213,6 @@
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
-                            <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
-                            <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
-                            <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
-                            <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                         </configuration>
                         <executions>
                             <execution>
@@ -248,10 +281,6 @@
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
-                            <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
-                            <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
-                            <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
-                            <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                         </configuration>
                         <executions>
                             <execution>

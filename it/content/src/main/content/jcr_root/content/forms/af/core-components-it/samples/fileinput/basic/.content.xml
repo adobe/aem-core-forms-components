@@ -60,6 +60,18 @@
                     tooltip="This is short description"
                     tooltipVisible="true"
                     type="file"/>
+            <fileinput4
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Input - 4"
+                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    accept="[application/x-msdownload,application/vnd.ms-outlook,application/pdf]"
+                    description="This is long description"
+                    fieldType="file-input"
+                    id="fileinput_unknown_mimetype_test"
+                    name="fileinput4"
+                    tooltip="This is short description"
+                    multiSelection="true"
+                    type="file"/>
             <submit
                     jcr:lastModified="{Date}2023-01-17T16:28:58.844+05:30"
                     jcr:lastModifiedBy="admin"

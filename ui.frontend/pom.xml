@@ -12,13 +12,11 @@
     governing permissions and limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>2.0.100-SNAPSHOT</version>
+        <version>2.0.77-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -52,10 +50,6 @@
                     <configuration>
                         <nodeVersion>v18.9.0</nodeVersion>
                         <npmVersion>8.19.1</npmVersion>
-                        <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
-                        <nodeDownloadRoot>https://npm.taobao.org/mirrors/node/</nodeDownloadRoot>
-                        <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
-                        <npmDownloadRoot>https://registry.npm.taobao.org/npm/-/</npmDownloadRoot>
                     </configuration>
                     <executions>
                         <execution>

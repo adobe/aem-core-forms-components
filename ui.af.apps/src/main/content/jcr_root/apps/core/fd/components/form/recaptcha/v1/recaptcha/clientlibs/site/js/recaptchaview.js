@@ -60,7 +60,7 @@
             this.widgetObject = new RecaptchaWidget(this, this._model, this.getWidget());
             this.getWidget().addEventListener('blur', (e) => {
                 if(this.element) {
-                    this.setActive(this.element, false);
+                    this.setInactive();
                 }
             });
 

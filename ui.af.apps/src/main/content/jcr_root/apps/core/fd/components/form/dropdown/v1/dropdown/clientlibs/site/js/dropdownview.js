@@ -205,6 +205,12 @@
             this.widget.addEventListener('change', (e) => {
                 this.#updateModelValue(e.target);
             });
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
+            });
+            this.widget.addEventListener('blur', (e) => {
+                this.setInactive();
+            });
         }
 
         #updateModelValue(widget) {

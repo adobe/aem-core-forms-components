@@ -85,6 +85,7 @@ describe('Form with Data Layer', () => {
             expect(lastEvent['eventInfo']['payload']['fieldTitle']).to.be.eq("Text Input 1");
             expect(lastEvent['eventInfo']['payload']['panelTitle']).to.be.eq("datalayerform");
             expect(lastEvent['eventInfo']['payload']['fieldType']).to.be.eq("text-input");
+            expect(lastEvent['eventInfo']['payload']['fieldQualifiedName']).to.be.eq("$form.textinput1");
         });
     });
 });

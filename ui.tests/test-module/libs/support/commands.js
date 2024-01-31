@@ -78,21 +78,23 @@ Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
 });
 
 
-function getCSRFToken() {
-    const TOKEN_SERVLET = '/libs/granite/csrf/token.json';
+
+function getCSRFToken(contextPath) {
+    const TOKEN_SERVLET = contextPath + '/libs/granite/csrf/token.json';
     cy.request(TOKEN_SERVLET).its('body.token').as("token")
 }
 
-function getUserInfoHome() {
-    const USER_INFO_SERVLET = "/libs/cq/security/userinfo.json";
+function getUserInfoHome(contextPath) {
+    const USER_INFO_SERVLET = contextPath + "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
 
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
-    getCSRFToken();
-    getUserInfoHome();
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    getCSRFToken(contextPath);
+    getUserInfoHome(contextPath);
     let preferences = {};
     if (!enable) {
         preferences = {
@@ -121,7 +123,6 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         preferences[":cq_csrf_token"] = token;
     });
     cy.get("@home").then(home => {
-        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
         const url = contextPath + home + '/preferences';
         //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
         cy.window().then(win => {
@@ -142,7 +143,8 @@ Cypress.Commands.add("openAFv2TemplateEditor", () => {
 
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
-    const path = `editor.html${templatePath}`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -226,7 +228,8 @@ Cypress.Commands.add("getFormJson", (pagePath) => {
 
 // Cypress command to open template editor
 Cypress.Commands.add("openTemplateEditor", (templatePath) => {
-    const path = `editor.html${templatePath}`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
     cy.enableOrDisableTutorials(false);
     cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
     preventClickJacking();
@@ -245,15 +248,17 @@ Cypress.Commands.add("openAuthoring", (pagePath) => {
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openPage", (pagePath, options = {}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let path = ((contextPath && !pagePath.startsWith(contextPath)) ? `${contextPath}${pagePath.startsWith('/') ? '' : '/'}${pagePath}` : pagePath);
     if (!options.noLogin) {
-        // getting status 403 intermittently, just ignore it
-        const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    // getting status 403 intermittently, just ignore it
+        const baseUrl = contextPath;
         cy.visit(baseUrl, {'failOnStatusCode': false});
         cy.login(baseUrl, () => {
-            cy.openPage(pagePath, options);
+            cy.openPage(path, options);
         });
     }
-    cy.visit(pagePath, options);
+    cy.visit(path, options);
 });
 
 // cypress command to select layer in authoring
@@ -284,7 +289,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                        cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
                         cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     }
@@ -449,7 +454,8 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 
 
 Cypress.Commands.add("previewForm", (formPath, options = {}) => {
-    let pagePath = `${formPath}?wcmmode=disabled`;
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let pagePath = contextPath ? `${contextPath}${formPath.startsWith('/') ? '' : '/'}${formPath}?wcmmode=disabled` : `${formPath}?wcmmode=disabled`;
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
@@ -697,15 +703,3 @@ Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => 
         rect.right <= Cypress.config("viewportWidth")
     );
 });
-
-
-/**
- * This function is used to fetch elements from ContentFrame iframe which are not accessible.
- * Without this, the element will not be returned due to browser's cross-origin security feature.
- */
-Cypress.Commands.add("getContentIframeBody", () => {
-    return cy
-        .get('#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
-})
