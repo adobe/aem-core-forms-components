@@ -78,6 +78,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String CUSTOM_FUNCTION_CONFIG_NAME = "edge-delivery-service-configuration";
 
     @OSGiService
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private ConfigurationResourceResolver configurationResourceResolver;
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -313,17 +314,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         Resource pageResource = resource.getResourceResolver().resolve(this.getParentPagePath());
-        if (pageResource != null) {
+        if (pageResource != null && configurationResourceResolver != null) {
             Resource configResource = configurationResourceResolver.getResource(pageResource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
                 CUSTOM_FUNCTION_CONFIG_NAME);
             if (configResource != null) {
                 Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
-                ValueMap configValueMap = jcrResource.getValueMap();
-                String owner = configValueMap.getOrDefault("owner", "").toString();
-                String repo = configValueMap.getOrDefault("repo", "").toString();
-                if (!owner.isEmpty() && !repo.isEmpty()) {
-                    String customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/customFunctions.js";
-                    properties.put(FD_CUSTOM_FUNCTION_URL, customFunctionUrl);
+                if (jcrResource != null) {
+                    ValueMap configValueMap = jcrResource.getValueMap();
+                    String owner = configValueMap.getOrDefault("owner", "").toString();
+                    String repo = configValueMap.getOrDefault("repo", "").toString();
+                    if (!owner.isEmpty() && !repo.isEmpty()) {
+                        String customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/customFunctions.js";
+                        properties.put(FD_CUSTOM_FUNCTION_URL, customFunctionUrl);
+                    }
                 }
             }
         }
