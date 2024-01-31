@@ -55,6 +55,7 @@ https://opensource.adobe.com/aem-core-forms-components/
 -   [Telephone Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/telephoneinput/v1/telephoneinput)
 -   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 -   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
+-   [Switch](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/switch/v1/switch)
 
 ## System Requirements
 
