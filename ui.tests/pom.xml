@@ -237,7 +237,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install --foce</arguments>
+                                    <arguments>install --legacy-peer-deps</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -305,7 +305,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install --force</arguments>
+                                    <arguments>install --legacy-peer-deps</arguments>
                                 </configuration>
                             </execution>
                         </executions>
