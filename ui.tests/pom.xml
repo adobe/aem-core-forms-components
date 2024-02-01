@@ -161,7 +161,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install --force</arguments>
+                                    <arguments>install --legacy-peer-deps</arguments>
                                 </configuration>
                             </execution>
                         </executions>
