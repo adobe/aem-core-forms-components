@@ -16,15 +16,15 @@
 
 describe('Form with RUM initialized', () => {
     // rum is only supported in latest addon
-    if (cy.af.isLatestAddon()) {
+    //if (cy.af.isLatestAddon()) {
         const pagePath = "content/forms/af/core-components-it/samples/rum/basic.html";
         let formContainer = null;
         const waitForVariableAndSetSpy = (win, variableName, spyName, timeout) => {
             const startTime = Date.now();
             const checkAndSetSpy = () => {
-                if (win[variableName]) {
+                if (win?.hlx?.[variableName]) {
                     // Set the spy
-                    cy.spy(win, variableName).as(spyName);
+                    cy.spy(win.hlx, variableName).as(spyName);
                     // Variable is set, no need to set the spy
                     return;
                 }
@@ -106,5 +106,5 @@ describe('Form with RUM initialized', () => {
             }
 
         });
-    }
+    //}
 });
