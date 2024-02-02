@@ -284,6 +284,7 @@ class Utils {
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
+            const customFunctionUrl = dataset["customFunctions"];
             const _path = dataset["path"];
             const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
@@ -295,7 +296,7 @@ class Utils {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
-                await this.registerCustomFunctionsByUrl(_formJson);
+                await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -316,8 +317,7 @@ class Utils {
         }
     }
 
-    static async registerCustomFunctionsByUrl(formDef) {
-        const url = formDef?.properties['fd:customFunctionUrl'];
+    static async registerCustomFunctionsByUrl(url) {
         if (url != null && url.trim().length > 0) {
             const customFunctionModule = await import(/*webpackIgnore: true*/ url);
             const keys = Object.keys(customFunctionModule);
