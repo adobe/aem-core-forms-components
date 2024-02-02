@@ -16,7 +16,7 @@
 
 describe('Form with RUM initialized', () => {
     // rum is only supported in latest addon
-    //if (cy.af.isLatestAddon()) {
+    if (cy.af.isLatestAddon()) {
         const pagePath = "content/forms/af/core-components-it/samples/rum/basic.html";
         let formContainer = null;
         const waitForVariableAndSetSpy = (win, variableName, spyName, timeout) => {
@@ -106,5 +106,5 @@ describe('Form with RUM initialized', () => {
             }
 
         });
-    //}
+    }
 });
