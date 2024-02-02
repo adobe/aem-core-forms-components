@@ -263,6 +263,29 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    @JsonIgnore
+    public String getCustomFunctionUrl() {
+        String customFunctionUrl = "";
+        Resource pageResource = resource.getResourceResolver().resolve(this.getParentPagePath());
+        if (pageResource != null && configurationResourceResolver != null) {
+            Resource configResource = configurationResourceResolver.getResource(pageResource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+                CUSTOM_FUNCTION_CONFIG_NAME);
+            if (configResource != null) {
+                Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
+                if (jcrResource != null) {
+                    ValueMap configValueMap = jcrResource.getValueMap();
+                    String owner = configValueMap.getOrDefault("owner", "").toString();
+                    String repo = configValueMap.getOrDefault("repo", "").toString();
+                    if (!owner.isEmpty() && !repo.isEmpty()) {
+                        customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
+                    }
+                }
+            }
+        }
+        return customFunctionUrl;
+    }
+
+    @Override
     public String getLang() {
         // todo: uncomment once forms sdk is released
         if (request != null) {
@@ -313,23 +336,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             formDataEnabled = true;
         }
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
-        Resource pageResource = resource.getResourceResolver().resolve(this.getParentPagePath());
-        if (pageResource != null && configurationResourceResolver != null) {
-            Resource configResource = configurationResourceResolver.getResource(pageResource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME);
-            if (configResource != null) {
-                Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
-                if (jcrResource != null) {
-                    ValueMap configValueMap = jcrResource.getValueMap();
-                    String owner = configValueMap.getOrDefault("owner", "").toString();
-                    String repo = configValueMap.getOrDefault("repo", "").toString();
-                    if (!owner.isEmpty() && !repo.isEmpty()) {
-                        String customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/customFunctions.js";
-                        properties.put(FD_CUSTOM_FUNCTION_URL, customFunctionUrl);
-                    }
-                }
-            }
-        }
         return properties;
     }
 
