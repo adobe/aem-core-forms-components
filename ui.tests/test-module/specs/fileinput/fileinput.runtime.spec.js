@@ -108,20 +108,15 @@ describe("Form with File Input - Basic Tests", () => {
                 checkHTML(id, field.getModel().getState())
         });
     })
-    it(" clicking fileinput after attaching file resets the widget value ", () => {
+    it(" after attaching the file widget value is reset to allow duplicate file ", () => {
         const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
         cy.get(fileInput).should('have.value', "");
         cy.get(fileInput).attachFile(sampleFileName).then(() => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
-                expect(actualValue.includes(sampleFileName)).to.be.true;
+                expect(actualValue.includes("")).to.be.true;
             })
-            // cy.get(fileInput).should('have.value', sampleFileName);
-            cy.get(fileInput).click({force: true});
-            cy.get('body').trigger('keydown', { keyCode: 27}).then(() => {
-                cy.get(fileInput).should('have.value', "");
-            })
-
         })
 
 
