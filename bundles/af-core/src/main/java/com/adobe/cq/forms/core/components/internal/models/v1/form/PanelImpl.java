@@ -150,6 +150,13 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     }
 
     @JsonIgnore
+    public boolean isParentVerticalTab() {
+        // Determine if the parent panel is a tree-style vertical tab for v2, incase of v3 that also needs to be added here
+        Resource parentResource = resource.getParent();
+        return parentResource != null && parentResource.isResourceType(FormConstants.RT_FD_FORM_VERTICAL_TABS_V2);
+    }
+
+    @JsonIgnore
     public List<ComponentExporter> getChildrenOfVerticalTab() {
         List<ComponentExporter> children = new ArrayList<>();
         collectChildrenOfVerticalTab(this, children);

@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2023 Adobe
+  ~ Copyright 2024 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -29,30 +29,37 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}">
-
     <div class="cmp-verticaltabs__label-container">
         <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
     </div>
-
     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
-        <div class="cmp-verticaltabs__tabs-container" id="${widgetId}">
+    <div class="cmp-verticaltabs__tabs-container" id="${widgetId}">
+        <sly data-sly-test.parentIsVerticalTab="${panel.isParentVerticalTab}">
+
+        </sly>
+        <sly data-sly-test.parentIsNotVerticalTab="${!parentIsVerticalTab}">
             <ol role="tablist"
                 class="cmp-verticaltabs__tablist cmp-verticaltabs__tablist--firstlevel"
                 aria-label="${tabs.accessibilityLabel}"
                 aria-multiselectable="false">
                 <sly data-sly-use.recursion="tabrecursion.html"
-                     data-sly-call="${recursion.tabsRecur @ panel=panel, items=panel.childrenOfVerticalTab, tabs=tabs}" data-sly-unwrap></sly>
+                     data-sly-call="${recursion.tabsRecur@panel=panel,items=panel.childrenOfVerticalTab,tabs=tabs}"data-sly-unwrap></sly>
             </ol>
-
-            <sly data-sly-use.panelrecursion="tabpanelrecursion.html"
-                 data-sly-call="${panelrecursion.panelRecur @ panel=panel, label=label, widgetId=widgetId, tabs=tabs, questionMark=questionMark, items=panel.childrenOfVerticalTab, shortDescription=shortDescription, longDescription=longDescription}" data-sly-unwrap></sly>
-        </div>
-
+        </sly>
+        <div data-sly-repeat.item="${tabs.items}"
+             data-sly-resource="${item.name @ decorationTagName='div'}"
+             id="${item.id}__tabpanel"
+             role="tabpanel"
+             aria-labelledby="${item.id}__tab"
+             tabindex="0"
+             class="cmp-verticaltabs__tabpanel${item.name == tabs.activeItem ? ' cmp-verticaltabs__tabpanel--active' : ''}"
+             data-cmp-hook-adaptiveFormVerticalTabs="tabpanel"></div>
+    </div>
     <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
          data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
 </div>
 <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
-    <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.verticaltabs.v2.runtime'}"/>
+    <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.verticaltabs.v1.runtime'}"/>
 </sly>

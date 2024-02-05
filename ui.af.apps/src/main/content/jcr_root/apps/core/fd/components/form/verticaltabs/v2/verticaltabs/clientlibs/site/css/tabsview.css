@@ -46,6 +46,13 @@
 .cmp-verticaltabs__tablist--firstlevel {
     display: block !important; /* Show always */
 }
+
+/* Style for child tabs of active vertical tab */
+.cmp-verticaltabs__tab--vertical.cmp-verticaltabs__tab--active > .cmp-verticaltabs__tablist > .cmp-verticaltabs__tab {
+  /* Add your styling for the child tabs here */
+  background-color: #bfbfbf; /* Replace with the color of your choice */
+  margin-left: 10px; /* Adjust the side shift according to your needs */
+}
 .cmp-verticaltabs__tab--vertical::after {
     content: "▼";
     /* Add any additional styling here */
