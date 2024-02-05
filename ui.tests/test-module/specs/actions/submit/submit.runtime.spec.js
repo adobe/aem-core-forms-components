@@ -102,6 +102,13 @@ describe("Form with Submit Button", () => {
         });
     })
 
+    it("RUM form data submission check point test", () => {
+        cy.previewForm(customSubmitPagePath);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get('body').should('contain', "Thank you for submitting the form.\n")
+        });
+    })
+
 
     if (cy.af.isLatestAddon()) {
         it("Custom Submit Action With Redirect Parameter test", () => {

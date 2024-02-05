@@ -9,7 +9,6 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="Adaptive Form V2 (IT)"
-        sling:configRef="/conf/datalayerContainer"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
@@ -17,6 +16,9 @@
             sling:resourceType="forms-components-examples/components/form/container"
             dorType="none"
             title="datalayerform"
+            actionType="forms-core-components-it/customsubmission/logsubmit"
+            thankYouMessage="Thank you for submitting the form."
+            thankYouOption="page"
             fieldType="form">
             <textinput
                 jcr:primaryType="nt:unstructured"
@@ -82,6 +84,25 @@
                     jcr:primaryType="nt:unstructured"
                     change="[if($field == 'aemforms'\, dispatchEvent(textinput1\, 'custom:setProperty'\, {value : 'new value'})\, {}),if($field == 'aemforms'\, dispatchEvent(textinput41671690715329\, 'custom:setProperty'\, {value : `null`})\, {})]"/>
             </textinput_1469562442>
+            <submit
+                    jcr:created="{Date}2022-11-23T12:16:03.945+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2022-11-23T12:16:03.945+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Submit"
+                    sling:resourceType="forms-components-examples/components/form/actions/submit"
+                    buttonType="submit"
+                    dorExclusion="true"
+                    fieldType="button"
+                    name="submit1669185963968">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm('custom:submitSuccess'\, 'custom:submitError')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[submitForm('custom:submitSuccess'\, 'custom:submitError')]"/>
+            </submit>
         </guideContainer>
     </jcr:content>
 </jcr:root>

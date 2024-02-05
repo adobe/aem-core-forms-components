@@ -103,8 +103,43 @@ describe('Form with RUM initialized', () => {
                     source: "textinput-f226352a71",
                     target: "{\"qualifiedName\":\"$form.textinput1\",\"formId\":\"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer\",\"validationType\":\"expressionMismatch\"}"
                 });
-            }
 
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+
+                // Assert the arguments of the sixth call
+                cy.get('@sampleRUMSpy').should((spyCall) => {
+                    let args = spyCall.args[5];
+                    // Partially match the source
+                    expect(args[0]).to.include("formfieldfocus");
+                    // Partially match the source
+                    expect(args[1].source).to.include("submit-64756a5a6e");
+                    // Check if the target value exists
+                    expect(args[1].target).to.include('{"qualifiedName":"$form.submit1669185963968","formId":"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer"}');
+
+                    args = spyCall.args[6];
+                    // Partially match the source
+                    expect(args[0]).to.include("formsubmit");
+                    // Partially match the source
+                    expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
+                    // Check if the target value exists
+                    expect(args[1].target).to.include('timeSpentOnForm');
+                });
+            }
+        });
+
+        it('sampleRUM custom http post/put checkpoint', () => {
+            if (toggle_array.includes("FT_SKYOPS-60870")) {
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+                // Assert the arguments of the sixth call
+                cy.get('@sampleRUMSpy').should((spyCall) => {
+                    let args = spyCall.args[4];
+                    // Partially match the source
+                    expect(args[0]).to.include("formhttppostput");
+                    // Partially match the source
+                    expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
+                });
+            }
         });
     }
 });
