@@ -71,7 +71,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
-    private static final String FD_CUSTOM_FUNCTION_URL = "fd:customFunctionUrl";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
 
     private static final String CUSTOM_FUNCTION_CONFIG_BUCKET_NAME = "settings/cloudconfigs";

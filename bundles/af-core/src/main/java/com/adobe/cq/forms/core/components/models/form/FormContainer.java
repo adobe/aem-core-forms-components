@@ -286,9 +286,9 @@ public interface FormContainer extends Container {
     }
 
     /**
-     * Returns the url to fetch custom functions ESM
+     * Returns the url to fetch custom functions bundled as an ESM
      *
-     * @return the url to fetch custom functions ESM
+     * @return the url to fetch custom functions bundled as an ESM
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getCustomFunctionUrl() {
