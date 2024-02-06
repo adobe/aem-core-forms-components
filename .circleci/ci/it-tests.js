@@ -23,60 +23,64 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
-const isLatestAddon = AEM === 'addon-latest';
-const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
+const classicFormAddonVersion = 'LATEST';
+const classicFormReleasedAddonVersion = '6.0.1016';
 
 try {
-    // # Define the image name
-    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
-    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
-    console.log("container id for qp ", qpContainerId);
-
-    // moving the qp docker content and environment variable to host machine
-    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
-    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
-
-    let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.stage("Integration Tests");
+    let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.dir(qpPath, () => {
         // Connect to QP
-        ci.sh(`./qp.sh -v bind --server-hostname localhost --server-port 55555`);
+        ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
 
-    let extras = ``, preleaseOpts = ``;
-    if (AEM === 'classic') {
-        // The core components are already installed in the Cloud SDK
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
-    } else if (AEM === 'addon') {
-        // Download the forms Add-On
-        ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
-        extras = '--install-file forms-addon.far';
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
-        if (PRERELEASE === 'true') {
-            // enable pre-release settings
-            preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+        let extras = ``, preleaseOpts = ``, contextPathOpts = ``;
+        if (AEM === 'classic') {
+            // Download latest add-on release from artifactory
+            ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormReleasedAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+            extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
+            // The core components are already installed in the Cloud SDK
+            extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+        } else if (AEM === 'classic-latest') {
+            // Download latest add-on release from artifactory
+            ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
+            extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
+            // The core components are already installed in the Cloud SDK
+            extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+            if (CONTEXTPATH != null) {
+                // enable context path settings
+                contextPathOpts = `--cmd-options \\\"-c ${CONTEXTPATH}\\\"`;
+            }
+        } else if (AEM === 'addon') {
+            // Download the forms Add-On
+            ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
+            extras = '--install-file forms-addon.far';
+            extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+            if (PRERELEASE === 'true') {
+                // enable pre-release settings
+                preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+            }
+        } else if (AEM === 'addon-latest') {
+            // Download latest add-on release from artifactory
+            ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
+            extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
+            extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
+            if (PRERELEASE === 'true') {
+                // enable pre-release settings
+                preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+            }
         }
-    } else if (AEM === 'addon-latest') {
-        // Download latest add-on release from artifactory
-        ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
-        extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
-        if (PRERELEASE === 'true') {
-            // enable pre-release settings
-            preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
+
+        if (FT === 'true') {
+            // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+            extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
         }
-    }
 
-    if (FT === 'true') {
-        // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
-        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
-    }
-
-    // Set an environment variable indicating test was executed
-    // this is used in case of re-run failed test scenario
-    ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
-    // Start CQ
-    ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
+        // Set an environment variable indicating test was executed
+        // this is used in case of re-run failed test scenario
+        ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
+        // Start CQ
+        ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
@@ -84,6 +88,7 @@ try {
             ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
+            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \\
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
@@ -92,9 +97,19 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-            ${preleaseOpts}`);
-});
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            ${preleaseOpts} ${contextPathOpts}`);
+
+        if (AEM === 'classic' || AEM === 'classic-latest') {
+            // add a sleep for 10 mins, add-on takes times to come up
+            ci.sh(`sleep 10m`);
+            // restart the AEM insatnce
+            ci.sh(`./qp.sh stop --id author`);
+            ci.sh(`./qp.sh start --id author`);
+            // add a sleep for 7 mins, add-on takes times to come up
+            ci.sh(`sleep 7m`);
+        }
+    });
 
     // Run integration tests
     /*
@@ -111,11 +126,16 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
+        if (disableToggleOption) {
+            ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';
+            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} ${contextPathOption} -DspecFiles="${testSuites}"`;
             ci.sh(command);
         });
     }
@@ -150,8 +170,8 @@ try {
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.
         ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/error.log');
-    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
-    ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
-    ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
-});
+        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stdout.log');
+        ci.sh('curl -O -f http://localhost:3000/crx-quickstart/logs/stderr.log');
+        ci.sh(`find . -name '*.log' -type f -size +32M -exec echo 'Truncating: ' {} \\; -execdir truncate --size 32M {} +`);
+    });
 }

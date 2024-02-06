@@ -74,8 +74,10 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(panelContainerDrop);
+        cy.get('.cq-dialog-cancel').should('be.visible');
+        cy.get('.cq-dialog-cancel').focus().click({force: true}).then(() => {
+            cy.deleteComponentByPath(panelContainerDrop);
+        });
     }
 
     context('Open Forms Editor', function () {

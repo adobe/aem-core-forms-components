@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
         .should("not.exist");
 
 
-    cy.get('.cq-dialog-cancel').click();
+    cy.clickAndValidate('.cq-dialog-cancel');
     cy.deleteComponentByPath(checkboxDrop);
   }
 
@@ -101,10 +101,8 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkboxDrop);
     });
 
-    it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
-        cy.cleanTest(checkboxDrop).then(function() {
-            testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
-        });
+    it('open edit dialog of aem forms Checkbox', function() {
+      testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
     });
   })
 });

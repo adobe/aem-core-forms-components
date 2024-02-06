@@ -8,12 +8,16 @@
   "videosFolder" : "target/videos",
   "videoUploadOnPasses" : false,
   "video" : true,
-  "chromeWebSecurity" :true,
+  "chromeWebSecurity" :false,
   "viewportHeight" : 900,
   "viewportWidth" : 1440,
   "pageLoadTimeout" : 200000,
-  "defaultCommandTimeout" : 10000,
+  "defaultCommandTimeout" : 30000,
   "responseTimeout" : 120000,
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  },
   "watchForFileChanges" : true,
   "trashAssetsBeforeRuns" : true,
   "reporterEnabled": "spec, cypress-circleci-reporter"

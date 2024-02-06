@@ -129,6 +129,17 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testGetThemeClientLibRef() {
+        String path = CONTENT_ROOT + "/myTestPage";
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        assertEquals("def", formStructureParser.getThemeClientLibRefFromFormContainer());
+
+        path = FORM_CONTAINER_PATH + "/container1";
+        formStructureParser = getFormStructureParserUnderTest(path);
+        assertNull(formStructureParser.getThemeClientLibRefFromFormContainer());
+    }
+
+    @Test
     public void containsFormContainer_should_return_true() {
         String path = JCR_CONTENT_PATH;
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);

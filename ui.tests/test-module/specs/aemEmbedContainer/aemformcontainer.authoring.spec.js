@@ -89,8 +89,8 @@ describe('Page - Authoring', function () {
                 // click configure action on Adaptive Form - Embed component
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + aemFormContainerEditPathSelector);
                 cy.invokeEditableAction("[data-action='CONFIGURE']");
-                cy.get("[name='./formRef'] > div > div > input").should("be.visible").clear().type("/content/dam/formsanddocuments/core-components-it/blank").blur(); // adding a v2 form path
-                cy.get("._coral-Menu-itemLabel:contains(/content/dam/formsanddocuments/core-components-it/blank)").should("be.visible").click(); // clicking on the displayed option
+                cy.get("[name='./formRef'] > div > div > input").should("be.visible").clear().type("/content/dam/formsanddocuments/core-components-it/blank", { delay: 0 }).click(); // adding a v2 form path
+                cy.get(".foundation-picker-buttonlist button").should("be.visible").click(); // clicking on the displayed option
                 cy.get(".cmp-adaptiveform-aemform__themeref").should("not.be.visible"); // the themeref dropdown must be hidden
                 cy.get(sitesSelectors.confirmDialog.actions.first).click();
             });

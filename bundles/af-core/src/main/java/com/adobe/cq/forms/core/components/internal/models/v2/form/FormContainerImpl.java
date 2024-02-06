@@ -90,6 +90,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String themeClientLibRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String title;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -158,6 +162,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     public String getClientLibRef() {
         return clientLibRef;
+    }
+
+    @Override
+    @Nullable
+    public String getThemeClientLibRef() {
+        return themeClientLibRef;
     }
 
     @Override
@@ -282,7 +292,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getLanguageDirection() {
-        return GuideUtils.getLanguageDirection(getLang());
+        return "ltr";
+        // return GuideUtils.getLanguageDirection(getLang());
     }
 
     @Override

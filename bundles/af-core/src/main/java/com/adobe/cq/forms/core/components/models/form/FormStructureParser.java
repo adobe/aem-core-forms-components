@@ -38,6 +38,11 @@ public interface FormStructureParser {
     String getClientLibRefFromFormContainer();
 
     /**
+     * @returns reference to theme client lib stored in the form container
+     */
+    String getThemeClientLibRefFromFormContainer();
+
+    /**
      * Checks if this resource contains a form container
      *
      * @return true if this resource or one of its children is a form container, else false
