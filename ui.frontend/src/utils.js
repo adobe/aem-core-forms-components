@@ -311,7 +311,7 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
-                const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, {"detail": formContainer});
+                const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
         }
@@ -321,15 +321,15 @@ class Utils {
         if (url != null && url.trim().length > 0) {
             const customFunctionModule = await import(/*webpackIgnore: true*/ url);
             const keys = Object.keys(customFunctionModule);
+            const functions = [];
             for (let i = 0; i < keys.length; i++) {
                 const name = keys[i];
                 const funcDef = customFunctionModule[keys[i]];
                 if (typeof funcDef === 'function') {
-                    const functions = [];
                     functions[name] = funcDef;
-                    FunctionRuntime.registerFunctions(functions);
                 }
             }
+            FunctionRuntime.registerFunctions(functions);
         }
     }
 
