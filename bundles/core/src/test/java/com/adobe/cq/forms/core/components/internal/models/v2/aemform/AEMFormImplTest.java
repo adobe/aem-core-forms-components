@@ -118,4 +118,31 @@ public class AEMFormImplTest {
         Mockito.when(aemFormMock.getFormVersion()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getFormVersion);
     }
+
+    @Test
+    void testDefaultTitle() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(GRID + "/aemformv2");
+        assertEquals("", aemform.getTitle());
+        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
+        Mockito.when(aemFormMock.getTitle()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getTitle);
+    }
+
+    @Test
+    void testTitleAddedThroughEditDialog() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals("AEM Form", aemform.getTitle());
+    }
+
+    @Test
+    void testJcrTitleNull() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(GRID + "/aemformv2_jcrtitleNull");
+        assertEquals("", aemform.getTitle());
+    }
+
+    @Test
+    void testFormTitle() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        assertEquals("Test", aemform.getTitle());
+    }
 }

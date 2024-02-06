@@ -21,11 +21,14 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.caconfig.ConfigurationResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -35,6 +38,7 @@ import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
 import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
 import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = SlingHttpServletRequest.class,
@@ -49,6 +53,9 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
     private ConfigurationResolver configurationResolver;
 
     private List<HtmlPageItem> htmlPageItems;
+
+    @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String jcrTitle;
 
     @Override
     public @Nullable List<HtmlPageItem> getHtmlPageItems() {
@@ -66,4 +73,23 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
         }
         return htmlPageItems;
     }
+
+    @JsonIgnore
+    public String getTitle() {
+        if (jcrTitle != null && !jcrTitle.isEmpty()) {
+            return jcrTitle;
+        } else {
+            // Fallback to form title if jcr:title is not available
+            Resource formResource = request.getResourceResolver().getResource(getFormPagePath());
+            if (formResource != null) {
+                ValueMap formProperties = formResource.getValueMap();
+                if (formProperties != null) {
+                    String formTitle = formProperties.get("title", "").toString();
+                    return formTitle;
+                }
+            }
+        }
+        return "";
+    }
+
 }
