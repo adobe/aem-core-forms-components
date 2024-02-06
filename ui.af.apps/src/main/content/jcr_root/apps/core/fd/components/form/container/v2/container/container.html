@@ -15,6 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
 <form data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
+      data-sly-use.configurationProvider="com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider"
       data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
       data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
       action="${container.metadata.action}"
@@ -23,7 +24,7 @@
       data-cmp-context-path="${request.contextPath}"
       data-cmp-page-lang="${container.containingPageLang}"
       data-cmp-path="${resource.path}"
-      data-cmp-custom-functions="${container.customFunctionUrl}"
+      data-cmp-custom-functions="${configurationProvider.customFunctionModuleUrl}"
       class="cmp-adaptiveform-container cmp-container"
       dir="${container.languageDirection}"
       method="post">
