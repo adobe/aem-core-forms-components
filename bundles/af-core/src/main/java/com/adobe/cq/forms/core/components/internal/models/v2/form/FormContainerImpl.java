@@ -22,11 +22,15 @@ import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
@@ -68,6 +72,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
+
+    private static final String CUSTOM_FUNCTION_CONFIG_BUCKET_NAME = "settings/cloudconfigs";
+    private static final String CUSTOM_FUNCTION_CONFIG_NAME = "edge-delivery-service-configuration";
+
+    @OSGiService
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private ConfigurationResourceResolver configurationResourceResolver;
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -248,6 +259,29 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         } else {
             return null;
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public String getCustomFunctionUrl() {
+        String customFunctionUrl = "";
+        Resource pageResource = resource.getResourceResolver().resolve(this.getParentPagePath());
+        if (pageResource != null && configurationResourceResolver != null) {
+            Resource configResource = configurationResourceResolver.getResource(pageResource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+                CUSTOM_FUNCTION_CONFIG_NAME);
+            if (configResource != null) {
+                Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
+                if (jcrResource != null) {
+                    ValueMap configValueMap = jcrResource.getValueMap();
+                    String owner = configValueMap.getOrDefault("owner", "").toString();
+                    String repo = configValueMap.getOrDefault("repo", "").toString();
+                    if (!owner.isEmpty() && !repo.isEmpty()) {
+                        customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
+                    }
+                }
+            }
+        }
+        return customFunctionUrl;
     }
 
     @Override

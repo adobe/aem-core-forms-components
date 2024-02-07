@@ -15,17 +15,12 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
-import com.adobe.aemds.guide.service.CloudConfigurationProvider;
-import com.adobe.aemds.guide.service.GuideException;
-import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.internal.form.FormConfigurationProviderImpl;
-import com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider;
-import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.msm.api.MSMNameConstants;
-import io.wcm.testing.mock.aem.junit5.AemContext;
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,11 +28,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider;
+import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.msm.api.MSMNameConstants;
+import io.wcm.testing.mock.aem.junit5.AemContext;
+import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 
@@ -45,9 +42,9 @@ import static org.junit.Assert.assertEquals;
 public class FormConfigurationProviderImplTest {
     private static final String BASE = "/form/formconfigprovider";
 
-    private static final String TEST_CONTENT_CONF_JSON="/test-content-conf.json";
-    private static final String TEST_CONTENT_JSON="/test-content.json";
-    private static final String CONF_PATH ="/conf/global/settings/cloudconfigs/edge-delivery-service-configuration";
+    private static final String TEST_CONTENT_CONF_JSON = "/test-content-conf.json";
+    private static final String TEST_CONTENT_JSON = "/test-content.json";
+    private static final String CONF_PATH = "/conf/global/settings/cloudconfigs/edge-delivery-service-configuration";
     private static final String CONTENT_ROOT = "/content";
 
     private static final String CUSTOM_FUNCTION_CONFIG_BUCKET_NAME = "settings/cloudconfigs";
@@ -55,7 +52,7 @@ public class FormConfigurationProviderImplTest {
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
-    private ConfigurationResourceResolver configurationResourceResolverMock= Mockito.mock(ConfigurationResourceResolver.class);
+    private ConfigurationResourceResolver configurationResourceResolverMock = Mockito.mock(ConfigurationResourceResolver.class);
 
     @BeforeEach
     void setUp() {
@@ -80,23 +77,25 @@ public class FormConfigurationProviderImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport
-                        .stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                        .collect(Collectors.toList());
+                    .stream(childResources.spliterator(), false)
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
+                    .collect(Collectors.toList());
             }
         });
     }
 
     @Test
     void testGetCustomFunctionModuleUrl() {
-        String path =  "/content/formcontainerv2";
+        String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
-        assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js", formConfigurationProvider.getCustomFunctionModuleUrl());
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js", formConfigurationProvider
+            .getCustomFunctionModuleUrl());
     }
 
     private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
-        Resource resource=context.currentResource(resourcePath);
+        Resource resource = context.currentResource(resourcePath);
         FormConfigurationProvider formConfigurationProvider = resource.adaptTo(FormConfigurationProvider.class);
         return formConfigurationProvider;
     }

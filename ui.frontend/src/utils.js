@@ -284,7 +284,7 @@ class Utils {
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
-            const customFunctionUrl = dataset["customFunctions"];
+            const customFunctionUrl = dataset["customFunctionsModuleUrl"];
             const _path = dataset["path"];
             const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
