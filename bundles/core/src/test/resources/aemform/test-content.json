@@ -111,6 +111,22 @@
                             "cssClientlib": "abc.def",
                             "useiframe": "true",
                             "usePageLocale": "true"
+                        },
+                        "aemformv2-1" : {
+                            "jcr:primaryType": "nt:unstructured",
+                            "jcr:title": "AEM Form",
+                            "sling:resourceType": "core/fd/components/aemform/v2/aemform",
+                            "height": "100",
+                            "thankyouPage": "/a/b/c",
+                            "thankyouConfig": "page",
+                            "formType": "adaptiveForm",
+                            "formRef": "/content/forms/af/abc",
+                            "themeRef": "/content/dam/formsanddocuments-themes/abc",
+                            "submitType": "inline",
+                            "cssClientlib": "abc.def",
+                            "useiframe" : "true",
+                            "usePageLocale" : "true",
+                            "enableFocusOnFirstField" : true
                         }
                     }
                 }

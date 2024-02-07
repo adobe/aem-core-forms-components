@@ -41,6 +41,9 @@ public class AEMFormImplTest {
     private static final String FORM_1 = "/aemformv2-1";
     private static final String PATH_FORM_1 = GRID + FORM_1;
     private static final String PATH_FORM_2 = "/content/test/en/home/jcr:content/root/container/container_1578756628/aemform";
+    private static final String ROOT_PAGE_LANG = "/content/aemform/en_US";
+    private static final String GRID_LANG = ROOT_PAGE_LANG + "/jcr:content/root/responsivegrid";
+    private static final String PATH_FORM_LANG = GRID_LANG + FORM_1;
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -144,5 +147,17 @@ public class AEMFormImplTest {
     void testFormTitle() throws Exception {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
         assertEquals("Test", aemform.getTitle());
+    }
+
+    @Test
+    void testTitlePageLanguageEmpty() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals("AEM Form", aemform.getTitle());
+    }
+
+    @Test
+    void testTitlePageLanguage() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_LANG);
+        assertEquals("AEM Form", aemform.getTitle());
     }
 }

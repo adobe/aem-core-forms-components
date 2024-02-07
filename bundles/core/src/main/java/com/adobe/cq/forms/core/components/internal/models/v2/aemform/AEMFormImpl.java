@@ -17,6 +17,8 @@ package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -38,6 +40,7 @@ import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.wcm.core.components.config.HtmlPageItemConfig;
 import com.adobe.cq.wcm.core.components.config.HtmlPageItemsConfig;
 import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
+import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -56,6 +59,9 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
 
     @ValueMapValue(name = "jcr:title", injectionStrategy = InjectionStrategy.OPTIONAL)
     private String jcrTitle;
+
+    @ValueMapValue(name = AEMForm.PN_USEPAGELOCALE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String usePageLocale;
 
     @Override
     public @Nullable List<HtmlPageItem> getHtmlPageItems() {
@@ -76,20 +82,36 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
 
     @JsonIgnore
     public String getTitle() {
+        String formTitle = "";
         if (jcrTitle != null && !jcrTitle.isEmpty()) {
-            return jcrTitle;
+            formTitle = jcrTitle;
         } else {
             // Fallback to form title if jcr:title is not available
             Resource formResource = request.getResourceResolver().getResource(getFormPagePath());
             if (formResource != null) {
                 ValueMap formProperties = formResource.getValueMap();
                 if (formProperties != null) {
-                    String formTitle = formProperties.get("title", "").toString();
-                    return formTitle;
+                    formTitle = formProperties.get("title", "").toString();
+
                 }
             }
         }
-        return "";
+
+        if ("true".equals(usePageLocale)) {
+            String pageLanguage = getLocale();
+            if (pageLanguage != null && !pageLanguage.isEmpty()) {
+                // Create a Locale object from the pageLanguage string
+                Locale locale = Locale.forLanguageTag(pageLanguage);
+                // Get the ResourceBundle for the locale
+                ResourceBundle resourceBundle = request.getResourceBundle(locale);
+                // Initialize the I18n object with the ResourceBundle object
+                I18n i18n = new I18n(resourceBundle);
+                // Fetch the localized title based on the page language
+                formTitle = i18n.get(formTitle);
+            }
+        }
+
+        return formTitle;
     }
 
 }
