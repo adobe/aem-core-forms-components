@@ -14,6 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
+import * as customfunctions from "@aemforms/af-custom-functions";
+
+// creating proxy to custom functions, since these were already exposed in the SDK
 
 /**
  * @module FormView
@@ -26,12 +29,7 @@
  * @memberof module:FormView~customFunctions
  */
 function toObject(str) {
-    try {
-        return JSON.parse(str);
-    }
-    catch (e) {
-        return {}
-    }
+    return customfunctions.toObject(str);
 }
 
 /**
@@ -55,13 +53,7 @@ function externalize(url) {
  * @memberof module:FormView~customFunctions
  */
 function validateURL(url) {
-    try {
-        const validatedUrl = new URL(url, window.location.href);
-        return (validatedUrl.protocol === 'http:' || validatedUrl.protocol === 'https:');
-    }
-    catch (err) {
-        return false;
-    }
+    return customfunctions.validateURL(url);
 }
 
 
@@ -73,25 +65,7 @@ function validateURL(url) {
  * @memberof module:FormView~customFunctions
  */
 function navigateTo(destinationURL, destinationType) {
-    let param = null,
-        windowParam = window,
-        arg = null;
-    switch (destinationType){
-        case "_newwindow":
-            param = "_blank";
-            arg = "width=1000,height=800";
-            break;
-    }
-    if (!param) {
-        if (destinationType) {
-            param = destinationType;
-        } else {
-            param = "_blank";
-        }
-    }
-    if (validateURL(destinationURL)){
-        windowParam.open(externalize(destinationURL), param, arg);
-    }
+    customfunctions.navigateTo(externalize(destinationURL), destinationType);
 }
 
 /**
@@ -103,25 +77,7 @@ function navigateTo(destinationURL, destinationType) {
  * @memberof module:FormView~customFunctions
  */
 function defaultErrorHandler(response, headers, globals) {
-    if(response && response.validationErrors) {
-        response.validationErrors?.forEach(function (violation) {
-            if (violation.details) {
-                if (violation.fieldName) {
-                    globals.form.visit(function callback(f) {
-                        if (f.qualifiedName === violation.fieldName) {
-                            f.markAsInvalid(violation.details.join("\n"));
-                        }
-                    });
-                } else if (violation.dataRef) {
-                    globals.form.visit(function callback(f) {
-                        if (f.dataRef === violation.dataRef) {
-                            f.markAsInvalid(violation.details.join("\n"));
-                        }
-                    });
-                }
-            }
-        });
-    }
+    customfunctions.defaultInvokeServiceErrorHandler(response, headers, globals);
 }
 
 /**
