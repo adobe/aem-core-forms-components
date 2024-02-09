@@ -29,7 +29,7 @@
     "assistPriority" : "custom",
     "custom" : "Custom screen reader text",
     "tooltip": "test-short-description",
-    "maxFileSize" : "4MB",
+    "maxFileSize" : "4",
     "accept" : ["audio/*", "video/*", "image/*"]
   },
   "multiselect-fileinput" : {
@@ -49,7 +49,7 @@
     "multiSelection" : true,
     "minItems" : 1,
     "maxItems" : 2,
-    "maxFileSize" : "4GB",
+    "maxFileSize" : "4",
     "accept" : ["text/*", "application/pdf"]
   },
   "fileinput-datalayer": {
