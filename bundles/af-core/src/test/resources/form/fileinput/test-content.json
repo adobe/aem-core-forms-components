@@ -49,7 +49,7 @@
     "multiSelection" : true,
     "minItems" : 1,
     "maxItems" : 2,
-    "maxFileSize" : "4",
+    "maxFileSize" : "4096",
     "accept" : ["text/*", "application/pdf"]
   },
   "fileinput-datalayer": {
