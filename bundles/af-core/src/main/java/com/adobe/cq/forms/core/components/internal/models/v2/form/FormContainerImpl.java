@@ -22,10 +22,8 @@ import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -259,29 +257,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         } else {
             return null;
         }
-    }
-
-    @Override
-    @JsonIgnore
-    public String getCustomFunctionUrl() {
-        String customFunctionUrl = "";
-        Resource pageResource = resource.getResourceResolver().resolve(this.getParentPagePath());
-        if (pageResource != null && configurationResourceResolver != null) {
-            Resource configResource = configurationResourceResolver.getResource(pageResource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME);
-            if (configResource != null) {
-                Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
-                if (jcrResource != null) {
-                    ValueMap configValueMap = jcrResource.getValueMap();
-                    String owner = configValueMap.getOrDefault("owner", "").toString();
-                    String repo = configValueMap.getOrDefault("repo", "").toString();
-                    if (!owner.isEmpty() && !repo.isEmpty()) {
-                        customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
-                    }
-                }
-            }
-        }
-        return customFunctionUrl;
     }
 
     @Override
