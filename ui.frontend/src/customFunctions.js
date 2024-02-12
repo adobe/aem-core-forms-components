@@ -16,79 +16,78 @@
 
 import * as customfunctions from "@aemforms/af-custom-functions";
 
-// creating proxy to custom functions, since these were already exposed in the SDK
-
 /**
  * @module FormView
  */
 
 /**
- * Converts a JSON string to an object.
- * @param {string} str - The JSON string to convert to an object.
- * @returns {object} - The parsed JSON object. Returns an empty object if an exception occurs.
- * @memberof module:FormView~customFunctions
- */
-function toObject(str) {
-    return customfunctions.toObject(str);
-}
-
-/**
- * Prefixes the URL with the context path.
- * @param {string} url - The URL to externalize.
- * @returns {string} - The externalized URL.
- * @memberof module:FormView~customFunctions
- */
-function externalize(url) {
-    if (window?.Granite?.HTTP && typeof (window.Granite.HTTP.externalize === "function")) {
-        return window.Granite.HTTP.externalize(url);
-    } else {
-        return url;
-    }
-}
-
-/**
- * Validates if the given URL is correct.
- * @param {string} url - The URL to validate.
- * @returns {boolean} - True if the URL is valid, false otherwise.
- * @memberof module:FormView~customFunctions
- */
-function validateURL(url) {
-    return customfunctions.validateURL(url);
-}
-
-
-/**
- * Navigates to the specified URL.
- * @param {string} destinationURL - The URL to navigate to. If not specified, a new blank window will be opened.
- * @param {string} destinationType - The type of destination. Supports the following values: "_newwindow", "_blank", "_parent", "_self", "_top", or the name of the window.
- * @returns {Window} - The newly opened window.
- * @memberof module:FormView~customFunctions
- */
-function navigateTo(destinationURL, destinationType) {
-    customfunctions.navigateTo(externalize(destinationURL), destinationType);
-}
-
-/**
- * Default error handler for the invoke service API.
- * @param {object} response - The response body of the invoke service API.
- * @param {object} headers - The response headers of the invoke service API.
- * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
- * @returns {void}
- * @memberof module:FormView~customFunctions
- */
-function defaultErrorHandler(response, headers, globals) {
-    customfunctions.defaultInvokeServiceErrorHandler(response, headers, globals);
-}
-
-/**
  * Namespace for custom functions.
- * @description Contains custom functions which can be used in the rule editor
+ * @description Contains custom functions which can be used in the rule editor.
  * @exports FormView/customFunctions
  * @namespace customFunctions
  */
 export const customFunctions = {
-    toObject,
-    externalize,
-    navigateTo,
-    defaultErrorHandler
+    /**
+     * Converts a JSON string to an object.
+     * @param {string} str - The JSON string to convert to an object.
+     * @returns {object} - The parsed JSON object. Returns an empty object if an exception occurs.
+     */
+    toObject: customfunctions.toObject,
+
+    /**
+     * Prefixes the URL with the context path.
+     * @param {string} url - The URL to externalize.
+     * @returns {string} - The externalized URL.
+     */
+    externalize: (url) => {
+        // Check if Granite.HTTP.externalize is available, otherwise return the original URL
+        if (window?.Granite?.HTTP && typeof window.Granite.HTTP.externalize === "function") {
+            return window.Granite.HTTP.externalize(url);
+        } else {
+            return url;
+        }
+    },
+
+    /**
+     * Validates if the given URL is correct.
+     * @param {string} url - The URL to validate.
+     * @returns {boolean} - True if the URL is valid, false otherwise.
+     */
+    validateURL: customfunctions.validateURL,
+
+    /**
+     * Navigates to the specified URL.
+     * @param {string} destinationURL - The URL to navigate to. If not specified, a new blank window will be opened.
+     * @param {string} destinationType - The type of destination. Supports the following values: "_newwindow", "_blank", "_parent", "_self", "_top", or the name of the window.
+     * @returns {Window} - The newly opened window.
+     */
+    navigateTo: (destinationURL, destinationType) => customfunctions.navigateTo(customFunctions.externalize(destinationURL), destinationType),
+
+    /**
+     * Default error handler for the invoke service API.
+     * @param {object} response - The response body of the invoke service API.
+     * @param {object} headers - The response headers of the invoke service API.
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
+     */
+    defaultErrorHandler: customfunctions.defaultErrorHandler,
+
+    /**
+     * Handles the success response after a form submission.
+     *
+     * @param {object} submitSuccessResponse - The success response object.
+     * @param {string} submitSuccessResponse.redirectUrl - The URL to redirect to on success.
+     * @param {string} submitSuccessResponse.thankYouMessage - The thank you message on success.
+     * @param {object} formModel - The form model
+     */
+    defaultSubmitSuccessHandler: customfunctions.defaultSubmitSuccessHandler,
+
+    /**
+     * Handles the error response after a form submission.
+     *
+     * @param {object} submitErrorResponse - The error response object.
+     * @param {object} formModel - The form model
+     * @param {string} defaultSubmitErrorMessage - The default error message.
+     */
+    defaultSubmitErrorHandler: customfunctions.defaultSubmitErrorHandler
 };
