@@ -231,6 +231,7 @@ jobs:
   jsdocs-deploy:
     docker:
       - image: node:8.10.0
+    working_directory: /home/circleci/build
     steps:
       - checkout
       - attach_workspace:
@@ -279,19 +280,53 @@ jobs:
             # Extract tag from CIRCLE_TAG environment variable
             TAG=${CIRCLE_TAG}
 
-            # Create the release using GitHub API
-            RESPONSE=$(curl -s -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Content-Type: application/json" \
-              -d '{
-                "tag_name": "'"$TAG"'",
-                "name": "'"$TAG"'",
-                "body": "Release notes for version '"$TAG"'"
-              }' \
-              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
+            # Maximum number of retries
+            MAX_RETRIES=3
 
-            # Get the upload URL from the response
-            UPLOAD_URL=$(echo "$RESPONSE" | jq -r '.upload_url' | sed -e 's/{.*}//')
+            # Function to create the release using GitHub API
+            create_release() {
+              local response
+              response=$(curl -s -X POST \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "tag_name": "'"$TAG"'",
+                  "name": "'"$TAG"'",
+                  "body": "Release notes for version '"$TAG"'"
+                }' \
+                "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
+
+              echo "$response"
+            }
+
+            # Function to extract upload URL from GitHub API response
+            extract_upload_url() {
+              local response="$1"
+              echo "$response" | jq -r '.upload_url' | sed -e 's/{.*}//'
+            }
+
+            # Create the release with retries
+            for ((retry_count=1; retry_count<=MAX_RETRIES; retry_count++)); do
+              echo "Attempt $retry_count to create the release..."
+
+              RESPONSE=$(create_release)
+              echo "RESPONSE: $RESPONSE"
+              UPLOAD_URL=$(extract_upload_url "$RESPONSE")
+              echo "UPLOAD_URL: $UPLOAD_URL"
+
+              # Check if UPLOAD_URL is not null or empty
+              if [ -n "$UPLOAD_URL" ] && [ "$UPLOAD_URL" != "null" ]; then
+                echo "Release successfully created."
+                break  # Successful response, exit the loop
+              elif [ "$retry_count" -lt "$MAX_RETRIES" ]; then
+                echo "Failed to create release. Retrying..."
+                sleep 3  # Add a delay before the next attempt
+              else
+                echo "Error: Unable to create release after $MAX_RETRIES attempts."
+                exit 1
+              fi
+            done
+
 
             # Upload release artifacts
             for ARTIFACT in ./all/target/*.zip; do
@@ -328,12 +363,16 @@ jobs:
             echo "BRANCH_NAME: $BRANCH_NAME"
 
             # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | head -n 2)
+
+            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
+
             # Debugging output
             echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
 
             # Extract the last released from the output
-            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
+
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
+
             # Debugging output
             echo "LAST_TAG: $LAST_TAG"
 
