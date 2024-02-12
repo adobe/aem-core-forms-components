@@ -319,12 +319,12 @@ class Utils {
 
     static async registerCustomFunctionsByUrl(url) {
         if (url != null && url.trim().length > 0) {
+            // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
             const customFunctionModule = await import(/*webpackIgnore: true*/ url);
             const keys = Object.keys(customFunctionModule);
             const functions = [];
-            for (let i = 0; i < keys.length; i++) {
-                const name = keys[i];
-                const funcDef = customFunctionModule[keys[i]];
+            for (const name of keys) {
+                const funcDef = customFunctionModule[name];
                 if (typeof funcDef === 'function') {
                     functions[name] = funcDef;
                 }
