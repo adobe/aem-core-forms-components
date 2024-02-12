@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-import * as customfunctions from "@aemforms/af-custom-functions";
+import * as cf from "@aemforms/af-custom-functions";
 
 /**
  * @module FormView
@@ -32,7 +32,7 @@ export const customFunctions = {
      * @param {string} str - The JSON string to convert to an object.
      * @returns {object} - The parsed JSON object. Returns an empty object if an exception occurs.
      */
-    toObject: customfunctions.toObject,
+    toObject: cf.toObject,
 
     /**
      * Prefixes the URL with the context path.
@@ -53,7 +53,7 @@ export const customFunctions = {
      * @param {string} url - The URL to validate.
      * @returns {boolean} - True if the URL is valid, false otherwise.
      */
-    validateURL: customfunctions.validateURL,
+    validateURL: cf.validateURL,
 
     /**
      * Navigates to the specified URL.
@@ -61,7 +61,7 @@ export const customFunctions = {
      * @param {string} destinationType - The type of destination. Supports the following values: "_newwindow", "_blank", "_parent", "_self", "_top", or the name of the window.
      * @returns {Window} - The newly opened window.
      */
-    navigateTo: (destinationURL, destinationType) => customfunctions.navigateTo(customFunctions.externalize(destinationURL), destinationType),
+    navigateTo: (destinationURL, destinationType) => cf.navigateTo(customFunctions.externalize(destinationURL), destinationType),
 
     /**
      * Default error handler for the invoke service API.
@@ -70,24 +70,22 @@ export const customFunctions = {
      * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
      * @returns {void}
      */
-    defaultErrorHandler: customfunctions.defaultErrorHandler,
+    defaultErrorHandler: cf.defaultErrorHandler,
 
     /**
      * Handles the success response after a form submission.
      *
-     * @param {object} submitSuccessResponse - The success response object.
-     * @param {string} submitSuccessResponse.redirectUrl - The URL to redirect to on success.
-     * @param {string} submitSuccessResponse.thankYouMessage - The thank you message on success.
-     * @param {object} formModel - The form model
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
      */
-    defaultSubmitSuccessHandler: customfunctions.defaultSubmitSuccessHandler,
+    defaultSubmitSuccessHandler: cf.defaultSubmitSuccessHandler,
 
     /**
      * Handles the error response after a form submission.
      *
-     * @param {object} submitErrorResponse - The error response object.
-     * @param {object} formModel - The form model
      * @param {string} defaultSubmitErrorMessage - The default error message.
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
      */
-    defaultSubmitErrorHandler: customfunctions.defaultSubmitErrorHandler
+    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler
 };
