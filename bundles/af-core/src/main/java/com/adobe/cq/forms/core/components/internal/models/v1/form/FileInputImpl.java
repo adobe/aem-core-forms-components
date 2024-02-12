@@ -88,8 +88,10 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public String getMaxFileSize() {
-        if (maxFileSize == null || "".equals(maxFileSize)) return null;
-        else return maxFileSize + "MB";
+        if (maxFileSize == null || "".equals(maxFileSize))
+            return null;
+        else
+            return maxFileSize + "MB";
     }
 
     @Override
