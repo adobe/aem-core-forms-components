@@ -21,7 +21,7 @@
     "cypress-log-to-output": "1.1.2",
     "cypress-multi-reporters": "1.6.3",
     "cypress-pipe": "2.0.0",
-    "cypress-plugin-snapshots": "1.4.4",
+    "cypress-plugin-snapshots": "github:Izhaki/cypress-plugin-snapshots#fix-cypress-peer-dependency",
     "cypress-recurse": "^1.27.0",
     "cypress-select-tests": "^1.3.0",
     "cypress-terminal-report": "2.4.0",
