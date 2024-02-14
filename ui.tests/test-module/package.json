@@ -23,7 +23,7 @@
     "cypress-pipe": "2.0.0",
     "cypress-plugin-snapshots": "github:Izhaki/cypress-plugin-snapshots#fix-cypress-peer-dependency",
     "cypress-recurse": "^1.27.0",
-    "cypress-select-tests": "^1.7.1",
+    "cypress-select-tests": "github:ravise5/cypress-select-tests#fix-cypress-peer-dependency",
     "cypress-terminal-report": "2.4.0",
     "cypress-wait-until": "1.7.1",
     "minimist": "^1.2.6",
