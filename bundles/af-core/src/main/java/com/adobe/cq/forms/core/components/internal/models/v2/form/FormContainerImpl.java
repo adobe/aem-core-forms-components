@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -104,6 +105,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String data;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = DEFAULT_FORMS_SPEC_VERSION)
+    private String specVersion;
+
     @PostConstruct
     protected void initFormContainerModel() {
         if (request != null) {
@@ -151,7 +156,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAdaptiveFormVersion() {
-        return "0.12.1";
+        return specVersion;
     }
 
     @Override
