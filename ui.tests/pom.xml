@@ -161,7 +161,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>--force</arguments>
+                                    <arguments>install --force</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -237,7 +237,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>--force</arguments>
+                                    <arguments>install --force</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -285,7 +285,6 @@
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
-                            <arguments>--force</arguments>
                         </configuration>
                         <executions>
                             <execution>
@@ -306,7 +305,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>--force</arguments>
+                                    <arguments>install --force</arguments>
                                 </configuration>
                             </execution>
                         </executions>
