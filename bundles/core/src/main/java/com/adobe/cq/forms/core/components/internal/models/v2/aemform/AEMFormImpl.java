@@ -55,6 +55,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.models.v1.aemform.AEMFormImpl implements AEMForm {
     public static final String RESOURCE_TYPE = "core/fd/components/aemform/v2/aemform";
+    private static final String FORM_TITLE_PROPERTY_NAME = "title";
 
     @OSGiService
     private ConfigurationResolver configurationResolver;
@@ -101,14 +102,11 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
             // Fallback to form title if jcr:title is not available
             Resource formResource = request.getResourceResolver().getResource(getFormPagePath());
             if (formResource != null) {
-                String propertyName = "title";
                 ValueMap formProperties = formResource.getValueMap();
-                formTitle = formProperties.get(propertyName, "");
+                formTitle = formProperties.get(FORM_TITLE_PROPERTY_NAME, "");
                 if (!StringUtils.isBlank(formTitle) && i18n != null) {
                     // Translate the formTitle
-                    formTitle = GuideUtils.translateOrReturnOriginal(formTitle, propertyName, i18n, formResource.getValueMap());
-                    ;
-
+                    formTitle = GuideUtils.translateOrReturnOriginal(formTitle, FORM_TITLE_PROPERTY_NAME, i18n, formResource.getValueMap());
                 }
             }
         }

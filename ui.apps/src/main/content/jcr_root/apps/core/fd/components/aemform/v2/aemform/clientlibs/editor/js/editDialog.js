@@ -20,6 +20,7 @@
         THEME_REF_DROPDOWN = ".cmp-adaptiveform-aemform__themeref",
         FORM_REF = ".cmp-adaptiveform-aemform__formref [name='./formRef'] coral-tag",
         IFRAME_CHECKBOX = ".cmp-aemform--editor-useiframe",
+        TITLE_FIELD_CLASS = ".cmp-adaptiveform-aemform__title",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function isCoreComponentForm(url) {
@@ -57,7 +58,7 @@
     function toggleTitleVisibility() {
         let dialog = $(EDIT_DIALOG);
         let checkbox = dialog.find(IFRAME_CHECKBOX);
-        let titleField = dialog.find(".cmp-adaptiveform-aemform__title");
+        let titleField = dialog.find(TITLE_FIELD_CLASS);
 
         if (checkbox.prop('checked')) {
             titleField.parent().hide();
