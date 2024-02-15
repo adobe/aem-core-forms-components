@@ -352,10 +352,10 @@ jobs:
 
             # Debugging output
             echo "RELEASE_BRANCH: $RELEASE_BRANCH"
-            
+
             # Checkout branch
             git checkout $RELEASE_BRANCH
-            
+
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
@@ -363,12 +363,14 @@ jobs:
             echo "BRANCH_NAME: $BRANCH_NAME"
 
             # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
+            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | head -n 2)
+
             # Debugging output
             echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
 
             # Extract the last released from the output
-            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
+
             # Debugging output
             echo "LAST_TAG: $LAST_TAG"
 
@@ -412,6 +414,7 @@ jobs:
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
             git push origin $RELEASE_BRANCH
+
 
 workflows:
   version: 2

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-const esModules = ['@adobe/json-formula'].join('|');
+const esModules = ['@adobe/json-formula', '@aemforms/af-custom-functions'].join('|');
 
 module.exports = {
     transformIgnorePatterns: [`node_modules/(?!${esModules})`],

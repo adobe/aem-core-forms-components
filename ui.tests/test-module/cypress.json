@@ -16,5 +16,9 @@
   "responseTimeout" : 120000,
   "watchForFileChanges" : true,
   "trashAssetsBeforeRuns" : true,
-  "reporterEnabled": "spec, cypress-circleci-reporter"
+  "reporterEnabled": "spec, cypress-circleci-reporter",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
 }

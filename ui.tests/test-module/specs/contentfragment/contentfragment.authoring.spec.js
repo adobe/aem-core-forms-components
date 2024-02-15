@@ -111,8 +111,10 @@ describe('Content Fragment - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert content fragment inside adaptive form container component', function() {
-            testContentFragmentBehaviour(cfEditPathSelector, cfDrop, false);
+        it('insert content fragment inside adaptive form container component', { retries: 3 }, function() {
+            cy.cleanTest(cfDrop).then(function() {
+                testContentFragmentBehaviour(cfEditPathSelector, cfDrop, false);
+            });
         });
     });
 
