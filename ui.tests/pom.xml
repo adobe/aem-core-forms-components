@@ -160,9 +160,6 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
-                                <configuration>
-                                    <arguments>install --force</arguments>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -237,7 +234,6 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install --force</arguments>
                                     <skip>${skipTests}</skip>
                                 </configuration>
                             </execution>
@@ -304,9 +300,6 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
-                                <configuration>
-                                    <arguments>install --force</arguments>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
