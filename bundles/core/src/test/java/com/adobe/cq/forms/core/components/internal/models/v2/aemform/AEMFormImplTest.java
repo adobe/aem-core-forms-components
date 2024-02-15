@@ -150,14 +150,20 @@ public class AEMFormImplTest {
     }
 
     @Test
-    void testTitlePageLanguageEmpty() throws Exception {
-        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+    void testTitlePageLanguage() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_LANG);
         assertEquals("AEM Form", aemform.getTitle());
     }
 
     @Test
-    void testTitlePageLanguage() throws Exception {
-        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_LANG);
-        assertEquals("AEM Form", aemform.getTitle());
+    void testFormTitleTranslationNoResource() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(GRID_LANG + "/aemformv2_formTitle");
+        assertEquals("", aemform.getTitle());
+    }
+
+    @Test
+    void testFormTitleTranslation() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        assertEquals("Test", aemform.getTitle());
     }
 }

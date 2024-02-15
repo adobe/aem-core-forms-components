@@ -28,6 +28,7 @@
                                 <items jcr:primaryType="nt:unstructured">
                                     <title
                                             jcr:primaryType="nt:unstructured"
+                                            granite:class="cmp-adaptiveform-aemform__title"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                             fieldLabel="Title"
                                             name="./jcr:title"/>

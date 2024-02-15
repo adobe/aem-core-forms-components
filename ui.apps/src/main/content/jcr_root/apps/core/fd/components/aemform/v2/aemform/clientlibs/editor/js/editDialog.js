@@ -57,7 +57,7 @@
     function toggleTitleVisibility() {
         let dialog = $(EDIT_DIALOG);
         let checkbox = dialog.find(IFRAME_CHECKBOX);
-        let titleField = dialog.find(".coral-Form-fieldwrapper input[name='./jcr:title']");
+        let titleField = dialog.find(".cmp-adaptiveform-aemform__title");
 
         if (checkbox.prop('checked')) {
             titleField.parent().hide();
