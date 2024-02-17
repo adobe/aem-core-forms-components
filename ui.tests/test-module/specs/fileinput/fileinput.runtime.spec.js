@@ -107,6 +107,19 @@ describe("Form with File Input - Basic Tests", () => {
                 checkHTML(id, field.getModel().getState())
         });
     })
+    it(" after attaching the file widget value is reset to allow duplicate file ", () => {
+        const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
+        cy.get(fileInput).should('have.value', "");
+        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
+            cy.get(fileInput).should(($element) => {
+                const actualValue = $element.val();
+                expect(actualValue.includes("")).to.be.true;
+            })
+        })
+
+
+    });
 
     it(" model's changes are reflected in the html ", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
