@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -32,6 +35,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
@@ -50,10 +55,12 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -62,6 +69,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
+
+    private static final Logger logger = LoggerFactory.getLogger(FormContainerImpl.class);
 
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
@@ -368,6 +377,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getName() {
         return FormContainer.super.getName();
+    }
+
+    @JsonIgnore
+    public String getFormDefinition() {
+        String result = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Writer writer = new StringWriter();
+            // return publish view specific properties only for runtime
+            mapper.writerWithView(Views.Publish.class).writeValue(writer, this);
+            result = writer.toString();
+        } catch (IOException e) {
+            logger.error("Unable to generate json from resource");
+        }
+        return result;
     }
 
 }

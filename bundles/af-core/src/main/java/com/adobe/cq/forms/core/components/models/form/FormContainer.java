@@ -370,4 +370,9 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    @JsonIgnore
+    default String getFormDefinition() {
+        return null;
+    }
+
 }
