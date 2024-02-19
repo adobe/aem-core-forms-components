@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Adaptive Form Password Input field"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          extraClientlibs="[core.forms.components.passwordinput.v1.editor]"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_passwordinput_v1"
+          trackingFeature="core-components:adaptiveform-passwordinput:v1">
+    <content
+            granite:class="cmp-adaptiveform-passwordinput__editdialog"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <value
+                                                    wrapperClass="cmp-adaptiveform-passwordinput__value"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Default value"
+                                                    name="./default"/>
+                                            <multiLine
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./multiLine"
+                                                    text="Allow multiple lines"
+                                                    value="true"/>
+                                            <autocomplete
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                                    fieldLabel="Autofill attribute"
+                                                    forceSelection="{Boolean}true"
+                                                    name="./autocomplete"
+                                                    value="off">
+                                                <options
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <off
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="off"
+                                                            value="off"/>
+                                                </items>
+                                            </autocomplete>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <validation
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <maxLength
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-passwordinput__maxlength"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue=""
+                                                    fieldLabel="Maximum Number of characters"
+                                                    min="0"
+                                                    name="./maxLength"/>
+                                            <maxLengthMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldDescription="Error message shown when more than maximum characters are entered."
+                                                    granite:class="cmp-adaptiveform-base__maxlengthmessage"
+                                                    fieldLabel="Maximum characters error message"
+                                                    name="./maxLengthMessage"/>
+                                            <minLength
+                                                    jcr:primaryType="nt:unstructured"
+                                                    wrapperClass="cmp-adaptiveform-passwordinput__minlength"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                                    defaultValue=""
+                                                    fieldLabel="Minimum number of characters"
+                                                    min="0"
+                                                    name="./minLength"/>
+                                            <minLengthMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldDescription="Error message shown when less than minimum characters are entered."
+                                                    granite:class="cmp-adaptiveform-base__minlengthmessage"
+                                                    fieldLabel="Minimum characters error message"
+                                                    name="./minLengthMessage"/>
+                                            <validationPatternGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Validation Pattern"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                                    title="Validation Pattern">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <validationPatternType
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-passwordinput__validationpattern"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Type"
+                                                            name="./validationPatternType">
+                                                        <datasource
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                fieldType="password-input"
+                                                                type="formatters"/>
+                                                    </validationPatternType>
+                                                    <validateFormat
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-passwordinput__validationformat"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Regular Expression is permitted."
+                                                            fieldLabel="Pattern"
+                                                            name="./pattern">
+                                                    </validateFormat>
+                                                    <validatePictureClauseMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Error message"
+                                                            name="./validatePictureClauseMessage"/>
+                                                </items>
+                                            </validationPatternGroup>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </validation>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Help Content"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </help>
+                    <accessibility
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Accessibility"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </accessibility>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
