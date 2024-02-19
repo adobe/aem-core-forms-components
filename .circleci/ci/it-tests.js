@@ -71,6 +71,8 @@ try {
         // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
         extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
     }
+    // explicitly add the rum bundle, since it is only available on publish tier
+    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar`;
 
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
