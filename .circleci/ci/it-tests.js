@@ -123,7 +123,7 @@ try {
                                             http://localhost:4502/system/console/bundles`;
             ci.sh(installWebVitalBundle);
             // get the bundle id
-            const webVitalBundleId = ci.sh("curl -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'");
+            const webVitalBundleId = ci.sh("curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'");
             console.log("Web Vital Bundle Id " + webVitalBundleId);
             if (webVitalBundleId) {
                 // start the web vital bundle
