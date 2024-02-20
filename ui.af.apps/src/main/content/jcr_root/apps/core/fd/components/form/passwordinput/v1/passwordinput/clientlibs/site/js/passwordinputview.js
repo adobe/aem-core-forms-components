@@ -35,11 +35,13 @@
             description: `.${PasswordInput.bemBlock}__longdescription`,
             qm: `.${PasswordInput.bemBlock}__questionmark`,
             errorDiv: `.${PasswordInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${PasswordInput.bemBlock}__shortdescription`
+            tooltipDiv: `.${PasswordInput.bemBlock}__shortdescription`,
+            showPasswordButton: `.${PasswordInput.bemBlock}__showpassword` // Selector for the show password button
         };
 
         constructor(params) {
             super(params);
+            this.showPassword = false; // State to track visibility of password
         }
 
         getWidget() {
@@ -66,6 +68,16 @@
             return this.element.querySelector(PasswordInput.selectors.qm);
         }
 
+        getShowPasswordButton() {
+            return this.element.querySelector(PasswordInput.selectors.showPasswordButton);
+        }
+
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+            this.getWidget().type = this.showPassword ? 'text' : 'password';
+            this.getShowPasswordButton().setAttribute('aria-pressed', this.showPassword.toString());
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widget.value !== '') {
@@ -77,6 +89,9 @@
             });
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
+            });
+            this.getShowPasswordButton().addEventListener('click', (e) => {
+                this.togglePasswordVisibility();
             });
         }
     }

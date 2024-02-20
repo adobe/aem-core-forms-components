@@ -40,12 +40,6 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                     fieldLabel="Default value"
                                                     name="./default"/>
-                                            <multiLine
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    name="./multiLine"
-                                                    text="Allow multiple lines"
-                                                    value="true"/>
                                             <autocomplete
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
@@ -136,8 +130,7 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldDescription="Regular Expression is permitted."
                                                             fieldLabel="Pattern"
-                                                            name="./pattern">
-                                                    </validateFormat>
+                                                            name="./pattern"/>
                                                     <validatePictureClauseMessage
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"

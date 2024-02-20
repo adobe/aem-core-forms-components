@@ -15,7 +15,6 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.PasswordInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
@@ -45,17 +44,8 @@ public class PasswordInputImpl extends AbstractFieldImpl implements PasswordInpu
     protected String autocomplete;
 
     @Override
-    public boolean isMultiLine() {
-        return multiLine;
-    }
-
-    @Override
     public String getFieldType() {
-        if (isMultiLine()) {
-            return FieldType.MULTILINE_INPUT.getValue();
-        } else {
-            return super.getFieldType();
-        }
+        return super.getFieldType();
     }
 
     @Override

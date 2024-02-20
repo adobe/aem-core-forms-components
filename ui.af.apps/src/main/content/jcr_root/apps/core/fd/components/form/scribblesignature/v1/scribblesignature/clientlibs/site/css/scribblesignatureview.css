@@ -14,34 +14,30 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-passwordinput {
+.cmp-adaptiveform-scribblesignature {
 
 }
 
-.cmp-adaptiveform-passwordinput__widget {
+.cmp-adaptiveform-scribblesignature__widget {
 
 }
-textarea.cmp-adaptiveform-passwordinput__widget{
-
-}
-
-.cmp-adaptiveform-passwordinput__label {
-
-}
-.cmp-adaptiveform-passwordinput__label-container{
+textarea.cmp-adaptiveform-scribblesignature__widget{
 
 }
 
-.cmp-adaptiveform-passwordinput__longdescription {
-}
+.cmp-adaptiveform-scribblesignature__label {
 
-.cmp-adaptiveform-passwordinput__shortdescription {
 }
-
-.cmp-adaptiveform-passwordinput__questionmark {
+.cmp-adaptiveform-scribblesignature__label-container{
 
 }
 
-.cmp-adaptiveform-passwordinput__showpassword {
+.cmp-adaptiveform-scribblesignature__longdescription {
+}
+
+.cmp-adaptiveform-scribblesignature__shortdescription {
+}
+
+.cmp-adaptiveform-scribblesignature__questionmark {
 
 }

@@ -18,12 +18,9 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-passwordinput__editdialog",
-        PASSWORDINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__allowrichtext",
         PASSWORDINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__maxlength",
         PASSWORDINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__minlength",
-        BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
         PASSWORDINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__value",
-        PASSWORDINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__richtextvalue",
         PASSWORDINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__validationpattern",
         PASSWORDINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-passwordinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
