@@ -71,8 +71,6 @@ try {
         // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
         extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
     }
-    // explicitly add the rum bundle, since it is only available on publish tier
-    extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar`;
 
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
@@ -113,6 +111,19 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        if (AEM && AEM.includes("addon")) {
+            // explicitly add the rum bundle, since it is only available on publish tier
+            // upload webvitals and disable api region
+            const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
+            ci.sh(disableApiRegion);
+
+            const installWebVitalBundle = `curl -u admin:admin \
+                                            -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
+                                            -F name='com.adobe.granite.webvitals' \
+                                            -F action=install \
+                                            http://localhost:4502/system/console/bundles`;
+            ci.sh(installWebVitalBundle);
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests
