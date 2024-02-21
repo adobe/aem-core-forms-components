@@ -22,6 +22,7 @@ use(function () {
   var longDescriptionPath = "core/fd/components/af-commons/v1/fieldTemplates/longDescription.html";
   var questionMarkPath = "core/fd/components/af-commons/v1/fieldTemplates/questionMark.html"
   var errorMessagePath = "core/fd/components/af-commons/v1/fieldTemplates/errorMessage.html";
+  var characterCounterPath = "core/fd/components/af-commons/v1/fieldTemplates/characterCounter.html";
 
   return {
     labelPath: labelPath,
@@ -29,6 +30,7 @@ use(function () {
     longDescriptionPath: longDescriptionPath,
     questionMarkPath: questionMarkPath,
     errorMessagePath: errorMessagePath,
+    characterCounterPath: characterCounterPath,
     clientlibs: clientlibsArr
   }
 });
