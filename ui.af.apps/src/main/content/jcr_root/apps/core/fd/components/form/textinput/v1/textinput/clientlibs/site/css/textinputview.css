@@ -41,3 +41,12 @@ textarea.cmp-adaptiveform-textinput__widget{
 .cmp-adaptiveform-textinput__questionmark {
 
 }
+.cmp-adaptiveform-textinput__charcounter {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    font-size: small;
+}
+.cmp-adaptiveform-textinput__charcount {
+ font-weight: bold;
+}

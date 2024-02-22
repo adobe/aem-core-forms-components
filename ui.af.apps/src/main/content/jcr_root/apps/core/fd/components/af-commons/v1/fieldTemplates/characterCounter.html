@@ -1,0 +1,6 @@
+<template data-sly-template.characterCounter="${@ componentId, showCharCounter, maxLength, bemBlock}">
+  <div data-sly-test="${showCharCounter}" class="${bemBlock}__charcounter">
+    <span class="${bemBlock}__charcount">0</span>
+    <span data-sly-test="${maxLength}" class="${bemBlock}__maxchar">/${maxLength}</span>
+  </div>
+</template>

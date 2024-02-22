@@ -213,6 +213,14 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <showCharCounter
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="{Boolean}false"
+                                                    fieldLabel="Show Character Counter?"
+                                                    name="./showCharCounter"
+                                                    text="Show Character Counter?"
+                                                    value="true"/>
                                             <maxLength
                                                     jcr:primaryType="nt:unstructured"
                                                     wrapperClass="cmp-adaptiveform-textinput__maxlength"

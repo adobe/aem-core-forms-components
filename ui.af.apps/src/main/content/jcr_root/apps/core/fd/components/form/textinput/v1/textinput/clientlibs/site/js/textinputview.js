@@ -34,7 +34,8 @@
             description: `.${TextInput.bemBlock}__longdescription`,
             qm: `.${TextInput.bemBlock}__questionmark`,
             errorDiv: `.${TextInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`
+            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`,
+            counterSpan: `.${TextInput.bemBlock}__charcount`
         };
 
         constructor(params) {
@@ -64,6 +65,9 @@
         getQuestionMarkDiv() {
             return this.element.querySelector(TextInput.selectors.qm);
         }
+        getCounterSpan() {
+            return this.element.querySelector(TextInput.selectors.counterSpan);
+        }
 
         setModel(model) {
             super.setModel(model);
@@ -77,6 +81,19 @@
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
             });
+            this.setupCharacterCounter();
+        }
+
+        setupCharacterCounter() {
+        	const counterSpan = this.getCounterSpan();
+        	const updateCharacterCounter = () => {
+        		const charCount = this.widget.value.length;
+        		if (counterSpan) {
+        			counterSpan.textContent = charCount;
+        		}
+        	};
+        	this.widget.addEventListener('input', updateCharacterCounter);
+        	updateCharacterCounter(); // Set the initial character count
         }
     }
 

@@ -19,6 +19,7 @@
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.characterCounter="${renderer.characterCounterPath}"
      data-sly-use.longDescription="${renderer.longDescriptionPath}"
      data-sly-use.errorMessage="${renderer.errorMessagePath}"
      data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
@@ -65,6 +66,7 @@
            minlength="${text.minLength}"
            maxlength="${text.maxLength}"
            dir="auto"/>
+    <div data-sly-call="${characterCounter.characterCounter @componentId=text.id, showCharCounter=text.showCharCounter, maxLength=text.maxLength, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=text.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>

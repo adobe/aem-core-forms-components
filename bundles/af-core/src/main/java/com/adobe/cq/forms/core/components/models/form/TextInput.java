@@ -63,4 +63,14 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
         return null;
     }
 
+    /**
+     * Returns {@code true} if character counter needs to be shown, otherwise {@code false}.
+     *
+     * @return {@code true} if character counter needs to be shown, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @JsonProperty("showCharCounter")
+    default boolean showCharCounter() {
+        return false;
+    }
 }
