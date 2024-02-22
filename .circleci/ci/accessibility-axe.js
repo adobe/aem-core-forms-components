@@ -51,7 +51,7 @@ const calculateAccessibility = async () => {
         });
         await driver.getPageSource();
 
-        const axeBuilder = new AxeBuilder(driver);
+        const axeBuilder = new AxeBuilder(driver).withTags(['wcag2a', 'wcag2aa', 'wcag2aaa']);
         const results = await axeBuilder.analyze();
         const reportHTML = createHtmlReport({
           results: results,
