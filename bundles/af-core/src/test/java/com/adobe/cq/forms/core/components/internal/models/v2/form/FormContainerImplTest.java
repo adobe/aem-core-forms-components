@@ -66,6 +66,7 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
+    private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2withspecversion";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
@@ -135,6 +136,20 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
         assertNotNull(formContainer.getId());
         assertEquals("L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=", formContainer.getId());
+    }
+
+    @Test
+    void testGetAdaptiveFormCustomVersion() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_SPEC, FormContainer.class, context);
+        assertNotNull(formContainer.getAdaptiveFormVersion());
+        assertEquals("x.y.z", formContainer.getAdaptiveFormVersion());
+    }
+
+    @Test
+    void testGetAdaptiveFormDefaultVersion() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNotNull(formContainer.getAdaptiveFormVersion());
+        assertEquals("0.12.1", formContainer.getAdaptiveFormVersion());
     }
 
     @Test

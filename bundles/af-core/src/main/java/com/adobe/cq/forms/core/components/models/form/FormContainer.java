@@ -64,6 +64,8 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
+    String DEFAULT_FORMS_SPEC_VERSION = "0.12.1";
+
     /**
      * Returns form metadata {@link FormMetaData}
      *
@@ -80,7 +82,7 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
-        return "0.12.1";
+        return DEFAULT_FORMS_SPEC_VERSION;
     }
 
     /*
