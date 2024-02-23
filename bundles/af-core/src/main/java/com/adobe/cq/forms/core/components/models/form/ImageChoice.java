@@ -16,10 +16,11 @@
 
 package com.adobe.cq.forms.core.components.models.form;
 
-import org.osgi.annotation.versioning.ConsumerType;
-import com.adobe.cq.forms.core.components.internal.models.v1.form.ImageItem;
-
 import java.util.List;
+
+import org.osgi.annotation.versioning.ConsumerType;
+
+import com.adobe.cq.forms.core.components.internal.models.v1.form.ImageItem;
 
 /**
  * Defines the form {@code ImageChoice} Sling Model used for the {@code /apps/core/fd/components/form/imagechoice/v1/imagechoice}
@@ -28,7 +29,7 @@ import java.util.List;
  * @since com.adobe.cq.forms.core.components.models.form 1.0.0
  */
 @ConsumerType
-public interface ImageChoice extends Field, OptionsConstraint {
+public interface ImageChoice extends Field {
 
     /**
      * Returns the type of selection for the image choice component, either single or multiple selection.

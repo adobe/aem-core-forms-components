@@ -26,7 +26,7 @@ BLOCK cmp-adaptiveform-imagechoice
 
 
 .cmp-adaptiveform-imagechoice {
-    /* Base styles for the image choice component */
+
 }
 
 .cmp-adaptiveform-imagechoice__widget {
@@ -56,47 +56,26 @@ BLOCK cmp-adaptiveform-imagechoice
 }
 
 .cmp-adaptiveform-imagechoice__options {
-    /* Styles for the options container */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Adjust the space between options */
+
 }
 
 .cmp-adaptiveform-imagechoice__option {
-    /* Styles for each option */
-    border: 1px solid #ccc; /* Border for the option */
-    border-radius: 4px; /* Rounded corners for the option */
-    padding: 5px; /* Padding inside the option */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    position: relative; /* Position relative for absolute positioning of child elements */
+
 }
 
 .cmp-adaptiveform-imagechoice__option--selected {
-    /* Styles for the selected option */
-    border-color: #007bff; /* Highlight color for selected option */
+
 }
 
 .cmp-adaptiveform-imagechoice__option input[type="checkbox"],
 .cmp-adaptiveform-imagechoice__option input[type="radio"] {
-    /* Hide the actual checkbox and radio inputs */
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+
 }
 
 .cmp-adaptiveform-imagechoice__option-label {
-    /* Styles for the option label (image) */
-    display: block;
-    width: 100%;
-    height: 100%;
+
 }
 
 .cmp-adaptiveform-imagechoice__option-image {
-    /* Styles for the image inside the option */
-    width: 100%; /* Make image take full width of the label */
-    height: auto; /* Adjust height automatically */
-    display: block; /* Display block to remove bottom space under image */
-}
 
-/* Add any additional styles or overrides as needed */
+}
