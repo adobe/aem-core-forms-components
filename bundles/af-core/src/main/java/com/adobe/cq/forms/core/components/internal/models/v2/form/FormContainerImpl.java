@@ -27,11 +27,8 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-<<<<<<< HEAD
 import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
-=======
 import org.apache.sling.models.annotations.Default;
->>>>>>> master
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
