@@ -42,7 +42,5 @@
   "format": "date",
   "minimum": "2022-02-04",
   "maximum": "2022-02-09",
-  "exclusiveMinimum": "2022-02-05",
-  "exclusiveMaximum": "2022-02-08",
   ":type": "core/fd/components/form/datepicker/v1/datepicker"
 }
