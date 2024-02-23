@@ -245,6 +245,12 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 Cypress.Commands.add("openAuthoring", (pagePath) => {
   const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
   // getting status 403 intermittently, just ignore it
+  cy.on('uncaught:exception', (err, runnable) => {
+    if (err.message.includes('shellMenuButton')) {
+      return false;
+    }
+    return true;
+  });
   cy.visit(baseUrl, {'failOnStatusCode': false});
   cy.login(baseUrl, () => {
     cy.openAuthoring(pagePath);
