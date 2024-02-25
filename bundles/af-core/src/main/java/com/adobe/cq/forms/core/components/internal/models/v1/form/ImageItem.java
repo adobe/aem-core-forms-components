@@ -18,20 +18,19 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.Optional;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 @Model(adaptables = Resource.class)
 public class ImageItem {
 
-    @ValueMapValue
+    @ValueMapValue(name = "key")
     private String key;
 
-    @ValueMapValue
+    @ValueMapValue(name = "value")
     private String value;
 
-    @ValueMapValue
-    @Optional
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "altText")
     private String altText;
 
     public String getKey() {
