@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.ImageChoice;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,6 +48,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageChoice {
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "orientation")
+    @Nullable
+    protected String orientationJcr;
+    private CheckBox.Orientation orientation;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "selectionType")
     @Nullable
     protected String selectionType;
@@ -55,17 +62,26 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
     @Optional
     protected List<ImageItem> options = new ArrayList<>();
 
-    public ImageChoiceImpl() {
-        // No-argument constructor
+    @PostConstruct
+    private void initImageChoiceModel() {
+        orientation = CheckBox.Orientation.fromString(orientationJcr);
     }
 
     @Override
     public @NotNull Map<String, Object> getCustomLayoutProperties() {
         Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
+        if (orientation != null) {
+            customLayoutProperties.put("orientation", orientation);
+        }
         if (selectionType != null) {
             customLayoutProperties.put("selectionType", selectionType);
         }
         return customLayoutProperties;
+    }
+
+    @JsonIgnore
+    public CheckBox.Orientation getOrientation() {
+        return orientation;
     }
 
     @JsonIgnore

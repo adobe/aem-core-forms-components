@@ -38,18 +38,18 @@
         <div data-sly-call="${label.label @ componentId=widgetId, labelValue=imagechoice.label.value, labelVisible=imagechoice.label.visible, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @ componentId=imagechoice.id, longDescription=imagechoice.description, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></div>
     </div>
-    <div class="cmp-adaptiveform-imagechoice__widget" id="${widgetId}">
+    <div class="cmp-adaptiveform-imagechoice__widget ${imagechoice.orientation}" id="${widgetId}">
         <div data-sly-list.option="${imagechoice.options}" data-sly-unwrap>
-            <div class="cmp-adaptiveform-imagechoice__option" data-sly-test.optionKey="${option.key}" data-sly-test.optionValue="${option.value}" data-sly-test.optionAltText="${option.altText || true}">
-                <label class="cmp-adaptiveform-imagechoice__option-label">
-                    <input class="cmp-adaptiveform-imagechoice__option-input"
+            <div class="cmp-adaptiveform-imagechoice__option ${imagechoice.name}">
+                <label class="cmp-adaptiveform-imagechoice__option-label" title="${imagechoice.tooltipVisible ? '' : imagechoice.tooltipText}">
+                    <input class="cmp-adaptiveform-imagechoice__option__widget"
                            type="${imagechoice.selectionType == 'multiple' ? 'checkbox' : 'radio'}"
                            name="${imagechoice.name}"
-                           value="${optionKey}"
-                           data-cmp-hook-imagechoice="option"
-                           data-imagechoice-path="${optionValue}"
-                           data-sly-test.optionId="${widgetId}-${optionKey}">
-                    <img src="${optionValue}" alt="${optionAltText}">
+                           value="${imagechoice.options[optionList.index].key}"
+                           checked="${imagechoice.options[optionList.index].key.toString in imagechoice.default }"
+                           disabled="${!imagechoice.enabled || imagechoice.readOnly}"
+                           aria-readonly="${imagechoice.readOnly ? 'true' : ''}">
+                    <img src="${imagechoice.options[optionList.index].value}" alt="${imagechoice.options[optionList.index].altText || true}">
                 </label>
             </div>
         </div>
