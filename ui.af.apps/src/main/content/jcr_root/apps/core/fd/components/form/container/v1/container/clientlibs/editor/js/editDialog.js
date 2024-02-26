@@ -328,30 +328,30 @@
 
     function showPostUrlTextField(dialog) {
         let enableRestEndpointCheckboxElement = dialog.find(REST_END_POINT_POST_CHECK_BOX)[0],
-            restEndPointConfig = Utils.selectElement("coral-radio", './restEndPointConfig'), isPostUrlSelected = false,
+            restEndPointSource = Utils.selectElement("coral-radio", './restEndPointSource'), isPostUrlSelected = false,
             restEndPointUrlTextBox = Utils.selectElement("input", './restEndpointPostUrl')[0],
-            restEndpointConfigPathSelectBox = Utils.selectElement("input", './restEndpointConfigPath')[0];
+            restEndpointConfigPath = Utils.selectElement("input", './restEndpointConfigPath')[0];
 
         if (enableRestEndpointCheckboxElement != null && enableRestEndpointCheckboxElement.checked == true) {
-            restEndPointConfig.parent('div').parent('div').show();
-            Utils.showComponent(restEndPointConfig, 'div');
-            restEndPointConfig.each(function (i, obj) {
+            restEndPointSource.parent('div').parent('div').show();
+            Utils.showComponent(restEndPointSource, 'div');
+            restEndPointSource.each(function (i, obj) {
                 if (obj.checked && obj.value === "posturl") {
                     isPostUrlSelected = true;
                 }
             });
-            if(restEndPointConfig.length == 0 || isPostUrlSelected){
+            if(restEndPointSource.length == 0 || isPostUrlSelected){
                 Utils.showComponent(restEndPointUrlTextBox, 'div');
-                Utils.hideComponent(restEndpointConfigPathSelectBox, 'div');
+                Utils.hideComponent(restEndpointConfigPath, 'div');
             } else {
-                Utils.showComponent(restEndpointConfigPathSelectBox, 'div');
+                Utils.showComponent(restEndpointConfigPath, 'div');
                 Utils.hideComponent(restEndPointUrlTextBox, 'div');
             }
         } else {
-            Utils.hideComponent(restEndPointConfig, 'div');
+            Utils.hideComponent(restEndPointSource, 'div');
             Utils.hideComponent(restEndPointUrlTextBox, 'div');
-            Utils.hideComponent(restEndpointConfigPathSelectBox, 'div');
-            restEndPointConfig.parent('div').parent('div').hide();
+            Utils.hideComponent(restEndpointConfigPath, 'div');
+            restEndPointSource.parent('div').parent('div').hide();
         }
     }
 
