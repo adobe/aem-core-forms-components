@@ -74,13 +74,15 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Integer maxLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
-    @Nullable
-    protected Long maximum;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
     @Nullable
-    protected Long minimum;
+    protected String dorColspan;
+
+    /** number and date constraint **/
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
     @Nullable
@@ -90,29 +92,23 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Date maximumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
     @Nullable
-    protected Long exclusiveMinimum;
+    protected Long maximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @Nullable
+    protected Long minimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @Default(booleanValues = false)
+    protected boolean exclusiveMinimum;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
-    @Nullable
-    protected Long exclusiveMaximum;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumDate")
-    @Nullable
-    protected Date exclusiveMinimumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumDate")
-    @Nullable
-    protected Date exclusiveMaximumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
     @Default(booleanValues = false)
-    protected boolean dorExclusion;
+    protected boolean exclusiveMaximum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
-    @Nullable
-    protected String dorColspan;
+    /** number and date constraint **/
 
     /**
      * Returns dorBindRef of the form field

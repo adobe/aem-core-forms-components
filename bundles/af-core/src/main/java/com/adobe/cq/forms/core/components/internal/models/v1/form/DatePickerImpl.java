@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Date;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
@@ -44,6 +46,9 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
     @SlingObject
     private Resource resource;
 
+    private Date exclusiveMinimumVaue;
+    private Date exclusiveMaximumValue;
+
     @Override
     public Date getMinimumDate() {
         return ComponentUtils.clone(minimumDate);
@@ -56,12 +61,12 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
     @Override
     public Date getExclusiveMaximumDate() {
-        return ComponentUtils.clone(exclusiveMaximumDate);
+        return ComponentUtils.clone(exclusiveMaximumValue);
     }
 
     @Override
     public Date getExclusiveMinimumDate() {
-        return ComponentUtils.clone(exclusiveMinimumDate);
+        return ComponentUtils.clone(exclusiveMinimumVaue);
     }
 
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
@@ -75,5 +80,18 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
             res.put(ConstraintType.MAXIMUM, msg);
         }
         return res;
+    }
+
+    @PostConstruct
+    private void initDatePicker() {
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumDate, null);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumDate, null);
+        // in json either, exclusiveMaximum or maximum should be present
+        if (exclusiveMaximumValue != null) {
+            maximumDate = null;
+        }
+        if (exclusiveMinimumVaue != null) {
+            minimumDate = null;
+        }
     }
 }
