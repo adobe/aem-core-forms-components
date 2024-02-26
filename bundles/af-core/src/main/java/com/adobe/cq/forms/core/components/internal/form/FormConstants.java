@@ -59,6 +59,9 @@ public final class FormConstants {
     /** The resource type for number input v1 */
     public static final String RT_FD_FORM_NUMBER_INPUT_V1 = RT_FD_FORM_PREFIX + "numberinput/v1/numberinput";
 
+    /** The resource type for number input v1 */
+    public static final String RT_FD_FORM_NUMBER_STEPPER_V1 = RT_FD_FORM_PREFIX + "numberstepper/v1/numberstepper";
+
     /** The resource type for drop down v1 */
     public static final String RT_FD_FORM_DROP_DOWN_V1 = RT_FD_FORM_PREFIX + "dropdown/v1/dropdown";
 
