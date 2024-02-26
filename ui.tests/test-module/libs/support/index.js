@@ -100,6 +100,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    //Cannot read properties of undefined (reading 'shellMenuButton')
+    // Logged issue: CUI-7466, no functional issue, hence skipping this in test
+    if (err.message.includes("reading 'shellMenuButton'")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
