@@ -24,29 +24,29 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 @Model(adaptables = Resource.class)
 public class ImageItem {
 
-    @ValueMapValue(name = "key")
-    private String key;
+    @ValueMapValue(name = "imageSrc")
+    private String imageSrc;
 
-    @ValueMapValue(name = "value")
-    private String value;
+    @ValueMapValue(name = "imageValue")
+    private String imageValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "altText")
     private String altText;
 
-    public String getKey() {
-        return key;
+    public String getImageSrc() {
+        return imageSrc;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
-    public String getValue() {
-        return value;
+    public String getImageValue() {
+        return imageValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setImageValue(String imageValue) {
+        this.imageValue = imageValue;
     }
 
     public String getAltText() {
