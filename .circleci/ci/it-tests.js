@@ -111,6 +111,25 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        if (AEM && AEM.includes("addon")) {
+            // explicitly add the rum bundle, since it is only available on publish tier
+            // upload webvitals and disable api region
+            const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
+            ci.sh(disableApiRegion);
+            const installWebVitalBundle = `curl -u admin:admin \
+                                            -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
+                                            -F name='com.adobe.granite.webvitals' \
+                                            -F action=install \
+                                            http://localhost:4502/system/console/bundles`;
+            ci.sh(installWebVitalBundle);
+            // get the bundle id
+            const webVitalBundleId = ci.sh("curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'", true);
+            console.log("Web Vital Bundle Id " + webVitalBundleId);
+            if (webVitalBundleId) {
+                // start the web vital bundle
+                ci.sh(`curl -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${webVitalBundleId}`)
+            }
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests
