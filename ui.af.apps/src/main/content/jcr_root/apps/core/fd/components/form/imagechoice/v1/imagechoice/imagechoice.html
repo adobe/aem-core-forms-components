@@ -45,11 +45,11 @@
                     <input class="cmp-adaptiveform-imagechoice__option__widget"
                            type="${imagechoice.selectionType == 'multiple' ? 'checkbox' : 'radio'}"
                            name="${imagechoice.name}"
-                           value="${imagechoice.options[optionList.index].key}"
-                           checked="${imagechoice.options[optionList.index].key.toString in imagechoice.default }"
+                           value="${imagechoice.options[optionList.index].imageValue}"
+                           checked="${imagechoice.options[optionList.index].imageValue.toString in imagechoice.default }"
                            disabled="${!imagechoice.enabled || imagechoice.readOnly}"
                            aria-readonly="${imagechoice.readOnly ? 'true' : ''}">
-                    <img src="${imagechoice.options[optionList.index].value}" alt="${imagechoice.options[optionList.index].altText || true}">
+                    <img src="${imagechoice.options[optionList.index].imageSrc}" alt="${imagechoice.options[optionList.index].altText || true}">
                 </label>
             </div>
         </div>

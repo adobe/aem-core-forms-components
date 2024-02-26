@@ -86,17 +86,17 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
                                                             <items jcr:primaryType="nt:unstructured">
-                                                                <key
+                                                                <value
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldLabel="Key"
-                                                                        name="./key"
+                                                                        fieldLabel="Data Value"
+                                                                        name="./imageValue"
                                                                         required="{Boolean}true"/>
-                                                                <value
+                                                                <image
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                         fieldLabel="Image"
-                                                                        name="./value"
+                                                                        name="./imageSrc"
                                                                         required="{Boolean}true"
                                                                         rootPath="/content/dam"/>
                                                                 <alt
