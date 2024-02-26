@@ -88,8 +88,8 @@
         "$event.payload"
       ]
     },
-    "exclusiveMinimumCheck" : true,
-    "exclusiveMaximumCheck" : true,
+    "excludeMinimumCheck" : true,
+    "excludeMaximumCheck" : true,
     "exclusiveMinimum" : 10002,
     "exclusiveMaximum" : 2000002,
     "minimum" : 10002,

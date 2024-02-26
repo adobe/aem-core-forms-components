@@ -20,14 +20,13 @@
         NUMERICINPUT_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__type",
         NUMERICINPUT_MAXIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__maximum",
         NUMERICINPUT_EXCLUDEMAXCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMaximumCheck",
-        NUMERICINPUT_EXCLUSIVEMAX = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__exclusiveMaximum",
         NUMERICINPUT_MINIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__minimum",
         NUMERICINPUT_EXCLUDEMINCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMinimumCheck",
-        NUMERICINPUT_EXCLUSIVEMIN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__exclusiveMinimum",
         NUMERICINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displaypattern",
         NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
+    /**
     function handleTypeDropdown(dialog) {
         var typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
         _manageLeadDigitsAndFracDigits();
@@ -36,8 +35,6 @@
         function _manageLeadDigitsAndFracDigits(){
             var typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
             let selectedValue=typeDropdownComponent.value;
-            let fracDigitsElement = dialog.find(NUMERICINPUT_FRACDIGITS);
-            let leadDigitsElement = dialog.find(NUMERICINPUT_LEADDIGITS);
             let fracDigitsParentDivElem = (fracDigitsElement).closest("div")[0];
 
             if(selectedValue === 'number'){
@@ -51,23 +48,7 @@
             }
         }
     }
-
-    function handleDialogSubmit(dialog){
-        var submitButton=dialog.find(".cq-dialog-submit")[0];
-        submitButton.addEventListener("click",_manageDialogSubmit);
-        function _manageDialogSubmit(){
-            var leadDigitsElement = dialog.find(NUMERICINPUT_LEADDIGITS)[0];
-            var fracDigitsElement = dialog.find(NUMERICINPUT_FRACDIGITS)[0];
-            var maximum = dialog.find(NUMERICINPUT_MAXIMUM)[0];
-            var excludeMaxCheck = dialog.find(NUMERICINPUT_EXCLUDEMAXCHECK)[0];
-            var exclusiveMaximum = dialog.find(NUMERICINPUT_EXCLUSIVEMAX)[0];
-            var minimum = dialog.find(NUMERICINPUT_MINIMUM)[0];
-            var excludeMinCheck = dialog.find(NUMERICINPUT_EXCLUDEMINCHECK)[0];
-            var exclusiveMinimum = dialog.find(NUMERICINPUT_EXCLUSIVEMIN)[0];
-            exclusiveMaximum.value = excludeMaxCheck.checked ? maximum.value : null;
-            exclusiveMinimum.value = excludeMinCheck.checked ? minimum.value : null;
-        }
-    }
+     **/
 
     function handleDisplayPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
@@ -77,5 +58,5 @@
         Utils.handlePatternFormat(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleTypeDropdown,handleDialogSubmit,handleDisplayPatternDropDown,handleDisplayFormat);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat);
 })(jQuery);

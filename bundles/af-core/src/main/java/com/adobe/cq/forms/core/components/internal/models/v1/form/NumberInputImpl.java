@@ -56,13 +56,13 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     protected Object exclusiveMaximum;
 
     /** Adding this for backward compatibility, not to be changed anymore **/
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumCheck")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMaximumCheck")
     @Nullable
-    private Boolean exclusiveMinimumCheck;
+    private Boolean excludeMaximumCheck;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumCheck")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMinimumCheck")
     @Nullable
-    private Boolean exclusiveMaximumCheck;
+    private Boolean excludeMinimumCheck;
     /** End **/
 
     private Long exclusiveMinimumVaue;
@@ -104,8 +104,8 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
     @PostConstruct
     private void initNumberInput() {
-        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, exclusiveMaximumCheck);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, exclusiveMinimumCheck);
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, excludeMaximumCheck);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
         // in json either, exclusiveMaximum or maximum should be present
         if (exclusiveMaximumValue != null) {
             maximum = null;
