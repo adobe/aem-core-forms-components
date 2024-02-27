@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
-$(document).ready(function() {
-     $(document).on('click', '.ssnField .fisheye', function() {
-         var type = $(".ssnField").find("input").attr("type");
-         if (type == "text") {
-             $(".ssnField").find("input").attr("type", "password");
-         }
-
-         if (type == "password") {
-             $(".ssnField").find("input").attr("type", "text");
-         }
-     });
- });
+(function() {      
+    "use strict";
+        let togglePasswordButton = document.querySelector('.cmp-adaptiveform-password .fisheye');
+        let  passwordInput = document.querySelector('input.cmp-adaptiveform-password__widget');
+     	if(togglePasswordButton && passwordInput){
+            togglePasswordButton.addEventListener('click', function () {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                } else {
+                    passwordInput.type = 'password';
+                }
+            });
+        }     
+ })();
