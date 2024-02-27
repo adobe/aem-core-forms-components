@@ -67,7 +67,7 @@ const calculateAccessibility = async () => {
         }
         console.log('node index ', nodeIndex);
 
-        if ((process.env.AEM === "addon" || process.env.AEM === "classic") && nodeIndex == 0) {
+        if ((process.env.AEM === "addon" || process.env.AEM === "classic" || process.env.AEM === "addon-latest") && nodeIndex == 0) {
 
             if (results.violations.length > 0) {
                 console.log(getAccessibilityViolationsTable(results.violations))
