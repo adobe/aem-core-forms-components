@@ -50,7 +50,7 @@ describe("Sites with Aem Embed Container", () => {
         })
 
         it('Test iframe src with dataRef', () => {
-            cy.visit(pagePath+"?dataRef='testingDataRef'")
+            cy.openPage(pagePath+"?dataRef='testingDataRef'")
             cy.get('.cmp-aemform__iframecontent').should('have.attr', 'src').should('include', "?wcmmode=DISABLED&dataRef='testingDataRef'");
           });
 
