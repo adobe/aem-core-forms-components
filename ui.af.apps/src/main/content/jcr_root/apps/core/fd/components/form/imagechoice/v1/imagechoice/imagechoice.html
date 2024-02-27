@@ -49,7 +49,7 @@
                            checked="${imagechoice.options[optionList.index].imageValue.toString in imagechoice.default }"
                            disabled="${!imagechoice.enabled || imagechoice.readOnly}"
                            aria-readonly="${imagechoice.readOnly ? 'true' : ''}">
-                    <img src="${imagechoice.options[optionList.index].imageSrc}" alt="${imagechoice.options[optionList.index].altText || true}">
+                    <img class ="cmp-adaptiveform-imagechoice__option__widget__image" src="${imagechoice.options[optionList.index].imageSrc}" alt="${imagechoice.options[optionList.index].altText || true}">
                 </label>
             </div>
         </div>
