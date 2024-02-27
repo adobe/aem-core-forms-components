@@ -435,7 +435,8 @@ Cypress.Commands.add("getFormData", () => {
 
 
 Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, cursor = "", limit = 20) => {
-  return cy.request("GET", `/adobe/forms/af/listforms?cursor=${cursor}&limit=${limit}`).then(({body}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+  return cy.request("GET", `${contextPath}/adobe/forms/af/listforms?cursor=${cursor}&limit=${limit}`).then(({body}) => {
     // We need its ID to continue nesting below it
     let retVal = body.items.find(collection => collection.path === formPath);
     if (retVal) {
@@ -452,7 +453,8 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, curs
 
 // this API is deprecated, this is not to be used anymore
 Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
-  return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+  return cy.request("GET", `${contextPath}/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
     // We need its ID to continue nesting below it
     let retVal = body.items.find(collection => collection.path === formPath);
     if (retVal) {
