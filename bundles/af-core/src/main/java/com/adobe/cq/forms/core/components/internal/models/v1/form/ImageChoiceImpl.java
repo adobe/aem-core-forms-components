@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -97,4 +98,22 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
     public Type getType() {
         return super.getType(); // Calling the getType() method of the superclass
     }
+
+    @Override
+    public Object[] getDefault() {
+        Object[] defaultValue = super.getDefault();
+        if (defaultValue != null) {
+            return Arrays.stream(defaultValue)
+                .map(p -> {
+                    if (p instanceof ImageItem) {
+                        return ((ImageItem) p).getImageValue();
+                    } else {
+                        return p;
+                    }
+                })
+                .toArray();
+        }
+        return null;
+    }
+
 }
