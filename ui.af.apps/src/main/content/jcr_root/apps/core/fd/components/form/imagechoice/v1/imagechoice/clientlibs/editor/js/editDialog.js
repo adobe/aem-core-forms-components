@@ -13,51 +13,63 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-
 (function($) {
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-imagechoice__editdialog",
-        IMAGECHOICE_SELECTIONTYPE = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__selectiontype",
-        IMAGECHOICE_OPTIONS = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__options",
+        IMAGECHOICE_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__assistprioritycustom",
+        IMAGECHOICE_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__customtext",
+        IMAGECHOICE_DATATYPE = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__type",
+        IMAGECHOICE_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-imagechoice__value",
+        IMAGECHOICE_OPTION = EDIT_DIALOG + " .cmp-adaptiveform-base__option",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
+
     /**
-     * Handles the change event for the selection type field in the dialog.
+     * Shows custom text box depending on the value of assist priority of radio button
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
      */
-    function handleSelectionTypeChange(dialog) {
-        var selectionType = dialog.find(IMAGECHOICE_SELECTIONTYPE);
-        var options = dialog.find(IMAGECHOICE_OPTIONS);
-        var updateOptionsVisibility = function() {
-            if (selectionType.val() === "single") {
-                options.find("coral-checkbox").prop("checked", false).attr("disabled", true);
+    function handleAssistPriorityChange(dialog) {
+        var assistpriority = dialog.find(IMAGECHOICE_ASSISTPRIORITY);
+        var customtext = dialog.find(IMAGECHOICE_CUSTOMTEXT);
+        var hideAndShowElements = function() {
+            if(assistpriority[0].value === "custom"){
+                customtext.show();
             } else {
-                options.find("coral-checkbox").attr("disabled", false);
+                customtext.hide();
             }
         };
-        updateOptionsVisibility();
-        dialog.on("change", IMAGECHOICE_SELECTIONTYPE, function() {
-            updateOptionsVisibility();
+        hideAndShowElements();
+        dialog.on("change", assistpriority, function() {
+            hideAndShowElements();
         });
     }
 
-    /**
-     * Initializes the dialog with the required event listeners.
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function initializeDialog(dialog) {
-        handleSelectionTypeChange(dialog);
-    }
-
-    /**
-     * Registers the initialization function to be called when the dialog is loaded.
-     */
-    $(document).on("dialog-loaded", function(event) {
-        var $dialog = event.dialog;
-        if ($dialog.length) {
-            initializeDialog($dialog);
+    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
+        IMAGECHOICE_DEFAULTVALUE + " input",
+        IMAGECHOICE_OPTION,
+        function (dialog) {
+            var selectedValue = '';
+            var checkboxSaveValue = dialog.find(IMAGECHOICE_DATATYPE + " coral-select");
+            if (checkboxSaveValue && checkboxSaveValue.length > 0) {
+                selectedValue = checkboxSaveValue[0].selectedItem ? checkboxSaveValue[0].selectedItem.value : '';
+            }
+            var dataType = '';
+            switch (selectedValue) {
+                case 'string[]':
+                    dataType = 'string';
+                    break;
+                case 'number[]':
+                    dataType = 'number';
+                    break;
+                case 'boolean[]':
+                    dataType = 'boolean';
+                    break;
+            }
+            return dataType;
         }
-    });
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleAssistPriorityChange, registerDialogValidator);
 
 })(jQuery);
