@@ -13,69 +13,107 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+(function() {
 
-(function(document, $) {
     "use strict";
+    class ImageChoice extends FormView.FormFieldBase {
 
-    // Namespace for the form components
-    var FORM_VIEW = window.FormView || {};
+        static NS = FormView.Constants.NS;
+        /**
+         * Each FormField has a data attribute class that is prefixed along with the global namespace to
+         * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
+         * data-{NS}-{IS}-x=""
+         * @type {string}
+         */
+        static IS = "adaptiveFormImageChoice";
+        static bemBlock = 'cmp-adaptiveform-imagechoice'
+        static checkboxBemBlock = 'cmp-adaptiveform-checkbox'
+        static selectors  = {
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            widgets: `.${ImageChoice.bemBlock}__widget`,
+            widget: `.${ImageChoice.bemBlock}__option__widget`,
+            widgetLabel: `.${ImageChoice.bemBlock}__label`,
+            label: `.${ImageChoice.bemBlock}__label`,
+            description: `.${ImageChoice.bemBlock}__longdescription`,
+            qm: `.${ImageChoice.bemBlock}__questionmark`,
+            errorDiv: `.${ImageChoice.bemBlock}__errormessage`,
+            tooltipDiv: `.${ImageChoice.bemBlock}__shortdescription`,
+            option:  `.${ImageChoice.bemBlock}-option`,
+            optionLabel: `${ImageChoice.bemBlock}__option-label`
+        };
 
-    // Class representing the ImageChoice component
-    FORM_VIEW.ImageChoice = function(element) {
-        this.element = element;
-        this.optionsContainer = this.element.querySelector('.cmp-adaptiveform-imagechoice__options');
-        this.selectionType = this.element.dataset.selectionType;
-        this.init();
-    };
+        constructor(params) {
+            super(params);
+            this.qm = this.element.querySelector(ImageChoice.selectors.qm)
+            this.widgetLabel = this.element.querySelector(ImageChoice.selectors.widgetLabel)
+        }
 
-    // Initialize the ImageChoice component
-    FORM_VIEW.ImageChoice.prototype.init = function() {
-        var self = this;
-        var options = this.optionsContainer.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+        getWidgets() {
+            return this.element.querySelector(ImageChoice.selectors.widgets);
+        }
 
-        // Add event listeners based on the selection type
-        if (this.selectionType === 'single') {
-            options.forEach(function(option) {
-                option.type = 'radio';
-                option.addEventListener('change', self.onSingleSelectChange.bind(self));
-            });
-        } else if (this.selectionType === 'multiple') {
-            options.forEach(function(option) {
-                option.type = 'checkbox';
-                option.addEventListener('change', self.onMultiSelectChange.bind(self));
+        getWidget() {
+          return this.element.querySelectorAll(ImageChoice.selectors.widget);
+        }
+
+        getDescription() {
+            return this.element.querySelector(ImageChoice.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(ImageChoice.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(ImageChoice.selectors.errorDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(ImageChoice.selectors.qm);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(ImageChoice.selectors.tooltipDiv);
+        }
+
+        getOptions() {
+            return this.element.querySelectorAll(ImageChoice.selectors.option);
+        }
+
+        updateEnabled(enabled, state) {
+            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+            let widgets = this.widget;
+            widgets.forEach(widget => {
+                if (enabled === false) {
+                    if(state.readOnly === false){
+                        widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
+                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                    }
+                } else if (state.readOnly === false) {
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+                }
             });
         }
-    };
 
-    // Event handler for single selection change
-    FORM_VIEW.ImageChoice.prototype.onSingleSelectChange = function(event) {
-        var selectedOption = event.target;
-        this.clearSelection();
-        selectedOption.checked = true;
-    };
+        updateReadOnly(readonly) {
+            let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
+            widgets.forEach(widget => {
+                if (readonly === true) {
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
+                    widget.setAttribute("aria-readonly", true);
+                } else {
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                    widget.removeAttribute("aria-readonly");
+                }
+            });
+        }
+    }
 
-    // Event handler for multiple selection change
-    FORM_VIEW.ImageChoice.prototype.onMultiSelectChange = function(event) {
-        // Multiple selection logic can be implemented if needed
-    };
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new ImageChoice({element, formContainer})
+    }, ImageChoice.selectors.self);
 
-    // Clear all selections
-    FORM_VIEW.ImageChoice.prototype.clearSelection = function() {
-        var options = this.optionsContainer.querySelectorAll('input[type="radio"], input[type="checkbox"]');
-        options.forEach(function(option) {
-            option.checked = false;
-        });
-    };
-
-    // Initialize all ImageChoice components on the page
-    document.addEventListener('DOMContentLoaded', function() {
-        var imageChoiceElements = document.querySelectorAll('.cmp-adaptiveform-imagechoice');
-        imageChoiceElements.forEach(function(element) {
-            new FORM_VIEW.ImageChoice(element);
-        });
-    });
-
-    // Expose the ImageChoice to the global scope
-    window.FormView = FORM_VIEW;
-
-})(document, Granite.$);
+})();
