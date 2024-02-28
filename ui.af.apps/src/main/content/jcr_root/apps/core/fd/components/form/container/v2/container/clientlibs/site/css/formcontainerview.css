@@ -14,9 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-[data-cmp-visible="false"] {
+html:not(.aem-AuthorLayer-Edit) [data-cmp-visible="false"] {
     display: none !important;
 }
 .cmp-adaptiveform-container--loading{
-  
+
 }
