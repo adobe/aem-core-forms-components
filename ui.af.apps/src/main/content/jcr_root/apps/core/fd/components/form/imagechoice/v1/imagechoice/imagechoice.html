@@ -45,7 +45,7 @@
                     <input class="cmp-adaptiveform-imagechoice__option__widget"
                            type="${imagechoice.selectionType == 'multiple' ? 'checkbox' : 'radio'}"
                            name="${imagechoice.name}"
-                           value="${imagechoice.options[optionList.index].imageValue}"
+                           value="${imagechoice.options[optionList.index].imageValue.toString}"
                            checked="${imagechoice.options[optionList.index].imageValue in imagechoice.default }"
                            disabled="${!imagechoice.enabled || imagechoice.readOnly}"
                            aria-readonly="${imagechoice.readOnly ? 'true' : ''}">
