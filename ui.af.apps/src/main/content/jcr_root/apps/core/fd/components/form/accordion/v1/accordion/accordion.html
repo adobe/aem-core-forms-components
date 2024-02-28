@@ -53,7 +53,7 @@
                     aria-controls="${accordion.exportedItems[item].id}-panel"
                     type="button"
                     data-cmp-hook-adaptiveFormAccordion="button">
-                <span class="cmp-accordion__title">${accordion.exportedItems[item].label.value}</span>
+                <span class="cmp-accordion__title">${accordion.exportedItems[item].label.value @ context = accordion.exportedItems[item].label.richText ? 'html' : 'text'}</span>
                 <span class="cmp-accordion__icon"></span>
             </button>
           <div

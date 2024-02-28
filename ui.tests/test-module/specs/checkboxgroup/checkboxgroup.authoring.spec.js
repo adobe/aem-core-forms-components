@@ -49,6 +49,15 @@ describe('Page - Authoring', function () {
         .then(cy.wrap)
   }
 
+  const getRuleEditorIframe = () => {
+      // get the iframe > document > body
+      // and retry until the body element is not empty
+      return cy
+          .get('iframe#af-rule-editor')
+          .its('0.contentDocument.body').should('not.be.empty')
+          .then(cy.wrap)
+  }
+
   const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
     if (isSites) {
       dropTextInputInSites();
@@ -193,6 +202,35 @@ describe('Page - Authoring', function () {
         cy.invokeEditableAction("[data-action='EDIT']");
         cy.get(".rte-toolbar").should('be.visible');
         cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+    });
+
+    it('rule editor is working with rich text enum names', function(){
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='editexpression']");
+        cy.get("#af-rule-editor").should("be.visible");
+        getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+        getRuleEditorIframe().find("#create-rule-button").click();
+        getRuleEditorIframe().find('#create-rule-button').then(($el) => {
+            $el[0].click();
+            getRuleEditorIframe().find('.child-choice-name').click();
+            getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
+                $el[0].scrollIntoView();
+                $el[0].click();
+                getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
+                    $el[0].click();
+                    getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
+                        $el[0].click();
+                        getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
+                            $el[0].click();
+                            getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                        });
+                    });
+                });
+            });
+            getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
+                $el[0].click();
+            });
+        });
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
   });

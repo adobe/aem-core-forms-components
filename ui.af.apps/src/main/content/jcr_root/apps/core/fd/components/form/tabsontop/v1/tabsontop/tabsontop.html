@@ -49,7 +49,7 @@
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          aria-controls="${tab.id}__tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
-         data-cmp-hook-adaptiveFormTabs="tab">${tab.label.value}</li>
+         data-cmp-hook-adaptiveFormTabs="tab">${tab.label.value @ context = tab.label.richText ? 'html' : 'text'}</li>
  </ol>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"
