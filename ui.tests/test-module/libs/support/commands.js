@@ -289,7 +289,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                        cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
                         cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     }
@@ -703,15 +703,3 @@ Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => 
         rect.right <= Cypress.config("viewportWidth")
     );
 });
-
-
-/**
- * This function is used to fetch elements from ContentFrame iframe which are not accessible.
- * Without this, the element will not be returned due to browser's cross-origin security feature.
- */
-Cypress.Commands.add("getContentIframeBody", () => {
-    return cy
-        .get('#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
-})
