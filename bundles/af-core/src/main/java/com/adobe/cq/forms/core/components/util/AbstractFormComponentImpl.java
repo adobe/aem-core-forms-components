@@ -194,9 +194,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isVisible() {
-        if (getEditMode()) {
-            return true;
-        }
+        // if (getEditMode()) {
+        // return true;
+        // }
         return visible;
     }
 
