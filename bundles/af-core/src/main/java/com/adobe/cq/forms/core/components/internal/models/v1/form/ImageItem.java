@@ -21,14 +21,18 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Model(adaptables = Resource.class)
 public class ImageItem {
-
     @ValueMapValue(name = "imageSrc")
     private String imageSrc;
 
+    @JsonIgnore
     @ValueMapValue(name = "imageValue")
-    private String imageValue;
+    private String value;
+
+    private Object imageValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "altText")
     private String altText;
@@ -41,11 +45,19 @@ public class ImageItem {
         this.imageSrc = imageSrc;
     }
 
-    public String getImageValue() {
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Object getImageValue() {
         return imageValue;
     }
 
-    public void setImageValue(String imageValue) {
+    public void setImageValue(Object imageValue) {
         this.imageValue = imageValue;
     }
 
@@ -56,4 +68,5 @@ public class ImageItem {
     public void setAltText(String altText) {
         this.altText = altText;
     }
+
 }
