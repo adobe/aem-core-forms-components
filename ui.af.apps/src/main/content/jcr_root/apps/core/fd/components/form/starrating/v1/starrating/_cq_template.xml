@@ -3,5 +3,6 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Star Rating"
           starnumber="5"
+           orientation="horizontal"
           fieldType="number-input"
           type="number"/>
