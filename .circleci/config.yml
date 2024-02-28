@@ -8,8 +8,8 @@ common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
@@ -24,6 +24,18 @@ common:
             which google-chrome
           name: Check browser installed
       - *restore_cache
+      - run:
+          name: Docker compose
+          command: |
+            set +e  # Disable exit on error
+            for i in $(seq 3); do
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+              docker-compose -f .circleci/docker-compose.yml down -v
+              docker-compose -f .circleci/docker-compose.yml up -d && break
+              sleep 10  # Add a delay between retries
+            done
+            set -e  # Enable exit on error
       - attach_workspace:
           at: /home/circleci/build
       - run:
@@ -49,6 +61,7 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+      - run: docker ps -a
       - run:
           name: UI tests
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
@@ -89,7 +102,8 @@ common:
             fi
       - run:
           name: Cleanup
-          command: rm -rf TEST_EXECUTION_STATUS.txt
+          command: |
+            rm -rf TEST_EXECUTION_STATUS.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
@@ -112,11 +126,9 @@ executors:
     docker:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
-    docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-        <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:1209202301-openjdk11
-        <<: *docker_auth
+    machine:
+      image: ubuntu-2204:2023.10.1
+      docker_layer_caching: true
 
 jobs:
   build-java-11:
@@ -137,7 +149,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -154,6 +166,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -299,19 +312,30 @@ jobs:
       - run:
           name: Update VERSIONS.md and README.md with the new released version
           command: |
+            echo "CIRCLE_TAG: $CIRCLE_TAG"
             RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
-            
+
+            # Debugging output
+            echo "RELEASE_BRANCH: $RELEASE_BRANCH"
+
             # Checkout branch
             git checkout $RELEASE_BRANCH
-            
+
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
+            # Debugging output
+            echo "BRANCH_NAME: $BRANCH_NAME"
+
             # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git log --pretty=format:"%D" --decorate=full ${BRANCH_NAME} | grep -o "tag: refs/tags/core-forms-components-reactor-[0-9.]*" | head -n 2)
+            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | head -n 2)
+            # Debugging output
+            echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
 
             # Extract the last released from the output
-            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1 | sed "s/tag: refs\/tags\///")
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
+            # Debugging output
+            echo "LAST_TAG: $LAST_TAG"
 
             # If there is no previous release, use an empty string
             if [[ -z "$LAST_TAG" ]]; then
@@ -320,19 +344,29 @@ jobs:
 
             # Fetch the new version
             NEW_VERSION=$(echo ${CIRCLE_TAG} | sed 's/^core-forms-components-reactor-//')
+            # Debugging output
+            echo "NEW_VERSION: $NEW_VERSION"
 
             # Fetch the last released version
             LAST_VERSION=$(echo "${LAST_TAG}" | sed 's/core-forms-components-reactor-//')
+            # Debugging output
+            echo "LAST_VERSION: $LAST_VERSION"
 
             # Fetch the wcm core component version
             WCM_CORE_COMPONENTS_VERSION=$(mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout)
+            # Debugging output
+            echo "WCM_CORE_COMPONENTS_VERSION: $WCM_CORE_COMPONENTS_VERSION"
 
+            echo "Before sed: $(cat VERSIONS.md)"
             # update versions.md
             sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
             sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
+            echo "After sed: $(cat VERSIONS.md)"
 
+            echo "Before sed: $(cat README.md)"
             # update readme.md
             sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
+            echo "After sed: $(cat README.md)"
 
             # Check if package-lock.json is modified
             if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
@@ -343,6 +377,7 @@ jobs:
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
             git push origin $RELEASE_BRANCH
+
 
 workflows:
   version: 2

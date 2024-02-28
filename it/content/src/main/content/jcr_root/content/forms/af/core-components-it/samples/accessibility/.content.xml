@@ -2692,6 +2692,26 @@
                         name="text1685010111735"
                         textIsRich="true"
                         value="&lt;p>&lt;strong style=&quot;font-size: 1rem;&quot;>I understand that&lt;/strong>:&lt;br>&#xa;&lt;/p>&#xa;&lt;ul>&#xa;&lt;li>Child Support can make relevant enquiries to make sure I receive the correct entitlement.&lt;/li>&#xa;&lt;li>giving false or misleading information is a serious offence.&lt;/li>&#xa;&lt;/ul>"/>
+                    <switch
+                            jcr:lastModified="{Date}2023-06-23T16:58:54.738+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="I am attaching supported documents"
+                            sling:resourceType="core/fd/components/form/switch/v1/switch"
+                            description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                            enabled="{Boolean}true"
+                            enum="[0,1]"
+                            enumNames="[No,Yes]"
+                            fieldType="checkbox"
+                            hideTitle="false"
+                            mandatoryMessage="this is a required field"
+                            name="switch1662722663424"
+                            readOnly="{Boolean}false"
+                            tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                            tooltipVisible="true"
+                            type="string"
+                            unboundFormElement="{Boolean}false"
+                            visible="{Boolean}true"/>
                     <checkboxgroup
                         jcr:lastModified="{Date}2023-05-30T08:08:18.288Z"
                         jcr:lastModifiedBy="admin"

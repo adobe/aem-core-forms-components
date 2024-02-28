@@ -51,10 +51,11 @@
         }
     }
 
-    const getEventInfo = (_eventTitle, _formTitle, _fieldId, dataLayerContent, formContainerID) => {
+    const getEventInfo = (_eventTitle, _formTitle, _fieldId, _fieldQualifiedName, dataLayerContent, formContainerID) => {
         // global variables to be used in abandon event which can be triggered anytime
         const fieldData = getCurrentFieldData(_fieldId, dataLayerContent);
         containerState[formContainerID].formTitle = _formTitle;
+        containerState[formContainerID].fieldQualifiedName = _fieldQualifiedName;
         containerState[formContainerID].fieldTitle = fieldData ? fieldData[DC_TITLE] : containerState[formContainerID].fieldTitle;
         containerState[formContainerID].fieldType = fieldData ? fieldData[FIELD_TYPE] : containerState[formContainerID].fieldType;
         containerState[formContainerID].panelTitle = getFieldPanelTitle(fieldData, dataLayerContent, formContainerID);
@@ -68,6 +69,7 @@
                 fieldType: containerState[formContainerID].fieldType,
                 panelTitle: containerState[formContainerID].panelTitle,
                 formPath: containerState[formContainerID].formPath,
+                fieldQualifiedName: containerState[formContainerID].fieldQualifiedName
             }
         }
     }
@@ -101,21 +103,21 @@
                 }
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.FIELD, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
+                    eventInfo: getEventInfo(FormEvents.FIELD, event.detail.formTitle, event.detail.fieldId, event.detail.fieldQualifiedName, dataLayerContent, formContainerPath)
                 });
             }
 
             function onElementHelpShown(event){
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.HELP, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
+                    eventInfo: getEventInfo(FormEvents.HELP, event.detail.formTitle, event.detail.fieldId, event.detail.fieldQualifiedName, dataLayerContent, formContainerPath)
                 });
             }
 
             function onElementErrorShown(event){
                 dataLayer.push({
                     event: FASTTRACK_ANALYTICS_EVENT,
-                    eventInfo: getEventInfo(FormEvents.ERROR, event.detail.formTitle, event.detail.fieldId, dataLayerContent, formContainerPath)
+                    eventInfo: getEventInfo(FormEvents.ERROR, event.detail.formTitle, event.detail.fieldId, event.detail.fieldQualifiedName, dataLayerContent, formContainerPath)
                 });
             }
 
@@ -125,8 +127,8 @@
                     event: FASTTRACK_ANALYTICS_EVENT,
                     eventInfo: {
                         type: FormEvents.SUBMIT,
-                        target: event.detail.fieldId,
-                        originalTarget: event.detail.fieldId,
+                        target: containerState[formContainerPath].formPath,
+                        originalTarget: containerState[formContainerPath].formPath,
                         payload: {
                             fieldTitle: containerState[formContainerPath].fieldTitle,
                             fieldType: containerState[formContainerPath].fieldType,
@@ -161,7 +163,7 @@
             bridge.on('elementFocusChanged', onElementFocusChanged);
             bridge.on('elementHelpShown', onElementHelpShown);
             bridge.on('elementErrorShown', onElementErrorShown);
-            bridge.on('submitStart', onSubmitStart);
+            bridge.getFormModel().subscribe(onSubmitStart, 'submit');
             window.addEventListener('beforeunload', onBeforeunload );
             
         }, null, formContainerPath);

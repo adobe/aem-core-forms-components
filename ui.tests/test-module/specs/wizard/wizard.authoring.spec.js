@@ -74,7 +74,7 @@ describe('Page - Authoring', function () {
                         cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
                             cy.get("[name='./name']").should("exist");
                             cy.get("[name='./jcr:title']").should("exist");
-                            cy.get("[name='./layout']").should("exist");
+                            cy.get("[name='./layout']").should("not.exist");
                             cy.get("[name='./dataRef']").should("exist");
                             cy.get("[name='./visible']").should("exist");
                             cy.get("[name='./enabled']").should("exist");
@@ -143,7 +143,7 @@ describe('Page - Authoring', function () {
                 cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click();
                 cy.get("[name='./name']").should("exist");
                 cy.get("[name='./jcr:title']").should("exist");
-                cy.get("[name='./layout']").should("exist");
+                cy.get("[name='./layout']").should("not.exist");
                 cy.get("[name='./dataRef']").should("exist");
                 cy.get("[name='./visible']").should("exist");
                 cy.get("[name='./enabled']").should("exist");

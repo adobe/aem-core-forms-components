@@ -41,6 +41,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -50,6 +51,9 @@ public class NumberInputImplTest {
     private static final String BASE = "/form/numberinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
+    private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
 
@@ -250,6 +254,12 @@ public class NumberInputImplTest {
     }
 
     @Test
+    void testJSONExportBackwardCompatible() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE));
+    }
+
+    @Test
     void testGetProperties() throws Exception {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         Map<String, Object> properties = numberInput.getProperties();
@@ -294,13 +304,27 @@ public class NumberInputImplTest {
 
     @Test
     void testGetExclusiveMinimum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
         assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
     }
 
     @Test
     void testGetExclusiveMaximum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
+        assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
+    }
+
+    @Test
+    void testGetExclusiveMinimum_BC() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
+        assertNull(numberInput.getMinimum());
+        assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
+    }
+
+    @Test
+    void testGetExclusiveMaximum_BC() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
+        assertNull(numberInput.getMaximum());
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
     }
 

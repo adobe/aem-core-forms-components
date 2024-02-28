@@ -189,6 +189,17 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
+
+    it("radiobutton with boolean type selection should happen in first click", () => {
+        const [radioButton8, radioButton1FieldView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${radioButton8}`).find("input").check("true").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="true"]').should("be.checked");
+        })
+
+        cy.get(`#${radioButton8}`).find("input").check("false").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
+        })
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {

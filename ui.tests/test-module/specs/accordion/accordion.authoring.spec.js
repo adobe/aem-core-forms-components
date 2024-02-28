@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./jcr:title']")
             .should("exist");
         cy.get("[name='./layout']")
-            .should("exist")
+            .should("not.exist")
         cy.get("[name='./dataRef']")
             .should("exist");
         cy.get("[name='./visible']")
@@ -84,8 +84,10 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(accordionEditPath);
         });
 
-        it('open edit dialog of Accordion', function () {
-            testAccordionBehaviour(accordionPathSelector, accordionEditPath);
+        it('open edit dialog of Accordion', {retries: 3}, function () {
+            cy.cleanTest(accordionEditPath).then(function() {
+                testAccordionBehaviour(accordionPathSelector, accordionEditPath);
+            });
         });
 
         it('switch accordion tabs', {retries: 3}, function () {

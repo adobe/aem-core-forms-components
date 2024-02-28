@@ -37,6 +37,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.mock;
@@ -51,11 +52,12 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
-
+    private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
+    private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -292,6 +294,20 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetExclusiveMinimum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMinimum());
+        assertEquals(10L, numberTextInput.getExclusiveMinimum().longValue());
+    }
+
+    @Test
+    void testGetExclusiveMaximum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMaximum());
+        assertEquals(100L, numberTextInput.getExclusiveMaximum().longValue());
+    }
+
+    @Test
     void testGetTooltip() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         assertEquals("test-short-description", textInput.getTooltip());
@@ -424,5 +440,13 @@ public class TextInputImplTest {
     void testJSONExportForEmptyValidationExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
+    }
+
+    @Test
+    void testPlaceholderAndAutocomplete() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE));
+        assertEquals("given-name", textInput.getAutoComplete());
+        assertEquals("test-placeholder", textInput.getPlaceHolder());
     }
 }

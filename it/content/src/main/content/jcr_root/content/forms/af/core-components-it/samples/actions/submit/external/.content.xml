@@ -17,7 +17,7 @@
                 dataXMLPath="data"
                 dataXMLType="FOLDER_PAYLOAD"
                 fieldType="form"
-                redirect="https://www.google.com/"
+                redirect="/abc"
                 thankYouOption="page"
                 themeRef="/libs/fd/af/themes/canvas"
                 workflowModel="/var/workflow/models/dam/adddamsize">
