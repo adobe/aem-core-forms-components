@@ -15,10 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
@@ -37,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.ImageChoice;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
@@ -91,29 +89,49 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
     }
 
     public List<ImageItem> getOptions() {
+        options = setImageValueBasedOnSubmissionDataType();
         return options;
+    }
+
+    private Map<Object, ImageItem> removeDuplicates() {
+        LinkedHashMap<Object, ImageItem> map = new LinkedHashMap<>();
+        if (options != null) {
+            for (ImageItem item : options) {
+                map.put(item.getValue(), item);
+            }
+        }
+        return map;
+    }
+
+    private List<ImageItem> setImageValueBasedOnSubmissionDataType() {
+        if (options == null) {
+            return null;
+        } else {
+            Map<Object, ImageItem> map = removeDuplicates();
+            List<ImageItem> updatedOptions = new ArrayList<>();
+            for (Map.Entry<Object, ImageItem> entry : map.entrySet()) {
+                Object key = entry.getKey();
+                ImageItem item = entry.getValue();
+                Object coercedValue = coerceImageValue(type, key);
+                item.setImageValue(coercedValue);
+                updatedOptions.add(item);
+            }
+            return updatedOptions;
+        }
+    }
+
+    private Object coerceImageValue(BaseConstraint.Type type, Object value) {
+        if (type.equals(BaseConstraint.Type.NUMBER) || type.equals(BaseConstraint.Type.NUMBER_ARRAY)) {
+            return Long.parseLong(value.toString());
+        } else if (type.equals(BaseConstraint.Type.BOOLEAN) || type.equals(BaseConstraint.Type.BOOLEAN_ARRAY)) {
+            return Boolean.parseBoolean(value.toString());
+        }
+        return value;
     }
 
     @Override
     public Type getType() {
-        return super.getType(); // Calling the getType() method of the superclass
-    }
-
-    @Override
-    public Object[] getDefault() {
-        Object[] defaultValue = super.getDefault();
-        if (defaultValue != null) {
-            return Arrays.stream(defaultValue)
-                .map(p -> {
-                    if (p instanceof ImageItem) {
-                        return ((ImageItem) p).getImageValue();
-                    } else {
-                        return p;
-                    }
-                })
-                .toArray();
-        }
-        return null;
+        return super.getType();
     }
 
 }
