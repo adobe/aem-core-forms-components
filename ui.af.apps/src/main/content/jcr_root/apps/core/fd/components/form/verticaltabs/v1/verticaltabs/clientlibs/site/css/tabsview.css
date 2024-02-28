@@ -1,38 +1,38 @@
-.cmp-verticaltabs{
+.cmp-adaptiveform-verticaltabs{
 
 }
-.cmp-verticaltabs__label{
+.cmp-adaptiveform-verticaltabs__label{
 
 }
-.cmp-verticaltabs__label-container{
-  
-}
-.cmp-verticaltabs__tabs-container {
-}
-
-.cmp-verticaltabs__tablist{
-}
-
-.cmp-verticaltabs__tab{
-}
-
-.cmp-verticaltabs__tab.cmp-verticaltabs__tab--active{
+.cmp-adaptiveform-verticaltabs__label-container{
 
 }
+.cmp-adaptiveform-verticaltabs__tabs-container {
+}
 
-.cmp-verticaltabs__tabpanel{
+.cmp-adaptiveform-verticaltabs__tablist{
+}
+
+.cmp-adaptiveform-verticaltabs__tab{
+}
+
+.cmp-adaptiveform-verticaltabs__tab.cmp-adaptiveform-verticaltabs__tab--active{
+
+}
+
+.cmp-adaptiveform-verticaltabs__tabpanel{
   display: none;
 }
 
-.cmp-verticaltabs__tabpanel.cmp-verticaltabs__tabpanel--active{
+.cmp-adaptiveform-verticaltabs__tabpanel.cmp-adaptiveform-verticaltabs__tabpanel--active{
   display: block;
 }
-.cmp-verticaltabs__longdescription {
+.cmp-adaptiveform-verticaltabs__longdescription {
 
 }
-.cmp-verticaltabs__shortdescription {
+.cmp-adaptiveform-verticaltabs__shortdescription {
 
 }
-.cmp-verticaltabs__questionmark{
+.cmp-adaptiveform-verticaltabs__questionmark{
 
 }
