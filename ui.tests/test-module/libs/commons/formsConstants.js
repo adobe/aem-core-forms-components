@@ -27,6 +27,7 @@ var formsConstants = {
                 "formtelephoneinput": "/apps/forms-components-examples/components/form/telephoneinput",
                 "formemailinput": "/apps/forms-components-examples/components/form/emailinput",
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
+                "formnumberstepper": "/apps/forms-components-examples/components/form/numberstepper",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
                 "pageheader": "/apps/forms-components-examples/components/form/pageheader",
                 "accordion": "/apps/forms-components-examples/components/form/accordion",
