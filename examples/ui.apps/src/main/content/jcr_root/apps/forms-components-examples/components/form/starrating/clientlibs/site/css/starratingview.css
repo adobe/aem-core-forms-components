@@ -1,0 +1,35 @@
+.cmp-adaptiveform-starrating {
+    align-items: center;
+}
+.cmp-adaptiveform-starrating--label {
+    font-size: 35px;
+    line-height: 1;
+    color:black;
+    position: relative;
+    z-index: 1;
+}
+
+.cmp-adaptiveform-starrating__option__widget {
+    appearance: none;
+}
+
+.cmp-adaptiveform-starrating__filled {
+    color: red!important;
+}
+
+
+.cmp-adaptiveform-starrating__option__widget + label:before {
+    content: '★';
+}
+
+.cmp-adaptiveform-starrating__widget label {
+    font-size: 50px;
+    line-height: 1;
+    color: pink;
+    transition: 0.2s ease;
+}
+
+.cmp-adaptiveform-starrating__widget label:hover {
+    color: yellow;
+    transition: 0.2s ease;
+}
