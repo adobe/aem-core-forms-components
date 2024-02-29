@@ -89,7 +89,7 @@
         	const updateCharacterCounter = () => {
         		const charCount = this.widget.value.length;
         		if (counterSpan) {
-        			counterSpan.textContent = charCount;
+        			counterSpan.textContent = Granite.I18n.getMessage(charCount);
         		}
         	};
         	this.widget.addEventListener('input', updateCharacterCounter);
