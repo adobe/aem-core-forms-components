@@ -49,8 +49,8 @@ describe("Sites with Aem Embed Container", () => {
             cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 10);
         })
 
-        it.only('Test iframe src with dataRef', () => {
-            cy.visit(pagePath+"?dataRef='testingDataRef'")
+         it('Test iframe src with dataRef', () => {
+            cy.openPage(`${pagePath}?dataRef='testingDataRef'`, {'noLogin': true})
             cy.get('.cmp-aemform__iframecontent').should('have.attr', 'src').should('include', "?wcmmode=DISABLED&dataRef='testingDataRef'");
           });
 
