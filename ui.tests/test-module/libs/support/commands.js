@@ -440,7 +440,7 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, curs
     // We need its ID to continue nesting below it
     let retVal = body.items.find(collection => collection.path === formPath);
     if (retVal) {
-      return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+      return cy.request("GET", `${contextPath}/adobe/forms/af/${retVal.id}`);
     } else {
       console.log("fetching the list of forms again");
       if (body.cursor) {
@@ -458,7 +458,7 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
     // We need its ID to continue nesting below it
     let retVal = body.items.find(collection => collection.path === formPath);
     if (retVal) {
-      return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+      return cy.request("GET", `${contextPath}/adobe/forms/af/${retVal.id}`);
     } else {
       console.log("fetching the list of forms again");
       return cy.getFromDefinitionUsingOpenAPI(formPath, offset + limit, limit);
