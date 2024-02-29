@@ -63,7 +63,7 @@ describe('Form with RUM initialized', () => {
 
 
         it('sampleRUM should have accurate data', () => {
-            if (toggle_array.includes("FT_SKYOPS-60870")) {
+            if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-8965")) {
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
                 cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
                 // Assert the number of calls
@@ -128,7 +128,7 @@ describe('Form with RUM initialized', () => {
         });
 
         it('sampleRUM custom http post/put checkpoint', () => {
-            if (toggle_array.includes("FT_SKYOPS-60870")) {
+            if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-8965")) {
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
                 cy.get(`.cmp-adaptiveform-button__widget`).click();
                 // Assert the arguments of the sixth call
