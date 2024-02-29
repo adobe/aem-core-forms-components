@@ -89,13 +89,12 @@ describe('Page/Form Authoring', function () {
         cy.get("[name='./enableRestEndpointPost']").should("exist");
         cy.get("[name='./enableRestEndpointPost']").first().click();
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
-            cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").should('have.attr', 'checked');
-            cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("be.visible");
-            cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
             cy.get("coral-radio[name='./restEndPointSource'][value='config']").first().click();
-            cy.get("[name='./restEndpointPostUrl']").should("exist").should("not.be.visible");
+            cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("not.be.visible");
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
             cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
+            cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
+            cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
         }
         cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
 
