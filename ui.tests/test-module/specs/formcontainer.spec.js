@@ -88,7 +88,7 @@ describe('Page/Form Authoring', function () {
         cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
         cy.get("[name='./enableRestEndpointPost']").should("exist");
         cy.get("[name='./enableRestEndpointPost']").first().click();
-        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-2494")) {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
             cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").should('have.attr', 'checked');
             cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("be.visible");
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
