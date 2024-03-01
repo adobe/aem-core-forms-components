@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class ImageChoice extends FormView.FormOptionFieldBase {
+    class ImageChoice extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -27,7 +27,6 @@
          */
         static IS = "adaptiveFormImageChoice";
         static bemBlock = 'cmp-adaptiveform-imagechoice'
-        static checkboxBemBlock = 'cmp-adaptiveform-checkbox'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widgets: `.${ImageChoice.bemBlock}__widget`,
