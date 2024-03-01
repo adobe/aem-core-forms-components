@@ -396,10 +396,12 @@ class FormFieldBase extends FormField {
         if (this.widget) {
             this.toggle(required, "required");
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
-            if (required === true) {
-                this.widget.setAttribute("required", "required");
-            } else {
-                this.widget.removeAttribute("required");
+            if(!(this.widget instanceof NodeList)) { // filtering radiobutton and checkboxGroup
+                if (required === true) {
+                    this.widget.setAttribute("required", "required");
+                } else {
+                    this.widget.removeAttribute("required");
+                }
             }
         }
     }
@@ -500,7 +502,7 @@ class FormFieldBase extends FormField {
         const filledModifierClass = `${bemClass}--filled`;
         const emptyModifierClass = `${bemClass}--empty`;
         this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
-        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**

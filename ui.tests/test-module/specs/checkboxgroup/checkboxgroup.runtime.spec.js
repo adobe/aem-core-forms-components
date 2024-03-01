@@ -210,6 +210,15 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkboxgroup--filled');
       });
     });
+
+    it("test if required property updated in model is reflected in view", () => {
+        const [id, checkboxview] = Object.entries(formContainer._fields)[5];
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false').then(() => {
+            checkboxview._model.required = true;
+        })
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+    });
+
 })
 
 describe("setFocus on checkboxgroup via rules", () => {
