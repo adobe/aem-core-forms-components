@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class ImageChoice extends FormView.FormFieldBase {
+    class ImageChoice extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -78,6 +78,53 @@
 
         getOptions() {
             return this.element.querySelectorAll(ImageChoice.selectors.option);
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            let widgets = this.widget;
+            widgets.forEach(widget => {
+                let self = widget;
+                this.#updateModelValue(self);
+                widget.addEventListener('change', (e) => {
+                    this.#updateModelValue(self);
+                });
+                widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
+                widget.addEventListener('blur', (e) => {
+                    this.setInactive();
+                });
+            })
+        }
+
+        #updateModelValue(widget) {
+            let value = [];
+            this.widget.forEach(widget => {
+                if (widget.checked) {
+                    value.push(widget.value)
+                }
+            }, this);
+            if (value.length !== 0 || this._model.value != null) {
+                this._model.value = value;
+            }
+        }
+
+        updateValue(modelValue) {
+            modelValue = [].concat(modelValue);
+            let selectedWidgetValues = modelValue.map(String);
+            this.widget.forEach(widget => {
+                if (selectedWidgetValues.includes((widget.value))) {
+                    widget.checked = true
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
+                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
+                } else {
+                    widget.checked = false
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
+                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
+                }
+            }, this)
+            super.updateEmptyStatus();
         }
 
         updateEnabled(enabled, state) {
