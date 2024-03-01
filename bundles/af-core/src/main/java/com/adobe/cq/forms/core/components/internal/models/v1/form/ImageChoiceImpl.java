@@ -30,6 +30,8 @@ import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -37,7 +39,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.ImageChoice;
-import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -45,8 +48,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     adapters = { ImageChoice.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_IMAGECHOICE_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageChoice {
+public class ImageChoiceImpl extends AbstractFieldImpl implements ImageChoice {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "orientation")
     @Nullable
     protected String orientationJcr;
@@ -132,6 +136,19 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
     @Override
     public Type getType() {
         return super.getType();
+    }
+
+    @Override
+    public Object[] getDefault() {
+        Object[] typedDefaultValue = null;
+        try {
+            if (defaultValue != null) {
+                typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
+            }
+        } catch (Exception exception) {
+            logger.error("Error while type casting default value to value type. Exception: ", exception);
+        }
+        return typedDefaultValue;
     }
 
 }
