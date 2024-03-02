@@ -1,0 +1,91 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly
+  data-sly-use.renderer="${'dateinput.js'}"
+  data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+  data-sly-use.label="${renderer.labelPath}"
+  data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+  data-sly-use.longDescription="${renderer.longDescriptionPath}"
+  data-sly-use.errorMessage="${renderer.errorMessagePath}"
+  data-sly-use.questionMark="${renderer.questionMarkPath}"
+></sly>
+<div
+  data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+  data-sly-use.dateInput="com.adobe.cq.forms.core.components.models.form.DateInput"
+  class="cmp-adaptiveform-dateinput"
+  data-cmp-is="adaptiveFormDateInput"
+  data-cmp-visible="${dateInput.visible ? 'true' : 'false'}"
+  data-cmp-enabled="${dateInput.enabled ? 'true' : 'false'}"
+  data-cmp-required="${dateInput.required ? 'true': 'false'}"
+  data-cmp-readonly="${dateInput.readOnly ? 'true' : 'false'}"
+  id="${dateInput.id}"
+  data-cmp-data-layer="${dateInput.data.json}"
+  data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+  data-sly-test.widgetId="${'{0}-{1}' @ format=[dateInput.id, 'widget']}"
+>
+  <div class="cmp-adaptiveform-dateinput__label-container">
+    <div
+      data-sly-call="${label.label @componentId=widgetId, labelValue=dateInput.label.value, labelVisible=dateInput.label.visible, bemBlock='cmp-adaptiveform-dateinput'}"
+      data-sly-unwrap
+    ></div>
+    <div
+      data-sly-call="${questionMark.questionMark @componentId=dateInput.id, longDescription=dateInput.description, bemBlock='cmp-adaptiveform-dateinput'}"
+      data-sly-unwrap
+    ></div>
+  </div>
+  <div
+    data-sly-list.key="${dateInput.combinedPlaceholder}"
+    class="cmp-adaptiveform-dateinput__widget"
+    id="${widgetId}"
+    min="${dateInput.minimumDate}"
+    max="${dateInput.maximumDate}"
+    required="${dateInput.required}"
+    readonly="${dateInput.readOnly}"
+    disabled="${!dateInput.enabled}"
+    name="${dateInput.name}"
+    title="${dateInput.tooltipVisible ? '' : dateInput.tooltipText}"
+    value="${dateInput.default? dateInput.default : ''}"
+  >
+    <div>
+      <label
+        data-sly-test=" ${!dateInput.hideTitleDate}"
+        class="cmp-adaptiveform-dateinput__label"
+        >${dateInput.combinedPlaceholder[key][0]}</label
+      >
+      <input
+        class="cmp-adaptiveform-dateinputField__widget"
+        type="text"
+        id="${key}"
+        name="${key}"
+        value="${dateInput.combinedPlaceholder[key][2]}"
+        placeholder="${dateInput.combinedPlaceholder[key][1]}"
+      />
+    </div>
+  </div>
+
+  <div
+    data-sly-call="${shortDescription.shortDescription @componentId=dateInput.id, shortDescriptionVisible=dateInput.tooltipVisible, shortDescription=dateInput.tooltip, bemBlock='cmp-adaptiveform-dateinput'}"
+    data-sly-unwrap
+  ></div>
+  <div
+    data-sly-call="${longDescription.longDescription @componentId=dateInput.id, longDescription=dateInput.description, bemBlock='cmp-adaptiveform-dateinput'}"
+    data-sly-unwrap
+  ></div>
+  <div
+    data-sly-call="${errorMessage.errorMessage @componentId=dateInput.id, bemBlock='cmp-adaptiveform-dateinput'}"
+    data-sly-unwrap
+  ></div>
+</div>

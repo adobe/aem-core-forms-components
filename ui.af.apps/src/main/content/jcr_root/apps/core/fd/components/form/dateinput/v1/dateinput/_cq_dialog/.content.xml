@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0" jcr:primaryType="nt:unstructured" jcr:title="Adaptive Form Date Input" sling:resourceType="cq/gui/components/authoring/dialog" extraClientlibs="[core.forms.components.dateinput.v1.editor]" helpPath="https://www.adobe.com/go/aem_af_cmp_datepicker_v1" trackingFeature="core-components:adaptiveform-dateinput:v1">
+    <content granite:class="cmp-adaptiveform-dateinput__editdialog" jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/tabs" maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic jcr:primaryType="nt:unstructured" jcr:title="Basic" sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns" margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <placeholder jcr:primaryType="nt:unstructured" sling:hideResource="{Boolean}true"/>
+                                            <defaultVal jcr:primaryType="nt:unstructured" sling:orderBefore="guideGlobalLazyField" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;." emptyText="yyyy-mm-dd" fieldLabel="Default Value" validation="regex.validation" name="./defaultVal"/>
+                                            <currentDate jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./currentDate" text="Current Date" value="true">
+                                            </currentDate>
+                                            <dateformat jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/form/dateinput/v1/dateinput/widgets/datePatternList" composite="{Boolean}true">
+                                                <field jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container" name="./datePlaceholder">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <dateFormatGroup jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <hiddenfield jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/form/dateinput/v1/dateinput/widgets/hiddenfield" name="./hiddenfield"/>
+                                                                <name jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldLabel="Title" name="./title"/>
+                                                                <placeholder jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldLabel="PlaceHolder" name="./placeholder"/>
+
+                                                            </items>
+                                                        </dateFormatGroup>
+                                                    </items>
+                                                </field>
+                                            </dateformat>
+                                            <hideTitleDate jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./hideTitleDate" text="Hide titles for these fields" value="true"/>
+
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <validation jcr:primaryType="nt:unstructured" jcr:title="Validation" sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns" margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <minimum jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/datepicker" fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;." fieldLabel="Minimum date" emptyText="YYYY-MM-DD" name="./minimumDate"/>
+                                            <minimumMessage jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textarea" fieldDescription="Error message shown when the date entered is before the minimum date." granite:class="cmp-adaptiveform-dateinput__minimummessage" fieldLabel="Minimum error message" name="./minimumMessage"/>
+                                            <maximum jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/datepicker" fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;." fieldLabel="Maximum date" emptyText="YYYY-MM-DD" name="./maximumDate"/>
+                                            <maximumMessage jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textarea" fieldDescription="Error message shown when the date entered is after the maximum date." granite:class="cmp-adaptiveform-datepicker__maximummessage" fieldLabel="Maximum error message" name="./maximumMessage"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </validation>
+                    <help jcr:primaryType="nt:unstructured" jcr:title="Help Content" sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </help>
+                    <accessibility jcr:primaryType="nt:unstructured" jcr:title="Accessibility" sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </accessibility>
+
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
