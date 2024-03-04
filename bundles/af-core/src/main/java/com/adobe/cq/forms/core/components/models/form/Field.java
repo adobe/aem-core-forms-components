@@ -54,6 +54,16 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
+     * The expression that when evaluated would determine what the displayValue of a field would be
+     *
+     * @return display value expression of the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    default String getDisplayValueExpression() {
+        return null;
+    }
+
+    /**
      * The format in which the value will be displayed to the user on screen in the field.
      * For example when using a currency field, the currency sign should be shown to the user.
      *
