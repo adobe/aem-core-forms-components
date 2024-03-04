@@ -25,7 +25,6 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Password;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -168,9 +167,9 @@ public class PasswordImplTest {
 
     @Test
     void testDataLayerProperties() throws IllegalAccessException {
-        TextInput textInput = Utils.getComponentUnderTest(PATH_PASSWORD_DATALAYER, TextInput.class, context);
-        FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
-        FormComponentData dataObject = (FormComponentData) textInput.getData();
+        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_DATALAYER, Password.class, context);
+        FieldUtils.writeField(password, "dataLayerEnabled", true, true);
+        FormComponentData dataObject = (FormComponentData) password.getData();
         assert (dataObject != null);
         assert (dataObject.getId()).equals("password-1c7bc238a6");
         assert (dataObject.getType()).equals("core/fd/components/form/password/v1/password");
