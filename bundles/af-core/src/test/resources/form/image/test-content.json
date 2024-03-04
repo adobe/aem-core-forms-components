@@ -1,4 +1,16 @@
 {
+  "image-parsedSrc" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/image/v1/image",
+    "name" : "abcd",
+    "jcr:title" : "def",
+    "hideTitle" : false,
+    "visible" : false,
+    "altText": "abc",
+    "filereference": "/content/dam/formsanddocuments/abc.jpeg",
+    "excludeFromDor": false,
+    "fieldType": "image"
+  },
  "image-customized" : {
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType": "core/fd/components/form/image/v1/image",

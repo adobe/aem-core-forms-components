@@ -48,6 +48,8 @@ public class StaticImageImplTest {
     private static final String BASE = "/form/image";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_IMAGE_CUSTOMIZED = CONTENT_ROOT + "/image-customized";
+
+    private static final String PATH_IMAGE_PARSED = CONTENT_ROOT + "/image-parsedSrc";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
     private static final String PATH_IMAGE_DATALAYER = CONTENT_ROOT + "/image-datalayer";
 
@@ -61,6 +63,15 @@ public class StaticImageImplTest {
     @Test
     void testExportedType() {
         StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_CUSTOMIZED, StaticImage.class, context);
+        assertEquals(FormConstants.RT_FD_FORM_IMAGE_V1, staticImage.getExportedType());
+        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
+        Mockito.when(staticImageMock.getExportedType()).thenCallRealMethod();
+        assertEquals("", staticImageMock.getExportedType());
+    }
+
+    @Test
+    void testExportedTypeForParsedImage() {
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_PARSED, StaticImage.class, context);
         assertEquals(FormConstants.RT_FD_FORM_IMAGE_V1, staticImage.getExportedType());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getExportedType()).thenCallRealMethod();
