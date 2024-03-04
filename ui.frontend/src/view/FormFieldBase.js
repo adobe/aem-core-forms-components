@@ -394,13 +394,13 @@ class FormFieldBase extends FormField {
      */
     updateRequired(required, state) {
         if (this.widget) {
-            this.toggle(required, "required");
+            this.element.toggleAttribute("required", required);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
-                if (required === true) {
-                    this.widget.setAttribute("required", "required");
-                } else {
-                    this.widget.removeAttribute("required");
-                }
+            if (required === true) {
+                this.widget.setAttribute("required", "required");
+            } else {
+                this.widget.removeAttribute("required");
+            }
         }
     }
 

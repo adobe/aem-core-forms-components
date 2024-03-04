@@ -162,7 +162,7 @@
         }
         updateRequired(required, state) {
             if (this.widget) {
-                this.toggle(required, "required");
+                this.element.toggleAttribute("required", required);
                 this.element.setAttribute("data-cmp-required", required);
             }
         }
