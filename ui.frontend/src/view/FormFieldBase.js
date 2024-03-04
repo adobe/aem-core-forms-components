@@ -396,13 +396,11 @@ class FormFieldBase extends FormField {
         if (this.widget) {
             this.toggle(required, "required");
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
-            if(!(this.widget instanceof NodeList)) { // filtering radiobutton and checkboxGroup
                 if (required === true) {
                     this.widget.setAttribute("required", "required");
                 } else {
                     this.widget.removeAttribute("required");
                 }
-            }
         }
     }
 
