@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-[data-cmp-visible="false"] {
+form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     display: none !important;
 }
 .cmp-adaptiveform-container--loading{

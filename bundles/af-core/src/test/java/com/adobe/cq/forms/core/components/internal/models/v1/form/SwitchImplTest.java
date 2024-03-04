@@ -126,7 +126,7 @@ public class SwitchImplTest {
     @Test
     void testIsVisible() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertEquals(null, switchObj.isVisible());
+        assertEquals(true, switchObj.isVisible());
         Switch switchMock = Mockito.mock(Switch.class);
         Mockito.when(switchMock.isVisible()).thenCallRealMethod();
         assertEquals(null, switchMock.isVisible());
@@ -144,7 +144,7 @@ public class SwitchImplTest {
     @Test
     void testIsEnabled() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertEquals(null, switchObj.isEnabled());
+        assertEquals(true, switchObj.isEnabled());
         Switch switchMock = Mockito.mock(Switch.class);
         Mockito.when(switchMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, switchMock.isEnabled());
@@ -162,7 +162,7 @@ public class SwitchImplTest {
     @Test
     void testIsReadOnly() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertEquals(null, switchObj.isReadOnly());
+        assertEquals(false, switchObj.isReadOnly());
         Switch switchMock = Mockito.mock(Switch.class);
         Mockito.when(switchMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, switchMock.isReadOnly());
@@ -180,7 +180,7 @@ public class SwitchImplTest {
     @Test
     void testIsRequired() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertEquals(null, switchObj.isRequired());
+        assertEquals(false, switchObj.isRequired());
         Switch switchMock = Mockito.mock(Switch.class);
         Mockito.when(switchMock.isRequired()).thenCallRealMethod();
         assertEquals(null, switchMock.isRequired());

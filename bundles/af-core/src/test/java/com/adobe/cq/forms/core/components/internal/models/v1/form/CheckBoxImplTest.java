@@ -135,7 +135,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsVisible() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isVisible());
+        assertEquals(true, checkbox.isVisible());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isVisible()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isVisible());
@@ -153,7 +153,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsEnabled() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isEnabled());
+        assertEquals(true, checkbox.isEnabled());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isEnabled());
@@ -171,7 +171,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsReadOnly() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isReadOnly());
+        assertEquals(false, checkbox.isReadOnly());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isReadOnly());
@@ -189,7 +189,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsRequired() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isRequired());
+        assertEquals(false, checkbox.isRequired());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isRequired()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isRequired());

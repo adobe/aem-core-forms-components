@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -44,6 +45,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean readOnly;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
@@ -124,16 +126,24 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     private Resource resource;
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isReadOnly() {
+        return readOnly != null ? readOnly : Boolean.FALSE;
+    }
+
+    @JsonProperty("readOnly")
+    public Boolean getReadOnlyIfPresent() {
         return readOnly;
     }
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isRequired() {
+        return required != null ? required : Boolean.FALSE;
+    }
+
+    @JsonProperty("required")
+    public Boolean getRequiredIfPresent() {
         return required;
     }
 
