@@ -37,9 +37,13 @@ import com.adobe.cq.forms.core.components.models.form.DateInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
-@Model(adaptables = { SlingHttpServletRequest.class,
-        Resource.class }, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL, adapters = { DateInput.class,
-                ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_DATE_INPUT_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class,
+        Resource.class },
+    defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL,
+    adapters = { DateInput.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_DATE_INPUT_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DateInputImpl extends AbstractFieldImpl implements DateInput {
 
@@ -107,7 +111,7 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     }
 
     private static void addKeyValuePair(Map<String, List<String>> map, String key, String value1, String value2,
-            String value3) {
+        String value3) {
         List<String> values = new ArrayList<>();
         values.add(value1);
         values.add(value2);
@@ -126,24 +130,24 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     }
 
     private void getDatePlaceholder(DateFormat placeholder, String[] dateArray,
-            LinkedHashMap<String, List<String>> combinedPlaceholder) {
+        LinkedHashMap<String, List<String>> combinedPlaceholder) {
         DateFormat placeholderVar = placeholder;
         String[] dateArrayVar = dateArray;
         if (placeholderVar.getHiddenfield().equals(YEAR)) {
             addKeyValuePair(combinedPlaceholder, YEAR,
-                    placeholderVar.getTitle() != null ? placeholderVar.getTitle() : YEAR,
-                    placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "YYYY",
-                    dateArrayVar[0]);
+                placeholderVar.getTitle() != null ? placeholderVar.getTitle() : YEAR,
+                placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "YYYY",
+                dateArrayVar[0]);
 
         } else if (placeholderVar.getHiddenfield().equals(MONTH)) {
             addKeyValuePair(combinedPlaceholder, MONTH,
-                    placeholderVar.getTitle() != null ? placeholderVar.getTitle() : MONTH,
-                    placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "MM", dateArrayVar[1]);
+                placeholderVar.getTitle() != null ? placeholderVar.getTitle() : MONTH,
+                placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "MM", dateArrayVar[1]);
 
         } else {
             addKeyValuePair(combinedPlaceholder, "Day",
-                    placeholderVar.getTitle() != null ? placeholderVar.getTitle() : DAY,
-                    placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "DD", dateArrayVar[2]);
+                placeholderVar.getTitle() != null ? placeholderVar.getTitle() : DAY,
+                placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "DD", dateArrayVar[2]);
 
         }
 
