@@ -1,0 +1,121 @@
+{
+    "password" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "fieldType": "password"
+    },
+    "password-customized" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "password",
+      "jcr:title" : "pwd",
+      "hideTitle" : false,
+      "dorExclusion": true,
+      "dorColspan": "4",
+      "dorBindRef": "Text1",
+      "description" : "password field",
+      "visible" : false,
+      "readOnly": false,
+      "enabled": true,
+      "required": true,      
+      "minLength": 5,
+      "maxLength": 10,
+      "maximum" : 6,
+      "minimum" : 1,
+      "exclusiveMinimum":8,
+      "exclusiveMaximum":16,
+      "displayFormat" : "password",
+      "assistPriority" : "custom",
+      "dataRef" : "a.b",
+      "custom" : "Custom screen reader text",
+      "typeMessage" : "incorrect type",
+      "tooltip": "test-short-description",
+      "placeholder": "Enter valid password",
+      "validationPattern": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
+      "default" : "password",
+      "fieldType": "password",
+      "label": {
+        "value": "Password",
+        "visible": true
+      }
+    },
+    "password-format" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "visible" : false,
+      "assistPriority" : "custom",
+      "dataRef" : "a.b",
+      "custom" : "Custom screen reader text",
+      "typeMessage" : "incorrect type",
+      "tooltip": "test-short-description",
+      "default" : "abc",
+      "fieldType": "password",
+      "readOnly": false,
+      "enabled": true,
+      "displayFormat" : "password"
+    },
+    "password-datalayer" : {
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "id": "password-1c7bc238a6",
+      "fieldType": "password",
+      "name": "Full Name",
+      "jcr:title" : "Full Name",
+      "visible": true,
+      "description": "Enter Full Name",
+      "tooltip": "Full Name",
+      "type": "string",
+      "required": true,
+      "enabled": true,
+      "readOnly": false,
+      "label": {
+        "value": "Full Name"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "afs:layout": {
+          "tooltipVisible": false
+        },
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/password"
+      },
+      ":type": "forms-components-examples/components/form/password"
+    },
+    "password_unboundFormElement" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "fieldType": "password",
+      "unboundFormElement": true,
+      "dataRef": "$.h"
+    },
+    "password-blank-dataref" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "fieldType": "password",
+      "dataRef": ""
+    },
+    "password-blank-validationExpression" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "fieldType": "password",
+      "validationExpression": ""
+    }
+  }
+  
