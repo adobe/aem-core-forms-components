@@ -58,6 +58,10 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String displayFormat;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayValueExpression")
+    @Nullable
+    protected String displayValueExpression;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editFormat")
     @Nullable
     protected String editFormat;
@@ -167,6 +171,12 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     public String getDisplayFormat() {
         return displayFormat;
+    }
+
+    @Override
+    @Nullable
+    public String getDisplayValueExpression() {
+        return displayValueExpression;
     }
 
     @Override
