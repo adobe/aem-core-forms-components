@@ -16,6 +16,8 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,21 +28,21 @@ import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Password;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class PasswordImplTest {
 
-    private static final String BASE = "/form/password";
+	private static final String BASE = "/form/password";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PASSWORD_DATALAYER = CONTENT_ROOT + "/password-datalayer";
     private static final String PATH_PASSWORD_CUSTOMIZED = CONTENT_ROOT + "/password-customized";
-    private static final String PATH_NUMBER_PASSWORD_EXCLUSIVE = CONTENT_ROOT + "/number-password-exclusive";
-    private static final String PATH_NUMBER_PASSWORD_INPUT = CONTENT_ROOT + "/number-password";
+
+    private static final String PATH_PASSWORD = CONTENT_ROOT + "/password";
+
+    private static final String PATH_PASSWORD_PATTERN = CONTENT_ROOT + "/password-pattern";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -96,13 +98,6 @@ public class PasswordImplTest {
     }
 
     @Test
-    void testGetValidationPattern() {
-        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", password.getValidationPattern());
-
-    }
-
-    @Test
     void testIsEnabled() {
         Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
         assertEquals(true, password.isEnabled());
@@ -139,35 +134,15 @@ public class PasswordImplTest {
     }
 
     @Test
-    void testGetExclusiveMinimum() {
-        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_EXCLUSIVE, Password.class, context);
-        assertNull(password.getMinimum());
-        assertEquals(8L, password.getExclusiveMinimum().longValue());
-    }
-
-    @Test
-    void testGetExclusiveMaximum() {
-        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_EXCLUSIVE, Password.class, context);
-        assertNull(password.getMaximum());
-        assertEquals(16L, password.getExclusiveMaximum().longValue());
-    }
-
-    @Test
-    void testGetMinimum() {
-        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_INPUT, Password.class, context);
-        assertEquals(8, password.getMinimum().intValue());
-    }
-
-    @Test
-    void testGetMaximum() {
-        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_INPUT, Password.class, context);
-        assertEquals(16, password.getMaximum().intValue());
-    }
-
-    @Test
     void testGetDisplayFormat() throws Exception {
         Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
         assertEquals("password", password.getFormat());
+    }
+
+    @Test
+    void testGetPattern() throws Exception {
+        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_PATTERN, Password.class, context);
+        assertEquals("^(?=.*\\d.*\\d)[A-Za-z\\d!@]+$", password.getPattern());
     }
 
     @Test
