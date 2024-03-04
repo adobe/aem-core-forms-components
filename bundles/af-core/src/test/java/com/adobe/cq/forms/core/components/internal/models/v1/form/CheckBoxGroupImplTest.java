@@ -25,6 +25,7 @@ import java.util.Set;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -296,6 +297,44 @@ public class CheckBoxGroupImplTest {
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
+        TextContent textContent1 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "m";
+            }
+        };
+        TextContent textContent2 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "f";
+            }
+        };
+        TextContent textContent3 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "o";
+            }
+        };
+        TextContent[] textContent = new TextContent[] { textContent1, textContent2, textContent3 };
+        for (int i = 0; i < checkboxGroup.getEnumNamesAsTextContent().length; i++) {
+            assertEquals(textContent[i].getValue(), checkboxGroup.getEnumNamesAsTextContent()[i].getValue());
+            assertEquals(textContent[i].isRichText(), checkboxGroup.getEnumNamesAsTextContent()[i].isRichText());
+        }
     }
 
     @Test
@@ -306,6 +345,9 @@ public class CheckBoxGroupImplTest {
         map.put("1", "Item 2");
         map.put("0", "Item 3");
         assertArrayEquals(map.values().toArray(new String[0]), checkboxGroup.getEnumNames());
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[checkboxGroup.getEnumNamesAsTextContent().length]);
+        assertArrayEquals(map.values().toArray(new String[0]), checkboxGroupValues);
     }
 
     @Test
@@ -386,5 +428,8 @@ public class CheckBoxGroupImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
+        String[] checkboxGroupValues = Arrays.stream(checkboxGroup.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[checkboxGroup.getEnumNamesAsTextContent().length]);
+        assertArrayEquals(set.toArray(new String[0]), checkboxGroupValues);
     }
 }
