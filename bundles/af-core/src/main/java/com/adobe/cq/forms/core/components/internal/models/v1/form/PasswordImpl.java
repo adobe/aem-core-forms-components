@@ -16,11 +16,13 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import javax.annotation.Nullable;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -38,8 +40,8 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PasswordImpl extends AbstractFieldImpl implements Password {
 
-    @ValueMapValue
-    @Default(values = "")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String validationPattern;
 
     @Override
