@@ -15,8 +15,8 @@
  ******************************************************************************/
 (function() {      
     "use strict";
-        let togglePasswordButton = document.querySelector('.cmp-adaptiveform-password .fisheye');
-        let  passwordInput = document.querySelector('input.cmp-adaptiveform-password__widget');
+        const togglePasswordButton = document.querySelector('.cmp-adaptiveform-password__input-wrapper .eyeicon');
+        const passwordInput = document.querySelector('.cmp-adaptiveform-password__input-wrapper input.cmp-adaptiveform-password__widget');
      	if(togglePasswordButton && passwordInput){
             togglePasswordButton.addEventListener('click', function () {
                 if (passwordInput.type === 'password') {
