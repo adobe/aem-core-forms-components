@@ -263,10 +263,12 @@ public class FormContainerImplTest {
     @Test
     void testGetContextPathWithDefaultRedirect() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1_WITHOUT_REDIRECT, FormContainer.class, context);
-        assertEquals(formContainer.getRedirectUrl(), "/content/wknd.html");
+        assertEquals(formContainer.getRedirectUrl(),
+            "/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
         // Test with contextPath set
         formContainer.setContextPath("/test");
-        assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
+        assertEquals(formContainer.getRedirectUrl(),
+            "/test/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
     }
 
     @Test
