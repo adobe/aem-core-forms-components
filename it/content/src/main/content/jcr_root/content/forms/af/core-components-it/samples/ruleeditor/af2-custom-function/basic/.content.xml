@@ -15,7 +15,9 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container"
             clientLibRef="corecomponent.it.customfunction"
-            fieldType="form">
+            fieldType="form"
+            thankYouMessage="Thank you for submitting the form."
+            thankYouOption="message">
             <textinput
                 jcr:lastModified="{Date}2023-05-26T15:34:29.160+05:30"
                 jcr:lastModifiedBy="admin"

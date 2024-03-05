@@ -116,15 +116,6 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(textInputDrop + "_copy");
     }
 
-    const getRuleEditorIframe = () => {
-        // get the iframe > document > body
-        // and retry until the body element is not empty
-        return cy
-            .get('iframe#af-rule-editor')
-            .its('0.contentDocument.body').should('not.be.empty')
-            .then(cy.wrap)
-    }
-
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             textInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/textinput",
@@ -191,10 +182,10 @@ describe('Page - Authoring', function () {
             cy.get("#af-rule-editor")
                 .invoke("css", "z-index")
                 .should("equal", '10');
-            getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-            getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+            cy.getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+            cy.getRuleEditorIframe().find("#create-rule-button").should("be.visible");
             cy.wait(1000) // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
-            getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+            cy.getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
             cy.deleteComponentByPath(textInputDrop);
         });
     //}
@@ -209,12 +200,12 @@ describe('Page - Authoring', function () {
           cy.get("#af-rule-editor")
               .invoke("css", "z-index")
               .should("equal", '10');
-          getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+          cy.getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
           // check if navigation tree is showing the text input
-          getRuleEditorIframe().find("#objectNavigationTree " + textInputInsideSitesContainerEditPathSelector).should("be.visible");
-          getRuleEditorIframe().find("#create-rule-button").should("be.visible");
+          cy.getRuleEditorIframe().find("#objectNavigationTree " + textInputInsideSitesContainerEditPathSelector).should("be.visible");
+          cy.getRuleEditorIframe().find("#create-rule-button").should("be.visible");
           cy.wait(1000); // TODO Trigger event once initalization of rule edtior completed and wait promise to resolve.
-          getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
+          cy.getRuleEditorIframe().find(".exp-Close-Button").should("be.visible").click();
       });
     //}
   });
