@@ -141,7 +141,7 @@ public class DropDownImplTest {
     @Test
     void testIsVisible() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isVisible());
+        assertEquals(true, dropdown.isVisible());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isVisible()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isVisible());
@@ -159,7 +159,7 @@ public class DropDownImplTest {
     @Test
     void testIsEnabled() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isEnabled());
+        assertEquals(true, dropdown.isEnabled());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isEnabled());
@@ -177,7 +177,7 @@ public class DropDownImplTest {
     @Test
     void testIsReadOnly() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isReadOnly());
+        assertEquals(false, dropdown.isReadOnly());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isReadOnly());
@@ -195,7 +195,7 @@ public class DropDownImplTest {
     @Test
     void testIsRequired() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isRequired());
+        assertEquals(false, dropdown.isRequired());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isRequired()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isRequired());
