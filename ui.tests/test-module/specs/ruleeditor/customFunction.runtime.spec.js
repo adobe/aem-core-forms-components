@@ -63,8 +63,7 @@ describe('Form with custom functions configured in client lib', () => {
         cy.get(`#${textbox1}`).find("input").should('have.value', "test")
     })
 
-    if (cy.af.isLatestAddon()) {
-    // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+    if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
         it("should submit custom formData on button click", () => {
             // Rule when button is clicked then submit massaged formdata in custom function testSubmitFormPreprocessor()
             cy.intercept({

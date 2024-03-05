@@ -21,8 +21,7 @@ describe('Rule editor sanity for core-components',function(){
      * Runtime ruleSanity for button to change label of textbox
      * [when button is clicked the textbox field label should change using custom function]
      */
-    if (cy.af.isLatestAddon()) {
-    // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+    if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
         it("should change textinput label on button click", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-button__widget`).click()
