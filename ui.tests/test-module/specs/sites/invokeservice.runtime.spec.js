@@ -27,18 +27,16 @@ describe("Invoke Service", () => {
         });
     });
 
-    if (cy.af.isLatestAddon()) {
-        it("should execute for forms inside sites", () => {
-            cy.intercept('POST', '**af.dermis**').as('invokeService');
-            cy.previewForm(pagePath)
-            cy.wait('@invokeService').then(({response}) => {
-                expect(response.statusCode).to.equal(400);
-                if (toggle_array.includes("FT_FORMS-3512")) {
-                    expect(response.body).to.contain('Invalid form data model path');
-                } else {
-                    expect(response.body).to.contain('Error During Form Submission');
-                }
-            });
-        })
-    }
+    it("should execute for forms inside sites", () => {
+        cy.intercept('POST', '**af.dermis**').as('invokeService');
+        cy.previewForm(pagePath)
+        cy.wait('@invokeService').then(({response}) => {
+            expect(response.statusCode).to.equal(400);
+            if (toggle_array.includes("FT_FORMS-3512")) {
+                expect(response.body).to.contain('Invalid form data model path');
+            } else {
+                expect(response.body).to.contain('Error During Form Submission');
+            }
+        });
+    })
 })

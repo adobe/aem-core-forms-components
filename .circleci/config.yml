@@ -228,7 +228,7 @@ jobs:
   cypress-chrome-655-with-latest-addon-context-path:
     executor: test_executor_655_latest
     environment:
-      AEM: classic-latest
+      AEM: classic-latest-cp
       TYPE: cypress
       BROWSER: chrome
       CONTEXTPATH: lc
