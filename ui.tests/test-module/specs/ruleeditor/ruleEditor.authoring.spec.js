@@ -1,17 +1,14 @@
 const commons = require('../../libs/commons/commons'),
     sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    formsSelectors = require('../../libs/commons/guideSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
 describe('Rule editor sanity for core-components',function(){
     const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
         formContainerPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
-        textBoxEditPath = formContainerPath + "/" +  afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
-        buttonPath = formContainerPath + "/" +  afConstants.components.forms.resourceType.formbutton.split("/").pop();
-
-    beforeEach(function() {
-        // this is done since cypress session results in 403 sometimes
-        cy.openAuthoring(pagePath);
-    })
+        textinputEditPath = formContainerPath + "/" +  afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
+        buttonEditPath = formContainerPath + "/" +  afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+        buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
 
     /**
      * RuleSanity for button to change label of textbox
@@ -38,11 +35,11 @@ describe('Rule editor sanity for core-components',function(){
         cy.selectLayer("Edit");
         cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
 
-        cy.insertComponentInPanel(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+        cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
             "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-        cy.insertComponentInPanel(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+        cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
             "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + "[data-path='" + buttonPath + "']");
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
@@ -50,60 +47,60 @@ describe('Rule editor sanity for core-components',function(){
 
         //4 click on  create option from rule editor header
         cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
         // "Forms Objects option is not existing on side panel"
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.formObjectsTab).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.formObjectsTab + ":first").then($el => {
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab + ":first").then($el => {
             expect($el.text().trim()).to.equal("Form Objects");
         })
 
         // Functions option is not existing on side panel
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.functionsTab).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.functionsTab).then($el => {
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).then($el => {
             expect($el.text().trim()).to.equal("Functions");
         })
 
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
 
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
             .click({force: true});
 
         //7 select the component for which rule is to written i.e. Button here
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
 
-        // IS CLICKED ooption not existing in 'OPERATIONS' dropdown
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
+        // IS CLICKED option not existing in 'OPERATIONS' dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
 
         // check and click on dropdown to view the actions available
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
         //8 select HIDE action from dropdown
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.operator.HIDE).click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).click();
 
-        cy.getRuleEditorFrame().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
-        cy.getRuleEditorFrame().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
 
-        cy.getRuleEditorFrame().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force:true});
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force:true});
 
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
 
         //11 check if rule is created
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE).should("exist");
 
-        //12 check and close rule editor
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-        cy.getRuleEditorFrame().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+        // 12 check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
 
-        cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + buttonPath + "']").should("exist");
+        cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
     })
 
 
@@ -111,31 +108,28 @@ describe('Rule editor sanity for core-components',function(){
      * 14 Move to preview mode and check if button is visible.
      * 15 Click on button item.
      * 16 Textbox will get hidden
-     * 17 Switch to edit Mode.
-     * 18 Delete textbox and button.
      */
 
     it('should execute rule to hide textbox on button click at runtime', function () {
-        cy.openPage(formPath + ".html?wcmmode=disabled");
-        cy.waitForFormInit().then(formContainer => {
-            console.log("Form container Initialized");
-        })
-        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']")
-            .scrollIntoView()
-            .should("be.visible");
+        cy.previewForm(formPath+".html").then(formContainer => {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
 
-        //15 Check if Button is available in preview mode
-        cy.get("button[type='button']")
-            .should("be.visible")
-            .click();
+            cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']")
+                .scrollIntoView()
+                .should("be.visible");
 
-        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']").should("not.be.visible");
+            cy.get("button[type='button']")
+                .should("be.visible")
+                .click();
+
+            cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']").should("not.be.visible");
+        });
     })
 
     after(function () {
-        cy.openAuthoring(formPath);
+        cy.openPage(cy.af.getEditorUrl(formPath), {'noLogin' : true, 'failOnStatusCode': false});
         cy.selectLayer("Edit");
-        cy.deleteComponentByPath(textBoxEditPath);
-        cy.deleteComponentByPath(buttonPath);
+        cy.deleteComponentByPath(textinputEditPath);
+        cy.deleteComponentByPath(buttonEditPath);
     })
 })

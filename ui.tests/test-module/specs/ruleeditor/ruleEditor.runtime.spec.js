@@ -1,6 +1,7 @@
 describe('Rule editor sanity for core-components',function(){
     const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/basic.html";
     let formContainer = null;
+    let toggle_array = null;
 
     /**
      * initialization of form container before every test
@@ -17,15 +18,16 @@ describe('Rule editor sanity for core-components',function(){
     });
 
     /**
-     * Runetime ruleSanity for button to change label of textbox
+     * Runtime ruleSanity for button to change label of textbox
      * [when button is clicked the textbox field label should change using custom function]
      */
-    if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+    if (cy.af.isLatestAddon()) {
+    // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
         it("should change textinput label on button click", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-button__widget`).click()
             const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-            cy.get(`#${textbox1}`).find("div > label").should('have.value', "Changed Label")
+            cy.get(`#${textbox1}`).find("div > label").should('have.text', "Changed Label")
         })
     }
 })
