@@ -5,10 +5,6 @@
     "FT_FORMS-2494",
     "FT_SKYOPS-60870",
     "FT_FORMS-8965",
-    "FT_FORMS-9244",
-    "FT_FORMS-11541", // object and scope param types in custom functions
-    "FT_FORMS-11269", // ES10 support in custom functions
-    "FT_FORMS-11714", // optional parameters in custom functions
-    "FT_FORMS-11756" // caching custom functions list
+    "FT_FORMS-9244"
   ]
 }
