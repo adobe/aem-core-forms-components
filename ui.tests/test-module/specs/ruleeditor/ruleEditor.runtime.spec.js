@@ -1,7 +1,7 @@
 describe('Rule editor sanity for core-components',function(){
     const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/basic.html";
     let formContainer = null;
-    let toggle_array = null;
+    let toggle_array = [];
 
     /**
      * initialization of form container before every test
