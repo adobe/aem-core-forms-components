@@ -25,7 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
 const classicFormAddonVersion = 'LATEST';
-const classicFormReleasedAddonVersion = '6.0.1016';
+const classicFormReleasedAddonVersion = '6.0.1120'; // change this value to last form released addon version
 
 try {
     ci.stage("Integration Tests");
