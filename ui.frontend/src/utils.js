@@ -258,17 +258,26 @@ class Utils {
      * @param {string} formId - The form ID.
      */
     static async registerCustomFunctions(formId) {
-        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
-        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
-        if (funcConfig && funcConfig.customFunction) {
-            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
-                if (window[func.id]) {
-                    accumulator[func.id] = window[func.id];
-                }
-                return accumulator;
-            }, {});
-            FunctionRuntime.registerFunctions(funcObj);
+        // populate all functions in hardcoded way for now
+
+        // Say, you have a client lib with the following functions
+        /**
+        function getEnum1() {
+            return ["one", "two", "three"]
         }
+        function getEnumNames1() {
+            return ["India", "US", "Singapore"]
+        }
+         **/
+
+        // if you load the client library via AF container dialog, the functions would be available in window namespace below
+        /*
+        let funcObj = {
+            getEnum1 : window.getEnum1,
+            getEnumNames1 : window.getEnumNames1
+        }
+        FunctionRuntime.registerFunctions(funcObj);
+        */
     }
 
     /**
