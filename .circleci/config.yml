@@ -460,9 +460,8 @@ workflows:
       - release:
           requires:
             - build-java-11
-            - jsdocs-deploy
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: ^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$
