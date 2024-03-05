@@ -25,7 +25,7 @@ describe("View Qualified Name Tests", () => {
             checkboxEditPathSelector = "[data-path='" + checkboxEditPath + "']",
             checkboxDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formcheckboxgroup.split("/").pop(),
             emailinputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/emailinput",
-            emailinputEditPathSelector = "[data-path='" + emailinputEditPath + "']",
+            emailinputEditPathSelector =    "[data-path='" + emailinputEditPath + "']",
             emailinputDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formemailinput.split("/").pop();
 
         const fileInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/fileinput",

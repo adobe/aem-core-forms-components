@@ -23,6 +23,6 @@
 function testSubmitFormPreprocessor(globals)
 {
     var formData = globals.functions.exportData();
-    formData.customData.value = 'someData';
-    globals.functions.submitForm(formData, false);
+    formData.textinput1 = 'customData';
+    globals.functions.submitForm(formData, false, 'application/json');
 }
