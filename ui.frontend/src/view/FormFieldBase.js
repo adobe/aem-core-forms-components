@@ -394,7 +394,7 @@ class FormFieldBase extends FormField {
      */
     updateRequired(required, state) {
         if (this.widget) {
-            this.toggle(required, "required");
+            this.element.toggleAttribute("required", required);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
@@ -500,7 +500,7 @@ class FormFieldBase extends FormField {
         const filledModifierClass = `${bemClass}--filled`;
         const emptyModifierClass = `${bemClass}--empty`;
         this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
-        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**

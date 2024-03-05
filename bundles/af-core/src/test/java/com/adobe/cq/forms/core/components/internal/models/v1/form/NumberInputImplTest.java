@@ -144,7 +144,7 @@ public class NumberInputImplTest {
     @Test
     void testIsVisible() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
-        assertEquals(null, numberInput.isVisible());
+        assertEquals(true, numberInput.isVisible());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isVisible()).thenCallRealMethod();
         assertEquals(null, numberInputMock.isVisible());
@@ -162,7 +162,7 @@ public class NumberInputImplTest {
     @Test
     void testIsEnabled() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
-        assertEquals(null, numberInput.isEnabled());
+        assertEquals(true, numberInput.isEnabled());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, numberInputMock.isEnabled());
@@ -180,7 +180,7 @@ public class NumberInputImplTest {
     @Test
     void testIsReadOnly() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
-        assertEquals(null, numberInput.isReadOnly());
+        assertEquals(false, numberInput.isReadOnly());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, numberInputMock.isReadOnly());
