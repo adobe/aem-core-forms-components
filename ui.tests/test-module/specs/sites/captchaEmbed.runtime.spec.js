@@ -14,24 +14,21 @@
  * limitations under the License.
  ******************************************************************************/
 describe("Captcha In Sites Runtime Test", () => {
-    // captcha is only supported from 6.5.20
-    if(cy.af.isLatestAddon()) {
-        const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
+    const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
 
-        let formContainer = null;
+    let formContainer = null;
 
-        beforeEach(() => {
-            cy.previewForm(pagePath).then(p => {
-                formContainer = p;
-            })
-        });
-
-        it("captcha should render when form is embedded in site", () => {
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
         })
-    }
+    });
+
+    it("captcha should render when form is embedded in site", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+    })
 })
