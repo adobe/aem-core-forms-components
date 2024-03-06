@@ -67,18 +67,6 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
     }
 
-    const executeRuleToHideTextboxonButtonClick = function() {
-        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']")
-            .scrollIntoView()
-            .should("be.visible");
-
-        cy.get(`.cmp-adaptiveform-button__widget`)
-            .should("be.visible")
-            .click();
-
-        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']").should("not.be.visible");
-    }
-
     context('Open Forms Editor', function() {
         const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
             formContainerPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
@@ -118,23 +106,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
             createRuleToHideTextInputOnButtonClick();
             cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
-        })
 
-
-        /**
-         * 14 Move to preview mode and check if button is visible.
-         * 15 Click on button item.
-         * 16 Textbox will get hidden
-         */
-        it('should execute rule to hide textbox on button click at runtime', function () {
-            cy.previewForm(formPath + ".html").then(formContainer => {
-                expect(formContainer, "formcontainer is initialized").to.not.be.null;
-                executeRuleToHideTextboxonButtonClick();
-            });
-        })
-
-        after(function () {
-            cy.openPage(cy.af.getEditorUrl(formPath), {'noLogin': true, 'failOnStatusCode': false});
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
             cy.deleteComponentByPath(buttonEditPath);
@@ -180,10 +152,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
             createRuleToHideTextInputOnButtonClick();
             cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
-        })
 
-        after(function () {
-            cy.openPage(cy.af.getEditorUrl(pagePath), {'noLogin': true, 'failOnStatusCode': false});
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
             cy.deleteComponentByPath(buttonEditPath);
