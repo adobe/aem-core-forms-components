@@ -3,7 +3,82 @@ const commons = require('../../libs/commons/commons'),
     formsSelectors = require('../../libs/commons/guideSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
-describe('Rule editor sanity for core-components',function(){
+describe('Rule editor authoring sanity for core-components',function(){
+
+    const createRuleToHideTextInputOnButtonClick = function() {
+        // Edit rule option not existing on button toolbar
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        // Forms Objects option is not existing on side panel
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).then($el => {
+            expect($el.text().trim()).to.equal("Form Objects");
+        })
+
+        // Functions option is not existing on side panel
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).then($el => {
+            expect($el.text().trim()).to.equal("Functions");
+        })
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+            .click({force: true});
+
+        // select the component for which rule is to written i.e. Button here
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        // IS CLICKED option not existing in 'OPERATIONS' dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
+
+        // check and click on dropdown to view the actions available
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+
+        // select HIDE action from dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+
+        // check if rule is created
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE).should("exist");
+
+        // check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+    }
+
+    const executeRuleToHideTextboxonButtonClick = function() {
+        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']")
+            .scrollIntoView()
+            .should("be.visible");
+
+        cy.get(`.cmp-adaptiveform-button__widget`)
+            .should("be.visible")
+            .click();
+
+        cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']").should("not.be.visible");
+    }
+
     context('Open Forms Editor', function() {
         const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
             formContainerPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
@@ -30,7 +105,6 @@ describe('Rule editor sanity for core-components',function(){
          * 12 Close rule editor
          * 13 Check if button is visible
          */
-
         it('should add rule on button to disable a text box', function () {
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
@@ -41,66 +115,8 @@ describe('Rule editor sanity for core-components',function(){
             cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
                 "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-            // Edit rule option not existing on button toolbar
-            cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-            cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-            cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
-            //4 click on  create option from rule editor header
-            cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
-
-            // "Forms Objects option is not existing on side panel"
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).then($el => {
-                expect($el.text().trim()).to.equal("Form Objects");
-            })
-
-            // Functions option is not existing on side panel
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).then($el => {
-                expect($el.text().trim()).to.equal("Functions");
-            })
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
-                .click({force: true});
-
-            //7 select the component for which rule is to written i.e. Button here
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
-
-            // IS CLICKED option not existing in 'OPERATIONS' dropdown
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
-
-            // check and click on dropdown to view the actions available
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
-
-            //8 select HIDE action from dropdown
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).click();
-
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
-
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
-
-            //11 check if rule is created
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE).should("exist");
-
-            // 12 check and close rule editor
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
-
+            createRuleToHideTextInputOnButtonClick();
             cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
         })
 
@@ -110,20 +126,10 @@ describe('Rule editor sanity for core-components',function(){
          * 15 Click on button item.
          * 16 Textbox will get hidden
          */
-
         it('should execute rule to hide textbox on button click at runtime', function () {
             cy.previewForm(formPath + ".html").then(formContainer => {
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
-
-                cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']")
-                    .scrollIntoView()
-                    .should("be.visible");
-
-                cy.get("button[type='button']")
-                    .should("be.visible")
-                    .click();
-
-                cy.get(".cmp-adaptiveform-textinput[data-cmp-is='adaptiveFormTextInput']").should("not.be.visible");
+                executeRuleToHideTextboxonButtonClick();
             });
         })
 
@@ -161,7 +167,6 @@ describe('Rule editor sanity for core-components',function(){
          * 12 Close rule editor
          * 13 Check if button is visible
          */
-
         it('should add rule on button to disable a text box', function () {
             cy.openAuthoring(pagePath);
             cy.selectLayer("Edit");
@@ -172,66 +177,8 @@ describe('Rule editor sanity for core-components',function(){
             cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
                 "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-            // Edit rule option not existing on button toolbar
-            cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-            cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-            cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
-            //4 click on  create option from rule editor header
-            cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
-
-            // "Forms Objects option is not existing on side panel"
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.formObjectsTab).then($el => {
-                expect($el.text().trim()).to.equal("Form Objects");
-            })
-
-            // Functions option is not existing on side panel
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.functionsTab).then($el => {
-                expect($el.text().trim()).to.equal("Functions");
-            })
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
-                .click({force: true});
-
-            //7 select the component for which rule is to written i.e. Button here
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
-
-            // IS CLICKED option not existing in 'OPERATIONS' dropdown
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
-
-            // check and click on dropdown to view the actions available
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
-
-            //8 select HIDE action from dropdown
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).click();
-
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
-
-            cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
-
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
-
-            //11 check if rule is created
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE).should("exist");
-
-            // 12 check and close rule editor
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
-
+            createRuleToHideTextInputOnButtonClick();
             cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
         })
 

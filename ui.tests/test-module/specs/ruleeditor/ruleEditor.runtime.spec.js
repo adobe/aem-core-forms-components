@@ -1,4 +1,4 @@
-describe('Rule editor sanity for core-components',function(){
+describe('Rule editor runtime sanity for core-components',function(){
     const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/basic.html";
     let formContainer = null;
     let toggle_array = [];
