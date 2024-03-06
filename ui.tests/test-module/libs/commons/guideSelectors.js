@@ -170,7 +170,10 @@ var selectors = {
             editRule : "#EditableToolbar [data-action='editexpression']",
             createRuleButton : "#create-rule-button",
             saveRule : ".exp-Save-Button",
-            closeRuleEditor : ".exp-Close-Button"
+            closeRuleEditor : ".exp-Close-Button",
+            sideToggleButton : "#exp-toggle-sidepanel-button",
+            formObjectsTab : ".exp-sidepanel coral-tabview coral-tab coral-tab-label:first",
+            functionsTab : ".exp-sidepanel coral-tabview coral-tab coral-tab-label:last"
         },
         choiceModels : {
             STATEMENT : ".choice-model.u-coral-clearFix.STATEMENT",
@@ -183,6 +186,9 @@ var selectors = {
             HIDE : "coral-selectlist [value='HIDE_STATEMENT']",
             IS_CLICKED : "coral-selectlist [value='is clicked']",
             NAVIGATE_TO : "coral-selectlist [value='NAVIGATE_TO']"
+        },
+        ruleSummary : {
+            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
         }
     }
 };
