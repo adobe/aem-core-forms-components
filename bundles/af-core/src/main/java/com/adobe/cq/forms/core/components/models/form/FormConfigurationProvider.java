@@ -16,6 +16,8 @@
 
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.io.UnsupportedEncodingException;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -24,5 +26,5 @@ public interface FormConfigurationProvider {
      *
      * @returns Returns the url to fetch custom functions bundled as an ESM
      */
-    String getCustomFunctionModuleUrl();
+    String getCustomFunctionModuleUrl() throws UnsupportedEncodingException;
 }

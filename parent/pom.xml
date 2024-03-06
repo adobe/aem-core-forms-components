@@ -91,6 +91,8 @@
         <core.wcm.components.version>2.23.4</core.wcm.components.version>
         <core.wcm.components.library.version>2.23.4</core.wcm.components.library.version>
 
+        <com.adobe.aem.wcm.franklin.version>0.2.50</com.adobe.aem.wcm.franklin.version>
+
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
@@ -1106,6 +1108,12 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>4.5.13</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.cq.wcm</groupId>
+                <artifactId>com.adobe.aem.wcm.franklin</artifactId>
+                <version>${com.adobe.aem.wcm.franklin.version}</version>
                 <scope>provided</scope>
             </dependency>
 

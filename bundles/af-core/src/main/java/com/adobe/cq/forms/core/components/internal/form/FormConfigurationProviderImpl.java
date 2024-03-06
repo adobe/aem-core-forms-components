@@ -16,16 +16,18 @@
 
 package com.adobe.cq.forms.core.components.internal.form;
 
-import org.apache.jackrabbit.JcrConstants;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import com.adobe.aem.wcm.franklin.CodeBusInfo;
+import com.adobe.aem.wcm.franklin.CodeBusInfoService;
 import com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider;
 
 @Model(
@@ -41,24 +43,20 @@ public class FormConfigurationProviderImpl implements FormConfigurationProvider 
 
     @OSGiService
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ConfigurationResourceResolver configurationResourceResolver;
+    private CodeBusInfoService codeBusInfoService;
 
     @Override
-    public String getCustomFunctionModuleUrl() {
+    public String getCustomFunctionModuleUrl() throws UnsupportedEncodingException {
+        CodeBusInfo codeBusInfo = codeBusInfoService.getCodeBusInfo(resource);
         String customFunctionUrl = "";
-        if (resource != null && configurationResourceResolver != null) {
-            Resource configResource = configurationResourceResolver.getResource(resource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME);
-            if (configResource != null) {
-                Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
-                if (jcrResource != null) {
-                    ValueMap configValueMap = jcrResource.getValueMap();
-                    String owner = configValueMap.getOrDefault("owner", "").toString();
-                    String repo = configValueMap.getOrDefault("repo", "").toString();
-                    if (!owner.isEmpty() && !repo.isEmpty()) {
-                        customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
-                    }
-                }
+        if (codeBusInfo != null) {
+            String owner = codeBusInfo.getOwner();
+            String repo = codeBusInfo.getRepo();
+            // ensures removal of html tags
+            owner = URLEncoder.encode(owner, "UTF-8");
+            repo = URLEncoder.encode(repo, "UTF-8");
+            if (!owner.isEmpty() && !repo.isEmpty()) {
+                customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
             }
         }
         return customFunctionUrl;

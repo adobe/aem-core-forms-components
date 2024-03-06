@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,12 +23,14 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.caconfig.resource.ConfigurationResourceResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.aem.wcm.franklin.CodeBusInfo;
+import com.adobe.aem.wcm.franklin.CodeBusInfoService;
+import com.adobe.aem.wcm.franklin.internal.CodeBusInfoImpl;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -52,13 +55,13 @@ public class FormConfigurationProviderImplTest {
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
-    private ConfigurationResourceResolver configurationResourceResolverMock = Mockito.mock(ConfigurationResourceResolver.class);
+    private CodeBusInfoService codeBusInfoServiceMock = Mockito.mock(CodeBusInfoService.class);
 
     @BeforeEach
     void setUp() {
         context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
         context.load().json(BASE + TEST_CONTENT_JSON, CONTENT_ROOT);
-        context.registerService(ConfigurationResourceResolver.class, configurationResourceResolverMock);
+        context.registerService(CodeBusInfoService.class, codeBusInfoServiceMock);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -85,11 +88,14 @@ public class FormConfigurationProviderImplTest {
     }
 
     @Test
-    void testGetCustomFunctionModuleUrl() {
+    void testGetCustomFunctionModuleUrl() throws UnsupportedEncodingException {
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        Resource r = context.resourceResolver().resolve(CONF_PATH);
+        CodeBusInfo codeBusInfoImpl = Mockito.mock(CodeBusInfoImpl.class);
+        Mockito.when(codeBusInfoImpl.getOwner()).thenReturn("testOwner");
+        Mockito.when(codeBusInfoImpl.getRepo()).thenReturn("test-repo");
+        Mockito.when(codeBusInfoServiceMock.getCodeBusInfo(context.currentResource())).thenReturn(codeBusInfoImpl);
         assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js", formConfigurationProvider
             .getCustomFunctionModuleUrl());
     }
