@@ -64,6 +64,7 @@ public class FormContainerImplTest {
     private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
+    private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
     private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2withspecversion";
@@ -257,6 +258,17 @@ public class FormContainerImplTest {
         // Test with contextPath set
         formContainer.setContextPath("/test");
         assertEquals(formContainer.getRedirectUrl(), "/test/content/wknd.html");
+    }
+
+    @Test
+    void testGetContextPathWithDefaultRedirect() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1_WITHOUT_REDIRECT, FormContainer.class, context);
+        assertEquals(formContainer.getRedirectUrl(),
+            "/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
+        // Test with contextPath set
+        formContainer.setContextPath("/test");
+        assertEquals(formContainer.getRedirectUrl(),
+            "/test/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
     }
 
     @Test

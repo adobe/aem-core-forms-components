@@ -81,8 +81,19 @@ describe('Page - Authoring', function () {
 
     it ('open edit dialog of Image', function(){
       testImageBehaviour(imageEditPathSelector, imageDrop);
-    })
-  })
+    });
+
+    it('check rich text support for label', function(){
+      dropImageInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      //rich text shouldn't be present in image component
+      cy.get("div[name='richTextTitle']").should('not.exist');
+      cy.get('.cmp-adaptiveform-base__istitlerichtext').should('not.exist');
+      cy.get('.cq-dialog-cancel').click();
+      cy.deleteComponentByPath(imageDrop);
+    });
+  });
 
   context('Open Sites Editor', function () {
     const pagePath = "/content/core-components-examples/library/adaptive-form/image",

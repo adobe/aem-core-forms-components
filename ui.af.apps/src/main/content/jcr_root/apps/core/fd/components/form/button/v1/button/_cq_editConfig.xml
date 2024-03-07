@@ -28,10 +28,128 @@
             jcr:primaryType="cq:InplaceEditingConfig"
             active="{Boolean}true"
             configPath="inplaceEditingConfig"
-            editorType="plaintext">
+            editorType="text">
         <inplaceEditingConfig
                 jcr:primaryType="nt:unstructured"
                 editElementQuery="span:first"
-                textPropertyName="jcr:title"/>
+                textPropertyName="jcr:title">
+            <rtePlugins jcr:primaryType="nt:unstructured">
+                <footnoteplugin
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <links jcr:primaryType="nt:unstructured">
+                    <linkDialogConfig
+                            jcr:primaryType="nt:unstructured"
+                            height="{Long}316">
+                        <linkAttributes jcr:primaryType="cq:WidgetCollection">
+                            <linkAdvanced
+                                    jcr:primaryType="cq:Widget"
+                                    collapsed="{Boolean}true"
+                                    collapsible="{Boolean}true"
+                                    inputValue="advanced"
+                                    name="./linkdialog/cq:adhocLinkTrackingTab"
+                                    title="Link tracking">
+                                <items jcr:primaryType="cq:WidgetCollection">
+                                    <enable
+                                            jcr:primaryType="nt:unstructured"
+                                            attribute="enabletracking"
+                                            fieldDescription="override analytics framework settings."
+                                            fieldLabel="Custom link tracking"
+                                            name="./linkdialog/cq:adhocLinkTrackingEnableTracking"
+                                            xtype="checkbox">
+                                        <listeners
+                                                jcr:primaryType="nt:unstructured"
+                                                check="function(component){var dlg=component.findParentByType('rtelinkdialog');dlg.enableSCFields(component.checked);}"/>
+                                    </enable>
+                                    <events
+                                            jcr:primaryType="nt:unstructured"
+                                            attribute="adhocevents"
+                                            fieldDescription="e.g.: event2, event7."
+                                            fieldLabel="Include SiteCatalyst events"
+                                            name="./linkdialog/cq:adhocLinkTrackingEvents"
+                                            xtype="textfield"/>
+                                    <evars
+                                            jcr:primaryType="nt:unstructured"
+                                            attribute="adhocevars"
+                                            fieldDescription="e.g.: eVar1: pagedata.url, prop4: 'const'."
+                                            fieldLabel="Include SiteCatalyst variables"
+                                            name="./linkdialog/cq:adhocLinkTrackingEvars"
+                                            xtype="textfield"/>
+                                </items>
+                            </linkAdvanced>
+                        </linkAttributes>
+                    </linkDialogConfig>
+                </links>
+                <misctools
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <edit
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <findreplace
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <format
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <undo
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <subsuperscript
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <lists
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <justify
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+                <paraformat
+                        jcr:primaryType="nt:unstructured"
+                        features="*"/>
+            </rtePlugins>
+            <uiSettings jcr:primaryType="nt:unstructured">
+                <cui jcr:primaryType="nt:unstructured">
+                    <inline
+                            jcr:primaryType="nt:unstructured"
+                            toolbar="[#format,-,#justify,-,#lists,-,links#modifylink,links#unlink,-,footnoteplugin#footnotecommand,-,fullscreen#start,-,control#close,control#save]">
+                        <popovers jcr:primaryType="nt:unstructured">
+                            <justify
+                                    jcr:primaryType="nt:unstructured"
+                                    items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                    ref="justify"/>
+                            <lists
+                                    jcr:primaryType="nt:unstructured"
+                                    items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                    ref="lists"/>
+                            <format
+                                    jcr:primaryType="nt:unstructured"
+                                    items="[format#bold,format#italic,format#underline]"
+                                    ref="format"/>
+                            <paraformat
+                                    jcr:primaryType="nt:unstructured"
+                                    items="[paraformat:getFormats:paraformat-pulldown]"
+                                    ref="paraformat"/>
+                        </popovers>
+                    </inline>
+                    <fullscreen
+                            jcr:primaryType="nt:unstructured"
+                            toolbar="[format#bold,format#italic,format#underline,subsuperscript#subscript,subsuperscript#superscript,justify#justifyleft,justify#justifycenter,justify#justifyright,lists#unordered,lists#ordered,lists#outdent,lists#indent,undo#undo,undo#redo,edit#cut,edit#copy,edit#paste-default,edit#paste-plaintext,edit#paste-wordhtml,links#modifylink,links#unlink,footnoteplugin#footnotecommand,links#anchor,findreplace#find,findreplace#replace,misctools#specialchars,#paraformat,fullscreen#finish]">
+                        <popovers jcr:primaryType="nt:unstructured">
+                            <paraformat
+                                    jcr:primaryType="nt:unstructured"
+                                    items="paraformat:getFormats:paraformat-pulldown"
+                                    ref="paraformat"/>
+                        </popovers>
+                    </fullscreen>
+                    <additionalClasses jcr:primaryType="nt:unstructured">
+                        <footnotecommand
+                                jcr:primaryType="nt:unstructured"
+                                classes="rte--trigger"
+                                command="footnoteplugin#footnotecommand"/>
+                    </additionalClasses>
+                </cui>
+            </uiSettings>
+        </inplaceEditingConfig>
     </cq:inplaceEditing>
 </jcr:root>

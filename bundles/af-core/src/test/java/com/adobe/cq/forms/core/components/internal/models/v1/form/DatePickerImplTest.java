@@ -125,7 +125,7 @@ public class DatePickerImplTest {
     @Test
     void testIsVisible() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isVisible());
+        assertEquals(true, datePicker.isVisible());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isVisible()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isVisible());
@@ -143,7 +143,7 @@ public class DatePickerImplTest {
     @Test
     void testIsEnabled() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isEnabled());
+        assertEquals(true, datePicker.isEnabled());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isEnabled());
@@ -173,7 +173,7 @@ public class DatePickerImplTest {
     @Test
     void testIsReadOnly() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isReadOnly());
+        assertEquals(false, datePicker.isReadOnly());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isReadOnly());
