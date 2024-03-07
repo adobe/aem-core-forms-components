@@ -114,7 +114,7 @@ describe('Rule editor authoring sanity for core-components',function(){
     })
 
     context('Open Sites Editor', function() {
-        const pagePath = "/content/core-components-examples/library/adaptive-form/ruleeditor",
+        const pagePath = "/content/forms/sites/core-components-it/ruleeditor",
             formContainerPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer",
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
