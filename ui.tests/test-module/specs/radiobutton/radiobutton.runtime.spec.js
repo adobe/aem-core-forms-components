@@ -200,6 +200,14 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
         })
     })
+
+    it("test if required property updated in model is reflected in view", () => {
+        const [id, radioButtonView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false').then(() => {
+            radioButtonView._model.required = true;
+        })
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {

@@ -101,7 +101,7 @@ public class TextImplTest {
     @Test
     void testIsVisible() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
-        assertEquals(null, text.isVisible());
+        assertEquals(true, text.isVisible());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isVisible()).thenCallRealMethod();
         assertEquals(null, textMock.isVisible());

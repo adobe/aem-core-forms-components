@@ -63,6 +63,15 @@ BLOCK cmp-adaptiveform-container
     ELEMENT cmp-adaptiveform-container__wrapper
 ```
 
+In edit mode, the BEM structure includes a modifier for the cmp-adaptiveform-container block,
+
+```
+BLOCK cmp-adaptiveform-container
+    MODIFIER cmp-adaptiveform-container--edit
+    ELEMENT cmp-adaptiveform-container__wrapper
+```
+
+
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform-container` block to enable initialization of the JavaScript component.

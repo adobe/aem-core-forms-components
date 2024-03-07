@@ -118,7 +118,7 @@
                     sling:resourceType="core/fd/components/form/toggleablelink/v1/toggleablelink"
                     enabled="{Boolean}true"
                     enum="http://localhost"
-                    enumNames="[label for the link]"
+                    enumNames="label for the link"
                     fieldType="checkbox-group"
                     hideTitle="false"
                     name="link1695211072051"

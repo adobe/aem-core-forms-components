@@ -25,6 +25,7 @@ import java.util.Set;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -140,7 +141,7 @@ public class DropDownImplTest {
     @Test
     void testIsVisible() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isVisible());
+        assertEquals(true, dropdown.isVisible());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isVisible()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isVisible());
@@ -158,7 +159,7 @@ public class DropDownImplTest {
     @Test
     void testIsEnabled() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isEnabled());
+        assertEquals(true, dropdown.isEnabled());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isEnabled());
@@ -176,7 +177,7 @@ public class DropDownImplTest {
     @Test
     void testIsReadOnly() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isReadOnly());
+        assertEquals(false, dropdown.isReadOnly());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isReadOnly());
@@ -194,7 +195,7 @@ public class DropDownImplTest {
     @Test
     void testIsRequired() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isRequired());
+        assertEquals(false, dropdown.isRequired());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isRequired()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isRequired());
@@ -379,6 +380,44 @@ public class DropDownImplTest {
     void testGetEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
         assertArrayEquals(new String[] { "m", "f", "o" }, dropdown.getEnumNames());
+        TextContent textContent1 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "m";
+            }
+        };
+        TextContent textContent2 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "f";
+            }
+        };
+        TextContent textContent3 = new TextContent() {
+            @Override
+            public @Nullable Boolean isRichText() {
+                return null;
+            }
+
+            @Override
+            public @Nullable String getValue() {
+                return "o";
+            }
+        };
+        TextContent[] textContent = new TextContent[] { textContent1, textContent2, textContent3 };
+        for (int i = 0; i < dropdown.getEnumNamesAsTextContent().length; i++) {
+            assertEquals(textContent[i].getValue(), dropdown.getEnumNamesAsTextContent()[i].getValue());
+            assertEquals(textContent[i].isRichText(), dropdown.getEnumNamesAsTextContent()[i].isRichText());
+        }
     }
 
     @Test
@@ -389,6 +428,10 @@ public class DropDownImplTest {
         map.put("1", "Item 2");
         map.put("0", "Item 3");
         assertArrayEquals(map.values().toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[dropdown
+                .getEnumNamesAsTextContent().length]);
+        assertArrayEquals(map.values().toArray(new String[0]), dropdownValues);
     }
 
     @Test
@@ -438,5 +481,9 @@ public class DropDownImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), dropdown.getEnumNames());
+        String[] dropdownValues = Arrays.stream(dropdown.getEnumNamesAsTextContent()).map(d -> d.getValue()).toArray(
+            size -> new String[dropdown
+                .getEnumNamesAsTextContent().length]);
+        assertArrayEquals(set.toArray(new String[0]), dropdownValues);
     }
 }

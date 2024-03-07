@@ -129,4 +129,19 @@
         jcr:primaryType="nt:folder"
         sling:key="guideContainer##wizard##jcr:title##299"
         sling:message="जादूगर"/>
+    <_x0035_3786ca1-ac18-4151-8e13-db1ec440cb44
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##jcr:title##3329"
+        sling:message="&lt;p>&lt;b>पशु का चयन करें&lt;/b>&lt;/p>"/>
+    <a420bd56-ad98-43df-9477-75e455bc0103
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##0"
+        sling:message="&lt;p>&lt;i>कुत्ता&lt;/i>&lt;/p>"/>
+    <f733b6f8-a8d1-4025-9f6c-7cbde7accc0e
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##1"
+        sling:message="&lt;p>&lt;u>बिल्ली&lt;/u>&lt;/p>"/>
 </jcr:root>

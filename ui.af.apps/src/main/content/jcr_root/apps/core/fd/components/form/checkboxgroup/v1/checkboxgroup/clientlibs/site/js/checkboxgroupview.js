@@ -179,6 +179,12 @@
                 }
             });
         }
+        updateRequired(required, state) {
+            if (this.widget) {
+                this.element.toggleAttribute("required", required);
+                this.element.setAttribute("data-cmp-required", required);
+            }
+        }
     }
 
 

@@ -326,7 +326,10 @@ jobs:
             
             # Checkout branch
             git checkout $RELEASE_BRANCH
-            
+
+            # Fetch all branches and tags from the remote repository
+            git fetch --tags
+
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
@@ -366,6 +369,7 @@ jobs:
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
             git push origin $RELEASE_BRANCH
+
 
 workflows:
   version: 2

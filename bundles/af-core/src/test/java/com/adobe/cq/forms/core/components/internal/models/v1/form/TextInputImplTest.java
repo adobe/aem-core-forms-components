@@ -37,6 +37,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.mock;
@@ -51,7 +52,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
-
+    private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
@@ -169,7 +170,7 @@ public class TextInputImplTest {
     @Test
     void testIsVisible() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isVisible());
+        assertEquals(true, textInput.isVisible());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isVisible()).thenCallRealMethod();
         assertEquals(null, textInputMock.isVisible());
@@ -187,7 +188,7 @@ public class TextInputImplTest {
     @Test
     void testIsEnabled() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isEnabled());
+        assertEquals(true, textInput.isEnabled());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, textInputMock.isEnabled());
@@ -205,7 +206,7 @@ public class TextInputImplTest {
     @Test
     void testIsReadOnly() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isReadOnly());
+        assertEquals(false, textInput.isReadOnly());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, textInputMock.isReadOnly());
@@ -290,6 +291,20 @@ public class TextInputImplTest {
     void testGetMinimum() {
         TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT, TextInput.class, context);
         assertEquals(10, numberTextInput.getMinimum().intValue());
+    }
+
+    @Test
+    void testGetExclusiveMinimum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMinimum());
+        assertEquals(10L, numberTextInput.getExclusiveMinimum().longValue());
+    }
+
+    @Test
+    void testGetExclusiveMaximum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMaximum());
+        assertEquals(100L, numberTextInput.getExclusiveMaximum().longValue());
     }
 
     @Test

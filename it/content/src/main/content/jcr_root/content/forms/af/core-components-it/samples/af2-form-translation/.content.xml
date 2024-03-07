@@ -48,7 +48,7 @@
                 enum="[0,1]"
                 enumNames="[Item 1, Item 2]"
                 fieldType="checkbox-group"
-                name="checkboxgroup1678442866069"
+                name="checkboxgroup1"
                 type="number[]"/>
             <datepicker
                 fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##datepicker##jcr:title##9506&quot;}"
@@ -215,6 +215,29 @@
                 sling:resourceType="forms-components-examples/components/form/wizard"
                 fieldType="panel"
                 name="wizard1678442986146"/>
+            <checkboxgroup7
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##checkboxgroup7##jcr:title##3329&quot;,&quot;enumNames&quot;:&quot;guideContainer##checkboxgroup7##enumNames##7570&quot;}"
+                    jcr:created="{Date}2023-10-06T11:32:51.920+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2023-10-06T11:33:40.225+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="&lt;p>&lt;b>Select Animal&lt;/b>&lt;/p>"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    areOptionsRichText="true"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[&lt;p>&lt;i>Dog&lt;/i>&lt;/p>,&lt;p> &lt;u>Cat&lt;/u>&lt;/p>]"
+                    fieldType="checkbox-group"
+                    hideTitle="false"
+                    isTitleRichText="true"
+                    name="checkboxgroup2"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true,true,true]"
+                    type="number[]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

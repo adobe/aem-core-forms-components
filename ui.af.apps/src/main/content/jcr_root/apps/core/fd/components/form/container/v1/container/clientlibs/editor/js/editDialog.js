@@ -327,12 +327,31 @@
     }
 
     function showPostUrlTextField(dialog) {
-        var enableRestEndpointCheckboxElement = dialog.find(REST_END_POINT_POST_CHECK_BOX)[0],
-            restEndPointUrlTextbox = Utils.selectElement("input", './restEndpointPostUrl')[0];
+        let enableRestEndpointCheckboxElement = dialog.find(REST_END_POINT_POST_CHECK_BOX)[0],
+            restEndPointSource = Utils.selectElement("coral-radio", './restEndPointSource'), isPostUrlSelected = false,
+            restEndPointUrlTextBox = Utils.selectElement("input", './restEndpointPostUrl')[0],
+            restEndpointConfigPath = Utils.selectElement("input", './restEndpointConfigPath')[0];
+
         if (enableRestEndpointCheckboxElement != null && enableRestEndpointCheckboxElement.checked == true) {
-            Utils.showComponent(restEndPointUrlTextbox, 'div');
+            restEndPointSource.parent('div').parent('div').show();
+            Utils.showComponent(restEndPointSource, 'div');
+            restEndPointSource.each(function (i, obj) {
+                if (obj.checked && obj.value === "posturl") {
+                    isPostUrlSelected = true;
+                }
+            });
+            if(restEndPointSource.length == 0 || isPostUrlSelected){
+                Utils.showComponent(restEndPointUrlTextBox, 'div');
+                Utils.hideComponent(restEndpointConfigPath, 'div');
+            } else {
+                Utils.showComponent(restEndpointConfigPath, 'div');
+                Utils.hideComponent(restEndPointUrlTextBox, 'div');
+            }
         } else {
-            Utils.hideComponent(restEndPointUrlTextbox, 'div');
+            Utils.hideComponent(restEndPointSource, 'div');
+            Utils.hideComponent(restEndPointUrlTextBox, 'div');
+            Utils.hideComponent(restEndpointConfigPath, 'div');
+            restEndPointSource.parent('div').parent('div').hide();
         }
     }
 

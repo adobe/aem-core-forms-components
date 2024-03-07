@@ -32,6 +32,17 @@ const commons = require('../libs/commons/commons'),
 
 // todo: beta specific form authoring test cases are not run (only common functionality [of beta and to be GA] test are executed)
 describe('Page/Form Authoring', function () {
+
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
+
         const checkEditDialog = function(formContainerEditPathSelector) {
             // click configure action on adaptive form container component
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
@@ -68,6 +79,14 @@ describe('Page/Form Authoring', function () {
         cy.get("coral-selectlist-item").contains('Submit to REST endpoint').click({force: true});
         cy.get("[name='./enableRestEndpointPost']").should("exist");
         cy.get("[name='./enableRestEndpointPost']").first().click();
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
+            cy.get("coral-radio[name='./restEndPointSource'][value='config']").first().click();
+            cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("not.be.visible");
+            cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
+            cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
+            cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
+            cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
+        }
         cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
 
         //save the configuration
