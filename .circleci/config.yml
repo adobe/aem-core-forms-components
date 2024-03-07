@@ -356,6 +356,9 @@ jobs:
             # Checkout branch
             git checkout $RELEASE_BRANCH
 
+            # Fetch all branches and tags from the remote repository
+            git fetch --tags
+
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
