@@ -160,6 +160,12 @@
         updateEnumNames(newEnumNames) {
             super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
         }
+        updateRequired(required, state) {
+            if (this.widget) {
+                this.element.toggleAttribute("required", required);
+                this.element.setAttribute("data-cmp-required", required);
+            }
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

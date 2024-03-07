@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Date;
 
 import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -44,6 +45,9 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
+    // type number and date are implemented in sling model as per crispr specification
+    // but it is not supported in AEM dialogs
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean multiLine;
@@ -59,6 +63,12 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String autocomplete;
+
+    /** Type number specific constraints **/
+    private Object exclusiveMinimumVaue;
+    private Object exclusiveMaximumValue;
+
+    /** End of Type number specific constraints **/
 
     @Override
     public boolean isMultiLine() {
@@ -110,13 +120,15 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     }
 
     @Override
+    @Nullable
     public Long getExclusiveMaximum() {
-        return exclusiveMaximum;
+        return (Long) exclusiveMaximumValue;
     }
 
     @Override
+    @Nullable
     public Long getExclusiveMinimum() {
-        return exclusiveMinimum;
+        return (Long) exclusiveMinimumVaue;
     }
 
     @Override
@@ -131,17 +143,30 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     @Override
     public Date getExclusiveMaximumDate() {
-        return ComponentUtils.clone(exclusiveMaximumDate);
+        return ComponentUtils.clone((Date) exclusiveMaximumValue);
     }
 
     @Override
     public Date getExclusiveMinimumDate() {
-        return ComponentUtils.clone(exclusiveMinimumDate);
+        return ComponentUtils.clone((Date) exclusiveMinimumVaue);
     }
 
     @Override
     @Nullable
     public String getFormat() {
         return format;
+    }
+
+    @PostConstruct
+    private void initTextInput() {
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
+        // in json either, exclusiveMaximum or maximum should be present
+        if (exclusiveMaximumValue != null) {
+            maximum = null;
+        }
+        if (exclusiveMinimumVaue != null) {
+            minimum = null;
+        }
     }
 }

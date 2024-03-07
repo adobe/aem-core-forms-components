@@ -66,9 +66,11 @@ describe('Page - Authoring', function () {
       cy.openAuthoring(pagePath);
     });
 
-    it('insert EmailInput in form container', function () {
-      dropEmailInputInContainer();
-      cy.deleteComponentByPath(emailInputDrop);
+    it('insert EmailInput in form container',  { retries: 3 }, function () {
+        cy.cleanTest(emailInputDrop).then(function() {
+            dropEmailInputInContainer();
+            cy.deleteComponentByPath(emailInputDrop);
+        });
     });
 
     it ('open edit dialog of EmailInput', { retries: 3 }, function(){

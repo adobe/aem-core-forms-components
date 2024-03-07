@@ -363,4 +363,9 @@ public interface AEMForm extends Component {
         throw new UnsupportedOperationException();
     }
 
+    @JsonIgnore
+    default String getTitle() {
+        throw new UnsupportedOperationException();
+    }
+
 }
