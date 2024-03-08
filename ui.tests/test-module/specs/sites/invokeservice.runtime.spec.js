@@ -31,11 +31,11 @@ describe("Invoke Service", () => {
         cy.intercept('POST', '**af.dermis**').as('invokeService');
         cy.previewForm(pagePath)
         cy.wait('@invokeService').then(({response}) => {
-            if (cy.af.isLatestAddon()) {
-                expect(response.statusCode).to.equal(400);
-            } else {
-                expect(response.statusCode).to.equal(200); // todo: some changes in 6.5 are not merged yet, hence changing this
-            }
+            //if (cy.af.isLatestAddon()) {
+            expect(response.statusCode).to.equal(400);
+            //} else {
+            //    expect(response.statusCode).to.equal(200); // todo: some changes in 6.5 are not merged yet, hence changing this
+            //}
 
             // todo: some changes in 6.5 are not merged yet, hence changing this
             if (cy.af.isLatestAddon()) {
