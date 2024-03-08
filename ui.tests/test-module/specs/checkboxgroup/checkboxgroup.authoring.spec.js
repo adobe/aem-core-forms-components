@@ -192,6 +192,7 @@ describe('Page - Authoring', function () {
         cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
         cy.get("div[name='richTextEnumNames']").first().should('be.visible');
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
+        cy.wait(5000); // waits for 5 seconds to save the data
         cy.get('.cq-dialog-submit').click();
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
