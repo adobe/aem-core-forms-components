@@ -39,9 +39,10 @@ The following properties are written to JCR for this Form Image Choice`component
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
 9. `./type` - defines the data type of the value
-9. `./key` - defines the set of possible keys for this field
-10. `./value` - defines the path of the image to display for the possible options of the field.
+9. `./imageValue` - defines the set of possible values for this field
+10. `./imageSrc` - Image Src
 11. `./altText` - alternate text for image
+12. `./selectionType` - defines the data type of field which can be radio or checkboxgroup
 
 ## Client Libraries
 The component provides a `core.forms.components.imagechoice.v1.runtime` client library category that contains the Javascript runtime for the component.
@@ -85,6 +86,7 @@ We support replace feature that allows replacing Reset Button component to any o
 
 * Drop Down
 * Radio Button
+* Image Choice
 
 ## Information
 * **Vendor**: Adobe
