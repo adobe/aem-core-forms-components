@@ -1,0 +1,49 @@
+{
+  ":type": "forms-components-examples/components/form/imagechoice",
+  "dataLayer": {
+    "imagechoice-337847e8a8": {
+      "@type": "core/fd/components/form/imagechoice/v1/imagechoice",
+      "dc:description": "Your preferred option",
+      "dc:title": "Select your preferred option",
+      "fieldType": "imagechoice"
+    }
+  },
+  "description": "Input your preferred option",
+  "enabled": true,
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "fieldType": "imagechoice",
+  "id": "imagechoice-337847e8a8",
+  "label": {
+    "value": "Preferred Option"
+  },
+  "name": "PreferredOption",
+  "options": {
+    "item0": {
+      "altText": "aem-corecomponents-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+      "imageValue": "1"
+    },
+    "item1": {
+      "altText": "adobe-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+      "imageValue": "2"
+    }
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal",
+      "selectionType": "single"
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/imagechoice-datalayer"
+  },
+  "readOnly": false,
+  "type": "string[]",
+  "visible": true
+}
