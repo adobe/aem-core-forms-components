@@ -141,14 +141,9 @@ public class ImageChoiceImpl extends AbstractFieldImpl implements ImageChoice {
     @Override
     public Object[] getDefault() {
         Object[] typedDefaultValue = null;
-        try {
-            if (defaultValue != null) {
-                typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
-            }
-        } catch (Exception exception) {
-            logger.error("Error while type casting default value to value type. Exception: ", exception);
+        if (defaultValue != null) {
+            typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
         }
         return typedDefaultValue;
     }
-
 }
