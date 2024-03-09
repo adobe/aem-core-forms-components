@@ -1,0 +1,52 @@
+{
+  ":type": "forms-components-examples/components/form/imagechoice",
+  "constraintMessages": {
+    "required": "This is a required field",
+    "validationExpression": "Required Expression"
+  },
+  "dataRef": "a.b",
+  "default": "1",
+  "description": "long description",
+  "enabled": true,
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "fieldType": "imagechoice",
+  "id": "imagechoice-3922625f43",
+  "label": {
+    "value": "Image Choice"
+  },
+  "name": "imagechoice_12345",
+  "options": {
+    "item0": {
+      "altText": "aem-corecomponents-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+      "imageValue": "1"
+    },
+    "item1": {
+      "altText": "adobe-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+      "imageValue": "2"
+    }
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "vertical",
+      "selectionType": "single",
+      "tooltipVisible": true
+    },
+    "fd:dor": {
+      "dorColspan": "4",
+      "dorExclusion": true
+    },
+    "fd:path": "/content/imagechoice-customized"
+  },
+  "readOnly": true,
+  "required": true,
+  "screenReaderText": "'custom text'",
+  "tooltip": "<p>short description</p>",
+  "type": "string[]",
+  "visible": false
+}
