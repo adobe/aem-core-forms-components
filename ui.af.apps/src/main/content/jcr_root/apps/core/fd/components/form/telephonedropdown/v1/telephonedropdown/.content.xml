@@ -4,5 +4,5 @@
 		  jcr:description="Add a field to capture telephone numbers."
 		  jcr:primaryType="cq:Component"
 		  jcr:title="Adaptive Form DropDown Telephone Input"
-		  sling:resourceSuperType="core/fd/components/form/textinput/v1/textinput"
+		  sling:resourceSuperType="core/fd/components/form/telephoneinput/v1/telephoneinput"
 		  componentGroup=".core-adaptiveform"/>

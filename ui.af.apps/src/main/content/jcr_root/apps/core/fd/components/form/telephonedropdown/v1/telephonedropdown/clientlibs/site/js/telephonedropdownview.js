@@ -70,6 +70,10 @@
             return this.element.querySelector(TelephoneDropdown.selectors.countryCode);
         }
 
+        getPhoneNumber() {
+            return this.element.querySelector(TelephoneDropdown.selectors.widget)
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widget.value !== '') {
@@ -82,9 +86,27 @@
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
             });
-            this.getCountryCodeSelect().addEventListener('change', (e) => {
-                this._model.defaultCountryCode = e.target.value;
+
+            this.getPhoneNumber().addEventListener('change', (e) => {
+                let countryCode = this.getCountryCodeSelect().value;
+                this._model.value = countryCode + e.target.value;
             });
+
+            this.getCountryCodeSelect().addEventListener('change', (e) => {
+                let phoneNumber = this.getPhoneNumber().value;
+                this._model.value = e.target.value + phoneNumber;
+            });
+
+            // this.getPhoneNumber().addEventListener('change', (e) => {
+            //     let countryCode = this.getCountryCodeSelect().value;
+            //     this._model.value = countryCode + e.target.value;
+            // });
+            //
+            // this.getCountryCodeSelect().addEventListener('change', (e) => {
+            //     local = e.target.value;
+            //     // let phoneNumber = this.getPhoneNumber().value;
+            //     // this._model.value = e.target.value + phoneNumber;
+            // });
         }
     }
 

@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Arrays;
 
+import javax.annotation.Nullable;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -37,15 +39,51 @@ import com.adobe.cq.forms.core.components.models.form.TelephoneDropdown;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class TelephoneDropdownImpl extends TextInputImpl implements TelephoneDropdown {
+public class TelephoneDropdownImpl extends DropDownImpl implements TelephoneDropdown {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.REQUIRED, name = "allowedCountryCodes")
     @Default(values = { "+0 CountryName" })
     private String[] allowedCountryCodes;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
+    @Nullable
+    protected String pattern;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    private boolean enforceEnum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelect")
+    @Default(booleanValues = false)
+    protected boolean multiSelect;
+
+    @Override
+    public Integer getMinItems() {
+        return minItems;
+    }
+
+    @Override
+    public boolean isEnforceEnum() {
+        return enforceEnum;
+    }
+
+    @Override
+    public Integer getMaxItems() {
+        return maxItems;
+    }
+
+    @Override
+    public Boolean isMultiSelect() {
+        return multiSelect;
+    }
+
     @Override
     public String[] getAllowedCountryCodes() {
         return Arrays.copyOf(allowedCountryCodes, allowedCountryCodes.length);
+    }
+
+    @Nullable
+    public String getPattern() {
+        return pattern;
     }
 
 }

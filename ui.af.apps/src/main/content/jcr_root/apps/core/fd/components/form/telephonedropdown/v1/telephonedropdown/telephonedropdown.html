@@ -55,7 +55,14 @@
     </div>
     <div class="cmp-adaptiveform-telephonedropdown__widget-container">
         <select class="cmp-adaptiveform-telephonedropdown__countrycode" id="${widgetId}-countrycode">
-            <option data-sly-repeat.countryCode="${telephoneDropdown.allowedCountryCodes}" value="${countryCode}">${countryCode}</option>
+            <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${telephoneDropdown.placeHolder}</option>
+            <div data-sly-list.enumName="${telephoneDropdown.enumNames}" data-sly-unwrap>
+                <div data-sly-test="${enumName != null && telephoneDropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
+                    <option value="${telephoneDropdown.enums[enumNameList.index].toString}"
+                            class="cmp-adaptiveform-telephonedropdown__option"
+                            data-sly-attribute.selected="${telephoneDropdown.enums[enumNameList.index] in telephoneDropdown.default ? 'selected' : ''}">${enumName}</option>
+                </div>
+            </div>
         </select>
         <input title="${telText.tooltipVisible ? '' : telText.tooltipText}"
                class="cmp-adaptiveform-telephonedropdown__widget"

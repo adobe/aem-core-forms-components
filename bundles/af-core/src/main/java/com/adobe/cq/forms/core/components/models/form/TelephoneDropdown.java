@@ -18,13 +18,15 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Defines the form TelephoneDropdown field Sling Model used for the telephone input component with dropdown.
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface TelephoneDropdown extends TextInput {
+public interface TelephoneDropdown extends Field, OptionsConstraint, ContainerConstraint {
 
     /**
      * Returns the default country code for the telephone field.
@@ -33,4 +35,7 @@ public interface TelephoneDropdown extends TextInput {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     String[] getAllowedCountryCodes();
+
+    @JsonIgnore
+    Boolean isMultiSelect();
 }
