@@ -23,12 +23,12 @@
       }
     },
     "orientation": "horizontal",
-    "selectionType": "single",
+    "selectionType": "multiple",
     "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
     "properties": {
       "afs:layout": {
         "orientation": "horizontal",
-        "selectionType": "single"
+        "selectionType": "multiple"
       },
       "fd:dor": {
         "dorExclusion": false

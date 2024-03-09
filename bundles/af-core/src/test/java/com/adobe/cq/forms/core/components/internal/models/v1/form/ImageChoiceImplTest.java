@@ -15,9 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import com.adobe.cq.forms.core.Utils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.sling.commons.json.JSONObject;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -363,5 +368,10 @@ public class ImageChoiceImplTest {
     void testGetSelectionType() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE_CUSTOMIZED);
         assertEquals("single", ((ImageChoiceImpl) imageChoice).getSelectionType());
+    }
+    @Test
+    void testGetSelectionTypeWithMultiple() {
+        ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
+        assertEquals("multiple", ((ImageChoiceImpl) imageChoice).getSelectionType());
     }
 }
