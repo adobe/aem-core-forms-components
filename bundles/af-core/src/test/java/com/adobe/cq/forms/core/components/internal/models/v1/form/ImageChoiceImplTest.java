@@ -364,6 +364,7 @@ public class ImageChoiceImplTest {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE_CUSTOMIZED);
         assertEquals("single", ((ImageChoiceImpl) imageChoice).getSelectionType());
     }
+
     @Test
     void testGetSelectionTypeWithMultiple() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
