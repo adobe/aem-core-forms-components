@@ -375,5 +375,17 @@ export const Constants = {
      * @namespace FIELD_TYPE
      */
     FIELD_TYPE: FIELD_TYPE
+
+    /**
+     * Html input type text
+     * @type {string}
+     */
+    HTML_INPUT_TYPE_TEXT : "text",
+
+    /**
+     * Html input type password
+     * @type {string}
+     */
+    HTML_INPUT_TYPE_PASSWORD : "password"
 };
 
