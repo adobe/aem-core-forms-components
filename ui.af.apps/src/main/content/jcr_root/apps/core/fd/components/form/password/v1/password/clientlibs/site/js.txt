@@ -16,4 +16,3 @@
 
 #base=js
 passwordview.js
-togglepasswordvisibility.js
