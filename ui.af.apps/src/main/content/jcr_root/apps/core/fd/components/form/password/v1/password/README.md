@@ -35,11 +35,10 @@ The following properties are written to JCR for this Form Password component and
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
 3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
+4. `./description` - defines a help message that can be rendered in the field as a hint for the user
+5. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
+6. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
+7. `./readOnly` - if set to `true`, the filed will be read only
 
 ## Client Libraries
 The component provides a `core.forms.components.password.v1.runtime` client library category that contains the Javascript runtime for the component. 
