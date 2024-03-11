@@ -35,7 +35,9 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Default value"
                                                 name="./default"
-                                                wrapperClass="cmp-adaptiveform-password__value"/>                                            
+                                                sling:hideResource="{Boolean}true"
+                                                wrapperClass="cmp-adaptiveform-password__value"/>
+                                                                                           
                                         </items>
                                     </column>
                                 </items>
