@@ -29,7 +29,6 @@ import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +70,7 @@ public class ImageChoiceImpl extends AbstractFieldImpl implements ImageChoice {
     }
 
     @Override
-    public @NotNull Map<String, Object> getCustomLayoutProperties() {
+    public Map<String, Object> getCustomLayoutProperties() {
         Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
         if (orientation != null) {
             customLayoutProperties.put("orientation", orientation);
