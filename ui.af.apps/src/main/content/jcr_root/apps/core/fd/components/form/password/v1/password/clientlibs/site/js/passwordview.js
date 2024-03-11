@@ -34,7 +34,8 @@
             description: `.${Password.bemBlock}__longdescription`,
             qm: `.${Password.bemBlock}__questionmark`,
             errorDiv: `.${Password.bemBlock}__errormessage`,
-            tooltipDiv: `.${Password.bemBlock}__shortdescription`
+            tooltipDiv: `.${Password.bemBlock}__shortdescription`,
+            eyeIcon: `.${Password.bemBlock}__eyeicon`
         };
 
         constructor(params) {
@@ -65,6 +66,10 @@
             return this.element.querySelector(Password.selectors.qm);
         }
 
+        getEyeIcon(){
+            return this.element.querySelector(Password.selectors.eyeIcon);
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widget.value !== '') {
@@ -77,7 +82,22 @@
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
             });
+            this.getEyeIcon().addEventListener('click', (e) => {
+                this.#togglePasswordType();
+            });
         }
+
+        #togglePasswordType(){
+            const widget = this.getWidget();
+            if(widget.value){
+                const widget = this.getWidget();
+                if (widget.type === FormView.Constants.HTML_INPUT_TYPE_PASSWORD) {
+                    widget.type = FormView.Constants.HTML_INPUT_TYPE_TEXT;
+                    } else {
+                     widget.type = FormView.Constants.HTML_INPUT_TYPE_PASSWORD;
+                    }
+                }            
+        }       
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
