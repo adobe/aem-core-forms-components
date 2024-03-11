@@ -223,6 +223,7 @@ describe('Page - Authoring', function () {
                         $el[0].click();
                         getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
                             $el[0].click();
+                            getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').click();
                             getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
                                 $el[0].click();
                                 getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
