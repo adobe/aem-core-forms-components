@@ -61,7 +61,22 @@ function clearEnums() {
     return enums;
 }
 
-
+/**
+ * Formats Credit Card Number
+ * @name formatCreditCardNumber Formats Credit Card Number
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatCreditCardNumber(field)
+{
+    var cardNumber = field.$value ? field.$value + '' : field.$value;
+    var formattedNumber = cardNumber;
+    if(cardNumber) {
+        var maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*');  // Replace digits with masked characters except for the last four
+        var formattedNumber = maskedNumber.replace(/(.{4})/g, '$1 '); // Add spaces after every 4 letters
+    }
+    return formattedNumber;
+}
 
 
 
