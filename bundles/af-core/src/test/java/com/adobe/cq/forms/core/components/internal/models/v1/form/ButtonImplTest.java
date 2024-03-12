@@ -87,7 +87,7 @@ public class ButtonImplTest {
     @Test
     void testIsVisible() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(null, button.isVisible());
+        assertEquals(true, button.isVisible());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isVisible()).thenCallRealMethod();
         assertEquals(null, buttonMock.isVisible());
@@ -105,7 +105,7 @@ public class ButtonImplTest {
     @Test
     void testIsEnabled() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(null, button.isEnabled());
+        assertEquals(true, button.isEnabled());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, buttonMock.isEnabled());

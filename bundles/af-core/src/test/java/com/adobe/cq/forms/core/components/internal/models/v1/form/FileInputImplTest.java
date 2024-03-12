@@ -137,7 +137,7 @@ public class FileInputImplTest {
     @Test
     void testIsVisible() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isVisible());
+        assertEquals(true, fileInput.isVisible());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isVisible()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isVisible());
@@ -155,7 +155,7 @@ public class FileInputImplTest {
     @Test
     void testIsEnabled() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isEnabled());
+        assertEquals(true, fileInput.isEnabled());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isEnabled());
@@ -173,7 +173,7 @@ public class FileInputImplTest {
     @Test
     void testIsRequired() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isRequired());
+        assertEquals(false, fileInput.isRequired());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isRequired()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isRequired());
@@ -191,7 +191,7 @@ public class FileInputImplTest {
     @Test
     void testIsReadOnly() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isReadOnly());
+        assertEquals(false, fileInput.isReadOnly());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isReadOnly());

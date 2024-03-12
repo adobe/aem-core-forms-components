@@ -105,6 +105,9 @@
                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                               fieldLabel="Default value"
                                               name="./default"/>
+                                            <readonly
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true" />
                                         </items>
                                     </column>
                                 </items>

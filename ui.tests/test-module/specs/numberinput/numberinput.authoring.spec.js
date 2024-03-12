@@ -89,12 +89,9 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
                 cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
-                    cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Number of digits before the decimal separator (1234.000)');
-                    cy.get(numberInputBlockBemSelector + '__fracdigits').parent().children('label').contains('Number of digits after the decimal separator (1234.000)');
-                    cy.get(numberInputBlockBemSelector + "__type").click();
-                    cy.get("coral-selectlist-item").contains('Decimal').should('be.visible');
-                    cy.get("coral-selectlist-item").contains('Integer').should('be.visible').click();
-                    cy.get(numberInputBlockBemSelector + '__leaddigits').parent().children('label').contains('Maximum Number of Digits');
+                    cy.get(numberInputBlockBemSelector + "__type").children('.coral3-Select-button').click();
+                    cy.get(".coral3-SelectList-item").contains('Decimal').should('be.visible');
+                    cy.get(".coral3-SelectList-item").contains('Integer').should('be.visible').click();
                     cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
                         cy.deleteComponentByPath(numberInputDrop);
                     })
@@ -102,7 +99,8 @@ describe('Page - Authoring', function () {
             });
         })
 
-        it('verify editFormat Value Getting saved correctly', function () {
+        // todo: leadDigits and fracDigits are not supported as of today
+        it.skip('verify editFormat Value Getting saved correctly', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);

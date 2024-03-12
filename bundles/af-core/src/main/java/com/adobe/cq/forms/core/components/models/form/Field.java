@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 import com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -47,6 +48,7 @@ public interface Field extends Base, BaseConstraint {
      * @return placeholder to show on the field
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
+    @JsonProperty("placeholder")
     default String getPlaceHolder() {
         return null;
     }

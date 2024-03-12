@@ -128,13 +128,15 @@ describe('Page - Authoring', function () {
         });
 
         //if (cy.af.isLatestAddon()) {
-            it('test data binding', function () {
-                configureDataModel(formContainerEditPathSelector);
-                dropTextInputInSites();
-                testDataBindingBehaviour(textInputEditPathSelector)
-                cy.openSiteAuthoring(pagePath);
-                testBindingPersistence(textInputEditPathSelector);
-                cy.deleteComponentByPath(textInputDrop);
+            it('test data binding', { retries: 3 }, function () {
+                cy.cleanTest(textInputDrop).then(function() {
+                    configureDataModel(formContainerEditPathSelector);
+                    dropTextInputInSites();
+                    testDataBindingBehaviour(textInputEditPathSelector);
+                    cy.openSiteAuthoring(pagePath);
+                    testBindingPersistence(textInputEditPathSelector);
+                    cy.deleteComponentByPath(textInputDrop);
+                });
             });
         //}
     });

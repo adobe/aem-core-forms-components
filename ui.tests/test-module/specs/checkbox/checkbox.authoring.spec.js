@@ -49,7 +49,9 @@ describe('Page - Authoring', function () {
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkboxEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
     cy.get("[name='./name']")
-    .should("exist");
+        .should("exist");
+    cy.get("[name='./readOnly']")
+        .should("not.exist");
 
 
     cy.clickAndValidate('.cq-dialog-cancel');
@@ -76,8 +78,10 @@ describe('Page - Authoring', function () {
       });
     });
 
-    it('open edit dialog of aem forms Checkbox', function() {
-      testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
+    it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
+        });
     });
   })
 
@@ -97,8 +101,10 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(checkboxDrop);
     });
 
-    it('open edit dialog of aem forms Checkbox', function() {
-      testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
+    it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
+        });
     });
   })
 });

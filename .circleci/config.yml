@@ -8,8 +8,8 @@ common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
@@ -119,17 +119,17 @@ executors:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:13804-openjdk11
         <<: *docker_auth
   test_executor_655:
-      docker:
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-          <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.18.0-openjdk11
-          <<: *docker_auth
+    docker:
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+        <<: *docker_auth
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load9-openjdk11
+        <<: *docker_auth
   test_executor_655_latest:
-      docker:
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-          <<: *docker_auth
-        - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.19-load9-openjdk11
-          <<: *docker_auth
+    docker:
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+        <<: *docker_auth
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.20.0-openjdk11
+        <<: *docker_auth
 
 jobs:
   build-java-11:
@@ -150,7 +150,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -167,6 +167,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -227,7 +228,7 @@ jobs:
   cypress-chrome-655-with-latest-addon-context-path:
     executor: test_executor_655_latest
     environment:
-      AEM: classic-latest
+      AEM: classic-latest-cp
       TYPE: cypress
       BROWSER: chrome
       CONTEXTPATH: lc
@@ -325,7 +326,10 @@ jobs:
             
             # Checkout branch
             git checkout $RELEASE_BRANCH
-            
+
+            # Fetch all branches and tags from the remote repository
+            git fetch --tags
+
             # Retrieve the branch name
             BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
@@ -365,6 +369,7 @@ jobs:
             git add VERSIONS.md README.md
             git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
             git push origin $RELEASE_BRANCH
+
 
 workflows:
   version: 2

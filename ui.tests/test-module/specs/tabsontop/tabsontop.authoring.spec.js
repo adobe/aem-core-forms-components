@@ -55,32 +55,32 @@ describe.only('Page - Authoring', function () {
         dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Horizontal Tabs", afConstants.components.forms.resourceType.tabsontop);
     }
 
-  const testPanelBehaviour = function(tabsEditPathSelector, tabsContainerDrop, isSites) {
-    if (isSites) {
-      dropTabsInSites();
-    } else {
-      dropTabsInContainer();
+    const testPanelBehaviour = function(tabsEditPathSelector, tabsContainerDrop, isSites) {
+        if (isSites) {
+            dropTabsInSites();
+        } else {
+            dropTabsInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+        // Check If Dialog Options Are Visible
+        cy.get("[name='./name']")
+        .should("exist");
+        cy.get("[name='./jcr:title']")
+        .should("exist");
+        cy.get("[name='./dataRef']")
+        .should("exist");
+        cy.get("[name='./visible']")
+        .should("exist");
+        cy.get("[name='./enabled']")
+        .should("exist");
+        cy.get("[name='./assistPriority']")
+        .should("exist");
+        cy.get("[name='./custom']")
+        .should("exist");
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
+        cy.deleteComponentByPath(tabsContainerDrop);
     }
-    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsEditPathSelector);
-    cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
-    // Check If Dialog Options Are Visible
-    cy.get("[name='./name']")
-    .should("exist");
-    cy.get("[name='./jcr:title']")
-    .should("exist");
-    cy.get("[name='./dataRef']")
-        .should("exist");
-    cy.get("[name='./visible']")
-        .should("exist");
-    cy.get("[name='./enabled']")
-        .should("exist");
-    cy.get("[name='./assistPriority']")
-        .should("exist");
-    cy.get("[name='./custom']")
-        .should("exist");
-    cy.get('.cq-dialog-cancel').should('be.visible').click();
-    cy.deleteComponentByPath(tabsContainerDrop);
-  }
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -117,6 +117,11 @@ describe.only('Page - Authoring', function () {
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    // In select panel, text will be in format: <component type>: <title>
+                    cy.get("table.cmp-panelselector__table tr").eq(0)
+                        .should("contain.text", "Adaptive Form Text Box: Text Input");
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Date Picker: Date Input");
                     const datePickerPath = tabsPath + "/datepicker";
                     cy.get(`[data-id="${datePickerPath}`).click().then(() => {
                         cy.get(`[data-path="${datePickerPath}"]`).should('be.visible');

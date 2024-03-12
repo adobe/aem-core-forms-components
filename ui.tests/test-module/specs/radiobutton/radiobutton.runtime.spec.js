@@ -189,6 +189,25 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${radioButton1}`).should('have.class', 'cmp-adaptiveform-radiobutton--filled');
       })
     })
+
+    it("radiobutton with boolean type selection should happen in first click", () => {
+        const [radioButton8, radioButton1FieldView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${radioButton8}`).find("input").check("true").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="true"]').should("be.checked");
+        })
+
+        cy.get(`#${radioButton8}`).find("input").check("false").then(() => {
+            cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
+        })
+    })
+
+    it("test if required property updated in model is reflected in view", () => {
+        const [id, radioButtonView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false').then(() => {
+            radioButtonView._model.required = true;
+        })
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {

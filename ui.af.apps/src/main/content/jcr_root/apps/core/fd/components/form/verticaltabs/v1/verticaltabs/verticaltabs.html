@@ -29,14 +29,14 @@
   data-placeholder-text="${wcmmode.edit && 'Please drag Vertical Tabs components here' @ i18n}"
   data-sly-test.widgetId="${'{0}-{1}' @ format=[panel.id, 'widget']}">
      <div class="cmp-verticaltabs__label-container">
-        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      </div>
      <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
      <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-verticaltabs'}" data-sly-unwrap></div>
 <div class="cmp-verticaltabs__tabs-container" id="${widgetId}">
  <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
-     data-sly-list.tab="${tabs.items}"
+     data-sly-list.tab="${panel.items}"
      role="tablist"
      class="cmp-verticaltabs__tablist"
      aria-label="${tabs.accessibilityLabel}"
@@ -48,7 +48,7 @@
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          aria-controls="${tab.id}__tabpanel"
          tabindex="${isActive ? '0' : '-1'}"
-         data-cmp-hook-adaptiveFormVerticalTabs="tab">${tab.title}</li>
+         data-cmp-hook-adaptiveFormVerticalTabs="tab">${tab.label.value @ context = tab.label.richText ? 'html' : 'text'}</li>
  </ol>
  <div data-sly-repeat.item="${tabs.items}"
       data-sly-resource="${item.name @ decorationTagName='div'}"

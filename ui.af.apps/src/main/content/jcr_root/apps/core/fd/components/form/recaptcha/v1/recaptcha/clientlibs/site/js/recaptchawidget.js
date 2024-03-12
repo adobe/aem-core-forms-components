@@ -84,7 +84,7 @@ if (typeof window.RecaptchaWidget === 'undefined') {
             var runtimeLocale = this.#lang;
 
             var scr = document.createElement('script');
-            scr.src = url + "?onload=onloadRecaptchaCallback&render=explicit&hl" + runtimeLocale;
+            scr.src = url + "?onload=onloadRecaptchaCallback&render=explicit&hl=" + runtimeLocale;
             scr.async = true;
             element.appendChild(scr);
         }

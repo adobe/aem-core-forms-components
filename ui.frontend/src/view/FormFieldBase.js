@@ -187,15 +187,18 @@ class FormFieldBase extends FormField {
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+            this.parentView.setFocus(this.getId());
         }
-        // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
-        if (this.widget.length > 0) {
-            this.widget[0].focus();
-        } else {
-            this.widget.focus();
+        if(!this.isActive()) {
+            this.widget = this.getWidget(); // updating to the latest widget in case of datepicker widget with a formatter
+            if (this.widget instanceof NodeList) { // only checkbox and radiobutton returns NodeList
+                this.widget[0].focus(); // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
+            } else if(this.getClass() === 'adaptiveFormFileInput') {
+                this.getAttachButtonLabel().focus();
+            } else {
+                this.widget.focus();
+            }
         }
-
     }
 
     /**
@@ -278,14 +281,17 @@ class FormFieldBase extends FormField {
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
         const fieldId = this._model.id;
+        const fieldQualifiedName = this._model.qualifiedName;
         const eventPayload = {
             formId,
             formTitle,
             fieldName,
             fieldId,
             panelName,
+            fieldQualifiedName,
             ...(originalEventPayload?.prevValue !== undefined ? { prevText: originalEventPayload?.prevValue } : {}),
-            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {})
+            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {}),
+            ...((typeof originalEventPayload === 'object' && originalEventPayload !== null) ? originalEventPayload : {})
         };
         const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
@@ -388,7 +394,7 @@ class FormFieldBase extends FormField {
      */
     updateRequired(required, state) {
         if (this.widget) {
-            this.toggle(required, "required");
+            this.element.toggleAttribute("required", required);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
@@ -443,12 +449,20 @@ class FormFieldBase extends FormField {
      */
     updateValidationMessage(validationMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.validationMessage;
-            if (state.validity.valid === false) {
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
-                // if there is no error message in model, set a default error in the view
-                if (!state.validationMessage) {
-                    this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+            // Check if the validationMessage is different from the current content
+            if (this.errorDiv.innerHTML !== state.validationMessage) {
+                this.errorDiv.innerHTML = state.validationMessage;
+                if (state.validity.valid === false) {
+                    // Find the first key whose value is true
+                    const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {
+                        'validationMessage': state.validationMessage,
+                        'validationType': validationType
+                    });
+                    // if there is no error message in model, set a default error in the view
+                    if (!state.validationMessage) {
+                        this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+                    }
                 }
             }
         }
@@ -486,7 +500,7 @@ class FormFieldBase extends FormField {
         const filledModifierClass = `${bemClass}--filled`;
         const emptyModifierClass = `${bemClass}--empty`;
         this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
-        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**
@@ -504,6 +518,7 @@ class FormFieldBase extends FormField {
             }
         }
     }
+
 
     /**
      * Updates the active child of the form container.
@@ -524,6 +539,8 @@ class FormFieldBase extends FormField {
             //TODO: handle the case when description is not present initially.
         }
     }
+
+
 
 
     /**

@@ -68,5 +68,3 @@ By placing the class names `cmp-adaptiveform-fragment__label` and `cmp-adaptivef
 The following attributes must be added for the initialization of the fragment component in the form view:  
  1. `data-cmp-is="adaptiveFormFragment"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
- 3. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
- 4. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not

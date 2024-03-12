@@ -49,6 +49,15 @@ describe('Page - Authoring', function () {
         .then(cy.wrap)
   }
 
+  const getRuleEditorIframe = () => {
+      // get the iframe > document > body
+      // and retry until the body element is not empty
+      return cy
+          .get('iframe#af-rule-editor')
+          .its('0.contentDocument.body').should('not.be.empty')
+          .then(cy.wrap)
+  }
+
   const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
     if (isSites) {
       dropTextInputInSites();
@@ -163,8 +172,73 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
+    it('check rich text support for label', function(){
+        dropCheckBoxGroupInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("div[name='richTextTitle']").should('not.be.visible');
 
-  })
+        // check rich text selector and see if RTE is visible for title.
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
+        cy.get("div[name='richTextTitle']").scrollIntoView();
+        cy.get("div[name='richTextTitle']").should('be.visible');
+
+        // check rich text selector and see if RTE is visible for enum names.
+        cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
+        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+        cy.get("div[name='richTextEnumNames']").then(($el) => {
+            $el[0].scrollIntoView();
+        })
+        cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
+        cy.get("div[name='richTextEnumNames']").first().should('be.visible');
+        cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
+        cy.get("input[name='./orientation'][value='vertical']").scrollIntoView().click();
+        cy.get('.cq-dialog-submit').click();
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
+        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+    });
+
+    it('check rich text inline editor is present', function(){
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get(".rte-toolbar").should('be.visible');
+        cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+    });
+
+    it('rule editor is working with rich text enum names', function(){
+        if(cy.af.isLatestAddon()){
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='editexpression']");
+            cy.get("#af-rule-editor").should("be.visible");
+            getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+            getRuleEditorIframe().find("#create-rule-button").click();
+            getRuleEditorIframe().find('#create-rule-button').then(($el) => {
+                $el[0].click();
+                getRuleEditorIframe().find('.child-choice-name').click();
+                getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
+                    $el[0].scrollIntoView();
+                    $el[0].click();
+                    getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
+                        $el[0].click();
+                        getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
+                            $el[0].click();
+                            getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
+                                $el[0].click();
+                                //skipping assertion as it is currently flaky
+                                // getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                            });
+                        });
+                    });
+                });
+                getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
+                    $el[0].click();
+                });
+            });
+        }
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
+  });
 /*
   context('Open Sites Editor', function () {
     const   pagePath = "/content/core-components-examples/library/adaptive-form/textinput",

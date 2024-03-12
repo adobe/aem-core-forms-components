@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./jcr:title']")
             .should("exist");
         cy.get("[name='./layout']")
-            .should("exist")
+            .should("not.exist")
         cy.get("[name='./dataRef']")
             .should("exist");
         cy.get("[name='./visible']")
@@ -85,8 +85,10 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(accordionEditPath);
         });
 
-        it('open edit dialog of Accordion', function () {
-            testAccordionBehaviour(accordionPathSelector, accordionEditPath);
+        it('open edit dialog of Accordion', {retries: 3}, function () {
+            cy.cleanTest(accordionEditPath).then(function() {
+                testAccordionBehaviour(accordionPathSelector, accordionEditPath);
+            });
         });
 
         it('switch accordion tabs', {retries: 3}, function () {
@@ -98,6 +100,10 @@ describe('Page - Authoring', function () {
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                cy.get("table.cmp-panelselector__table tr").eq(0)
+                    .should("contain.text", "Adaptive Form Panel: Item 1");
+                cy.get("table.cmp-panelselector__table tr").eq(1)
+                    .should("contain.text", "Adaptive Form Panel: Item 2");
                 cy.get("tr[data-name='item_2']").click();
 
                 cy.get('body').click(0, 0);

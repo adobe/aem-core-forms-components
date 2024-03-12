@@ -37,9 +37,8 @@ The following properties are written to JCR for this Form CheckBox component and
 5. `./description` - defines a help message that can be rendered in the field as a hint for the user
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./type` - defines the data type of the value
-10. `./enum` - defines the two set of possible values for this field. (On or Off)
+8. `./type` - defines the data type of the value
+9. `./enum` - defines the two set of possible values for this field. (On or Off)
 
 ## Enum
 Checkbox component can have only one of two state i.e. ON and OFF. Since the enums are stored as array, the enum at index '0' is assumed to be ON(i.e. checkbox is 'checked''), and enum at index '1' is OFF
@@ -69,6 +68,15 @@ BLOCK cmp-adaptiveform-checkbox
 The following attributes must be added for the initialization of the checkbox component in the form view:  
  1. `data-cmp-is="adaptiveFormCheckBox"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
  
 ## Information

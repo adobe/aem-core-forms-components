@@ -14,5 +14,7 @@
 # limitations under the License.
 ###############################################################################
 
- #base=css
- authoring.css
+#base=js
+fileinputwidget.js
+fileinputview.js
+

@@ -25,26 +25,8 @@ describe("Form with multipe components", () => {
         })
     });
 
-    const checkHTML = (id, state, view, count) => {
-        const visible = state.visible;
-        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
-        cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
-        expect(state.items.length, "model has children equal to count").to.equal(count);
-        if (count == 0) {
-            return cy.get(`.${childBemBlock}`).should('not.exist');
-        } else {
-            return cy.get(`.${childBemBlock}`).should('have.length', count);
-        }
-    };
-
     it("check if first tab activated if focus call from other tab", () => {
-        const firstChildComponentId = formContainer._model.items[7].items[1].items[0].id;
+        const firstChildComponentId = formContainer._model.items[8].items[2].items[0].id;
         const firstChildComponentButtonId = formContainer._model.items[0].id ;
                 cy.get(`#${firstChildComponentButtonId}`).click();
                 cy.get(`#${firstChildComponentId}`).isElementInViewport().should("eq", true);
