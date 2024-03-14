@@ -48,7 +48,8 @@
     <sly data-sly-set.dataRef="${request.requestParameterMap['dataRef'] ? request.requestParameterMap['dataRef'][0].toString :'' @ context='attribute'}"/>
     <sly data-sly-set.wcmmode="${!wcmmode.edit?'wcmmode=DISABLED':''}"/>
     <sly data-sly-set.formUrlParams="${wcmmode ? '?':''}${wcmmode}${dataRef ? '&dataRef=' :''}${dataRef}"/>
-     <iframe class="cmp-aemform__iframecontent"
+     <iframe title="${form.title}"
+             class="cmp-aemform__iframecontent"
                 src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html${formUrlParams}"
                 width="100%;"
                 data-form-page-path="${form.formEditPagePath}"></iframe>

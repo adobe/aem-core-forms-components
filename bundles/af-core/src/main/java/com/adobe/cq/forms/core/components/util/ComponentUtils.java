@@ -139,6 +139,36 @@ public class ComponentUtils {
             .orElse(null);
     }
 
+    /**
+     * Retrieves the exclusive value based on certain conditions.
+     *
+     * @param exclusiveValue The exclusive value to be checked.
+     * @param value The actual value to be returned if conditions are met.
+     * @param exclusiveValueCheck An additional check for exclusive value.
+     * @return The exclusive value if conditions are met; otherwise, null.
+     */
+    public static <T> T getExclusiveValue(Object exclusiveValue, T value, Object exclusiveValueCheck) {
+        // Check if exclusive value is a boolean and true, and value is not null
+        if (exclusiveValue instanceof Boolean && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck))
+            && value != null) {
+            // If so, return the value
+            return (T) value;
+        } else if (exclusiveValue instanceof Long) { // special case
+            // If exclusive value is already a long, return it directly
+            return (T) exclusiveValue;
+        } else if (exclusiveValue instanceof String) {
+            // Check if exclusive value is a boolean string and true, and value is not null
+            if (((String) exclusiveValue).equalsIgnoreCase("true") && value != null) {
+                return (T) value;
+            } else {
+                return null;
+            }
+        } else {
+            // Handle other cases or return null if desired
+            return null;
+        }
+    }
+
     @NotNull
     public static Object[] coerce(@NotNull BaseConstraint.Type type, @NotNull Object[] objArr) {
         if (type.equals(type.NUMBER) || type.equals(type.NUMBER_ARRAY)) {

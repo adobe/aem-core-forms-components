@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.99-eds-SNAPSHOT</version>
+    <version>3.0.1-eds-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -88,8 +88,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.23.4</core.wcm.components.version>
-        <core.wcm.components.library.version>2.23.4</core.wcm.components.library.version>
+        <core.wcm.components.version>2.24.2</core.wcm.components.version>
+        <core.wcm.components.library.version>2.24.2</core.wcm.components.library.version>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1054,7 +1054,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>4.1</version>
+                <version>4.4</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

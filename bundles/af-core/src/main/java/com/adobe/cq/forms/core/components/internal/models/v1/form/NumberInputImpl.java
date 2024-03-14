@@ -15,16 +15,23 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -34,24 +41,55 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
+    // TODO
+    // Lead Digits and Frac Digits is not implemented today, based on the use-case
+    // it would be implemented on crispr spec, even locale would have to be handled**/
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @Nullable
+    @Default(booleanValues = false)
+    protected Object exclusiveMinimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
+    @Nullable
+    @Default(booleanValues = false)
+    protected Object exclusiveMaximum;
+
+    /** Adding this for backward compatibility, not to be changed anymore **/
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMaximumCheck")
+    @Nullable
+    private Boolean excludeMaximumCheck;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMinimumCheck")
+    @Nullable
+    private Boolean excludeMinimumCheck;
+    /** End **/
+
+    private Long exclusiveMinimumVaue;
+    private Long exclusiveMaximumValue;
+
     @Override
+    @Nullable
     public Long getMinimum() {
         return minimum;
     }
 
     @Override
+    @Nullable
     public Long getMaximum() {
         return maximum;
     }
 
     @Override
+    @Nullable
     public Long getExclusiveMaximum() {
-        return exclusiveMaximum;
+        return exclusiveMaximumValue;
     }
 
     @Override
+    @Nullable
     public Long getExclusiveMinimum() {
-        return exclusiveMinimum;
+        return exclusiveMinimumVaue;
     }
 
     @Override
@@ -61,6 +99,19 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
             return Type.NUMBER;
         } else {
             return superType;
+        }
+    }
+
+    @PostConstruct
+    private void initNumberInput() {
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, excludeMaximumCheck);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
+        // in json either, exclusiveMaximum or maximum should be present
+        if (exclusiveMaximumValue != null) {
+            maximum = null;
+        }
+        if (exclusiveMinimumVaue != null) {
+            minimum = null;
         }
     }
 }

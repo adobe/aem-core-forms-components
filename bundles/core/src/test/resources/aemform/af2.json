@@ -23,6 +23,7 @@
       "dorType": "none",
       "themeRef": "/conf/global/frontend/deployments/red_theme/red_theme-0.0.2-1662093232-7cb0d8b",
       "fieldType": "form",
+      "title": "Test",
       "textinput": {
         "jcr:primaryType": "nt:unstructured",
         "jcr:createdBy": "admin",

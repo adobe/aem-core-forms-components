@@ -27,12 +27,8 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -135,7 +131,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsVisible() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isVisible());
+        assertEquals(true, checkbox.isVisible());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isVisible()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isVisible());
@@ -153,7 +149,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsEnabled() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isEnabled());
+        assertEquals(true, checkbox.isEnabled());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isEnabled());
@@ -171,7 +167,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsReadOnly() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isReadOnly());
+        assertEquals(false, checkbox.isReadOnly());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isReadOnly());
@@ -189,7 +185,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsRequired() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isRequired());
+        assertEquals(false, checkbox.isRequired());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isRequired()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isRequired());
@@ -307,6 +303,16 @@ public class CheckBoxImplTest {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         assertArrayEquals(new String[] { "on", "off" }, checkbox.getEnums());
 
+    }
+
+    @Test
+    void testGetNullEnumNames() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertNull(checkbox.getEnumNamesAsTextContent());
+        assertNull(checkbox.getEnumNames());
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnumNamesAsTextContent());
+        assertNull(noEnumCheckbox.getEnumNames());
     }
 
     @Test

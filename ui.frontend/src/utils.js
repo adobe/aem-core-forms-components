@@ -318,19 +318,26 @@ class Utils {
     }
 
     static async registerCustomFunctionsByUrl(url) {
-        if (url != null && url.trim().length > 0) {
-            // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
-            const customFunctionModule = await import(/*webpackIgnore: true*/ url);
-            const keys = Object.keys(customFunctionModule);
-            const functions = [];
-            for (const name of keys) {
-                const funcDef = customFunctionModule[name];
-                if (typeof funcDef === 'function') {
-                    functions[name] = funcDef;
+        try{
+            if (url != null && url.trim().length > 0) {
+                // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+                const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+                const keys = Object.keys(customFunctionModule);
+                const functions = [];
+                for (const name of keys) {
+                    const funcDef = customFunctionModule[name];
+                    if (typeof funcDef === 'function') {
+                        functions[name] = funcDef;
+                    }
                 }
+                FunctionRuntime.registerFunctions(functions);
             }
-            FunctionRuntime.registerFunctions(functions);
+        }catch (e){
+            if(window.console){
+                console.error("error in loading custom functions from url "+url+" with message "+e.message);
+            }
         }
+
     }
 
     /**

@@ -394,7 +394,7 @@ class FormFieldBase extends FormField {
      */
     updateRequired(required, state) {
         if (this.widget) {
-            this.toggle(required, "required");
+            this.element.toggleAttribute("required", required);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
@@ -449,14 +449,20 @@ class FormFieldBase extends FormField {
      */
     updateValidationMessage(validationMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.validationMessage;
-            if (state.validity.valid === false) {
-                // Find the first key whose value is true
-                const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {'validationMessage' : state.validationMessage, 'validationType': validationType});
-                // if there is no error message in model, set a default error in the view
-                if (!state.validationMessage) {
-                    this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+            // Check if the validationMessage is different from the current content
+            if (this.errorDiv.innerHTML !== state.validationMessage) {
+                this.errorDiv.innerHTML = state.validationMessage;
+                if (state.validity.valid === false) {
+                    // Find the first key whose value is true
+                    const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {
+                        'validationMessage': state.validationMessage,
+                        'validationType': validationType
+                    });
+                    // if there is no error message in model, set a default error in the view
+                    if (!state.validationMessage) {
+                        this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+                    }
                 }
             }
         }
@@ -494,7 +500,7 @@ class FormFieldBase extends FormField {
         const filledModifierClass = `${bemClass}--filled`;
         const emptyModifierClass = `${bemClass}--empty`;
         this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
-        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**
