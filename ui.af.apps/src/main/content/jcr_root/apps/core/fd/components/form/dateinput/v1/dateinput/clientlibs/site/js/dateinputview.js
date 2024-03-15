@@ -64,51 +64,52 @@
 
     setModel(model) {
       super.setModel(model);
-      if (this.widget.value !== "") {
-        this._model.value = this.widget.value;
-      }
-      let dateValue = "";
+      let widgets = this.widget;
       let map = new Map();
-      let widgets = this.getWidgets();
-      this.widget.forEach((widget) => {
-        if (widget.value !== "") {
-          map.set(widget.id, widget.value);
-        }
-        if (map.size == 3) {
-          const dateVal =
-            map.get("Year") + "-" + map.get("Month") + "-" + map.get("Day");
-          this._model.value = dateVal;
-        }
-      });
-      widgets.addEventListener("focusout", (e) => {
-        if (e.target.value != "" && this.widget.value !== "") {
-          map.set(e.target.id, e.target.value);
-          map.set(e.target.id, e.target.value);
-          map.set(e.target.id, e.target.value);
-          if (map.size == 3) {
-            const dateVal =
-              map.get("Year") + "-" + map.get("Month") + "-" + map.get("Day");
-            this._model.value = dateVal;
-            e.stopPropagation();
-          }
-
-          this.setInactive();
-        }
-      });
-
-      this.widget.forEach((widget) => {
+      widgets.forEach((widget) => {
+        let self = widget;
+        this.#updateModelValue(self, map);
         widget.addEventListener("change", (e) => {
-          this._model.value = e.target.value;
+          this.#updateModelValue(self, map);
         });
         widget.addEventListener("focusin", (e) => {
           this.setActive();
         });
-        widget.addEventListener("focusout", (e) => {
-          this._model.value = e.target.value;
+        widget.addEventListener("blur", (e) => {
           this.setInactive();
         });
       });
     }
+
+    #updateModelValue(widget, map) {
+      map.set(widget.id, widget.value);
+      if (map.size == 3) {
+        const dateVal =
+          map.get("Year") + "-" + map.get("Month") + "-" + map.get("Day");
+        this._model.value = dateVal;
+        if (dateVal == "--") {
+          this._model.value = null;
+        }
+      }
+    }
+
+    updateValue(modelValue) {
+      modelValue = [].concat(modelValue);
+      if (modelValue[0] != null) {
+        let dateArray = modelValue[0].split("-");
+        this.widget.forEach((widget, index) => {
+          if (widget.id == "Year") {
+            widget.setAttribute("value", dateArray[0]);
+          } else if (widget.id == "Month") {
+            widget.setAttribute("value", dateArray[1]);
+          } else {
+            widget.setAttribute("value", dateArray[2]);
+          }
+        }, this);
+      }
+      super.updateEmptyStatus();
+    }
+
     updateEnabled(enabled, state) {
       this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
       this.element.setAttribute(
@@ -154,7 +155,6 @@
 
     updateRequired(required, state) {
       let widgets = this.widget;
-      console.log("hello");
       this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
       widgets.forEach((widget) => {
         if (this.widget) {
@@ -170,15 +170,6 @@
           }
         }
       });
-    }
-
-    #noFormats() {
-      return (
-        (this._model.editFormat == null ||
-          this._model.editFormat === "date|short") &&
-        (this._model.displayFormat == null ||
-          this._model.displayFormat === "date|short")
-      );
     }
   }
 

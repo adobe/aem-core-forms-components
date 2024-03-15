@@ -92,7 +92,7 @@ attrs.addBoolean("reorderupdown", isUpAndDownRequired);
 %><coral-multifield <%= attrs.build() %>><%
 try {
 		 int counter=0;
-	
+
          Resource contentResource = getContentResource(slingRequest, name);
 		 if (contentResource != null) {
 		  for (Resource item : contentResource.getChildren()) {
@@ -113,11 +113,11 @@ try {
 					<coral-multifield-item>
                         <coral-multifield-item-content><% include(field, cmp, slingRequest); %></coral-multifield-item-content>
                     </coral-multifield-item>
-			
+
          <%
-				
+
 			}
-		 
+
     %>
     <template coral-multifield-template><% include(field, cmp, slingRequest); %></template><%
 

@@ -15,8 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.lang.reflect.Method;
-import java.time.LocalDate;
 import java.util.*;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -42,12 +40,12 @@ public class DateInputImplTest {
     private static final String BASE = "/form/dateinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATEINPUT_CUSTOMIZED = CONTENT_ROOT + "/dateinput-customized";
-
-    private static final String PATH_DATEINPUT_MESSAGE = CONTENT_ROOT + "/dateinput-message";
+    private static final String PATH_DATEINPUT_CUSTOMIZED_ELSE = CONTENT_ROOT + "/dateinput-customized-else";
 
     private static final String PATH_DATEINPUT = CONTENT_ROOT + "/dateinput";
-    private static final String PATH_FORMATDATEINPUT = CONTENT_ROOT + "/formatdateinput";
     private static final String PATH_DATEINPUT_DATALAYER = CONTENT_ROOT + "/dateinput-datalayer";
+
+    private static final String PATH_DATEINPUT_MESSAGE = CONTENT_ROOT + "/dateinput-message";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -164,6 +162,12 @@ public class DateInputImplTest {
     }
 
     @Test
+    void testGetDefaultElse() {
+        DateInput dateInput = Utils.getComponentUnderTest(PATH_DATEINPUT_CUSTOMIZED_ELSE, DateInput.class, context);
+        assertArrayEquals(new Object[] { "Mon Feb 07 00:00:00 IST 2022" }, dateInput.getDefault());
+    }
+
+    @Test
     void testIsReadOnly() {
         DateInput dateInput = Utils.getComponentUnderTest(PATH_DATEINPUT, DateInput.class, context);
         assertEquals(null, dateInput.isReadOnly());
@@ -228,21 +232,6 @@ public class DateInputImplTest {
     }
 
     @Test
-    void testGetCurrentDate() throws Exception {
-        DateInputImpl DateInput = new DateInputImpl();
-        Method method = DateInputImpl.class.getDeclaredMethod("getCurrentDate");
-        method.setAccessible(true);
-        String[] result = (String[]) method.invoke(DateInput);
-        LocalDate currentDate = LocalDate.now();
-        String[] expected = {
-            String.valueOf(currentDate.getYear()),
-            String.format("%02d", currentDate.getMonthValue()),
-            String.format("%02d", currentDate.getDayOfMonth())
-        };
-        assertArrayEquals(expected, result);
-    }
-
-    @Test
     void testGetProperties_should_return_empty_if_no_custom_properties() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         when(textInputMock.getProperties()).thenCallRealMethod();
@@ -286,7 +275,7 @@ public class DateInputImplTest {
     @Test
     void testGetCombinedPlaceholder() throws Exception {
         DateInput dateInput = Utils.getComponentUnderTest(PATH_DATEINPUT, DateInputImpl.class, context);
-        List<DateFormat> datePlaceholderList = new ArrayList<>();
+
         Map<String, List<String>> expectedResult = getExpectedResultFromJson();
         Map<String, List<String>> result = dateInput.getCombinedPlaceholder();
         assertEquals(expectedResult, result);
@@ -301,4 +290,5 @@ public class DateInputImplTest {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(json, Map.class);
     }
+
 }

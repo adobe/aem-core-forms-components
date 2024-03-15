@@ -22,7 +22,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 @Model(adaptables = { Resource.class })
 
-public class DateFormat {
+public class DatePlaceholderFields {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String hiddenfield;

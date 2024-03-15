@@ -30,15 +30,15 @@
                                     <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
                                             <placeholder jcr:primaryType="nt:unstructured" sling:hideResource="{Boolean}true"/>
-                                            <defaultVal jcr:primaryType="nt:unstructured" sling:orderBefore="guideGlobalLazyField" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;." emptyText="yyyy-mm-dd" fieldLabel="Default Value" validation="regex.validation" name="./defaultVal"/>
-                                            <currentDate jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./currentDate" text="Current Date" value="true">
-                                            </currentDate>
-                                            <dateformat jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/form/dateinput/v1/dateinput/widgets/datePatternList" composite="{Boolean}true">
+                                            <default jcr:primaryType="nt:unstructured" sling:orderBefore="guideGlobalLazyField" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;." emptyText="yyyy-mm-dd" fieldLabel="Default Value" validation="regex.validation" name="./default"/>
+<!--                                            <currentDate jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./currentDate" text="Current Date" value="true">-->
+<!--                                            </currentDate>-->
+                                            <dateformat jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/af-commons/widgets/datepatternmutifield" composite="{Boolean}true">
                                                 <field jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container" name="./datePlaceholder">
                                                     <items jcr:primaryType="nt:unstructured">
                                                         <dateFormatGroup jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/well">
                                                             <items jcr:primaryType="nt:unstructured">
-                                                                <hiddenfield jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/form/dateinput/v1/dateinput/widgets/hiddenfield" name="./hiddenfield"/>
+                                                                <hiddenfield jcr:primaryType="nt:unstructured" sling:resourceType="core/fd/components/af-commons/widgets/hiddenfield" name="./hiddenfield"/>
                                                                 <name jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldLabel="Title" name="./title"/>
                                                                 <placeholder jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/textfield" fieldLabel="PlaceHolder" name="./placeholder"/>
 

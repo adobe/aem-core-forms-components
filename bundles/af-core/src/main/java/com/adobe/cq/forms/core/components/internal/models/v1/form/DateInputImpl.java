@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import javax.inject.Inject;
@@ -32,8 +31,8 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.DateFormat;
 import com.adobe.cq.forms.core.components.models.form.DateInput;
+import com.adobe.cq.forms.core.components.models.form.DatePlaceholderFields;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
@@ -78,18 +77,14 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     @Default(values = "false")
     protected String hideTitleDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    protected String defaultVal;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(values = "false")
-    protected String currentDate;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    protected Object[] defaultVal;
 
     @Inject
     @Via("resource")
-    protected List<DateFormat> datePlaceholder;
+    protected List<DatePlaceholderFields> datePlaceholder;
 
-    public List<DateFormat> getDateFormat() {
+    public List<DatePlaceholderFields> getDateFormat() {
         return datePlaceholder;
     }
 
@@ -99,7 +94,7 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
         combinedPlaceholder = new LinkedHashMap<>();
         String[] dateArray = getDateArray();
         if (datePlaceholder != null && datePlaceholder.size() > 0) {
-            for (DateFormat placeholder : datePlaceholder) {
+            for (DatePlaceholderFields placeholder : datePlaceholder) {
                 getDatePlaceholder(placeholder, dateArray, combinedPlaceholder);
             }
         } else {
@@ -121,17 +116,13 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
 
     private String[] getDateArray() {
         String[] dateArray;
-        if (currentDate.equals("true")) {
-            dateArray = getCurrentDate();
-        } else {
-            dateArray = getDefaultValArr();
-        }
+        dateArray = getDefaultValArr();
         return dateArray;
     }
 
-    private void getDatePlaceholder(DateFormat placeholder, String[] dateArray,
+    private void getDatePlaceholder(DatePlaceholderFields placeholder, String[] dateArray,
         LinkedHashMap<String, List<String>> combinedPlaceholder) {
-        DateFormat placeholderVar = placeholder;
+        DatePlaceholderFields placeholderVar = placeholder;
         String[] dateArrayVar = dateArray;
         if (placeholderVar.getHiddenfield().equals(YEAR)) {
             addKeyValuePair(combinedPlaceholder, YEAR,
@@ -145,7 +136,7 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
                 placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "MM", dateArrayVar[1]);
 
         } else {
-            addKeyValuePair(combinedPlaceholder, "Day",
+            addKeyValuePair(combinedPlaceholder, DAY,
                 placeholderVar.getTitle() != null ? placeholderVar.getTitle() : DAY,
                 placeholderVar.getPlaceholder() != null ? placeholderVar.getPlaceholder() : "DD", dateArrayVar[2]);
 
@@ -156,18 +147,12 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     private String[] getDefaultValArr() {
         String[] dates = { "", "", "" };
         if (defaultVal != null) {
-            String[] dateArray = defaultVal.split("-");
+            String defaultDate = Arrays.toString(defaultVal);
+            String[] dateArray = defaultDate.substring(1, defaultDate.length() - 1).split("-");
             return dateArray;
         } else {
             return dates;
         }
-    }
-
-    private String[] getCurrentDate() {
-        LocalDate currentDateVal = LocalDate.now();
-        String formattedDate = currentDateVal.toString();
-        String[] dateArray = formattedDate.split("-");
-        return dateArray;
     }
 
     @Override
@@ -182,5 +167,23 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
             res.put(ConstraintType.MAXIMUM, msg);
         }
         return res;
+    }
+
+    @Override
+    public Object[] getDefault() {
+        if (defaultVal != null) {
+            return Arrays.stream(defaultVal)
+                .map(p -> {
+                    if (p instanceof Calendar) {
+                        return ((Calendar) p).getTime();
+                    } else {
+                        return p;
+                    }
+                })
+                .toArray();
+        } else {
+            return null;
+        }
+
     }
 }

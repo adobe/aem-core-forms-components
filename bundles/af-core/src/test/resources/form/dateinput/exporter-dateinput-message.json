@@ -22,11 +22,7 @@
       "placeholder" : "YYYY",
       "title" : "Year"
     } },
-  "combinedPlaceholder" : {
-    "Month" : [ "Month", "MM", "" ],
-    "Day" : [ "Day", "DD", "" ],
-    "Year" : [ "Yyy", "YYYY", "" ]
-  },
+
   "constraintMessages": {
     "type": "incorrect type",
     "minimum": "Date should be greater than 4th Feb 2022",

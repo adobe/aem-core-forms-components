@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Defines the form {@code DatePicker} Sling Model used for the
- * {@code /apps/core/fd/components/form/datepicker/v1/datepicker} component.
+ * {@code /apps/core/fd/components/form/datepicker/v1/dateinput} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */

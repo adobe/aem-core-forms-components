@@ -9,6 +9,7 @@
   "type": "string",
   "required": false,
   "enabled": false,
+  "msg": "validation",
   "constraintMessages": {
     "type": "incorrect type"
   },
