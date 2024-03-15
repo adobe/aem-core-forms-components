@@ -13,20 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Adaptive Form Date Picker (v1)
-====
-Adaptive Form Date Picker field component written in HTL.
+
+# Adaptive Form Date Input (v1)
+
+Adaptive Form Date Input field component written in HTL.
 
 ## Features
 
-* Provides the following type of input:
-  * date
-* Allows replacing this component with other component (as mentioned below).
+- Provides the following type of input:
+  - date
+- Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
-The Form Date Picker component uses the `com.adobe.cq.forms.core.components.models.form.DatePicker` Sling Model for its Use-object.
+
+The Form Date Input component uses the `com.adobe.cq.forms.core.components.models.form.DateInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
+
 The following properties are written to JCR for this Form Date component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
@@ -37,64 +40,66 @@ The following properties are written to JCR for this Form Date component and are
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./dataFormat` - defines the format in which the value exported/submitted
-10. `./editFormat` - defines the format in which the value will be edited by the user
-11. `./minimumDate` - define the minimum date input allowed for the field
-12. `./maximumDate` - define the maximum date input allowed for the field
-13. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)).
+9. `./editFormat` - defines the format in which the value will be edited by the user
+10. `./minimumDate` - define the minimum date input allowed for the field
+11. `./maximumDate` - define the maximum date input allowed for the field
+12. `./datePlaceholder` - define the display pattern
+13. `./hideDatelabel` - Hide the Label for TextBoxes
 
 ## Client Libraries
-The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 
+
+The component provides a `core.forms.components.dateInput.v1.runtime` client library category that contains the Javascript runtime for the component.
 It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
+
 ```
-BLOCK cmp-adaptiveform-datepicker
-    ELEMENT cmp-adaptiveform-datepicker__label
-    ELEMENT cmp-adaptiveform-datepicker__label-container
-    ELEMENT cmp-adaptiveform-datepicker__widget
-    ELEMENT cmp-adaptiveform-datepicker__questionmark
-    ELEMENT cmp-adaptiveform-datepicker__shortdescription
-    ELEMENT cmp-adaptiveform-datepicker__longdescription
-    ELEMENT cmp-adaptiveform-datepicker__errormessage
+BLOCK cmp-adaptiveform-dateinput
+    ELEMENT cmp-adaptiveform-dateinput__label
+    ELEMENT cmp-adaptiveform-dateinput__label-container
+    ELEMENT cmp-adaptiveform-dateinput__widget
+    ELEMENT cmp-adaptiveform-dateinput__questionmark
+    ELEMENT cmp-adaptiveform-dateinput__shortdescription
+    ELEMENT cmp-adaptiveform-dateinput__longdescription
+    ELEMENT cmp-adaptiveform-dateinput__errormessage
 ```
 
 ### Note
-By placing the class names `cmp-adaptiveform-datepicker__label` and `cmp-adaptiveform-datepicker__questionmark` within the `cmp-adaptiveform-datepicker__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
+By placing the class names `cmp-adaptiveform-dateinput__label` and `cmp-adaptiveform-dateinput__questionmark` within the `cmp-adaptiveform-dateinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the date-picker component in the form view:  
- 1. `data-cmp-is="adaptiveFormDatePicker"`
- 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+The following attributes must be added for the initialization of the date-input component in the form view:
 
+1.  `data-cmp-is="adaptiveFormDateinput"`
+2.  `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 The following are optional attributes that can be added to the component in the form view:
+
 1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
 2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
 3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
-4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not
 5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
 6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
+
 We support replace feature that allows replacing Reset Button component to any of the below components:
 
-* Button
-* Email Input
-* Number Input
-* Reset Button
-* Submit Button
-* Telephone Input
-* Text Box
-* Text Input
- 
- 
+- Button
+- Email Input
+- Number Input
+- Reset Button
+- Submit Button
+- Telephone Input
+- Text Box
+- Text Input
+
 ## Information
-* **Vendor**: Adobe
-* **Version**: v1
-* **Compatibility**: Cloud
-* **Status**: production-ready
 
-
-
+- **Vendor**: Adobe
+- **Version**: v1
+- **Compatibility**: Cloud
+- **Status**: production-ready
