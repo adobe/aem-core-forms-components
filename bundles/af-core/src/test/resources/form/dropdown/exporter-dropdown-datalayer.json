@@ -9,12 +9,8 @@
   "readOnly": false,
   "enforceEnum": true,
   "enumNames": [
-    {
-      "value": "Owl"
-    },
-    {
-      "value": "Wolf"
-    }
+    "Owl",
+    "Wolf"
   ],
   "label": {
     "value": "Favorite Animal"

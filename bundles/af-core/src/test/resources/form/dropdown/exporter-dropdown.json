@@ -5,15 +5,9 @@
   "type": "string",
   "enforceEnum": true,
   "enumNames": [
-    {
-      "value": "m"
-    },
-    {
-      "value": "f"
-    },
-    {
-      "value": "o"
-    }
+    "m",
+    "f",
+    "o"
   ],
   "enum": ["0", "1", "2"],
   "label": {

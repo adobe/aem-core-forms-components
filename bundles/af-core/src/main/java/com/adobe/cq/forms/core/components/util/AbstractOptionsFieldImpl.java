@@ -118,6 +118,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
+    @JsonIgnore
     public TextContent[] getEnumNamesAsTextContent() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
@@ -138,6 +139,11 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                 .toArray(TextContent[]::new);
         }
         return null;
+    }
+
+    @Override
+    public Object[] getEnumNamesArray() {
+        return areOptionsRichText != null && areOptionsRichText ? getEnumNamesAsTextContent() : getEnumNames();
     }
 
     @Override

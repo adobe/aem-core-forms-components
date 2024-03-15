@@ -69,6 +69,16 @@ public interface OptionsConstraint {
      * @return the list of enum names
      * @since com.adobe.cq.forms.core.components.models.form 5.4.0
      */
-    @JsonProperty("enumNames")
+    @JsonIgnore
     TextContent[] getEnumNamesAsTextContent();
+
+    /**
+     * Returns an array of String or TextContent to be displayed to the end user based on the richText flag.
+     * The length of enum and enumNames array must match
+     *
+     * @return the list of enum names
+     * @since com.adobe.cq.forms.core.components.models.form 5.5.0
+     */
+    @JsonProperty("enumNames")
+    Object[] getEnumNamesArray();
 }
