@@ -15,6 +15,5 @@
 ###############################################################################
 
 #base=js
-editDialog.js
 regex.js
 removeDeleteButton.js
