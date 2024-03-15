@@ -27,7 +27,7 @@
   data-sly-use.dateInput="com.adobe.cq.forms.core.components.models.form.DateInput"
   class="cmp-adaptiveform-dateinput"
   data-cmp-is="adaptiveFormDateInput"
-  data-cmp-visible="${dateInput.visible ? 'true' : 'false'}"
+  data-cmp-visible="${dateInput.visible ?'true' :'false'}"
   data-cmp-enabled="${dateInput.enabled ? 'true' : 'false'}"
   data-cmp-required="${dateInput.required ? 'true': 'false'}"
   data-cmp-readonly="${dateInput.readOnly ? 'true' : 'false'}"
@@ -61,7 +61,7 @@
   >
     <div>
       <label
-        data-sly-test=" ${!dateInput.hideTitleDate}"
+        data-sly-test=" ${dateInput.hideDateLabel}"
         class="cmp-adaptiveform-dateinput__label"
         >${dateInput.combinedPlaceholder[key][0]}</label
       >

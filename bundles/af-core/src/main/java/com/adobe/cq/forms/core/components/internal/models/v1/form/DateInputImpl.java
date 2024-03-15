@@ -75,7 +75,7 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = "false")
-    protected String hideTitleDate;
+    protected String hideDateLabel;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     protected Object[] defaultVal;
@@ -86,6 +86,10 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
 
     public List<DatePlaceholderFields> getDateFormat() {
         return datePlaceholder;
+    }
+
+    public String getHideDateLabel() {
+        return hideDateLabel;
     }
 
     @Override

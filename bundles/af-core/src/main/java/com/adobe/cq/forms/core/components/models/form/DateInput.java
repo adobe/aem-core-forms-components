@@ -38,6 +38,8 @@ public interface DateInput extends Field, DateConstraint {
 
     public HashMap<String, List<String>> getCombinedPlaceholder();
 
+    public String getHideDateLabel();
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
     @Override
     default Object[] getDefault() {

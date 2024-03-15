@@ -6,7 +6,7 @@
     "jcr:title": "def",
     "default":"2022-02-02",
     "fieldType": "date-input",
-
+     "hideDateLabel": "false",
     "datePlaceholder" : { "jcr:primaryType": "nt:unstructured",
       "item0":{
       "hiddenfield" : "Month",

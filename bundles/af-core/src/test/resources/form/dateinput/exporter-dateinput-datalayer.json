@@ -4,6 +4,7 @@
   "name": "DoB",
   "description": "Date of Birth",
   "type": "string",
+  "hideDateLabel": "false",
   "combinedPlaceholder" : {
     "Month" : [ "Month", "MM", "" ],
     "Day" : [ "Day", "DD", "" ],

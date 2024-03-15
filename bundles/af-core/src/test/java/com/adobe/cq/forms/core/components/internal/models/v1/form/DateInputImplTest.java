@@ -141,6 +141,13 @@ public class DateInputImplTest {
     }
 
     @Test
+    void testGetHideDateLabel() {
+        DateInput dateInput = Utils.getComponentUnderTest(PATH_DATEINPUT, DateInput.class, context);
+        assertEquals("false", dateInput.getHideDateLabel());
+
+    }
+
+    @Test
     void testIsEnabledForCustomized() {
         DateInput dateInput = Utils.getComponentUnderTest(PATH_DATEINPUT_CUSTOMIZED, DateInput.class, context);
         assertEquals(false, dateInput.isEnabled());
