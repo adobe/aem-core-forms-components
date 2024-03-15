@@ -200,12 +200,6 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-      it('rule editor is working without rich text enum names', function(){
-          dropCheckBoxGroupInContainer();
-          testRuleEditorForCheckBoxGroup("Item 1", checkBoxGroupEditPathSelector);
-          cy.deleteComponentByPath(checkBoxGroupDrop);
-      });
-
     it('check rich text support for label', function(){
         dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
@@ -243,6 +237,12 @@ describe('Page - Authoring', function () {
         if(cy.af.isLatestAddon()){
             testRuleEditorForCheckBoxGroup("Select 1", checkBoxGroupEditPathSelector);
         }
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+    });
+
+    it('rule editor is working without rich text enum names', function(){
+        dropCheckBoxGroupInContainer();
+        testRuleEditorForCheckBoxGroup("Item 1", checkBoxGroupEditPathSelector);
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
   });
