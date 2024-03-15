@@ -23,8 +23,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * Defines the form {@code DatePicker} Sling Model used for the
- * {@code /apps/core/fd/components/form/datepicker/v1/dateinput} component.
+ * Defines the form {@code DateInput} Sling Model used for the
+ * {@code /apps/core/fd/components/form/dateinput/v1/dateinput} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
