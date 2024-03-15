@@ -17,11 +17,10 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.*;
 
-import javax.inject.Inject;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.*;
+import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -80,7 +79,7 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
     protected Object[] defaultVal;
 
-    @Inject
+    @ChildResource
     @Via("resource")
     protected List<DatePlaceholderFields> datePlaceholder;
 
