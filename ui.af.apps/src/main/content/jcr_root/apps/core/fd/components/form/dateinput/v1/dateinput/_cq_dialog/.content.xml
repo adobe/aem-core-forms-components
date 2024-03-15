@@ -47,7 +47,7 @@
                                                     </items>
                                                 </field>
                                             </dateformat>
-                                            <hideDateLabel jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./hideTitleDate" text="Hide titles for these fields" value="true"/>
+                                            <hideDateLabel jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/form/checkbox" name="./hideDateLabel" text="Hide titles for these fields" value="true"/>
 
                                         </items>
                                     </column>
