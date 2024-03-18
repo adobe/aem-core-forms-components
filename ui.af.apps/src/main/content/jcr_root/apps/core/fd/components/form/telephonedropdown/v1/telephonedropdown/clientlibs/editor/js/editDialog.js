@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2023 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,26 @@
         TYPE = EDIT_DIALOG + " input[name='./type']",
         DEFAULTINPUT = DROPDOWN_DEFAULTVALUE + " input",
         DEFAULTMUTIINPUT = DROPDOWN_DEFAULTVALUEMULTISELCET + " input[type='text']",
+        DEFAULTENUM = ".cmp-adaptiveform-telephonedropdown__enums",
+        DEFAULTCOUNTRYCODES = ".cmp-adaptiveform-telephonedropdown__countrycodes",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
+
+    function handlecheckbox() {
+        var enumsInclude = document.querySelector(DEFAULTENUM);
+        var checkbox = document.querySelector(DEFAULTCOUNTRYCODES);
+        var isChecked = checkbox.checked;
+
+        if(isChecked){
+            enumsInclude.style.display = 'none';
+        }
+        else {
+            enumsInclude.style.display = 'block';
+        }
+
+        if(checkbox){
+            checkbox.addEventListener('change', handlecheckbox);
+        }
+    }
 
     function handleValidationPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,TELEPHONEDROPDOWN_VALIDATIONPATTERN,TELEPHONEDROPDOWN_VALIDATIONFORMAT);
@@ -39,99 +58,5 @@
     }
 
 
-    // function handleSaveValueDropDown(dialog) {
-    //     var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
-    //         saveValueDropdown = dialog.find(DROPDOWN_SAVEVALUE),
-    //         type = dialog.find(TYPE),
-    //         saveTypes = ['string', 'number', 'boolean'];
-    //
-    //     var updateSaveValueType = function() {
-    //         var index = parseInt(saveValueDropdown.val());
-    //         if(multiSelect.checked) {
-    //             type.val(saveTypes[index] + '[]');
-    //         } else {
-    //             type.val(saveTypes[index]);
-    //         }
-    //     }
-    //     // triggered when dialog is launched
-    //     updateSaveValueType();
-    //     saveValueDropdown.on("change", function() {
-    //         updateSaveValueType();
-    //     });
-    //     multiSelect.on("change", function() {
-    //         updateSaveValueType();
-    //     });
-    // }
-
-    /**
-     * Handles the default value field in the dialog appropriately when multi-select is toggled.
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    // function handleDefaultValue(dialog) {
-    //     var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
-    //         defaultValue = dialog.find(DROPDOWN_DEFAULTVALUE),
-    //         defaultValueMS = dialog.find(DROPDOWN_DEFAULTVALUEMULTISELCET),
-    //         defaultInput = dialog.find(DEFAULTINPUT),
-    //         defaultMultiInput = dialog.find(DEFAULTMUTIINPUT);
-    //
-    //     var isMultiSelect = function () {
-    //         return multiSelect.checked;
-    //     }
-    //
-    //     var isNotMultiSelect = function () {
-    //         return !isMultiSelect();
-    //     }
-    //
-    //     var changeNameForMultiSelect = function (newName) {
-    //         [...defaultMultiInput].forEach((input) => {
-    //             input.name = newName;
-    //         })
-    //     }
-    //
-    //     var hideAndShowElements = function () {
-    //         Utils.checkAndDisplay(defaultValueMS)(isMultiSelect);
-    //         Utils.checkAndDisplay(defaultValue)(isNotMultiSelect);
-    //
-    //         // making sure that ./default of the rendered component is only persisted in jcr
-    //         if(isMultiSelect()) {
-    //             defaultInput.attr("name","./default@Delete");
-    //             changeNameForMultiSelect("./default");
-    //         } else {
-    //             defaultInput.attr("name","./default");
-    //             changeNameForMultiSelect("./default@Delete");
-    //         }
-    //     }
-    //     hideAndShowElements();
-    //     multiSelect.on("change", function() {
-    //         hideAndShowElements();
-    //     });
-    // }
-
-    var registerDialogValidator = Utils.registerDialogDataTypeValidators(
-        DROPDOWN_DEFAULTVALUE + " input",
-        DROPDOWN_ENUM,
-        function (dialog) {
-            var selectedValue = '';
-            var dropdownSaveValue = dialog.find(DROPDOWN_SAVEVALUE);
-            if (dropdownSaveValue && dropdownSaveValue.length > 0) {
-                selectedValue = dropdownSaveValue[0].selectedItem ? dropdownSaveValue[0].selectedItem.value : '';
-            }
-            var dataType = '';
-            switch (selectedValue) {
-                case '0':
-                    dataType = 'string';
-                    break;
-                case '1':
-                    dataType = 'number';
-                    break;
-                case '2':
-                    dataType = 'boolean';
-                    break;
-            }
-            return dataType;
-        }
-    );
-
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown, handleValidationFormat, registerDialogValidator);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown, handleValidationFormat, handlecheckbox);
 })(jQuery);

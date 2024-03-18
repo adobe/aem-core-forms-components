@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2022 Adobe
+  ~ Copyright 2024 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -95,89 +95,38 @@
 											</autocomplete-tel>
 										</items>
 									</column>
-<!--									<column-->
-<!--											jcr:primaryType="nt:unstructured"-->
-<!--											sling:resourceType="granite/ui/components/coral/foundation/container">-->
-<!--										<items jcr:primaryType="nt:unstructured">-->
-<!--											<countryCodes-->
-<!--													jcr:primaryType="nt:unstructured"-->
-<!--													sling:resourceType="granite/ui/components/coral/foundation/form/multifield"-->
-<!--													fieldLabel="Allowed Country Codes"-->
-<!--													name="./allowedCountryCodes">-->
-<!--												<field-->
-<!--														jcr:primaryType="nt:unstructured"-->
-<!--														sling:resourceType="granite/ui/components/coral/foundation/form/textfield"-->
-<!--														name="./allowedCountryCodes"/>-->
-<!--											</countryCodes>-->
-<!--										</items>-->
-<!--									</column>-->
 									<column
 											jcr:primaryType="nt:unstructured"
 											sling:resourceType="granite/ui/components/coral/foundation/container">
 										<items jcr:primaryType="nt:unstructured">
-											<saveValueType
-													granite:class="cmp-adaptiveform-telephonedropdown__savevaluetype"
+											<placeholder
 													jcr:primaryType="nt:unstructured"
-													sling:orderBefore="placeholder"
-													sling:resourceType="granite/ui/components/coral/foundation/form/select"
-													fieldLabel="Save value as"
-													typeHint="String"
-													name="./typeIndex">
-												<items jcr:primaryType="nt:unstructured">
-													<String jcr:primaryType="nt:unstructured"
-															text="String"
-															value="0"/>
-													<Number jcr:primaryType="nt:unstructured"
-															text="Number"
-															value="1"/>
-													<Boolean jcr:primaryType="nt:unstructured"
-															 text="Boolean"
-															 value="2"/>
-												</items>
-											</saveValueType>
-											<type   jcr:primaryType="nt:unstructured"
-													sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-													name="./type"/>
+													granite:class="cmp-adaptiveform-base__placeholder"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Placeholder for Input"
+													name="./placeholder"/>
+											<placeholdercode
+													jcr:primaryType="nt:unstructured"
+													granite:class="cmp-adaptiveform-base__placeholder"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Placeholder for DropDown"
+													name="./placeholdercode"/>
+											<AllCountryCodes
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+													granite:class="cmp-adaptiveform-telephonedropdown__countrycodes"
+													name="./AllCountryCodes"
+													text="All Country Codes"
+													uncheckedValue="false"
+													value="true"
+													checked="true"/>
 											<enums jcr:primaryType="nt:unstructured"
-												   sling:resourceType="granite/ui/components/coral/foundation/include"
-												   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enums"
-												   sling:orderBefore="placeholder"
-												   sling:hideResource="{Boolean}false"/>
-<!--											<multiSelect-->
-<!--													granite:class="cmp-adaptiveform-telephonedropdown__allowmultiselect"-->
-<!--													jcr:primaryType="nt:unstructured"-->
-<!--													sling:orderBefore="saveValueType"-->
-<!--													sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"-->
-<!--													name="./multiSelect"-->
-<!--													text="Allow multiple selection"-->
-<!--													value="true"/>-->
-<!--											<multiSelect-typehint-->
-<!--													jcr:primaryType="nt:unstructured"-->
-<!--													sling:resourceType="granite/ui/components/coral/foundation/form/hidden"-->
-<!--													name="./multiSelect@TypeHint"-->
-<!--													value="Boolean"/>-->
-<!--											<defaultValueSS-->
-<!--													wrapperClass="cmp-adaptiveform-telephonedropdown__defaultvalue"-->
-<!--													jcr:primaryType="nt:unstructured"-->
-<!--													sling:orderBefore="placeholder"-->
-<!--													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"-->
-<!--													fieldDescription="Specified default option is preselected on form load."-->
-<!--													fieldLabel="Default option"-->
-<!--													name="./default"/>-->
-<!--											<defaultValueMS-->
-<!--													wrapperClass="cmp-adaptiveform-telephonedropdown__defaultvaluemultiselect"-->
-<!--													jcr:primaryType="nt:unstructured"-->
-<!--													sling:orderBefore="placeholder"-->
-<!--													sling:resourceType="granite/ui/components/coral/foundation/form/multifield"-->
-<!--													typeHint="String[]"-->
-<!--													fieldDescription="Specified default options are preselected on form load."-->
-<!--													fieldLabel="Default options">-->
-<!--												<field-->
-<!--														jcr:primaryType="nt:unstructured"-->
-<!--														sling:resourceType="granite/ui/components/coral/foundation/form/textfield"-->
-<!--														name="./default"-->
-<!--														required="{Boolean}false"/>-->
-<!--											</defaultValueMS>-->
+												   sling:resourceType="granite/ui/components/coral/foundation/container"
+												   granite:class="cmp-adaptiveform-telephonedropdown__enums"
+												   sling:hideResource="{Boolean}false">
+												<items jcr:primaryType="nt:unstructured"
+													   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enums/items"/>
+											</enums>
 										</items>
 									</column>
 								</items>

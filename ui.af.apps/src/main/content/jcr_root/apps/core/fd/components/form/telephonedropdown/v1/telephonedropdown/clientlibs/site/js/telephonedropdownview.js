@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
     "use strict";
     class TelephoneDropdown extends FormView.FormFieldBase {
-
         static NS = FormView.Constants.NS;
         /**
          * Each FormField has a data attribute class that is prefixed along with the global namespace to
@@ -74,15 +73,47 @@
             return this.element.querySelector(TelephoneDropdown.selectors.widget)
         }
 
-        updateValue(value) {
-            if (this.widgetObject == null && (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari'))) {
-                this.initializeWidget();
+        #parsePhoneNumber(value) {
+            // Find the country code and the rest of the phone number
+            var  countryCodes = ['+567', '+91'];
+            let countryCode = '';
+            let number = value;
+
+            if (!number.startsWith('+')) {
+                number = '+' + number;
             }
-            if (this.widgetObject) {
-                this.widgetObject.setValue(value);
-                super.updateEmptyStatus();
-            } else {
-                super.updateValue(value);
+
+            for (var i = 0; i < countryCodes.length; i++) {
+                let code = countryCodes[i];
+                if (number.startsWith(code)) {
+                    countryCode = code;
+                    number = number.slice(code.length);
+                    break;
+                }
+            }
+            if (countryCode === '') {
+                throw new Error('Country code not found');
+            }
+            return {countryCode, number};
+        }
+        updateValue(value) {
+            let parsedPhoneNumber;
+            let form = document.getElementsByClassName('cmp-adaptiveform-telephonedropdown')[0];
+            let oldErrorMessage = form.querySelector('.errormessage');
+
+            if (oldErrorMessage)
+                form.removeChild(oldErrorMessage);
+
+            try {
+                parsedPhoneNumber = this.#parsePhoneNumber(value);
+                this.getPhoneNumber().value = parsedPhoneNumber.number;
+                this.getCountryCodeSelect().value = parsedPhoneNumber.countryCode;
+            } catch (error) {
+                console.error('An error occurred:', error);
+                let errorMessage = document.createElement('div');
+                errorMessage.textContent = 'Please enter a valid country code in rules';
+                errorMessage.className = 'errormessage';
+                form.appendChild(errorMessage);
             }
         }
 
@@ -92,59 +123,20 @@
                 this._model.value = this.getCountryCodeSelect().value + this.widget.value;
             }
             this.widget.addEventListener('blur', (e) => {
+                this._model.value = this.getCountryCodeSelect().value + this.widget.value;
                 this.setInactive();
             });
-            this.widget.addEventListener('focus', (e) => {
+            this.getCountryCodeSelect().addEventListener('blur', (e) => {
+                this._model.value = this.getCountryCodeSelect().value + this.widget.value;
+                this.setInactive();
+            });
+            this.getCountryCodeSelect().addEventListener('focus', (e) => {
                 this.setActive();
             });
 
-            var countryCodes = [];
-
-            function populateCountryCodes() {
-                var selectElement = document.querySelector(TelephoneDropdown.selectors.countryCode);
-                var optionElements = selectElement.querySelectorAll('option');
-                for (var i = 0; i < optionElements.length; i++) {
-                    var countryCode = optionElements[i].value;
-                    countryCodes.push(countryCode);
-                }
-            }
-
-            if (document.readyState === 'loading') {  // Loading hasn't finished yet
-                document.addEventListener('DOMContentLoaded', populateCountryCodes);
-            } else {  // `DOMContentLoaded` has already fired
-                populateCountryCodes();
-            }
-
-            function parsePhoneNumber(phoneNumber) {
-                // Find the country code and the rest of the phone number
-                let countryCode = '';
-                let number = phoneNumber;
-                for(var i = 0; i < countryCodes.length; i++){
-                    let code = countryCodes[i];
-                    if (phoneNumber.startsWith(code)) {
-                        countryCode = code;
-                        number = phoneNumber.slice(code.length);
-                        break;
-                    }
-                }
-                return {countryCode, number };
-            }
-
-            this.getPhoneNumber().addEventListener('change', (e) => {
-                let countryCode = this.getCountryCodeSelect().value;
-                this._model.value = countryCode + e.target.value;
-                e.target.value = parsePhoneNumber(e.target.value).number;
-                this.getCountryCodeSelect().value = countryCode;
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
             });
-
-            this.getCountryCodeSelect().addEventListener('change', (e) => {
-                let phoneNumber = this.getPhoneNumber().value;
-                this._model.value = e.target.value + phoneNumber;
-                this.getPhoneNumber().value = parsePhoneNumber(this._model.value).number;
-                e.target.value = parsePhoneNumber(this._model.value).countryCode;
-            });
-
-
         }
     }
 

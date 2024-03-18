@@ -47,3 +47,9 @@
     color: #d32f2f; /* Example error color */
     margin-top: 5px; /* Add space above the error message */
 }
+
+.errormessage {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}

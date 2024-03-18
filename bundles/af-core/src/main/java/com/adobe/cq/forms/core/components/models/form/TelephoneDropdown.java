@@ -18,7 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Defines the form TelephoneDropdown field Sling Model used for the telephone input component with dropdown.
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 @ConsumerType
-public interface TelephoneDropdown extends Field, OptionsConstraint, ContainerConstraint {
+public interface TelephoneDropdown extends TextInput {
 
     /**
      * Returns the default country code for the telephone field.
@@ -34,8 +35,13 @@ public interface TelephoneDropdown extends Field, OptionsConstraint, ContainerCo
      * @return the default country code
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    String[] getAllowedCountryCodes();
+    // String[] getAllowedCountryCodes();
+    String getPlaceHoldercode();
 
-    @JsonIgnore
-    Boolean isMultiSelect();
+    boolean isChecked();
+
+    void countryCode();
+
+    List<Map.Entry<String, String>> getCountryDropdown();
+
 }
