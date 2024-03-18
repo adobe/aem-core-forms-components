@@ -39,10 +39,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -51,6 +48,7 @@ public class NumberInputImplTest {
     private static final String BASE = "/form/numberinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
+    private static final String PATH_NUMBER_INPUT_INTEGER_TYPE = CONTENT_ROOT + "/numberinput-integer-type";
     private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
@@ -239,6 +237,14 @@ public class NumberInputImplTest {
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), numberInputMock.getConstraintMessages());
+    }
+
+    @Test
+    void testGetConstraintMessagesTypeInteger() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_INTEGER_TYPE, NumberInput.class, context);
+        Map<ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.MAXIMUM), "Please enter a valid Number");
+        assertEquals(constraintsMessages.get(ConstraintType.MINIMUM), "Please enter a valid Number");
     }
 
     @Test
