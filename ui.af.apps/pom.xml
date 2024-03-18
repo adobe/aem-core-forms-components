@@ -310,6 +310,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fileinput/v1/fileinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/footer/v1/footer/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/image/v1/image/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/imagechoice/v1/imagechoice/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/numberinput/v1/numberinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/wizard/v1/wizard/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/verticaltabs/v1/verticaltabs/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
