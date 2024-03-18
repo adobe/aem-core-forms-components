@@ -50,6 +50,8 @@ describe('Page - Authoring', function () {
         // Check If Dialog Options Are Visible
         cy.get("[name='./multiLine']")
             .should("exist");
+         cy.get("[name='./showCharCounter']")
+            .should("exist");
         cy.get("[name='./autocomplete']")
             .should("exist");
 
