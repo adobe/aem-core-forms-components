@@ -50,6 +50,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
                                             <selectionType
+                                                    wrapperClass="cmp-adaptiveform-imagechoice__selectionType"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                     fieldLabel="Selection Type"
