@@ -84,7 +84,7 @@ describe('Page - Authoring', function () {
       cy.invokeEditableAction("[data-action='CONFIGURE']");
       cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
-        cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select('US Phone Number', {force: true});
+        cy.get('.cmp-adaptiveform-telephoneinput__validationformat').get('.cmp-adaptiveform-telephoneinput__validationpattern').type('^[+]1[0-9]{0,10}$', {force: true});
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+]1[0-9]{0,10}$');
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(telephoneInputDrop);

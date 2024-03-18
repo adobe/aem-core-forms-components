@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+		  jcr:primaryType="nt:unstructured"
+		  jcr:title="Adaptive Form Telephone Input field"
+		  sling:resourceType="cq/gui/components/authoring/dialog"
+		  helpPath="https://www.adobe.com/go/aem_af_cmp_telephonedropdown_v1"
+		  extraClientlibs="[core.forms.components.telephonedropdown.v1.editor]"
+		  trackingFeature="core-components:adaptiveform-telephonedropdown:v1">
+	<content
+			granite:class="cmp-adaptiveform-telephonedropdown__editdialog"
+			jcr:primaryType="nt:unstructured"
+			sling:resourceType="granite/ui/components/coral/foundation/container">
+		<items jcr:primaryType="nt:unstructured">
+			<tabs
+					jcr:primaryType="nt:unstructured"
+					sling:resourceType="granite/ui/components/coral/foundation/tabs"
+					maximized="{Boolean}true">
+				<items jcr:primaryType="nt:unstructured">
+					<basic
+							jcr:primaryType="nt:unstructured"
+							jcr:title="Basic"
+							sling:resourceType="granite/ui/components/coral/foundation/container">
+						<items jcr:primaryType="nt:unstructured">
+							<columns
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+									margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<column
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+											<richTextValue
+													jcr:primaryType="nt:unstructured"
+													sling:hideResource="{Boolean}true">
+											</richTextValue>
+											<multiLine
+													jcr:primaryType="nt:unstructured"
+													sling:hideResource="{Boolean}true"/>
+											<allowRichText
+													jcr:primaryType="nt:unstructured"
+													sling:hideResource="{Boolean}true">
+											</allowRichText>
+											<autocomplete
+													jcr:primaryType="nt:unstructured"
+													sling:hideResource="{Boolean}true">
+											</autocomplete>
+											<autocomplete-tel
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+													fieldLabel="Autofill attribute"
+													forceSelection="{Boolean}true"
+													name="./autocomplete"
+													value="">
+												<options
+														jcr:primaryType="nt:unstructured"
+														sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+												<items jcr:primaryType="nt:unstructured">
+													<empty
+															jcr:primaryType="nt:unstructured"
+															text=""
+															value=""/>
+													<off
+															jcr:primaryType="nt:unstructured"
+															text="off"
+															value="off"/>
+													<on
+															jcr:primaryType="nt:unstructured"
+															text="on"
+															value="on"/>
+													<tel
+															jcr:primaryType="nt:unstructured"
+															text="tel"
+															value="tel"/>
+													<tel-national
+															jcr:primaryType="nt:unstructured"
+															text="tel-national"
+															value="tel-national"/>
+												</items>
+											</autocomplete-tel>
+										</items>
+									</column>
+									<column
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+											<placeholder
+													jcr:primaryType="nt:unstructured"
+													granite:class="cmp-adaptiveform-base__placeholder"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Placeholder for Input"
+													name="./placeholder"/>
+											<placeholdercode
+													jcr:primaryType="nt:unstructured"
+													granite:class="cmp-adaptiveform-base__placeholder"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldLabel="Placeholder for DropDown"
+													name="./placeholdercode"/>
+											<AllCountryCodes
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+													granite:class="cmp-adaptiveform-telephonedropdown__countrycodes"
+													name="./AllCountryCodes"
+													text="All Country Codes"
+													uncheckedValue="false"
+													value="true"
+													checked="true"/>
+											<enums jcr:primaryType="nt:unstructured"
+												   sling:resourceType="granite/ui/components/coral/foundation/container"
+												   granite:class="cmp-adaptiveform-telephonedropdown__enums"
+												   sling:hideResource="{Boolean}false">
+												<items jcr:primaryType="nt:unstructured"
+													   path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enums/items"/>
+											</enums>
+										</items>
+									</column>
+								</items>
+							</columns>
+						</items>
+					</basic>
+					<validation
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/container">
+						<items jcr:primaryType="nt:unstructured">
+							<columns
+									jcr:primaryType="nt:unstructured"
+									sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+									margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<column
+											jcr:primaryType="nt:unstructured"
+											sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+											<validationPatternGroup
+													jcr:primaryType="nt:unstructured"
+													jcr:title="Validation Pattern"
+													sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+													title="Validation Pattern">
+												<items jcr:primaryType="nt:unstructured">
+													<validationPatternType
+															jcr:primaryType="nt:unstructured"
+															granite:class="cmp-adaptiveform-telephonedropdown__validationpattern"
+															sling:resourceType="granite/ui/components/coral/foundation/form/select"
+															fieldLabel="Type"
+															name="./validationPatternType">
+														<datasource
+																jcr:primaryType="nt:unstructured"
+																sling:resourceType="core/fd/components/form/container/v1/datasource"
+																type="formatters"/>
+													</validationPatternType>
+													<validateFormat
+															jcr:primaryType="nt:unstructured"
+															granite:class="cmp-adaptiveform-telephonedropdown__validationformat"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldDescription="Regular Expression is permitted."
+															fieldLabel="Pattern"
+															name="./pattern">
+													</validateFormat>
+													<validatePictureClauseMessage
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Error Message"
+															name="./validatePictureClauseMessage"/>
+												</items>
+											</validationPatternGroup>
+										</items>
+									</column>
+								</items>
+							</columns>
+						</items>
+					</validation>
+				</items>
+			</tabs>
+		</items>
+	</content>
+</jcr:root>
