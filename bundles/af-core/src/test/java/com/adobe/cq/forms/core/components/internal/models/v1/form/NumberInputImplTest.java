@@ -370,7 +370,7 @@ public class NumberInputImplTest {
     }
 
     @Test
-    void testJSONExportForEmptyValidationExpression() throws Exception {
+    void testJSONExportForDisplayValueExpression() throws Exception {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
     }

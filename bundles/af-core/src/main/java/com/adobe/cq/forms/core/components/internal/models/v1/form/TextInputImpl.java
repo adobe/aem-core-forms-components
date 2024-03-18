@@ -70,6 +70,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     /** End of Type number specific constraints **/
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String displayValueExpression;
+
     @Override
     public boolean isMultiLine() {
         return multiLine;
@@ -168,5 +172,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
         if (exclusiveMinimumVaue != null) {
             minimum = null;
         }
+    }
+
+    @Override
+    @Nullable
+    public String getDisplayValueExpression() {
+        return displayValueExpression;
     }
 }

@@ -18,13 +18,16 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Date;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -69,6 +72,10 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
         return ComponentUtils.clone(exclusiveMinimumVaue);
     }
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String displayValueExpression;
+
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
         Map<ConstraintType, String> res = super.getConstraintMessages();
         String msg = getConstraintMessage(ConstraintType.MINIMUM);
@@ -93,5 +100,11 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
         if (exclusiveMinimumVaue != null) {
             minimumDate = null;
         }
+    }
+
+    @Override
+    @Nullable
+    public String getDisplayValueExpression() {
+        return displayValueExpression;
     }
 }
