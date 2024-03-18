@@ -16,6 +16,7 @@
 describe("Form Runtime with Date Picker", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/datepicker/basic.html"
+    const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
     const bemBlock = 'cmp-adaptiveform-datepicker'
     let toggle_array = [];
 
@@ -25,6 +26,7 @@ describe("Form Runtime with Date Picker", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+
         cy.fetchFeatureToggles().then((response) => {
             if (response.status === 200) {
                 toggle_array = response.body.enabled;

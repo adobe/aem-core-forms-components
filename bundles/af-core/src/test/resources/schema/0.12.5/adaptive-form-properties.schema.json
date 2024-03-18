@@ -1,5 +1,5 @@
 {
-  "$id": "https://git.corp.adobe.com/pages/livecycle/af2-docs/schema/generated/adaptive-form-properties.schema.json",
+  "$id": "classpath:/schema/0.12.5/adaptive-form-properties.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "$defs": {
@@ -119,6 +119,11 @@
           "type": "string",
           "title": "The format in which the value will be edited by the user.",
           "description": "The format in which the value will be edited by the user. Applicable for date and number types. For instance users in Germany would want to interchange decimal (.) and comma (,) when entering numerical values."
+        },
+        "displayValueExpression": {
+          "type": "string",
+          "title": "The json-formula expression which when evaluated will return the value that will be displayed to the user on screen in the field.",
+          "description": "The json-formula expression which when evaluated will return the value that will be displayed to the user on screen in the field. Applicable for date,number, text, email and telephone input fields. For instance users might need to mask certain chars in the input."
         },
         "emptyValue": {
           "type": [
