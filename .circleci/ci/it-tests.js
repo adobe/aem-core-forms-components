@@ -100,7 +100,7 @@ try {
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts} ${contextPathOpts}`);
 
-        if (AEM === 'classic' || AEM === 'classic-latest') {
+        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
             // add a sleep for 10 mins, add-on takes times to come up
             ci.sh(`sleep 12m`);
             // restart the AEM insatnce
