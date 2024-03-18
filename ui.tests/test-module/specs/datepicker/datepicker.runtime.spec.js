@@ -17,6 +17,7 @@ describe("Form Runtime with Date Picker", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/datepicker/basic.html"
     const bemBlock = 'cmp-adaptiveform-datepicker'
+    let toggle_array = [];
 
     let formContainer = null
 
@@ -24,6 +25,11 @@ describe("Form Runtime with Date Picker", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state, displayValue) => {
@@ -219,6 +225,21 @@ describe("Form Runtime with Date Picker", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [dateInput, dateInputView] = Object.entries(formContainer._fields)[7];
+            const input = '2024-02-02';
+            const formatted=  '2024-02-02 today'
+            let model = dateInputView.getModel();
+
+            cy.get(`#${dateInput}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal('2024-02-02');
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${dateInput}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 
 })

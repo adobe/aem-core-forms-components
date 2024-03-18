@@ -28,6 +28,7 @@ describe("Form Runtime with Text Input", () => {
     }
 
     let formContainer = null
+    let toggle_array = [];
 
     beforeEach(() => {
          if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
@@ -35,6 +36,11 @@ describe("Form Runtime with Text Input", () => {
                 formContainer = p;
             })
         }
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -273,6 +279,21 @@ describe("Form Runtime with Text Input", () => {
             .invoke('attr', 'autocomplete')
             .should("eq", "given-name");
     })
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [textInput, textInputField] = Object.entries(formContainer._fields)[10];
+            const input = '1234567812345678';
+            const formatted=  '**** **** **** 5678 '
+            let model = textInputField.getModel();
+
+            cy.get(`#${textInput}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal(input);
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${textInput}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
+    });
 })
 
 describe("Form Runtime with Text Input For Different locale", () => {
