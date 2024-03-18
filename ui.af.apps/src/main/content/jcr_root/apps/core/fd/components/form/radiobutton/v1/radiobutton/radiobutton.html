@@ -49,7 +49,8 @@
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                         aria-readonly="${radioButton.readOnly ? 'true' : ''}"/>
-                  <span>${radioButton.enumNamesAsTextContent[itemList.index].value @ context = radioButton.enumNamesAsTextContent[itemList.index].richText ? 'html' : 'text'}</span>
+                  <span data-sly-test="${radioButton.enumNamesArray[itemList.index].value == null}" >${radioButton.enumNamesArray[itemList.index]}</span>
+                  <span data-sly-test="${radioButton.enumNamesArray[itemList.index].value != null}">${radioButton.enumNamesArray[itemList.index].value @ context = radioButton.enumNamesArray[itemList.index].richText ? 'html' : 'text'}</span>
               </label>
           </div>
       </div>

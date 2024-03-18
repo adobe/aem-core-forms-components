@@ -117,9 +117,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         return null;
     }
 
-    @Override
-    @JsonIgnore
-    public TextContent[] getEnumNamesAsTextContent() {
+    private TextContent[] getEnumNamesAsTextContent() {
         if (enumNames != null) {
             Map<Object, String> map = removeDuplicates();
             String[] enumName = map.values().toArray(new String[0]);

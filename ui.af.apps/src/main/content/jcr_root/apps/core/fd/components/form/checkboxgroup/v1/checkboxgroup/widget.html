@@ -25,7 +25,8 @@
                  checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                  disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                  aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"/>
-          <span>${checkboxgroup.enumNamesAsTextContent[itemList.index].value @ context = checkboxgroup.enumNamesAsTextContent[itemList.index].richText ? 'html' : 'text'}</span>
+            <span data-sly-test="${checkboxgroup.enumNamesArray[itemList.index].value == null}" >${checkboxgroup.enumNamesArray[itemList.index]}</span>
+            <span data-sly-test="${checkboxgroup.enumNamesArray[itemList.index].value != null}">${checkboxgroup.enumNamesArray[itemList.index].value @ context = checkboxgroup.enumNamesArray[itemList.index].richText ? 'html' : 'text'}</span>
         </label>
       </div>
     </div>
