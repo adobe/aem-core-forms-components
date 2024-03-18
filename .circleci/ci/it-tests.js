@@ -41,7 +41,7 @@ try {
             extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
             // The core components are already installed in the Cloud SDK
             extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
-        } else if (AEM === 'classic-latest') {
+        } else if (AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
             // Download latest add-on release from artifactory
             ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
             extras += ` --install-file ${buildPath}/forms-linux-addon.far`;
