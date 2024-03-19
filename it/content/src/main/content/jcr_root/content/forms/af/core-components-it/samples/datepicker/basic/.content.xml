@@ -17,6 +17,7 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container"
+                themeRef="/libs/fd/af/themes/canvas"
                 clientLibRef="corecomponent.it.customfunction"
                 fieldType="form"
                 schemaType="none"
