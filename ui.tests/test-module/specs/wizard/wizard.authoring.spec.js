@@ -164,31 +164,50 @@ describe('Page - Authoring', function () {
 
     });
 
-    context.only('Test Wizard Component String Language', function () {
-        const pagePath = "/content/forms/af/core-components-it/blank";
-        beforeEach(function () {
-            // this is done since cypress session results in 403 sometimes
-            cy.openAuthoring(pagePath);
-        });
-        it('Wizard String language test for Deutsch', () => {
+    context.only('Test Wizard Component String Language', function (){
+        beforeEach( () => {
+            cy.visit('http://localhost:4502/aem/start.html');
+            cy.get('#username').type('admin');
+            cy.get('#password').type('admin');
+            cy.get('#submit-button').click();
+            cy.on('uncaught:exception', () => {
+                return false
+            });
+
             changeLanguage("de");
-            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html').then(() => {
+            cy.visit('http://localhost:4502/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
+                // Your tests here
                 cy.wait(30000);
-                cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Assistentenkomponenten hierhin ziehen');
+                cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click();
+                cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e').click();
+                cy.get('input[name="submitDialogTitle"]').type('language-test');
+                cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e.spectrum-ButtonGroup-Button_b10c2f').click();
             });
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
+            const dataPath = "/content/forms/af/language-test/jcr:content/guideContainer/*",
+                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+            cy.selectLayer("Edit");
+            cy.insertComponent(responsiveGridDropZoneSelector, "Adaptives Formular – Assistenten-Layout", afConstants.components.forms.resourceType.wizard);
+            cy.get('body').click(0, 0);
         });
 
-        it('Wizard String language test for Italiano', () => {
+        it('Wizard String language test for English', function ()  {
+            changeLanguage("en");
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
+            cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Please drag Wizard components here');
+        });
+        it('Wizard String language test for Italiano', function ()  {
             changeLanguage("it");
-            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html').then(() => {
-                cy.wait(30000);
-                cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Trascina qui i componenti della procedura guidata');
-            });
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
+            cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
         });
 
-        it('Changes locale to en', () => {
+        afterEach(() => {
+            cy.visit("http://localhost:4502/aem/formdetails.html/content/dam/formsanddocuments/language-test");
+            cy.get('.betty-ActionBar-item.formsmanager-admin-action-delete.cq-formsmanager-admin-actions-delete-activator').click();
+            cy.get('button._coral-Button._coral-Button--warning').click();
             changeLanguage("en");
             cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html');
-        });
-    });
+        })
+    })
 })
