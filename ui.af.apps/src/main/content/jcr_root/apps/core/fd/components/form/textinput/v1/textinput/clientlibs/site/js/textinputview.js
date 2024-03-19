@@ -72,16 +72,12 @@
             }
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
-                if(this._model.displayValue) {
-                    this.widget.value = this._model.displayValue;
-                }
+                this.setWidgetValueToDisplayValue();
                 this.setInactive();
             });
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
-                if(this._model.displayValue) {
-                    this.widget.value = this._model.value;
-                }
+                this.setWidgetValueToModelValue();
             });
         }
     }

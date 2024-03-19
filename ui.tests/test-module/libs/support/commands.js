@@ -254,9 +254,13 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     // getting status 403 intermittently, just ignore it
         const baseUrl = contextPath;
         cy.visit(baseUrl, {'failOnStatusCode': false});
-        cy.login(baseUrl, () => {
-            cy.openPage(path, options);
-        });
+        cy.getCookie('login-token').then(cookie => {
+            if(!cookie) {
+                cy.login(baseUrl, () => {
+                    cy.openPage(path, options);
+                });
+            }
+        })
     }
     cy.visit(path, options);
 });

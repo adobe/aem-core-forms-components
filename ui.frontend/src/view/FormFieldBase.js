@@ -307,6 +307,18 @@ class FormFieldBase extends FormField {
         return this.parentView.getModel().name;
     }
 
+    setWidgetValueToDisplayValue() {
+        if(this._model.displayValue) {
+            this.widget.value = this._model.displayValue;
+        }
+    }
+
+    setWidgetValueToModelValue() {
+        if(this._model.displayValue) {
+            this.widget.value = this._model.value;
+        }
+    }
+
     /**
      * Shows or hides the tooltip <div> based on the provided flag.
      * @param {boolean} show - If true, the tooltip <div> will be shown; otherwise, it will be hidden.

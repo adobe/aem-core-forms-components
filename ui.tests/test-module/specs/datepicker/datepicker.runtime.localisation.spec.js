@@ -19,6 +19,19 @@ describe("Form Runtime with Date Picker", () => {
     const bemBlock = 'cmp-adaptiveform-datepicker'
 
     let formContainer = null
+    const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
+    const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
+    const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
+    // enabling theme for this test case as without theme there is a bug in custom widget css
+    before(() => {
+        cy.openPage(fmPropertiesUI).then(() => {
+            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+                cy.get(propertiesSaveBtn).click().then(() => {
+                    cy.url().should('include','/aem/forms.html/content/dam/formsanddocuments/core-components-it/');
+                })
+            })
+        })
+    })
 
     beforeEach(() => {
         cy.previewForm(pagePath, {"params" : ["afAcceptLang=fr"]}).then(p => {
