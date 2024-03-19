@@ -9,6 +9,7 @@
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
+            sling:configRef="/conf/forms/core-components-it/samples/datepicker/basic/"
             sling:resourceType="forms-components-examples/components/page">
         <guideContainer
                 fd:version="2.1"
