@@ -305,6 +305,7 @@ public class CheckBoxGroupImplTest {
         map.put("0", "Item 1");
         map.put("1", "Item 2");
         map.put("0", "Item 3");
+        assertArrayEquals(map.values().toArray(new String[0]), checkboxGroup.getEnumNames());
     }
 
     @Test
