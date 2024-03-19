@@ -164,7 +164,7 @@ describe('Page - Authoring', function () {
 
     });
 
-    context.only('Test Wizard Component String Language', function (){
+    context.only('Test Wizard Component String Language', function () {
         const pagePath = "/content/forms/af/core-components-it/blank";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -172,19 +172,23 @@ describe('Page - Authoring', function () {
         });
         it('Wizard String language test for Deutsch', () => {
             changeLanguage("de");
-            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html');
-            cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Assistentenkomponenten hierhin ziehen');
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html').then(() => {
+                cy.wait(30000);
+                cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Assistentenkomponenten hierhin ziehen');
+            });
         });
+
         it('Wizard String language test for Italiano', () => {
             changeLanguage("it");
-            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html');
-            cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Trascina qui i componenti della procedura guidata');
-    
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html').then(() => {
+                cy.wait(30000);
+                cy.get('[data-path="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Trascina qui i componenti della procedura guidata');
+            });
         });
 
         it('Changes locale to en', () => {
             changeLanguage("en");
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/core-components-it/blank.html');
         });
-
-    })
+    });
 })
