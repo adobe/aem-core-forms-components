@@ -60,15 +60,30 @@
         }
 
         updateValue(value) {
-            if (this.widgetObject) {
+            if (value && value.trim() != '' && this.widgetObject) {
                 if (this.isActive()) {
                     this.widgetObject.setValue(value);
                 } else {
+                    this._model.value = this.widgetObject.getValue();
                     this.widgetObject.setDisplayValue(value);
                 }
             } else {
                 super.updateValue(value);
             }
+        }
+
+        getFormattedDate(value) {
+            if(!value || value.trim() === '') {
+                return '';
+            }
+            let editFormat = this._model.editFormat;
+            if(editFormat === 'date|short') {
+                editFormat = 'date|yyyy/mm/dd';
+            }
+            let currDate = FormView.Formatters.parse(value.toString(), this._model.locale, editFormat, null, false);
+            if (currDate && !isNaN(currDate) && value != null) {
+                return currDate.getFullYear() + "-" + (currDate.getMonth() + 1) +"-"+ currDate.getDate() + "";
+            } else return value;
         }
 
         setModel(model) {
@@ -78,18 +93,20 @@
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
                 if (this.widgetObject.getValue() !== '') {
-                    this._model.value = this.widgetObject.getValue();
+                    this._model.value = this.getFormattedDate(this.widgetObject.getValue());
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
-                    this._model.value = this.widgetObject.getValue();
+                    const {target:{value}} = e;
+                    this._model.value = this.getFormattedDate(value);
 
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
-                    this.widgetObject.setDisplayValue(this._model.value);
+                    this.widgetObject.setDisplayValue(value);
 
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
-                    this.widgetObject.setValue(e.target.value);
+                    const value = this._model.value;
+                    this.widgetObject.setValue(value);
                     this.setActive();
                 }, this.getWidget());
             } else {

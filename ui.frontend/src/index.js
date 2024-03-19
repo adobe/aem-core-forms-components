@@ -20,7 +20,7 @@ import {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormFileIn
 import {Constants} from "./constants.js";
 import GuideBridge from "./GuideBridge.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
-import {formatDate, parseDate} from "@aemforms/af-formatters";
+import {formatDate, parseDate, parse} from "@aemforms/af-formatters";
 import {FunctionRuntime} from '@aemforms/af-core';
 
 /**
@@ -57,7 +57,7 @@ const Actions = {
  * @property {function} parseDate - The function for parsing a date.
  */
 const Formatters = {
-    formatDate, parseDate
+    formatDate, parseDate, parse
 }
 
 /**

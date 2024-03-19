@@ -1164,7 +1164,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (!this.#isEditValueOrDisplayValue(value)) {
           this.#curInstance.selectedDate = value;  // prevent edit/display value from getting set in calender
         }
-        this.#curInstance.$field.value = this.#curInstance.editValue() || value;
+        this.#curInstance.$field.value = this.#isEditValueOrDisplayValue(value) ?
+            this.#model.editValue : this.#curInstance.editValue() || value;
       } else {
         this.#widget.value = this.#model.editValue || value;
       }

@@ -178,7 +178,8 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // choose a different date and check if its persisted
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
@@ -186,7 +187,8 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // check clear option
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get(".dp-clear").click();
         });
 
@@ -195,7 +197,8 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
             cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
@@ -219,6 +222,49 @@ describe("Form Runtime with Date Picker", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
       });
+    });
+
+    it("input given as per edit pattern should be valid", () => {
+        const [datePicker8] = Object.entries(formContainer._fields)[7]
+        const incorrectInput = "01-01-2023";
+        const correctInput = "25/2/2023";
+        cy.get(`#${datePicker8}`).find("input").clear().type(incorrectInput).blur().then(x => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Specify the value in allowed format : date.")
+        });
+        cy.get(`#${datePicker8}`).find("input").clear().type(correctInput).blur().then(x => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+        });
+    });
+
+    it("Display pattern transforms to edit format when focused", () => {
+        const [datePicker8, fieldView] = Object.entries(formContainer._fields)[7]
+        const input = "25/2/2023", displayFormat = "February 25, 2023";
+        cy.get(`#${datePicker8}`).should('have.class', 'cmp-adaptiveform-datepicker--empty');
+        cy.get(`#${datePicker8}`).find("input").clear().type(input).blur().then(() => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+            cy.get(`#${datePicker8}`).find("input").should('have.value', displayFormat);
+            cy.get(`#${datePicker8}`).find("input").click().then(() => {
+                cy.get(`#${datePicker8}`).find("input").should('have.value',input);
+                })
+        });
+    });
+
+    it("Test changing dates in datePicker then typing manually updates model", () => {
+        const [datePicker7] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible")
+            .eq(0).click({force: true}).then(() => {
+            cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Tuesday, 2 January, 2024");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/1/2024");
+        });
+
+        // choose a different date and check if its persisted
+        const date = '23/1/2024';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Tuesday, 23 January, 2024");
+            cy.get(`#${datePicker7}`).find("input").focus().should("have.value",date);
+        });
     });
 
 })
