@@ -48,6 +48,7 @@
                    aria-label="${switch.label.value}"
                    disabled="${!switch.enabled || switch.readOnly}"
                    value="${switch.default}"
+                   aria-describedby="${switch.id}__errormessage"
                    aria-readonly="${switch.readOnly ? 'true' : ''}">
             <div class="cmp-adaptiveform-switch__widget-slider">
                 <div class="cmp-adaptiveform-switch__circle-indicator"></div>

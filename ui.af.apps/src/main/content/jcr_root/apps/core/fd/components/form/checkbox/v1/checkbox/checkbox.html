@@ -41,6 +41,7 @@
             id="${checkbox.id}_widget"
             title="${checkbox.tooltipVisible ? '' : checkbox.tooltipText}"
             name="${checkbox.name}"
+            aria-describedby="${checkbox.id}__errormessage"
             value="${checkbox.default[0]}"
             disabled="${!checkbox.enabled}" />
 

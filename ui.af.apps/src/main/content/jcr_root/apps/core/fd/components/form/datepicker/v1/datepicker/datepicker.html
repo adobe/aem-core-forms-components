@@ -46,6 +46,7 @@
             title="${datePicker.tooltipVisible ? '' : datePicker.tooltipText}"
             id="${widgetId}"
             placeholder="${datePicker.placeHolder}"
+            aria-describedby="${datePicker.id}__errormessage"
             min="${datePicker.minimumDate}"
             max="${datePicker.maximumDate}"/>
      <div data-sly-call="${shortDescription.shortDescription @componentId=datePicker.id, shortDescriptionVisible=datePicker.tooltipVisible, shortDescription=datePicker.tooltip, bemBlock='cmp-adaptiveform-datepicker'}" data-sly-unwrap>

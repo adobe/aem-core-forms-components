@@ -116,10 +116,8 @@
             widgets.forEach(widget => {
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                    widget.setAttribute("aria-readonly", true);
                 } else {
-                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute("aria-readonly");
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED); 
                 }
             });
         }
