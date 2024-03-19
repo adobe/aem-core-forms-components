@@ -4,7 +4,17 @@
   "name": "abc",
   "type": "string",
   "enforceEnum": true,
-  "enumNames": ["m", "f", "o"],
+  "enumNames": [
+    {
+      "value": "m"
+    },
+    {
+      "value": "f"
+    },
+    {
+      "value": "o"
+    }
+  ],
   "enum": ["0", "1", "2"],
   "label": {
     "value": "def"

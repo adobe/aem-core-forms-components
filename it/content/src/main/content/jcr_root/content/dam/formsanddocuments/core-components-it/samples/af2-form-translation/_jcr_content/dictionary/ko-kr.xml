@@ -129,4 +129,19 @@
         jcr:primaryType="nt:folder"
         sling:key="guideContainer##wizard##jcr:title##299"
         sling:message="마법사"/>
+    <_x0030_d52109d-2260-4962-b0a4-a589fceb42cd
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##jcr:title##3329"
+        sling:message="&lt;p>&lt;b>동물 선택&lt;/b>&lt;/p>"/>
+    <_x0030_ab74673-ed86-4d13-853e-86fbcb638588
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##0"
+        sling:message="&lt;p>&lt;i>개&lt;/i>&lt;/p>"/>
+    <b74e28f6-aa6a-4823-b87b-c45b0058d67d
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##1"
+        sling:message="&lt;p>&lt;u>고양이&lt;/u>&lt;/p>"/>
 </jcr:root>
