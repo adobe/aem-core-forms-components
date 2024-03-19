@@ -64,11 +64,6 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Nullable
     private Boolean excludeMinimumCheck;
     /** End **/
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String displayValueExpression;
-
     private Long exclusiveMinimumVaue;
     private Long exclusiveMaximumValue;
 
@@ -117,11 +112,5 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
         if (exclusiveMinimumVaue != null) {
             minimum = null;
         }
-    }
-
-    @Override
-    @Nullable
-    public String getDisplayValueExpression() {
-        return displayValueExpression;
     }
 }
