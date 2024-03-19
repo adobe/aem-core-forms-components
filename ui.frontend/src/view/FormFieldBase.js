@@ -308,13 +308,13 @@ class FormFieldBase extends FormField {
     }
 
     setWidgetValueToDisplayValue() {
-        if(this._model.displayValue) {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
             this.widget.value = this._model.displayValue;
         }
     }
 
     setWidgetValueToModelValue() {
-        if(this._model.displayValue) {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
             this.widget.value = this._model.value;
         }
     }
