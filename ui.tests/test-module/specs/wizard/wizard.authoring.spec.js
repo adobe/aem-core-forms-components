@@ -164,7 +164,7 @@ describe('Page - Authoring', function () {
 
     });
 
-    context.only('Test Wizard Component String Language', function (){
+    context('Test Wizard Component String Language', function (){
         beforeEach( () => {
             cy.visit('http://localhost:4502/aem/start.html');
             cy.get('#username').type('admin');
