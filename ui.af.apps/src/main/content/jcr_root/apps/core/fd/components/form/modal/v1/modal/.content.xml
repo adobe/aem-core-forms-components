@@ -20,5 +20,5 @@
           jcr:description="Modal"
           jcr:primaryType="cq:Component"
           jcr:title="Adaptive Form Modal (v1)"
-          sling:resourceSuperType="wcm/foundation/components/responsivegrid"
+          sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
           componentGroup=".core-adaptiveform"/>
