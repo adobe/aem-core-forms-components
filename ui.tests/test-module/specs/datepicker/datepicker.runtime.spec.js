@@ -27,9 +27,7 @@ describe("Form Runtime with Date Picker", () => {
     before(() => {
         cy.openPage(fmPropertiesUI).then(() => {
             cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
-                cy.get(propertiesSaveBtn).click().then(() => {
-                    //cy.url().should('include','/aem/forms.html/content/dam/formsanddocuments/core-components-it/');
-                })
+                cy.get(propertiesSaveBtn).click();
             })
         })
     })
