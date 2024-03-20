@@ -29,20 +29,19 @@
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
      id="${panel.id}"
      title="${panel.tooltipVisible ? '' : panel.tooltipText}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-     role="dialog">
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
 
     <div class="cmp-adaptiveform-modal__label-container">
         <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
     </div>
 
-    <div class="cmp-adaptiveform-modal__overlay cmp-adaptiveform-modal__overlay--hidden" role="dialog" >
-        <div class="cmp-adaptiveform-modal__panel-container cmp-adaptiveform-modal__panel-container--hidden" data-sly-resource="${'panelcontainer'}">
-            <button class="cmp-adaptiveform-modal__close">Close</button>
+    <div role="dialog">
+        <div class="${wcmmode.preview || wcmmode.disabled ? 'cmp-adaptiveform-modal__dialog' : ''}">
+            <div class="cmp-adaptiveform-modal__panel-container" data-sly-resource="${'panelcontainer'}"></div>
         </div>
-        <div class="cmp-adaptiveform-modal__button" data-sly-resource="${'button'}"></div>
     </div>
+    <div class="cmp-adaptiveform-modal__button" data-sly-resource="${'button'}"></div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>

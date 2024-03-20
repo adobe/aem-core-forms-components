@@ -28,6 +28,5 @@
         <fd:events
                 jcr:primaryType="nt:unstructured"
                 click="dispatchEvent(panelcontainer, 'custom:setProperty', {visible : true()})"/>
-
     </button>
 </jcr:root>
