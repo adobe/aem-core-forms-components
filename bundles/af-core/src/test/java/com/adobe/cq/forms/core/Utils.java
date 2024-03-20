@@ -132,7 +132,7 @@ public class Utils {
             // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
-                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.12.0/form.json");
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.12.5/form.json");
                 JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
