@@ -375,7 +375,7 @@ public class NumberInputImplTest {
         Mockito.when(numberInputMock.getDisplayValueExpression()).thenCallRealMethod();
         assertEquals(null, numberInputMock.getDataFormat());
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
-        assertEquals("($field.$value & abc)",numberInput.getDisplayValueExpression());
+        assertEquals("($field.$value & abc)", numberInput.getDisplayValueExpression());
     }
 
     @Test
