@@ -17,7 +17,7 @@
             jcr:lastModifiedBy="admin"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container"
-            clientLibRef="corecomponent.it.ruleeditor,corecomponent.it.customfunction"
+            clientLibRef="corecomponent.it.customfunction,corecomponent.it.customfunction2"
             dorType="none"
             fieldType="form"
             schemaType="none"

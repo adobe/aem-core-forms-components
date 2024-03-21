@@ -17,6 +17,26 @@ describe('Rule editor runtime sanity for core-components',function(){
         });
     });
 
+    if (cy.af.isLatestAddon()) {
+        it("should have merged custom function list registered in FunctionRuntime from both clientlibs", () => {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            let func;
+            cy.window().then(win => {
+                func = win.FormView.FunctionRuntime.customFunctions.testFunction1; // from corecomponent.it.customfunction
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
+
+                func = win.FormView.FunctionRuntime.customFunctions.testSubmitFormPreprocessor; // from corecomponent.it.customfunction
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
+
+                func = win.FormView.FunctionRuntime.customFunctions.testSetProperty; // from corecomponent.it.customfunction2
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
+            })
+        })
+    }
+
     /**
      * Runtime ruleSanity for button to change label of textbox
      * [when button is clicked the textbox field label should change using custom function]
