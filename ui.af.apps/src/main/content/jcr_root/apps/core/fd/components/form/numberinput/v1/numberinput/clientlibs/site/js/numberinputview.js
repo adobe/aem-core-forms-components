@@ -87,7 +87,7 @@
         setModel(model) {
             super.setModel(model);
             // only initialize if patterns are set
-            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat
+            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || this._model._jsonModel.displayValueExpression
                 || this._model._jsonModel.type === 'integer' || FormView.Utils.isUserAgent('safari')) {
                 if (this.widgetObject == null) {
                     this.initializeWidget();
