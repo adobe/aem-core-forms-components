@@ -1,0 +1,21 @@
+{
+  "id": "dateinput-00447787e6",
+  "fieldType": "date-input",
+  "name": "abc",
+  "type": "string",
+  "YEAR": 2023,
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": ["$event.payload"]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dateinput"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/dateinput/v1/dateinput"
+}

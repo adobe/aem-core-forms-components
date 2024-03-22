@@ -1,0 +1,58 @@
+{
+  "id": "dateinput-fffa242824",
+  "dataRef": "a.b",
+  "fieldType": "date-input",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": true,
+  "datePlaceholder" : { "jcr:primaryType": "nt:unstructured",
+    "item0":{
+      "hiddenfield" : "Month",
+      "placeholder" : "MM",
+      "title" : "Month"
+    }, "item1":{
+      "hiddenfield" : "Day",
+      "placeholder" : "DD",
+      "title" : "Day"
+    },"item2": {
+      "hiddenfield" : "Year",
+      "placeholder" : "YYYY",
+      "title" : "Year"
+    } },
+
+  "constraintMessages": {
+    "type": "incorrect type",
+    "minimum": "Date should be greater than 4th Feb 2022",
+    "maximum": "Date should be less than 9th Feb 2022"
+  },
+  "defaultVal": "2022-02-07",
+  "label": {
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": ["$event.payload"]
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dateinput-message"
+  },
+  "format": "date",
+  "exclusiveMinimum": "2022-02-05",
+  "exclusiveMaximum": "2022-02-08",
+  ":type": "core/fd/components/form/dateinput/v1/dateinput"
+}

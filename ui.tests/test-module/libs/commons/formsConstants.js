@@ -15,56 +15,78 @@
  */
 
 var formsConstants = {
-    components : {
-        forms : {
-            resourceType : {
-                "aemformcontainer" : "/apps/forms-components-examples/components/aemform",
-                "formcontainer" : "/apps/forms-components-examples/components/form/container",
-                "fplinkcomponent"  : "/apps/forms-components-examples/components/linkcomponent",
-                "fpsnlcomponent"  : "/apps/forms-components-examples/components/searchlister",
-                "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
-                "formtextinput": "/apps/forms-components-examples/components/form/textinput",
-                "formtelephoneinput": "/apps/forms-components-examples/components/form/telephoneinput",
-                "formemailinput": "/apps/forms-components-examples/components/form/emailinput",
-                "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
-                "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
-                "pageheader": "/apps/forms-components-examples/components/form/pageheader",
-                "accordion": "/apps/forms-components-examples/components/form/accordion",
-                "formtext": "/apps/forms-components-examples/components/form/text",
-                "footer": "/apps/forms-components-examples/components/form/footer",
-                "formcheckboxgroup": "/apps/forms-components-examples/components/form/checkboxgroup",
-                "tabsontop": "/apps/forms-components-examples/components/form/tabsontop",
-                "verticaltabs":"/apps/forms-components-examples/components/form/verticaltabs",
-                "datepicker": "/apps/forms-components-examples/components/form/datepicker",
-                "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
-                "formbutton": "/apps/forms-components-examples/components/form/button",
-                "formimage": "/apps/forms-components-examples/components/form/image",
-                "formradiobutton": "/apps/forms-components-examples/components/form/radiobutton",
-                "formfileinput": "/apps/forms-components-examples/components/form/fileinput",
-                "wizard": "/apps/forms-components-examples/components/form/wizard",
-                "title": "/apps/forms-components-examples/components/form/title",
-                "checkbox": "/apps/forms-components-examples/components/form/checkbox",
-                "switch": "/apps/forms-components-examples/components/form/switch",
-                "fragment": "/apps/forms-components-examples/components/form/fragment",
-                "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
-                "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions"
-            }
-        },
-        resourceType : {
-            "contentfragment": "/apps/core-components-examples/components/contentfragment",
-            "experiencefragment": "/apps/core-components-examples/components/experiencefragment"
-        }
+  components: {
+    forms: {
+      resourceType: {
+        aemformcontainer: "/apps/forms-components-examples/components/aemform",
+        formcontainer:
+          "/apps/forms-components-examples/components/form/container",
+        fplinkcomponent:
+          "/apps/forms-components-examples/components/linkcomponent",
+        fpsnlcomponent:
+          "/apps/forms-components-examples/components/searchlister",
+        fpdnscomponent:
+          "/apps/forms-components-examples/components/draftsandsubmissions",
+        formtextinput:
+          "/apps/forms-components-examples/components/form/textinput",
+        formtelephoneinput:
+          "/apps/forms-components-examples/components/form/telephoneinput",
+        formemailinput:
+          "/apps/forms-components-examples/components/form/emailinput",
+        formnumberinput:
+          "/apps/forms-components-examples/components/form/numberinput",
+        panelcontainer:
+          "/apps/forms-components-examples/components/form/panelcontainer",
+        pageheader:
+          "/apps/forms-components-examples/components/form/pageheader",
+        accordion: "/apps/forms-components-examples/components/form/accordion",
+        formtext: "/apps/forms-components-examples/components/form/text",
+        footer: "/apps/forms-components-examples/components/form/footer",
+        formcheckboxgroup:
+          "/apps/forms-components-examples/components/form/checkboxgroup",
+        tabsontop: "/apps/forms-components-examples/components/form/tabsontop",
+        verticaltabs:
+          "/apps/forms-components-examples/components/form/verticaltabs",
+        datepicker:
+          "/apps/forms-components-examples/components/form/datepicker",
+        dateinput: "/apps/forms-components-examples/components/form/dateinput",
+        formdropdown:
+          "/apps/forms-components-examples/components/form/dropdown",
+        formbutton: "/apps/forms-components-examples/components/form/button",
+        formimage: "/apps/forms-components-examples/components/form/image",
+        formradiobutton:
+          "/apps/forms-components-examples/components/form/radiobutton",
+        formfileinput:
+          "/apps/forms-components-examples/components/form/fileinput",
+        wizard: "/apps/forms-components-examples/components/form/wizard",
+        title: "/apps/forms-components-examples/components/form/title",
+        checkbox: "/apps/forms-components-examples/components/form/checkbox",
+        switch: "/apps/forms-components-examples/components/form/switch",
+        fragment: "/apps/forms-components-examples/components/form/fragment",
+        fragmentcontainer:
+          "/apps/forms-components-examples/components/form/fragmentcontainer",
+        termsandconditions:
+          "/apps/forms-components-examples/components/form/termsandconditions",
+      },
     },
-    RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
-    FORM_EDITOR_FORM_CONTAINER_SUFFIX : "/jcr:content/guideContainer",
-    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/container1",
-    RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
-    EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
-    events : {
-        LOADING_SHOW : "loading-show.cypress",
-        LOADING_HIDE : "loading-hide.cypress",
-        DIALOG_READY : "dialog-ready.cypress"
-    }
+    resourceType: {
+      contentfragment:
+        "/apps/core-components-examples/components/contentfragment",
+      experiencefragment:
+        "/apps/core-components-examples/components/experiencefragment",
+    },
+  },
+  RESPONSIVE_GRID_DEMO_SUFFIX:
+    "/jcr:content/root/responsivegrid/demo/component",
+  FORM_EDITOR_FORM_CONTAINER_SUFFIX: "/jcr:content/guideContainer",
+  FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX: "/jcr:content/container1",
+  RESPONSIVE_GRID_SUFFIX: "/jcr:content/root/responsivegrid",
+  EVENT_NAME_GUIDE_REFRESH_DONE: "guideRefreshDone.cypress",
+  events: {
+    LOADING_SHOW: "loading-show.cypress",
+    LOADING_HIDE: "loading-hide.cypress",
+    DIALOG_READY: "dialog-ready.cypress",
+  },
 };
 
 module.exports = formsConstants;

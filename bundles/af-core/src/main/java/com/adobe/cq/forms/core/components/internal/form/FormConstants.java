@@ -53,6 +53,9 @@ public final class FormConstants {
     /** The resource type for switch v1 */
     public static final String RT_FD_FORM_SWITCH_V1 = RT_FD_FORM_PREFIX + "switch/v1/switch";
 
+    /** The resource type for date input v1 */
+    public static final String RT_FD_FORM_DATE_INPUT_V1 = RT_FD_FORM_PREFIX + "dateinput/v1/dateinput";
+
     /** The resource type for date picker v1 */
     public static final String RT_FD_FORM_DATE_PICKER_V1 = RT_FD_FORM_PREFIX + "datepicker/v1/datepicker";
 

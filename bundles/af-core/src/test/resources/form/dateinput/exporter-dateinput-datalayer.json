@@ -1,0 +1,36 @@
+{
+  "id": "dateinput-0ac1fed1fe",
+  "fieldType": "date-input",
+  "name": "DoB",
+  "description": "Date of Birth",
+  "type": "string",
+  "hideDateLabel": "false",
+  "combinedPlaceholder" : {
+    "Month" : [ "Month", "MM", "" ],
+    "Day" : [ "Day", "DD", "" ],
+    "Year" : [ "Year", "YYYY", "" ]
+  },
+
+    "label": {
+    "value": "DoB"
+  },
+  "events": {
+    "custom:setProperty": ["$event.payload"]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dateinput-datalayer"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/dateinput/v1/dateinput",
+  "dataLayer": {
+    "dateinput-0ac1fed1fe": {
+      "dc:title": "DoB",
+      "dc:description": "Date of Birth",
+      "@type": "core/fd/components/form/dateinput/v1/dateinput",
+      "fieldType": "date-input"
+    }
+  }
+}
