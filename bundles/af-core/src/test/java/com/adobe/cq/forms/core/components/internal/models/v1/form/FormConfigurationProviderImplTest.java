@@ -77,9 +77,9 @@ public class FormConfigurationProviderImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport
-                        .stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                        .collect(Collectors.toList());
+                    .stream(childResources.spliterator(), false)
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
+                    .collect(Collectors.toList());
             }
         });
     }
@@ -89,9 +89,9 @@ public class FormConfigurationProviderImplTest {
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
         Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
         assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js", formConfigurationProvider
-                .getCustomFunctionModuleUrl());
+            .getCustomFunctionModuleUrl());
     }
 
     private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
