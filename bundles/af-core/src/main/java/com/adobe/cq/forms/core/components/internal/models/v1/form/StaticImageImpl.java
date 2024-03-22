@@ -62,6 +62,10 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @org.jetbrains.annotations.Nullable
     protected String description; // long description as per current spec
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fileReference")
+    @Nullable
+    protected String fileReference;
+
     /**
      * Returns the source where the image is present.
      *
@@ -119,5 +123,10 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
         } catch (RepositoryException | IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public String getSource() {
+        return fileReference;
     }
 }
