@@ -18,7 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.2-edsB003-SNAPSHOT</version>
+        <version>3.0.2-edsB004</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
