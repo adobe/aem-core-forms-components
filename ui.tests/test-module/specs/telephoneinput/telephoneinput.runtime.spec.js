@@ -18,6 +18,7 @@ describe("Form Runtime with Telephone Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/telephoneinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-telephoneinput'
     const IS = "adaptiveFormTelephoneInput"
+    let toggle_array = [];
     const selectors = {
         telephoneinput : `[data-cmp-is="${IS}"]`
     }
@@ -28,6 +29,11 @@ describe("Form Runtime with Telephone Input", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -141,5 +147,20 @@ describe("Form Runtime with Telephone Input", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [field, fieldView] = Object.entries(formContainer._fields)[7];
+            const input = 9999999999;
+            const formatted=  '*******999'
+            let model = fieldView.getModel();
+
+            cy.get(`#${field}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal('9999999999');
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${field}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 })
