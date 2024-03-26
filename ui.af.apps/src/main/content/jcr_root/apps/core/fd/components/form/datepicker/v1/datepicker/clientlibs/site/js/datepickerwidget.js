@@ -57,7 +57,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
     #defaultOptions = {
       yearsPerView: 16,
-      width: 340,
+      width: 433,
       viewHeight: 248,
       locale: {
         days: ["S","M","T","W","T","F","S"],
@@ -626,8 +626,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
       var self = this,
           curDate = new Date(this.currentYear, this.currentMonth),
           maxDay = this.#maxDate(this.currentMonth),
-          prevMaxDay = this.#maxDate((this.currentMonth + 11) % 12),
+          prevMaxDay = this.#maxDate((this.currentMonth + 12) % 12),
           day1 = new Date(this.currentYear, this.currentMonth, 1).getDay(),
+          rowsReq = Math.ceil((day1 + maxDay) / 7) + 1,
           data, display;
           var localizedYear = this.#getLocalizedYear(curDate);
 
@@ -636,22 +637,19 @@ if (typeof window.DatePickerWidget === 'undefined') {
             caption: this.#options.locale.months[this.currentMonth] + ", "
                 + this.#convertNumberToLocale(localizedYear),
             header: this.#options.locale.days,
-            numRows: 7,
+            numRows: rowsReq,
             numColumns: 7,
             elementAt: function (row, col) {
               var day = (row - 1) * 7 + col - day1 + 1;
-              var monthVal = self.currentMonth + 1;
               let gridId = "day-" + day;
               display = self.#convertNumberToLocale(day);
               data = day;
               if (day < 1) {
                 display = self.#convertNumberToLocale(prevMaxDay + day);
-                data = -1;
-                monthVal = self.currentMonth;
+                data = -1
               } else if (day > maxDay) {
                 display = self.#convertNumberToLocale(day - maxDay);
                 data = -1;
-                monthVal = self.currentMonth + 2;
               } else {
                 curDate.setDate(day);
                 // check if the currentdate is valid based on max and min valid date
@@ -666,7 +664,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
                 gridId: gridId,
                 display: display,
                 ariaLabel: self.#options.editValue(
-                    self.currentYear + "-" + self.#pad2(monthVal)
+                    self.currentYear + "-" + self.#pad2(self.currentMonth + 1)
                     + "-" + self.#pad2(display))
               };
             }
@@ -858,6 +856,20 @@ if (typeof window.DatePickerWidget === 'undefined') {
           c++;
         }
         this.insertRow(r++, row, false, options.elementAt);
+      }
+
+      rows = this["$" + this.view.toLowerCase()].querySelectorAll("ul");
+      rows = [...rows].filter((r) => {
+        return !(r.offsetHeight === 0 && r.offsetWidth === 0)
+      });
+      let len = rows.length;
+      while (len > options.numRows) {
+        this["$" + this.view.toLowerCase()].querySelectorAll(
+            "ul")[--len].style.display = "none";
+      }
+      while (options.numRows > len) {
+        this["$" + this.view.toLowerCase()].querySelectorAll(
+            "ul")[len++].style.display = "flex";
       }
     }
 
