@@ -69,7 +69,6 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     private Object exclusiveMaximumValue;
 
     /** End of Type number specific constraints **/
-
     @Override
     public boolean isMultiLine() {
         return multiLine;

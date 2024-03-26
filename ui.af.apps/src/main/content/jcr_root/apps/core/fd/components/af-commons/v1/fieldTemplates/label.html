@@ -1,4 +1,4 @@
-<template data-sly-template.label="${@ componentId, labelValue, labelVisible, bemBlock}">
+<template data-sly-template.label="${@ componentId, labelValue, labelVisible, labelRichText, bemBlock}">
   <label for="${componentId}" class="${bemBlock}__label"
-         data-sly-test="${labelValue && (labelVisible==null || labelVisible==true)}">${labelValue}</label>
+         data-sly-test="${labelValue && (labelVisible==null || labelVisible==true)}" data-richtext="${labelRichText}">${labelValue @ context = labelRichText ? 'html' : 'text'}</label>
 </template>
