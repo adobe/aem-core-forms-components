@@ -460,7 +460,7 @@ class FormFieldBase extends FormField {
      * @param {Object} state - The state object.
      */
     updateValidationMessage(validationMessage, state) {
-        if (this.errorDiv) {
+        if (this.errorDiv && this.formContainer.getModel()?.properties?.enableValidationMessage === true) {
             // Check if the validationMessage is different from the current content
             if (this.errorDiv.innerHTML !== state.validationMessage) {
                 this.errorDiv.innerHTML = state.validationMessage;
