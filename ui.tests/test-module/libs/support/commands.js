@@ -293,7 +293,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
+                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
                         cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     }
