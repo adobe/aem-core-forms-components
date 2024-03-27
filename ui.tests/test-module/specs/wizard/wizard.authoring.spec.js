@@ -37,7 +37,6 @@ describe('Page - Authoring', function () {
 
         cy.get('body').click(0, 0);
     }
-    
     const dropWizardInSites = function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -46,8 +45,8 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
+    
     context('Open Forms Editor', function () {
-        
         const pagePath = "/content/forms/af/core-components-it/blank",
             wizardLayoutDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.wizard.split("/").pop(),
             wizardEditPathSelector = "[data-path='" + wizardLayoutDrop + "']",
