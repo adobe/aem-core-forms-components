@@ -164,7 +164,7 @@ describe('Page - Authoring', function () {
 
     });
 
-    context.only('Test Wizard Component String Language', function (){
+    context('Test Wizard Component String Language', function (){
         beforeEach( () => {
             cy.intercept("http://localhost:4502/editor.html/content/forms/af/language-test.html").as("formEditor");
             cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
@@ -183,7 +183,7 @@ describe('Page - Authoring', function () {
                 cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click();
                 cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e').click();
                 cy.get('input[name="submitDialogTitle"]').type('language-test');
-                cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e.spectrum-ButtonGroup-Button_b10c2f').click();
+                cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
             });
             cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
             const dataPath = "/content/forms/af/language-test/jcr:content/guideContainer/*",
