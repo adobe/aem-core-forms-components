@@ -43,10 +43,11 @@
             data-cmp-data-layer="${dropdown.data.json}"
             disabled="${!dropdown.enabled || dropdown.readOnly}"
             required="${dropdown.required}"
+            aria-describedby="${dropdown.id}__errormessage ${dropdown.id}__longdescription ${dropdown.id}__shortdescription"
             data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
             aria-readonly="${dropdown.readOnly ? 'true' : ''}">
         <div data-sly-test.isPlaceHolderSet="${dropdown.placeHolder != null}" data-sly-unwrap></div>
-        <option data-sly-test="${!isPlaceHolderSet}" role="none" style="display: none;"></option>
+        <option data-sly-test="${!isPlaceHolderSet}"  style="display: none;"></option>
         <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
         <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
             <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
