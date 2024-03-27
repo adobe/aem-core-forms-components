@@ -23,7 +23,7 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Adaptive Form Modal"
   sling:resourceType="cq/gui/components/authoring/dialog"
-  helpPath="https://www.adobe.com/go/aem_af_cmp_termsandconditions_v1"
+  helpPath="https://www.adobe.com/go/aem_af_cmp_modal_v1"
   trackingFeature="core-components:adaptiveform-modal:v1"
   extraClientlibs="[core.forms.components.modal.v1.editor]">
     <content

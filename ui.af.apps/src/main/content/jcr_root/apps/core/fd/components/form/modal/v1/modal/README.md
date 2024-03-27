@@ -37,7 +37,7 @@ The following properties are written to JCR for this Form Panel component and ar
 
 
 ## Client Libraries
-The component provides a `core.forms.components.termsandconditions.v1.runtime` client library category that contains the Javascript runtime for the component.
+The component provides a `core.forms.components.modal.v1.runtime` client library category that contains the Javascript runtime for the component.
 It should be added to a relevant site client library using the `embed` property.
 
 
