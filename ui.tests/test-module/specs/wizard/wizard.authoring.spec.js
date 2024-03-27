@@ -164,8 +164,10 @@ describe('Page - Authoring', function () {
 
     });
 
-    context('Test Wizard Component String Language', function (){
+    context.only('Test Wizard Component String Language', function (){
         beforeEach( () => {
+            cy.intercept("http://localhost:4502/editor.html/content/forms/af/language-test.html").as("formEditor");
+            cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
             cy.visit('http://localhost:4502/aem/start.html');
             cy.get('#username').type('admin');
             cy.get('#password').type('admin');
@@ -177,7 +179,7 @@ describe('Page - Authoring', function () {
             changeLanguage("de");
             cy.visit('http://localhost:4502/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
                 // Your tests here
-                cy.wait(30000);
+                cy.wait('@templates',{requestTimeout: 30000});
                 cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click();
                 cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e').click();
                 cy.get('input[name="submitDialogTitle"]').type('language-test');
@@ -194,11 +196,13 @@ describe('Page - Authoring', function () {
         it('Wizard String language test for English', function ()  {
             changeLanguage("en");
             cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
+            cy.wait('@formEditor',{requestTimeout: 30000});
             cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Please drag Wizard components here');
         });
         it('Wizard String language test for Italiano', function ()  {
             changeLanguage("it");
-            cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html');
+            cy.visit('http://localhost:4502/editor.html/content/forms/af/language-test.html')
+            cy.wait('@formEditor',{requestTimeout: 30000});
             cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
         });
 
