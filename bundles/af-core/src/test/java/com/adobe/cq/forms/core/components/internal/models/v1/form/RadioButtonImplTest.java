@@ -310,7 +310,7 @@ public class RadioButtonImplTest {
     @Test
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
-        assertArrayEquals(new String[] { "<p>Item 1</p>", "<p>Item 2</p>" }, radioButton.getEnumNames());
+        assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
     }
 
     @Test

@@ -5,8 +5,8 @@
   "type": "string",
   "enforceEnum": true,
   "enumNames": [
-    "<p>Item 1</p>",
-    "<p>Item 2</p>"
+    "Item 1",
+    "Item 2"
   ],
   "label": {
     "value": "Radio Button"

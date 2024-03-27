@@ -55,8 +55,6 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
 
-    private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
-
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -368,20 +366,4 @@ public class NumberInputImplTest {
         FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
     }
-
-    @Test
-    void testGetDisplayValueExpression() throws Exception {
-        NumberInput numberInputMock = Mockito.mock(NumberInput.class);
-        Mockito.when(numberInputMock.getDisplayValueExpression()).thenCallRealMethod();
-        assertEquals(null, numberInputMock.getDisplayValueExpression());
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
-        assertEquals("($field.$value & abc)", numberInput.getDisplayValueExpression());
-    }
-
-    @Test
-    void testJSONExportForDisplayValueExpression() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
-    }
-
 }

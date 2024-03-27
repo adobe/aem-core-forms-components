@@ -109,7 +109,7 @@
 
         #noFormats() {
             return (this._model.editFormat == null || this._model.editFormat === 'date|short') &&
-                (this._model.displayFormat == null || this._model.displayFormat === 'date|short') && (this._model.displayValueExpression == null)
+                (this._model.displayFormat == null || this._model.displayFormat === 'date|short');
         }
     }
 

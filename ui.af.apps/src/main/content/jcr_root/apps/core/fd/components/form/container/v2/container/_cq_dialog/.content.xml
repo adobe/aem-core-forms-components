@@ -71,11 +71,6 @@
                                       fieldDescription="This client library contains JavaScript Functions which can be used in expressions supported by Adaptive Forms."
                                       fieldLabel="Client library category"
                                       name="./clientLibRef"/>
-                                    <specVersion
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                            name="./specVersion"
-                                            value="0.12.5"/>
                                 </items>
                             </container>
                         </items>

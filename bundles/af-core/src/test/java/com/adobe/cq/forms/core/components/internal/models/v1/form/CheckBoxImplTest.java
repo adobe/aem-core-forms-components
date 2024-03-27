@@ -310,14 +310,6 @@ public class CheckBoxImplTest {
     }
 
     @Test
-    void testGetNullEnumNames() {
-        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertNull(checkbox.getEnumNames());
-        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
-        assertNull(noEnumCheckbox.getEnumNames());
-    }
-
-    @Test
     void testGetNullEnum() {
         CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
         assertNull(noEnumCheckbox.getEnums());

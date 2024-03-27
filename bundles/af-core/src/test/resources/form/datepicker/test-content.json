@@ -87,13 +87,5 @@
     },
     "format": "date",
     ":type": "forms-components-examples/components/form/datepicker"
-  },
-  "datepicker-displayValueExpression" : {
-    "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
-    "name" : "abc",
-    "jcr:title" : "def",
-    "fieldType": "date-input",
-    "displayValueExpression": "($field.$value & abc)"
   }
 }

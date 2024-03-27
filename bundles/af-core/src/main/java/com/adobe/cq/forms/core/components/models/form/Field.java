@@ -98,14 +98,4 @@ public interface Field extends Base, BaseConstraint {
         return null;
     }
 
-    /**
-     * The expression that when evaluated would determine what the displayValue of a field would be
-     *
-     * @return display value expression of the field
-     * @since com.adobe.cq.forms.core.components.models.form 5.2.0
-     */
-    default String getDisplayValueExpression() {
-        return null;
-    }
-
 }
