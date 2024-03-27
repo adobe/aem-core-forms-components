@@ -748,4 +748,3 @@ Cypress.Commands.add("getRuleEditorIframe", () => {
         .its('0.contentDocument.body').should('not.be.empty')
         .then(cy.wrap)
 });
->>>>>>> master
