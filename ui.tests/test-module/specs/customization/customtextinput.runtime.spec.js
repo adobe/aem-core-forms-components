@@ -104,11 +104,11 @@ describe("Form Runtime with Custom Text Input", () => {
 
     it("should show different default error messages on different constraints only on click of submit button", () => {
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[6];
-        const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[7];
-        const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[8];
+        const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[5];
+        const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
+        const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
 
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[12]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[11];
 
         // Required field should not show error on blur due to custom text field
         cy.get(`#${textbox6}`).find("input").focus().clear().type("abc").blur().then(x => {
