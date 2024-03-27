@@ -269,7 +269,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
                     putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
                 }
 
-                if (type.equals(Type.NUMBER) || type.equals(Type.INTEGER)) {
+                if (type.equals(Type.NUMBER)) {
                     putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
                     putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
                 }

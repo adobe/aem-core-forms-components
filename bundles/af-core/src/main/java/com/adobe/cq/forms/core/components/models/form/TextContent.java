@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2023 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -16,30 +16,36 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.jetbrains.annotations.Nullable;
-import org.osgi.annotation.versioning.ConsumerType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Defines the form {@code NumberInput} Sling Model used for the {@code /apps/core/fd/components/form/numberinput/v1/numberinput} component.
+ * Interface to represent text as rich content
  *
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.4.0
  */
-@ConsumerType
-public interface NumberInput extends Field, NumberConstraint {
+@ProviderType
+public interface TextContent {
 
+    /**
+     * Returns {@code true} if text is rich, otherwise {@code false}.
+     *
+     * @return {@code true} if text is rich, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.0
+     */
     @Nullable
-    @JsonIgnore
-    default String getEditFormat() {
+    default Boolean isRichText() {
         return null;
     }
 
     /**
-     * @see BaseConstraint#getType()
-     * @since com.adobe.cq.wcm.core.components.models.form 4.4.0
+     * Returns a user friendly text to display for the possible options to be shown to the end user.
+     *
+     * @return the content of this text
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.0
      */
-    @Override
-    default Type getType() {
-        return Type.NUMBER;
+    @Nullable
+    default String getValue() {
+        return null;
     }
+
 }

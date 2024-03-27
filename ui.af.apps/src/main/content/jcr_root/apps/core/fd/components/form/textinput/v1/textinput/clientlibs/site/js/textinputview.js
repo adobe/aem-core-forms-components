@@ -72,12 +72,10 @@
             }
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
-                this.setWidgetValueToDisplayValue();
                 this.setInactive();
             });
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
-                this.setWidgetValueToModelValue();
             });
         }
     }

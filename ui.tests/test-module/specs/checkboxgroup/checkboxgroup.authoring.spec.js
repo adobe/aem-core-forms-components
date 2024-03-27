@@ -205,32 +205,34 @@ describe('Page - Authoring', function () {
     });
 
     it('rule editor is working with rich text enum names', function(){
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='editexpression']");
-        cy.get("#af-rule-editor").should("be.visible");
-        getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-        getRuleEditorIframe().find("#create-rule-button").click();
-        getRuleEditorIframe().find('#create-rule-button').then(($el) => {
-            $el[0].click();
-            getRuleEditorIframe().find('.child-choice-name').click();
-            getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
-                $el[0].scrollIntoView();
+        if(cy.af.isLatestAddon()){
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='editexpression']");
+            cy.get("#af-rule-editor").should("be.visible");
+            getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
+            getRuleEditorIframe().find("#create-rule-button").click();
+            getRuleEditorIframe().find('#create-rule-button').then(($el) => {
                 $el[0].click();
-                getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
+                getRuleEditorIframe().find('.child-choice-name').click();
+                getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
+                    $el[0].scrollIntoView();
                     $el[0].click();
-                    getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
+                    getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
                         $el[0].click();
-                        getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
+                        getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
                             $el[0].click();
-                            getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                            getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
+                                $el[0].click();
+                                getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                            });
                         });
                     });
                 });
+                getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
+                    $el[0].click();
+                });
             });
-            getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
-                $el[0].click();
-            });
-        });
+        }
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
   });

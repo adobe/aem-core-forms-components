@@ -64,10 +64,6 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String editFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Nullable
-    protected String displayValueExpression;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
     @Nullable
     protected String dataFormat;
@@ -187,12 +183,6 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @Override
     @Nullable
-    public String getDisplayValueExpression() {
-        return displayValueExpression;
-    }
-
-    @Override
-    @Nullable
     public String getDataFormat() {
         return dataFormat;
     }
@@ -210,4 +200,5 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         }
         return customDorProperties;
     }
+
 }
