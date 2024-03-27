@@ -88,11 +88,13 @@ describe("Form Runtime with Email Input", () => {
         })
     });
 
-    it(" Invalid email ID generates error message ", () => {
+    it(" Invalid email ID generates error message email ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const notAllowed = "invalidEmail"
         cy.get(`#${id}`).find("input").clear().type(notAllowed).blur().then(x => {
             cy.get('.cmp-adaptiveform-emailinput__errormessage').should('be.visible');
+            cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`);
         })
         const invalidEmailPattern = "invalidEmail@domain"
         cy.get(`#${id}`).find("input").clear().type(invalidEmailPattern).blur().then(x => {

@@ -24,8 +24,16 @@
  */
 function testSetProperty(input1, normalField, globals)
 {
-
     globals.functions.setProperty(normalField, {label : {value : 'Changed Label'}});
+}
+
+/**
+ * enableValidationMessageOnlyOnSubmit
+ * @name enableValidationMessageOnlyOnSubmit
+ * @param {scope} globals
+ */
+function enableValidationMessageOnlyOnSubmit(globals) {
+    globals.functions.setProperty(globals.form, {'properties' : {'enableValidationMessageOnlyOnSubmit' : true}})
 }
 
 

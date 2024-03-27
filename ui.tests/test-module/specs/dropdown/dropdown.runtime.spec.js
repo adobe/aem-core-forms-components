@@ -184,6 +184,8 @@ describe("Form with Dropdown", () => {
         cy.get(`#${dropdown3} select`).select("cauliflower").blur().then(x => {
             cy.get(`#${dropdown6} select`).select("beans")
             cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"Please enter a valid value.")
+            cy.get(`#${dropdown6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${dropdown6}__errormessage`)
+            cy.get(`#${dropdown6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${dropdown6}__errormessage ${dropdown6}__longdescription ${dropdown6}__shortdescription`)
 
             cy.get(`#${dropdown6} select`).select("carrot")
             cy.get(`#${dropdown6}`).find(".cmp-adaptiveform-dropdown__errormessage").should('have.text',"")
