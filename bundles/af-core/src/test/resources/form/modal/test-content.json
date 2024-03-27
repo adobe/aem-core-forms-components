@@ -1,0 +1,30 @@
+{
+  "modal": {
+    "jcr:primaryType": "nt:unstructured",
+    "fieldType": "panel",
+    "jcr:title": "Modal",
+    "name": "modal1711016014566",
+    "sling:resourceType": "core/fd/components/form/modal/v1/modal",
+    "panelcontainer": {
+      "jcr:primaryType": "nt:unstructured",
+      "fieldType": "panel",
+      "jcr:title": "Panel",
+      "name": "panelcontainer",
+      "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+      "datepicker" : {
+        "jcr:primaryType": "nt:unstructured",
+        "fieldType": "date-input",
+        "jcr:title": "Date Input",
+        "name": "datepicker1711461935572",
+        "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker"
+      }
+    },
+    "button" : {
+      "jcr:primaryType": "nt:unstructured",
+      "fieldType": "button",
+      "jcr:title": "Open Modal",
+      "name": "button1711016014673",
+      "sling:resourceType": "core/fd/components/form/button/v1/button"
+    }
+  }
+}

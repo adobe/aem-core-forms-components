@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2024-03-20T09:33:42.990+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Adaptive Form V2 (IT)"
+        sling:configRef="/conf/forms/core-components-it/samples/modal/basic/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            schemaType="none"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="basic">
+            <modal
+                jcr:created="{Date}2024-03-19T20:19:02.707+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-19T20:19:02.707+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Modal"
+                sling:resourceType="forms-components-examples/components/form/modal"
+                fieldType="panel"
+                name="modal1710859742923">
+                <panelcontainer
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel"
+                    sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+                    fieldType="panel"
+                    name="panelcontainer">
+                    <fd:rules
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"
+                        visible="false()"/>
+                    <fd:events jcr:primaryType="nt:unstructured"/>
+                    <datepicker
+                        jcr:created="{Date}2024-03-20T08:59:01.741+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-03-20T08:59:01.741+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Date Input"
+                        sling:resourceType="forms-components-examples/components/form/datepicker"
+                        fieldType="date-input"
+                        name="datepicker1710905342080"/>
+                </panelcontainer>
+                <button
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Open Modal"
+                    sling:resourceType="core/fd/components/form/button/v1/button"
+                    fieldType="button"
+                    name="button1710859743025">
+                    <fd:rules
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                    <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="dispatchEvent(panelcontainer, 'custom:setProperty', {visible : true()})"/>
+                </button>
+            </modal>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
