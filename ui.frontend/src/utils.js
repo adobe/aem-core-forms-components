@@ -40,7 +40,7 @@ class Utils {
      * @private
      * @type {Object[]}
      */
-    static #fieldCreatorSets = [];
+    static #fieldCreatorSets = {};
 
     /**
      * Returns the data attributes of the specific element.
@@ -136,7 +136,7 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
-        Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
+        Object.values(Utils.#fieldCreatorSets).forEach(function (fieldCreatorSet) {
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
@@ -156,11 +156,13 @@ class Utils {
             Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
             Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
         }
-        Utils.#fieldCreatorSets.push({
+        // there should be only one view for each fieldSelector in case of multiple view registrations in case of extension
+        // if customer needs to create two views for each field selector, they need to do it via themservles
+        Utils.#fieldCreatorSets[fieldSelector] = {
             fieldCreator,
             fieldSelector,
             fieldClass
-        });
+        };
         document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
     }
 

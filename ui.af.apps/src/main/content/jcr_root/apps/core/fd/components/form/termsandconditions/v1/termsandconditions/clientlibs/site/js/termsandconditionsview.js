@@ -122,6 +122,9 @@
         }
     }
 
+    // Expose TermsAndConditions under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { TermsAndConditions: TermsAndConditions });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new TermsAndConditions({element, formContainer})
     }, TermsAndConditions.selectors.self);

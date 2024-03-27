@@ -70,7 +70,10 @@
                 // since there is no widget for textview, the innerHTML is being changed
                 this.element.children[0].innerHTML = actualValue;
             }
-        }
+    }
+
+    // Expose Text under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { Text: Text });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Text({element, formContainer})

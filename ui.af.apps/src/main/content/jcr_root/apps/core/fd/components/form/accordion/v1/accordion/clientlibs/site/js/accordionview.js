@@ -684,6 +684,9 @@
         }
     }
 
+    // Expose Accordion under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { Accordion: Accordion });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Accordion({element, formContainer})
     }, Accordion.selectors.self);
