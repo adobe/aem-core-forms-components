@@ -17,16 +17,22 @@
  */
 
 describe('Form with custom functions configured in client lib', () => {
-    const pagePath = "/content/forms/af/core-components-it/samples/af2-custom-function/basic.html";
+    const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/af2-custom-function/basic.html";
     let formContainer = null;
+    let toggle_array = [];
 
     /**
      * initialization of form container before every test
      * */
     beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
+        cy.previewForm(formPath).then(p => {
             formContainer = p;
-        })
+        });
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     it('should have custom function definition loaded in the window object', () => {
@@ -56,4 +62,27 @@ describe('Form with custom functions configured in client lib', () => {
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
         cy.get(`#${textbox1}`).find("input").should('have.value', "test")
     })
+
+    if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+        it("should submit custom formData on button click", () => {
+            // Rule when button is clicked then submit massaged formdata in custom function testSubmitFormPreprocessor()
+            cy.intercept({
+                method: 'POST',
+                url: '**/adobe/forms/af/submit/*',
+            }).as('afSubmission');
+
+            cy.get(`.cmp-adaptiveform-button__widget`).click();
+
+            cy.wait('@afSubmission').then(({ request, response }) => {
+                // Check the request payload
+                expect(request.body.data).to.be.not.null;
+                expect(request.body.data.textinput1).to.equal("customData"); // which is set in custom function
+
+                expect(response.statusCode).to.equal(200);
+                expect(response.body).to.be.not.null;
+                expect(response.body.thankYouMessage).to.be.not.null;
+                expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
+            });
+        })
+    }
 })
