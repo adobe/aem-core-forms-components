@@ -344,13 +344,8 @@ jobs:
             # Debugging output
             echo "BRANCH_NAME: $BRANCH_NAME"
 
-<<<<<<< HEAD
-            # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git tag -l "core-forms-components-reactor-*" | sort -V -r | head -n 2)
-=======
             # Find the last two tags on the branch, ignoring the private release
             LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | head -n 2)
->>>>>>> master
 
             # Debugging output
             echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
