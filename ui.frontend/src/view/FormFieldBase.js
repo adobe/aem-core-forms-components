@@ -307,6 +307,18 @@ class FormFieldBase extends FormField {
         return this.parentView.getModel().name;
     }
 
+    setWidgetValueToDisplayValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.displayValue;
+        }
+    }
+
+    setWidgetValueToModelValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.value;
+        }
+    }
+
     /**
      * Shows or hides the tooltip <div> based on the provided flag.
      * @param {boolean} show - If true, the tooltip <div> will be shown; otherwise, it will be hidden.
@@ -377,7 +389,6 @@ class FormFieldBase extends FormField {
      */
     updateReadOnly(readOnly, state) {
         if (this.widget) {
-            this.toggle(readOnly, "readonly");
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
                 this.widget.setAttribute("readonly", "readonly");

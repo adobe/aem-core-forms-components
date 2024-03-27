@@ -254,9 +254,13 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     // getting status 403 intermittently, just ignore it
         const baseUrl = contextPath;
         cy.visit(baseUrl, {'failOnStatusCode': false});
-        cy.login(baseUrl, () => {
-            cy.openPage(path, options);
-        });
+        cy.getCookie('login-token').then(cookie => {
+            if(!cookie) {
+                cy.login(baseUrl, () => {
+                    cy.openPage(path, options);
+                });
+            }
+        })
     }
     cy.visit(path, options);
 });
@@ -289,7 +293,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
+                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
                         cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     }
@@ -702,4 +706,28 @@ Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => 
         rect.bottom <= Cypress.config("viewportHeight") &&
         rect.right <= Cypress.config("viewportWidth")
     );
+});
+
+
+/**
+ * This function is used to fetch elements from ContentFrame iframe which are not accessible.
+ * Without this, the element will not be returned due to browser's cross-origin security feature.
+ */
+Cypress.Commands.add("getContentIframeBody", () => {
+    return cy
+        .get('#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
+/**
+ * This function is used to fetch rule editor iframe.
+ */
+Cypress.Commands.add("getRuleEditorIframe", () => {
+    // get the iframe > document > body
+    // and retry until the body element is not empty
+    return cy
+        .get('iframe#af-rule-editor')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
 });

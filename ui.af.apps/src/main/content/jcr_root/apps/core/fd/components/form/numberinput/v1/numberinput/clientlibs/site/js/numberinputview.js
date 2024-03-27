@@ -87,7 +87,7 @@
         setModel(model) {
             super.setModel(model);
             // only initialize if patterns are set
-            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat
+            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || this._model._jsonModel.displayValueExpression
                 || this._model._jsonModel.type === 'integer' || FormView.Utils.isUserAgent('safari')) {
                 if (this.widgetObject == null) {
                     this.initializeWidget();
@@ -110,6 +110,9 @@
             });
         }
     }
+
+    // Expose NumberInput under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { NumberInput: NumberInput });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new NumberInput({element,formContainer})

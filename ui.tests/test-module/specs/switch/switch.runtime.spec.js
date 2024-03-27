@@ -109,7 +109,7 @@ describe("Form Runtime with Switch Input", () => {
         })
     });
 
-    it(" should show error messages in the HTML ", () => {
+    it(" should show error messages in the HTML switch", () => {
         const id = formContainer._model.items[2].id;
         const model = formContainer._model.getElement(id)
 
@@ -118,7 +118,9 @@ describe("Form Runtime with Switch Input", () => {
         })
 
         cy.get(`#${id}`).find("input").click().then(x => {
-            cy.get(`#${id}`).find(".cmp-adaptiveform-switch__errormessage").should('have.text',"This is a custom required switch")
+            cy.get(`#${id}`).find(".cmp-adaptiveform-switch__errormessage").should('have.text',"This is a custom required switch");
+            cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+            cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__widget-label > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`);
         })
 
         cy.get(`#${id}`).find("input").click().then(x => {
