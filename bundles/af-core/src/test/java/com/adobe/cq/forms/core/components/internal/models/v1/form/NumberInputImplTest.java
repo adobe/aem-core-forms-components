@@ -39,10 +39,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -51,11 +48,14 @@ public class NumberInputImplTest {
     private static final String BASE = "/form/numberinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
+    private static final String PATH_NUMBER_INPUT_INTEGER_TYPE = CONTENT_ROOT + "/numberinput-integer-type";
     private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
+
+    private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -242,6 +242,14 @@ public class NumberInputImplTest {
     }
 
     @Test
+    void testGetConstraintMessagesTypeInteger() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_INTEGER_TYPE, NumberInput.class, context);
+        Map<ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.MAXIMUM), "Please enter a valid Number");
+        assertEquals(constraintsMessages.get(ConstraintType.MINIMUM), "Please enter a valid Number");
+    }
+
+    @Test
     void testJSONExportForCustomized() throws Exception {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_CUSTOMIZED));
@@ -360,4 +368,20 @@ public class NumberInputImplTest {
         FieldUtils.writeField(numberInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DATALAYER));
     }
+
+    @Test
+    void testGetDisplayValueExpression() throws Exception {
+        NumberInput numberInputMock = Mockito.mock(NumberInput.class);
+        Mockito.when(numberInputMock.getDisplayValueExpression()).thenCallRealMethod();
+        assertEquals(null, numberInputMock.getDisplayValueExpression());
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
+        assertEquals("($field.$value & abc)", numberInput.getDisplayValueExpression());
+    }
+
+    @Test
+    void testJSONExportForDisplayValueExpression() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
+    }
+
 }

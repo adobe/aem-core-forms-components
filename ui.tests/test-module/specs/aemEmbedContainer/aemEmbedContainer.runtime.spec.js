@@ -41,12 +41,12 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for aemembedcontainer presence inside iframe", () => {
             getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
-            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 7);
+            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 8);
         })
 
         it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 10);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 11);
         })
 
         it('Test iframe src with dataRef', () => {
