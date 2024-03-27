@@ -346,6 +346,13 @@ export const Constants = {
     TABINDEX : "tabindex",
 
     /**
+     * Aria Current attribute.
+     * @type {string}
+     */
+    ARIA_CURRENT : "aria-current",
+
+
+    /**
      * Prefix path for all AF HTTP APIs.
      * @type {string}
      */
