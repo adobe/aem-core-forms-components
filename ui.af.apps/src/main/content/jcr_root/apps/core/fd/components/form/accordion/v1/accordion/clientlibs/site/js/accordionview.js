@@ -23,7 +23,7 @@
         static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
         _templateHTML = {};
         static selectors = {
-            self: `.${Accordion.bemBlock}`,
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,

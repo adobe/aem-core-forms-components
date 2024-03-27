@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2023 Adobe
+ * Copyright 2022 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,30 @@
  * limitations under the License.
  ******************************************************************************/
 
+.cmp-adaptiveform-textinput {
 
-/**
- * testSetProperty
- * @name testSetProperty
- * @param {string} input1
- * @param {object} normalField
- * @param {scope} globals
- */
-function testSetProperty(input1, normalField, globals)
-{
-    globals.functions.setProperty(normalField, {label : {value : 'Changed Label'}});
 }
 
-/**
- * enableValidationMessageOnlyOnSubmit
- * @name enableValidationMessageOnlyOnSubmit
- * @param {scope} globals
- */
-function enableValidationMessageOnlyOnSubmit(globals) {
-    globals.functions.setProperty(globals.form, {'properties' : {'enableValidationMessageOnlyOnSubmit' : true}})
+.cmp-adaptiveform-textinput__widget {
+
+}
+textarea.cmp-adaptiveform-textinput__widget{
+  
 }
 
+.cmp-adaptiveform-textinput__label {
 
+}
+.cmp-adaptiveform-textinput__label-container{
+  
+}
 
+.cmp-adaptiveform-textinput__longdescription {
+}
 
+.cmp-adaptiveform-textinput__shortdescription {
+}
 
+.cmp-adaptiveform-textinput__questionmark {
+
+}

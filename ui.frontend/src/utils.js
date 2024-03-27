@@ -36,11 +36,17 @@ class Utils {
      */
     static #contextPath = "";
     /**
-     * The array of field creator sets.
+     * Object of field creator sets.
      * @private
-     * @type {Object[]}
      */
     static #fieldCreatorSets = {};
+    /**
+     * The array of field creator order.
+     * This is to store the insertion order
+     * @private
+     * @type {String[]}
+     */
+    static #fieldCreatorOrder = [];
 
     /**
      * Returns the data attributes of the specific element.
@@ -136,7 +142,8 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
-        Object.values(Utils.#fieldCreatorSets).forEach(function (fieldCreatorSet) {
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelector) {
+            let fieldCreatorSet = Utils.#fieldCreatorSets[fieldSelector];
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
@@ -149,23 +156,28 @@ class Utils {
      * @param {string} fieldClass - The data attribute to read the field data from.
      */
     static setupField(fieldCreator, fieldSelector, fieldClass) {
-        const onInit = (e) => {
-            console.debug("FormContainerInitialised Received", e.detail);
-            let formContainer =  e.detail;
-            let fieldElements = document.querySelectorAll(fieldSelector);
-            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
-            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
-        }
         // there should be only one view for each fieldSelector in case of multiple view registrations in case of extension
         // if customer needs to create two views for each field selector, they need to do it via themservles
+        if (!(fieldSelector in Utils.#fieldCreatorSets)) {
+            Utils.#fieldCreatorOrder.push(fieldSelector);
+        }
         Utils.#fieldCreatorSets[fieldSelector] = {
             fieldCreator,
             fieldSelector,
             fieldClass
         };
-        document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
     }
 
+    static initializeAllFields(formContainer) {
+        console.debug("Initializing field views ", formContainer);
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelectorInCreator) {
+            const {fieldSelector, fieldCreator, fieldClass} = Utils.#fieldCreatorSets[fieldSelectorInCreator];
+            console.debug("Initializing all fields of field selector ", fieldSelector);
+            let fieldElements = document.querySelectorAll(fieldSelector);
+            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
+            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
+        });
+    }
     /**
      * Removes field reference from form container.
      * @private
@@ -328,6 +340,7 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
+                Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
