@@ -40,7 +40,7 @@ describe('Locale - Authoring Test', function () {
             cy.visit('http://localhost:4502/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
                 cy.wait('@templates', {requestTimeout: 30000});
                 cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click();
-                cy.get('.spectrum-Button_e2d99e.spectrum-Button--cta_e2d99e').click();
+                cy.get('button', 'Erstellen').click();
                 cy.get('input[name="submitDialogTitle"]').type('language-test');
                 cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
             });
