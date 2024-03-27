@@ -14,7 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-<sly data-sly-use.panel="com.adobe.cq.forms.core.components.models.form.Panel"
+<sly data-sly-use.modal="com.adobe.cq.forms.core.components.models.form.Modal"
      data-sly-use.renderer="${'modal.js'}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
@@ -27,13 +27,13 @@
      data-cmp-is="adaptiveFormModal"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-     id="${panel.id}"
-     title="${panel.tooltipVisible ? '' : panel.tooltipText}"
+     id="${modal.id}"
+     title="${modal.tooltipVisible ? '' : modal.tooltipText}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
 
     <div class="cmp-adaptiveform-modal__label-container">
-        <div data-sly-call="${label.label @componentId=widgetId, labelValue=panel.label.value, labelVisible=panel.label.visible, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
-        <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=modal.label.value, labelVisible=modal.label.visible, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=modal.id, longDescription=modal.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
     </div>
 
     <div role="dialog">
@@ -43,6 +43,6 @@
     </div>
     <div class="cmp-adaptiveform-modal__button" data-sly-resource="${'button'}"></div>
 
-    <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
-    <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=modal.id, shortDescriptionVisible=modal.tooltipVisible, shortDescription=modal.tooltip, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=modal.id, longDescription=modal.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
 </div>

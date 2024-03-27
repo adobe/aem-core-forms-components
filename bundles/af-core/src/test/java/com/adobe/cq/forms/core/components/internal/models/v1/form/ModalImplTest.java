@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +30,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
+import com.adobe.cq.forms.core.components.models.form.Modal;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -41,20 +40,19 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertEquals;
 
 @ExtendWith(AemContextExtension.class)
-public class TermsAndConditionsImplTest {
+public class ModalImplTest {
 
-    private static final String BASE = "/form/termsandconditions";
+    private static final String BASE = "/form/modal";
     private static final String CONTENT_ROOT = "/content";
 
-    private static final String PATH_TNC = CONTENT_ROOT + "/termsandconditions";
-
-    private static final String PATH_NOWRAP_TNC = CONTENT_ROOT + "/termsandconditionsNoWrapData";
+    private static final String PATH_MODAL = CONTENT_ROOT + "/modal";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
     public void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -81,46 +79,17 @@ public class TermsAndConditionsImplTest {
     }
 
     @Test
-    void testExportedType() throws Exception {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
-        assertEquals(FormConstants.RT_FD_FORM_TERMS_AND_CONDITIONS_V1, tnc.getExportedType());
-        TermsAndConditions tncMock = Mockito.mock(TermsAndConditions.class);
-        Mockito.when(tncMock.getExportedType()).thenCallRealMethod();
-        assertEquals("", tncMock.getExportedType());
-    }
-
-    @Test
-    public void testGetProperties() {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
-        Assert.assertTrue(tnc.isShowApprovalOption());
-        Assert.assertTrue(tnc.isShowAsPopup());
-        Assert.assertFalse(tnc.isShowLink());
-    }
-
-    @Test
-    public void testCustomFDProperty() {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
-        Map<String, Object> props = tnc.getProperties();
-        Assert.assertTrue(props.containsKey("fd:tnc"));
-        Assert.assertTrue((Boolean) props.get("fd:tnc"));
-
+    void testExportedType() {
+        Modal modal = Utils.getComponentUnderTest(PATH_MODAL, Modal.class, context);
+        assertEquals(FormConstants.RT_FD_FORM_MODAL_V1, modal.getExportedType());
+        Modal modalMock = Mockito.mock(Modal.class);
+        Mockito.when(modalMock.getExportedType()).thenCallRealMethod();
+        assertEquals("", modalMock.getExportedType());
     }
 
     @Test
     void testJSONExport() throws Exception {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
-        Utils.testJSONExport(tnc, Utils.getTestExporterJSONPath(BASE, PATH_TNC));
-    }
-
-    @Test
-    void testJSONExport_showLink() throws Exception {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
-        Utils.testJSONExport(tnc, Utils.getTestExporterJSONPath(BASE, PATH_NOWRAP_TNC));
-    }
-
-    @Test
-    void testNoWrap() {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
-        Assert.assertNull(tnc.getType());
+        Modal modal = Utils.getComponentUnderTest(PATH_MODAL, Modal.class, context);
+        Utils.testJSONExport(modal, Utils.getTestExporterJSONPath(BASE, PATH_MODAL));
     }
 }
