@@ -23,7 +23,7 @@
         static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
         _templateHTML = {};
         static selectors = {
-            self: `.${Accordion.bemBlock}`,
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${Accordion.bemBlock}__widget`,
             description: `.${Accordion.bemBlock}__longdescription`,
             qm: `.${Accordion.bemBlock}__questionmark`,
@@ -683,6 +683,9 @@
           });
         }
     }
+
+    // Expose Accordion under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { Accordion: Accordion });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Accordion({element, formContainer})
