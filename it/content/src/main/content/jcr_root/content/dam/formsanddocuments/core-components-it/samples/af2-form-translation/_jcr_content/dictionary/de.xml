@@ -129,6 +129,21 @@
         jcr:primaryType="nt:folder"
         sling:key="guideContainer##wizard##jcr:title##299"
         sling:message="Zauberer"/>
+    <_x0039_6b6493f-b93e-4b2d-8b38-3633a3fe6286
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##jcr:title##3329"
+        sling:message="&lt;p>&lt;b>Tier auswählen&lt;/b>&lt;/p>"/>
+    <fba2a273-8ffd-4286-87c8-120bab383d9e
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##0"
+        sling:message="&lt;p>&lt;i>Hund&lt;/i>&lt;/p>"/>
+    <_x0037_c44f84b-8830-4270-ba63-8aa9de935572
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##checkboxgroup7##enumNames##7570##1"
+        sling:message="&lt;p>&lt;u>Katze&lt;/u>&lt;/p>"/>
     <bb998be9-c330-493c-a5d3-e252a9ab8cc7
         jcr:mixinTypes="[sling:Message]"
         jcr:primaryType="nt:folder"
