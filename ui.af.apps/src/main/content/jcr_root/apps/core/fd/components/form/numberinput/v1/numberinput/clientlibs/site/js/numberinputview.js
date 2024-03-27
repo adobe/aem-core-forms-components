@@ -111,6 +111,9 @@
         }
     }
 
+    // Expose NumberInput under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { NumberInput: NumberInput });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new NumberInput({element,formContainer})
     }, NumberInput.selectors.self);

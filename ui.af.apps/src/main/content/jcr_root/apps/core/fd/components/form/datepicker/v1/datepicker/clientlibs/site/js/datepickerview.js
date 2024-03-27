@@ -113,6 +113,9 @@
         }
     }
 
+    // Expose date picker under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { DatePicker: DatePicker });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new DatePicker({element, formContainer})
     }, DatePicker.selectors.self);

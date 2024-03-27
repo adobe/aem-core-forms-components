@@ -166,6 +166,9 @@
         }
     }
 
+    // Expose RadioButton under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { RadioButton: RadioButton });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new RadioButton({element, formContainer});
     }, RadioButton.selectors.self);

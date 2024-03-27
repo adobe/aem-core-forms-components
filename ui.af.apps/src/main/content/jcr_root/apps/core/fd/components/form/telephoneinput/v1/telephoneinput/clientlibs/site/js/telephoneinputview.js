@@ -82,6 +82,9 @@
         }
     }
 
+    // Expose TelephoneInput under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { TelephoneInput: TelephoneInput });
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new TelephoneInput({element, formContainer})
     }, TelephoneInput.selectors.self);
