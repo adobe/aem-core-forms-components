@@ -25,7 +25,8 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
 const classicFormAddonVersion = 'LATEST';
-const classicFormReleasedAddonVersion = '6.0.1120'; // change this value to last form released addon version
+// this value is for 6.5.20.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
+const classicFormReleasedAddonVersion = '6.0.1192';
 
 try {
     ci.stage("Integration Tests");
@@ -42,7 +43,7 @@ try {
             // The core components are already installed in the Cloud SDK
             extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
             // add hotfix for 6520, remove it later if required
-            extras += ` --install-file ${buildPath}/it/core/src/main/resources/Hotfix-6520-Linux.zip`;
+            // extras += ` --install-file ${buildPath}/it/core/src/main/resources/Hotfix-6520-Linux.zip`;
         } else if (AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
             // Download latest add-on release from artifactory
             ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${classicFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.far`);
