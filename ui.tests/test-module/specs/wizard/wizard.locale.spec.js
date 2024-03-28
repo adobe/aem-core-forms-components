@@ -24,7 +24,9 @@ describe('Locale - Authoring Test', function () {
             cy.on('uncaught:exception', () => {
                 return false
             });
+        });
 
+        it('Create Form in German language', function (){
             cy.changeLanguage("de");
             cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
             cy.openPage('/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
@@ -52,17 +54,18 @@ describe('Locale - Authoring Test', function () {
 
         it('Wizard String language test for Italiano', function () {
             cy.changeLanguage("it");
-            cy.openPage('/editor.html/content/forms/af/language-test.html').then(() => {
+            cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
                 cy.wait('@createFormRequest', {requestTimeout: 30000});
                 cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
             });
         });
 
-        afterEach(() => {
-            cy.openPage("/aem/formdetails.html/content/dam/formsanddocuments/language-test");
-            cy.get('.betty-ActionBar-item.formsmanager-admin-action-delete.cq-formsmanager-admin-actions-delete-activator').click();
-            cy.get('button._coral-Button._coral-Button--warning').click();
+        after(() => {
             cy.changeLanguage("en");
-        });
+            cy.openPage("/aem/formdetails.html/content/dam/formsanddocuments/language-test");
+            cy.get('button[trackingelement="delete"]').click();
+            // cy.get('coral-dialog-footer button[is="coral-button"]').contains('Delete').click();
+            cy.get('button._coral-Button._coral-Button--warning').click();
+            });
     });
 })
