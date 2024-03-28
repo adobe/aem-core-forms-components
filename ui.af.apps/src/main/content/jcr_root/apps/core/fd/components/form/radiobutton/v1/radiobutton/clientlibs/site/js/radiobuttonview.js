@@ -122,6 +122,17 @@
             });
         }
 
+        // updateValidity(validity, state) {
+        //     const valid = validity.valid;
+        //     let widgets = this.widget;
+        //     widgets.forEach(widget => {
+        //         console.log(widget, 'wid');
+        //         if (valid) {
+        //              widget.setAttribute('aria-invalid', !valid);
+        //         } 
+        //     });
+        // }
+
         updateValue(modelValue) {
             this.widget.forEach(widget => {
                 if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
@@ -158,6 +169,11 @@
         updateEnumNames(newEnumNames) {
             super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
         }
+
+        updateValidity(validity) {
+            super.updateValidityForRadioButtonAndCheckbox(validity)
+        }
+
         updateRequired(required, state) {
             if (this.widget) {
                 this.element.toggleAttribute("required", required);

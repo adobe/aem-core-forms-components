@@ -15,6 +15,7 @@
  ******************************************************************************/
 
 import FormFieldBase from "./FormFieldBase.js";
+import {Constants} from "../constants.js";
 
 /**
  * Class containing common view code for dropdown, checkboxgroup and radiobutton
@@ -60,6 +61,18 @@ class FormOptionFieldBase extends FormFieldBase {
                 }
             })
         }
+    }
+
+    updateValidityForRadioButtonAndCheckbox(validity) {
+        const valid = validity.valid;
+            let widgets = this.widget;
+            widgets.forEach(widget => {
+                if (valid) {
+                     widget.setAttribute(Constants.ARIA_INVALID, !valid);
+                } else {
+                    widget.setAttribute(Constants.ARIA_INVALID, 'true');
+                }
+            });
     }
 
 

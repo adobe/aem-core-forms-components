@@ -111,6 +111,20 @@
             }
         }
 
+        // updateValidity(validity, state) {
+        //     const valid = validity.valid;
+        //     console.log(state, 'state radio')
+        //     console.log(valid, 'valid from radio')
+        //     let widgets = this.widget;
+        //     // this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
+        //     widgets.forEach(widget => {
+        //         console.log(widget, 'wid');
+        //         if (valid) {
+        //              widget.setAttribute('aria-invalid', !valid);
+        //         } 
+        //     })
+        // }    
+
         updateValue(modelValue) {
             modelValue = [].concat(modelValue);
             let selectedWidgetValues = modelValue.map(String);
@@ -184,6 +198,10 @@
                 this.element.toggleAttribute("required", required);
                 this.element.setAttribute("data-cmp-required", required);
             }
+        }
+
+        updateValidity(validity) {
+            super.updateValidityForRadioButtonAndCheckbox(validity)
         }
     }
 

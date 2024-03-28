@@ -437,6 +437,7 @@ class FormFieldBase extends FormField {
         if (this.errorDiv) {
             this.toggle(valid, Constants.ARIA_INVALID, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            this.widget.setAttribute(Constants.ARIA_INVALID, !valid);
             this.updateValidationMessage(state.validationMessage, state);
         }
     }
