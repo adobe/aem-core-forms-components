@@ -20,6 +20,7 @@ describe('Locale - Authoring Test', function () {
     context('Test Wizard Component String Language', function () {
         beforeEach(() => {
             cy.intercept("/editor.html/content/forms/af/language-test.html").as("createFormRequest");
+            cy.intercept({ method: "GET", url: "adobe/forms/fm/v1/themes*" }).as("getThemesRequest");
             cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
             cy.on('uncaught:exception', () => {
                 return false
@@ -32,9 +33,11 @@ describe('Locale - Authoring Test', function () {
             cy.openPage('/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
                 cy.wait('@templates', {requestTimeout: 30000});
                 cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click();
-                cy.get('button').contains( 'Erstellen').click({force: true});
-                cy.get('input[name="submitDialogTitle"]').type('language-test');
-                cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
+                cy.wait('@getThemesRequest').then(() => {
+                    cy.get('[type="button"]').contains( 'Erstellen').click({force: true});
+                    cy.get('input[name="submitDialogTitle"]').type('language-test');
+                    cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
+                });
             });
             cy.openPage('/editor.html/content/forms/af/language-test.html');
             const dataPath = "/content/forms/af/language-test/jcr:content/guideContainer/*",
