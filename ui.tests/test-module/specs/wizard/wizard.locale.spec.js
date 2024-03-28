@@ -64,8 +64,7 @@ describe('Locale - Authoring Test', function () {
             cy.changeLanguage("en");
             cy.openPage("/aem/formdetails.html/content/dam/formsanddocuments/language-test");
             cy.get('button[trackingelement="delete"]').click();
-            // cy.get('coral-dialog-footer button[is="coral-button"]').contains('Delete').click();
-            cy.get('button._coral-Button._coral-Button--warning').click();
+            cy.get('coral-dialog.is-open button').contains('Delete').click({force: true});
             });
     });
 })
