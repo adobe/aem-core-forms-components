@@ -346,7 +346,7 @@ jobs:
             echo "BRANCH_NAME: $BRANCH_NAME"
 
             # Find the last tag on the branch, ignoring the private release
-            LAST_TAG=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | awk -v tag="core-forms-components-reactor-3.0.6" '$0 < tag' | head -n 1)
+            LAST_TAG=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | awk -v tag="$CIRCLE_TAG" '$0 < tag' | head -n 1)
 
             # Debugging output
             # echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
