@@ -65,7 +65,7 @@ public interface FormContainer extends Container {
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
     String THEME_CLIENT_LIB_REF = "themeClientLibRef";
-    String DEFAULT_FORMS_SPEC_VERSION = "0.12.1";
+    String DEFAULT_FORMS_SPEC_VERSION = "0.12.5";
 
     /**
      * Returns form metadata {@link FormMetaData}
@@ -90,7 +90,7 @@ public interface FormContainer extends Container {
      * Returns schema reference
      *
      * @return reference to schema
-     * 
+     *
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable

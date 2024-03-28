@@ -50,7 +50,6 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
-
 | Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
 |-----------------------|---------------------|---------| ----- | ------ | 
 | 1.1.34                | 2.24.2              | 6.5.18+ | 8, 11 | 3.3.9+ |

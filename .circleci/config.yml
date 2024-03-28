@@ -128,7 +128,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.21-load2-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.21-load3-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -322,6 +322,10 @@ jobs:
       - run:
           name: Update VERSIONS.md and README.md with the new released version
           command: |
+            # Echo Git version
+            echo "Git Version: $(git --version)"
+
+            # Echo Circle CI tag
             echo "CIRCLE_TAG: $CIRCLE_TAG"
             RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
 
@@ -340,8 +344,8 @@ jobs:
             # Debugging output
             echo "BRANCH_NAME: $BRANCH_NAME"
 
-            # Find the last two tags on the branch
-            LAST_TWO_TAGS=$(git tag -l "core-forms-components-reactor-*" | sort -V -r | head -n 2)
+            # Find the last two tags on the branch, ignoring the private release
+            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | head -n 2)
 
             # Debugging output
             echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
@@ -372,13 +376,13 @@ jobs:
             # Debugging output
             echo "WCM_CORE_COMPONENTS_VERSION: $WCM_CORE_COMPONENTS_VERSION"
 
-            echo "Before sed: $(cat VERSIONS.md)"
+            # echo "Before sed: $(cat VERSIONS.md)"
             # update versions.md
             sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
             sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
             echo "After sed: $(cat VERSIONS.md)"
 
-            echo "Before sed: $(cat README.md)"
+            # echo "Before sed: $(cat README.md)"
             # update readme.md
             sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
             echo "After sed: $(cat README.md)"

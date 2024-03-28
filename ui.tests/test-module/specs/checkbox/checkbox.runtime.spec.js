@@ -113,7 +113,7 @@ describe("Form Runtime with CheckBox Input", () => {
         })
     });
 
-    it(" should show error messages in the HTML ", () => {
+    it(" should show error messages in the HTML", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[2]
         const model = formContainer._model.getElement(id)
 
@@ -123,6 +123,8 @@ describe("Form Runtime with CheckBox Input", () => {
 
         cy.get(`#${id}`).find("input").click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__errormessage").should('have.text',"This is a custom required checkbox")
+            cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`)
+            cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`)
         })
 
         cy.get(`#${id}`).find("input").click().then(x => {

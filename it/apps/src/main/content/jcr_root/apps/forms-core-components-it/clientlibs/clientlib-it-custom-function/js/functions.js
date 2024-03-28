@@ -61,7 +61,74 @@ function clearEnums() {
     return enums;
 }
 
+/**
+ * Formats Credit Card Number
+ * @name formatCreditCardNumber Formats Credit Card Number
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatCreditCardNumber(field)
+{
+    var cardNumber = field.$value ? field.$value + '' : field.$value;
+    var formattedNumber = cardNumber;
+    if(cardNumber) {
+        var maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*');  // Replace digits with masked characters except for the last four
+        var formattedNumber = maskedNumber.replace(/(.{4})/g, '$1 '); // Add spaces after every 4 letters
+    }
+    return formattedNumber;
+}
 
+/**
+ * Formats Date input
+ * @name formatDateInput Formats Date input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatDateInput(field)
+{
+    var date = field.$value;
+    return date ? date + ' today' : date;
+}
+
+/**
+ * Formats email input
+ * @name formatEmailInput Formats email input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatEmailInput(field)
+{
+    var email = field.$value;
+    var transformedEmail;
+    if(email) {
+        var parts = email.split('@');
+        if (parts[0].length > 1) {
+            transformedEmail = parts[0][0] + '*'.repeat(parts[0].length - 1) + '@' + parts[1];
+        } else {
+            transformedEmail = email;
+        }
+    }
+
+    return transformedEmail;
+}
+
+
+/**
+ * Formats telephone input
+ * @name formatTelephoneInput Formats telephone input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatTelephoneInput(field)
+{
+    var phoneNumber = field.$value;
+    if(phoneNumber) {
+        var maskedDigits = phoneNumber.substring(0, 7).replace(/\d/g, '*');
+        var lastThreeDigits = phoneNumber.substring(7);
+        return maskedDigits + lastThreeDigits;
+    }
+    return phoneNumber;
+}
 
 
 
