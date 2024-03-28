@@ -72,13 +72,18 @@
             }
             this.widget.addEventListener('blur', (e) => {
                 this._model.value = e.target.value;
+                this.setWidgetValueToDisplayValue();
                 this.setInactive();
             });
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
+                this.setWidgetValueToModelValue();
             });
         }
     }
+
+    // Expose TextInput under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { TextInput: TextInput });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new TextInput({element, formContainer})

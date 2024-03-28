@@ -18,6 +18,7 @@ describe("Form Runtime with Email Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/emailinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-emailinput'
     const IS = "adaptiveFormEmailInput"
+    let toggle_array = [];
     const selectors = {
         textinput : `[data-cmp-is="${IS}"]`
     }
@@ -28,6 +29,11 @@ describe("Form Runtime with Email Input", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -82,11 +88,13 @@ describe("Form Runtime with Email Input", () => {
         })
     });
 
-    it(" Invalid email ID generates error message ", () => {
+    it(" Invalid email ID generates error message email ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const notAllowed = "invalidEmail"
         cy.get(`#${id}`).find("input").clear().type(notAllowed).blur().then(x => {
             cy.get('.cmp-adaptiveform-emailinput__errormessage').should('be.visible');
+            cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`);
         })
         const invalidEmailPattern = "invalidEmail@domain"
         cy.get(`#${id}`).find("input").clear().type(invalidEmailPattern).blur().then(x => {
@@ -154,5 +162,20 @@ describe("Form Runtime with Email Input", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-emailinput--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [field, fieldView] = Object.entries(formContainer._fields)[4];
+            const input = 'johndoe@adobe.com';
+            const formatted=  'j******@adobe.com'
+            let model = fieldView.getModel();
+
+            cy.get(`#${field}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal('johndoe@adobe.com');
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${field}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 })

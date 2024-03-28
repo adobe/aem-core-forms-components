@@ -97,6 +97,9 @@ describe("Form with Radio Button Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0];
         formContainer._model.validate();
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+        // cy.get(`#${id} > .${bemBlock}__option__widget`).should('have.attr', 'aria-describedby');
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`);
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");

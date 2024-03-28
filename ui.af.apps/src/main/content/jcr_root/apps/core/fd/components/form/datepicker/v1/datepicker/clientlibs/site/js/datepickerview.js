@@ -109,9 +109,12 @@
 
         #noFormats() {
             return (this._model.editFormat == null || this._model.editFormat === 'date|short') &&
-                (this._model.displayFormat == null || this._model.displayFormat === 'date|short');
+                (this._model.displayFormat == null || this._model.displayFormat === 'date|short') && (this._model.displayValueExpression == null)
         }
     }
+
+    // Expose date picker under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { DatePicker: DatePicker });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new DatePicker({element, formContainer})

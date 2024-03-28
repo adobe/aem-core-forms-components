@@ -11,12 +11,8 @@
     "1"
   ],
   "enumNames": [
-    {
-      "value": "OFF"
-    },
-    {
-      "value": "ON"
-    }
+    "OFF",
+    "ON"
   ],
   "events": {
     "custom:setProperty": [

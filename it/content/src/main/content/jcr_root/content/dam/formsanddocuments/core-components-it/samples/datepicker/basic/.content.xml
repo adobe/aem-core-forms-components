@@ -9,6 +9,7 @@
             type="guide">
         <metadata
                 fd:version="2.1"
+                themeRef="/libs/fd/af/themes/canvas"
                 jcr:primaryType="nt:unstructured"
                 allowedRenderFormat="HTML"
                 author="admin"

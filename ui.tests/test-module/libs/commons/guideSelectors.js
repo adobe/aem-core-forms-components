@@ -170,7 +170,8 @@ var selectors = {
             editRule : "#EditableToolbar [data-action='editexpression']",
             createRuleButton : "#create-rule-button",
             saveRule : ".exp-Save-Button",
-            closeRuleEditor : ".exp-Close-Button"
+            closeRuleEditor : ".exp-Close-Button",
+            sideToggleButton : "#exp-toggle-sidepanel-button"
         },
         choiceModels : {
             STATEMENT : ".choice-model.u-coral-clearFix.STATEMENT",
