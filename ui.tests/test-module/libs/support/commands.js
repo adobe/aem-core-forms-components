@@ -731,3 +731,15 @@ Cypress.Commands.add("getRuleEditorIframe", () => {
         .its('0.contentDocument.body').should('not.be.empty')
         .then(cy.wrap)
 });
+
+/**
+ * This function is used to change language.
+ */
+Cypress.Commands.add("changeLanguage", (str) => {
+    cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
+    cy.get(siteSelectors.locale.shell.userProperties).click();
+    cy.get(siteSelectors.locale.shell.userPreferences).click();
+    cy.get(siteSelectors.locale.language).first().click();
+    cy.get(`coral-selectlist-item[value=${str}]`).click({force: true});
+    cy.get(siteSelectors.locale.accept).click();
+});
