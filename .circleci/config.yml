@@ -327,7 +327,8 @@ jobs:
 
             # Echo Circle CI tag
             echo "CIRCLE_TAG: $CIRCLE_TAG"
-            RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
+            # Hardcoding the branch on release/650, since finding branch name with tag does not return correct output
+            RELEASE_BRANCH="release/650"
 
             # Debugging output
             echo "RELEASE_BRANCH: $RELEASE_BRANCH"
@@ -344,14 +345,14 @@ jobs:
             # Debugging output
             echo "BRANCH_NAME: $BRANCH_NAME"
 
-            # Find the last two tags on the branch, ignoring the private release
-            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | head -n 2)
+            # Find the last tag on the branch, ignoring the private release
+            LAST_TAG=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | awk -v tag="core-forms-components-reactor-3.0.6" '$0 < tag' | head -n 1)
 
             # Debugging output
-            echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
+            # echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
 
             # Extract the last released from the output
-            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
+            # LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
 
             # Debugging output
             echo "LAST_TAG: $LAST_TAG"
