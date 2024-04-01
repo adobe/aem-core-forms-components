@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2024-04-01T16:31:42.351+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="basic"
+        sling:configRef="/conf/forms/core-components-it/samples/imagechoice/basic/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="basic">
+            <imagechoice1
+                jcr:created="{Date}2024-04-01T09:11:44.053+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T09:13:06.439+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 1 "
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice1711942904106"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+            </imagechoice1>
+            <imagechoice2
+                jcr:created="{Date}2024-04-01T09:31:18.834+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T11:16:18.456+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 2"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                mandatoryMessage="This is a custom required imagechoice"
+                name="imagechoice_10503704001711944078880"
+                orientation="vertical"
+                readOnly="{Boolean}false"
+                required="true"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_10503704001711944078880&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_10503704001711944078880&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_10503704001711944078880&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_10503704001711944078880&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_763416881711951019006&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 4/&quot;\,&quot;name&quot;:&quot;imagechoice_763416881711951019006&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_13689958751711950960188&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 3/&quot;\,&quot;name&quot;:&quot;imagechoice_13689958751711950960188&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_763416881711951019006\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_13689958751711950960188\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_10503704001711944078880&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_10503704001711944078880&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_10503704001711944078880&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_10503704001711944078880&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice1711954409492&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 5&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 5/&quot;\,&quot;name&quot;:&quot;imagechoice1711954409492&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_5970077621711954417111&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 6&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 6/&quot;\,&quot;name&quot;:&quot;imagechoice_5970077621711954417111&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice1711954409492\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_5970077621711954417111\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_763416881711951019006\, 'custom:setProperty'\, {visible : false()})\, {})\,if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_13689958751711950960188\, 'custom:setProperty'\, {visible : true()})\, {})]\,{}),if(contains($event.payload.changes[].propertyName\, 'value')\,[if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice1711954409492\, 'custom:setProperty'\, {enabled : true()})\, {})\,if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_5970077621711954417111\, 'custom:setProperty'\, {enabled : false()})\, {})]\,{})]"/>
+            </imagechoice2>
+            <imagechoice3
+                jcr:created="{Date}2024-04-01T11:26:00.144+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T12:38:07.096+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 3"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_13689958751711950960188"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}false">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_13689958751711950960188&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_13689958751711950960188&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_10503704001711944078880&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 2&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 2/&quot;\,&quot;name&quot;:&quot;imagechoice_10503704001711944078880&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice1711954409492&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 5&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 5/&quot;\,&quot;name&quot;:&quot;imagechoice1711954409492&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;mid&quot;\,&quot;displayName&quot;:&quot;Substring Of&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING|ARRAY&quot;\,&quot;name&quot;:&quot;subject&quot;\,&quot;description&quot;:&quot;subject&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;startPos&quot;\,&quot;description&quot;:&quot;startPos&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;length&quot;\,&quot;description&quot;:&quot;length&quot;}]\,&quot;impl&quot;:&quot;$0($1\,$2\,$3)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice_10503704001711944078880\, 'custom:setProperty'\, {value : `null`})\, {})&quot;\,&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice1711954409492\, 'custom:setProperty'\, {value : mid('1'\,0\,1)})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(contains($field\, '1')\, dispatchEvent(imagechoice_10503704001711944078880\, 'custom:setProperty'\, {value : `null`})\, {})\,if(contains($field\, '1')\, dispatchEvent(imagechoice1711954409492\, 'custom:setProperty'\, {value : mid('1'\,0\,1)})\, {})]\,{})]"/>
+            </imagechoice3>
+            <imagechoice4
+                jcr:created="{Date}2024-04-01T11:26:58.980+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T11:28:03.411+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 4"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                id="tooltip_scenario_test"
+                name="imagechoice_763416881711951019006"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                tooltipVisible="true"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+            </imagechoice4>
+            <imagechoice5
+                jcr:created="{Date}2024-04-01T12:23:29.456+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T12:24:31.767+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 5"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice1711954409492"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                validationExpression="$field == imagechoice_13689958751711950960188"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice1711954409492&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;imagechoice1711954409492&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice1711954409492&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 5&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 5/&quot;\,&quot;name&quot;:&quot;imagechoice1711954409492&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_13689958751711950960188&quot;\,&quot;displayName&quot;:&quot;Image Choice Multiple 3&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Multiple 3/&quot;\,&quot;name&quot;:&quot;imagechoice_13689958751711950960188&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == imagechoice_13689958751711950960188&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </imagechoice5>
+            <imagechoice6
+                jcr:created="{Date}2024-04-01T12:23:37.079+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T14:26:50.195+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Multiple 6"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_5970077621711954417111"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="multiple"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        altText="testadobelogo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                </options>
+            </imagechoice6>
+            <imagechoice7
+                jcr:created="{Date}2024-04-01T15:58:08.832+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:01:39.062+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 1"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice1711967288959"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="single"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+            </imagechoice7>
+            <imagechoice8
+                jcr:created="{Date}2024-04-01T15:59:15.973+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:04:05.129+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 2"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                mandatoryMessage="This is a custom required imagechoice"
+                name="imagechoice_2587201171711967356015"
+                orientation="vertical"
+                readOnly="{Boolean}false"
+                required="true"
+                selectionType="single"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_2587201171711967356015&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_2587201171711967356015&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_6854149321711967368334&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 4/&quot;\,&quot;name&quot;:&quot;imagechoice_6854149321711967368334&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_4714140661711967362184&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 3/&quot;\,&quot;name&quot;:&quot;imagechoice_4714140661711967362184&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice_6854149321711967368334\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice_4714140661711967362184\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_2587201171711967356015&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_2587201171711967356015&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_2587201171711967356015&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_2587201171711967356015&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_16153762131711967374254&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 5&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 5/&quot;\,&quot;name&quot;:&quot;imagechoice_16153762131711967374254&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_9906385421711967379510&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 6&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 6/&quot;\,&quot;name&quot;:&quot;imagechoice_9906385421711967379510&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_16153762131711967374254\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_9906385421711967379510\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(contains($field\, '1')\, dispatchEvent(imagechoice_6854149321711967368334\, 'custom:setProperty'\, {visible : false()})\, {})\,if(contains($field\, '1')\, dispatchEvent(imagechoice_4714140661711967362184\, 'custom:setProperty'\, {visible : true()})\, {})]\,{}),if(contains($event.payload.changes[].propertyName\, 'value')\,[if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_16153762131711967374254\, 'custom:setProperty'\, {enabled : true()})\, {})\,if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(imagechoice_9906385421711967379510\, 'custom:setProperty'\, {enabled : false()})\, {})]\,{})]"/>
+            </imagechoice8>
+            <imagechoice9
+                jcr:created="{Date}2024-04-01T15:59:22.156+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:17:55.500+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 3"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_4714140661711967362184"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="single"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}false">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_4714140661711967362184&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;imagechoice_4714140661711967362184&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_2587201171711967356015&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 2&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 2/&quot;\,&quot;name&quot;:&quot;imagechoice_2587201171711967356015&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_16153762131711967374254&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 5&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 5/&quot;\,&quot;name&quot;:&quot;imagechoice_16153762131711967374254&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;mid&quot;\,&quot;displayName&quot;:&quot;Substring Of&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING|ARRAY&quot;\,&quot;name&quot;:&quot;subject&quot;\,&quot;description&quot;:&quot;subject&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;startPos&quot;\,&quot;description&quot;:&quot;startPos&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;length&quot;\,&quot;description&quot;:&quot;length&quot;}]\,&quot;impl&quot;:&quot;$0($1\,$2\,$3)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice_2587201171711967356015\, 'custom:setProperty'\, {value : `null`})\, {})&quot;\,&quot;if(contains($field\, '1')\, dispatchEvent(imagechoice_16153762131711967374254\, 'custom:setProperty'\, {value : mid('1'\,0\,1)})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(contains($field\, '1')\, dispatchEvent(imagechoice_2587201171711967356015\, 'custom:setProperty'\, {value : `null`})\, {})\,if(contains($field\, '1')\, dispatchEvent(imagechoice_16153762131711967374254\, 'custom:setProperty'\, {value : mid('1'\,0\,1)})\, {})]\,{})]"/>
+            </imagechoice9>
+            <imagechoice10
+                jcr:created="{Date}2024-04-01T15:59:28.303+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:18:57.007+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 4"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                description="&lt;p>This is long description&lt;/p>&#xd;&#xa;"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_6854149321711967368334"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="single"
+                textIsRich="[true,true]"
+                tooltip="&lt;p>This is short description&lt;/p>&#xd;&#xa;"
+                tooltipVisible="true"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+            </imagechoice10>
+            <imagechoice11
+                jcr:created="{Date}2024-04-01T15:59:34.225+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:09:45.181+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 5"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_16153762131711967374254"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="single"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                validationExpression="$field == imagechoice_4714140661711967362184"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                </options>
+                <fd:rules
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_16153762131711967374254&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;imagechoice_16153762131711967374254&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_16153762131711967374254&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 5&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 5/&quot;\,&quot;name&quot;:&quot;imagechoice_16153762131711967374254&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.imagechoice_4714140661711967362184&quot;\,&quot;displayName&quot;:&quot;Image Choice Single 3&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Image Choice Single 3/&quot;\,&quot;name&quot;:&quot;imagechoice_4714140661711967362184&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == imagechoice_4714140661711967362184&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </imagechoice11>
+            <imagechoice12
+                jcr:created="{Date}2024-04-01T15:59:39.484+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-04-01T16:10:59.072+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Image Choice Single 6"
+                sling:resourceType="forms-components-examples/components/form/imagechoice"
+                enabled="{Boolean}true"
+                fieldType="imagechoice"
+                hideTitle="false"
+                name="imagechoice_9906385421711967379510"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                selectionType="single"
+                textIsRich="[true,true]"
+                type="string[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <options jcr:primaryType="nt:unstructured">
+                    <item0
+                        jcr:primaryType="nt:unstructured"
+                        altText="adobe logo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                    <item1
+                        jcr:primaryType="nt:unstructured"
+                        altText="corecomponentlogo"
+                        imageSrc="/content/dam/core-components-examples/library/aem-corecomponents-logo.svg"
+                        imageValue="2"/>
+                    <item2
+                        jcr:primaryType="nt:unstructured"
+                        altText="testadobelogo"
+                        imageSrc="/content/dam/core-components-examples/library/adobe-logo.svg"
+                        imageValue="1"/>
+                </options>
+            </imagechoice12>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
