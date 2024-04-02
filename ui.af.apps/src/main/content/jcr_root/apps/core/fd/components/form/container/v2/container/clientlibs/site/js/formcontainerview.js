@@ -98,7 +98,4 @@
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
 
-    // Expose form container under v2 for custom extensions
-    FormView.v2 = Object.assign(FormView.v2 || {}, { FormContainer: FormContainerV2 });
-
 })();

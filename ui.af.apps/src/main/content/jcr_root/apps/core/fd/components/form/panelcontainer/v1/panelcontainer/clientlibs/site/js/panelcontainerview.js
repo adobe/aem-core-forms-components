@@ -181,9 +181,6 @@
         }
     }
 
-    // Expose panel under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Panel: Panel });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Panel({element, formContainer})
     }, Panel.selectors.self);
