@@ -78,9 +78,6 @@
         }
     }
 
-    // Expose Recaptcha under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Recaptcha: Recaptcha });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Recaptcha({element, formContainer})
     }, Recaptcha.selectors.self);
