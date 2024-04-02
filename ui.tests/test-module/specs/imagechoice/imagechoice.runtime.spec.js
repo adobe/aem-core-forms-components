@@ -118,7 +118,7 @@ describe("Form Runtime with ImageChoice Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
 
-    it("should show and hide components on certain checkbox input", () => {
+    it("should show and hide components on certain imagechoice input", () => {
         // Rule on imagechoice2: When imagechoice2 has 1 AND 2 selected => Show imagechoice3 and Hide imagechoice4
 
         const [imageChoice2, imageChoice2FieldView] = Object.entries(formContainer._fields)[1];
@@ -143,7 +143,7 @@ describe("Form Runtime with ImageChoice Input", () => {
 
     })
 
-    it("should enable and disable components on certain checkbox input", () => {
+    it("should enable and disable components on certain imagechoice input", () => {
         // Rule on imageChoice2: When imageChoice2 has 1 AND 2 selected => Enable imageChoice5 and Disable imageChoice6
 
         const [imageChoice2, imageChoice2FieldView] = Object.entries(formContainer._fields)[1];
@@ -155,15 +155,15 @@ describe("Form Runtime with ImageChoice Input", () => {
             cy.get(`#${imageChoice6}`).find("input").should('not.be.enabled')
         })
 
-		 // Rule on imageChoice8: When imageChoice8 has 1 selected => Enable imageChoice10 and Disable imageChoice11
+		 // Rule on imageChoice8: When imageChoice8 has 1 selected => Enable imageChoice11 and Disable imageChoice12
 
         const [imageChoice8, imageChoice8FieldView] = Object.entries(formContainer._fields)[7];
-        const [imageChoice9, imageChoice9FieldView] = Object.entries(formContainer._fields)[10];
-        const [imageChoice10, imageChoice10FieldView] = Object.entries(formContainer._fields)[11];
+        const [imageChoice11, imageChoice11FieldView] = Object.entries(formContainer._fields)[10];
+        const [imageChoice12, imageChoice12FieldView] = Object.entries(formContainer._fields)[11];
 
-        cy.get(`#${imageChoice2}`).find("input").check(["1"]).then(x => {
-            cy.get(`#${imageChoice5}`).find("input").should('be.enabled')
-            cy.get(`#${imageChoice6}`).find("input").should('not.be.enabled')
+        cy.get(`#${imageChoice8}`).find("input").check(["1"]).then(x => {
+            cy.get(`#${imageChoice11}`).find("input").should('be.enabled')
+            cy.get(`#${imageChoice12}`).find("input").should('not.be.enabled')
         })
     })
 
@@ -205,7 +205,7 @@ describe("Form Runtime with ImageChoice Input", () => {
         const [imageChoice9, imageChoice9FieldView] = Object.entries(formContainer._fields)[8];
         const [imageChoice11, imageChoice11FieldView] = Object.entries(formContainer._fields)[10];
 
-        // Make imageChoice3 visible
+        // Make imageChoice8 visible
         cy.get(`#${imageChoice8}`).find("input").check(["1", "2"])
         cy.get(`#${imageChoice9}`).find("input").check("1").blur().then(x => {
             cy.get(`#${imageChoice11}`).find("input").should('be.checked')
@@ -224,7 +224,7 @@ describe("Form Runtime with ImageChoice Input", () => {
 
     it(" should add filled/empty class at container div ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[2]
-            cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-imagechoice--empty');
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-imagechoice--empty');
         cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
         cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
         const [imageChoice2, imageChoice2FieldView] = Object.entries(formContainer._fields)[1];
