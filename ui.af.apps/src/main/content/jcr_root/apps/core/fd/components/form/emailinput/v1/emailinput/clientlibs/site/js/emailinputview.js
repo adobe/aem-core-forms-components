@@ -82,9 +82,6 @@
         }
     }
 
-    // Expose email input under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { EmailInput: EmailInput });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new EmailInput({element, formContainer})
     }, EmailInput.selectors.self);

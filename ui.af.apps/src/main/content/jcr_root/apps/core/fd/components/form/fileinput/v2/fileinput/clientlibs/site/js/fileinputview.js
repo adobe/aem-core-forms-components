@@ -108,9 +108,6 @@
         }
     }
 
-    // Expose file input under v2 for custom extensions
-    FormView.v2 = Object.assign(FormView.v2 || {}, { FileInput: FileInputV2 });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new FileInputV2({element, formContainer})
     }, FileInputV2.selectors.self);

@@ -66,9 +66,6 @@
         }
     }
 
-    // Expose Fragment under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Fragment: Fragment });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Fragment({element, formContainer})
     }, Fragment.selectors.self);

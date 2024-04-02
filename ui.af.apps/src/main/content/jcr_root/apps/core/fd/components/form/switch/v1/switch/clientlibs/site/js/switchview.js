@@ -66,9 +66,6 @@
         }
     }
 
-    // Expose Switch under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Switch: Switch });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Switch({element,formContainer})
     }, Switch.selectors.self);
