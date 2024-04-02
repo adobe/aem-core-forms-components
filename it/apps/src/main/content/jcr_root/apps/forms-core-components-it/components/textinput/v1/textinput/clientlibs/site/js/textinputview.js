@@ -91,7 +91,6 @@
            // add listener for invalid event
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                debugger;
                 this.updateValidationMessage(this._model.errorMessage, state);
             }, "invalid");
         }
