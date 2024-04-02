@@ -19,7 +19,7 @@ describe("Form Runtime with Custom Text Input", () => {
 
   });
 
-  const pagePath = "content/forms/af/core-components-it/samples/textinput/custom-text-input-repeatability.html"
+  const pagePath = "content/forms/af/core-components-it/samples/textinput/custom_text_input_repeatability.html"
   const bemBlock = 'cmp-adaptiveform-textinput'
   const IS = "adaptiveFormTextInput"
   const selectors = {
