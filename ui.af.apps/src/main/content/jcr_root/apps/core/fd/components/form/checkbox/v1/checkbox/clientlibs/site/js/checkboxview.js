@@ -70,9 +70,6 @@
         }
     }
 
-    // Expose Accordion under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { CheckBox: CheckBox });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBox({element, formContainer})
     }, CheckBox.selectors.self);

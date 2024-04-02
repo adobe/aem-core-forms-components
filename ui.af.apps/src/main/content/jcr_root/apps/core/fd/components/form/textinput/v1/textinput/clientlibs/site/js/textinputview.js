@@ -82,9 +82,6 @@
         }
     }
 
-    // Expose TextInput under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { TextInput: TextInput });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new TextInput({element, formContainer})
     }, TextInput.selectors.self);

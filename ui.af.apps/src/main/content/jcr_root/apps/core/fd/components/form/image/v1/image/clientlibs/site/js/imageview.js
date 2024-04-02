@@ -63,9 +63,6 @@
             }
     }
 
-    // Expose Image under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Image: Image });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Image({element, formContainer})
     }, Image.selectors.self);
