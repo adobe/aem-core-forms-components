@@ -41,15 +41,23 @@ describe('Custom Prefill Test', function () {
         }).as('afSubmission')
     });
 
-    const validatePrefill = (prefillId) => {
-        // preview the form by passing the prefillId parameter in the URL
-        cy.visit(pagePath + `?wcmmode=disabled&prefillId=${prefillId}`);
+    const validatePrefill = (prefillId, customService) => {
+        if (customService) {
+            cy.intercept('GET', '**/af/data/**').as('afPrefill');
+            // preview the form by passing the prefillId parameter in the URL
+            cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`, `dataRef=service://${customService}`]});
+            // this test ensures that the prefill service is called, returns 500 since service does not exist on server
+            cy.wait('@afPrefill').its('response.statusCode').should('eq', 500);
+        } else {
+            // preview the form by passing the prefillId parameter in the URL
+            cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`]});
+            // validating the prefilled data
+            cy.get(nameTextBox).should("have.value", "John Doe");
+            cy.get(dobDropdown).should("have.value", "1999-10-10");
+            cy.get(genderRadioButton).should("have.value", "0");
+            cy.get(jobDropdown).should("have.value", "1");
+        }
 
-        // validating the prefilled data
-        cy.get(nameTextBox).should("have.value", "John Doe");
-        cy.get(dobDropdown).should("have.value", "1999-10-10");
-        cy.get(genderRadioButton).should("have.value", "0");
-        cy.get(jobDropdown).should("have.value", "1");
     }
 
     it('', function() {
@@ -71,6 +79,23 @@ describe('Custom Prefill Test', function () {
 
             prefillId = response.body.metadata.prefillId;
             validatePrefill(prefillId);
+        })
+    });
+
+    it('prefill using service in dataRef', function() {
+        // filling the form
+        cy.get(nameTextBox).type("John Doe");
+        cy.get(dobDropdown).type("1999-10-10");
+        cy.get(genderRadioButton).first().check();
+        cy.get(jobDropdown).select('Working');
+
+        // submitting the form and fetching the prefillID
+        let prefillId;
+        cy.get("button").click();
+
+        cy.wait('@afSubmission').then(({response}) => {
+            prefillId = response.body.metadata.prefillId;
+            validatePrefill(prefillId, "temp");
         })
     });
 
