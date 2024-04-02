@@ -16,15 +16,69 @@
 (function() {
 
     "use strict";
-    class CustomTextInput extends FormView.v1.TextInput {
+    class CustomTextInput extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
-        static IS = FormView.v1.TextInput.IS;
-        static bemBlock = FormView.v1.TextInput.bemBlock;
-        static selectors  = FormView.v1.TextInput.selectors;
+        /**
+         * Each FormField has a data attribute class that is prefixed along with the global namespace to
+         * distinguish between them. If a component wants to put a data-attribute X, the attribute in HTML would be
+         * data-{NS}-{IS}-x=""
+         * @type {string}
+         */
+        static IS = "adaptiveFormTextInput";
+        static bemBlock = 'cmp-adaptiveform-textinput'
+        static selectors  = {
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            widget: `.${CustomTextInput.bemBlock}__widget`,
+            label: `.${CustomTextInput.bemBlock}__label`,
+            description: `.${CustomTextInput.bemBlock}__longdescription`,
+            qm: `.${CustomTextInput.bemBlock}__questionmark`,
+            errorDiv: `.${CustomTextInput.bemBlock}__errormessage`,
+            tooltipDiv: `.${CustomTextInput.bemBlock}__shortdescription`
+        };
 
         constructor(params) {
             super(params);
+        }
+
+        getWidget() {
+            return this.element.querySelector(CustomTextInput.selectors.widget);
+        }
+
+        getDescription() {
+            return this.element.querySelector(CustomTextInput.selectors.description);
+        }
+
+        getLabel() {
+            return this.element.querySelector(CustomTextInput.selectors.label);
+        }
+
+        getErrorDiv() {
+            return this.element.querySelector(CustomTextInput.selectors.errorDiv);
+        }
+
+        getTooltipDiv() {
+            return this.element.querySelector(CustomTextInput.selectors.tooltipDiv);
+        }
+
+        getQuestionMarkDiv() {
+            return this.element.querySelector(CustomTextInput.selectors.qm);
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            if (this.widget.value !== '') {
+                this._model.value = this.widget.value;
+            }
+            this.widget.addEventListener('blur', (e) => {
+                this._model.value = e.target.value;
+                this.setWidgetValueToDisplayValue();
+                this.setInactive();
+            });
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
+                this.setWidgetValueToModelValue();
+            });
         }
 
         updateValidationMessage(validationMessage, state) {
