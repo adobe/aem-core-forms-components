@@ -31,7 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
 
-import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.model.HCaptchaConfiguration;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
@@ -56,7 +56,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     @Reference
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ReCaptchaConfigurationModel reCaptchaConfiguration;
+    private HCaptchaConfiguration hCaptchaConfiguration;
 
     @OSGiService
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -64,21 +64,19 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("rcCloudServicePath")
+    @Named("cloudServicePath")
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("recaptchaSize")
+    @Named("size")
     protected String size;
 
-    public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
-    public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
-    private static final String RECAPTCHA_SITE_KEY = "siteKey";
-    private static final String RECAPTCHA_URI = "uri";
-    private static final String RECAPTCHA_SIZE = "size";
-    private static final String RECAPTCHA_THEME = "theme";
-    private static final String RECAPTCHA_TYPE = "type";
+    private static final String SITE_KEY = "siteKey";
+    private static final String URI = "uri";
+    private static final String SIZE = "size";
+    private static final String THEME = "theme";
+    private static final String TYPE = "type";
 
     @Override
     @JsonIgnore
@@ -101,19 +99,20 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
-        String siteKey = null;
+        String siteKey = null, uri = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null && cloudConfigurationProvider != null) {
-            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            if (reCaptchaConfiguration != null) {
-                siteKey = reCaptchaConfiguration.siteKey();
+            hCaptchaConfiguration = cloudConfigurationProvider.getHcaptchaCloudConfiguration(resource);
+            if (hCaptchaConfiguration != null) {
+                siteKey = hCaptchaConfiguration.getSiteKey();
+                uri = hCaptchaConfiguration.getClientSideJsUrl();
             }
         }
-        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
-        customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
-        customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
-        customCaptchaProperties.put(RECAPTCHA_THEME, "light");
-        customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
+        customCaptchaProperties.put(SITE_KEY, siteKey);
+        customCaptchaProperties.put(URI, uri);
+        customCaptchaProperties.put(SIZE, getSize());
+        customCaptchaProperties.put(THEME, "light");
+        customCaptchaProperties.put(TYPE, "image");
 
         return customCaptchaProperties;
 
