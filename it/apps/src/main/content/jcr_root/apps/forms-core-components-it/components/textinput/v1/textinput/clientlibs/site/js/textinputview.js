@@ -86,6 +86,14 @@
                 super.updateValidationMessage(validationMessage, state);
             }
         }
+        subscribe() {
+           super.subscribe();
+           // add listener for invalid event
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                this.updateValidationMessage(this._model.errorMessage, state);
+            }, "invalid");
+        }
     }
 
 
