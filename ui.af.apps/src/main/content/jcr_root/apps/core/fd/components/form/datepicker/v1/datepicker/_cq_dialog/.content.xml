@@ -215,7 +215,7 @@
                                                             fieldLabel="Edit Format"
                                                             name="./editFormat">
                                                     </editFormat>
-                                                    <maximumMessage
+                                                    <formatMessage
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                             fieldDescription="Error message shown when the date format is incorrect."
