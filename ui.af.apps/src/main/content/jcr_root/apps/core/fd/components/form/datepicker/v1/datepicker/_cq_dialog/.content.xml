@@ -215,6 +215,13 @@
                                                             fieldLabel="Edit Format"
                                                             name="./editFormat">
                                                     </editFormat>
+                                                    <maximumMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldDescription="Error message shown when the date format is incorrect."
+                                                            granite:class="cmp-adaptiveform-datepicker__formatmessage"
+                                                            fieldLabel="Format error message"
+                                                            name="./formatMessage"/>
                                                 </items>
                                             </editPatternGroup>
                                         </items>
