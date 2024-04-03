@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -15,30 +15,13 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import java.util.Map;
-
 import org.osgi.annotation.versioning.ConsumerType;
 
-import com.adobe.aemds.guide.service.GuideException;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
- * Defines a base interface to be extended by all the different types of captcha.
+ * Defines the form {@code Captcha} Sling Model used for the {@code /apps/core/fd/components/form/hcaptcha/v1/hcaptcha}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface Captcha extends Field {
-
-    @JsonIgnore
-    default String getCloudServicePath() {
-        return null;
-    }
-
-    @JsonIgnore
-    String getProvider();
-
-    @JsonIgnore
-    Map<String, Object> getCaptchaProperties() throws GuideException;
-
-}
+public interface HCaptcha extends Captcha {}
