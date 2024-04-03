@@ -82,7 +82,11 @@ class FormContainer {
      */
     getParentFormElementId(model) {
         const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
-        return parentModel.id;
+        if (parentModel.fieldType === 'form') {
+            return '$form';
+        } else {
+            return parentModel.id;
+        }
     }
 
     /**
