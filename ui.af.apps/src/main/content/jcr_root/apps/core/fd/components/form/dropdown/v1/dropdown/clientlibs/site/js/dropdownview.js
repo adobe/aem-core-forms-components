@@ -117,10 +117,10 @@
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
+                // clear of any selection, and re-add selection (otherwise HTML shows stale state if it already existed)
+                option.removeAttribute('selected');
                 if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                     option.setAttribute('selected', 'selected');
-                } else {
-                    option.removeAttribute('selected');
                 }
             });
             super.updateEmptyStatus();
