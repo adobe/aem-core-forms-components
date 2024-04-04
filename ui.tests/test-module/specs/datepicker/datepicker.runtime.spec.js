@@ -256,4 +256,16 @@ describe("Form Runtime with Date Picker", () => {
         }
     });
 
+    it.only("Test custom error message when incorrect date format is entered", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        const incorrectInputs = ["adfasdfa", "29/2/2023", "32/1/2023", "1/32/23", "1-1-2023"];
+        incorrectInputs.forEach(incorrectInput => {
+            cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
+            cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()
+                .then(x => {
+                cy.get(`#${datePicker7}`).find("input").should('have.value', incorrectInput); // Check if the input is the same
+                cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Date format expected is d/M/y")
+            });
+        });
+    });
 })
