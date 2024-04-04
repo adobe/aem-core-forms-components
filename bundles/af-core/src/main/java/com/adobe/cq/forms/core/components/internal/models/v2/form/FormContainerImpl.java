@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -108,6 +109,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name="lang")
+    @javax.annotation.Nullable
+    @Default(values = "en-US")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String lang;
 
     @PostConstruct
     protected void initFormContainerModel() {
@@ -257,11 +264,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getLang() {
-        // todo: uncomment once forms sdk is released
         if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
-            return FormContainer.super.getLang();
+            return lang;
         }
     }
 

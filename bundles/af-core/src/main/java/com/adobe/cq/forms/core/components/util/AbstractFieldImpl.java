@@ -114,6 +114,17 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Default(booleanValues = false)
     protected boolean exclusiveMaximum;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name="lang")
+    @javax.annotation.Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String lang;
+
+    @javax.annotation.Nullable
+    public String getLang() {
+        return lang;
+    }
+
+
     /** number and date constraint **/
 
     /**

@@ -53,6 +53,8 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
+
+    private static final String PATH_NUMBER_INPUT_LANG = CONTENT_ROOT + "/numberinput-lang";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
 
     private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
@@ -260,6 +262,13 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT));
     }
+
+    @Test
+    void testJSONExportLang() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_LANG, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_LANG));
+    }
+
 
     @Test
     void testJSONExportBackwardCompatible() throws Exception {

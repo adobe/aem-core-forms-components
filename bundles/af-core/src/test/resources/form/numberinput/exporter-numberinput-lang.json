@@ -1,0 +1,22 @@
+{
+  "id": "numberinput-86900b9e3b",
+  "fieldType": "number-input",
+  "name": "abc",
+  "type": "number",
+  "label": {
+    "value": "def"
+  },
+  "lang" : "es",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/numberinput-lang"
+  },
+  ":type": "core/fd/components/form/numberinput/v1/numberinput"
+}

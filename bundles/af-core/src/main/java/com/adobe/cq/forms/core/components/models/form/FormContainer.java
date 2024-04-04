@@ -19,6 +19,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -64,7 +68,7 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
-    String DEFAULT_FORMS_SPEC_VERSION = "0.12.5";
+    String DEFAULT_FORMS_SPEC_VERSION = "0.12.6";
 
     /**
      * Returns form metadata {@link FormMetaData}

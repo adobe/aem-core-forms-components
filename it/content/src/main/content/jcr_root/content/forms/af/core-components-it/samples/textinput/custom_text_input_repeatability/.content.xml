@@ -21,7 +21,7 @@
       dorType="none"
       fieldType="form"
       schemaType="none"
-      specVersion="0.12.5"
+      specVersion="0.12.6"
       textIsRich="true"
       thankYouMessage="Thank you for submitting the form."
       thankYouOption="page"

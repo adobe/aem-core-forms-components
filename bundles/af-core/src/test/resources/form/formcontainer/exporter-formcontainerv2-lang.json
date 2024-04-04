@@ -1,14 +1,14 @@
 {
   "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
   "fieldType": "form",
-  "lang": "en",
+  "lang": "es",
   "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
   "properties": {
     "fd:dor": {
       "dorType": "generate",
       "dorTemplateRef": "xyz"
     },
-    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
+    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-lang",
     "fd:schemaType": "BASIC",
     "fd:formDataEnabled": true
   },
@@ -28,7 +28,7 @@
   ":type": "core/fd/components/form/container/v2/container",
   ":items": {
     "textinput": {
-      "id": "textinput-9a52c5fa93",
+      "id": "textinput-b4768a1cc7",
       "fieldType": "text-input",
       "name": "abc",
       "visible": false,
@@ -47,7 +47,7 @@
         "fd:dor": {
           "dorExclusion": false
         },
-        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-lang/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
