@@ -51,16 +51,16 @@ describe("Form Runtime with Date Picker", () => {
         const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
-                .should(passDisabledAttributeCheck, 'disabled');
+            .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
             cy.get('input').should('have.value', value)
         })
@@ -229,16 +229,16 @@ describe("Form Runtime with Date Picker", () => {
     })
 
     it(" should add filled/empty class at container div ", () => {
-      const [id, fieldView] = Object.entries(formContainer._fields)[0]
-      const model = formContainer._model.getElement(id)
-      const input = "2020-10-10";
-      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--empty');
-      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
-      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-      cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-          expect(model.getState().value).to.equal(input);
-          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
-      });
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        const input = "2020-10-10";
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--empty');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            expect(model.getState().value).to.equal(input);
+            cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
+        });
     });
 
     it(" should support display value expression", () => {
@@ -256,9 +256,21 @@ describe("Form Runtime with Date Picker", () => {
         }
     });
 
+    it("Test custom error message when incorrect date format is entered", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        const incorrectInputs = ["adfasdfa", "29/2/2023", "32/1/2023", "1/32/23", "1-1-2023"];
+        incorrectInputs.forEach(incorrectInput => {
+            cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
+            cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()
+            .then(x => {
+                cy.get(`#${datePicker7}`).find("input").should('have.value', incorrectInput); // Check if the input is the same
+                cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Date format expected is d/M/y")
+            });
+        });
+    });
+
     it("should not show calendar widget if marked readonly", () => {
         const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[8];
         cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("not.exist");
     })
-
 })
