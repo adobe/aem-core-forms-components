@@ -21,6 +21,8 @@ import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
+import com.adobe.aemds.guide.utils.AdobeSignerPropertiesUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -339,6 +341,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 traverseChild((Container) component, callback);
             }
         }
+    }
+
+    @Override
+    @JsonIgnore
+    @Nullable
+    public Map<String, Object> getSignerProperties() throws  JsonProcessingException {
+        AdobeSignerPropertiesUtils adobeSignerProperties = new AdobeSignerPropertiesUtils();
+        return adobeSignerProperties.getSignerProperties(resource);
     }
 
     @Override

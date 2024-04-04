@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -351,6 +352,9 @@ public interface FormContainer extends Container {
 
     @JsonIgnore
     default void visit(Consumer<ComponentExporter> callback) throws Exception {}
+
+    @JsonIgnore
+    @Nullable Map<String, Object> getSignerProperties() throws JsonProcessingException;
 
     /**
      * Returns site page path if dropped in sites else the form page path.
