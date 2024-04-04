@@ -73,7 +73,7 @@
 
         setModel(model) {
             super.setModel(model);
-            if (!this.#noFormats()) {
+            if (!this.#noFormats() && !model.getState().readOnly) {
                 if (this.widgetObject == null) {
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }

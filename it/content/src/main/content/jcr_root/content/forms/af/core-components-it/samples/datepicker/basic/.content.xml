@@ -143,6 +143,26 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </datepicker_1911670949>
+            <datepicker_604351231
+              jcr:created="{Date}2024-04-04T15:14:42.469+05:30"
+              jcr:createdBy="admin"
+              jcr:lastModified="{Date}2024-04-04T15:15:16.111+05:30"
+              jcr:lastModifiedBy="admin"
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Readonly with edit and display pattern"
+              sling:resourceType="forms-components-examples/components/form/datepicker"
+              displayFormat="d/M/y"
+              displayPatternType="d/M/y"
+              editFormat="d/M/y"
+              editPatternType="d/M/y"
+              enabled="{Boolean}true"
+              fieldType="date-input"
+              hideTitle="false"
+              name="datepicker_6043512311712223882852"
+              readOnly="{Boolean}true"
+              textIsRich="[true,true,true]"
+              unboundFormElement="{Boolean}false"
+              visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
