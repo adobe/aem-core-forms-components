@@ -729,13 +729,24 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     #getLocalizedYear(date) {
+      /*
+      // Only Thai language return year according to Buddhist calendar, rest all languages follows gregorian calendar in practice.
+      // The Buddhist Year in 2024 = 543 + 2024  = B.E. 2567 (reference https://wesak.org.my/calculating-b-e/)
+      // Intl.DateTimeFormat#formatToParts returns number (2024) for all languages except for Thai (2567) & for Persian ('۱۴۰۳')
+      // For Persian ('۱۴۰۳'), returned year is not in numbers that is breaking next flow.
+      */
+      if(this.#lang === 'th') {
         const dateFormat = new Intl.DateTimeFormat(this.#lang, {
-            year: 'numeric'
+          year: 'numeric'
         });
         const dateParts = dateFormat.formatToParts(date);
         const yearObject = dateParts.find(yearObject => yearObject.type === "year");
         const localizedYear = yearObject.value;
         return Number(localizedYear);
+      }
+      else {
+        return Number(date.getFullYear());
+      }
     }
 
     /*
