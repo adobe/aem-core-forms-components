@@ -119,7 +119,7 @@
                     hideTitle="false"
                     name="datepicker7"
                     readOnly="{Boolean}false"
-                    textIsRich="[true,true,true]"
+                    textIsRich="[true,true]"
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
             <datepicker_1911670949
