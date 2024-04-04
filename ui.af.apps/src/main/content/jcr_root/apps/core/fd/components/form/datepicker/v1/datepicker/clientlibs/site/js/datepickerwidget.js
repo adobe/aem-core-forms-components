@@ -1135,8 +1135,13 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
 
     setValue(value) {
-      let currDate =  new Date(value);
-
+      let currDate;
+      const dateArray = value.split('-');
+      if (dateArray && dateArray.length == 3) {
+        currDate = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
+      } else {
+        new Date(value);
+      }
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
