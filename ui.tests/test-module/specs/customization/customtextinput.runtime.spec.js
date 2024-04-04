@@ -111,7 +111,7 @@ describe("Form Runtime with Custom Text Input", () => {
         const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[11];
 
         // Required field should not show error on blur due to custom text field
-        cy.get(`#${textbox6}`).find("input").focus().clear().type("abc").blur().then(x => {
+        cy.get(`#${textbox6}`).find("input").focus().clear().blur().then(x => {
             cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
         })
 
@@ -125,8 +125,7 @@ describe("Form Runtime with Custom Text Input", () => {
         cy.get(`#${textbox8}`).find("input").then(x => {
             cy.get(`#${textbox8}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please lengthen this text to 12 characters or more.")
         })
-        debugger;
-        cy.get(`#${textbox6}`).find("input").focus().clear().blur().then(x => {
+        cy.get(`#${textbox6}`).find("input").then(x => {
             cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please fill in this field.")
         })
 

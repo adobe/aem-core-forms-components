@@ -92,9 +92,6 @@
         }
     }
 
-    // Expose Tabs under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Tabs: Tabs });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Tabs({element, formContainer})
     }, Tabs.selectors.self);
