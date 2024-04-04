@@ -37,17 +37,17 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.ReCaptcha;
+import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { ReCaptcha.class,
+    adapters = { Captcha.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class RecaptchaImpl extends AbstractCaptchaImpl implements ReCaptcha {
+public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @Inject
     private ResourceResolver resourceResolver;
