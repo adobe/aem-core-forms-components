@@ -145,6 +145,27 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </datepicker_1911670949>
+            <datepicker_269513547
+                    jcr:created="{Date}2024-04-04T09:54:04.561+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-04-04T10:01:04.574+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input with fixed date"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    default="2024-03-01"
+                    displayFormat="MMMM d, y"
+                    displayPatternType="MMMM d, y"
+                    editFormat="MMMM d, y"
+                    editPatternType="MMMM d, y"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    hideTitle="false"
+                    name="datepicker_2695135471712204644671"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
