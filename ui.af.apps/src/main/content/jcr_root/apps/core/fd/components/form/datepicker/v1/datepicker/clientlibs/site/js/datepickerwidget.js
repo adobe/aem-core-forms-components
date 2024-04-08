@@ -1135,12 +1135,19 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
 
     setValue(value) {
-      let currDate;
-      const dateArray = value.split('-');
-      if (dateArray && dateArray.length == 3) {
-        currDate = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
-      } else {
-        new Date(value);
+      function isDateDefaultFormat(str) {
+        // test if format is 'yyyy-MM-dd'
+        const pattern = /^\d{4}-\d{2}-\d{2}$/;
+        return pattern.test(str);
+      }
+      let currDate =  new Date(value);
+      /**
+       * We only test for 'yyyy-MM-dd' because timezone related issue only occurs when date is selected from calendar.
+       * And calendar only sets value in yyyy-MM-dd
+       */
+      if (isDateDefaultFormat(value)) {
+        const timezoneOffset = currDate.getTimezoneOffset();
+        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
       }
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
