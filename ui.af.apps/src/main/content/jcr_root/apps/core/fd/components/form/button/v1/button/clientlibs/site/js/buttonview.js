@@ -71,9 +71,6 @@
         }
     }
 
-    // Expose button under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Button: Button });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Button({element, formContainer})
     }, Button.selectors.self);

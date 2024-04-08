@@ -638,9 +638,6 @@
         }
     }
 
-    // Expose Wizard under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { Wizard: Wizard });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Wizard({element, formContainer})
     }, Wizard.selectors.self);
