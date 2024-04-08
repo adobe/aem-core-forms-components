@@ -171,13 +171,18 @@ var selectors = {
             createRuleButton : "#create-rule-button",
             saveRule : ".exp-Save-Button",
             closeRuleEditor : ".exp-Close-Button",
-            sideToggleButton : "#exp-toggle-sidepanel-button"
+            sideToggleButton : "#exp-toggle-sidepanel-button",
+            sidePanelFormObjectTab: ".exp-sidepanel-formobject-tab-label",
+            sidePanelFunctionObjectTab: ".exp-sidepanel-function-tab-label"
         },
         choiceModels : {
             STATEMENT : ".choice-model.u-coral-clearFix.STATEMENT",
             EVENT_AND_COMPARISON_OPERATOR : ".choice-model.u-coral-clearFix.EVENT_AND_COMPARISON_OPERATOR",
             PRIMITIVE_EXPRESSION : ".choice-model.u-coral-clearFix.PRIMITIVE_EXPRESSION.choice-model-inline",
             BLOCK_STATEMENT : ".choice-model.u-coral-clearFix.BLOCK_STATEMENT"
+        },
+        ruleSummary : {
+            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
         },
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
